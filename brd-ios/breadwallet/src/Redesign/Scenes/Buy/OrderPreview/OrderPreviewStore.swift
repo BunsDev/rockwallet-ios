@@ -3,7 +3,7 @@
 //  breadwallet
 //
 //  Created by Dijana Angelovska on 12.8.22.
-//  Copyright © 2022 Placeholder, LLC. All rights reserved.
+//  Copyright © 2022 RockWallet, LLC. All rights reserved.
 //
 //  See the LICENSE file at the project root for license information.
 //

@@ -23,11 +23,11 @@
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-	<string>group.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<string>group.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.placeholder.app</string>
+		<string>$(AppIdentifierPrefix)com.rockwallet.app</string>
 	</array>
 </dict>
 </plist>

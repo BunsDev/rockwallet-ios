@@ -12,8 +12,8 @@ import UIKit
 class CoreSystem: Subscriber {
     
     private var system: System?
-    private let queue = DispatchQueue(label: "com.placeholder.app.CoreSystem", qos: .utility)
-    private let listenerQueue = DispatchQueue(label: "com.placeholder.app.CoreSystem.listener", qos: .utility)
+    private let queue = DispatchQueue(label: "com.rockwallet.app.CoreSystem", qos: .utility)
+    private let listenerQueue = DispatchQueue(label: "com.rockwallet.app.CoreSystem.listener", qos: .utility)
     private let keyStore: KeyStore
     private var systemClient: SystemClient?
     fileprivate var btcWalletCreationCallback: (() -> Void)?
