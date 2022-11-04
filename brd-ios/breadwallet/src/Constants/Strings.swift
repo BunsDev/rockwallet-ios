@@ -329,15 +329,15 @@ internal enum L10n {
     /// Alert Subheader label (playfully positive)
     internal static let paperKeySetSubheader = L10n.tr("Localizable", "Alerts.paperKeySetSubheader", fallback: "Awesome!")
     /// Alert Header label (the PIN was set)
-    internal static let pinSet = L10n.tr("Localizable", "Alerts.pinSet", fallback: "PIN Set")
+    internal static let pinSet = L10n.tr("Localizable", "Alerts.pinSet", fallback: "PIN successfully updated")
     /// Send failure alert header label (the send failed to happen)
     internal static let sendFailure = L10n.tr("Localizable", "Alerts.sendFailure", fallback: "Send failed")
     /// Send success alert header label (confirmation that the send happened)
     internal static let sendSuccess = L10n.tr("Localizable", "Alerts.sendSuccess", fallback: "Send Confirmation")
     /// Send success alert subheader label (e.g. the money was sent)
     internal static let sendSuccessSubheader = L10n.tr("Localizable", "Alerts.sendSuccessSubheader", fallback: "Money Sent!")
-    /// Restore your wallet
-    internal static let walletRestored = L10n.tr("Localizable", "Alerts.walletRestored", fallback: "Restore your wallet")
+    /// Recovery Phrase correct
+    internal static let walletRestored = L10n.tr("Localizable", "Alerts.walletRestored", fallback: "Recovery Phrase correct")
     internal enum TouchIdSucceeded {
       /// Fingerprint was recognized by the scanner
       internal static let android = L10n.tr("Localizable", "Alerts.touchIdSucceeded.android", fallback: "Fingerprint recognized")
@@ -1217,7 +1217,7 @@ internal enum L10n {
     /// Onboarding screen 'Next' button
     internal static let next = L10n.tr("Localizable", "Onboarding.next", fallback: "Next")
     /// Onboarding screen restore an existing wallet.
-    internal static let restoreWallet = L10n.tr("Localizable", "Onboarding.restoreWallet", fallback: "Restore wallet")
+    internal static let restoreWallet = L10n.tr("Localizable", "Onboarding.restoreWallet", fallback: "Restore with Recovery Phrase")
     /// Onboarding screen Skip button title that allows the user to exit the onboarding process.
     internal static let skip = L10n.tr("Localizable", "Onboarding.skip", fallback: "Skip")
   }

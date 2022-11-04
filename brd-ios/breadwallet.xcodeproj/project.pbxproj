@@ -4378,7 +4378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ! -f .env ]; then\n    echo \".env file not found or configured properlly.\"\n    exit 1\nfi\n\nsource \".env\"\nhost=\"$API_URL/blocksatoshi\"\n\njson=$(curl -k -v -X POST -H 'Content-type: application/json' -d '{\"deviceID\": \"b21f2253-51e1-4346-92b0-e32323733067\", \"pubKey\": \"rCxDp6qD8uGqK2Z3UgeQ5bvTCZegqGfVexyz5XkbvwfW\"}'  https://${host}/wallet/token)\n\ntoken=\"$(echo $json | sed \"s/{.*\\\"token\\\":\\\"\\([^\\\"]*\\).*}/\\1/g\"):sig\"\n\n./scripts/download_bundles.sh $host\n./scripts/download_currencylist.sh $host $token\n";
+			shellScript = "if [ ! -f .env ]; then\n    echo \".env file not found or configured properlly.\"\n    exit 1\nfi\n\nsource \".env\"\nhost=\"$API_URL/blocksatoshi\"\n\njson=$(curl -k -v -X POST -H 'Content-type: application/json' -d '{\"deviceID\": \"b21f2253-51e1-4346-92b0-e32323733067\", \"pubKey\": \"rCxDp6qD8uGqK2Z3UgeQ5bvTCZegqGfVexyz5XkbvwfW\"}'  https://${host}/wallet/token)\n\ntoken=\"$(echo $json | sed \"s/{.*\\\"token\\\":\\\"\\([^\\\"]*\\).*}/\\1/g\"):sig\"\n\n./scripts/download_bundles.sh $host\n./scripts/download_currencylist.sh $host $token\n\n";
 		};
 		7E67772628C9C4910052927A /* Generate localization */ = {
 			isa = PBXShellScriptBuildPhase;
