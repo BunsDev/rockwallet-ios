@@ -380,7 +380,7 @@
 "Alerts.paperKeySetSubheader" = "Awesome!";
 
 /* Alert Header label (the PIN was set) */
-"Alerts.pinSet" = "PIN Set";
+"Alerts.pinSet" = "PIN successfully updated";
 
 /* Send failure alert header label (the send failed to happen) */
 "Alerts.sendFailure" = "Send failed";
@@ -394,7 +394,7 @@
 /* Fingerprint was recognized by the scanner */
 "Alerts.touchIdSucceeded.android" = "Fingerprint recognized";
 
-"Alerts.walletRestored" = "Restore your wallet";
+"Alerts.walletRestored" = "Recovery Phrase correct";
 
 /* Error label on XRP send amount screen */
 "Amount.MinXRPAmount" = "The minimum required ammount is 10 XRP.";
@@ -1366,7 +1366,7 @@
 "Onboarding.next" = "Next";
 
 /* Onboarding screen restore an existing wallet. */
-"Onboarding.restoreWallet" = "Restore wallet";
+"Onboarding.restoreWallet" = "Restore with Recovery Phrase";
 
 /* Onboarding screen Skip button title that allows the user to exit the onboarding process. */
 "Onboarding.skip" = "Skip";
