@@ -11,13 +11,13 @@
 import Foundation
 
 var WalletSecAttrService: String {
-    if E.isRunningTests { return "com.placeholder.app.testnetQA.tests" }
+    if E.isRunningTests { return "com.rockwallet.app.testnetQA.tests" }
     #if TESTNET
-    return "com.placeholder.app.testnetQA"
+    return "com.rockwallet.app.testnetQA"
     #elseif INTERNAL
-    return "com.placeholder.app.internalQA"
+    return "com.rockwallet.app.internalQA"
     #else
-    return "com.placeholder.app"
+    return "com.rockwallet.app"
     #endif
 }
 

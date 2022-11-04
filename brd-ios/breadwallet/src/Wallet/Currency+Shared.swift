@@ -3,7 +3,7 @@
 //  breadwallet
 //
 //  Created by Kenan Mamedoff on 20/05/2022.
-//  Copyright © 2022 Placeholder, LLC. All rights reserved.
+//  Copyright © 2022 RockWallet, LLC. All rights reserved.
 //
 //  See the LICENSE file at the project root for license information.
 //
@@ -11,7 +11,7 @@
 import UIKit
 
 public enum AppGroup: String {
-    case placeholderApp = "group.com.placeholder.app"
+    case placeholderApp = "group.com.rockwallet.app"
     
     public var containerURL: URL? {
         switch self {
