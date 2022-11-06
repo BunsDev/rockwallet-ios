@@ -66,6 +66,7 @@ class AssetListTableView: UITableViewController, Subscriber {
         tableView.register(HomeScreenCell.self, forCellReuseIdentifier: HomeScreenCellIds.regularCell.rawValue)
         tableView.separatorStyle = .none
         tableView.rowHeight = assetHeight
+        tableView.contentInset.bottom = ViewSizes.Common.largeCommon.rawValue
         
         setupSubscriptions()
         reload()
@@ -74,19 +75,17 @@ class AssetListTableView: UITableViewController, Subscriber {
     private func setupAddWalletButton() {
         guard tableView.tableFooterView == nil else { return }
         
-        let manageAssetsButtonHeight: CGFloat = 56.0
-        let topBottomInset: CGFloat = Margins.extraLarge.rawValue
-        let leftRightInset: CGFloat = Margins.large.rawValue
+        let manageAssetsButtonHeight = ViewSizes.Common.largeCommon.rawValue
         let tableViewWidth = tableView.frame.width - tableView.contentInset.left - tableView.contentInset.right
         
         let footerView = UIView(frame: CGRect(x: 0,
                                               y: 0,
                                               width: tableViewWidth,
-                                              height: manageAssetsButtonHeight + (topBottomInset * 2)))
+                                              height: manageAssetsButtonHeight + (Margins.large.rawValue * 2)))
         
-        manageAssetsButton.frame = CGRect(x: leftRightInset,
-                                          y: topBottomInset,
-                                          width: footerView.frame.width - (2 * leftRightInset),
+        manageAssetsButton.frame = CGRect(x: Margins.large.rawValue,
+                                          y: Margins.large.rawValue,
+                                          width: footerView.frame.width - (2 * Margins.large.rawValue),
                                           height: manageAssetsButtonHeight)
         
         footerView.addSubview(manageAssetsButton)
