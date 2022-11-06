@@ -64,10 +64,8 @@ class AssetListTableView: UITableViewController, Subscriber {
         
         tableView.backgroundColor = LightColors.Background.two
         tableView.register(HomeScreenCell.self, forCellReuseIdentifier: HomeScreenCellIds.regularCell.rawValue)
-        tableView.register(HomeScreenHiglightableCell.self, forCellReuseIdentifier: HomeScreenCellIds.highlightableCell.rawValue)
         tableView.separatorStyle = .none
         tableView.rowHeight = assetHeight
-        tableView.contentInset = UIEdgeInsets(top: Margins.small.rawValue, left: 0, bottom: 0, right: 0)
         
         setupSubscriptions()
         reload()

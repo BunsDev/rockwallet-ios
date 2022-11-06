@@ -16,14 +16,14 @@ enum PinViewStyle {
 }
 
 class PinView: UIView {
-
     // MARK: - Public
+    
     var width: CGFloat {
         return CGFloat(length) * ViewSizes.small.rawValue + CGFloat(length - 1) * Margins.large.rawValue
     }
     
     let shakeDuration: CFTimeInterval = 0.6
-    fileprivate var shakeCompletion: (() -> Void)?
+    private var shakeCompletion: (() -> Void)?
 
     init(style: PinViewStyle, length: Int) {
         self.style = style
@@ -69,8 +69,7 @@ class PinView: UIView {
     private var filled: [UIView]
     private let style: PinViewStyle
     private let length: Int
-    private let gradientView = MotionGradientView()
-
+    
     private func toRadian(value: Int) -> CGFloat {
         return CGFloat(Double(value) / 180.0 * .pi)
     }
@@ -82,8 +81,6 @@ class PinView: UIView {
     }
 
     private func addCircleContraints(_ circles: [UIView]) {
-        let padding: CGFloat = Margins.large.rawValue
-        let extraWidth: CGFloat = 0.0
         circles.enumerated().forEach { index, circle in
             addSubview(circle)
             let leadingConstraint: NSLayoutConstraint?
@@ -96,10 +93,10 @@ class PinView: UIView {
                                                        toItem: circles[index - 1],
                                                        attribute: .trailing,
                                                        multiplier: 1.0,
-                                                       constant: padding)
+                                                       constant: Margins.large.rawValue)
             }
             circle.constrain([
-                circle.constraint(.width, constant: ViewSizes.small.rawValue + extraWidth),
+                circle.constraint(.width, constant: ViewSizes.small.rawValue),
                 circle.constraint(.height, constant: ViewSizes.small.rawValue),
                 circle.constraint(.centerY, toView: self, constant: nil),
                 leadingConstraint ])
