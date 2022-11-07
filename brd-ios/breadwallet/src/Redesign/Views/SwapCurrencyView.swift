@@ -291,14 +291,6 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         
         decidePlaceholder()
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func configure(with config: SwapCurrencyConfiguration?) {
         super.configure(with: config)
         
