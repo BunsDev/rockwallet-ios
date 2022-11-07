@@ -175,11 +175,7 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
                         self.showBackButton()
                     }
                     
-                    guard self.pages.count == self.pageIndex + 1 else {
-                        self.continueButton.setType(type: .tertiary)
-                        return
-                    }
-                    self.continueButton.setType(type: .secondary)
+                    self.continueButton.setType(type: self.onLastPage ? .secondary : .tertiary)
                 }
             }
         }
