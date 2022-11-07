@@ -32,7 +32,7 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
         
         sectionRows = [
             Models.Section.order: [
-                OrderViewModel(title: "Rockwallet Order ID",
+                OrderViewModel(title: "RockWallet Order ID",
                                value: NSAttributedString(string: "13rXEZoh5NFj4q9aasdfkLp2..."),
                                isCopyable: true)
             ]

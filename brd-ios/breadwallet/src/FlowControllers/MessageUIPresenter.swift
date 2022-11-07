@@ -54,8 +54,8 @@ class MessageUIPresenter: NSObject {
         let emailView = MFMailComposeViewController()
         
         emailView.setToRecipients([C.iosEmail])
-        emailView.setSubject("Rockwallet Logs")
-        emailView.setMessageBody("Rockwallet Logs", isHTML: false)
+        emailView.setSubject("RockWallet Logs")
+        emailView.setMessageBody("RockWallet Logs", isHTML: false)
         
         for attachment in attachments {
             let filename = attachment.0
