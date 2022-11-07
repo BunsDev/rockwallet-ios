@@ -59,12 +59,6 @@ class FETimerView: FEView<TimerConfiguration, TimerViewModel> {
         stack.addArrangedSubview(iconView)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-    }
-    
     override func configure(with config: TimerConfiguration?) {
         guard let config = config else { return }
         super.configure(with: config)

@@ -294,13 +294,6 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
         setupClearMargins()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func configure(with config: VerificationConfiguration?) {
         guard let config = config else { return }
         

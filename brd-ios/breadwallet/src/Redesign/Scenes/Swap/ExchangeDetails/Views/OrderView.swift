@@ -80,8 +80,6 @@ class OrderView: FEView<OrderConfiguration, OrderViewModel> {
         super.layoutSubviews()
         
         bottomStack.configure(background: config?.contentBackground)
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
     }
     
     override func configure(with config: OrderConfiguration?) {

@@ -73,13 +73,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         return view
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func setupSubviews() {
         super.setupSubviews()
         

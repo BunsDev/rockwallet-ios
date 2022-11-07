@@ -202,10 +202,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay) {
+        tableView.beginUpdates()
+        
         if let cell = getRateAndTimerCell() {
             cell.setup { view in
-                view.configure(with: .init())
                 view.setup(with: responseDisplay.rate)
+                
                 view.completion = { [weak self] in
                     self?.interactor?.getExchangeRate(viewAction: .init())
                 }
@@ -216,17 +218,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         if let section = sections.firstIndex(of: Models.Sections.accountLimits),
            let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
-            
             cell.setup { view in
-                let model = responseDisplay.limits
-                view.setup(with: model)
+                view.setup(with: responseDisplay.limits)
             }
         }
         
-        UIView.transition(with: tableView, duration: Presets.Animation.duration, options: .transitionCrossDissolve) { [weak self] in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
-        }
+        tableView.endUpdates()
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {
