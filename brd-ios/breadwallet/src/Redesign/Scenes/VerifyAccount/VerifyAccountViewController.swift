@@ -38,7 +38,7 @@ class VerifyAccountViewController: BaseTableViewController<KYCCoordinator,
         }
         
         verifyButton.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
             make.edges.equalTo(verifyButton.snp.margins)
         }
         

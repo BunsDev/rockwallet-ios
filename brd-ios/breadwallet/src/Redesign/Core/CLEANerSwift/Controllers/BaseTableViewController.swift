@@ -269,7 +269,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
             view.setup(with: model)
             view.setupCustomMargins(vertical: .large, horizontal: .large)
             view.snp.makeConstraints { make in
-                make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+                make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
             }
             view.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }

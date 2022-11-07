@@ -57,12 +57,12 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
             button.setup(with: model)
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             button.snp.makeConstraints { make in
-                make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+                make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
             }
             buttonStack.addArrangedSubview(button)
         }
         let count = CGFloat(buttonStack.arrangedSubviews.count)
-        var height = ViewSizes.Common.largeButton.rawValue * count
+        var height = ViewSizes.Common.largeCommon.rawValue * count
         height += Margins.extraSmall.rawValue * (count - 1)
         
         buttonStack.snp.makeConstraints { make in

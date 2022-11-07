@@ -12,7 +12,7 @@ private extension C {
     static let statusRowHeight: CGFloat = 48.0
     static let compactContainerHeight: CGFloat = 300
     static let expandedContainerHeight: CGFloat = 408
-    static let detailsButtonHeight: CGFloat = 64.0
+    static let detailsButtonHeight: CGFloat = ViewSizes.Common.hugeCommon.rawValue
 }
 
 protocol TxDetaiViewControllerDelegate: AnyObject {
