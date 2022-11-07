@@ -3483,10 +3483,10 @@
 		75A2A7881DA5934300A983D8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = FE;
+				CLASSPREFIX = RW;
 				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1400;
-				ORGANIZATIONNAME = "Fabriik Exchange, LLC";
+				ORGANIZATIONNAME = "RockWallet, LLC";
 				TargetAttributes = {
 					22A9A9951DF63426000F0016 = {
 						CreatedOnToolsVersion = 8.1;

@@ -1,6 +1,5 @@
-//
-//  EQNetworking
-//  Copyright © 2022 Equaleyes Ltd. All rights reserved.
+// 
+//  Copyright © 2022 RockWallet, LLC. All rights reserved.
 //
 
 import Foundation
