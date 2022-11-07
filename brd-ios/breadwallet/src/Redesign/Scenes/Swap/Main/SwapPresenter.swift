@@ -72,8 +72,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                       showTimer: true)
         
         viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: exchangeRateViewModel,
-                                                                   accountLimits: .text(limitText),
-                                                                   swapCard: setupMainSwapViewModel(from: from, to: to)))
+                                                                   accountLimits: .text(limitText)))
     }
     
     func presentAmount(actionResponse: SwapModels.Amounts.ActionResponse) {
@@ -221,8 +220,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             switch error.errorMessage {
             case SwapErrors.quoteFail.errorMessage:
                 viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: .init(),
-                                                                           accountLimits: nil,
-                                                                           swapCard: nil))
+                                                                           accountLimits: nil))
                 
             default:
                 break

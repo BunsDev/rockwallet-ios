@@ -208,13 +208,18 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         confirmButton.wrappedView.isEnabled = responseDisplay.continueEnabled
         
+        tableView.beginUpdates()
+        
         guard let section = sections.firstIndex(of: Models.Sections.swapCard),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
         cell.setup { view in
-            let model = responseDisplay.amounts
-            view.setup(with: model)
+            view.setToggleSwitchPlacesButtonState(true)
+            
+            view.setup(with: responseDisplay.amounts)
         }
+        
+        tableView.endUpdates()
     }
     
     func displayExchangeRate(responseDisplay: SwapModels.Rate.ResponseDisplay) {
@@ -222,7 +227,6 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         if let cell = getRateAndTimerCell() {
             cell.setup { view in
-                view.configure(with: .init())
                 view.setup(with: responseDisplay.rateAndTimer)
                 
                 view.completion = { [weak self] in
@@ -235,15 +239,6 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
            let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
             cell.setup { view in
                 view.setup(with: responseDisplay.accountLimits)
-            }
-        }
-        
-        if let section = sections.firstIndex(of: Models.Sections.swapCard),
-           let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> {
-            cell.setup { view in
-                view.setup(with: responseDisplay.swapCard)
-                
-                view.setToggleSwitchPlacesButtonState(true)
             }
         }
         

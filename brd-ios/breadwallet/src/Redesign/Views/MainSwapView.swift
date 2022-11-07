@@ -182,10 +182,6 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         didTapToAssetsSelection?()
     }
     
-    func setToggleSwitchPlacesButtonState(_ value: Bool) {
-        swapButton.isEnabled = value
-    }
-    
     @objc private func switchPlacesButtonTapped(_ sender: UIButton?) {
         if !baseSwapCurrencyView.isFeeAndAmountsStackViewHidden || !termSwapCurrencyView.isFeeAndAmountsStackViewHidden {
             UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
@@ -200,7 +196,15 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
             animateSwitchPlaces()
         }
     }
-
+    
+    func setToggleSwitchPlacesButtonState(_ value: Bool) {
+        UIView.transition(with: swapButton,
+                          duration: Presets.Animation.duration) { [weak self] in
+            self?.swapButton.alpha = value ? 1.0 : 0.5
+            self?.swapButton.isUserInteractionEnabled = value
+        }
+    }
+    
     func animateSwitchPlaces() {
         setToggleSwitchPlacesButtonState(false)
         
@@ -229,7 +233,6 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
             self?.termSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
         } completion: { [weak self] _ in
             self?.didFinish?(true)
-            self?.setToggleSwitchPlacesButtonState(true)
         }
     }
 }

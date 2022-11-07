@@ -206,8 +206,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         if let cell = getRateAndTimerCell() {
             cell.setup { view in
-                view.configure(with: .init())
                 view.setup(with: responseDisplay.rate)
+                
                 view.completion = { [weak self] in
                     self?.interactor?.getExchangeRate(viewAction: .init())
                 }
@@ -218,10 +218,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         if let section = sections.firstIndex(of: Models.Sections.accountLimits),
            let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
-            
             cell.setup { view in
-                let model = responseDisplay.limits
-                view.setup(with: model)
+                view.setup(with: responseDisplay.limits)
             }
         }
         
