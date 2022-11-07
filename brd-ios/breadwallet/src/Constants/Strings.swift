@@ -707,6 +707,10 @@ internal enum L10n {
       return L10n.tr("Localizable", "ConfirmPaperPhrase.word", String(describing: p1), fallback: "Word #%1$@")
     }
   }
+  internal enum ConfirmRecoveryPhrase {
+    /// Confirm Recovery Phrase
+    internal static let title = L10n.tr("Localizable", "ConfirmRecoveryPhrase.Title", fallback: "Confirm Recovery Phrase")
+  }
   internal enum Confirmation {
     /// Amount to Send: ($1.00)
     internal static let amountLabel = L10n.tr("Localizable", "Confirmation.amountLabel", fallback: "Amount to Send:")
@@ -1023,13 +1027,13 @@ internal enum L10n {
       return L10n.tr("Localizable", "Import.confirm", String(describing: p1), String(describing: p2), fallback: "Send %1$@ from this private key into your wallet? The bitcoin network will receive a fee of %2$@.")
     }
     /// [Redeem] the funds stored on this private key.
-    internal static let importButton = L10n.tr("Localizable", "Import.importButton", fallback: "Import")
+    internal static let importButton = L10n.tr("Localizable", "Import.importButton", fallback: "Sweep")
     /// Importing wallet progress view label
-    internal static let importing = L10n.tr("Localizable", "Import.importing", fallback: "Importing Wallet")
+    internal static let importing = L10n.tr("Localizable", "Import.importing", fallback: "Sweeping a wallet")
     /// Caption for graphics
     internal static let leftCaption = L10n.tr("Localizable", "Import.leftCaption", fallback: "Wallet to be imported")
     /// Import wallet intro screen message
-    internal static let message = L10n.tr("Localizable", "Import.message", fallback: "Importing a wallet transfers all the money from your other wallet into your RockWallet wallet using a single transaction.")
+    internal static let message = L10n.tr("Localizable", "Import.message", fallback: "Sweeping a wallet transfers all the money from your other wallet into your RockWallet wallet using a single transaction.")
     /// Enter password alert view title
     internal static let password = L10n.tr("Localizable", "Import.password", fallback: "This private key is password protected.")
     /// password textfield placeholder
@@ -1043,11 +1047,11 @@ internal enum L10n {
     /// Successfully imported wallet message body
     internal static let successBody = L10n.tr("Localizable", "Import.SuccessBody", fallback: "Successfully imported wallet.")
     /// Import Wallet screen title
-    internal static let title = L10n.tr("Localizable", "Import.title", fallback: "Import Wallet")
+    internal static let title = L10n.tr("Localizable", "Import.title", fallback: "Sweep Wallet")
     /// Unlocking Private key activity view message.
     internal static let unlockingActivity = L10n.tr("Localizable", "Import.unlockingActivity", fallback: "Unlocking Key")
     /// Import wallet intro warning message
-    internal static let warning = L10n.tr("Localizable", "Import.warning", fallback: "Importing a wallet does not include transaction history or other details.")
+    internal static let warning = L10n.tr("Localizable", "Import.warning", fallback: "Sweeping a wallett does not include transaction history or other details.")
     /// Wrong password alert message
     internal static let wrongPassword = L10n.tr("Localizable", "Import.wrongPassword", fallback: "Wrong password, please try again.")
     internal enum Error {
