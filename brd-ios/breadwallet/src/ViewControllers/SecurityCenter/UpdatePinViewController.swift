@@ -225,7 +225,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
     
     func setupBackButton() {
-        let back = UIBarButtonItem(image: UIImage(named: "BackArrowWhite"),
+        let back = UIBarButtonItem(image: UIImage(named: "back"),
                                    style: .plain,
                                    target: self,
                                    action: #selector(backButtonPressed))
