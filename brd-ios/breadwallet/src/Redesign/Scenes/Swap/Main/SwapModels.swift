@@ -100,7 +100,6 @@ enum SwapModels {
         struct ResponseDisplay {
             var rateAndTimer: ExchangeRateViewModel
             var accountLimits: LabelViewModel?
-            var swapCard: MainSwapViewModel?
         }
     }
     
