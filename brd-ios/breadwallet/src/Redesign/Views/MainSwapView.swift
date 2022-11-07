@@ -137,13 +137,6 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func configure(with config: MainSwapConfiguration?) {
         super.configure(with: config)
         

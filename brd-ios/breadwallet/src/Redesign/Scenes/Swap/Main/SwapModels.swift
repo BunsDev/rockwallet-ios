@@ -98,8 +98,9 @@ enum SwapModels {
         }
         
         struct ResponseDisplay {
-            var rate: ExchangeRateViewModel
-            var limits: LabelViewModel?
+            var rateAndTimer: ExchangeRateViewModel
+            var accountLimits: LabelViewModel?
+            var swapCard: MainSwapViewModel?
         }
     }
     

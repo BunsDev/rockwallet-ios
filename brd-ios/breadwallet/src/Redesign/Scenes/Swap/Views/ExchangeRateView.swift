@@ -85,12 +85,6 @@ class ExchangeRateView: FEView<ExchangeRateConfiguration, ExchangeRateViewModel>
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-    }
-    
     override func configure(with config: ExchangeRateConfiguration?) {
         guard let config = config else { return }
         super.configure(with: config)

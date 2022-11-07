@@ -190,7 +190,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         switch error {
         case .noQuote:
-            displayExchangeRate(responseDisplay: .init(rate: .init()))
+            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()))
             
         case .failed:
             coordinator?.showFailure()
@@ -218,10 +218,12 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     }
     
     func displayExchangeRate(responseDisplay: SwapModels.Rate.ResponseDisplay) {
+        tableView.beginUpdates()
+        
         if let cell = getRateAndTimerCell() {
             cell.setup { view in
                 view.configure(with: .init())
-                view.setup(with: responseDisplay.rate)
+                view.setup(with: responseDisplay.rateAndTimer)
                 
                 view.completion = { [weak self] in
                     self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
@@ -232,22 +234,20 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         if let section = sections.firstIndex(of: Models.Sections.accountLimits),
            let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
             cell.setup { view in
-                let model = responseDisplay.limits
-                view.setup(with: model)
+                view.setup(with: responseDisplay.accountLimits)
             }
         }
         
         if let section = sections.firstIndex(of: Models.Sections.swapCard),
            let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> {
             cell.setup { view in
+                view.setup(with: responseDisplay.swapCard)
+                
                 view.setToggleSwitchPlacesButtonState(true)
             }
         }
         
-        UIView.transition(with: tableView, duration: Presets.Animation.duration, options: .transitionCrossDissolve) { [weak self] in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
-        }
+        tableView.endUpdates()
     }
     
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {

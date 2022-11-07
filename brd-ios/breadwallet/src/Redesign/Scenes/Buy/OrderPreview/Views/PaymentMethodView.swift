@@ -76,13 +76,6 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     
     var didTapCvvInfo: (() -> Void)?
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func setupSubviews() {
         super.setupSubviews()
         

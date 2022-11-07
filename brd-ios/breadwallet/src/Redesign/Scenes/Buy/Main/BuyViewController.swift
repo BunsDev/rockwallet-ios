@@ -202,6 +202,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay) {
+        tableView.beginUpdates()
+        
         if let cell = getRateAndTimerCell() {
             cell.setup { view in
                 view.configure(with: .init())
@@ -223,10 +225,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             }
         }
         
-        UIView.transition(with: tableView, duration: Presets.Animation.duration, options: .transitionCrossDissolve) { [weak self] in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
-        }
+        tableView.endUpdates()
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {

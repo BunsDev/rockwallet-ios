@@ -198,13 +198,6 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func configure(with config: BuyOrderConfiguration?) {
         super.configure(with: config)
         
