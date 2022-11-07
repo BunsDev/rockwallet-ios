@@ -31,7 +31,7 @@ struct RecoveryKeyIntroPage {
          subTitle: String,
          imageName: String,
          stepHint: String = "",
-         continueButtonText: String = L10n.Button.continueAction,
+         continueButtonText: String = L10n.Onboarding.next,
          isLandingPage: Bool = true) {
         
         self.title = title
