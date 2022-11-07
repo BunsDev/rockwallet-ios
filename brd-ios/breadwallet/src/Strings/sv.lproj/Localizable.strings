@@ -1,11 +1,11 @@
 /* App name */
-"About.appName.android" = "Rockwallet";
+"About.appName.android" = "RockWallet";
 
 /* About screen blog label */
 "About.blog" = "Blogg";
 
 /* About screen footer */
-"About.footer" = "Skapad av det lokala teamet för Rockwallet. Version %1$@ Build %2$@";
+"About.footer" = "Skapad av det lokala teamet för RockWallet. Version %1$@ Build %2$@";
 
 /* Privay Policy button label */
 "About.privacy" = "Sekretesspolicy";
@@ -23,7 +23,7 @@
 "About.twitter" = "Twitter";
 
 /* About screen wallet ID label */
-"About.walletID" = "Belönings-ID för Rockwallet";
+"About.walletID" = "Belönings-ID för RockWallet";
 
 /* Close modal button accessibility label */
 "AccessibilityLabels.close" = "Stäng";
@@ -65,7 +65,7 @@
 "AccountCreation.title" = "Bekräfta konto skapande";
 
 /* Default wallet name */
-"AccountHeader.defaultWalletName" = "Mitt Rockwallet";
+"AccountHeader.defaultWalletName" = "Mitt RockWallet";
 
 /* Third party keyboard warning */
 "Alert.customKeyboard.android" = "Det verkar som att du använder ett tangentbord från tredje part, vilket kan registrera det du skriver och stjäla din kryptonyckel. Byt till Androids standardtangentbord för extra säkerhet.";
@@ -80,13 +80,13 @@
 "Alert.keystore.generic.android" = "Det har uppstått ett problem med KeyStore till Android OS. Kontakta support@breadwallet.com";
 
 /* KeyStore error, keys are invalidated */
-"Alert.keystore.invalidated.android" = "Dina krypterade Rockwallet-uppgifter har nyligen ogiltigförklarats på grund av att Androids skärmlås inaktiverades.";
+"Alert.keystore.invalidated.android" = "Dina krypterade RockWallet-uppgifter har nyligen ogiltigförklarats på grund av att Androids skärmlås inaktiverades.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must uninstall. */
-"Alert.keystore.invalidated.uninstall.android" = "Vi kan inte fortsätta eftersom dina skärmslåsinställningar har ändrats (t.ex. lösenordet inaktiverades, fingeravtryck ändrades). Av säkerhetsskäl har Android låst din nyckelförvaring. Därför måste dina Rockwallet-appdata tas bort genom att avinstallera appen.\n\nOroa dig inte, dina pengar är fortfarande säkra! Installera om appen och återställ din plånbok med din pappersnyckel.";
+"Alert.keystore.invalidated.uninstall.android" = "Vi kan inte fortsätta eftersom dina skärmslåsinställningar har ändrats (t.ex. lösenordet inaktiverades, fingeravtryck ändrades). Av säkerhetsskäl har Android låst din nyckelförvaring. Därför måste dina RockWallet-appdata tas bort genom att avinstallera appen.\n\nOroa dig inte, dina pengar är fortfarande säkra! Installera om appen och återställ din plånbok med din pappersnyckel.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must wipe their app data. */
-"Alert.keystore.invalidated.wipe.android" = "Vi kan inte fortsätta eftersom dina skärmslåsinställningar har ändrats (t.ex. lösenordet inaktiverades, fingeravtryck ändrades). Av säkerhetsskäl har Android låst din nyckelförvaring. Därför måste dina Rockwallet-appdata tas bort.\n\nOroa dig inte, dina pengar är fortfarande säkra! Återställ din plånbok med pappersnyckeln.";
+"Alert.keystore.invalidated.wipe.android" = "Vi kan inte fortsätta eftersom dina skärmslåsinställningar har ändrats (t.ex. lösenordet inaktiverades, fingeravtryck ändrades). Av säkerhetsskäl har Android låst din nyckelförvaring. Därför måste dina RockWallet-appdata tas bort.\n\nOroa dig inte, dina pengar är fortfarande säkra! Återställ din plånbok med pappersnyckeln.";
 
 /* Keystore error title */
 "Alert.keystore.title.android" = "KeyStore-fel för Android";
@@ -131,13 +131,13 @@
 "Alerts.touchIdSucceeded.android" = "Fingeravtryck bekräftat";
 
 /* Tell the user where they can enable permissions to access device storage. */
-"Android.allowFileSystemAccess" = "Vi ber dig att medge lagringstillåtelse i dina enhetsinställningar: \"Inställningar\" > \"Appar\" > \"Rockwallet\" > \"Tillåtelser\".";
+"Android.allowFileSystemAccess" = "Vi ber dig att medge lagringstillåtelse i dina enhetsinställningar: \"Inställningar\" > \"Appar\" > \"RockWallet\" > \"Tillåtelser\".";
 
 /* The "home" screen is the name of the top level menu for the app. */
 "Android.BCH.welcome.message" = "Valfri BCH i din plånbok kan nås via hemskärmen.";
 
 /* Warning about using apps that can alter the screen */
-"Android.screenAlteringMessage" = "Rockwallet fungerar inte korrekt om inte skärmskiftande appar (såsom Twilight) är inaktiverade.";
+"Android.screenAlteringMessage" = "RockWallet fungerar inte korrekt om inte skärmskiftande appar (såsom Twilight) är inaktiverade.";
 
 /* An app that alters the screen ("screen-altering app") has been detected. */
 "Android.screenAlteringTitle" = "Skärmskiftande app upptäckt";
@@ -484,7 +484,7 @@
 "ErrorMessages.ethBalanceLow" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
 
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
-"ErrorMessages.loopingLockScreen.android" = "Rockwallet kan inte verifieras på grund av en bugg i din version av Android. [Klicka här för mer information.]";
+"ErrorMessages.loopingLockScreen.android" = "RockWallet kan inte verifieras på grund av en bugg i din version av Android. [Klicka här för mer information.]";
 
 /* Messaging unavailable alert title */
 "ErrorMessages.messagingUnavailableMessage" = "Denna enhet är inte konfigurerad för att skicka meddelanden.";
@@ -522,16 +522,16 @@
 "FaceIDSettings.customizeText" = "Du kan anpassa din utgiftsgräns för Face ID från %1$@.";
 
 /* Text describing the purpose of the Face ID settings in the BRD app. */
-"FaceIDSettings.explanatoryText" = "Använd Face ID för att låsa upp din Rockwallet-app och skicka pengar.";
+"FaceIDSettings.explanatoryText" = "Använd Face ID för att låsa upp din RockWallet-app och skicka pengar.";
 
 /* Face Id screen label */
-"FaceIDSettings.label" = "Använd ditt ansikte för att låsa upp din Rockwallet och skicka pengar upp till en satt gräns.";
+"FaceIDSettings.label" = "Använd ditt ansikte för att låsa upp din RockWallet och skicka pengar upp till en satt gräns.";
 
 /* Title of the screen for setting the Face ID Spending Limit */
 "FaceIDSettings.linkText" = "Sida för utgiftsgräns för Face ID";
 
 /* Setting to turn on Face ID for BRD */
-"FaceIDSettings.switchLabel" = "Aktivera Face ID för Rockwallet";
+"FaceIDSettings.switchLabel" = "Aktivera Face ID för RockWallet";
 
 /* Face ID settings view title */
 "FaceIDSettings.title" = "Face ID";
@@ -546,7 +546,7 @@
 "FaceIDSettings.unavailableAlertTitle" = "Face ID har inte satts upp";
 
 /* Text label for a toggle that enables Face ID for unlocking the BRD app. */
-"FaceIDSettings.unlockTitleText" = "Aktivera Face ID för att låsa upp Rockwallet";
+"FaceIDSettings.unlockTitleText" = "Aktivera Face ID för att låsa upp RockWallet";
 
 /* Face Id spending limit screen title */
 "FaceIDSpendingLimit.title" = "Utgiftsgräns för Face ID";
@@ -587,7 +587,7 @@
 "FileChooser.selectImageSource.android" = "Välj bildkälla";
 
 /* Fingerprint authentication settings screen description */
-"FingerprintSettings.description" = "Använd ditt fingeravtryck för att låsa upp din Rockwallet-app och sänd transaktioner.";
+"FingerprintSettings.description" = "Använd ditt fingeravtryck för att låsa upp din RockWallet-app och sänd transaktioner.";
 
 /* Switch label to enable fingerprint authentication to send money */
 "FingerprintSettings.sendMoney" = "Använd fingeravtryck för att sänd pengar";
@@ -596,7 +596,7 @@
 "FingerprintSettings.title" = "Fingeravtryck";
 
 /* Switch label to enable fingerprint authentication to unlock BRD app */
-"FingerprintSettings.unlockApp" = "Använd fingeravtryck för att låsa upp Rockwallet";
+"FingerprintSettings.unlockApp" = "Använd fingeravtryck för att låsa upp RockWallet";
 
 /* Activity button on the home screen toolbar */
 "HomeScreen.activity" = "Activity";
@@ -668,7 +668,7 @@
 "Import.leftCaption" = "Privat Nyckel";
 
 /* Import wallet intro screen message */
-"Import.message" = "Privata nycklar trycks ofta på papper som en QR-kod och används för att lagra tillgångar offline. Du löser in en privat nyckel för att överföra alla pengar den kontrollerar in i din Rockwallet med en enda transaktion.";
+"Import.message" = "Privata nycklar trycks ofta på papper som en QR-kod och används för att lagra tillgångar offline. Du löser in en privat nyckel för att överföra alla pengar den kontrollerar in i din RockWallet med en enda transaktion.";
 
 /* Enter password alert view title */
 "Import.password" = "Denna privata nyckel är lösenordsskyddad.";
@@ -677,7 +677,7 @@
 "Import.passwordPlaceholder" = "lösenord";
 
 /* Caption for graphics */
-"Import.rightCaption" = "Din Rockwallet-plånbok";
+"Import.rightCaption" = "Din RockWallet-plånbok";
 
 /* Scan Private key button label */
 "Import.scan" = "Läs av privat nyckel";
@@ -707,10 +707,10 @@
 "JailbreakWarnings.ignore" = "Ignorera";
 
 /* Jailbreak warning message */
-"JailbreakWarnings.messageWithBalance" = "ENHETENS SÄKERHET ÄR ÄVENTYRAD\nEn \"intrångs\"-app kan få tillgång till Rockwallets nyckeldata och stjäla dina bitcoin! Töm denna plånbok direkt och återställ den på en säker enhet.";
+"JailbreakWarnings.messageWithBalance" = "ENHETENS SÄKERHET ÄR ÄVENTYRAD\nEn \"intrångs\"-app kan få tillgång till RockWallets nyckeldata och stjäla dina bitcoin! Töm denna plånbok direkt och återställ den på en säker enhet.";
 
 /* Jailbreak warning message */
-"JailbreakWarnings.messageWithoutBalance" = "ENHETENS SÄKERHET ÄR ÄVENTYRAD\nEn \"intrångs\"-app kan få tillgång till Rockwallets nyckeldata och stjäla dina bitcoin! Använd Rockwallet endast på en säker enhet.";
+"JailbreakWarnings.messageWithoutBalance" = "ENHETENS SÄKERHET ÄR ÄVENTYRAD\nEn \"intrångs\"-app kan få tillgång till RockWallets nyckeldata och stjäla dina bitcoin! Använd RockWallet endast på en säker enhet.";
 
 /* Jailbreak warning title */
 "JailbreakWarnings.title" = "VARNING";
@@ -743,7 +743,7 @@
 "LocationPlugin.disabled" = "Platstjänster är inaktiverade.";
 
 /* No permissions for location services */
-"LocationPlugin.notAuthorized" = "Rockwallet har inte rätt att utnyttja platstjänster";
+"LocationPlugin.notAuthorized" = "RockWallet har inte rätt att utnyttja platstjänster";
 
 /* Wallet creation date prefix */
 "ManageWallet.creationDatePrefix" = "Du skapade din plånbok på %1$@";
@@ -877,7 +877,7 @@
 "OnboardingPageOne.title" = "Välkommen till din nya globala plånbok!";
 
 /* Onboarding screen Page 3 subtitle */
-"OnboardingPageThree.subtitle" = "Investera och bredda dig med Rockwallet, lätt och tryggt.";
+"OnboardingPageThree.subtitle" = "Investera och bredda dig med RockWallet, lätt och tryggt.";
 
 /* Onboarding screen Page 3 title */
 "OnboardingPageThree.title" = "Köp och handla med bitcoin, jetonger och andra digitala valutor.";
@@ -886,7 +886,7 @@
 "OnboardingPageTwo.subtitle" = "Vi har skyddade tillgångar värda över 6 miljarder  USD.";
 
 /* Onboarding screen Page 2 title */
-"OnboardingPageTwo.title" = "Bli en av miljontals människor runt om i världen som litar på Rockwallet.";
+"OnboardingPageTwo.title" = "Bli en av miljontals människor runt om i världen som litar på RockWallet.";
 
 /* Eg. Send 1.0Eth to purchase CCC */
 "PaymentConfirmation.amountText" = "Skicka %1$@ för att köpa %2$@";
@@ -972,9 +972,9 @@
 
 "Prompts.RateApp.enjoyingBrd" = "Njuter BRD?";
 
-"Prompts.RateApp.enjoyingRockwallet" = "Njuter Rockwallet?";
+"Prompts.RateApp.enjoyingRockWallet" = "Njuter RockWallet?";
 
-"Prompts.RateApp.googlePlayReview" = "Din recension hjälper till att växa Rockwallet-gemenskapen.";
+"Prompts.RateApp.googlePlayReview" = "Din recension hjälper till att växa RockWallet-gemenskapen.";
 
 "Prompts.RateApp.noThanks" = "Nej tack";
 
@@ -987,7 +987,7 @@
 "Prompts.RecommendRescan.title" = "Transaktionen avslogs";
 
 /* Share data prompt body */
-"Prompts.ShareData.body" = "Hjälp till att förbättra Rockwallet genom att dela dina anonyma data med oss";
+"Prompts.ShareData.body" = "Hjälp till att förbättra RockWallet genom att dela dina anonyma data med oss";
 
 /* Share data prompt title */
 "Prompts.ShareData.title" = "Dela anonyma data";
@@ -1008,7 +1008,7 @@
 "Prompts.TouchId.usePin.android" = "PIN-kod";
 
 /* Upgrade PIN prompt body. */
-"Prompts.UpgradePin.body" = "Rockwallet har uppgraderat till att använda 6-siffrig PIN-kod. Klicka här för att uppgradera.";
+"Prompts.UpgradePin.body" = "RockWallet har uppgraderat till att använda 6-siffrig PIN-kod. Klicka här för att uppgradera.";
 
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Uppgradera PIN-kod";
@@ -1020,13 +1020,13 @@
 "PushNotifications.disabled" = "Meddelanden avaktiverade";
 
 /* Body text when push notifications are disabled. */
-"PushNotifications.disabledBody" = "Slå på meddelanden för att få specialerbjudanden och uppdateringar från Rockwallet.";
+"PushNotifications.disabledBody" = "Slå på meddelanden för att få specialerbjudanden och uppdateringar från RockWallet.";
 
 /* Body text when push notifications are enabled. */
-"PushNotifications.enabledBody" = "Du får specialerbjudanden och uppdateringar från Rockwallet.";
+"PushNotifications.enabledBody" = "Du får specialerbjudanden och uppdateringar från RockWallet.";
 
 /* Instructions to enable push notifications for BRD in the phone's system settings. */
-"PushNotifications.enableInstructions" = "Det verkar som att meddelanden är avstängda. Gå till Inställningar för att aktivera meddelanden från Rockwallet.";
+"PushNotifications.enableInstructions" = "Det verkar som att meddelanden är avstängda. Gå till Inställningar för att aktivera meddelanden från RockWallet.";
 
 /* Push notifications toggle switch label */
 "PushNotifications.label" = "Ta emot push-meddelanden";
@@ -1050,10 +1050,10 @@
 "RateAppPrompt.Button.Dismiss.Android" = "Nej tack";
 
 /* Google play review prompt, dismiss button */
-"RateAppPrompt.Button.RateApp.Android" = "Betygsätt Rockwallet";
+"RateAppPrompt.Button.RateApp.Android" = "Betygsätt RockWallet";
 
 /* Google play review prompt title */
-"RateAppPrompt.Title.Android" = "Betygsätt Rockwallet";
+"RateAppPrompt.Title.Android" = "Betygsätt RockWallet";
 
 /* Address copied message. */
 "Receive.copied" = "Kopierad till urklipp.";
@@ -1086,7 +1086,7 @@
 "RecoverWallet.instruction" = "Ange ordnyckel";
 
 /* Recover wallet intro */
-"RecoverWallet.intro" = "Återställ Rockwallet med din ordnyckel.";
+"RecoverWallet.intro" = "Återställ RockWallet med din ordnyckel.";
 
 /* Invalid paper key message */
 "RecoverWallet.invalid" = "Den ordnyckel du angav är ogiltig. Dubbelkolla varje ord och försök igen.";
@@ -1179,13 +1179,13 @@
 "RecoveryKeyFlow.securityAssurance" = "Köp och handla med vetskapen att dina tillgångar skyddas av den bästa säkerheten och integriteten i branschen";
 
 /* Recommends that the user stores the recovery key in a secure location */
-"RecoveryKeyFlow.storeSecurelyRecommendation" = "Förvara din nyckel på en säker plats. Detta är det enda sättet att återställa din plånbok. Rockwallet tillhandahåller inte någon kopia.";
+"RecoveryKeyFlow.storeSecurelyRecommendation" = "Förvara din nyckel på en säker plats. Detta är det enda sättet att återställa din plånbok. RockWallet tillhandahåller inte någon kopia.";
 
 /* Title for the success page after the recovery phrase has been set up */
 "RecoveryKeyFlow.successHeading" = "Gratulerar! Du är nu klar med att ställa in din återställningsnyckel.";
 
 /* Subtitle for the success page after the recovery key has been set up */
-"RecoveryKeyFlow.successSubheading" = "Du är nu redo att börja sätta in, handla med och köpa krypto från din Rockwallet-plånbok";
+"RecoveryKeyFlow.successSubheading" = "Du är nu redo att börja sätta in, handla med och köpa krypto från din RockWallet-plånbok";
 
 /* Title displayed to the user on the intro screen when unlinking a wallet */
 "RecoveryKeyFlow.unlinkWallet" = "Ta bort länken till din plånbok från denna enhet.";
@@ -1236,7 +1236,7 @@
 "ReScan.body1" = "20-45 minuter";
 
 /* Syncing explanation */
-"ReScan.body2" = "Om en transaktion visar sig som klar i bitcoins nätverk men inte i Rockwallet.";
+"ReScan.body2" = "Om en transaktion visar sig som klar i bitcoins nätverk men inte i RockWallet.";
 
 /* Syncing explanation */
 "ReScan.body3" = "Du får gång på gång ett meddelande som säger att din transaktion avvisades.";
@@ -1260,7 +1260,7 @@
 "RewardsView.expandedBody" = "Se hur du kan spara in på handelsavgifter och frigöra framtida belöningar.";
 
 /* Rewards view expanded title. */
-"RewardsView.expandedTitle" = "Introduktion av Rockwallet Rewards.";
+"RewardsView.expandedTitle" = "Introduktion av RockWallet Rewards.";
 
 /* Rewards view title */
 "RewardsView.normalTitle" = "Belöningar";
@@ -1302,13 +1302,13 @@
 "SecurityCenter.paperKeyTitle.android" = "Ordnyckel";
 
 /* PIN button description */
-"SecurityCenter.pinDescription" = "Skyddar ditt Rockwallet från obehöriga användare.";
+"SecurityCenter.pinDescription" = "Skyddar ditt RockWallet från obehöriga användare.";
 
 /* PIN button title */
 "SecurityCenter.pinTitle" = "6-siffrig PIN-kod";
 
 /* Touch ID button description */
-"SecurityCenter.touchIdDescription" = "Lås enkelt upp ditt Rockwallet och skicka pengar upp till en inställd gräns.";
+"SecurityCenter.touchIdDescription" = "Lås enkelt upp ditt RockWallet och skicka pengar upp till en inställd gräns.";
 
 /* Touch ID button title */
 "SecurityCenter.touchIdTitle" = "Touch ID";
@@ -1343,16 +1343,16 @@
 "Send.balanceString" = "Saldo:";
 
 /* Instructions how to allow the camera access for the app */
-"Send.cameraUnavailabeMessage.android" = "Tillåt kameraåtkomst under Inställningar > Appar > Rockwallet > Behörigheter";
+"Send.cameraUnavailabeMessage.android" = "Tillåt kameraåtkomst under Inställningar > Appar > RockWallet > Behörigheter";
 
 /* Permission required to access camera */
-"Send.cameraUnavailabeTitle.android" = "Rockwallet har inte åtkomst till kameran";
+"Send.cameraUnavailabeTitle.android" = "RockWallet har inte åtkomst till kameran";
 
 /* Camera not allowed message */
 "Send.cameraunavailableMessage" = "Gå till Inställningar för att ge tillgång till kameran.";
 
 /* Camera not allowed alert title */
-"Send.cameraUnavailableTitle" = "Rockwallet har inte tillgång till kameran";
+"Send.cameraUnavailableTitle" = "RockWallet har inte tillgång till kameran";
 
 /* Warning when sending to self. */
 "Send.containsAddress" = "Destinationen är din egen adress. Du kan inte skicka till dig själv.";
@@ -1525,7 +1525,7 @@
 "Settings.EnableSegwit" = "Aktivera Segwit";
 
 /* Are you enjoying bread alert message body */
-"Settings.enjoying" = "Gillar du Rockwallet?";
+"Settings.enjoying" = "Gillar du RockWallet?";
 
 /* Export transaction history menu item */
 "Settings.exportTransfers" = "Exportera transaktionshistorik till CSV";
@@ -1594,7 +1594,7 @@
 "Settings.wipe.android" = "Ta bort länken till din plånbok från denna enhet.";
 
 /* Share data view body */
-"ShareData.body" = "Hjälp till att förbättra Rockwallet genom att dela dina anonyma uppgifter med oss. Detta inbegriper inga ekonomiska uppgifter. Vi respekterar din ekonomiska sekretess.";
+"ShareData.body" = "Hjälp till att förbättra RockWallet genom att dela dina anonyma uppgifter med oss. Detta inbegriper inga ekonomiska uppgifter. Vi respekterar din ekonomiska sekretess.";
 
 /* Share data header */
 "ShareData.header" = "Dela uppgifter?";
@@ -1606,7 +1606,7 @@
 
 "ShareGift.footerMessage1" = "En nätavgift dras av från summan när den begärs.\n Verkligt värde beror på aktuellt pris på bitcoin.";
 
-"ShareGift.footerMessage2" = "Ladda ner Rockwallet-appen för iPhone eller Android.\n För mer information besök rockwallet.com/gift";
+"ShareGift.footerMessage2" = "Ladda ner RockWallet-appen för iPhone eller Android.\n För mer information besök rockwallet.com/gift";
 
 "ShareGift.tagLine" = "Någon gav dig bitcoin!";
 
@@ -1678,10 +1678,10 @@
 "StartPaperPhrase.againButtonTitle" = "Skriv ner ordnyckel på nytt";
 
 /* Paper key explanation text. */
-"StartPaperPhrase.body" = "Din ordnyckel  är enda sättet att återställ Rockwallet om du förlorat din telefon, blivit bestulen på den eller har uppgraderat den.\n\nVi visar dig en lista över ord som du kan skriva ner på ett papper och gömma undan.";
+"StartPaperPhrase.body" = "Din ordnyckel  är enda sättet att återställ RockWallet om du förlorat din telefon, blivit bestulen på den eller har uppgraderat den.\n\nVi visar dig en lista över ord som du kan skriva ner på ett papper och gömma undan.";
 
 /* Paper key explanation text (Android-version) */
-"StartPaperPhrase.Body.Android" = "Det är enbart med din skrivna nyckel du kan återställa Rockwallet om din telefon försvinner, går sönder eller uppgraderas. \n\nDen skrivna nyckeln behövs också om du ändrar säkerhetsinställningarna på din enhet. \n\nVi visar dig en lista med ord som du ska nedteckna på ett papper och förvara säkert.";
+"StartPaperPhrase.Body.Android" = "Det är enbart med din skrivna nyckel du kan återställa RockWallet om din telefon försvinner, går sönder eller uppgraderas. \n\nDen skrivna nyckeln behövs också om du ändrar säkerhetsinställningarna på din enhet. \n\nVi visar dig en lista med ord som du ska nedteckna på ett papper och förvara säkert.";
 
 /* button label */
 "StartPaperPhrase.buttonTitle" = "Skriv ner ordnyckel";
@@ -1774,10 +1774,10 @@
 "TouchIdSettings.disabledWarning.title.android" = "Fingeravtrycksautentisering har inte aktiverats";
 
 /* Text that describes the purpose of the Touch ID settings in the BRD app. */
-"TouchIdSettings.explanatoryText" = "Använd Touch ID för att låsa upp din Rockwallet-app och skicka pengar.";
+"TouchIdSettings.explanatoryText" = "Använd Touch ID för att låsa upp din RockWallet-app och skicka pengar.";
 
 /* Touch Id screen label */
-"TouchIdSettings.label" = "Använd ditt fingeravtryck för att låsa upp Rockwallet och skicka pengar upp till en inställd gräns.";
+"TouchIdSettings.label" = "Använd ditt fingeravtryck för att låsa upp RockWallet och skicka pengar upp till en inställd gräns.";
 
 /* Link Text (see TouchIdSettings.customizeText) */
 "TouchIdSettings.linkText" = "Sida för utgiftsgräns i Touch ID";
@@ -1786,7 +1786,7 @@
 "TouchIdSettings.spendingLimit" = "Utnyttjandegräns: %1$@ (%2$@)";
 
 /* Touch id switch label. */
-"TouchIdSettings.switchLabel" = "Aktivera Touch ID för Rockwallet";
+"TouchIdSettings.switchLabel" = "Aktivera Touch ID för RockWallet";
 
 /* Enable fingerprint for this wallet called Bread */
 "TouchIdSettings.switchLabel.android" = "Aktivera fingeravtrycksautentisering";
@@ -1807,7 +1807,7 @@
 "TouchIdSettings.unavailableAlertTitle" = "Touch ID är inte inställt";
 
 /* Text label for the toggle that enables Touch ID for unlocking the BRD app. */
-"TouchIdSettings.unlockTitleText" = "Aktivera Touch ID för att låsa upp Rockwallet";
+"TouchIdSettings.unlockTitleText" = "Aktivera Touch ID för att låsa upp RockWallet";
 
 /* Always require passcode option */
 "TouchIdSpendingLimit" = "Kräver alltid lösenord";
@@ -2059,7 +2059,7 @@
 "UnlockScreen.touchIdInstructions.android" = "Touchsensor";
 
 /* TouchID prompt text */
-"UnlockScreen.touchIdPrompt" = "Lås upp Rockwallet.";
+"UnlockScreen.touchIdPrompt" = "Lås upp RockWallet.";
 
 /* Device authentication body */
 "UnlockScreen.touchIdPrompt.android" = "Lås upp din Android-enhet för att fortsätta.";
@@ -2083,7 +2083,7 @@
 "UpdatePin.caption" = "Kom ihåg PIN-koden. Om du glömmer den, kommer du inte åt dina bitcoin.";
 
 /* PIN creation info. */
-"UpdatePin.createInstruction" = "Din PIN-kod används för att låsa upp ditt Rockwallet och skicka pengar";
+"UpdatePin.createInstruction" = "Din PIN-kod används för att låsa upp ditt RockWallet och skicka pengar";
 
 /* Update PIN title */
 "UpdatePin.createTitle" = "Ställ in PIN-kod";
@@ -2196,7 +2196,7 @@
 "WalletConnectionSettings.viewTitle" = "Fastsync";
 
 /* 'No wallet' warning for watch app */
-"Watch.noWalletWarning" = "Öppna iPhone-appen Rockwallet för att ställa in din plånbok.";
+"Watch.noWalletWarning" = "Öppna iPhone-appen RockWallet för att ställa in din plånbok.";
 
 /* Dismiss button label */
 "Webview.dismiss" = "Avfärda";
@@ -2208,10 +2208,10 @@
 "Webview.updating" = "Uppdaterar...";
 
 /* Welcome screen text. (?) will be replaced with the help icon users should look for. */
-"Welcome.body" = "Rockwalletplånboken har bytt namn till Rockwallet, med ett splitter nytt utseende och några nya funktioner.\n\nOm du behöver hjälp, leta efter (?)-tecknet i det övre högra hörnet på de flesta skärmar.";
+"Welcome.body" = "RockWalletplånboken har bytt namn till RockWallet, med ett splitter nytt utseende och några nya funktioner.\n\nOm du behöver hjälp, leta efter (?)-tecknet i det övre högra hörnet på de flesta skärmar.";
 
 /* Top title of welcome screen */
-"Welcome.title" = "Välkommen till Rockwallet!";
+"Welcome.title" = "Välkommen till RockWallet!";
 
 /* Single asset widget description */
 "Widget.assetDescription" = "Håll dig uppdaterad med din favorit kryptotillgång";
@@ -2322,7 +2322,7 @@
 "WipeWallet.startMessage" = "Ta bort länken till din plånbok för att ta bort den från denna enhet. När länken till denna plånbok är borttagen kan du skapa en ny plånbok eller återställa en annan plånbok på denna enhet.";
 
 /* Start wipe wallet view warning */
-"WipeWallet.startWarning" = "Du kommer inte längre att kunna komma åt din aktuella Rockwalletplånbok från denna enhet. Saldot kommer att kvarstå på frasen.";
+"WipeWallet.startWarning" = "Du kommer inte längre att kunna komma åt din aktuella RockWalletplånbok från denna enhet. Saldot kommer att kvarstå på frasen.";
 
 /* Unlink this wallet from this device. */
 "WipeWallet.title" = "Ta Bort Länken Till Plånboken";
