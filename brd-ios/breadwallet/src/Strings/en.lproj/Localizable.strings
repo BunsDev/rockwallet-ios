@@ -1365,7 +1365,7 @@
 "Onboarding.getStarted" = "Get started";
 
 /* Onboarding screen 'Next' button */
-"Onboarding.next" = "Next";
+"Onboarding.next" = "NEXT";
 
 /* Onboarding screen restore an existing wallet. */
 "Onboarding.restoreWallet" = "Restore with Recovery Phrase";
@@ -1608,7 +1608,7 @@
 "RecoverWallet.leftArrow" = "Left Arrow";
 
 /* Next button label */
-"RecoverWallet.next" = "Next";
+"RecoverWallet.next" = "NEXT";
 
 /* What Is recovery phrase text popup */
 "RecoverWallet.RecoveryPhrasePopup" = "A Recovery Phrase consists of 12 randomly generated words. The app creates the Recovery Phrase for you automatically when you start a new wallet. The Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction, or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The key is also required when upgrading your current phone to a new one.";
@@ -3070,7 +3070,7 @@
 "WritePaperPhrase.instruction" = "Write down the following words in order";
 
 /* button label */
-"WritePaperPhrase.next" = "Next";
+"WritePaperPhrase.next" = "NEXT";
 
 /* button label */
 "WritePaperPhrase.previous" = "Previous";

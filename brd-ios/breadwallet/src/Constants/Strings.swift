@@ -1219,7 +1219,7 @@ internal enum L10n {
     /// Onboarding screen 'Get started' (create new wallet) button
     internal static let getStarted = L10n.tr("Localizable", "Onboarding.getStarted", fallback: "Get started")
     /// Onboarding screen 'Next' button
-    internal static let next = L10n.tr("Localizable", "Onboarding.next", fallback: "Next")
+    internal static let next = L10n.tr("Localizable", "Onboarding.next", fallback: "NEXT")
     /// Onboarding screen restore an existing wallet.
     internal static let restoreWallet = L10n.tr("Localizable", "Onboarding.restoreWallet", fallback: "Restore with Recovery Phrase")
     /// Onboarding screen Skip button title that allows the user to exit the onboarding process.
@@ -1483,7 +1483,7 @@ internal enum L10n {
     /// Previous button accessibility label
     internal static let leftArrow = L10n.tr("Localizable", "RecoverWallet.leftArrow", fallback: "Left Arrow")
     /// Next button label
-    internal static let next = L10n.tr("Localizable", "RecoverWallet.next", fallback: "Next")
+    internal static let next = L10n.tr("Localizable", "RecoverWallet.next", fallback: "NEXT")
     /// What Is recovery phrase text popup
     internal static let recoveryPhrasePopup = L10n.tr("Localizable", "RecoverWallet.RecoveryPhrasePopup", fallback: "A Recovery Phrase consists of 12 randomly generated words. The app creates the Recovery Phrase for you automatically when you start a new wallet. The Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction, or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The key is also required when upgrading your current phone to a new one.")
     /// Reset PIN with paper key: more information button.
@@ -2729,7 +2729,7 @@ internal enum L10n {
     /// Paper key instructions.
     internal static let instruction = L10n.tr("Localizable", "WritePaperPhrase.instruction", fallback: "Write down the following words in order")
     /// button label
-    internal static let next = L10n.tr("Localizable", "WritePaperPhrase.next", fallback: "Next")
+    internal static let next = L10n.tr("Localizable", "WritePaperPhrase.next", fallback: "NEXT")
     /// button label
     internal static let previous = L10n.tr("Localizable", "WritePaperPhrase.previous", fallback: "Previous")
     /// 1 of 3
