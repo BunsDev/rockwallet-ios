@@ -431,7 +431,7 @@ internal enum L10n {
     /// prompt dismiss button
     internal static let dismiss = L10n.tr("Localizable", "Button.dismiss", fallback: "Dismiss")
     /// Done button title
-    internal static let done = L10n.tr("Localizable", "Button.done", fallback: "Done")
+    internal static let done = L10n.tr("Localizable", "Button.done", fallback: "DONE")
     /// Finish button title
     internal static let finish = L10n.tr("Localizable", "Button.Finish", fallback: "Finish")
     /// Go to dashboard button
@@ -1467,7 +1467,7 @@ internal enum L10n {
   }
   internal enum RecoverWallet {
     /// Done button text
-    internal static let done = L10n.tr("Localizable", "RecoverWallet.done", fallback: "Done")
+    internal static let done = L10n.tr("Localizable", "RecoverWallet.done", fallback: "DONE")
     /// Enter recovery phrase label to delete the wallet
     internal static let enterRecoveryPhrase = L10n.tr("Localizable", "RecoverWallet.EnterRecoveryPhrase", fallback: "Please enter your recovery phrase to delete this wallet from your device.")
     /// Recover wallet header
@@ -1519,7 +1519,7 @@ internal enum L10n {
     /// Default title for the recovery phrase landing page
     internal static let generateKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyTitle", fallback: "Generate your private recovery phrase")
     /// Title for a button that takes the user to the wallet after setting up the recovery key.
-    internal static let goToWalletButtonTitle = L10n.tr("Localizable", "RecoveryKeyFlow.goToWalletButtonTitle", fallback: "Go to Wallet")
+    internal static let goToWalletButtonTitle = L10n.tr("Localizable", "RecoveryKeyFlow.goToWalletButtonTitle", fallback: "GO TO WALLET")
     /// Hint text for recovery key intro page, e.g., Step 2
     internal static func howItWorksStep(_ p1: Any) -> String {
       return L10n.tr("Localizable", "RecoveryKeyFlow.howItWorksStep", String(describing: p1), fallback: "How it works - Step %1$@")

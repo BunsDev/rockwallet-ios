@@ -502,7 +502,7 @@
 "Button.dismiss" = "Dismiss";
 
 /* Done button title */
-"Button.done" = "Done";
+"Button.done" = "DONE";
 
 /* Finish button title */
 "Button.Finish" = "Finish";
@@ -1484,6 +1484,8 @@
 
 "Prompts.RateApp.enjoyingBrd" = "Enjoying RockWallet?";
 
+"Prompts.RateApp.enjoyingRockWallet" = "Enjoying RockWallet?";
+
 "Prompts.RateApp.googlePlayReview" = "Your review helps grow the RockWallet community.";
 
 "Prompts.RateApp.noThanks" = "No thanks";
@@ -1584,7 +1586,7 @@
 "Receive.title" = "Receive";
 
 /* Done button text */
-"RecoverWallet.done" = "Done";
+"RecoverWallet.done" = "DONE";
 
 /* Enter recovery phrase label to delete the wallet */
 "RecoverWallet.EnterRecoveryPhrase" = "Please enter your recovery phrase to delete this wallet from your device.";
@@ -1659,7 +1661,7 @@
 "RecoveryKeyFlow.generateKeyTitle" = "Generate your private recovery phrase";
 
 /* Title for a button that takes the user to the wallet after setting up the recovery key. */
-"RecoveryKeyFlow.goToWalletButtonTitle" = "Go to Wallet";
+"RecoveryKeyFlow.goToWalletButtonTitle" = "GO TO WALLET";
 
 /* Hint text for recovery key intro page, e.g., Step 2 */
 "RecoveryKeyFlow.howItWorksStep" = "How it works - Step %1$@";
