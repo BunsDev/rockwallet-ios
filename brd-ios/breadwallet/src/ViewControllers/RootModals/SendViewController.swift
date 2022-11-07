@@ -48,9 +48,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     private let attributeCell: AttributeCell?
     private let memoCell = DescriptionSendCell(placeholder: L10n.Send.descriptionLabel)
     private let sendButton = BRDButton(title: L10n.Send.sendLabel, type: .secondary)
-    private let currencyBorder = UIView(color: LightColors.Outline.one)
-    private var currencySwitcherHeightConstraint: NSLayoutConstraint?
-    private var pinPadHeightConstraint: NSLayoutConstraint?
     private var attributeCellHeight: NSLayoutConstraint?
     private let confirmTransitioningDelegate = PinTransitioningDelegate()
     private let sendingActivity = BRActivityViewController(message: L10n.TransactionDetails.titleSending)
@@ -60,8 +57,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     private var paymentProtocolRequest: PaymentProtocolRequest?
     private var didIgnoreUsedAddressWarning = false
     private var didIgnoreIdentityNotCertified = false
-    private let verticalButtonPadding: CGFloat = 32.0
-    private let buttonSize = CGSize(width: 52.0, height: 32.0)
     private var feeLevel: FeeLevel = .regular {
         didSet {
             updateFees()
@@ -174,7 +169,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         sendButton.constrain([
             sendButton.constraint(.leading, toView: view, constant: Margins.large.rawValue),
             sendButton.constraint(.trailing, toView: view, constant: -Margins.large.rawValue),
-            sendButton.constraint(toBottom: memoCell, constant: verticalButtonPadding),
+            sendButton.constraint(toBottom: memoCell, constant: Margins.extraHuge.rawValue),
             sendButton.constraint(.height, constant: ViewSizes.Common.defaultCommon.rawValue),
             sendButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: E.isIPhoneX ? -Margins.custom(5) : -Margins.large.rawValue) ])
         addButtonActions()
