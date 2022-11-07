@@ -29,7 +29,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        decideInterface(for: children.last ?? UIViewController())
+        decideInterface(for: children.last)
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
@@ -44,7 +44,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     
     func decideInterface(for viewController: UIViewController?) {
         switch viewController {
-        case is AccountViewController:
+        case is AccountViewController, is HomeScreenViewController:
             backgroundColor = .clear
             tintColor = LightColors.Text.three
             
@@ -52,8 +52,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = .black
             tintColor = LightColors.Background.one
             
-        case is HomeScreenViewController,
-            is OnboardingViewController:
+        case is OnboardingViewController:
             backgroundColor = .clear
             tintColor = LightColors.Background.two
             
@@ -113,6 +112,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         
         UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
             self?.navigationBar.tintColor = self?.tintColor ?? .clear
+            self?.navigationBar.layoutIfNeeded()
         }
         
         navigationBar.titleTextAttributes = [
