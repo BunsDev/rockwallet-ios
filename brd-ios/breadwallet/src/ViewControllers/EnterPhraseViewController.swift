@@ -102,7 +102,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func setBackButton() {
-        let back = UIBarButtonItem(image: UIImage(named: "BackArrowWhite"),
+        let back = UIBarButtonItem(image: UIImage(named: "back"),
                                    style: .plain,
                                    target: self,
                                    action: #selector(onBackButton))

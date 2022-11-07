@@ -48,7 +48,7 @@ class AttributeCell: UIView {
     
     lazy var infoButton: UIButton = {
         let infoButton = UIButton()
-        infoButton.setImage(UIImage(named: "Faq"), for: .normal)
+        infoButton.setImage(UIImage(named: "faqIcon"), for: .normal)
         infoButton.tintColor = .gray2
         infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         

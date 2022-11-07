@@ -81,7 +81,7 @@ class BaseRecoveryKeyViewController: UIViewController {
     }
     
     func showBackButton() {
-        let back = UIBarButtonItem(image: UIImage(named: "BackArrowWhite"),
+        let back = UIBarButtonItem(image: UIImage(named: "back"),
                                    style: .plain,
                                    target: self,
                                    action: #selector(onBackButton))
