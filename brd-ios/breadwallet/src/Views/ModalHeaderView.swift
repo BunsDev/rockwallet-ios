@@ -57,8 +57,8 @@ class ModalHeaderView: UIView {
         close.constrain([
             close.constraint(.leading, toView: self),
             close.constraint(.centerY, toView: self),
-            close.constraint(.height, constant: ViewSizes.Common.largeButton.rawValue),
-            close.constraint(.width, constant: ViewSizes.Common.largeButton.rawValue)])
+            close.constraint(.height, constant: ViewSizes.Common.largeCommon.rawValue),
+            close.constraint(.width, constant: ViewSizes.Common.largeCommon.rawValue)])
 
         backgroundColor = LightColors.Background.one
         
@@ -73,8 +73,8 @@ class ModalHeaderView: UIView {
         faq.constrain([
             faq.constraint(.trailing, toView: self),
             faq.constraint(.centerY, toView: self),
-            faq.constraint(.height, constant: ViewSizes.Common.largeButton.rawValue),
-            faq.constraint(.width, constant: ViewSizes.Common.largeButton.rawValue) ])
+            faq.constraint(.height, constant: ViewSizes.Common.largeCommon.rawValue),
+            faq.constraint(.width, constant: ViewSizes.Common.largeCommon.rawValue) ])
     }
 
     private func setColors() {

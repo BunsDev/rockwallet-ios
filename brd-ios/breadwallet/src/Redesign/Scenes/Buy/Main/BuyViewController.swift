@@ -46,7 +46,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         }
         
         continueButton.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
             make.edges.equalTo(continueButton.snp.margins)
         }
         

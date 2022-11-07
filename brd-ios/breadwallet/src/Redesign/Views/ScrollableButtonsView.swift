@@ -45,7 +45,7 @@ class ScrollableButtonsView: FEView<ScrollableButtonsConfiguration, ScrollableBu
         content.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
         }
         
         scrollView.addSubview(stack)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let guideSize: CGFloat = 64.0
+private let guideSize: CGFloat = ViewSizes.Common.hugeCommon.rawValue
 private let lineWidth: CGFloat = 8.0
 
 enum CameraGuideState {

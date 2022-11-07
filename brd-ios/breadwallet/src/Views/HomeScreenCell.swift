@@ -8,91 +8,81 @@
 
 import UIKit
 
-protocol HighlightableCell {
-    func highlight()
-    func unhighlight()
-}
-
 enum HomeScreenCellIds: String {
     case regularCell = "CurrencyCell"
-    case highlightableCell  = "HighlightableCurrencyCell"
-}
-
-class Background: UIView, GradientDrawable {
-    var currency: Currency?
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let maskLayer = CAShapeLayer()
-        let corners: UIRectCorner = .allCorners
-        maskLayer.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners,
-                                      cornerRadii: CGSize(width: CornerRadius.common.rawValue,
-                                                          height: CornerRadius.common.rawValue)).cgPath
-        layer.mask = maskLayer
-    }
 }
 
 class HomeScreenCell: UITableViewCell, Subscriber {
+    lazy var containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.shadowRadius = CornerRadius.medium.rawValue
+        view.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.08).cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize(width: 2, height: 4)
+        return view
+    }()
+    
+    lazy var cardView: UIView = {
+        let view = UIView()
+        view.backgroundColor = LightColors.Background.cards
+        return view
+    }()
+    
     private lazy var iconImageView: WrapperView<FEImageView> = {
         let view = WrapperView<FEImageView>()
         view.setupClearMargins()
         return view
     }()
     
-    private lazy var cardView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = CornerRadius.common.rawValue
-        view.layer.borderColor = UIColor.shadowColor.cgColor
-        view.layer.borderWidth = 0.5
-        view.layer.shadowRadius = view.layer.cornerRadius
-        view.layer.shadowColor = view.layer.borderColor
-        view.layer.shadowOpacity = 2
-        view.layer.shadowOffset = .zero
-        view.backgroundColor = .whiteBackground
-        return view
-    }()
+    private var currency: Currency?
     
     private let currencyName = UILabel(font: Fonts.Subtitle.one, color: LightColors.Text.three)
     private let price = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.two)
     private let fiatBalance = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.two)
     private let tokenBalance = UILabel(font: Fonts.Subtitle.one, color: LightColors.Text.three)
+    
     private let syncIndicator = SyncingIndicator(style: .home)
     private let priceChangeView = PriceChangeView(style: .percentOnly)
     
-    let container = Background()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = UIBezierPath(roundedRect: cardView.bounds, byRoundingCorners: .allCorners,
+                                      cornerRadii: CGSize(width: CornerRadius.common.rawValue,
+                                                          height: CornerRadius.common.rawValue)).cgPath
+        cardView.layer.mask = maskLayer
+    }
+    
     private var isSyncIndicatorVisible: Bool = false {
         didSet {
-            UIView.crossfade(tokenBalance, syncIndicator, toRight: isSyncIndicatorVisible, duration: isSyncIndicatorVisible == oldValue ? 0.0 : 0.3)
-            fiatBalance.textColor = (isSyncIndicatorVisible || !(container.currency?.isSupported ?? false)) ? .transparentBlack : .black
+            UIView.crossfade(tokenBalance, syncIndicator,
+                             toRight: isSyncIndicatorVisible,
+                             duration: isSyncIndicatorVisible == oldValue ? 0.0 : 0.3)
+            fiatBalance.textColor = (isSyncIndicatorVisible || !(currency?.isSupported ?? false)) ? .transparentBlack : LightColors.Text.two
         }
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         setupViews()
-    }
-
-    static func cellIdentifier() -> String {
-        return "CurrencyCell"
     }
     
     func set(viewModel: HomeScreenAssetViewModel) {
         accessibilityIdentifier = viewModel.currency.name
-        container.currency = viewModel.currency
+        currency = viewModel.currency
         iconImageView.wrappedView.setup(with: .image(viewModel.currency.imageSquareBackground))
         iconImageView.configure(background: BackgroundConfiguration(tintColor: viewModel.currency.isSupported ? .white : .disabledBackground,
                                                                     border: .init(borderWidth: 0,
                                                                                   cornerRadius: .fullRadius)))
         currencyName.text = viewModel.currency.name
-        currencyName.textColor = viewModel.currency.isSupported ? .black : .transparentBlack
         price.text = viewModel.exchangeRate
         fiatBalance.text = viewModel.fiatBalance
-        fiatBalance.textColor = viewModel.currency.isSupported ? .black : .transparentBlack
         tokenBalance.text = viewModel.tokenBalance
-        priceChangeView.isHidden = false
         priceChangeView.currency = viewModel.currency
-        container.setNeedsDisplay()
+        
         Store.subscribe(self, selector: { $0[viewModel.currency]?.syncState != $1[viewModel.currency]?.syncState },
                         callback: { state in
                             guard !(viewModel.currency.isHBAR && Store.state.requiresCreation(viewModel.currency)),
@@ -123,13 +113,14 @@ class HomeScreenCell: UITableViewCell, Subscriber {
         addSubviews()
         addConstraints()
     }
-
+    
     private func addSubviews() {
-        backgroundColor = .homeBackground
         selectionStyle = .none
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         
-        contentView.addSubview(container)
-        container.addSubview(cardView)
+        contentView.addSubview(containerView)
+        containerView.addSubview(cardView)
         cardView.addSubview(iconImageView)
         cardView.addSubview(currencyName)
         cardView.addSubview(price)
@@ -141,13 +132,17 @@ class HomeScreenCell: UITableViewCell, Subscriber {
 
     private func addConstraints() {
         let containerPadding = Margins.large.rawValue
-        container.constrain(toSuperviewEdges: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         
-        cardView.constrain([
-            cardView.topAnchor.constraint(equalTo: container.topAnchor, constant: 4),
-            cardView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -4),
-            cardView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: containerPadding),
-            cardView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -containerPadding)])
+        containerView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(Margins.extraSmall.rawValue)
+            make.leading.equalToSuperview().inset(containerPadding)
+            make.center.equalToSuperview()
+        }
+        
+        cardView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         iconImageView.constrain([
             iconImageView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: containerPadding),
             iconImageView.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),

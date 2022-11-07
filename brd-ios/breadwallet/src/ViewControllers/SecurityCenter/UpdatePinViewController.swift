@@ -108,6 +108,8 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         if shouldShowFAQButton {
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
         }

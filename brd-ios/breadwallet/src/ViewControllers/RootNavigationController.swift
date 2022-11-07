@@ -26,6 +26,12 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         setNormalNavigationBar()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        setNormalNavigationBar()
+    }
+    
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         let backgroundColor: UIColor
         let tintColor: UIColor
@@ -40,8 +46,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             tintColor = LightColors.Background.one
             
         case is HomeScreenViewController,
-            is OnboardingViewController,
-            is ProfileViewController:
+            is OnboardingViewController:
             backgroundColor = .clear
             tintColor = LightColors.Background.two
             
@@ -54,6 +59,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             is RegistrationViewController,
             is RegistrationConfirmationViewController,
             is AccountVerificationViewController,
+            is ProfileViewController,
             is KYCBasicViewController,
             is KYCLevelTwoEntryViewController,
             is KYCDocumentPickerViewController,
@@ -86,15 +92,17 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             NSAttributedString.Key.font: Fonts.Title.six, NSAttributedString.Key.foregroundColor: tintColor
         ]
         
+        let backImage = UIImage(named: "back")
+        
         let normalAppearance = UINavigationBarAppearance()
-        normalAppearance.setBackIndicatorImage(UIImage(named: "back"), transitionMaskImage: UIImage(named: "back"))
+        normalAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         normalAppearance.titleTextAttributes = navigationBar.titleTextAttributes ?? [:]
         normalAppearance.configureWithOpaqueBackground()
         normalAppearance.backgroundColor = normalBackgroundColor
         normalAppearance.shadowColor = nil
         
         let scrollAppearance = UINavigationBarAppearance()
-        scrollAppearance.setBackIndicatorImage(UIImage(named: "back"), transitionMaskImage: UIImage(named: "back"))
+        scrollAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         scrollAppearance.titleTextAttributes = navigationBar.titleTextAttributes ?? [:]
         scrollAppearance.configureWithTransparentBackground()
         scrollAppearance.backgroundColor = scrollBackgroundColor

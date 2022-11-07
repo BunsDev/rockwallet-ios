@@ -138,7 +138,7 @@ class WalletDisabledView: UIView {
             reset.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Margins.extraHuge.rawValue),
             reset.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Margins.large.rawValue),
             reset.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.large.rawValue),
-            reset.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeButton.rawValue)])
+            reset.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue)])
         
     }
 
