@@ -1650,7 +1650,7 @@
 "RecoveryKeyFlow.exitRecoveryKeyPromptTitle" = "Set Up Later";
 
 /* Button text for the 'Generate Recovery Phrase' button */
-"RecoveryKeyFlow.generateKeyButton" = "Generate Recovery Phrase";
+"RecoveryKeyFlow.generateKeyButton" = "GOT IT";
 
 /* Subtext for the recovery key landing page. */
 "RecoveryKeyFlow.generateKeyExplanation" = "This is required to restore your wallet if you upgrade or lose your phone.";
@@ -1677,7 +1677,7 @@
 "RecoveryKeyFlow.noScreenshotsOrEmailWarning" = "For security purposes, do not screenshot or email these words";
 
 /* Recommends that the user avoids capturing the paper key with a screenshot */
-"RecoveryKeyFlow.noScreenshotsRecommendation" = "Write down your key on paper and confirm it. Screenshots are not recommended for security reasons.";
+"RecoveryKeyFlow.noScreenshotsRecommendation" = "This is required to restore your wallet if you upgrade or lose your phone.";
 
 /* Title displayed when the user starts the process of recovering a wallet */
 "RecoveryKeyFlow.recoveryYourWallet" = "Restore Your Wallet";
@@ -1722,7 +1722,7 @@
 "RecoveryKeyFlow.wipeWalletSubtext" = "Start a new wallet by wiping the current wallet from your device.";
 
 /* Title for recovery key intro page */
-"RecoveryKeyFlow.writeItDown" = "Write down your key";
+"RecoveryKeyFlow.writeItDown" = "Generate your private Recovery Phrase";
 
 /* Title for the recovery phrase landing page if the key has already been generated. */
 "RecoveryKeyFlow.writeKeyAgain" = "Write down your recovery phrase again";

@@ -54,8 +54,6 @@ class RecoveryKeyPageCell: UICollectionViewCell {
     var titleLabel = UILabel.wrapping(font: Fonts.Title.six, color: LightColors.Text.three)
     var subTitleLabel = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     
-    let headingLeftRightMargin: CGFloat = Margins.extraHuge.rawValue
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpSubviews()
@@ -63,9 +61,11 @@ class RecoveryKeyPageCell: UICollectionViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setUpSubviews()
+        setUpConstraints()
     }
-
+    
     func setUpSubviews() {
         [titleLabel, subTitleLabel, imageView].forEach({ contentView.addSubview($0) })
         titleLabel.textAlignment = .center
@@ -74,7 +74,24 @@ class RecoveryKeyPageCell: UICollectionViewCell {
     }
     
     func setUpConstraints() {
-        // subclasses should position their subviews
+        imageView.constrain([
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margins.large.rawValue),
+            imageView.heightAnchor.constraint(equalToConstant: ViewSizes.ilustration.rawValue),
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margins.custom(15))
+        ])
+        
+        titleLabel.constrain([
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Margins.custom(5)),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margins.custom(5)),
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        ])
+        
+        subTitleLabel.constrain([
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Margins.large.rawValue),
+            subTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margins.extraHuge.rawValue),
+            subTitleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        ])
     }
     
     func configure(with page: RecoveryKeyIntroPage) {
@@ -85,146 +102,25 @@ class RecoveryKeyPageCell: UICollectionViewCell {
 }
 
 //
-// Full-screen collection view cell for recovery key landing page.
-//
-class RecoveryKeyLandingPageCell: RecoveryKeyPageCell {
-    
-    static let lockImageName = "il_shield"
-    private let lockImageDefaultSize: (CGFloat, CGFloat) = (100, 144)
-    private var lockImageScale: CGFloat = 1.0
-    private var lockIconTopConstraintPercent: CGFloat = 0.29
-    private let headingTopMargin: CGFloat = 53
-    private let subheadingTopMargin: CGFloat = Margins.large.rawValue
-
-    override func setUpSubviews() {
-        super.setUpSubviews()
-        
-        // The lock image is a bit too large at scale for small screens such as the iPhone 5 SE.
-        // Here we shrink the image and move it up. See setUpConstraints().
-        if E.isIPhone6OrSmaller {
-            lockImageScale = 0.8
-            lockIconTopConstraintPercent = 0.2
-        }
-    }
-    
-    override func setUpConstraints() {
-        let lockImageTop = 63.0
-        
-        imageView.constrain([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: lockImageTop),
-            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-            ])
-        
-        if lockImageScale != 1.0 {
-            let scaledWidth: CGFloat = (lockImageDefaultSize.0 * lockImageScale)
-            let scaledHeight: CGFloat = (lockImageDefaultSize.1 * lockImageScale)
-            
-            imageView.constrain([
-                imageView.widthAnchor.constraint(equalToConstant: scaledWidth),
-                imageView.heightAnchor.constraint(equalToConstant: scaledHeight)
-                ])
-        }
-        
-        titleLabel.constrain([
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: headingTopMargin),
-            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: headingLeftRightMargin),
-            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -headingLeftRightMargin)
-            ])
-        
-        subTitleLabel.constrain([
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: subheadingTopMargin),
-            subTitleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: headingLeftRightMargin),
-            subTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -headingLeftRightMargin)
-            ])
-    }
-}
-
-//
-// Full-screen collection view cell for the recovery key educational/intro pages.
-//
-class RecoveryKeyIntroCell: RecoveryKeyPageCell {
-
-    private var introStepLabel = UILabel()
-    private var contentTopConstraintPercent: CGFloat = 0.3
-    private let imageWidth: CGFloat = 52
-    private let imageHeight: CGFloat = 44
-    private let imageTopMarginToTitle: CGFloat = 42
-    private let subtitleTopMarginToImage: CGFloat = 20
-    
-    override func setUpSubviews() {
-        super.setUpSubviews()
-        
-        introStepLabel.font = Fonts.Body.two
-        introStepLabel.textColor = LightColors.Text.two
-        introStepLabel.textAlignment = .center
-        introStepLabel.numberOfLines = 0
-        
-        contentView.addSubview(introStepLabel)
-        
-        if E.isSmallScreen {
-            contentTopConstraintPercent = 0.22
-        }
-    }
-    
-    override func setUpConstraints() {
-        super.setUpConstraints()
-        
-        let screenHeight = UIScreen.main.bounds.height
-        let statusBarHeight = self.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        let contentTop = (screenHeight * contentTopConstraintPercent) - statusBarHeight
-        
-        introStepLabel.constrain([
-            introStepLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: contentTop),
-            introStepLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Margins.large.rawValue),
-            introStepLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Margins.large.rawValue)
-            ])
-        
-        titleLabel.constrain([
-            titleLabel.topAnchor.constraint(equalTo: introStepLabel.bottomAnchor, constant: Margins.small.rawValue),
-            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: headingLeftRightMargin),
-            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -headingLeftRightMargin)
-            ])
-        
-        imageView.constrain([
-            imageView.widthAnchor.constraint(equalToConstant: imageWidth),
-            imageView.heightAnchor.constraint(equalToConstant: imageHeight),
-            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: imageTopMarginToTitle)
-            ])
-        
-        subTitleLabel.constrain([
-            subTitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: subtitleTopMarginToImage),
-            subTitleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: headingLeftRightMargin),
-            subTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -headingLeftRightMargin)
-            ])
-    }
-    
-    override func configure(with page: RecoveryKeyIntroPage) {
-        super.configure(with: page)
-        introStepLabel.text = page.stepHint
-    }
-}
-
-//
 // Screen displayed when the user wants to generate a recovery key or view the words and
 // write it down again.
 //
 class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
-
+    
     private var mode: EnterRecoveryKeyMode = .generateKey
-
+    
     private var landingPage: RecoveryKeyIntroPage {
         switch mode {
         case .generateKey:
             return RecoveryKeyIntroPage(title: L10n.RecoveryKeyFlow.generateKeyTitle,
                                         subTitle: L10n.RecoveryKeyFlow.generateKeyExplanation,
                                         imageName: "il_shield",
-                                        continueButtonText: L10n.Button.continueAction)
+                                        continueButtonText: L10n.Onboarding.next)
         case .writeKey:
             return RecoveryKeyIntroPage(title: L10n.RecoveryKeyFlow.writeKeyAgain,
                                         subTitle: UserDefaults.writePaperPhraseDateString,
                                         imageName: "il_setup",
-                                        continueButtonText: L10n.Button.continueAction)
+                                        continueButtonText: L10n.Onboarding.next)
         case .unlinkWallet:
             return RecoveryKeyIntroPage(title: L10n.RecoveryKeyFlow.unlinkWallet,
                                         subTitle: L10n.RecoveryKeyFlow.unlinkWalletSubtext,
@@ -238,7 +134,7 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
     // wallet access.
     private let keyUseInfoView = InfoView()
     
-    private let continueButton = BRDButton(title: L10n.Button.continueAction, type: .secondary)
+    private let continueButton = BRDButton(title: L10n.Onboarding.next, type: .tertiary)
     private var pagingView: UICollectionView?
     private var pagingViewContainer: UIView = UIView()
     
@@ -254,9 +150,9 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
         didSet {
             if let paging = pagingView {
                 //scrollToItem is broken in the GM build of xcode 12. Check if later versions fix this
-//                paging.scrollToItem(at: IndexPath(item: self.pageIndex, section: 0),
-//                                    at: UICollectionView.ScrollPosition.left,
-//                                    animated: true)
+                //                paging.scrollToItem(at: IndexPath(item: self.pageIndex, section: 0),
+                //                                    at: UICollectionView.ScrollPosition.left,
+                //                                    animated: true)
                 if let rect = paging.layoutAttributesForItem(at: IndexPath(item: pageIndex, section: 0))?.frame {
                     paging.scrollRectToVisible(rect, animated: true)
                 }
@@ -278,6 +174,12 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
                     } else {
                         self.showBackButton()
                     }
+                    
+                    guard self.pages.count == self.pageIndex + 1 else {
+                        self.continueButton.setType(type: .tertiary)
+                        return
+                    }
+                    self.continueButton.setType(type: .secondary)
                 }
             }
         }
@@ -328,18 +230,18 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
         guard let exit = self.exitCallback else { return }
         
         switch mode {
-        // If writing down the key again, just bail.
+            // If writing down the key again, just bail.
         case .writeKey:
             exit(.abort)
             
-        // If generating the key for the first time, confirm that the user really wants to exit.
+            // If generating the key for the first time, confirm that the user really wants to exit.
         case .generateKey:
             RecoveryKeyFlowController.promptToSetUpRecoveryKeyLater(from: self) { userWantsToSetUpLater in
                 if userWantsToSetUpLater {
                     exit(.abort)
                 }
             }
-        
+            
         case .unlinkWallet:
             exit(.abort)
         }
@@ -391,10 +293,9 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.backBarButtonItem = nil
     }
-        
+    
     private func setUpKeyUseInfoView() {
         keyUseInfoView.text = infoViewText
-        keyUseInfoView.imageName = "ExclamationMarkCircle"
         keyUseInfoView.isHidden = shouldHideInfoView
     }
     
@@ -439,8 +340,7 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
         paging.delegate = self
         paging.dataSource = self
         
-        paging.register(RecoveryKeyLandingPageCell.self, forCellWithReuseIdentifier: "RecoveryKeyLandingPageCell")
-        paging.register(RecoveryKeyIntroCell.self, forCellWithReuseIdentifier: "RecoveryKeyIntroCell")
+        paging.register(RecoveryKeyPageCell.self, forCellWithReuseIdentifier: "RecoveryKeyPageCell")
         
         paging.isUserInteractionEnabled = false // only use the Continue button to move forward in the flow
         
@@ -487,7 +387,7 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
             keyUseInfoView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: Margins.large.rawValue),
             keyUseInfoView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -Margins.large.rawValue),
             keyUseInfoView.bottomAnchor.constraint(equalTo: continueButton.topAnchor, constant: -Margins.large.rawValue)
-            ])
+        ])
     }
 }
 
@@ -503,22 +403,13 @@ extension RecoveryKeyIntroViewController: UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let page = pages[indexPath.item]
-        
-        if page.isLandingPage {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecoveryKeyLandingPageCell",
-                                                             for: indexPath) as? RecoveryKeyLandingPageCell {
-                cell.configure(with: page)
-                return cell
-            }
-        } else {
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecoveryKeyIntroCell",
-                                                             for: indexPath) as? RecoveryKeyIntroCell {
-                cell.configure(with: page)
-                return cell
-            }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecoveryKeyPageCell",
+                                                            for: indexPath) as? RecoveryKeyPageCell
+        else {
+            return UICollectionViewCell()
         }
-        
-        return UICollectionViewCell()
+        cell.configure(with: page)
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,

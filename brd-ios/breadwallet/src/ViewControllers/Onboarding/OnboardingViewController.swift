@@ -387,7 +387,7 @@ class OnboardingViewController: UIViewController {
         view.addSubview(restoreButton)
         
         let buttonLeftRightMargin: CGFloat = 24
-        let buttonHeight: CGFloat = 48
+        let buttonHeight: CGFloat = ViewSizes.Common.largeCommon.rawValue
         
         // Position the top button just below the bottom of the view (or safe area / notch) to start with
         // so that we can animate it up into view.
