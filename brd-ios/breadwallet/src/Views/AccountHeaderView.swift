@@ -68,10 +68,10 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     }()
     
     private let historyPeriodPill: UIView = {
-        let view = UIView(color: UIColor.white.withAlphaComponent(0.6))
+        let view = UIView()
+        view.backgroundColor = LightColors.Background.three
         view.layer.cornerRadius = CornerRadius.extraSmall.rawValue
         view.layer.masksToBounds = true
-        view.alpha = 0.3
         return view
     }()
     
@@ -249,7 +249,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
         }
         
         if let initiallySelected = graphButtons.first(where: { return $0.hasInitialHistoryPeriod }) {
-            self.updateHistoryPeriodPillPosition(button: initiallySelected.button, withAnimation: false)
+            updateHistoryPeriodPillPosition(button: initiallySelected.button)
         }
                 
         Store.subscribe(self,
@@ -303,18 +303,20 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     
     private func showChart() {
         isChartHidden = false
+        
         UIView.animate(withDuration: Presets.Animation.duration, animations: {
             self.chartView.alpha = 1.0
             self.exchangeRateLabel.alpha = 1.0
             self.priceChangeView.alpha = 1.0
             self.graphButtonStackView.alpha = 1.0
-            self.historyPeriodPill.alpha = 0.3
+            self.historyPeriodPill.alpha = 1.0
             self.marketDataView?.alpha = 1.0
         })
     }
     
     private func hideChart(animated: Bool = true) {
         isChartHidden = true
+        
         if animated {
             UIView.animate(withDuration: Presets.Animation.duration, animations: {
                 self.setChartTransparent()
@@ -399,29 +401,20 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
         headerHeight?.isActive = true
     }
     
-    private func updateHistoryPeriodPillPosition(button: UIButton, withAnimation: Bool) {
-        historyPeriodPillX?.isActive = false
-        historyPeriodPillY?.isActive = false
-        historyPeriodPillX = historyPeriodPill.centerXAnchor.constraint(equalTo: button.centerXAnchor)
-        historyPeriodPillY = historyPeriodPill.centerYAnchor.constraint(equalTo: button.centerYAnchor)
-        NSLayoutConstraint.activate([historyPeriodPillX!, historyPeriodPillY!])
-        
-        if withAnimation {
-            UIView.spring(Presets.Animation.duration, animations: {
-                self.layoutIfNeeded()
-            }, completion: {_ in})
-        }
-        
-        button.backgroundColor = LightColors.Background.three
-        graphButtons.forEach {
-            if $0.button != button {
-                $0.button.backgroundColor = .clear
-            }
-        }
+    private func updateHistoryPeriodPillPosition(button: UIButton) {
+        UIView.spring(Presets.Animation.duration, animations: {
+            self.historyPeriodPillX?.isActive = false
+            self.historyPeriodPillY?.isActive = false
+            self.historyPeriodPillX = self.historyPeriodPill.centerXAnchor.constraint(equalTo: button.centerXAnchor)
+            self.historyPeriodPillY = self.historyPeriodPill.centerYAnchor.constraint(equalTo: button.centerYAnchor)
+            NSLayoutConstraint.activate([self.historyPeriodPillX!, self.historyPeriodPillY!])
+            
+            self.layoutIfNeeded()
+        }, completion: { _ in })
     }
     
     private func didTap(button: UIButton) {
-        updateHistoryPeriodPillPosition(button: button, withAnimation: true)
+        updateHistoryPeriodPillPosition(button: button)
     }
     
     override func layoutSubviews() {
