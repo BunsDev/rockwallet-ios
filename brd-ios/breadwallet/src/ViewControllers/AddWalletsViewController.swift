@@ -23,11 +23,10 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
     lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .darkBackground
         tableView.keyboardDismissMode = .interactive
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .gray3
-        tableView.rowHeight = 66.0
+        tableView.separatorColor = LightColors.Outline.one
+        tableView.rowHeight = ViewSizes.Common.hugeCommon.rawValue
         tableView.register(ManageCurrencyCell.self, forCellReuseIdentifier: ManageCurrencyCell.cellIdentifier)
         
         return tableView
