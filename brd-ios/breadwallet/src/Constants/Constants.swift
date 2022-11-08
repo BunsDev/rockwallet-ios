@@ -36,13 +36,12 @@ struct C {
     static let secondsInMinute: TimeInterval = 60
     static let walletQueue = "com.rockwallet.app.walletqueue"
     static let maxMemoLength = 250
-    static let companyURL = "placeholder.com"
-    static let privacyPolicy = "https://\(companyURL)/privacy-policy/"
-    static let termsAndConditions = "https://\(companyURL)/terms-and-conditions/"
+    static let companyURL = "rockwallet.com"
+    static let privacyPolicy = "https://\(companyURL)/privacy"
+    static let termsAndConditions = "https://\(companyURL)/tc"
+    static let supportLink = "https://help.\(companyURL)"
     static let feedbackEmail = "hello@\(companyURL)"
-    static let iosEmail = "hello@\(companyURL)"
-    static let reviewLink = "https://apps.apple.com/us/app/company/id1595167194?action=write-review"
-    static let supportLink = "https://support.\(companyURL)/"
+    static let reviewLink = "https://apps.apple.com/us/app/rockwallet-buy-and-swap/id6444194230?action=write-review"
     static var standardPort: Int {
         return E.isTestnet ? 18333 : 8333
     }

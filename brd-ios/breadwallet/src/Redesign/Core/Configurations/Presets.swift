@@ -368,3 +368,12 @@ extension Presets {
                                                            value: .init(font: Fonts.Body.three, textColor: LightColors.Text.two, textAlignment: .right))
     }
 }
+
+extension Presets {
+    struct ExchangeView {
+        static var shadow: ShadowConfiguration? = Presets.Shadow.light
+        static var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.cards,
+                                                                tintColor: LightColors.Text.one,
+                                                                border: Presets.Border.zero)
+    }
+}
