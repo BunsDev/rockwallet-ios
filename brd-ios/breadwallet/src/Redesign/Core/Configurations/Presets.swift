@@ -64,6 +64,7 @@ struct Presets {
     struct Border {
         static var zero = BorderConfiguration(borderWidth: 0, cornerRadius: .zero)
         static var extraSmallPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .extraSmall)
+        static var mediumPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .medium)
         static var commonPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .common)
         static var error = BorderConfiguration(tintColor: LightColors.Error.one, borderWidth: 1, cornerRadius: .medium)
         static var accountVerification = BorderConfiguration(tintColor: LightColors.Outline.one, borderWidth: 1, cornerRadius: .small)
@@ -205,14 +206,14 @@ extension Presets {
                                                    description: .init(font: Fonts.Body.two, textColor: LightColors.Text.three),
                                                    background: .init(backgroundColor: LightColors.Background.three,
                                                                      tintColor: LightColors.Contrast.two,
-                                                                     border: Presets.Border.zero),
+                                                                     border: Presets.Border.mediumPlain),
                                                    shadow: Presets.Shadow.zero)
         
         static var error = InfoViewConfiguration(headerTitle: .init(font: Fonts.Title.six, textColor: LightColors.Contrast.two),
                                                  description: .init(font: Fonts.Body.two, textColor: LightColors.Contrast.two),
                                                  background: .init(backgroundColor: LightColors.Error.one,
                                                                    tintColor: LightColors.Contrast.two,
-                                                                   border: Presets.Border.zero),
+                                                                   border: Presets.Border.mediumPlain),
                                                  shadow: Presets.Shadow.zero)
     }
 }
@@ -221,7 +222,7 @@ extension Presets {
     struct Popup {
         static var normal = PopupConfiguration(background: .init(backgroundColor: LightColors.Background.one,
                                                                  tintColor: LightColors.Contrast.two,
-                                                                 border: Presets.Border.zero),
+                                                                 border: Presets.Border.mediumPlain),
                                                title: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center),
                                                body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center),
                                                
@@ -233,7 +234,7 @@ extension Presets {
         
         static var white = PopupConfiguration(background: .init(backgroundColor: LightColors.Background.one,
                                                                 tintColor: LightColors.Contrast.two,
-                                                                border: Presets.Border.zero),
+                                                                border: Presets.Border.mediumPlain),
                                               title: .init(font: Fonts.Title.five, textColor: LightColors.Text.three),
                                               body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .left),
                                               buttons: [Presets.Button.primary.withBorder(normal: Presets.Border.normalButtonFullRadius,
@@ -255,7 +256,7 @@ extension Presets {
         static var resubmitAndDeclined = VerificationConfiguration(shadow: Presets.Shadow.zero,
                                                                    background: .init(backgroundColor: LightColors.Background.one,
                                                                                      tintColor: LightColors.Outline.two,
-                                                                                     border: Presets.Border.zero),
+                                                                                     border: Presets.Border.mediumPlain),
                                                                    title: .init(font: Fonts.Title.five, textColor: LightColors.Text.one),
                                                                    status: .init(title: .init(font: Fonts.Body.two,
                                                                                               textColor: LightColors.Contrast.two,
@@ -272,7 +273,7 @@ extension Presets {
         static var pending = VerificationConfiguration(shadow: Presets.Shadow.zero,
                                                        background: .init(backgroundColor: LightColors.Background.one,
                                                                          tintColor: LightColors.Outline.two,
-                                                                         border: Presets.Border.zero),
+                                                                         border: Presets.Border.mediumPlain),
                                                        title: .init(font: Fonts.Title.five, textColor: LightColors.Text.one),
                                                        status: .init(title: .init(font: Fonts.Body.two,
                                                                                   textColor: LightColors.Contrast.one,
@@ -289,7 +290,7 @@ extension Presets {
         static var verified = VerificationConfiguration(shadow: Presets.Shadow.zero,
                                                         background: .init(backgroundColor: LightColors.Background.one,
                                                                           tintColor: LightColors.Outline.two,
-                                                                          border: Presets.Border.zero),
+                                                                          border: Presets.Border.mediumPlain),
                                                         title: .init(font: Fonts.Title.five, textColor: LightColors.Text.one),
                                                         status: .init(title: .init(font: Fonts.Body.two,
                                                                                    textColor: LightColors.Contrast.one,
@@ -316,7 +317,7 @@ extension Presets {
                                               shadow: Presets.Shadow.light,
                                               background: .init(backgroundColor: LightColors.Background.one,
                                                                 tintColor: LightColors.Text.one,
-                                                                border: Presets.Border.zero),
+                                                                border: Presets.Border.mediumPlain),
                                               contentBackground: .init(tintColor: LightColors.Text.one))
     }
 }
@@ -374,6 +375,6 @@ extension Presets {
         static var shadow: ShadowConfiguration? = Presets.Shadow.light
         static var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.cards,
                                                                 tintColor: LightColors.Text.one,
-                                                                border: Presets.Border.zero)
+                                                                border: Presets.Border.mediumPlain)
     }
 }

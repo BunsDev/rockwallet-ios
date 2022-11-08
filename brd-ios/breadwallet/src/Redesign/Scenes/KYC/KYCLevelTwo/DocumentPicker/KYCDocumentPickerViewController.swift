@@ -50,7 +50,7 @@ class KYCDocumentPickerViewController: BaseTableViewController<KYCCoordinator,
             (cell as? WrapperTableViewCell<NavigationItemView>)?.wrappedView.setupCustomMargins(vertical: .zero, horizontal: .large)
             (cell as? WrapperTableViewCell<NavigationItemView>)?.wrappedView.setBackground(with: .init(backgroundColor: LightColors.Background.cards,
                                            tintColor: LightColors.Text.one,
-                                           border: Presets.Border.zero))
+                                           border: Presets.Border.mediumPlain))
             (cell as? WrapperTableViewCell<NavigationItemView>)?.wrappedView.layer.setShadow(with: Presets.Shadow.light)
             
         default:
