@@ -382,13 +382,21 @@ class UpdatePinViewController: UIViewController, Subscriber {
                         self?.presentResetPinSuccess(newPin: newPin)
                     })))
                 } else {
-                    Store.perform(action: Alert.Show(.pinSet(callback: { [weak self] in
+                    let callback = { [weak self] in
                         guard let self = self else { return }
                         self.setPinSuccess?(newPin)
                         if self.type != .creationNoPhrase {
                             self.parent?.dismiss(animated: true, completion: nil)
                         }
-                    })))
+                    }
+                    
+                    let type: AlertType
+                    if self.type == .creationNoPhrase {
+                        type = .pinSet(callback: callback)
+                    } else {
+                        type = .pinUpdated(callback: callback)
+                    }
+                    Store.perform(action: Alert.Show(type))
                 }
 
             } else {

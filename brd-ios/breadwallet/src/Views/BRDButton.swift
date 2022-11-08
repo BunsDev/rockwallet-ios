@@ -116,6 +116,10 @@ class BRDButton: UIControl {
         didSet {
             guard isEnabled else {
                 switch type {
+                case .primary:
+                    imageView?.tintColor = LightColors.Disabled.one
+                    label.textColor = LightColors.Disabled.one
+                    
                 case .secondary:
                     container.backgroundColor = LightColors.Disabled.one
                     

@@ -197,6 +197,8 @@ internal enum L10n {
     internal static let buyLimits = L10n.tr("Localizable", "AccountKYCLevelTwo.BuyLimits", fallback: "Buy limits: $500 USD/day, no lifetime limit")
     /// Capture back page of the document text
     internal static let captureBackPage = L10n.tr("Localizable", "AccountKYCLevelTwo.CaptureBackPage", fallback: "Make sure to capture the entire back page of the document.")
+    /// Make sure to capture the entire document.
+    internal static let captureEntireDocument = L10n.tr("Localizable", "AccountKYCLevelTwo.CaptureEntireDocument", fallback: "Make sure to capture the entire document.")
     /// Capture front page text label
     internal static let captureFrontPage = L10n.tr("Localizable", "AccountKYCLevelTwo.CaptureFrontPage", fallback: "Make sure to capture the entire front page of the document.")
     /// Checking for errors label on KYC2
@@ -329,7 +331,9 @@ internal enum L10n {
     /// Alert Subheader label (playfully positive)
     internal static let paperKeySetSubheader = L10n.tr("Localizable", "Alerts.paperKeySetSubheader", fallback: "Awesome!")
     /// Alert Header label (the PIN was set)
-    internal static let pinSet = L10n.tr("Localizable", "Alerts.pinSet", fallback: "PIN successfully updated")
+    internal static let pinSet = L10n.tr("Localizable", "Alerts.pinSet", fallback: "PIN successfully set")
+    /// PIN successfully updated
+    internal static let pinUpdated = L10n.tr("Localizable", "Alerts.pinUpdated", fallback: "PIN successfully updated")
     /// Send failure alert header label (the send failed to happen)
     internal static let sendFailure = L10n.tr("Localizable", "Alerts.sendFailure", fallback: "Send failed")
     /// Send success alert header label (confirmation that the send happened)
