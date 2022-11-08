@@ -1045,7 +1045,7 @@ internal enum L10n {
     /// Caption for graphics
     internal static let rightCaption = L10n.tr("Localizable", "Import.rightCaption", fallback: "Your RockWallet Wallet")
     /// Scan Private key button label
-    internal static let scan = L10n.tr("Localizable", "Import.scan", fallback: "Scan Private Key")
+    internal static let scan = L10n.tr("Localizable", "Import.scan", fallback: "SCAN PRIVATE KEY")
     /// Import wallet success alert title
     internal static let success = L10n.tr("Localizable", "Import.success", fallback: "Success")
     /// Successfully imported wallet message body
