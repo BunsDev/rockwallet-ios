@@ -26,6 +26,8 @@ class HomeScreenCell: UITableViewCell, Subscriber {
     lazy var cardView: UIView = {
         let view = UIView()
         view.backgroundColor = LightColors.Background.cards
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = CornerRadius.common.rawValue
         return view
     }()
     
@@ -44,16 +46,6 @@ class HomeScreenCell: UITableViewCell, Subscriber {
     
     private let syncIndicator = SyncingIndicator(style: .home)
     private let priceChangeView = PriceChangeView(style: .percentOnly)
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = UIBezierPath(roundedRect: cardView.bounds, byRoundingCorners: .allCorners,
-                                      cornerRadii: CGSize(width: CornerRadius.common.rawValue,
-                                                          height: CornerRadius.common.rawValue)).cgPath
-        cardView.layer.mask = maskLayer
-    }
     
     private var isSyncIndicatorVisible: Bool = false {
         didSet {
