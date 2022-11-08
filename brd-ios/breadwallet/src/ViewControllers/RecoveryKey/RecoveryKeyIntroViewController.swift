@@ -76,7 +76,7 @@ class RecoveryKeyPageCell: UICollectionViewCell {
     func setUpConstraints() {
         imageView.constrain([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Margins.large.rawValue),
-            imageView.heightAnchor.constraint(equalToConstant: ViewSizes.ilustration.rawValue),
+            imageView.heightAnchor.constraint(equalToConstant: ViewSizes.illustration.rawValue),
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margins.custom(15))
         ])
