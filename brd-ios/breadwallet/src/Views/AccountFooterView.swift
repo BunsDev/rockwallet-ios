@@ -44,12 +44,12 @@ class AccountFooterView: UIView, Subscriber {
         let buttons = [
             (L10n.Button.send, #selector(AccountFooterView.send)),
             (L10n.Button.receive, #selector(AccountFooterView.receive))
-        ].compactMap { (title, selector) -> UIButton in
-            let button = UIButton.rounded(title: title.uppercased())
+        ].compactMap { (title, selector) -> BRDButton in
+            let button = BRDButton(title: title, type: .secondary)
             button.addTarget(self, action: selector, for: .touchUpInside)
             return button
         }
-        buttons.first?.isEnabled = currency.wallet?.balance.isZero != true
+//        buttons.first?.isEnabled = currency.wallet?.balance.isZero != true
         let buttonsView = UIStackView(arrangedSubviews: buttons)
         buttonsView.spacing = Margins.small.rawValue
         buttonsView.distribution = .fillEqually
