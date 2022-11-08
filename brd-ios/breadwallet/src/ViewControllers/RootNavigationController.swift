@@ -13,7 +13,6 @@ import UIKit
 class RootNavigationController: UINavigationController, UINavigationControllerDelegate {
     private var backgroundColor = LightColors.Background.two
     var tintColor = LightColors.Text.three
-    private var currentViewController = UIViewController()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         guard let vc = topViewController else { return .default }
@@ -33,12 +32,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        decideInterface(for: currentViewController)
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        currentViewController = viewController
-        
         decideInterface(for: viewController)
     }
     
