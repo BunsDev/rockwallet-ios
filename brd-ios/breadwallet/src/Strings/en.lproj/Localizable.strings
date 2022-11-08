@@ -228,6 +228,8 @@
 /* Capture back page of the document text */
 "AccountKYCLevelTwo.CaptureBackPage" = "Make sure to capture the entire back page of the document.";
 
+"AccountKYCLevelTwo.CaptureEntireDocument" = "Make sure to capture the entire document.";
+
 /* Capture front page text label */
 "AccountKYCLevelTwo.CaptureFrontPage" = "Make sure to capture the entire front page of the document.";
 
@@ -380,7 +382,9 @@
 "Alerts.paperKeySetSubheader" = "Awesome!";
 
 /* Alert Header label (the PIN was set) */
-"Alerts.pinSet" = "PIN successfully updated";
+"Alerts.pinSet" = "PIN successfully set";
+
+"Alerts.pinUpdated" = "PIN successfully updated";
 
 /* Send failure alert header label (the send failed to happen) */
 "Alerts.sendFailure" = "Send failed";
