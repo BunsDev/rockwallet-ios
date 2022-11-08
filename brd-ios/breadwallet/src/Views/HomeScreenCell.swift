@@ -27,6 +27,7 @@ class HomeScreenCell: UITableViewCell, Subscriber {
         let view = UIView()
         view.backgroundColor = LightColors.Background.cards
         view.layer.masksToBounds = true
+        view.layer.cornerRadius = CornerRadius.common.rawValue
         return view
     }()
     
@@ -45,12 +46,6 @@ class HomeScreenCell: UITableViewCell, Subscriber {
     
     private let syncIndicator = SyncingIndicator(style: .home)
     private let priceChangeView = PriceChangeView(style: .percentOnly)
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        cardView.layer.cornerRadius = CornerRadius.common.rawValue
-    }
     
     private var isSyncIndicatorVisible: Bool = false {
         didSet {
