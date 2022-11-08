@@ -50,12 +50,12 @@ enum TransactionStatus: String, Hashable, ModelResponse {
             return nil
         }
     }
-    
+
     var backgroundColor: UIColor {
         switch self {
         case .pending: return LightColors.Pending.two
         case .failed: return LightColors.Error.two
-        case .complete: return LightColors.Success.two
+        case .complete, .confirmed: return LightColors.Success.two
         default: return .clear
         }
     }
@@ -64,7 +64,7 @@ enum TransactionStatus: String, Hashable, ModelResponse {
         switch self {
         case .pending: return LightColors.Pending.one
         case .failed: return LightColors.Error.one
-        case .complete: return LightColors.Success.one
+        case .complete, .confirmed: return LightColors.Success.one
         default: return .clear
         }
     }
