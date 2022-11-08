@@ -34,28 +34,11 @@ enum TransactionStatus: String, Hashable, ModelResponse {
         self.init(rawValue: string)
     }
     
-    var viewModel: AssetViewModel? {
-        switch self {
-        case .pending:
-            return .init(icon: UIImage(named: "pendingIcon"), title: L10n.Staking.statusPending)
-        case .complete:
-            return .init(icon: UIImage(named: "completeIcon"), title: L10n.Transaction.complete)
-        case .failed:
-            return .init(icon: UIImage(named: "errorIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.failed)
-        case .refunded:
-            return .init(icon: UIImage(named: "refundedIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.refunded)
-        case .manuallySettled:
-            return .init(icon: UIImage(named: "completeIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.manuallySettled)
-        default:
-            return nil
-        }
-    }
-    
     var backgroundColor: UIColor {
         switch self {
         case .pending: return LightColors.Pending.two
         case .failed: return LightColors.Error.two
-        case .complete: return LightColors.Success.two
+        case .complete, .confirmed: return LightColors.Success.two
         default: return .clear
         }
     }
@@ -64,7 +47,7 @@ enum TransactionStatus: String, Hashable, ModelResponse {
         switch self {
         case .pending: return LightColors.Pending.one
         case .failed: return LightColors.Error.one
-        case .complete: return LightColors.Success.one
+        case .complete, .confirmed: return LightColors.Success.one
         default: return .clear
         }
     }

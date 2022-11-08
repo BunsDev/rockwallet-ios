@@ -48,8 +48,6 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
             break
         }
         
-        guard let header = detail.status.viewModel else { return }
-        
         let fromImage = getBaseCurrencyImage(currencyCode: detail.source.currency)
         let toImage = getBaseCurrencyImage(currencyCode: detail.destination.currency)
         
@@ -103,7 +101,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         }
         
         let sectionRows = [
-            Models.Section.header: [header],
+            Models.Section.header: [],
             Models.Section.order: [
                 OrderViewModel(title: L10n.Swap.transactionID,
                                value: ExchangeDetailsPresenter.generateAttributedOrderValue(with: orderValue, isCopyable: true),
