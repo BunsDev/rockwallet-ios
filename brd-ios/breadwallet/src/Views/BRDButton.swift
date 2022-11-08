@@ -115,6 +115,10 @@ class BRDButton: UIControl {
     
     override var isEnabled: Bool {
         didSet {
+            guard isEnabled else {
+                container.backgroundColor = LightColors.Disabled.one
+                return
+            }
             setColors()
         }
     }
