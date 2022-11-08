@@ -49,7 +49,7 @@ class AccountFooterView: UIView, Subscriber {
             button.addTarget(self, action: selector, for: .touchUpInside)
             return button
         }
-//        buttons.first?.isEnabled = currency.wallet?.balance.isZero != true
+        buttons.first?.isEnabled = currency.wallet?.balance.isZero != true
         let buttonsView = UIStackView(arrangedSubviews: buttons)
         buttonsView.spacing = Margins.small.rawValue
         buttonsView.distribution = .fillEqually
