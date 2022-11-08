@@ -23,10 +23,10 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
         }
     }
 
-    private let lockSuccessIcon = UIImageView(image: UIImage(named: "RecoveryKeyLockImageSuccess"))
-    private let headingLabel = UILabel()
-    private let subheadingLabel = UILabel()
-    private var continueButton = BRDButton(title: L10n.RecoveryKeyFlow.goToWalletButtonTitle, type: .primary)
+    private let lockSuccessIcon = UIImageView(image: UIImage(named: "celebrate"))
+    private let headingLabel = UILabel.wrapping(font: Fonts.Title.six, color: LightColors.Text.three)
+    private let subheadingLabel = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
+    private var continueButton = BRDButton(title: L10n.RecoveryKeyFlow.goToWalletButtonTitle, type: .secondary)
     
     init(fromOnboarding: Bool, proceedToWallet: (() -> Void)?) {
         super.init()
@@ -81,10 +81,6 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
         for (i, label) in [headingLabel, subheadingLabel].enumerated() {
             view.addSubview(label)
             label.textAlignment = .center
-            label.font = fonts[i]
-            label.textColor = colors[i]
-            label.numberOfLines = 0
-            
             label.text = titles[i]
             
             label.constrain([
