@@ -10,6 +10,7 @@ import UIKit
 
 enum AlertType {
     case pinSet(callback: () -> Void)
+    case pinUpdated(callback: () -> Void)
     case paperKeySet(callback: () -> Void)
     case sendSuccess
     case addressesCopied
@@ -25,6 +26,8 @@ enum AlertType {
         switch self {
         case .pinSet:
             return L10n.Alerts.pinSet
+        case .pinUpdated:
+            return L10n.Alerts.pinUpdated
         case .paperKeySet:
             return L10n.Alerts.paperKeySet
         case .sendSuccess:
@@ -46,8 +49,6 @@ enum AlertType {
 
     var subheader: String {
         switch self {
-        case .pinSet:
-            return ""
         case .paperKeySet:
             return L10n.Alerts.paperKeySetSubheader
         case .sendSuccess:
@@ -62,10 +63,10 @@ enum AlertType {
             return L10n.Alert.accountRestorediCloud
         case .cloudBackupSuccess:
             return L10n.Alert.accountBackedUpiCloud
-        case .walletRestored, .walletUnlinked:
-            return ""
         case .none:
             return "none"
+        default:
+            return ""
         }
     }
 
@@ -78,6 +79,8 @@ extension AlertType: Equatable {}
 
 func == (lhs: AlertType, rhs: AlertType) -> Bool {
     switch (lhs, rhs) {
+    case (.pinUpdated, .pinUpdated):
+        return true
     case (.pinSet, .pinSet):
         return true
     case (.paperKeySet, .paperKeySet):

@@ -22,7 +22,7 @@ struct BuyOrderConfiguration: Configurable {
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
-                                                     border: Presets.Border.zero)
+                                                     border: Presets.Border.mediumPlain)
     var currencyIconImage = BackgroundConfiguration(border: BorderConfiguration(borderWidth: 0, cornerRadius: .fullRadius))
 }
 

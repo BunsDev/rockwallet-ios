@@ -13,7 +13,6 @@ enum ButtonType {
     case secondary
     case tertiary
     case underlined
-    case darkOpaque
     case secondaryTransparent
     case search
 }
@@ -115,6 +114,29 @@ class BRDButton: UIControl {
     
     override var isEnabled: Bool {
         didSet {
+            guard isEnabled else {
+                switch type {
+                case .primary:
+                    imageView?.tintColor = LightColors.Disabled.one
+                    label.textColor = LightColors.Disabled.one
+                    
+                case .secondary:
+                    container.backgroundColor = LightColors.Disabled.one
+                    
+                case .tertiary:
+                    container.layer.borderColor = LightColors.Disabled.one.cgColor
+                    imageView?.tintColor = LightColors.Disabled.one
+                    label.textColor = LightColors.Disabled.one
+                    
+                default:
+                    container.layer.backgroundColor = container.layer.backgroundColor?.copy(alpha: 0.7)
+                    imageView?.tintColor = imageView?.tintColor?.withAlphaComponent(0.7)
+                    label.textColor = label.textColor?.withAlphaComponent(0.7)
+                    return
+                }
+                
+                return
+            }
             setColors()
         }
     }
@@ -219,9 +241,6 @@ class BRDButton: UIControl {
             container.backgroundColor = .clear
             label.textColor = LightColors.Contrast.two
             imageView?.tintColor = LightColors.Contrast.two
-        case .darkOpaque:
-            container.backgroundColor = .darkOpaqueButton
-            label.textColor = .black
         case .secondaryTransparent:
             container.backgroundColor = .transparentButton
             label.textColor = .black

@@ -53,7 +53,7 @@ class MessageUIPresenter: NSObject {
         
         let emailView = MFMailComposeViewController()
         
-        emailView.setToRecipients([C.iosEmail])
+        emailView.setToRecipients([C.feedbackEmail])
         emailView.setSubject("RockWallet Logs")
         emailView.setMessageBody("RockWallet Logs", isHTML: false)
         

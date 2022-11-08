@@ -93,6 +93,7 @@ class AlertPresenter: Subscriber {
                 switch type {
                 case .paperKeySet(let callback),
                         .pinSet(let callback),
+                        .pinUpdated(let callback),
                         .sweepSuccess(let callback),
                         .cloudBackupRestoreSuccess(let callback),
                         .walletRestored(let callback),
