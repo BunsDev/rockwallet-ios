@@ -102,10 +102,8 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         }
         
         cell.setup { view in
-            view.configure(with: .init(shadow: Presets.Shadow.light,
-                                       background: .init(backgroundColor: LightColors.Background.one,
-                                                         tintColor: LightColors.Text.one,
-                                                         border: Presets.Border.zero)))
+            view.configure(with: .init(shadow: Presets.ExchangeView.shadow,
+                                       background: Presets.ExchangeView.background))
             view.setup(with: model)
             
             view.didChangeFromFiatAmount = { [weak self] amount in

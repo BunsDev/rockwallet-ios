@@ -78,7 +78,6 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         view.keyboardType = .decimalPad
         view.delegate = self
         view.addTarget(self, action: #selector(fiatAmountDidChange(_:)), for: .editingChanged)
-        
         return view
     }()
     
@@ -91,7 +90,6 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         view.keyboardType = .decimalPad
         view.delegate = self
         view.addTarget(self, action: #selector(cryptoAmountDidChange(_:)), for: .editingChanged)
-        
         return view
     }()
     

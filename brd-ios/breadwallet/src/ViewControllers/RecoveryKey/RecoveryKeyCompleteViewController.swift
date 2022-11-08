@@ -68,8 +68,6 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
         constrainContinueButton(continueButton)
         
         let titles = [L10n.RecoveryKeyFlow.successHeading, L10n.RecoveryKeyFlow.successSubheading]
-        let fonts = [Fonts.Title.two, Fonts.Body.one]
-        let colors = [LightColors.Text.one, LightColors.Text.two]
         let xInsets: CGFloat = E.isSmallScreen ? 40 : 62
         
         continueButton.title = shouldShowGoToWalletButton ? L10n.RecoveryKeyFlow.goToWalletButtonTitle : L10n.Button.done
