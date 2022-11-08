@@ -26,6 +26,7 @@ class HomeScreenCell: UITableViewCell, Subscriber {
     lazy var cardView: UIView = {
         let view = UIView()
         view.backgroundColor = LightColors.Background.cards
+        view.layer.masksToBounds = true
         return view
     }()
     
@@ -48,11 +49,7 @@ class HomeScreenCell: UITableViewCell, Subscriber {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = UIBezierPath(roundedRect: cardView.bounds, byRoundingCorners: .allCorners,
-                                      cornerRadii: CGSize(width: CornerRadius.common.rawValue,
-                                                          height: CornerRadius.common.rawValue)).cgPath
-        cardView.layer.mask = maskLayer
+        cardView.layer.cornerRadius = CornerRadius.common.rawValue
     }
     
     private var isSyncIndicatorVisible: Bool = false {
