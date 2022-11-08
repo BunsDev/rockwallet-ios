@@ -62,7 +62,6 @@ struct Presets {
     }
     
     struct Border {
-        static var zero = BorderConfiguration(borderWidth: 0, cornerRadius: .zero)
         static var extraSmallPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .extraSmall)
         static var mediumPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .medium)
         static var commonPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .common)

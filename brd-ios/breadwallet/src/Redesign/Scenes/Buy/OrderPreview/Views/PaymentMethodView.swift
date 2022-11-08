@@ -15,8 +15,7 @@ struct PaymentMethodConfiguration: Configurable {
     var cvvTitle: TitleValueConfiguration? = Presets.TitleValue.verticalSmall
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
-                                                     tintColor: LightColors.Text.one,
-                                                     border: Presets.Border.zero)
+                                                     tintColor: LightColors.Text.one)
 }
 
 struct PaymentMethodViewModel: ViewModel {
