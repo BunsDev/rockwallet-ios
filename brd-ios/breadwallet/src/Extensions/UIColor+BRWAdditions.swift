@@ -257,11 +257,6 @@ extension UIColor {
     static var transparentButton: UIColor {
         return UIColor(white: 1.0, alpha: 0.2)
     }
-
-    static var darkOpaqueButton: UIColor {
-        return UIColor(hex: "6496F8")
-//        return UIColor(white: 1.0, alpha: 0.05)
-    }
     
     static var blueGradientStart: UIColor {
         return UIColor(red: 99.0/255.0, green: 188.0/255.0, blue: 255.0/255.0, alpha: 1.0)

@@ -1341,6 +1341,8 @@ internal enum L10n {
       internal static let dontShow = L10n.tr("Localizable", "Prompts.RateApp.dontShow", fallback: "Don't ask again")
       /// Enjoying RockWallet?
       internal static let enjoyingBrd = L10n.tr("Localizable", "Prompts.RateApp.enjoyingBrd", fallback: "Enjoying RockWallet?")
+      /// Enjoying RockWallet?
+      internal static let enjoyingRockWallet = L10n.tr("Localizable", "Prompts.RateApp.enjoyingRockWallet", fallback: "Enjoying RockWallet?")
       /// Your review helps grow the RockWallet community.
       internal static let googlePlayReview = L10n.tr("Localizable", "Prompts.RateApp.googlePlayReview", fallback: "Your review helps grow the RockWallet community.")
       /// No thanks
