@@ -21,6 +21,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         return L10n.Account.personalInformation
     }
     private var isValid = false
+    private var isPickCountryPressed = false
 
     // MARK: - Overrides
     
@@ -155,6 +156,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         switch sections[indexPath.section] as? Models.Section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
+            isPickCountryPressed = true
             
         default:
             return
@@ -170,9 +172,13 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
 
     // MARK: - KYCBasicResponseDisplay
     func displayCountry(responseDisplay: KYCBasicModels.SelectCountry.ResponseDisplay) {
+        guard isPickCountryPressed else { return }
+        
         coordinator?.showCountrySelector(countries: responseDisplay.countries) { [weak self] model in
             self?.interactor?.pickCountry(viewAction: .init(code: model?.code, countryFullName: model?.name))
         }
+        
+        isPickCountryPressed = false
     }
     
     func displayValidate(responseDisplay: KYCBasicModels.Validate.ResponseDisplay) {
