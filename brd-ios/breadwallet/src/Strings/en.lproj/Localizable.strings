@@ -502,7 +502,7 @@
 "Button.dismiss" = "Dismiss";
 
 /* Done button title */
-"Button.done" = "Done";
+"Button.done" = "DONE";
 
 /* Finish button title */
 "Button.Finish" = "Finish";
@@ -1365,7 +1365,7 @@
 "Onboarding.getStarted" = "Get started";
 
 /* Onboarding screen 'Next' button */
-"Onboarding.next" = "Next";
+"Onboarding.next" = "NEXT";
 
 /* Onboarding screen restore an existing wallet. */
 "Onboarding.restoreWallet" = "Restore with Recovery Phrase";
@@ -1484,6 +1484,8 @@
 
 "Prompts.RateApp.enjoyingBrd" = "Enjoying RockWallet?";
 
+"Prompts.RateApp.enjoyingRockWallet" = "Enjoying RockWallet?";
+
 "Prompts.RateApp.googlePlayReview" = "Your review helps grow the RockWallet community.";
 
 "Prompts.RateApp.noThanks" = "No thanks";
@@ -1584,7 +1586,7 @@
 "Receive.title" = "Receive";
 
 /* Done button text */
-"RecoverWallet.done" = "Done";
+"RecoverWallet.done" = "DONE";
 
 /* Enter recovery phrase label to delete the wallet */
 "RecoverWallet.EnterRecoveryPhrase" = "Please enter your recovery phrase to delete this wallet from your device.";
@@ -1608,7 +1610,7 @@
 "RecoverWallet.leftArrow" = "Left Arrow";
 
 /* Next button label */
-"RecoverWallet.next" = "Next";
+"RecoverWallet.next" = "NEXT";
 
 /* What Is recovery phrase text popup */
 "RecoverWallet.RecoveryPhrasePopup" = "A Recovery Phrase consists of 12 randomly generated words. The app creates the Recovery Phrase for you automatically when you start a new wallet. The Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction, or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The key is also required when upgrading your current phone to a new one.";
@@ -1650,7 +1652,7 @@
 "RecoveryKeyFlow.exitRecoveryKeyPromptTitle" = "Set Up Later";
 
 /* Button text for the 'Generate Recovery Phrase' button */
-"RecoveryKeyFlow.generateKeyButton" = "Generate Recovery Phrase";
+"RecoveryKeyFlow.generateKeyButton" = "GOT IT";
 
 /* Subtext for the recovery key landing page. */
 "RecoveryKeyFlow.generateKeyExplanation" = "This is required to restore your wallet if you upgrade or lose your phone.";
@@ -1659,7 +1661,7 @@
 "RecoveryKeyFlow.generateKeyTitle" = "Generate your private recovery phrase";
 
 /* Title for a button that takes the user to the wallet after setting up the recovery key. */
-"RecoveryKeyFlow.goToWalletButtonTitle" = "Go to Wallet";
+"RecoveryKeyFlow.goToWalletButtonTitle" = "GO TO WALLET";
 
 /* Hint text for recovery key intro page, e.g., Step 2 */
 "RecoveryKeyFlow.howItWorksStep" = "How it works - Step %1$@";
@@ -1677,7 +1679,7 @@
 "RecoveryKeyFlow.noScreenshotsOrEmailWarning" = "For security purposes, do not screenshot or email these words";
 
 /* Recommends that the user avoids capturing the paper key with a screenshot */
-"RecoveryKeyFlow.noScreenshotsRecommendation" = "Write down your key on paper and confirm it. Screenshots are not recommended for security reasons.";
+"RecoveryKeyFlow.noScreenshotsRecommendation" = "This is required to restore your wallet if you upgrade or lose your phone.";
 
 /* Title displayed when the user starts the process of recovering a wallet */
 "RecoveryKeyFlow.recoveryYourWallet" = "Restore Your Wallet";
@@ -1722,7 +1724,7 @@
 "RecoveryKeyFlow.wipeWalletSubtext" = "Start a new wallet by wiping the current wallet from your device.";
 
 /* Title for recovery key intro page */
-"RecoveryKeyFlow.writeItDown" = "Write down your key";
+"RecoveryKeyFlow.writeItDown" = "Generate your private Recovery Phrase";
 
 /* Title for the recovery phrase landing page if the key has already been generated. */
 "RecoveryKeyFlow.writeKeyAgain" = "Write down your recovery phrase again";
@@ -3070,7 +3072,7 @@
 "WritePaperPhrase.instruction" = "Write down the following words in order";
 
 /* button label */
-"WritePaperPhrase.next" = "Next";
+"WritePaperPhrase.next" = "NEXT";
 
 /* button label */
 "WritePaperPhrase.previous" = "Previous";

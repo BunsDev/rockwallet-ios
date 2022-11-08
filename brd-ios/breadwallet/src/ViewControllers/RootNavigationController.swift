@@ -2,13 +2,19 @@
 //  RootNavigationController.swift
 //  breadwallet
 //
-//  Created by Adrian Corscadden on 2017-12-05.
-//  Copyright © 2017-2019 Breadwinner AG. All rights reserved.
+//  Created by Kenan Mamedoff on 07/11/2022.
+//  Copyright © 2022 RockWallet, LLC. All rights reserved.
+//
+//  See the LICENSE file at the project root for license information.
 //
 
 import UIKit
 
 class RootNavigationController: UINavigationController, UINavigationControllerDelegate {
+    private var backgroundColor = LightColors.Background.two
+    private var tintColor = LightColors.Text.three
+    private var currentViewController = UIViewController()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         guard let vc = topViewController else { return .default }
         return vc.preferredStatusBarStyle
@@ -23,21 +29,22 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setNormalNavigationBar()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        setNormalNavigationBar()
+        decideInterface(for: children.last)
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        let backgroundColor: UIColor
-        let tintColor: UIColor
+        decideInterface(for: currentViewController)
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        currentViewController = viewController
         
+        decideInterface(for: viewController)
+    }
+    
+    func decideInterface(for viewController: UIViewController?) {
         switch viewController {
-        case is AccountViewController:
+        case is AccountViewController, is HomeScreenViewController:
             backgroundColor = .clear
             tintColor = LightColors.Text.three
             
@@ -45,8 +52,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = .black
             tintColor = LightColors.Background.one
             
-        case is HomeScreenViewController,
-            is OnboardingViewController:
+        case is OnboardingViewController:
             backgroundColor = .clear
             tintColor = LightColors.Background.two
             
@@ -78,41 +84,41 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         }
         
         let item = SimpleBackBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        viewController.navigationItem.backBarButtonItem = item
+        viewController?.navigationItem.backBarButtonItem = item
         
-        setNormalNavigationBar(normalBackgroundColor: backgroundColor,
-                               scrollBackgroundColor: backgroundColor,
-                               tintColor: tintColor)
+        setNormalNavigationBar()
     }
     
-    func setNormalNavigationBar(normalBackgroundColor: UIColor = .clear,
-                                scrollBackgroundColor: UIColor = .clear,
-                                tintColor: UIColor = LightColors.Text.one) {
-        navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font: Fonts.Title.six, NSAttributedString.Key.foregroundColor: tintColor
-        ]
-        
+    func setNormalNavigationBar() {
         let backImage = UIImage(named: "back")
         
         let normalAppearance = UINavigationBarAppearance()
         normalAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         normalAppearance.titleTextAttributes = navigationBar.titleTextAttributes ?? [:]
         normalAppearance.configureWithOpaqueBackground()
-        normalAppearance.backgroundColor = normalBackgroundColor
+        normalAppearance.backgroundColor = backgroundColor
         normalAppearance.shadowColor = nil
         
         let scrollAppearance = UINavigationBarAppearance()
         scrollAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
         scrollAppearance.titleTextAttributes = navigationBar.titleTextAttributes ?? [:]
         scrollAppearance.configureWithTransparentBackground()
-        scrollAppearance.backgroundColor = scrollBackgroundColor
+        scrollAppearance.backgroundColor = backgroundColor
         scrollAppearance.shadowColor = nil
         
         navigationBar.scrollEdgeAppearance = normalAppearance
         navigationBar.standardAppearance = scrollAppearance
         navigationBar.compactAppearance = scrollAppearance
         
-        navigationBar.tintColor = tintColor
+        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            self?.navigationBar.tintColor = self?.tintColor ?? .clear
+            self?.navigationBar.layoutIfNeeded()
+        }
+        
+        navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.font: Fonts.Title.six, NSAttributedString.Key.foregroundColor: tintColor
+        ]
+        
         navigationBar.prefersLargeTitles = false
     }
 }

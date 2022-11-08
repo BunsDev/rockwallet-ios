@@ -383,7 +383,6 @@ class WriteRecoveryKeyViewController: BaseRecoveryKeyViewController {
     
     private func updateInfoView() {
         infoView.text = (pageIndex == 0) ? L10n.RecoveryKeyFlow.noScreenshotsOrEmailWarning : L10n.RecoveryKeyFlow.rememberToWriteDownReminder
-        infoView.imageName = (pageIndex == 0) ? "ExclamationMarkCircle" : "Document"
     }
     
     private func updateWordCellAppearances(pageScrollPercent: CGFloat) {

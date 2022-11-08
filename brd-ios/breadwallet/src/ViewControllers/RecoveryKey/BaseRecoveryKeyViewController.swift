@@ -14,8 +14,6 @@ class BaseRecoveryKeyViewController: UIViewController {
         case skip
     }
     
-    let continueButtonHeight: CGFloat = 48
-    
     var eventContext: EventContext = .none
     var screen: Screen = .none
     
@@ -45,8 +43,8 @@ class BaseRecoveryKeyViewController: UIViewController {
         button.constrain([
             button.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: Margins.large.rawValue),
             button.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -Margins.large.rawValue),
-            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Margins.large.rawValue),
-            button.heightAnchor.constraint(equalToConstant: continueButtonHeight)
+            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Margins.huge.rawValue),
+            button.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue)
             ])
     }
     

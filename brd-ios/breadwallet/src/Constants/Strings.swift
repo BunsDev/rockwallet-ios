@@ -431,7 +431,7 @@ internal enum L10n {
     /// prompt dismiss button
     internal static let dismiss = L10n.tr("Localizable", "Button.dismiss", fallback: "Dismiss")
     /// Done button title
-    internal static let done = L10n.tr("Localizable", "Button.done", fallback: "Done")
+    internal static let done = L10n.tr("Localizable", "Button.done", fallback: "DONE")
     /// Finish button title
     internal static let finish = L10n.tr("Localizable", "Button.Finish", fallback: "Finish")
     /// Go to dashboard button
@@ -1219,7 +1219,7 @@ internal enum L10n {
     /// Onboarding screen 'Get started' (create new wallet) button
     internal static let getStarted = L10n.tr("Localizable", "Onboarding.getStarted", fallback: "Get started")
     /// Onboarding screen 'Next' button
-    internal static let next = L10n.tr("Localizable", "Onboarding.next", fallback: "Next")
+    internal static let next = L10n.tr("Localizable", "Onboarding.next", fallback: "NEXT")
     /// Onboarding screen restore an existing wallet.
     internal static let restoreWallet = L10n.tr("Localizable", "Onboarding.restoreWallet", fallback: "Restore with Recovery Phrase")
     /// Onboarding screen Skip button title that allows the user to exit the onboarding process.
@@ -1467,7 +1467,7 @@ internal enum L10n {
   }
   internal enum RecoverWallet {
     /// Done button text
-    internal static let done = L10n.tr("Localizable", "RecoverWallet.done", fallback: "Done")
+    internal static let done = L10n.tr("Localizable", "RecoverWallet.done", fallback: "DONE")
     /// Enter recovery phrase label to delete the wallet
     internal static let enterRecoveryPhrase = L10n.tr("Localizable", "RecoverWallet.EnterRecoveryPhrase", fallback: "Please enter your recovery phrase to delete this wallet from your device.")
     /// Recover wallet header
@@ -1483,7 +1483,7 @@ internal enum L10n {
     /// Previous button accessibility label
     internal static let leftArrow = L10n.tr("Localizable", "RecoverWallet.leftArrow", fallback: "Left Arrow")
     /// Next button label
-    internal static let next = L10n.tr("Localizable", "RecoverWallet.next", fallback: "Next")
+    internal static let next = L10n.tr("Localizable", "RecoverWallet.next", fallback: "NEXT")
     /// What Is recovery phrase text popup
     internal static let recoveryPhrasePopup = L10n.tr("Localizable", "RecoverWallet.RecoveryPhrasePopup", fallback: "A Recovery Phrase consists of 12 randomly generated words. The app creates the Recovery Phrase for you automatically when you start a new wallet. The Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction, or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The key is also required when upgrading your current phone to a new one.")
     /// Reset PIN with paper key: more information button.
@@ -1513,13 +1513,13 @@ internal enum L10n {
     /// Title for an alert dialog asking the user whether to set up the recovery key later
     internal static let exitRecoveryKeyPromptTitle = L10n.tr("Localizable", "RecoveryKeyFlow.exitRecoveryKeyPromptTitle", fallback: "Set Up Later")
     /// Button text for the 'Generate Recovery Phrase' button
-    internal static let generateKeyButton = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyButton", fallback: "Generate Recovery Phrase")
+    internal static let generateKeyButton = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyButton", fallback: "GOT IT")
     /// Subtext for the recovery key landing page.
     internal static let generateKeyExplanation = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyExplanation", fallback: "This is required to restore your wallet if you upgrade or lose your phone.")
     /// Default title for the recovery phrase landing page
     internal static let generateKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyTitle", fallback: "Generate your private recovery phrase")
     /// Title for a button that takes the user to the wallet after setting up the recovery key.
-    internal static let goToWalletButtonTitle = L10n.tr("Localizable", "RecoveryKeyFlow.goToWalletButtonTitle", fallback: "Go to Wallet")
+    internal static let goToWalletButtonTitle = L10n.tr("Localizable", "RecoveryKeyFlow.goToWalletButtonTitle", fallback: "GO TO WALLET")
     /// Hint text for recovery key intro page, e.g., Step 2
     internal static func howItWorksStep(_ p1: Any) -> String {
       return L10n.tr("Localizable", "RecoveryKeyFlow.howItWorksStep", String(describing: p1), fallback: "How it works - Step %1$@")
@@ -1533,7 +1533,7 @@ internal enum L10n {
     /// Reminds the user not to take screenshots or email the recovery key words
     internal static let noScreenshotsOrEmailWarning = L10n.tr("Localizable", "RecoveryKeyFlow.noScreenshotsOrEmailWarning", fallback: "For security purposes, do not screenshot or email these words")
     /// Recommends that the user avoids capturing the paper key with a screenshot
-    internal static let noScreenshotsRecommendation = L10n.tr("Localizable", "RecoveryKeyFlow.noScreenshotsRecommendation", fallback: "Write down your key on paper and confirm it. Screenshots are not recommended for security reasons.")
+    internal static let noScreenshotsRecommendation = L10n.tr("Localizable", "RecoveryKeyFlow.noScreenshotsRecommendation", fallback: "This is required to restore your wallet if you upgrade or lose your phone.")
     /// Title displayed when the user starts the process of recovering a wallet
     internal static let recoveryYourWallet = L10n.tr("Localizable", "RecoveryKeyFlow.recoveryYourWallet", fallback: "Restore Your Wallet")
     /// Subtitle displayed when the user starts the process of recovering a wallet
@@ -1563,7 +1563,7 @@ internal enum L10n {
     /// Subtitle displayed to the user on the intro screen when wiping a wallet.
     internal static let wipeWalletSubtext = L10n.tr("Localizable", "RecoveryKeyFlow.wipeWalletSubtext", fallback: "Start a new wallet by wiping the current wallet from your device.")
     /// Title for recovery key intro page
-    internal static let writeItDown = L10n.tr("Localizable", "RecoveryKeyFlow.writeItDown", fallback: "Write down your key")
+    internal static let writeItDown = L10n.tr("Localizable", "RecoveryKeyFlow.writeItDown", fallback: "Generate your private Recovery Phrase")
     /// Title for the recovery phrase landing page if the key has already been generated.
     internal static let writeKeyAgain = L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyAgain", fallback: "Write down your recovery phrase again")
     /// Subtitle for the write recovery key screen
@@ -2729,7 +2729,7 @@ internal enum L10n {
     /// Paper key instructions.
     internal static let instruction = L10n.tr("Localizable", "WritePaperPhrase.instruction", fallback: "Write down the following words in order")
     /// button label
-    internal static let next = L10n.tr("Localizable", "WritePaperPhrase.next", fallback: "Next")
+    internal static let next = L10n.tr("Localizable", "WritePaperPhrase.next", fallback: "NEXT")
     /// button label
     internal static let previous = L10n.tr("Localizable", "WritePaperPhrase.previous", fallback: "Previous")
     /// 1 of 3

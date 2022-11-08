@@ -10,7 +10,7 @@ import UIKit
 
 class InfoView: UIView {
     
-    private let imageSize: CGFloat = ViewSizes.small.rawValue
+    private let imageSize: CGFloat = ViewSizes.medium.rawValue
     
     private let infoLabel = UILabel()
     private let infoImageView = UIImageView()
@@ -21,15 +21,13 @@ class InfoView: UIView {
         }
     }
     
-    var imageName: String = "warning" {
-        didSet {
-            infoImageView.image = UIImage(named: imageName)?.withTintColor(LightColors.Error.one)
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setUp()
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        infoImageView.layer.cornerRadius = CornerRadius.fullRadius.rawValue * infoImageView.frame.height
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,7 +44,12 @@ class InfoView: UIView {
         infoLabel.adjustsFontSizeToFitWidth = true
         infoLabel.minimumScaleFactor = 0.5
         
+        infoImageView.image = .init(named: "warning")
         infoImageView.contentMode = .center
+        infoImageView.tintColor = LightColors.Error.one
+        infoImageView.backgroundColor = LightColors.Background.cards
+        infoImageView.layer.borderWidth = 0
+        infoImageView.layer.masksToBounds = true
 
         addSubview(infoLabel)
         addSubview(infoImageView)

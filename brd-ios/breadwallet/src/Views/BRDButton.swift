@@ -43,7 +43,7 @@ class BRDButton: UIControl {
     var title: String {
         didSet {
             guard type == .underlined else {
-                label.text = title.uppercased()
+                label.text = title
                 return
             }
             
@@ -59,7 +59,7 @@ class BRDButton: UIControl {
             imageView?.image = image
         }
     }
-    private let type: ButtonType
+    private var type: ButtonType
     private let container = UIView()
     private let label = UILabel()
     private var cornerRadius = CornerRadius.common
@@ -187,6 +187,11 @@ class BRDButton: UIControl {
     private func setupLabelOnly() {
         container.addSubview(label)
         label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.small.rawValue, left: Margins.large.rawValue, bottom: -Margins.small.rawValue, right: -Margins.large.rawValue))
+    }
+    
+    func setType(type: ButtonType) {
+        self.type = type
+        setColors()
     }
 
     private func setColors() {
