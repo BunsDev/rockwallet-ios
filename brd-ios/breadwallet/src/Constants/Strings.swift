@@ -278,8 +278,6 @@ internal enum L10n {
     internal static let accountRestorediCloud = L10n.tr("Localizable", "Alert.AccountRestorediCloud", fallback: "Account succesfully restored from Cloud backup")
     /// Error alert title
     internal static let error = L10n.tr("Localizable", "Alert.error", fallback: "Error")
-    /// Error title when balance to low
-    internal static let ethBalance = L10n.tr("Localizable", "Alert.ethBalance", fallback: "Insufficient Ethereum Balance")
     /// Hedera Account succesfully created header alert view
     internal static let hederaAccount = L10n.tr("Localizable", "Alert.HederaAccount", fallback: "Hedera Account succesfully created.")
     /// No internet alert message
@@ -839,7 +837,9 @@ internal enum L10n {
     /// Email unavailable alert title
     internal static let emailUnavailableTitle = L10n.tr("Localizable", "ErrorMessages.emailUnavailableTitle", fallback: "Email Unavailable")
     /// Not enough ETH for transaction fee
-    internal static let ethBalanceLow = L10n.tr("Localizable", "ErrorMessages.ethBalanceLow", fallback: "Insufficient Ethereum balance in your wallet to transfer this type of token.")
+    internal static func ethBalanceLowAddEth(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", p1, fallback: "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet. ")
+    }
     /// Swap failed. Reason: %@.
     internal static func exchangeFailed(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.exchangeFailed", String(describing: p1), fallback: "Swap failed. Reason: %@.")

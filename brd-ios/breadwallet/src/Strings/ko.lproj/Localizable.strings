@@ -1310,9 +1310,6 @@
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "이 종류의 토큰을 전송하려면 지갑에 최소 %1$s가 있어야 합니다. 지금 이더리움 지갑으로 가시겠습니까?";
 
-/* Your ethereum balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "이더리움 잔액이 부족합니다";
-
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "해당 수취인 주소는 %1$s에서 유효하지 않은 주소입니다.";
 
