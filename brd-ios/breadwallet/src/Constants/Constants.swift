@@ -40,7 +40,7 @@ struct C {
     static let privacyPolicy = "https://\(companyURL)/privacy"
     static let termsAndConditions = "https://\(companyURL)/tc"
     static let supportLink = "https://help.\(companyURL)"
-    static let feedbackEmail = "hello@\(companyURL)"
+    static let feedbackEmail = "support@\(companyURL)"
     static let reviewLink = "https://apps.apple.com/us/app/rockwallet-buy-and-swap/id6444194230?action=write-review"
     static var standardPort: Int {
         return E.isTestnet ? 18333 : 8333
