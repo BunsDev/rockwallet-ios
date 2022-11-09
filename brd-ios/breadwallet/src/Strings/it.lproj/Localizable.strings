@@ -74,7 +74,7 @@
 "Alert.error" = "Errore";
 
 /* Keystore error */
-"Alert.keystore.generic.android" = "C’è un problema con il KeyStore del tuo sistema operativo Android, per favore, contatta support@breadwallet.com";
+"Alert.keystore.generic.android" = "C’è un problema con il KeyStore del tuo sistema operativo Android, per favore, contatta support@rockwallet.com";
 
 /* KeyStore error, keys are invalidated */
 "Alert.keystore.invalidated.android" = "I tuoi dati criptati di RockWallet sono stati recentemente  invalidati  perché la schermata di blocco del tuo Android era disabilitata.";

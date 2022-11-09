@@ -74,7 +74,7 @@
 "Alert.error" = "Fel";
 
 /* Keystore error */
-"Alert.keystore.generic.android" = "Det har uppstått ett problem med KeyStore till Android OS. Kontakta support@breadwallet.com";
+"Alert.keystore.generic.android" = "Det har uppstått ett problem med KeyStore till Android OS. Kontakta support@rockwallet.com";
 
 /* KeyStore error, keys are invalidated */
 "Alert.keystore.invalidated.android" = "Dina krypterade RockWallet-uppgifter har nyligen ogiltigförklarats på grund av att Androids skärmlås inaktiverades.";
