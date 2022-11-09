@@ -3664,6 +3664,7 @@
 		};
 		7E390A2A27F57D15003C929D /* Download */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3682,6 +3683,7 @@
 		};
 		7E67772628C9C4910052927A /* Generate localization */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3700,6 +3702,7 @@
 		};
 		7EDC2EED291A68D600FF9F34 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
