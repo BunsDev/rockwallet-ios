@@ -280,9 +280,8 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     
                 case .failure:
                     self?.sendButton.isEnabled = false
-                    self?.showAlert(title: L10n.Alert.ethBalance,
-                                    message: L10n.ErrorMessages.ethBalanceLow,
-                                    buttonLabel: L10n.Button.ok)
+                    
+                    _ = self?.handleValidationResult(.insufficientFunds)
                 }
                 
                 self?.amountView.updateBalanceLabel()
@@ -328,7 +327,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     @objc private func pasteTapped() {
         guard let pasteboard = UIPasteboard.general.string, !pasteboard.utf8.isEmpty else {
-            return showAlert(title: L10n.Alert.error, message: L10n.Send.emptyPasteboard, buttonLabel: L10n.Button.ok)
+            return showAlert(title: L10n.Alert.error, message: L10n.Send.emptyPasteboard)
         }
         
         if let resolver = ResolvableFactory.resolver(pasteboard) {
@@ -344,7 +343,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         
         guard let request = PaymentRequest(string: pasteboard, currency: currency) else {
             let message = L10n.Send.invalidAddressOnPasteboard(currency.name)
-            return showAlert(title: L10n.Send.invalidAddressTitle, message: message, buttonLabel: L10n.Button.ok)
+            return showAlert(title: L10n.Send.invalidAddressTitle, message: message)
         }
         self.paymentProtocolRequest = nil
         handleRequest(request)
@@ -360,7 +359,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             let tag = addressDetails.1
             guard currency.isValidAddress(address) else {
                 let message = L10n.Send.invalidAddressMessage(currency.name)
-                showAlert(title: L10n.Send.invalidAddressTitle, message: message, buttonLabel: L10n.Button.ok)
+                showAlert(title: L10n.Send.invalidAddressTitle, message: message)
                 resetPayId()
                 return
             }
@@ -428,7 +427,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         guard paymentProtocolRequest == nil else { return true }
         
         guard let address = address, !address.isEmpty else {
-            showAlert(title: L10n.Alert.error, message: L10n.Send.noAddress, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Alert.error, message: L10n.Send.noAddress)
             return false
         }
         
@@ -438,17 +437,17 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         //know that the address is invalid.
         guard currency.isValidAddress(address) else {
             let message = L10n.Send.invalidAddressMessage(currency.name)
-            showAlert(title: L10n.Send.invalidAddressTitle, message: message, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Send.invalidAddressTitle, message: message)
             return false
         }
 
         guard let amount = amount, !amount.isZero else {
-            showAlert(title: L10n.Alert.error, message: L10n.Send.noAmount, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Alert.error, message: L10n.Send.noAmount)
             return false
         }
         
         guard let feeBasis = currentFeeBasis else {
-            showAlert(title: L10n.Alert.error, message: L10n.Send.noFeeEstimate, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Alert.error, message: L10n.Send.noFeeEstimate)
             return false
         }
         
@@ -457,7 +456,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         if let attribute = attributeCell?.attribute, currency.isXRP,
            !attribute.isEmpty {
             if UInt32(attribute) == nil {
-                showAlert(title: L10n.Alert.error, message: L10n.Send.destinationTag, buttonLabel: L10n.Button.ok)
+                showAlert(title: L10n.Alert.error, message: L10n.Send.destinationTag)
                return false
             }
             attributeText = attribute
@@ -473,25 +472,29 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     private func handleValidationResult(_ result: SenderValidationResult, protocolRequest: PaymentProtocolRequest? = nil) -> Bool {
         switch result {
         case .noFees:
-            showAlert(title: L10n.Alert.error, message: L10n.Send.noFeesError, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Alert.error, message: L10n.Send.noFeesError)
             
         case .invalidAddress:
             let message = L10n.Send.invalidAddressMessage(currency.name)
-            showAlert(title: L10n.Send.invalidAddressTitle, message: message, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Send.invalidAddressTitle, message: message)
             
         case .ownAddress:
-            showAlert(title: L10n.Alert.error, message: L10n.Send.containsAddress, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Alert.error, message: L10n.Send.containsAddress)
             
         case .outputTooSmall(let minOutput), .paymentTooSmall(let minOutput):
             let amountText = "\(minOutput.tokenDescription) (\(minOutput.fiatDescription))"
             let message = L10n.PaymentProtocol.Errors.smallPayment(amountText)
-            showAlert(title: L10n.Alert.error, message: message, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Alert.error, message: message)
             
         case .insufficientFunds:
-            showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientFunds, buttonLabel: L10n.Button.ok)
+            if currency.isERC20Token {
+                showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
+            } else {
+                showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientFunds)
+            }
             
         case .failed:
-            showAlert(title: L10n.Alert.error, message: L10n.Send.creatTransactionError, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.Alert.error, message: L10n.Send.creatTransactionError)
             
         case .insufficientGas:
             showInsufficientGasError()
@@ -505,7 +508,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             })
             return false
         case .invalidRequest(let errorMessage):
-            showAlert(title: L10n.PaymentProtocol.Errors.badPaymentRequest, message: errorMessage, buttonLabel: L10n.Button.ok)
+            showAlert(title: L10n.PaymentProtocol.Errors.badPaymentRequest, message: errorMessage)
             return false
         case .usedAddress:
             showError(title: L10n.Send.UsedAddress.title,
@@ -584,10 +587,10 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                         self.onPublishSuccess?()
                     }
                 case .creationError(let message):
-                    self.showAlert(title: L10n.Alerts.sendFailure, message: message, buttonLabel: L10n.Button.ok)
+                    self.showAlert(title: L10n.Alerts.sendFailure, message: message)
                 case .publishFailure(let code, let message):
                     let codeStr = code == 0 ? "" : " (\(code))"
-                    self.showAlert(title: L10n.Send.sendError, message: message + codeStr, buttonLabel: L10n.Button.ok)
+                    self.showAlert(title: L10n.Send.sendError, message: message + codeStr)
                 case .insufficientGas:
                     self.showInsufficientGasError()
                 }

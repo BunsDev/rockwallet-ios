@@ -86,7 +86,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
-        let fiat = actionResponse.amount?.fiatValue ?? 0
+        let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
         let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
         let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
         

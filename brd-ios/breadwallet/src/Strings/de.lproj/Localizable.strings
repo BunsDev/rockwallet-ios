@@ -73,9 +73,6 @@
 /* Error alert title */
 "Alert.error" = "Fehler";
 
-/* Error title when balance to low */
-"Alert.ethBalance" = "Insufficient Ethereum Balance";
-
 /* Keystore error */
 "Alert.keystore.generic.android" = "Es liegt ein Problem mit dem KeyStore Ihres Android-Betriebssystems vor, bitte wenden Sie sich an support@rockwallet.com";
 
@@ -481,7 +478,7 @@
 "ErrorMessages.emailUnavailableTitle" = "E-Mail nicht verfügbar";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLow" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
+"ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
 
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "RockWallet kann nicht authentifiziert werden aufgrund eines Fehlers in deiner Version von Android. [Bitte tippe hier für weitere Informationen].";
@@ -1400,9 +1397,6 @@
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "Sie müssen mindestens %1$@ in Ihrer Wallet haben, um diese Art von Token zu übertragen. Möchten Sie jetzt Ihre Ethereum-Wallet aufrufen?";
-
-/* Your ethereum balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "Unzureichender Ethereum-Saldo";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "Die Zieladresse ist keine gültige %1$@-Adresse.";

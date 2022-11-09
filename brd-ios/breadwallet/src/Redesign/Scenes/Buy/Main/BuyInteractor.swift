@@ -76,17 +76,14 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         
         let to: Amount
-        let from: Decimal
         
         dataStore?.values = viewAction
         
         if let value = viewAction.tokenValue,
            let crypto = ExchangeFormatter.current.number(from: value)?.decimalValue {
             to = .init(decimalAmount: crypto, isFiat: false, currency: toCurrency, exchangeRate: 1 / rate)
-            from = crypto / rate
         } else if let value = viewAction.fiatValue,
                   let fiat = ExchangeFormatter.current.number(from: value)?.decimalValue {
-            from = fiat
             to = .init(decimalAmount: fiat, isFiat: true, currency: toCurrency, exchangeRate: 1 / rate)
         } else {
             presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
@@ -97,7 +94,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         
         dataStore?.toAmount = to
-        dataStore?.from = from
+        dataStore?.from = to.fiatValue
         
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.paymentCard,

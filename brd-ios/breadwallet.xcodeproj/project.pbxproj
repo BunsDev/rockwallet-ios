@@ -445,6 +445,7 @@
 		7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */; };
 		7ED83AFD284F418E00261565 /* KYCDocumentWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83AFC284F418E00261565 /* KYCDocumentWorker.swift */; };
 		7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDB82528C8684900C287CB /* Amount+Init.swift */; };
+		7EE05A96291BA4080099EB09 /* Float+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE05A95291BA4080099EB09 /* Float+Extensions.swift */; };
 		7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE76FC12857648F00724548 /* NewDeviceWorker.swift */; };
 		7EEBAE8A28E7099400686CA3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEBAE8928E7099400686CA3 /* SnapKit */; };
 		7EF2188028630E2F006ABCC1 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2187F28630E2F006ABCC1 /* UserManager.swift */; };
@@ -1235,6 +1236,7 @@
 		7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckListInteractor.swift; sourceTree = "<group>"; };
 		7ED83AFC284F418E00261565 /* KYCDocumentWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCDocumentWorker.swift; sourceTree = "<group>"; };
 		7EDDB82528C8684900C287CB /* Amount+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amount+Init.swift"; sourceTree = "<group>"; };
+		7EE05A95291BA4080099EB09 /* Float+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float+Extensions.swift"; sourceTree = "<group>"; };
 		7EE76FC12857648F00724548 /* NewDeviceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceWorker.swift; sourceTree = "<group>"; };
 		7EF2187F28630E2F006ABCC1 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		7EF2998827E3B8C400A2238A /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiClient.swift; path = CoinGecko/ApiClient.swift; sourceTree = "<group>"; };
@@ -2980,6 +2982,7 @@
 			isa = PBXGroup;
 			children = (
 				7B54E58A27F4A2B0002DD1E4 /* UITableView+Extensions.swift */,
+				7EE05A95291BA4080099EB09 /* Float+Extensions.swift */,
 				CE20C8F51DBAF77D00C8397A /* UIViewController+BRWAdditions.swift */,
 				CE20C8FB1DBB0F3A00C8397A /* UIColor+BRWAdditions.swift */,
 				CE20C90D1DBE52B000C8397A /* UIView+BRWAdditions.swift */,
@@ -3664,6 +3667,7 @@
 		};
 		7E390A2A27F57D15003C929D /* Download */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3682,6 +3686,7 @@
 		};
 		7E67772628C9C4910052927A /* Generate localization */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3700,6 +3705,7 @@
 		};
 		7EDC2EED291A68D600FF9F34 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -4031,6 +4037,7 @@
 				7ECCA9912873079100F99368 /* QuoteWorker.swift in Sources */,
 				7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */,
 				7CBABD9C20181D890077CB55 /* NSMutableAttributedString+Additions.swift in Sources */,
+				7EE05A96291BA4080099EB09 /* Float+Extensions.swift in Sources */,
 				3A69885E24591F890084953D /* PayId.swift in Sources */,
 				7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */,
 				7EBC6AF728488B10000A301F /* RegistrationPresenter.swift in Sources */,
