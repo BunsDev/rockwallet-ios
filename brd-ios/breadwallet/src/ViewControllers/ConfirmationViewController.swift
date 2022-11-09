@@ -225,13 +225,13 @@ class ConfirmationViewController: UIViewController, ContentBoxPresenter {
             total.trailingAnchor.constraint(equalTo: contentBox.trailingAnchor, constant: -Margins.large.rawValue),
             total.firstBaselineAnchor.constraint(equalTo: totalLabel.firstBaselineAnchor) ])
         cancel.constrain([
-            cancel.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue),
+            cancel.heightAnchor.constraint(equalToConstant: ViewSizes.Common.defaultCommon.rawValue),
             cancel.leadingAnchor.constraint(equalTo: contentBox.leadingAnchor, constant: Margins.large.rawValue),
             cancel.topAnchor.constraint(equalTo: totalLabel.bottomAnchor, constant: Margins.huge.rawValue),
             cancel.trailingAnchor.constraint(equalTo: contentBox.centerXAnchor, constant: -Margins.small.rawValue),
             cancel.bottomAnchor.constraint(equalTo: contentBox.bottomAnchor, constant: -Margins.large.rawValue) ])
         sendButton.constrain([
-            sendButton.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue),
+            sendButton.heightAnchor.constraint(equalToConstant: ViewSizes.Common.defaultCommon.rawValue),
             sendButton.leadingAnchor.constraint(equalTo: contentBox.centerXAnchor, constant: Margins.small.rawValue),
             sendButton.topAnchor.constraint(equalTo: totalLabel.bottomAnchor, constant: Margins.huge.rawValue),
             sendButton.trailingAnchor.constraint(equalTo: contentBox.trailingAnchor, constant: -Margins.large.rawValue),

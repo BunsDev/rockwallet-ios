@@ -332,9 +332,6 @@
 /* Error alert title */
 "Alert.error" = "Error";
 
-/* Error title when balance to low */
-"Alert.ethBalance" = "Insufficient Ethereum Balance";
-
 /* Hedera Account succesfully created header alert view */
 "Alert.HederaAccount" = "Hedera Account succesfully created.";
 
@@ -936,7 +933,7 @@
 "ErrorMessages.emailUnavailableTitle" = "Email Unavailable";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLow" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
+"ErrorMessages.ethBalanceLowAddEth" = "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet. ";
 
 "ErrorMessages.exchangeFailed" = "Swap failed. Reason: %@.";
 

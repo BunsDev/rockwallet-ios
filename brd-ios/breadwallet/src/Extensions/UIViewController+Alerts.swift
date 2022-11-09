@@ -9,32 +9,15 @@
 import UIKit
 
 extension UIViewController {
-
     func showErrorMessage(_ message: String) {
         let alert = UIAlertController(title: L10n.Alert.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     
-    func showErrorMessageAndDismiss(_ message: String) {
-        let alert = UIAlertController(title: L10n.Alert.error, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: { _ in
-            self.dismiss(animated: true, completion: nil)
-        }))
-        present(alert, animated: true, completion: nil)
-    }
-
-    func showAlert(title: String, message: String, buttonLabel: String = L10n.Button.ok) {
+    func showAlert(title: String? = nil, message: String? = nil, buttonLabel: String = L10n.Button.ok) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: buttonLabel, style: .default, handler: nil))
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showAlertAndDismiss(title: String, message: String, buttonLabel: String = L10n.Button.ok) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: buttonLabel, style: .default, handler: { _ in
-            self.dismiss(animated: true, completion: nil)
-        }))
         present(alertController, animated: true, completion: nil)
     }
     
@@ -114,7 +97,6 @@ extension UIViewController {
         }
     }
     
-    // MARK: - Additional Helpers
     @objc func hidePopup() {
         guard let popup = view.subviews.first(where: { $0 is FEPopupView })
         else { return }

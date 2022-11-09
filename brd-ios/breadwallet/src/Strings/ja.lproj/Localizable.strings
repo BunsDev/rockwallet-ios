@@ -1310,9 +1310,6 @@
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "このタイプのトークンを送金するには、ウォレットに%1$s以上保有していなければなりません。今すぐイーサリアムのウォレットに移動しますか?";
 
-/* Your ethereum balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "イーサリアムの残高不足";
-
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "送金先のアドレスが無効な%1$sアドレスです。";
 
