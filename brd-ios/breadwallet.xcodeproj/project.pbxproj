@@ -568,13 +568,6 @@
 		C46C2903287EBF4F0035C843 /* BaseInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28FC287EBF4F0035C843 /* BaseInfoInteractor.swift */; };
 		C47BD50A282E427300FAA903 /* Roboto-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C47BD507282E427300FAA903 /* Roboto-Regular.otf */; };
 		C47BD50B282E427300FAA903 /* Roboto-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C47BD508282E427300FAA903 /* Roboto-Medium.otf */; };
-		C47F46FA286A2931002287F1 /* ResetPinCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F46F3286A2931002287F1 /* ResetPinCoordinator.swift */; };
-		C47F46FB286A2931002287F1 /* ResetPinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F46F4286A2931002287F1 /* ResetPinStore.swift */; };
-		C47F46FC286A2931002287F1 /* ResetPinPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F46F5286A2931002287F1 /* ResetPinPresenter.swift */; };
-		C47F46FD286A2931002287F1 /* ResetPinModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F46F6286A2931002287F1 /* ResetPinModels.swift */; };
-		C47F46FE286A2931002287F1 /* ResetPinVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F46F7286A2931002287F1 /* ResetPinVIP.swift */; };
-		C47F46FF286A2931002287F1 /* ResetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F46F8286A2931002287F1 /* ResetPinViewController.swift */; };
-		C47F4700286A2931002287F1 /* ResetPinInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47F46F9286A2931002287F1 /* ResetPinInteractor.swift */; };
 		C491ABF828A6395D00E79954 /* OrderPreviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF128A6395C00E79954 /* OrderPreviewStore.swift */; };
 		C491ABF928A6395D00E79954 /* OrderPreviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF228A6395C00E79954 /* OrderPreviewPresenter.swift */; };
 		C491ABFA28A6395D00E79954 /* OrderPreviewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF328A6395C00E79954 /* OrderPreviewModels.swift */; };
@@ -1338,13 +1331,6 @@
 		C46C28FC287EBF4F0035C843 /* BaseInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoInteractor.swift; sourceTree = "<group>"; };
 		C47BD507282E427300FAA903 /* Roboto-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.otf"; path = "Fonts/Roboto-Regular.otf"; sourceTree = "<group>"; };
 		C47BD508282E427300FAA903 /* Roboto-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.otf"; path = "Fonts/Roboto-Medium.otf"; sourceTree = "<group>"; };
-		C47F46F3286A2931002287F1 /* ResetPinCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinCoordinator.swift; sourceTree = "<group>"; };
-		C47F46F4286A2931002287F1 /* ResetPinStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinStore.swift; sourceTree = "<group>"; };
-		C47F46F5286A2931002287F1 /* ResetPinPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinPresenter.swift; sourceTree = "<group>"; };
-		C47F46F6286A2931002287F1 /* ResetPinModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinModels.swift; sourceTree = "<group>"; };
-		C47F46F7286A2931002287F1 /* ResetPinVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinVIP.swift; sourceTree = "<group>"; };
-		C47F46F8286A2931002287F1 /* ResetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinViewController.swift; sourceTree = "<group>"; };
-		C47F46F9286A2931002287F1 /* ResetPinInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPinInteractor.swift; sourceTree = "<group>"; };
 		C491ABF128A6395C00E79954 /* OrderPreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewStore.swift; sourceTree = "<group>"; };
 		C491ABF228A6395C00E79954 /* OrderPreviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewPresenter.swift; sourceTree = "<group>"; };
 		C491ABF328A6395C00E79954 /* OrderPreviewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewModels.swift; sourceTree = "<group>"; };
@@ -2269,7 +2255,6 @@
 				C4C0CA542845F2F400B6ED79 /* AccountVerification */,
 				7E8E978F283F4817008606B0 /* Profile */,
 				C4D5E7F6284951B3000BEE6F /* VerifyAccount */,
-				C47F46F2286A28E7002287F1 /* ResetPin */,
 				7E5CB3302835090D00EC787E /* Demo */,
 			);
 			path = Scenes;
@@ -2881,20 +2866,6 @@
 				7E5B305A28A67FC60065D2D8 /* SwapInfoViewController.swift */,
 			);
 			path = SwapInfo;
-			sourceTree = "<group>";
-		};
-		C47F46F2286A28E7002287F1 /* ResetPin */ = {
-			isa = PBXGroup;
-			children = (
-				C47F46F3286A2931002287F1 /* ResetPinCoordinator.swift */,
-				C47F46F4286A2931002287F1 /* ResetPinStore.swift */,
-				C47F46F5286A2931002287F1 /* ResetPinPresenter.swift */,
-				C47F46F6286A2931002287F1 /* ResetPinModels.swift */,
-				C47F46F7286A2931002287F1 /* ResetPinVIP.swift */,
-				C47F46F8286A2931002287F1 /* ResetPinViewController.swift */,
-				C47F46F9286A2931002287F1 /* ResetPinInteractor.swift */,
-			);
-			path = ResetPin;
 			sourceTree = "<group>";
 		};
 		C491ABEF28A6393F00E79954 /* OrderPreview */ = {
@@ -3977,7 +3948,6 @@
 				7CBD578F2107EB560042C388 /* PairedWalletData.swift in Sources */,
 				7EF2998B27E3B8C400A2238A /* Resources.swift in Sources */,
 				7E5CB38C2835090E00EC787E /* Borderable.swift in Sources */,
-				C47F46FD286A2931002287F1 /* ResetPinModels.swift in Sources */,
 				7ED83AF5284F40EB00261565 /* CheckListVIP.swift in Sources */,
 				7EF45F592845353100D1F7B0 /* DoubleHorizontalTextboxView.swift in Sources */,
 				CEAA9E951DC1659F0066731D /* UILabel+BRWAdditions.swift in Sources */,
@@ -4001,7 +3971,6 @@
 				7C377EC220F6C29E00E8CF1C /* UIAlertController+Additions.swift in Sources */,
 				7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */,
 				7ED83AF8284F40EB00261565 /* CheckListStore.swift in Sources */,
-				C47F46FF286A2931002287F1 /* ResetPinViewController.swift in Sources */,
 				3A6FD42D24E456B800068ECE /* KeyStoreUtils.swift in Sources */,
 				7EF45F4F2845352400D1F7B0 /* KYCBasicInteractor.swift in Sources */,
 				7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */,
@@ -4046,7 +4015,6 @@
 				7EF45F8B284768C100D1F7B0 /* ItemSelectionViewController.swift in Sources */,
 				CEF3E8321DE55540007C0A9E /* CheckView.swift in Sources */,
 				4F3AB11A25D53F4300B378DC /* ExternalAPIClient.swift in Sources */,
-				C47F46FC286A2931002287F1 /* ResetPinPresenter.swift in Sources */,
 				7EBC6AF828488B10000A301F /* RegistrationModels.swift in Sources */,
 				CECCE5A91E0378FB00D99448 /* PinPadViewController.swift in Sources */,
 				7E5CB3B02835090E00EC787E /* FEInfoView.swift in Sources */,
@@ -4143,7 +4111,6 @@
 				7E5CB3AF2835090E00EC787E /* FELabel.swift in Sources */,
 				CE8F0AE31EB91BB500AA7642 /* SearchHeaderView.swift in Sources */,
 				7BDB49F52806EF890031F015 /* BRAPIClient+Bundles.swift in Sources */,
-				C47F4700286A2931002287F1 /* ResetPinInteractor.swift in Sources */,
 				7E5CB39B2835090E00EC787E /* BaseVIP.swift in Sources */,
 				7B54E5B127F4A2B0002DD1E4 /* UITableView+Extensions.swift in Sources */,
 				7EC0F8B62888049F0037145C /* WrapperPopupView.swift in Sources */,
@@ -4174,7 +4141,6 @@
 				C4D5E800284951DD000BEE6F /* VerifyAccountPresenter.swift in Sources */,
 				7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */,
 				CEB909FA1E5FF242001804DC /* RecoverWalletIntroViewController.swift in Sources */,
-				C47F46FA286A2931002287F1 /* ResetPinCoordinator.swift in Sources */,
 				CE25BF911DF9ADE700BC67B6 /* UIImage+Utils.swift in Sources */,
 				7C7F18ED1FED9A3B0030230E /* TxStatusIndicator.swift in Sources */,
 				7E5CB3992835090E00EC787E /* Interactor.swift in Sources */,
@@ -4229,7 +4195,6 @@
 				7E5CB37F2835090E00EC787E /* DemoViewController.swift in Sources */,
 				7CA3BC302006864C00517BF7 /* Currency.swift in Sources */,
 				7E5B305B28A67FC60065D2D8 /* SwapInfoViewController.swift in Sources */,
-				C47F46FB286A2931002287F1 /* ResetPinStore.swift in Sources */,
 				7C72D134226625130091B185 /* CoreSystem.swift in Sources */,
 				7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */,
 				CE3D4C571EF5D5740016B1C8 /* ReachabilityMonitor.swift in Sources */,
@@ -4251,7 +4216,6 @@
 				7E5CB3AB2835090E00EC787E /* WrapperCollectionViewCell.swift in Sources */,
 				7B94343D2887F98E00638703 /* DeleteProfileWorker.swift in Sources */,
 				CE25BF931DFDA7A600BC67B6 /* MessageUIPresenter.swift in Sources */,
-				C47F46FE286A2931002287F1 /* ResetPinVIP.swift in Sources */,
 				7E8E979C283F4830008606B0 /* ProfileViewController.swift in Sources */,
 				3A6785FB257019220065F835 /* RedeemTransitioningDelegate.swift in Sources */,
 				CE20C90C1DBC59E600C8397A /* StartFlowPresenter.swift in Sources */,

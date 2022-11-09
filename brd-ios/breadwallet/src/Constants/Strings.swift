@@ -652,8 +652,8 @@ internal enum L10n {
     internal static let enableBody1 = L10n.tr("Localizable", "CloudBackup.enableBody1", fallback: "iCloud Keychain must be turned on for this feature to work.")
     /// It should look like the following:
     internal static let enableBody2 = L10n.tr("Localizable", "CloudBackup.enableBody2", fallback: "It should look like the following:")
-    /// I have turned on iCloud Keychain
-    internal static let enableButton = L10n.tr("Localizable", "CloudBackup.enableButton", fallback: "I have turned on iCloud Keychain")
+    /// I HAVE TURNED ON ICLOUD KEYCHAIN
+    internal static let enableButton = L10n.tr("Localizable", "CloudBackup.enableButton", fallback: "I HAVE TURNED ON ICLOUD KEYCHAIN")
     /// Enable Keychain
     internal static let enableTitle = L10n.tr("Localizable", "CloudBackup.enableTitle", fallback: "Enable Keychain")
     /// Enter pin to encrypt backup
@@ -1045,7 +1045,7 @@ internal enum L10n {
     /// Caption for graphics
     internal static let rightCaption = L10n.tr("Localizable", "Import.rightCaption", fallback: "Your RockWallet Wallet")
     /// Scan Private key button label
-    internal static let scan = L10n.tr("Localizable", "Import.scan", fallback: "Scan Private Key")
+    internal static let scan = L10n.tr("Localizable", "Import.scan", fallback: "SCAN PRIVATE KEY")
     /// Import wallet success alert title
     internal static let success = L10n.tr("Localizable", "Import.success", fallback: "Success")
     /// Successfully imported wallet message body

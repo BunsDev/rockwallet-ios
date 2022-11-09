@@ -17,6 +17,11 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     
     private var isPaymentsPressed = false
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        interactor?.getData(viewAction: .init())
+    }
+    
     // MARK: - Overrides
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
