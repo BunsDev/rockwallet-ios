@@ -12,8 +12,7 @@ import UIKit
 
 class RootNavigationController: UINavigationController, UINavigationControllerDelegate {
     private var backgroundColor = LightColors.Background.two
-    private var tintColor = LightColors.Text.three
-    private var currentViewController = UIViewController()
+    var tintColor = LightColors.Text.three
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         guard let vc = topViewController else { return .default }
@@ -33,12 +32,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        decideInterface(for: currentViewController)
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        currentViewController = viewController
-        
         decideInterface(for: viewController)
     }
     
@@ -55,6 +48,10 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         case is OnboardingViewController:
             backgroundColor = .clear
             tintColor = LightColors.Background.two
+            
+        case is ImportKeyViewController:
+            backgroundColor = LightColors.primary
+            tintColor = LightColors.Contrast.two
             
         case is DefaultCurrencyViewController,
             is ShareDataViewController,
@@ -110,13 +107,20 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         navigationBar.standardAppearance = scrollAppearance
         navigationBar.compactAppearance = scrollAppearance
         
+        let tint = tintColor
         UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
-            self?.navigationBar.tintColor = self?.tintColor ?? .clear
+            self?.navigationBar.tintColor = tint
+            self?.navigationItem.titleView?.tintColor = tint
+            self?.navigationItem.leftBarButtonItems?.forEach { $0.tintColor = tint }
+            self?.navigationItem.rightBarButtonItems?.forEach { $0.tintColor = tint }
+            self?.navigationItem.leftBarButtonItem?.tintColor = tint
+            self?.navigationItem.rightBarButtonItem?.tintColor = tint
             self?.navigationBar.layoutIfNeeded()
         }
         
         navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font: Fonts.Title.six, NSAttributedString.Key.foregroundColor: tintColor
+            NSAttributedString.Key.font: Fonts.Title.six,
+            NSAttributedString.Key.foregroundColor: tint
         ]
         
         navigationBar.prefersLargeTitles = false

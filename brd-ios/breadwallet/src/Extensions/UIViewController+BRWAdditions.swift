@@ -48,7 +48,7 @@ extension UIViewController {
     
     func addCloseNavigationItem(side: NavBarButtonSide = .left) {
         let close = side == .left ? UIButton.buildModernCloseButton(position: .left) : UIButton.buildModernCloseButton(position: .right)
-        
+        close.tintColor = navigationController?.navigationItem.titleView?.tintColor
         close.tap = { [weak self] in
             self?.dismiss(animated: true, completion: nil)
         }

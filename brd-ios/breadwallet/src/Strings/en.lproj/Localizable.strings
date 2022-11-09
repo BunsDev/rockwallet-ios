@@ -764,7 +764,7 @@
 
 "CloudBackup.enableBody2" = "It should look like the following:";
 
-"CloudBackup.enableButton" = "I have turned on iCloud Keychain";
+"CloudBackup.enableButton" = "I HAVE TURNED ON ICLOUD KEYCHAIN";
 
 "CloudBackup.enableTitle" = "Enable Keychain";
 
@@ -1184,7 +1184,7 @@
 "Import.rightCaption" = "Your RockWallet Wallet";
 
 /* Scan Private key button label */
-"Import.scan" = "Scan Private Key";
+"Import.scan" = "SCAN PRIVATE KEY";
 
 /* Import wallet success alert title */
 "Import.success" = "Success";
