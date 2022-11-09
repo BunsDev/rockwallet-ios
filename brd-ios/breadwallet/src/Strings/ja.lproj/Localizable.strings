@@ -74,7 +74,7 @@
 "Alert.error" = "エラー";
 
 /* Keystore error */
-"Alert.keystore.generic.android" = "Android OSのKeystoreに問題があります。hello@rockwallet.com にお問い合わせください。";
+"Alert.keystore.generic.android" = "Android OSのKeystoreに問題があります。support@rockwallet.com にお問い合わせください。";
 
 /* KeyStore error, keys are invalidated */
 "Alert.keystore.invalidated.android" = "お使いのAndroidロック画面が無効にされたため、暗号化されたブレッドのデータはつい最近無効になりました。";
