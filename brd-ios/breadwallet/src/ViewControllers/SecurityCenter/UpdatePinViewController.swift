@@ -411,16 +411,9 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
     
     func presentResetPinSuccess(newPin: String) {
-        let resetPinSuccess = ResetPinViewController()
-        resetPinSuccess.resetFromDisabledSuccess = { [weak self] in
-            self?.dismiss(animated: true, completion: {
-                self?.resetFromDisabledSuccess?(newPin)
-            })
-        }
-        let nc = RootNavigationController(rootViewController: resetPinSuccess)
-        nc.modalPresentationStyle = .overFullScreen
-        nc.isNavigationBarHidden = true
-        present(nc, animated: true)
+        dismiss(animated: true, completion: { [weak self] in
+            self?.resetFromDisabledSuccess?(newPin)
+        })
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
