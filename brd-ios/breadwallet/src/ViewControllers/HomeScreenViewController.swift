@@ -138,6 +138,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        pullToRefreshControl.endRefreshing()
+        
         isInExchangeFlow = false
         ExchangeCurrencyHelper.revertIfNeeded()
     }

@@ -134,8 +134,8 @@ class AssetListTableView: UITableViewController, Subscriber {
               parentViewController.isInExchangeFlow == false else { return }
         
         DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
             self?.didReload?()
+            self?.tableView.reloadData()
             self?.showLoadingState(false)
         }
     }
