@@ -37,8 +37,8 @@ class StatusPip: UIView {
     private var flashingAnimation: CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "fillColor")
         
-        animation.fromValue = tintColor.withAlphaComponent(0.05).cgColor
-        animation.toValue = tintColor.withAlphaComponent(0.4).cgColor
+        animation.fromValue = tintColor.withAlphaComponent(0.4).cgColor
+        animation.toValue = tintColor.withAlphaComponent(1).cgColor
         animation.duration = 1.0
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         animation.repeatCount = Float.greatestFiniteMagnitude
@@ -51,7 +51,7 @@ class StatusPip: UIView {
     
     // MARK: Init
 
-    init(onColor: UIColor = .statusIndicatorActive, offColor: UIColor = .grayBackground) {
+    init(onColor: UIColor = LightColors.primary, offColor: UIColor = LightColors.Outline.one) {
         self.state = .off
         self.offColor = offColor
         super.init(frame: .zero)
