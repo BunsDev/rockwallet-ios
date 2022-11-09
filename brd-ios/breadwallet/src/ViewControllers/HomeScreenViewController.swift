@@ -92,6 +92,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         return view
     }()
     
+    // We are not using pullToRefreshControl.isRefreshing because when you trigger reload() it is already refreshing. We need a variable that tracks the real refreshing of the resources.
+    private var isRefreshing = false
+    
     private let tabBarButtons = [(L10n.Button.home, UIImage(named: "home"), #selector(showHome)),
                                  (L10n.HomeScreen.trade, UIImage(named: "trade"), #selector(trade)),
                                  (L10n.HomeScreen.buy, UIImage(named: "buy"), #selector(buy)),
@@ -116,6 +119,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     @objc func reload() {
+        guard !isRefreshing else { return }
+        
+        isRefreshing = true
+        
         UserManager.shared.refresh { [weak self] _ in
             self?.attemptShowKYCPrompt()
         }
@@ -148,6 +155,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         assetListTableView.didTapAddWallet = didTapManageWallets
         assetListTableView.didReload = { [weak self] in
             self?.pullToRefreshControl.endRefreshing()
+            
+            self?.isRefreshing = false
         }
         
         setupSubviews()
