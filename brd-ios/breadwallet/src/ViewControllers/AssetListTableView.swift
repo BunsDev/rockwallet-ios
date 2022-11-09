@@ -130,13 +130,14 @@ class AssetListTableView: UITableViewController, Subscriber {
     }
     
     func reload() {
+        didReload?()
+        showLoadingState(false)
+        
         guard let parentViewController = parent as? HomeScreenViewController,
               parentViewController.isInExchangeFlow == false else { return }
         
         DispatchQueue.main.async { [weak self] in
-            self?.didReload?()
             self?.tableView.reloadData()
-            self?.showLoadingState(false)
         }
     }
     

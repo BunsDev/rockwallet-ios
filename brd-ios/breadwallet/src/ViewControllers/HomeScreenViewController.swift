@@ -127,7 +127,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             self?.attemptShowKYCPrompt()
         }
         
-        setupSubscriptions()
         Currencies.shared.reloadCurrencies()
         
         coreSystem.refreshWallet { [weak self] in
