@@ -52,7 +52,7 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
         navigationItem.titleView = titleLabel
 
         let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.displayCurrency, currency: nil, position: .right)
-        faqButton.tintColor = .navigationTint
+        faqButton.tintColor = LightColors.Text.one
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: faqButton)]
     }
     
@@ -87,13 +87,13 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
 
         if currency.code == selectedCurrencyCode {
             let check = UIImageView(image: #imageLiteral(resourceName: "CircleCheck").withRenderingMode(.alwaysTemplate))
-            check.tintColor = .navigationTint
+            check.tintColor = LightColors.Text.one
             cell.accessoryView = check
         } else {
             cell.accessoryView = nil
         }
-        cell.contentView.backgroundColor = .darkBackground
-        cell.backgroundColor = .darkBackground
+        cell.contentView.backgroundColor = LightColors.Background.two
+        cell.backgroundColor = LightColors.Background.two
         return cell
     }
 
