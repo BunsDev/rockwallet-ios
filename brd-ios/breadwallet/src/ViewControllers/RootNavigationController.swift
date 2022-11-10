@@ -11,8 +11,8 @@
 import UIKit
 
 class RootNavigationController: UINavigationController, UINavigationControllerDelegate {
-    private var backgroundColor = LightColors.Background.two
-    var tintColor = LightColors.Text.three
+    private var backgroundColor = UIColor.clear
+    private var tintColor = UIColor.clear
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         guard let vc = topViewController else { return .default }
@@ -36,6 +36,14 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     }
     
     func decideInterface(for viewController: UIViewController?) {
+        guard let viewController = viewController else {
+            backgroundColor = LightColors.Contrast.one
+            tintColor = LightColors.Contrast.one
+            
+            setNormalNavigationBar()
+            return
+        }
+        
         switch viewController {
         case is AccountViewController, is HomeScreenViewController:
             backgroundColor = .clear
@@ -81,7 +89,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         }
         
         let item = SimpleBackBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        viewController?.navigationItem.backBarButtonItem = item
+        viewController.navigationItem.backBarButtonItem = item
         
         setNormalNavigationBar()
     }
@@ -118,11 +126,12 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             self?.navigationBar.layoutIfNeeded()
         }
         
+        navigationBar.prefersLargeTitles = false
         navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: Fonts.Title.six,
             NSAttributedString.Key.foregroundColor: tint
         ]
         
-        navigationBar.prefersLargeTitles = false
+        view.backgroundColor = backgroundColor
     }
 }
