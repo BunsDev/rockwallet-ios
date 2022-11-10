@@ -16,7 +16,7 @@ class SeparatorCell: UITableViewCell {
         addSubview(separator)
         contentView.backgroundColor = .clear
         backgroundColor = LightColors.Background.one
-        selectedBackgroundView = UIView.init(color: UIColor.navigationTint.withAlphaComponent(0.7))
+        selectedBackgroundView = UIView.init(color: LightColors.Text.one.withAlphaComponent(0.7))
         separator.constrain([
             separator.leadingAnchor.constraint(equalTo: leadingAnchor),
             separator.bottomAnchor.constraint(equalTo: bottomAnchor),
