@@ -58,10 +58,8 @@ class DefaultImageStoreService: ImageStoreService {
 // MARK: - Utilities
 
 private extension DefaultImageStoreService {
-        
     func needsToRefreshImages() -> Bool {
-        let defautls = UserDefaults.standard
-        let lastVersion = defautls.string(forKey: Constant.refreshedVersionKey) ?? ""
+        let lastVersion = UserDefaults.standard.string(forKey: Constant.refreshedVersionKey) ?? ""
         return (lastVersion != currentVersionString() ||
             (!decompressedAssetExists())) &&
             isRunningInWidgetExtension()
@@ -100,21 +98,18 @@ private extension DefaultImageStoreService {
     }
     
     static var imageFolder: URL {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory,
-                                             in: .userDomainMask)[0]
-        return documentsURL.appendingPathComponent(Constant.imageFolder)
+        let documentsURL = FileManager.default.urls(for: .documentDirectory,
+                                                    in: .userDomainMask)[0]
+        return documentsURL.appendingPathComponent(Constant.tokensFileName)
     }
 }
 
 // MARK: - Constants
 
 private extension DefaultImageStoreService {
-    
     enum Constant {
         static let refreshedVersionKey = "lastRefreshVersionKey"
         static let tokensFileName = "brd-tokens"
-        static let imageFolder = "brd-tokens"
         static let noBgFolder = "white-no-bg"
         static let bgFolder = "white-square-bg"
     }

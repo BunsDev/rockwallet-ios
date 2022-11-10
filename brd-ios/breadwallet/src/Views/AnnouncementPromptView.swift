@@ -29,7 +29,7 @@ class AnnouncementPromptView: PromptView {
     override func setup() {
         super.setup()
         
-        title.textColor = .darkPromptTitleColor
+        title.textColor = .white
         body.textColor = .darkPromptBodyColor
         
         imageView.contentMode = .scaleAspectFit

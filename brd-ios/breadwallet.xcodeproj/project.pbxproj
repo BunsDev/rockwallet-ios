@@ -512,8 +512,6 @@
 		9F3C308625DA929600C7C398 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEA35D4232A9D1200FB58C4 /* Identifier.swift */; };
 		9F3C308D25DA94C400C7C398 /* UIColor+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20C8FB1DBB0F3A00C8397A /* UIColor+BRWAdditions.swift */; };
 		9F3C309425DA94C600C7C398 /* UIColor+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20C8FB1DBB0F3A00C8397A /* UIColor+BRWAdditions.swift */; };
-		9F3C309B25DA951200C7C398 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A3170C229C70C00088F97C /* Theme.swift */; };
-		9F3C30A225DA951200C7C398 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A3170C229C70C00088F97C /* Theme.swift */; };
 		9F3C30A925DA954300C7C398 /* UIFont+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E9F1DC2F9F50066731D /* UIFont+BRWAdditions.swift */; };
 		9F3C30B025DA954300C7C398 /* UIFont+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E9F1DC2F9F50066731D /* UIFont+BRWAdditions.swift */; };
 		9F3C311B25DAC14900C7C398 /* Numeric+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDDE55325D5B79D00E42BE3 /* Numeric+Extensions.swift */; };
@@ -890,8 +888,6 @@
 		4F3AB12225D53F5D00B378DC /* Baker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Baker.swift; path = src/ExternalAPIClient/BakingBad/Baker.swift; sourceTree = "<group>"; };
 		4F3AB12925D58AB400B378DC /* SelectBakerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectBakerViewController.swift; path = src/ViewControllers/SelectBakerViewController.swift; sourceTree = "<group>"; };
 		4F3AB13325D5E7F900B378DC /* SelectBakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectBakerCell.swift; path = src/ViewControllers/SelectBakerCell.swift; sourceTree = "<group>"; };
-		5FA4B51C290BAA8600AEFD7A /* breadwalletRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = breadwalletRelease.entitlements; sourceTree = "<group>"; };
-		5FA4B51D290BBF0100AEFD7A /* breadwalletDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = breadwalletDebug.entitlements; sourceTree = "<group>"; };
 		71014F7B2327E49400DA1373 /* fiat_currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fiat_currencies.json; path = Resources/fiat_currencies.json; sourceTree = "<group>"; };
 		710B036321F8C208007E8A2A /* AppRatingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppRatingManager.swift; path = src/Utilities/AppRatingManager.swift; sourceTree = "<group>"; };
 		71173058220CCC91001931B3 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PromptView.swift; path = src/Views/PromptView.swift; sourceTree = "<group>"; };
@@ -910,7 +906,6 @@
 		71904FBA2228132100A6D027 /* announcement-supported.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "announcement-supported.json"; path = "json/announcement-supported.json"; sourceTree = "<group>"; };
 		71988B0721EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BRUserAgentHeaderGenerator.swift; path = src/Platform/BRUserAgentHeaderGenerator.swift; sourceTree = "<group>"; };
 		71988B0A21EF8D06008B8EA0 /* BRUserAgentHeaderGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRUserAgentHeaderGeneratorTests.swift; sourceTree = "<group>"; };
-		71A3170C229C70C00088F97C /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = src/Theme/Theme.swift; sourceTree = "<group>"; };
 		71A3170F22A6D55A0088F97C /* InAppNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAppNotificationViewController.swift; path = src/ViewControllers/Notifications/InAppNotificationViewController.swift; sourceTree = "<group>"; };
 		71A3171122A6E5F10088F97C /* BRAPIClient+Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+Messages.swift"; path = "src/Platform/BRAPIClient+Messages.swift"; sourceTree = "<group>"; };
 		71C44E8F225D135E00EF4459 /* ConfirmRecoveryKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfirmRecoveryKeyViewController.swift; path = src/ViewControllers/RecoveryKey/ConfirmRecoveryKeyViewController.swift; sourceTree = "<group>"; };
@@ -1781,7 +1776,6 @@
 		71A3170B229C70920088F97C /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				71A3170C229C70C00088F97C /* Theme.swift */,
 			);
 			name = Theme;
 			sourceTree = "<group>";
@@ -1825,14 +1819,9 @@
 		75A2A7921DA5934300A983D8 /* breadwallet */ = {
 			isa = PBXGroup;
 			children = (
-				5FA4B51D290BBF0100AEFD7A /* breadwalletDebug.entitlements */,
-				5FA4B51C290BAA8600AEFD7A /* breadwalletRelease.entitlements */,
 				7E5CB32E2835090D00EC787E /* Redesign */,
 				7EF2998727E3B8AA00A2238A /* CoinGecko */,
 				3A4972C32602E0D10002C3EC /* Cosmos */,
-				75A2A87C1DA59E4E00A983D8 /* breadwallet.entitlements */,
-				75A2A79F1DA5934300A983D8 /* Info.plist */,
-				7EF36C052829893600BB43A7 /* theme.plist */,
 				75A2A7931DA5934300A983D8 /* AppDelegate.swift */,
 				CE20C8F11DBAF71500C8397A /* ApplicationController.swift */,
 				7C0F3DC32124A81100531E54 /* Backend.swift */,
@@ -1845,8 +1834,12 @@
 				CEE659E61F65A936001FF29D /* RetryTimer.swift */,
 				CE8CD8DC1E2D9EF200785E02 /* Sender.swift */,
 				CE4C1CC71ED88B600063E184 /* URLController.swift */,
+				75A2A87C1DA59E4E00A983D8 /* breadwallet.entitlements */,
+				75A2A79F1DA5934300A983D8 /* Info.plist */,
+				7EF36C052829893600BB43A7 /* theme.plist */,
 				75A2A79A1DA5934300A983D8 /* Assets.xcassets */,
 				CE5E6C991EB9135000A476DB /* Icon.xcassets */,
+				75A2A79C1DA5934300A983D8 /* LaunchScreen.storyboard */,
 				7B54E56F27F4A2B0002DD1E4 /* Helpers */,
 				3A6785EF256F2EF70065F835 /* ReceiveGift */,
 				3AFAD92E2567ED22005853E8 /* Gifting */,
@@ -1857,7 +1850,6 @@
 				4F3AB11725D53F0000B378DC /* ExternalAPIClient */,
 				CE20C90A1DBC59C500C8397A /* FlowControllers */,
 				CEAA9E9C1DC2F8270066731D /* Fonts */,
-				75A2A79C1DA5934300A983D8 /* LaunchScreen.storyboard */,
 				CE6D0E5A1E14BF8400137DF1 /* Models */,
 				22A9A9311DF61930000F0016 /* Platform */,
 				7C377EBC20F64C1200E8CF1C /* Resources */,
@@ -2137,8 +2129,8 @@
 				7EBC6AF128488B10000A301F /* RegistrationModels.swift */,
 				7EBC6AF328488B10000A301F /* RegistrationViewController.swift */,
 				7EBC6AF428488B10000A301F /* RegistrationInteractor.swift */,
-				7EF45F7D2847672C00D1F7B0 /* RegistrationWorker.swift */,
 				7EBC6AEE28488B10000A301F /* RegistrationCoordinator.swift */,
+				7EF45F7D2847672C00D1F7B0 /* RegistrationWorker.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -4368,7 +4360,6 @@
 				7E50C724290BE1100036AA9F /* UIColor+init.swift in Sources */,
 				9F3C308625DA929600C7C398 /* Identifier.swift in Sources */,
 				7E50C720290BE0EE0036AA9F /* Colors.swift in Sources */,
-				9F3C30A225DA951200C7C398 /* Theme.swift in Sources */,
 				9F3C309425DA94C600C7C398 /* UIColor+BRWAdditions.swift in Sources */,
 				9F1143B7261B048900848E7B /* CacheService.swift in Sources */,
 				A243978083345DAFD36DA7A4 /* MarketInfo.swift in Sources */,
@@ -4388,7 +4379,6 @@
 				9F3C316C25DACFF000C7C398 /* LogoStyle+Extensions.swift in Sources */,
 				9F00EAD025DDF28400A99218 /* Bundle+Extensions.swift in Sources */,
 				9FDDE57225D5B82A00E42BE3 /* AssetWidget.swift in Sources */,
-				9F3C309B25DA951200C7C398 /* Theme.swift in Sources */,
 				7E50C723290BE10F0036AA9F /* UIColor+init.swift in Sources */,
 				9F2118AC25DD74EA00ABD2C8 /* CoinGecko+Extesions.swift in Sources */,
 				7B8140BA27FD6DBB00662724 /* Currency+Extensions.swift in Sources */,

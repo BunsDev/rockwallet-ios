@@ -143,7 +143,7 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
         searchBar.searchBarStyle = .minimal
         searchBar.barStyle = .black
         searchBar.isTranslucent = false
-        searchBar.barTintColor = .darkBackground
+        searchBar.barTintColor = LightColors.Background.two
         searchBar.placeholder = L10n.Search.search
     }
     

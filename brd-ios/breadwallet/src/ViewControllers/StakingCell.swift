@@ -15,7 +15,7 @@ class StakingCell: UIView, Subscriber {
     private let iconContainer = UIView(color: .transparentIconBackground)
     private let icon = UIImageView()
     private let currency: Currency
-    private let title = UILabel(font: .customBody(size: 14), color: .rewardsViewNormalTitle)
+    private let title = UILabel(font: .customBody(size: 14), color: .black)
     private var indicatorView = UIImageView()
     private let topPadding = UIView(color: .whiteTint)
     private let bottomPadding = UIView(color: .whiteTint)
