@@ -79,7 +79,7 @@ private extension DefaultImageStoreService {
     }
     
     func isRunningInWidgetExtension() -> Bool {
-        return Bundle.main.bundleIdentifier?.contains("breadwalletWidget") ?? false
+        return Bundle.main.bundleIdentifier?.contains("rockwalletWidget") ?? false
     }
     
     func currentVersionString() -> String {
