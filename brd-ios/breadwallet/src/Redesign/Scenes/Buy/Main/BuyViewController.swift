@@ -12,10 +12,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     typealias Models = BuyModels
     
-    override var sceneLeftAlignedTitle: String? {
-        return L10n.HomeScreen.buy
-    }
-    
     lazy var continueButton: WrapperView<FEButton> = {
         let button = WrapperView<FEButton>()
         return button
@@ -34,6 +30,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     override func setupSubviews() {
         super.setupSubviews()
         
+        tableView.register(WrapperTableViewCell<FESegmentControl>.self)
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
         tableView.register(WrapperTableViewCell<CardSelectionView>.self)
         tableView.delaysContentTouches = false
@@ -69,6 +66,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Sections {
+        case .segment:
+            cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
+            
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -78,7 +78,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         case .from:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
 
-        case .to:
+        case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
         default:
@@ -148,6 +148,27 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
+              let model = sectionRows[section]?[indexPath.row] as? SegmentControlViewModel
+        else {
+            return UITableViewCell()
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+            
+            view.didChangeValue = { [weak self] segment in
+                self?.view.endEditing(true)
+                self?.interactor?.setAmount(viewAction: .init(paymentSegmentValue: segment))
+            }
+        }
+        
+        return cell
+    }
+    
     private func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
@@ -188,7 +209,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(of: Models.Sections.from),
-              let toSection = sections.firstIndex(of: Models.Sections.to),
+              let toSection = sections.firstIndex(of: Models.Sections.paymentMethod),
               let fromCell = tableView.cellForRow(at: .init(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
               let toCell = tableView.cellForRow(at: .init(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView>
         else { return continueButton.wrappedView.isEnabled = false }

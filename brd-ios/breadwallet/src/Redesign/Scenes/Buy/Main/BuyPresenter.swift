@@ -16,24 +16,36 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     // MARK: - BuyActionResponses
     
     private var exchangeRateViewModel = ExchangeRateViewModel()
+    private var paymentSegment = SegmentControlViewModel()
+    private var paymentMethod = CardSelectionViewModel()
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let sections: [Models.Sections] = [
+            .segment,
             .rateAndTimer,
             .from,
-            .to,
+            .paymentMethod,
             .accountLimits
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
+        paymentSegment = SegmentControlViewModel(selectedIndex: .ach)
+        
+        switch paymentSegment.selectedIndex {
+        case .ach:
+            paymentMethod = CardSelectionViewModel(title: .text("ACH Payments"), subtitle: .text("Link bank account"), userInteractionEnabled: true)
+        default:
+            paymentMethod = CardSelectionViewModel()
+        }
 
         let sectionRows: [Models.Sections: [ViewModel]] =  [
+            .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
+            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
+            .paymentMethod: [paymentMethod],
             .accountLimits: [
                 LabelViewModel.text("")
-            ],
-            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
-            .to: [CardSelectionViewModel(userInteractionEnabled: true)]
+            ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
@@ -75,13 +87,15 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
-        if let paymentCard = actionResponse.card {
+        if let paymentCard = actionResponse.card, actionResponse.paymentSegmentValue == .card {
             cardModel = .init(logo: paymentCard.displayImage,
                               cardNumber: .text(paymentCard.displayName),
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
-        } else {
+        } else if actionResponse.paymentSegmentValue == .card {
             cardModel = .init(userInteractionEnabled: true)
+        } else {
+            cardModel = CardSelectionViewModel(title: .text("ACH Payments"), subtitle: .text("Link bank account"), userInteractionEnabled: true)
         }
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         

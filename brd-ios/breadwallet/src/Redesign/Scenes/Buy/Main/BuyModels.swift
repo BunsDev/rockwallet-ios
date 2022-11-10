@@ -16,10 +16,11 @@ enum BuyModels {
     }
     
     enum Sections: Sectionable {
+        case segment
         case rateAndTimer
         case accountLimits
         case from
-        case to
+        case paymentMethod
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
@@ -36,6 +37,7 @@ enum BuyModels {
             var card: PaymentCard?
             var quote: Quote?
             var handleErrors = false
+            var paymentSegmentValue: FESegmentControl.Values?
         }
         
         struct ResponseDisplay {
@@ -72,6 +74,7 @@ enum BuyModels {
         struct ViewAction {
             var fiatValue: String?
             var tokenValue: String?
+            var paymentSegmentValue: FESegmentControl.Values?
         }
     }
     

@@ -53,6 +53,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore {
     var keyStore: KeyStore? { get set }
     
     var autoSelectDefaultPaymentMethod: Bool { get set }
+    var paymentSegmentValue: FESegmentControl.Values { get set }
 }
 
 protocol BuyDataPassing {

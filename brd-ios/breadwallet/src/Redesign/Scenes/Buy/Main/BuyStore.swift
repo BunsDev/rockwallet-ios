@@ -16,6 +16,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var values: BuyModels.Amounts.ViewAction = .init()
+    var paymentSegmentValue: FESegmentControl.Values = .card
     
     override init() {
         super.init()

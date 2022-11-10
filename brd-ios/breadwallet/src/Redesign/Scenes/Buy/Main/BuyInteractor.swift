@@ -89,7 +89,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                            card: dataStore?.paymentCard,
                                                            quote: dataStore?.quote,
-                                                           handleErrors: true))
+                                                           handleErrors: true,
+                                                           paymentSegmentValue: viewAction.paymentSegmentValue))
             return
         }
         
@@ -98,7 +99,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.paymentCard,
-                                                       quote: dataStore?.quote))
+                                                       quote: dataStore?.quote,
+                                                       paymentSegmentValue: viewAction.paymentSegmentValue))
     }
     
     func getExchangeRate(viewAction: Models.Rate.ViewAction) {
