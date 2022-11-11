@@ -25,7 +25,7 @@ extension UIButton {
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = UIFont.customBody(size: 14.0)
         button.tintColor = .white
-        button.backgroundColor = .outlineButtonBackground
+        button.backgroundColor = LightColors.primary
         button.layer.cornerRadius = 6
         button.layer.borderWidth = 0.5
         button.layer.borderColor = UIColor.white.cgColor

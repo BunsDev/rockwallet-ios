@@ -143,6 +143,9 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         baseSwapCurrencyView.configure(with: .init())
         termSwapCurrencyView.configure(with: .init())
         
+        backgroundView = containerStackView
+        shadowView = containerStackView
+        
         configure(background: config?.background)
         configure(shadow: config?.shadow)
     }
