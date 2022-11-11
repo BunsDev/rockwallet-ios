@@ -174,7 +174,7 @@ class GetUserEmailPromptView: PromptView {
         emailInput.textColor = LightColors.Text.one
         emailInput.font = UIFont.emailPlaceholder()
         emailInput.attributedPlaceholder = NSAttributedString(string: L10n.Prompts.Email.placeholder,
-                                                              attributes: [ NSAttributedString.Key.foregroundColor: UIColor.emailPlaceholderText ])
+                                                              attributes: [ NSAttributedString.Key.foregroundColor: UIColor.gray ])
         emailInput.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: emailInputHeight))
         emailInput.leftViewMode = .always
         emailInput.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: emailInputHeight))
