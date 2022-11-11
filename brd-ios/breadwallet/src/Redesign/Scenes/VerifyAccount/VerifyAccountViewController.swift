@@ -1,5 +1,5 @@
-//
-// Created by Equaleyes Solutions Ltd
+// 
+//  Copyright © 2022 RockWallet, LLC. All rights reserved.
 //
 
 import UIKit
@@ -38,7 +38,7 @@ class VerifyAccountViewController: BaseTableViewController<KYCCoordinator,
         }
         
         verifyButton.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
             make.edges.equalTo(verifyButton.snp.margins)
         }
         

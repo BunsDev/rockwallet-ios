@@ -102,7 +102,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func setBackButton() {
-        let back = UIBarButtonItem(image: UIImage(named: "BackArrowWhite"),
+        let back = UIBarButtonItem(image: UIImage(named: "back"),
                                    style: .plain,
                                    target: self,
                                    action: #selector(onBackButton))
@@ -176,7 +176,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
             nextButton.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -ViewSizes.Common.defaultCommon.rawValue),
             nextButton.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: Margins.large.rawValue),
-            nextButton.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeButton.rawValue)
+            nextButton.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue)
         ])
         nextButton.configure(with: Presets.Button.primary)
         nextButton.addTarget(self, action: #selector(nextTapped(_:)), for: .touchUpInside)

@@ -84,7 +84,10 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
         }
         
         cell.setup { view in
-            view.configure(with: .init())
+            view.configure(with: .init(shadow: Presets.Shadow.light,
+                                       background: .init(backgroundColor: LightColors.Background.one,
+                                                         tintColor: LightColors.Text.one,
+                                                         border: Presets.Border.commonPlain)))
             view.setup(with: model)
             
             view.didTypeCVV = { [weak self] cvv in

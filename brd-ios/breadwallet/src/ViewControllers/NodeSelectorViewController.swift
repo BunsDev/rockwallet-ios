@@ -63,7 +63,7 @@ class NodeSelectorViewController: UIViewController {
     }
 
     private func setInitialData() {
-        view.backgroundColor = .darkBackground
+        view.backgroundColor = LightColors.Background.two
         titleLabel.text = L10n.NodeSelector.title
         nodeLabel.text = L10n.NodeSelector.nodeLabel
         statusLabel.text = L10n.NodeSelector.statusLabel

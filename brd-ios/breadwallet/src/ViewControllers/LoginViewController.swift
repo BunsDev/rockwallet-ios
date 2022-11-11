@@ -77,7 +77,6 @@ class LoginViewController: UIViewController, Subscriber {
     private var topControlTop: NSLayoutConstraint?
     private var unlockTimer: Timer?
     private let pinPadBackground = UIView(color: LightColors.Text.one)
-    private let logoBackground = MotionGradientView()
     private var hasAttemptedToShowBiometrics = false
     private let lockedOverlay = UIVisualEffectView()
     private var isResetting = false
@@ -127,6 +126,8 @@ class LoginViewController: UIViewController, Subscriber {
     }()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         addSubviews()
         addConstraints()
         addPinPadCallbacks()

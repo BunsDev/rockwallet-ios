@@ -557,7 +557,7 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }
                 
-                let feedback = EmailFeedbackManager.Feedback(recipients: C.feedbackEmail, subject: "Rockwallet - Feedback", body: "")
+                let feedback = EmailFeedbackManager.Feedback(recipients: C.feedbackEmail, subject: "RockWallet - Feedback", body: "")
                 if let feedbackManager = EmailFeedbackManager(feedback: feedback, on: topVc) {
                     self?.feedbackManager = feedbackManager
                     
@@ -792,14 +792,14 @@ class ModalPresenter: Subscriber {
         topViewController?.present(alert, animated: true, completion: nil)
     }
     
-    private func presentKeyImport(wallet: Wallet, scanResult: QRCode? = nil) {
+    private func presentKeyImport(wallet: Wallet, scanResult: QRCode? = nil) {        
         let nc = RootNavigationController()
         let start = ImportKeyViewController(wallet: wallet, initialQRCode: scanResult)
         start.addCloseNavigationItem()
-        start.navigationItem.title = L10n.Import.title
         let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.importWallet, currency: wallet.currency, position: .right)
+        faqButton.tintColor = LightColors.Contrast.two
         start.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: faqButton)]
-        nc.viewControllers = [start]
+        nc.pushViewController(start, animated: true)
         topViewController?.present(nc, animated: true, completion: nil)
     }
 

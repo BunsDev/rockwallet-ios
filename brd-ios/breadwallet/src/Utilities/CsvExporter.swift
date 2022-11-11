@@ -42,7 +42,7 @@ class CsvExporter {
                 appropriateFor: tempCsvDir,
                 create: true)
             let timestamp = DateFormatter.filenameDateFormatter.string(from: Date())
-            let tempCsvUrl = tempDir.appendingPathComponent("BRD-transactions-\(timestamp).csv")
+            let tempCsvUrl = tempDir.appendingPathComponent("RockWallet-transactions-\(timestamp).csv")
             let created = FileManager.default.createFile(atPath: tempCsvUrl.path, contents: nil, attributes: nil)
             
             assert(created)

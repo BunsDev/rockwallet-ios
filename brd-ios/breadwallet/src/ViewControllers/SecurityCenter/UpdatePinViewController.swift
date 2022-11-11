@@ -108,6 +108,8 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         if shouldShowFAQButton {
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
         }
@@ -223,7 +225,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
     
     func setupBackButton() {
-        let back = UIBarButtonItem(image: UIImage(named: "BackArrowWhite"),
+        let back = UIBarButtonItem(image: UIImage(named: "back"),
                                    style: .plain,
                                    target: self,
                                    action: #selector(backButtonPressed))
@@ -380,13 +382,21 @@ class UpdatePinViewController: UIViewController, Subscriber {
                         self?.presentResetPinSuccess(newPin: newPin)
                     })))
                 } else {
-                    Store.perform(action: Alert.Show(.pinSet(callback: { [weak self] in
+                    let callback = { [weak self] in
                         guard let self = self else { return }
                         self.setPinSuccess?(newPin)
                         if self.type != .creationNoPhrase {
                             self.parent?.dismiss(animated: true, completion: nil)
                         }
-                    })))
+                    }
+                    
+                    let type: AlertType
+                    if self.type == .creationNoPhrase {
+                        type = .pinSet(callback: callback)
+                    } else {
+                        type = .pinUpdated(callback: callback)
+                    }
+                    Store.perform(action: Alert.Show(type))
                 }
 
             } else {
@@ -401,16 +411,9 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
     
     func presentResetPinSuccess(newPin: String) {
-        let resetPinSuccess = ResetPinViewController()
-        resetPinSuccess.resetFromDisabledSuccess = { [weak self] in
-            self?.dismiss(animated: true, completion: {
-                self?.resetFromDisabledSuccess?(newPin)
-            })
-        }
-        let nc = RootNavigationController(rootViewController: resetPinSuccess)
-        nc.modalPresentationStyle = .overFullScreen
-        nc.isNavigationBarHidden = true
-        present(nc, animated: true)
+        dismiss(animated: true, completion: { [weak self] in
+            self?.resetFromDisabledSuccess?(newPin)
+        })
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

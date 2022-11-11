@@ -17,7 +17,7 @@ struct CardSelectionConfiguration: Configurable {
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
-                                                     border: Presets.Border.zero)
+                                                     border: Presets.Border.mediumPlain)
 }
 
 struct CardSelectionViewModel: ViewModel {
@@ -72,13 +72,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         let view = FEImageView()
         return view
     }()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
     
     override func setupSubviews() {
         super.setupSubviews()

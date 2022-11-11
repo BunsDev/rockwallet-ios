@@ -1,11 +1,11 @@
 /* App name */
-"About.appName.android" = "Rockwallet";
+"About.appName.android" = "RockWallet";
 
 /* About screen blog label */
 "About.blog" = "Blog";
 
 /* About screen footer */
-"About.footer" = "Realizzato dal Global team Rockwallet. Versione %1$@ Build %2$@";
+"About.footer" = "Realizzato dal Global team RockWallet. Versione %1$@ Build %2$@";
 
 /* Privay Policy button label */
 "About.privacy" = "Informativa sulla Privacy";
@@ -23,7 +23,7 @@
 "About.twitter" = "Twitter";
 
 /* About screen wallet ID label */
-"About.walletID" = "ID premio Rockwallet";
+"About.walletID" = "ID premio RockWallet";
 
 /* Close modal button accessibility label */
 "AccessibilityLabels.close" = "Chiudi";
@@ -65,7 +65,7 @@
 "AccountCreation.title" = "Conferma creazione account";
 
 /* Default wallet name */
-"AccountHeader.defaultWalletName" = "Il Mio Rockwallet";
+"AccountHeader.defaultWalletName" = "Il Mio RockWallet";
 
 /* Third party keyboard warning */
 "Alert.customKeyboard.android" = "Sembra che tu stia utilizzando una tastiera di terze parti, essa può registrare ciò che scrivi e rubare la tua Paper Key. Per favore, utilizza la tastiera Android di default per maggiore protezione.";
@@ -73,20 +73,17 @@
 /* Error alert title */
 "Alert.error" = "Errore";
 
-/* Error title when balance to low */
-"Alert.ethBalance" = "Insufficient Ethereum Balance";
-
 /* Keystore error */
-"Alert.keystore.generic.android" = "C’è un problema con il KeyStore del tuo sistema operativo Android, per favore, contatta support@breadwallet.com";
+"Alert.keystore.generic.android" = "C’è un problema con il KeyStore del tuo sistema operativo Android, per favore, contatta support@rockwallet.com";
 
 /* KeyStore error, keys are invalidated */
-"Alert.keystore.invalidated.android" = "I tuoi dati criptati di Rockwallet sono stati recentemente  invalidati  perché la schermata di blocco del tuo Android era disabilitata.";
+"Alert.keystore.invalidated.android" = "I tuoi dati criptati di RockWallet sono stati recentemente  invalidati  perché la schermata di blocco del tuo Android era disabilitata.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must uninstall. */
-"Alert.keystore.invalidated.uninstall.android" = "Non possiamo procedere perché le impostazioni del blocco schermo sono state modificate (ad es. la password è stata disabilitata, le impronte digitali sono state modificate). Per ragioni di sicurezza, Android ha bloccato in modo permanente il tuo keystore. Pertanto, i dati dell'app Rockwallet devono essere cancellati attraverso la disinstallazione.\n\nNon preoccuparti, i tuoi fondi sono ancora al sicuro! Reinstalla l'app e recupera il tuo portafoglio utilizzando la paper key.";
+"Alert.keystore.invalidated.uninstall.android" = "Non possiamo procedere perché le impostazioni del blocco schermo sono state modificate (ad es. la password è stata disabilitata, le impronte digitali sono state modificate). Per ragioni di sicurezza, Android ha bloccato in modo permanente il tuo keystore. Pertanto, i dati dell'app RockWallet devono essere cancellati attraverso la disinstallazione.\n\nNon preoccuparti, i tuoi fondi sono ancora al sicuro! Reinstalla l'app e recupera il tuo portafoglio utilizzando la paper key.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must wipe their app data. */
-"Alert.keystore.invalidated.wipe.android" = "Non possiamo procedere perché le impostazioni del blocco schermo sono state modificate (ad es. la password è stata disabilitata, le impronte digitali sono state modificate). Per ragioni di sicurezza, Android ha bloccato in modo permanente il tuo keystore. Dunque, i dati dell'app Rockwallet devono essere cancellati.\n\nNon preoccuparti, i tuoi fondi sono ancora al sicuro! Recupera il tuo portafoglio usando la tua paper key.";
+"Alert.keystore.invalidated.wipe.android" = "Non possiamo procedere perché le impostazioni del blocco schermo sono state modificate (ad es. la password è stata disabilitata, le impronte digitali sono state modificate). Per ragioni di sicurezza, Android ha bloccato in modo permanente il tuo keystore. Dunque, i dati dell'app RockWallet devono essere cancellati.\n\nNon preoccuparti, i tuoi fondi sono ancora al sicuro! Recupera il tuo portafoglio usando la tua paper key.";
 
 /* Keystore error title */
 "Alert.keystore.title.android" = "Errore KeyStore Android";
@@ -131,13 +128,13 @@
 "Alerts.touchIdSucceeded.android" = "Impronta digitale riconosciuta";
 
 /* Tell the user where they can enable permissions to access device storage. */
-"Android.allowFileSystemAccess" = "Abilita le autorizzazioni per l'archiviazione nelle impostazioni del dispositivo: \"Impostazioni\"> \"App\"> \"Rockwallet\"> \"Autorizzazioni\".";
+"Android.allowFileSystemAccess" = "Abilita le autorizzazioni per l'archiviazione nelle impostazioni del dispositivo: \"Impostazioni\"> \"App\"> \"RockWallet\"> \"Autorizzazioni\".";
 
 /* The "home" screen is the name of the top level menu for the app. */
 "Android.BCH.welcome.message" = "Puoi accedere a qualsiasi BCH nel tuo wallet dalla schermata Home.";
 
 /* Warning about using apps that can alter the screen */
-"Android.screenAlteringMessage" = "Rockwallet non funzionerà correttamente a meno che le app che alterano lo schermo (come Twilight) siano disabilitate.";
+"Android.screenAlteringMessage" = "RockWallet non funzionerà correttamente a meno che le app che alterano lo schermo (come Twilight) siano disabilitate.";
 
 /* An app that alters the screen ("screen-altering app") has been detected. */
 "Android.screenAlteringTitle" = "App che altera lo schermo rilevata";
@@ -481,10 +478,10 @@
 "ErrorMessages.emailUnavailableTitle" = "E-mail Non Disponibile";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLow" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
+"ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
 
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
-"ErrorMessages.loopingLockScreen.android" = "Rockwallet non può essere autenticato a causa di un bug nella tua versione di Android. [Tocca qui per maggiori informazioni.]";
+"ErrorMessages.loopingLockScreen.android" = "RockWallet non può essere autenticato a causa di un bug nella tua versione di Android. [Tocca qui per maggiori informazioni.]";
 
 /* Messaging unavailable alert title */
 "ErrorMessages.messagingUnavailableMessage" = "Questo dispositivo non è configurato per inviare messaggi.";
@@ -522,16 +519,16 @@
 "FaceIDSettings.customizeText" = "Puoi personalizzare il tuo limite di spesa Face ID dal %1$@.";
 
 /* Text describing the purpose of the Face ID settings in the BRD app. */
-"FaceIDSettings.explanatoryText" = "Utilizza Face ID per sbloccare l'app Rockwallet e inviare denaro.";
+"FaceIDSettings.explanatoryText" = "Utilizza Face ID per sbloccare l'app RockWallet e inviare denaro.";
 
 /* Face Id screen label */
-"FaceIDSettings.label" = "Usa il tuo viso per sbloccare i tuoi Rockwallet e inviare denaro fino a un limite impostato.";
+"FaceIDSettings.label" = "Usa il tuo viso per sbloccare i tuoi RockWallet e inviare denaro fino a un limite impostato.";
 
 /* Title of the screen for setting the Face ID Spending Limit */
 "FaceIDSettings.linkText" = "Schermata limite di spesa Face ID";
 
 /* Setting to turn on Face ID for BRD */
-"FaceIDSettings.switchLabel" = "Abilita Face ID per Rockwallet";
+"FaceIDSettings.switchLabel" = "Abilita Face ID per RockWallet";
 
 /* Face ID settings view title */
 "FaceIDSettings.title" = "Face ID";
@@ -546,7 +543,7 @@
 "FaceIDSettings.unavailableAlertTitle" = "Face ID non impostato";
 
 /* Text label for a toggle that enables Face ID for unlocking the BRD app. */
-"FaceIDSettings.unlockTitleText" = "Abilita Face ID per sbloccare Rockwallet";
+"FaceIDSettings.unlockTitleText" = "Abilita Face ID per sbloccare RockWallet";
 
 /* Face Id spending limit screen title */
 "FaceIDSpendingLimit.title" = "Limite di spesa Face ID";
@@ -587,7 +584,7 @@
 "FileChooser.selectImageSource.android" = "Seleziona sorgente immagine";
 
 /* Fingerprint authentication settings screen description */
-"FingerprintSettings.description" = "Utilizzare l'impronta digitale per sbloccare l'applicazione Rockwallet e inviare le transazioni.";
+"FingerprintSettings.description" = "Utilizzare l'impronta digitale per sbloccare l'applicazione RockWallet e inviare le transazioni.";
 
 /* Switch label to enable fingerprint authentication to send money */
 "FingerprintSettings.sendMoney" = "Utilizzare l'impronta digitale per inviare denaro";
@@ -596,7 +593,7 @@
 "FingerprintSettings.title" = "Impronta digitale";
 
 /* Switch label to enable fingerprint authentication to unlock BRD app */
-"FingerprintSettings.unlockApp" = "Utilizzare l'impronta digitale per sbloccare Rockwallet";
+"FingerprintSettings.unlockApp" = "Utilizzare l'impronta digitale per sbloccare RockWallet";
 
 /* Activity button on the home screen toolbar */
 "HomeScreen.activity" = "Activity";
@@ -668,7 +665,7 @@
 "Import.leftCaption" = "Portafoglio da importare";
 
 /* Import wallet intro screen message */
-"Import.message" = "L'importazione del portafoglio trasferisce tutti i fondi dal tuo portafoglio al tuo portafoglio Rockwallet utilizzando una singola transizione.";
+"Import.message" = "L'importazione del portafoglio trasferisce tutti i fondi dal tuo portafoglio al tuo portafoglio RockWallet utilizzando una singola transizione.";
 
 /* Enter password alert view title */
 "Import.password" = "Questa chiave privata è protetta da password.";
@@ -677,7 +674,7 @@
 "Import.passwordPlaceholder" = "password";
 
 /* Caption for graphics */
-"Import.rightCaption" = "Il Tuo Portafoglio Rockwallet";
+"Import.rightCaption" = "Il Tuo Portafoglio RockWallet";
 
 /* Scan Private key button label */
 "Import.scan" = "Acquisisci Chiave Privata";
@@ -707,10 +704,10 @@
 "JailbreakWarnings.ignore" = "Ignora";
 
 /* Jailbreak warning message */
-"JailbreakWarnings.messageWithBalance" = "SICUREZZA DEL DISPOSITIVO COMPROMESSA\nQualsiasi applicazione \"jailbreak\" può accedere ai dati di keychain di Rockwallet e rubarti i bitcoin! Cancella immediatamente questo portafoglio ed effettua il ripristino su un dispositivo sicuro.";
+"JailbreakWarnings.messageWithBalance" = "SICUREZZA DEL DISPOSITIVO COMPROMESSA\nQualsiasi applicazione \"jailbreak\" può accedere ai dati di keychain di RockWallet e rubarti i bitcoin! Cancella immediatamente questo portafoglio ed effettua il ripristino su un dispositivo sicuro.";
 
 /* Jailbreak warning message */
-"JailbreakWarnings.messageWithoutBalance" = "SICUREZZA DEL DISPOSITIVO COMPROMESSA\nQualsiasi applicazione \"jailbreak\" può accedere ai dati di keychain di Rockwallet e rubarti i bitcoin. Utilizza Rockwallet solamente su un dispositivo senza jailbreak.";
+"JailbreakWarnings.messageWithoutBalance" = "SICUREZZA DEL DISPOSITIVO COMPROMESSA\nQualsiasi applicazione \"jailbreak\" può accedere ai dati di keychain di RockWallet e rubarti i bitcoin. Utilizza RockWallet solamente su un dispositivo senza jailbreak.";
 
 /* Jailbreak warning title */
 "JailbreakWarnings.title" = "ATTENZIONE";
@@ -743,7 +740,7 @@
 "LocationPlugin.disabled" = "I servizi di localizzazione sono disabilitati.";
 
 /* No permissions for location services */
-"LocationPlugin.notAuthorized" = "Rockwallet non dispone dell'autorizzazione per accedere ai servizi di localizzazione.";
+"LocationPlugin.notAuthorized" = "RockWallet non dispone dell'autorizzazione per accedere ai servizi di localizzazione.";
 
 /* Wallet creation date prefix */
 "ManageWallet.creationDatePrefix" = "Hai creato il tuo portafoglio il %1$@";
@@ -877,7 +874,7 @@
 "OnboardingPageOne.title" = "Benvenuto nel tuo nuovo portafoglio globale!";
 
 /* Onboarding screen Page 3 subtitle */
-"OnboardingPageThree.subtitle" = "Investi e diversifica con Rockwallet, facilmente ed in maniera sicura.";
+"OnboardingPageThree.subtitle" = "Investi e diversifica con RockWallet, facilmente ed in maniera sicura.";
 
 /* Onboarding screen Page 3 title */
 "OnboardingPageThree.title" = "Acquista e scambia bitcoin, token e altre valute digitali.";
@@ -886,7 +883,7 @@
 "OnboardingPageTwo.subtitle" = "Abbiamo un patrimonio di oltre $ 6 miliardi sotto protezione.";
 
 /* Onboarding screen Page 2 title */
-"OnboardingPageTwo.title" = "Unisciti a milioni di persone che in tutto il mondo si fidano di Rockwallet.";
+"OnboardingPageTwo.title" = "Unisciti a milioni di persone che in tutto il mondo si fidano di RockWallet.";
 
 /* Eg. Send 1.0Eth to purchase CCC */
 "PaymentConfirmation.amountText" = "Invia %1$@ per acquistare %2$@";
@@ -972,9 +969,9 @@
 
 "Prompts.RateApp.enjoyingBrd" = "Ti piace BRD?";
 
-"Prompts.RateApp.enjoyingRockwallet" = "Ti piace Rockwallet?";
+"Prompts.RateApp.enjoyingRockWallet" = "Ti piace RockWallet?";
 
-"Prompts.RateApp.googlePlayReview" = "La tua recensione aiuta a far crescere la comunità Rockwallet.";
+"Prompts.RateApp.googlePlayReview" = "La tua recensione aiuta a far crescere la comunità RockWallet.";
 
 "Prompts.RateApp.noThanks" = "No Grazie";
 
@@ -987,7 +984,7 @@
 "Prompts.RecommendRescan.title" = "Transazione Rifiutata";
 
 /* Share data prompt body */
-"Prompts.ShareData.body" = "Aiutaci a migliorare Rockwallet condividendo i tuoi dati anonimi con noi";
+"Prompts.ShareData.body" = "Aiutaci a migliorare RockWallet condividendo i tuoi dati anonimi con noi";
 
 /* Share data prompt title */
 "Prompts.ShareData.title" = "Condividi dati anonimi";
@@ -1008,7 +1005,7 @@
 "Prompts.TouchId.usePin.android" = "PIN";
 
 /* Upgrade PIN prompt body. */
-"Prompts.UpgradePin.body" = "Rockwallet è stato aggiornato per l'utilizzo di un PIN a 6 cifre. Tocca qui per aggiornare.";
+"Prompts.UpgradePin.body" = "RockWallet è stato aggiornato per l'utilizzo di un PIN a 6 cifre. Tocca qui per aggiornare.";
 
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Aggiorna il PIN";
@@ -1020,13 +1017,13 @@
 "PushNotifications.disabled" = "Notifiche Disabilitate";
 
 /* Body text when push notifications are disabled. */
-"PushNotifications.disabledBody" = "Attiva le notifiche per ricevere offerte speciali e aggiornamenti da Rockwallet.";
+"PushNotifications.disabledBody" = "Attiva le notifiche per ricevere offerte speciali e aggiornamenti da RockWallet.";
 
 /* Body text when push notifications are enabled. */
-"PushNotifications.enabledBody" = "Stai ricevendo offerte speciali e aggiornamenti da Rockwallet.";
+"PushNotifications.enabledBody" = "Stai ricevendo offerte speciali e aggiornamenti da RockWallet.";
 
 /* Instructions to enable push notifications for BRD in the phone's system settings. */
-"PushNotifications.enableInstructions" = "Sembra che le notifiche siano disattivate. Accedi alle Impostazioni per abilitare le notifiche da Rockwallet.";
+"PushNotifications.enableInstructions" = "Sembra che le notifiche siano disattivate. Accedi alle Impostazioni per abilitare le notifiche da RockWallet.";
 
 /* Push notifications toggle switch label */
 "PushNotifications.label" = "Ricevi notifiche push";
@@ -1050,10 +1047,10 @@
 "RateAppPrompt.Button.Dismiss.Android" = "No Grazie";
 
 /* Google play review prompt, dismiss button */
-"RateAppPrompt.Button.RateApp.Android" = "Valutare Rockwallet";
+"RateAppPrompt.Button.RateApp.Android" = "Valutare RockWallet";
 
 /* Google play review prompt title */
-"RateAppPrompt.Title.Android" = "Valutare Rockwallet";
+"RateAppPrompt.Title.Android" = "Valutare RockWallet";
 
 /* Address copied message. */
 "Receive.copied" = "Copiato negli appunti.";
@@ -1086,7 +1083,7 @@
 "RecoverWallet.instruction" = "Inserisci la tua Paper Key";
 
 /* Recover wallet intro */
-"RecoverWallet.intro" = "Recupera il tuo Rockwallet con la tua Paper Key";
+"RecoverWallet.intro" = "Recupera il tuo RockWallet con la tua Paper Key";
 
 /* Invalid paper key message */
 "RecoverWallet.invalid" = "La Paper Key inserita non è valida. Si prega di controllare ogni parola due volte e riprovare.";
@@ -1179,13 +1176,13 @@
 "RecoveryKeyFlow.securityAssurance" = "Compra e fai affari sapendo che i tuoi fondi sono protetti dalla migliore sicurezza e privacy sul mercato.";
 
 /* Recommends that the user stores the recovery key in a secure location */
-"RecoveryKeyFlow.storeSecurelyRecommendation" = "Conserva la tua chiave in un luogo sicuro. Questa è l'unica maniera per recuperare il tuo portafoglio. Rockwallet non ne mantiene una copia.";
+"RecoveryKeyFlow.storeSecurelyRecommendation" = "Conserva la tua chiave in un luogo sicuro. Questa è l'unica maniera per recuperare il tuo portafoglio. RockWallet non ne mantiene una copia.";
 
 /* Title for the success page after the recovery phrase has been set up */
 "RecoveryKeyFlow.successHeading" = "Congratulazioni! Hai completato l'impostazione della tua chiave di recupero.";
 
 /* Subtitle for the success page after the recovery key has been set up */
-"RecoveryKeyFlow.successSubheading" = "Sei pronto per depositare, commerciare e comprare criptovaluta dal tua portafoglio Rockwallet.";
+"RecoveryKeyFlow.successSubheading" = "Sei pronto per depositare, commerciare e comprare criptovaluta dal tua portafoglio RockWallet.";
 
 /* Title displayed to the user on the intro screen when unlinking a wallet */
 "RecoveryKeyFlow.unlinkWallet" = "Scollega il tuo portafoglio da questo dispositivo.";
@@ -1236,7 +1233,7 @@
 "ReScan.body1" = "20-45 minuti";
 
 /* Syncing explanation */
-"ReScan.body2" = "Se una transazione figura come completata sulla rete, ma non sul tuo Rockwallet.";
+"ReScan.body2" = "Se una transazione figura come completata sulla rete, ma non sul tuo RockWallet.";
 
 /* Syncing explanation */
 "ReScan.body3" = "Hai ricevuto ripetutamente un errore che dice che la transazione è stata rifiutata.";
@@ -1260,7 +1257,7 @@
 "RewardsView.expandedBody" = "Impara come puoi risparmiare sulle tue commissioni di trading e sbloccare futuri benefici.";
 
 /* Rewards view expanded title. */
-"RewardsView.expandedTitle" = "Presentazione dei benefici Rockwallet.";
+"RewardsView.expandedTitle" = "Presentazione dei benefici RockWallet.";
 
 /* Rewards view title */
 "RewardsView.normalTitle" = "Benefici";
@@ -1302,13 +1299,13 @@
 "SecurityCenter.paperKeyTitle.android" = "Paper Key";
 
 /* PIN button description */
-"SecurityCenter.pinDescription" = "Protegge il tuo Rockwallet dagli utenti non autorizzati.";
+"SecurityCenter.pinDescription" = "Protegge il tuo RockWallet dagli utenti non autorizzati.";
 
 /* PIN button title */
 "SecurityCenter.pinTitle" = "PIN a 6 cifre";
 
 /* Touch ID button description */
-"SecurityCenter.touchIdDescription" = "Sblocca comodamente il tuo Rockwallet e invia denaro fino a un limite impostato.";
+"SecurityCenter.touchIdDescription" = "Sblocca comodamente il tuo RockWallet e invia denaro fino a un limite impostato.";
 
 /* Touch ID button title */
 "SecurityCenter.touchIdTitle" = "Touch ID";
@@ -1343,16 +1340,16 @@
 "Send.balanceString" = "Saldo:";
 
 /* Instructions how to allow the camera access for the app */
-"Send.cameraUnavailabeMessage.android" = "Consenti l’accesso alla fotocamera in “Impostazioni” > “Apps” > “Rockwallet” > “Permessi”";
+"Send.cameraUnavailabeMessage.android" = "Consenti l’accesso alla fotocamera in “Impostazioni” > “Apps” > “RockWallet” > “Permessi”";
 
 /* Permission required to access camera */
-"Send.cameraUnavailabeTitle.android" = "Rockwallet non è autorizzato ad accedere alla fotocamera";
+"Send.cameraUnavailabeTitle.android" = "RockWallet non è autorizzato ad accedere alla fotocamera";
 
 /* Camera not allowed message */
 "Send.cameraunavailableMessage" = "Vai su Impostazioni per consentire l'accesso alla fotocamera.";
 
 /* Camera not allowed alert title */
-"Send.cameraUnavailableTitle" = "Rockwallet non è autorizzato ad accedere alla fotocamera";
+"Send.cameraUnavailableTitle" = "RockWallet non è autorizzato ad accedere alla fotocamera";
 
 /* Warning when sending to self. */
 "Send.containsAddress" = "La destinazione corrisponde al tuo indirizzo. Non puoi inviare a te stesso.";
@@ -1400,9 +1397,6 @@
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "Devi avere almeno %1$@ nel tuo portafoglio per poter trasferire questo tipo di gettone. Vuoi andare al tuo portafoglio Ethereum adesso?";
-
-/* Your ethereum balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "Saldo Ethereum insufficiente";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "L'indirizzo di destinazione non è un indirizzo %1$@ valido.";
@@ -1525,7 +1519,7 @@
 "Settings.EnableSegwit" = "Abilita SegWit";
 
 /* Are you enjoying bread alert message body */
-"Settings.enjoying" = "Ti piace Rockwallet?";
+"Settings.enjoying" = "Ti piace RockWallet?";
 
 /* Export transaction history menu item */
 "Settings.exportTransfers" = "Esporta la cronologia delle transazioni in CSV";
@@ -1594,7 +1588,7 @@
 "Settings.wipe.android" = "Scollega il tuo portafoglio da questo dispositivo.";
 
 /* Share data view body */
-"ShareData.body" = "Aiuta a migliorare Rockwallet condividendo con noi i tuoi dati anonimi. Ciò non include alcuna informazione finanziaria. Rispettiamo la tua privacy finanziaria.";
+"ShareData.body" = "Aiuta a migliorare RockWallet condividendo con noi i tuoi dati anonimi. Ciò non include alcuna informazione finanziaria. Rispettiamo la tua privacy finanziaria.";
 
 /* Share data header */
 "ShareData.header" = "Condividi Dati?";
@@ -1606,7 +1600,7 @@
 
 "ShareGift.footerMessage1" = "Una volta richiesta, verrà detratta una tariffa di rete dal totale.\n Il valore effettivo dipende dal prezzo corrente del bitcoin.";
 
-"ShareGift.footerMessage2" = "Scarica l'app Rockwallet per iPhone o Android.\n Per ulteriori informazioni, visitare rockwallet.com/gift";
+"ShareGift.footerMessage2" = "Scarica l'app RockWallet per iPhone o Android.\n Per ulteriori informazioni, visitare rockwallet.com/gift";
 
 "ShareGift.tagLine" = "Qualcuno ti ha regalato bitcoin!";
 
@@ -1678,10 +1672,10 @@
 "StartPaperPhrase.againButtonTitle" = "Annota di nuovo la Paper Key";
 
 /* Paper key explanation text. */
-"StartPaperPhrase.body" = "La tua Paper Key è l'unico modo per ripristinare il tuo Rockwallet, nel caso il tuo telefono sia perso, rubato, rotto o aggiornato.\n\nTi mostreremo un elenco di parole da annotare su un pezzo di carta e conservare al sicuro.";
+"StartPaperPhrase.body" = "La tua Paper Key è l'unico modo per ripristinare il tuo RockWallet, nel caso il tuo telefono sia perso, rubato, rotto o aggiornato.\n\nTi mostreremo un elenco di parole da annotare su un pezzo di carta e conservare al sicuro.";
 
 /* Paper key explanation text (Android-version) */
-"StartPaperPhrase.Body.Android" = "La chiave di sicurezza è il solo modo per ripristinare il tuo Rockwallet se il tuo telefono viene perso, rubato, rotto, o aggiornato.\n\nLa tua chiave di sicurezza è richiesta anche se cambi le impostazioni di sicurezza del dispositivo.\n\nTi mostreremo una lista di parole da scrivere su un pezzo di carta e tenere al sicuro.";
+"StartPaperPhrase.Body.Android" = "La chiave di sicurezza è il solo modo per ripristinare il tuo RockWallet se il tuo telefono viene perso, rubato, rotto, o aggiornato.\n\nLa tua chiave di sicurezza è richiesta anche se cambi le impostazioni di sicurezza del dispositivo.\n\nTi mostreremo una lista di parole da scrivere su un pezzo di carta e tenere al sicuro.";
 
 /* button label */
 "StartPaperPhrase.buttonTitle" = "Annota la Paper Key";
@@ -1774,10 +1768,10 @@
 "TouchIdSettings.disabledWarning.title.android" = "Autenticazione Impronta non abilitata";
 
 /* Text that describes the purpose of the Touch ID settings in the BRD app. */
-"TouchIdSettings.explanatoryText" = "Utilizza Touch ID per sbloccare l'app Rockwallet e inviare denaro.";
+"TouchIdSettings.explanatoryText" = "Utilizza Touch ID per sbloccare l'app RockWallet e inviare denaro.";
 
 /* Touch Id screen label */
-"TouchIdSettings.label" = "Utilizza l'impronta digitale per sbloccare il tuo Rockwallet e inviare denaro fino a un limite impostato.";
+"TouchIdSettings.label" = "Utilizza l'impronta digitale per sbloccare il tuo RockWallet e inviare denaro fino a un limite impostato.";
 
 /* Link Text (see TouchIdSettings.customizeText) */
 "TouchIdSettings.linkText" = "Schermata limite di spesa con Touch ID";
@@ -1786,7 +1780,7 @@
 "TouchIdSettings.spendingLimit" = "Limite di spesa: %1$@ (%2$@)";
 
 /* Touch id switch label. */
-"TouchIdSettings.switchLabel" = "Abilita Touch ID per Rockwallet";
+"TouchIdSettings.switchLabel" = "Abilita Touch ID per RockWallet";
 
 /* Enable fingerprint for this wallet called Bread */
 "TouchIdSettings.switchLabel.android" = "Abilita l’Autenticazione con Impronta Digitale";
@@ -1807,7 +1801,7 @@
 "TouchIdSettings.unavailableAlertTitle" = "Touch ID Non Impostato";
 
 /* Text label for the toggle that enables Touch ID for unlocking the BRD app. */
-"TouchIdSettings.unlockTitleText" = "Abilita Touch ID per sbloccare Rockwallet";
+"TouchIdSettings.unlockTitleText" = "Abilita Touch ID per sbloccare RockWallet";
 
 /* Always require passcode option */
 "TouchIdSpendingLimit" = "Richiede sempre una password";
@@ -2059,7 +2053,7 @@
 "UnlockScreen.touchIdInstructions.android" = "Sensore Touch";
 
 /* TouchID prompt text */
-"UnlockScreen.touchIdPrompt" = "Sblocca il tuo Rockwallet.";
+"UnlockScreen.touchIdPrompt" = "Sblocca il tuo RockWallet.";
 
 /* Device authentication body */
 "UnlockScreen.touchIdPrompt.android" = "Per favore, sblocca il tuo dispositivo Android per continuare.";
@@ -2083,7 +2077,7 @@
 "UpdatePin.caption" = "Ricorda questo PIN. Se lo dimentichi, non sarai in grado di accedere al tuo bitcoin.";
 
 /* PIN creation info. */
-"UpdatePin.createInstruction" = "Il PIN verrà utilizzato per sbloccare il tuo Rockwallet e inviare denaro.";
+"UpdatePin.createInstruction" = "Il PIN verrà utilizzato per sbloccare il tuo RockWallet e inviare denaro.";
 
 /* Update PIN title */
 "UpdatePin.createTitle" = "Imposta PIN";
@@ -2196,7 +2190,7 @@
 "WalletConnectionSettings.viewTitle" = "Fastsync";
 
 /* 'No wallet' warning for watch app */
-"Watch.noWalletWarning" = "Apri l'app Rockwallet per iPhone per impostare tuo il portafoglio.";
+"Watch.noWalletWarning" = "Apri l'app RockWallet per iPhone per impostare tuo il portafoglio.";
 
 /* Dismiss button label */
 "Webview.dismiss" = "Ignora";
@@ -2208,10 +2202,10 @@
 "Webview.updating" = "In aggiornamento…";
 
 /* Welcome screen text. (?) will be replaced with the help icon users should look for. */
-"Welcome.body" = "Breadwallet ha cambiato il suo nome in Rockwallet e ha un look nuovissimo nonché alcune nuove funzionalità.\n\nSe hai bisogno di aiuto, cerca il (?) a destra in alto sulla maggior parte delle schermate.";
+"Welcome.body" = "Breadwallet ha cambiato il suo nome in RockWallet e ha un look nuovissimo nonché alcune nuove funzionalità.\n\nSe hai bisogno di aiuto, cerca il (?) a destra in alto sulla maggior parte delle schermate.";
 
 /* Top title of welcome screen */
-"Welcome.title" = "Ti diamo il benvenuto su Rockwallet!";
+"Welcome.title" = "Ti diamo il benvenuto su RockWallet!";
 
 /* Single asset widget description */
 "Widget.assetDescription" = "Rimani aggiornato con la tua risorsa crittografica preferita";

@@ -18,7 +18,7 @@ class ManageWalletsViewController: UITableViewController {
     
     private lazy var manageAssetsButton: ManageAssetsButton = {
         let manageAssetsButton = ManageAssetsButton()
-        let manageAssetsButtonTitle = "+ " + L10n.TokenList.addTitle
+        let manageAssetsButtonTitle = "+ " + L10n.TokenList.addTitle.uppercased()
         manageAssetsButton.set(title: manageAssetsButtonTitle)
         manageAssetsButton.accessibilityLabel = manageAssetsButtonTitle
         

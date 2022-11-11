@@ -10,66 +10,60 @@ import UIKit
 
 class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     private let walletAuthenticator: WalletAuthenticator
-    private let assetListTableView = AssetListTableView()
     private let notificationHandler = NotificationHandler()
     private let coreSystem: CoreSystem
     
-    private lazy var toolbarContainerView: UIView = {
+    private lazy var assetListTableView: AssetListTableView = {
+        let view = AssetListTableView()
+        return view
+    }()
+    
+    private lazy var tabBarContainerView: UIView = {
         let view = UIView()
+        view.backgroundColor = .clear
         view.clipsToBounds = true
         view.layer.masksToBounds = true
         view.layer.cornerRadius = CornerRadius.large.rawValue
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        
         return view
     }()
     
-    private lazy var toolbar: UITabBar = {
-        let toolbar = UITabBar()
-        toolbar.delegate = self
-        toolbar.isTranslucent = false
-        toolbar.barTintColor = LightColors.Background.cards
-        toolbar.tintColor = LightColors.Text.two
-        toolbar.unselectedItemTintColor = LightColors.Text.two
-        
-        return toolbar
+    private lazy var tabBar: UITabBar = {
+        let view = UITabBar()
+        view.delegate = self
+        view.isTranslucent = false
+        view.barTintColor = LightColors.Background.cards
+        view.tintColor = LightColors.Text.two
+        view.unselectedItemTintColor = LightColors.Text.two
+        return view
     }()
     
     private lazy var subHeaderView: UIView = {
-        let subHeaderView = UIView()
-        subHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        subHeaderView.backgroundColor = .clear
-        subHeaderView.clipsToBounds = false
-        
-        return subHeaderView
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.clipsToBounds = false
+        return view
     }()
     
     private lazy var totalAssetsTitleLabel: UILabel = {
-        let totalAssetsTitleLabel = UILabel(font: Fonts.Body.two, color: LightColors.Text.three)
-        totalAssetsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalAssetsTitleLabel.text = L10n.HomeScreen.totalAssets
-        
-        return totalAssetsTitleLabel
+        let view = UILabel(font: Fonts.Body.two, color: LightColors.Text.three)
+        view.text = L10n.HomeScreen.totalAssets
+        return view
     }()
     
     private lazy var totalAssetsAmountLabel: UILabel = {
-        let totalAssetsAmountLabel = UILabel(font: Fonts.Title.three, color: LightColors.Text.three)
-        totalAssetsAmountLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalAssetsAmountLabel.adjustsFontSizeToFitWidth = true
-        totalAssetsAmountLabel.minimumScaleFactor = 0.5
-        totalAssetsAmountLabel.textAlignment = .right
-        totalAssetsAmountLabel.text = "0"
-        
-        return totalAssetsAmountLabel
+        let view = UILabel(font: Fonts.Title.three, color: LightColors.Text.three)
+        view.adjustsFontSizeToFitWidth = true
+        view.minimumScaleFactor = 0.5
+        view.textAlignment = .right
+        return view
     }()
     
     private lazy var logoImageView: UIImageView = {
-        let logoImageView = UIImageView()
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.contentMode = .scaleAspectFit
-        logoImageView.image = UIImage(named: "logo_icon")
-        
-        return logoImageView
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "logo_icon")
+        return view
     }()
     
     var didSelectCurrency: ((Currency) -> Void)?
@@ -92,11 +86,14 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }()
     
     private lazy var pullToRefreshControl: UIRefreshControl = {
-        let pullToRefreshControl = UIRefreshControl()
-        pullToRefreshControl.attributedTitle = NSAttributedString(string: L10n.HomeScreen.pullToRefresh)
-        pullToRefreshControl.addTarget(self, action: #selector(reload), for: .valueChanged)
-        return pullToRefreshControl
+        let view = UIRefreshControl()
+        view.attributedTitle = NSAttributedString(string: L10n.HomeScreen.pullToRefresh)
+        view.addTarget(self, action: #selector(reload), for: .valueChanged)
+        return view
     }()
+    
+    // We are not using pullToRefreshControl.isRefreshing because when you trigger reload() it is already refreshing. We need a variable that tracks the real refreshing of the resources.
+    private var isRefreshing = false
     
     private let tabBarButtons = [(L10n.Button.home, UIImage(named: "home"), #selector(showHome)),
                                  (L10n.HomeScreen.trade, UIImage(named: "trade"), #selector(trade)),
@@ -109,6 +106,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     init(walletAuthenticator: WalletAuthenticator, coreSystem: CoreSystem) {
         self.walletAuthenticator = walletAuthenticator
         self.coreSystem = coreSystem
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -121,11 +119,14 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     @objc func reload() {
+        guard !isRefreshing else { return }
+        
+        isRefreshing = true
+        
         UserManager.shared.refresh { [weak self] _ in
             self?.attemptShowKYCPrompt()
         }
         
-        setupSubscriptions()
         Currencies.shared.reloadCurrencies()
         
         coreSystem.refreshWallet { [weak self] in
@@ -135,6 +136,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        pullToRefreshControl.endRefreshing()
         
         isInExchangeFlow = false
         ExchangeCurrencyHelper.revertIfNeeded()
@@ -153,10 +156,11 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         assetListTableView.didTapAddWallet = didTapManageWallets
         assetListTableView.didReload = { [weak self] in
             self?.pullToRefreshControl.endRefreshing()
+            
+            self?.isRefreshing = false
         }
         
-        addSubviews()
-        addConstraints()
+        setupSubviews()
         setInitialData()
         setupSubscriptions()
         updateTotalAssets()
@@ -170,28 +174,22 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     // MARK: Setup
     
-    private func addSubviews() {
+    private func setupSubviews() {
         view.addSubview(subHeaderView)
         subHeaderView.addSubview(logoImageView)
         subHeaderView.addSubview(totalAssetsTitleLabel)
         subHeaderView.addSubview(totalAssetsAmountLabel)
+        
         view.addSubview(promptContainerStack)
-        view.addSubview(toolbarContainerView)
-        toolbarContainerView.addSubview(toolbar)
         
         assetListTableView.refreshControl = pullToRefreshControl
         pullToRefreshControl.layer.zPosition = assetListTableView.view.layer.zPosition - 1
-    }
-    
-    private func addConstraints() {
-        let headerHeight: CGFloat = 64
-        let toolbarHeight: CGFloat = 84.0
         
         subHeaderView.constrain([
             subHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            subHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -Margins.huge.rawValue),
+            subHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -(navigationController?.navigationBar.frame.height ?? 0) + Margins.extraHuge.rawValue),
             subHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            subHeaderView.heightAnchor.constraint(equalToConstant: headerHeight) ])
+            subHeaderView.heightAnchor.constraint(equalToConstant: ViewSizes.Common.hugeCommon.rawValue) ])
         
         totalAssetsTitleLabel.constrain([
             totalAssetsTitleLabel.topAnchor.constraint(equalTo: subHeaderView.topAnchor),
@@ -204,30 +202,34 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         logoImageView.constrain([
             logoImageView.leadingAnchor.constraint(equalTo: subHeaderView.leadingAnchor, constant: Margins.large.rawValue),
-            logoImageView.topAnchor.constraint(equalTo: totalAssetsTitleLabel.topAnchor, constant: Margins.extraSmall.rawValue),
-            logoImageView.bottomAnchor.constraint(equalTo: totalAssetsAmountLabel.bottomAnchor, constant: -Margins.extraSmall.rawValue)])
+            logoImageView.centerYAnchor.constraint(equalTo: subHeaderView.centerYAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 40),
+            logoImageView.heightAnchor.constraint(equalToConstant: 48)])
         
         promptContainerStack.constrain([
             promptContainerStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.large.rawValue),
             promptContainerStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.large.rawValue),
             promptContainerStack.topAnchor.constraint(equalTo: subHeaderView.bottomAnchor, constant: Margins.huge.rawValue),
-            promptContainerStack.heightAnchor.constraint(equalToConstant: 0).priority(.defaultLow)])
+            promptContainerStack.heightAnchor.constraint(equalToConstant: ViewSizes.minimum.rawValue).priority(.defaultLow)])
         
         addChildViewController(assetListTableView, layout: {
             assetListTableView.view.constrain([
                 assetListTableView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                 assetListTableView.view.topAnchor.constraint(equalTo: promptContainerStack.bottomAnchor),
                 assetListTableView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                assetListTableView.view.bottomAnchor.constraint(equalTo: toolbar.topAnchor)])
+                assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
         
-        toolbarContainerView.constrain([
-            toolbarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            toolbarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            toolbarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            toolbarContainerView.heightAnchor.constraint(equalToConstant: toolbarHeight)])
+        view.addSubview(tabBarContainerView)
+        tabBarContainerView.addSubview(tabBar)
         
-        toolbar.snp.makeConstraints { make in
+        tabBarContainerView.constrain([
+            tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: 84.0)])
+        
+        tabBar.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -250,11 +252,11 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             buttons.append(button)
         }
         
-        toolbar.items = buttons
+        tabBar.items = buttons
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        guard let index = toolbar.items?.firstIndex(where: { $0 == item }) else { return }
+        guard let index = tabBar.items?.firstIndex(where: { $0 == item }) else { return }
         perform(tabBarButtons[index].2)
         tabBar.selectedItem = nil
     }
@@ -349,7 +351,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         didTapProfile?()
     }
     
-    @objc private func menu() { didTapMenu?() }
+    @objc private func menu() {
+        didTapMenu?()
+    }
     
     // MARK: - Prompt
     

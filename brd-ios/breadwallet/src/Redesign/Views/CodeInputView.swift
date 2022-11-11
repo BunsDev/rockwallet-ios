@@ -93,12 +93,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         hiddenTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(with: config)
-    }
-    
     override func configure(background: BackgroundConfiguration? = nil) {
         guard let background = background else { return }
         

@@ -19,7 +19,7 @@ class AssetListTableView: UITableViewController, Subscriber {
     
     private lazy var manageAssetsButton: ManageAssetsButton = {
         let manageAssetsButton = ManageAssetsButton()
-        let manageAssetsButtonTitle = L10n.MenuButton.manageAssets
+        let manageAssetsButtonTitle = L10n.MenuButton.manageAssets.uppercased()
         manageAssetsButton.set(title: manageAssetsButtonTitle)
         manageAssetsButton.accessibilityLabel = manageAssetsButtonTitle
         
@@ -64,10 +64,9 @@ class AssetListTableView: UITableViewController, Subscriber {
         
         tableView.backgroundColor = LightColors.Background.two
         tableView.register(HomeScreenCell.self, forCellReuseIdentifier: HomeScreenCellIds.regularCell.rawValue)
-        tableView.register(HomeScreenHiglightableCell.self, forCellReuseIdentifier: HomeScreenCellIds.highlightableCell.rawValue)
         tableView.separatorStyle = .none
         tableView.rowHeight = assetHeight
-        tableView.contentInset = UIEdgeInsets(top: Margins.small.rawValue, left: 0, bottom: 0, right: 0)
+        tableView.contentInset.bottom = ViewSizes.Common.largeCommon.rawValue
         
         setupSubscriptions()
         reload()
@@ -76,19 +75,17 @@ class AssetListTableView: UITableViewController, Subscriber {
     private func setupAddWalletButton() {
         guard tableView.tableFooterView == nil else { return }
         
-        let manageAssetsButtonHeight: CGFloat = 56.0
-        let topBottomInset: CGFloat = Margins.extraLarge.rawValue
-        let leftRightInset: CGFloat = Margins.large.rawValue
+        let manageAssetsButtonHeight = ViewSizes.Common.largeCommon.rawValue
         let tableViewWidth = tableView.frame.width - tableView.contentInset.left - tableView.contentInset.right
         
         let footerView = UIView(frame: CGRect(x: 0,
                                               y: 0,
                                               width: tableViewWidth,
-                                              height: manageAssetsButtonHeight + (topBottomInset * 2)))
+                                              height: manageAssetsButtonHeight + (Margins.large.rawValue * 2)))
         
-        manageAssetsButton.frame = CGRect(x: leftRightInset,
-                                          y: topBottomInset,
-                                          width: footerView.frame.width - (2 * leftRightInset),
+        manageAssetsButton.frame = CGRect(x: Margins.large.rawValue,
+                                          y: Margins.large.rawValue,
+                                          width: footerView.frame.width - (2 * Margins.large.rawValue),
                                           height: manageAssetsButtonHeight)
         
         footerView.addSubview(manageAssetsButton)
@@ -133,13 +130,14 @@ class AssetListTableView: UITableViewController, Subscriber {
     }
     
     func reload() {
+        didReload?()
+        showLoadingState(false)
+        
         guard let parentViewController = parent as? HomeScreenViewController,
               parentViewController.isInExchangeFlow == false else { return }
         
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
-            self?.didReload?()
-            self?.showLoadingState(false)
         }
     }
     

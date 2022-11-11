@@ -11,7 +11,7 @@
 import UIKit
 
 struct WrapperPopupConfiguration<C: Configurable>: Configurable {
-    var background: BackgroundConfiguration = .init(backgroundColor: .white, tintColor: .black, border: Presets.Border.zero)
+    var background: BackgroundConfiguration = .init(backgroundColor: .white, tintColor: .black, border: Presets.Border.mediumPlain)
     var leading: BackgroundConfiguration?
     var title = LabelConfiguration(font: Fonts.Title.six, textColor: LightColors.Text.one, textAlignment: .center)
     var trailing = Presets.Button.blackIcon
@@ -175,11 +175,11 @@ class WrapperPopupView<T: ViewProtocol & UIView>: UIView,
         
         buttonStack.addArrangedSubview(confirmButton)
         confirmButton.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
         }
         buttonStack.addArrangedSubview(cancelButton)
         cancelButton.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeButton.rawValue)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
         }
         
         isUserInteractionEnabled = true

@@ -387,7 +387,7 @@ class OnboardingViewController: UIViewController {
         view.addSubview(restoreButton)
         
         let buttonLeftRightMargin: CGFloat = 24
-        let buttonHeight: CGFloat = 48
+        let buttonHeight: CGFloat = ViewSizes.Common.largeCommon.rawValue
         
         // Position the top button just below the bottom of the view (or safe area / notch) to start with
         // so that we can animate it up into view.
@@ -436,7 +436,7 @@ class OnboardingViewController: UIViewController {
     }
     
     private func addBackAndSkipButtons() {
-        let image = UIImage(named: "BackArrowWhite")
+        let image = UIImage(named: "back")
         
         backButton.alpha = 0
         skipButton.alpha = 0

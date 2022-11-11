@@ -1,5 +1,5 @@
 //
-//  Margins.swift
+//  Margins+Sizes.swift
 //  
 //
 //  Created by Rok Cresnik on 14/09/2021.
@@ -63,7 +63,9 @@ enum ViewSizes: CGFloat {
         /// 48
         case defaultCommon = 48.0
         /// 56
-        case largeButton = 56.0
+        case largeCommon = 56.0
+        /// 64
+        case hugeCommon = 64.0
     }
     
     /// 1
@@ -80,4 +82,6 @@ enum ViewSizes: CGFloat {
     case extralarge = 80.0
     /// 100
     case extraExtraHuge = 100.0
+    /// illustration
+    case illustration = 180.0
 }

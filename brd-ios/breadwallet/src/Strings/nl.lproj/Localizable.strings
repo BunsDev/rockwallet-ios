@@ -1,11 +1,11 @@
 /* App name */
-"About.appName.android" = "Rockwallet";
+"About.appName.android" = "RockWallet";
 
 /* About screen blog label */
 "About.blog" = "Blog";
 
 /* About screen footer */
-"About.footer" = "Gemaakt door het globale Rockwallet team. Versie %1$@ Bouw %2$@";
+"About.footer" = "Gemaakt door het globale RockWallet team. Versie %1$@ Bouw %2$@";
 
 /* Privay Policy button label */
 "About.privacy" = "Privacyverklaring";
@@ -23,7 +23,7 @@
 "About.twitter" = "Twitter";
 
 /* About screen wallet ID label */
-"About.walletID" = "Rockwallet-beloningenidentificatie";
+"About.walletID" = "RockWallet-beloningenidentificatie";
 
 /* Close modal button accessibility label */
 "AccessibilityLabels.close" = "Sluiten";
@@ -65,7 +65,7 @@
 "AccountCreation.title" = "Account aanmaken bevestigen";
 
 /* Default wallet name */
-"AccountHeader.defaultWalletName" = "Mijn Rockwallet";
+"AccountHeader.defaultWalletName" = "Mijn RockWallet";
 
 /* Third party keyboard warning */
 "Alert.customKeyboard.android" = "Het lijkt erop dat u een toetsenbord van een derde gebruikt. Deze kan bijhouden wat u typt en eventueel uw sleutel stelen. Schakel alstublieft over naar het standaard Android toetsenbord voor extra veiligheid.";
@@ -73,20 +73,17 @@
 /* Error alert title */
 "Alert.error" = "Error";
 
-/* Error title when balance to low */
-"Alert.ethBalance" = "Insufficient Ethereum Balance";
-
 /* Keystore error */
-"Alert.keystore.generic.android" = "Er is een probleem met uw Android OS keystore, neem alstublieft contact op met support@breadwallet.com";
+"Alert.keystore.generic.android" = "Er is een probleem met uw Android OS keystore, neem alstublieft contact op met support@rockwallet.com";
 
 /* KeyStore error, keys are invalidated */
-"Alert.keystore.invalidated.android" = "Uw door Rockwallet geëncrypteerde data is onlangs ongeldig gemaakt omdat uw Android schermvergrendeling is uitgeschakeld.";
+"Alert.keystore.invalidated.android" = "Uw door RockWallet geëncrypteerde data is onlangs ongeldig gemaakt omdat uw Android schermvergrendeling is uitgeschakeld.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must uninstall. */
-"Alert.keystore.invalidated.uninstall.android" = "We kunnen niet doorgaan omdat uw instellingen voor schermvergrendeling zijn gewijzigd (bijv. wachtwoord was uitgeschakeld, vingerafdrukken waren gewijzigd). Om veiligheidsredenen heeft Android uw sleutelarchief permanent gesloten. Daarom moeten uw Rockwallet-app-gegevens worden gewist door de installatie ongedaan te maken.\n\nGeen zorgen, uw geld is nog steeds veilig! Installeer de app opnieuw en herstel uw portemonnee met behulp van uw papieren sleutel.";
+"Alert.keystore.invalidated.uninstall.android" = "We kunnen niet doorgaan omdat uw instellingen voor schermvergrendeling zijn gewijzigd (bijv. wachtwoord was uitgeschakeld, vingerafdrukken waren gewijzigd). Om veiligheidsredenen heeft Android uw sleutelarchief permanent gesloten. Daarom moeten uw RockWallet-app-gegevens worden gewist door de installatie ongedaan te maken.\n\nGeen zorgen, uw geld is nog steeds veilig! Installeer de app opnieuw en herstel uw portemonnee met behulp van uw papieren sleutel.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must wipe their app data. */
-"Alert.keystore.invalidated.wipe.android" = "We kunnen niet doorgaan omdat uw instellingen voor schermvergrendeling zijn gewijzigd (bijv. wachtwoord was uitgeschakeld, vingerafdrukken waren gewijzigd). Om veiligheidsredenen heeft Android uw sleutelarchief permanent gesloten. Daarom moeten uw Rockwallet-app-gegevens worden gewist.\n\nGeen zorgen, uw geld is nog steeds veilig! Herstel uw portemonnee met behulp van uw papieren sleutel.";
+"Alert.keystore.invalidated.wipe.android" = "We kunnen niet doorgaan omdat uw instellingen voor schermvergrendeling zijn gewijzigd (bijv. wachtwoord was uitgeschakeld, vingerafdrukken waren gewijzigd). Om veiligheidsredenen heeft Android uw sleutelarchief permanent gesloten. Daarom moeten uw RockWallet-app-gegevens worden gewist.\n\nGeen zorgen, uw geld is nog steeds veilig! Herstel uw portemonnee met behulp van uw papieren sleutel.";
 
 /* Keystore error title */
 "Alert.keystore.title.android" = "Android KeyStore fout";
@@ -131,13 +128,13 @@
 "Alerts.touchIdSucceeded.android" = "Vingerafdruk geaccepteerd";
 
 /* Tell the user where they can enable permissions to access device storage. */
-"Android.allowFileSystemAccess" = "Schakel opslagtoestemmingen in uw apparaatinstellingen in: \"Instellingen\"> \"Apps\"> \"Rockwallet\"> \"Toestemmingen\".";
+"Android.allowFileSystemAccess" = "Schakel opslagtoestemmingen in uw apparaatinstellingen in: \"Instellingen\"> \"Apps\"> \"RockWallet\"> \"Toestemmingen\".";
 
 /* The "home" screen is the name of the top level menu for the app. */
 "Android.BCH.welcome.message" = "Elke BCH in uw wallet is toegankelijk via het startscherm.";
 
 /* Warning about using apps that can alter the screen */
-"Android.screenAlteringMessage" = "Rockwallet zal niet goed werken tenzij schermveranderende apps (zoals Twilight) zijn uitgeschakeld.";
+"Android.screenAlteringMessage" = "RockWallet zal niet goed werken tenzij schermveranderende apps (zoals Twilight) zijn uitgeschakeld.";
 
 /* An app that alters the screen ("screen-altering app") has been detected. */
 "Android.screenAlteringTitle" = "Schermveranderende app gedetecteerd";
@@ -481,10 +478,10 @@
 "ErrorMessages.emailUnavailableTitle" = "E-mail niet beschikbaar";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLow" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
+"ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
 
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
-"ErrorMessages.loopingLockScreen.android" = "Rockwallet kan niet gewaarmerkt worden vanwege een fout in uw versie van Android. [Klik hier voor meer informatie.]";
+"ErrorMessages.loopingLockScreen.android" = "RockWallet kan niet gewaarmerkt worden vanwege een fout in uw versie van Android. [Klik hier voor meer informatie.]";
 
 /* Messaging unavailable alert title */
 "ErrorMessages.messagingUnavailableMessage" = "Dit apparaat is niet geconfigureerd om berichten te sturen.";
@@ -522,16 +519,16 @@
 "FaceIDSettings.customizeText" = "Je kunt de bestedingslimiet van je Face-ID aanpassen vanuit het %1$@.";
 
 /* Text describing the purpose of the Face ID settings in the BRD app. */
-"FaceIDSettings.explanatoryText" = "Gebruik Face ID om uw Rockwallet-app te ontgrendelen en geld te verzenden.";
+"FaceIDSettings.explanatoryText" = "Gebruik Face ID om uw RockWallet-app te ontgrendelen en geld te verzenden.";
 
 /* Face Id screen label */
-"FaceIDSettings.label" = "Gebruik uw gezicht om uw Rockwallet te ontgrendelen en verstuur geld tot een vastgestelde limiet.";
+"FaceIDSettings.label" = "Gebruik uw gezicht om uw RockWallet te ontgrendelen en verstuur geld tot een vastgestelde limiet.";
 
 /* Title of the screen for setting the Face ID Spending Limit */
 "FaceIDSettings.linkText" = "Scherm bestedingslimiet Face-ID";
 
 /* Setting to turn on Face ID for BRD */
-"FaceIDSettings.switchLabel" = "Face-ID voor Rockwallet inschakelen";
+"FaceIDSettings.switchLabel" = "Face-ID voor RockWallet inschakelen";
 
 /* Face ID settings view title */
 "FaceIDSettings.title" = "Face-ID";
@@ -546,7 +543,7 @@
 "FaceIDSettings.unavailableAlertTitle" = "Face-ID niet ingesteld";
 
 /* Text label for a toggle that enables Face ID for unlocking the BRD app. */
-"FaceIDSettings.unlockTitleText" = "Schakel Face ID in om Rockwallet te ontgrendelen";
+"FaceIDSettings.unlockTitleText" = "Schakel Face ID in om RockWallet te ontgrendelen";
 
 /* Face Id spending limit screen title */
 "FaceIDSpendingLimit.title" = "Bestedingslimiet Face-ID";
@@ -596,7 +593,7 @@
 "FingerprintSettings.title" = "Vingerafdruk";
 
 /* Switch label to enable fingerprint authentication to unlock BRD app */
-"FingerprintSettings.unlockApp" = "Gebruik de vingerafdruk om Rockwallet te ontgrendelen";
+"FingerprintSettings.unlockApp" = "Gebruik de vingerafdruk om RockWallet te ontgrendelen";
 
 /* Activity button on the home screen toolbar */
 "HomeScreen.activity" = "Activity";
@@ -668,7 +665,7 @@
 "Import.leftCaption" = "Wallet om te importeren";
 
 /* Import wallet intro screen message */
-"Import.message" = "Private keys worden vaak afgedrukt op papier als een QR-code en gebruikt om middelen online op te slaan. Wissel een persoonlijke sleutel in om al het geld dat het beheert over te schrijven naar je Rockwallet via een enkele transactie.";
+"Import.message" = "Private keys worden vaak afgedrukt op papier als een QR-code en gebruikt om middelen online op te slaan. Wissel een persoonlijke sleutel in om al het geld dat het beheert over te schrijven naar je RockWallet via een enkele transactie.";
 
 /* Enter password alert view title */
 "Import.password" = "Deze private key is beveiligd met een wachtwoord.";
@@ -677,7 +674,7 @@
 "Import.passwordPlaceholder" = "wachtwoord";
 
 /* Caption for graphics */
-"Import.rightCaption" = "Jouw Rockwallet Portemonnee";
+"Import.rightCaption" = "Jouw RockWallet Portemonnee";
 
 /* Scan Private key button label */
 "Import.scan" = "Scan private key";
@@ -707,10 +704,10 @@
 "JailbreakWarnings.ignore" = "Negeren";
 
 /* Jailbreak warning message */
-"JailbreakWarnings.messageWithBalance" = "APPARAAT BEVEILIGING BESCHADIGD\nElke 'jailbreak' app heeft toegang tot de sleutelhanger data van Rockwallet en kan hiermee je Bitcoins stelen! Wis deze portemonnee direct en herstel het op een veilig apparaat.";
+"JailbreakWarnings.messageWithBalance" = "APPARAAT BEVEILIGING BESCHADIGD\nElke 'jailbreak' app heeft toegang tot de sleutelhanger data van RockWallet en kan hiermee je Bitcoins stelen! Wis deze portemonnee direct en herstel het op een veilig apparaat.";
 
 /* Jailbreak warning message */
-"JailbreakWarnings.messageWithoutBalance" = "APPARAAT BEVEILIGING BESCHADIGD\nElke 'jailbreak' app heeft toegang tot de sleutelhanger data van Rockwallet en kan hiermee je Bitcoins stelen. Gebruik Rockwallet a.u.b. alleen op een niet-gejailbreakt apparaat.";
+"JailbreakWarnings.messageWithoutBalance" = "APPARAAT BEVEILIGING BESCHADIGD\nElke 'jailbreak' app heeft toegang tot de sleutelhanger data van RockWallet en kan hiermee je Bitcoins stelen. Gebruik RockWallet a.u.b. alleen op een niet-gejailbreakt apparaat.";
 
 /* Jailbreak warning title */
 "JailbreakWarnings.title" = "WAARSCHUWING";
@@ -743,7 +740,7 @@
 "LocationPlugin.disabled" = "Locatievoorzieningen zijn uitgeschakeld.";
 
 /* No permissions for location services */
-"LocationPlugin.notAuthorized" = "Rockwallet heeft geen toestemming om locatievoorzieningen te gebruiken.";
+"LocationPlugin.notAuthorized" = "RockWallet heeft geen toestemming om locatievoorzieningen te gebruiken.";
 
 /* Wallet creation date prefix */
 "ManageWallet.creationDatePrefix" = "Je hebt je portemonnee gecreëerd op %1$@";
@@ -877,7 +874,7 @@
 "OnboardingPageOne.title" = "Welkom bij uw nieuwe wereldwijde portemonnee!";
 
 /* Onboarding screen Page 3 subtitle */
-"OnboardingPageThree.subtitle" = "Investeer en diversifieer met Rockwallet, snel en veilig.";
+"OnboardingPageThree.subtitle" = "Investeer en diversifieer met RockWallet, snel en veilig.";
 
 /* Onboarding screen Page 3 title */
 "OnboardingPageThree.title" = "Koop en handel in bitcoin, tokens en andere digitale valuta.";
@@ -886,7 +883,7 @@
 "OnboardingPageTwo.subtitle" = "We hebben meer dan $6 miljard USD waard aan aandelen onder onze bescherming.";
 
 /* Onboarding screen Page 2 title */
-"OnboardingPageTwo.title" = "Sluit je aan bij miljoenen mensen over de hele wereld die op Rockwallet vertrouwen.";
+"OnboardingPageTwo.title" = "Sluit je aan bij miljoenen mensen over de hele wereld die op RockWallet vertrouwen.";
 
 /* Eg. Send 1.0Eth to purchase CCC */
 "PaymentConfirmation.amountText" = "%1$@ versturen om %2$@ te kopen";
@@ -972,9 +969,9 @@
 
 "Prompts.RateApp.enjoyingBrd" = "Genieten van BRD?";
 
-"Prompts.RateApp.enjoyingRockwallet" = "Genieten van Rockwallet?";
+"Prompts.RateApp.enjoyingRockWallet" = "Genieten van RockWallet?";
 
-"Prompts.RateApp.googlePlayReview" = "Uw beoordeling helpt de Rockwallet-gemeenschap te laten groeien.";
+"Prompts.RateApp.googlePlayReview" = "Uw beoordeling helpt de RockWallet-gemeenschap te laten groeien.";
 
 "Prompts.RateApp.noThanks" = "Nee bedankt";
 
@@ -987,7 +984,7 @@
 "Prompts.RecommendRescan.title" = "Transactie Geweigerd";
 
 /* Share data prompt body */
-"Prompts.ShareData.body" = "Help ons bij het verbeteren van Rockwallet door je anonieme data met ons te delen";
+"Prompts.ShareData.body" = "Help ons bij het verbeteren van RockWallet door je anonieme data met ons te delen";
 
 /* Share data prompt title */
 "Prompts.ShareData.title" = "Deel Anonieme Data";
@@ -1008,7 +1005,7 @@
 "Prompts.TouchId.usePin.android" = "PIN";
 
 /* Upgrade PIN prompt body. */
-"Prompts.UpgradePin.body" = "Rockwallet is geüpgrade naar een 6-cijferige PIN. Tik hier om te upgraden.";
+"Prompts.UpgradePin.body" = "RockWallet is geüpgrade naar een 6-cijferige PIN. Tik hier om te upgraden.";
 
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "PIN Upgraden";
@@ -1020,13 +1017,13 @@
 "PushNotifications.disabled" = "Meldingen Uitgeschakeld";
 
 /* Body text when push notifications are disabled. */
-"PushNotifications.disabledBody" = "Schakel meldingen in om speciale aanbiedingen en updates van Rockwallet te ontvangen.";
+"PushNotifications.disabledBody" = "Schakel meldingen in om speciale aanbiedingen en updates van RockWallet te ontvangen.";
 
 /* Body text when push notifications are enabled. */
-"PushNotifications.enabledBody" = "U ontvangt speciale aanbiedingen en updates van Rockwallet.";
+"PushNotifications.enabledBody" = "U ontvangt speciale aanbiedingen en updates van RockWallet.";
 
 /* Instructions to enable push notifications for BRD in the phone's system settings. */
-"PushNotifications.enableInstructions" = "U ontvangt speciale aanbiedingen en updates van Rockwallet. Ga naar Instellingen van Rockwallet i om meldingen in te schakelen.";
+"PushNotifications.enableInstructions" = "U ontvangt speciale aanbiedingen en updates van RockWallet. Ga naar Instellingen van RockWallet i om meldingen in te schakelen.";
 
 /* Push notifications toggle switch label */
 "PushNotifications.label" = "Pushmeldingen ontvangen";
@@ -1050,10 +1047,10 @@
 "RateAppPrompt.Button.Dismiss.Android" = "Nee bedankt";
 
 /* Google play review prompt, dismiss button */
-"RateAppPrompt.Button.RateApp.Android" = "Beoordeel Rockwallet";
+"RateAppPrompt.Button.RateApp.Android" = "Beoordeel RockWallet";
 
 /* Google play review prompt title */
-"RateAppPrompt.Title.Android" = "Beoordeel Rockwallet";
+"RateAppPrompt.Title.Android" = "Beoordeel RockWallet";
 
 /* Address copied message. */
 "Receive.copied" = "Gekopieerd naar plakbord.";
@@ -1086,7 +1083,7 @@
 "RecoverWallet.instruction" = "Papieren Sleutel Invoeren";
 
 /* Recover wallet intro */
-"RecoverWallet.intro" = "Herstel je Rockwallet met je papieren sleutel.";
+"RecoverWallet.intro" = "Herstel je RockWallet met je papieren sleutel.";
 
 /* Invalid paper key message */
 "RecoverWallet.invalid" = "De papieren sleutel die je hebt ingevoerd is ongeldig. Check ieder woord a.u.b. en probeer het opnieuw.";
@@ -1179,13 +1176,13 @@
 "RecoveryKeyFlow.securityAssurance" = "Koop en handel in de wetenschap dat uw fondsen beschermd zijn met de beste veiligheid en privacy die er zijn.";
 
 /* Recommends that the user stores the recovery key in a secure location */
-"RecoveryKeyFlow.storeSecurelyRecommendation" = "Bewaar uw code op een veilige plek. Dit is de enige manier om uw wallet terug te krijgen. Rockwallet bewaart geen kopie.";
+"RecoveryKeyFlow.storeSecurelyRecommendation" = "Bewaar uw code op een veilige plek. Dit is de enige manier om uw wallet terug te krijgen. RockWallet bewaart geen kopie.";
 
 /* Title for the success page after the recovery phrase has been set up */
 "RecoveryKeyFlow.successHeading" = "Gefeliciteerd! U heeft de instellingen van uw herstelcode voltooid.";
 
 /* Subtitle for the success page after the recovery key has been set up */
-"RecoveryKeyFlow.successSubheading" = "U bent nu klaar om te storten, handelen en crypto van uw Rockwallet-wallet te kopen.";
+"RecoveryKeyFlow.successSubheading" = "U bent nu klaar om te storten, handelen en crypto van uw RockWallet-wallet te kopen.";
 
 /* Title displayed to the user on the intro screen when unlinking a wallet */
 "RecoveryKeyFlow.unlinkWallet" = "Ontkoppel uw wallet van dit apparaat.";
@@ -1236,7 +1233,7 @@
 "ReScan.body1" = "20-45 minuten";
 
 /* Syncing explanation */
-"ReScan.body2" = "Als een transactie als voltooid staat op het Bitcoin netwerk maar niet in je Rockwallet.";
+"ReScan.body2" = "Als een transactie als voltooid staat op het Bitcoin netwerk maar niet in je RockWallet.";
 
 /* Syncing explanation */
 "ReScan.body3" = "Je kreeg herhaaldelijk een foutmelding die zei dat je transactie werd afgewezen.";
@@ -1260,7 +1257,7 @@
 "RewardsView.expandedBody" = "Leer hoe je kan besparen op handelskosten en toekomstige beloningen vrijspeelt.";
 
 /* Rewards view expanded title. */
-"RewardsView.expandedTitle" = "Introductie van Rockwallet-beloningen.";
+"RewardsView.expandedTitle" = "Introductie van RockWallet-beloningen.";
 
 /* Rewards view title */
 "RewardsView.normalTitle" = "Beloningen";
@@ -1302,13 +1299,13 @@
 "SecurityCenter.paperKeyTitle.android" = "Papieren Sleutel";
 
 /* PIN button description */
-"SecurityCenter.pinDescription" = "Beschermt je Rockwallet van ongeautoriseerde gebruikers.";
+"SecurityCenter.pinDescription" = "Beschermt je RockWallet van ongeautoriseerde gebruikers.";
 
 /* PIN button title */
 "SecurityCenter.pinTitle" = "6-cijferige PIN";
 
 /* Touch ID button description */
-"SecurityCenter.touchIdDescription" = "Ontgrendel je Rockwallet handig en stuur geld tot een bepaalde ingestelde limiet.";
+"SecurityCenter.touchIdDescription" = "Ontgrendel je RockWallet handig en stuur geld tot een bepaalde ingestelde limiet.";
 
 /* Touch ID button title */
 "SecurityCenter.touchIdTitle" = "Touch ID";
@@ -1343,16 +1340,16 @@
 "Send.balanceString" = "Balans:";
 
 /* Instructions how to allow the camera access for the app */
-"Send.cameraUnavailabeMessage.android" = "Sta cameratoegang toe via \"Instellingen\" > \"Apps\" > \"Rockwallet\" > \"Toestemmingen\"";
+"Send.cameraUnavailabeMessage.android" = "Sta cameratoegang toe via \"Instellingen\" > \"Apps\" > \"RockWallet\" > \"Toestemmingen\"";
 
 /* Permission required to access camera */
-"Send.cameraUnavailabeTitle.android" = "Rockwallet heeft geen toegang tot de camera";
+"Send.cameraUnavailabeTitle.android" = "RockWallet heeft geen toegang tot de camera";
 
 /* Camera not allowed message */
 "Send.cameraunavailableMessage" = "Ga naar Instellingen om camera gebruik toe te staan.";
 
 /* Camera not allowed alert title */
-"Send.cameraUnavailableTitle" = "Rockwallet heeft geen toestemming voor het gebruik van de camera";
+"Send.cameraUnavailableTitle" = "RockWallet heeft geen toestemming voor het gebruik van de camera";
 
 /* Warning when sending to self. */
 "Send.containsAddress" = "De bestemming is je eigen adres. Je kunt het niet naar jezelf sturen.";
@@ -1400,9 +1397,6 @@
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "Je moet minstens %1$@ in je wallet hebben om dit type token te versturen. Wil je graag nu naar je Ethereum wallet gaan?";
-
-/* Your ethereum balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "Onvoldoende Ethereum Saldo";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "Het bestemmingsadres is geen geldig %1$@-adres.";
@@ -1525,7 +1519,7 @@
 "Settings.EnableSegwit" = "Activeer SegWit";
 
 /* Are you enjoying bread alert message body */
-"Settings.enjoying" = "Vind je Rockwallet leuk?";
+"Settings.enjoying" = "Vind je RockWallet leuk?";
 
 /* Export transaction history menu item */
 "Settings.exportTransfers" = "Exporteer transactiegeschiedenis naar CSV";
@@ -1594,7 +1588,7 @@
 "Settings.wipe.android" = "Ontkoppel uw wallet van dit apparaat.";
 
 /* Share data view body */
-"ShareData.body" = "Help om Rockwallet te verbeteren door je anonieme data met ons te delen. Dit bevat geen financiële informatie. We respecteren je financiële privacy.";
+"ShareData.body" = "Help om RockWallet te verbeteren door je anonieme data met ons te delen. Dit bevat geen financiële informatie. We respecteren je financiële privacy.";
 
 /* Share data header */
 "ShareData.header" = "Data Delen?";
@@ -1606,7 +1600,7 @@
 
 "ShareGift.footerMessage1" = "Bij het claimen wordt een netwerkvergoeding van het totaalbedrag afgetrokken.\n De werkelijke waarde is afhankelijk van de huidige prijs van bitcoin.";
 
-"ShareGift.footerMessage2" = "Download de Rockwallet-app voor iPhone of Android.\n Ga voor meer informatie naar rockwallet.com/gift";
+"ShareGift.footerMessage2" = "Download de RockWallet-app voor iPhone of Android.\n Ga voor meer informatie naar rockwallet.com/gift";
 
 "ShareGift.tagLine" = "Iemand heeft je bitcoin cadeau gedaan!";
 
@@ -1678,10 +1672,10 @@
 "StartPaperPhrase.againButtonTitle" = "Schrijf Papieren Sleutel Opnieuw Op";
 
 /* Paper key explanation text. */
-"StartPaperPhrase.body" = "Je papieren sleutel is de enige manier om je Rockwallet te herstellen als je telefoon verloren, gestolen, kapot of geüpgrade is.\n\nWe zullen je een lijst met woorden laten zie die je op een papiertje moet schrijven en veilig moet bewaren.";
+"StartPaperPhrase.body" = "Je papieren sleutel is de enige manier om je RockWallet te herstellen als je telefoon verloren, gestolen, kapot of geüpgrade is.\n\nWe zullen je een lijst met woorden laten zie die je op een papiertje moet schrijven en veilig moet bewaren.";
 
 /* Paper key explanation text (Android-version) */
-"StartPaperPhrase.Body.Android" = "Uw papieren sleutel is de enige manier om uw Rockwallet te herstellen indien u uw telefoon kwijtraakt of als deze gestolen of geüpgraded wordt. \n\nU heeft uw papieren sleutel tevens nodig indien u de beveiligingsinstellingen van uw apparaat aanpast.\n\nWe tonen u een lijst met woorden die u op een stuk papier kunt opschrijven en veilig dient te bewaren.";
+"StartPaperPhrase.Body.Android" = "Uw papieren sleutel is de enige manier om uw RockWallet te herstellen indien u uw telefoon kwijtraakt of als deze gestolen of geüpgraded wordt. \n\nU heeft uw papieren sleutel tevens nodig indien u de beveiligingsinstellingen van uw apparaat aanpast.\n\nWe tonen u een lijst met woorden die u op een stuk papier kunt opschrijven en veilig dient te bewaren.";
 
 /* button label */
 "StartPaperPhrase.buttonTitle" = "Schrijf Papieren Sleutel Op";
@@ -1774,10 +1768,10 @@
 "TouchIdSettings.disabledWarning.title.android" = "Authenticatie met vingerafdruk niet ingesteld";
 
 /* Text that describes the purpose of the Touch ID settings in the BRD app. */
-"TouchIdSettings.explanatoryText" = "Gebruik Touch ID om uw Rockwallet-app te ontgrendelen en geld te verzenden.";
+"TouchIdSettings.explanatoryText" = "Gebruik Touch ID om uw RockWallet-app te ontgrendelen en geld te verzenden.";
 
 /* Touch Id screen label */
-"TouchIdSettings.label" = "Gebruik je vingerafdruk om je Rockwallet te ontgrendelen en geld tot een ingestelde limiet te versturen.";
+"TouchIdSettings.label" = "Gebruik je vingerafdruk om je RockWallet te ontgrendelen en geld tot een ingestelde limiet te versturen.";
 
 /* Link Text (see TouchIdSettings.customizeText) */
 "TouchIdSettings.linkText" = "Touch-ID uitgavenlimietscherm";
@@ -1786,7 +1780,7 @@
 "TouchIdSettings.spendingLimit" = "Bestedingslimiet: %1$@ (%2$@)";
 
 /* Touch id switch label. */
-"TouchIdSettings.switchLabel" = "Schakel Touch ID in voor Rockwallet";
+"TouchIdSettings.switchLabel" = "Schakel Touch ID in voor RockWallet";
 
 /* Enable fingerprint for this wallet called Bread */
 "TouchIdSettings.switchLabel.android" = "Stel authenticatie met vingerafdruk";
@@ -1807,7 +1801,7 @@
 "TouchIdSettings.unavailableAlertTitle" = "Touch ID Niet Ingesteld";
 
 /* Text label for the toggle that enables Touch ID for unlocking the BRD app. */
-"TouchIdSettings.unlockTitleText" = "Schakel Touch ID in om Rockwallet te ontgrendelen";
+"TouchIdSettings.unlockTitleText" = "Schakel Touch ID in om RockWallet te ontgrendelen";
 
 /* Always require passcode option */
 "TouchIdSpendingLimit" = "Vraag altijd naar wachtwoord";
@@ -2059,7 +2053,7 @@
 "UnlockScreen.touchIdInstructions.android" = "Aanraaksensor";
 
 /* TouchID prompt text */
-"UnlockScreen.touchIdPrompt" = "Ontgrendel je Rockwallet.";
+"UnlockScreen.touchIdPrompt" = "Ontgrendel je RockWallet.";
 
 /* Device authentication body */
 "UnlockScreen.touchIdPrompt.android" = "Ontgrendel alstublieft uw Android-apparaat om door te gaan.";
@@ -2083,7 +2077,7 @@
 "UpdatePin.caption" = "Onthoud deze PIN. Als je deze vergeet, zul je niet in staat zijn om bij je Bitcoins te kunnen.";
 
 /* PIN creation info. */
-"UpdatePin.createInstruction" = "Je PIN zal worden gebruikt om je Rockwallet te ontgrendelen en geld te versturen.";
+"UpdatePin.createInstruction" = "Je PIN zal worden gebruikt om je RockWallet te ontgrendelen en geld te versturen.";
 
 /* Update PIN title */
 "UpdatePin.createTitle" = "PIN Instellen";
@@ -2196,7 +2190,7 @@
 "WalletConnectionSettings.viewTitle" = "Fastsync";
 
 /* 'No wallet' warning for watch app */
-"Watch.noWalletWarning" = "Open de Rockwallet iPhone app om je portemonnee in te stellen.";
+"Watch.noWalletWarning" = "Open de RockWallet iPhone app om je portemonnee in te stellen.";
 
 /* Dismiss button label */
 "Webview.dismiss" = "Verwerpen";
@@ -2208,10 +2202,10 @@
 "Webview.updating" = "Updaten...";
 
 /* Welcome screen text. (?) will be replaced with the help icon users should look for. */
-"Welcome.body" = "Breadwallet is omgedoopt tot Rockwallet, met een gloednieuw uiterlijk en enkele nieuwe functies.\n\nAls u hulp nodig hebt, zoek naar de (?) rechtsboven in de meeste schermen.";
+"Welcome.body" = "Breadwallet is omgedoopt tot RockWallet, met een gloednieuw uiterlijk en enkele nieuwe functies.\n\nAls u hulp nodig hebt, zoek naar de (?) rechtsboven in de meeste schermen.";
 
 /* Top title of welcome screen */
-"Welcome.title" = "Welkom bij Rockwallet!";
+"Welcome.title" = "Welkom bij RockWallet!";
 
 /* Single asset widget description */
 "Widget.assetDescription" = "Blijf op de hoogte van uw favoriete cryptovaluta";
@@ -2322,7 +2316,7 @@
 "WipeWallet.startMessage" = "Ontkoppel je portemonnee om het te verwijderen van dit toestel. Wanneer deze portemonnee ontkoppeld is kunt u een nieuwe portemonnee beginnen of een andere portemonnee laden op dit toestel.";
 
 /* Start wipe wallet view warning */
-"WipeWallet.startWarning" = "U zal niet langer uw huidige Rockwallet portemonnee kunnen bereiken vanaf dit apparaat. Uw saldo zal hetzelfde blijven.";
+"WipeWallet.startWarning" = "U zal niet langer uw huidige RockWallet portemonnee kunnen bereiken vanaf dit apparaat. Uw saldo zal hetzelfde blijven.";
 
 /* Unlink this wallet from this device. */
 "WipeWallet.title" = "Portemonnee Ontkoppelen";

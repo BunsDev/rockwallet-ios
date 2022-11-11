@@ -1,5 +1,5 @@
-// 
-// Created by Equaleyes Solutions Ltd
+// 
+//  Copyright © 2022 RockWallet, LLC. All rights reserved.
 //
 
 import UIKit

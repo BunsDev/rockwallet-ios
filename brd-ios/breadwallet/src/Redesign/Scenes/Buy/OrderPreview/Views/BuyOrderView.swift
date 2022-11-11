@@ -22,7 +22,7 @@ struct BuyOrderConfiguration: Configurable {
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
-                                                     border: Presets.Border.zero)
+                                                     border: Presets.Border.mediumPlain)
     var currencyIconImage = BackgroundConfiguration(border: BorderConfiguration(borderWidth: 0, cornerRadius: .fullRadius))
 }
 
@@ -198,13 +198,6 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func configure(with config: BuyOrderConfiguration?) {
         super.configure(with: config)
         
@@ -218,9 +211,8 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         networkFeeView.configure(with: config?.networkFee)
         totalCostView.configure(with: config?.totalCost)
         
-        var paymentMethodConfiguration = PaymentMethodConfiguration()
-        paymentMethodConfiguration.shadow = nil
-        paymentMethodView.configure(with: paymentMethodConfiguration)
+        paymentMethodView.configure(with: .init(background: .init(backgroundColor: LightColors.Background.one,
+                                                                  tintColor: LightColors.Text.one)))
         paymentMethodView.content.setupCustomMargins(all: .zero)
         
         configure(background: config?.background)

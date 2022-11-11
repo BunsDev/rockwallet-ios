@@ -13,10 +13,8 @@ import UIKit
 struct PaymentMethodConfiguration: Configurable {
     var title: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Text.two)
     var cvvTitle: TitleValueConfiguration? = Presets.TitleValue.verticalSmall
-    var shadow: ShadowConfiguration? = Presets.Shadow.light
-    var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
-                                                     tintColor: LightColors.Text.one,
-                                                     border: Presets.Border.zero)
+    var shadow: ShadowConfiguration?
+    var background: BackgroundConfiguration?
 }
 
 struct PaymentMethodViewModel: ViewModel {
@@ -76,13 +74,6 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     
     var didTapCvvInfo: (() -> Void)?
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        configure(background: config?.background)
-        configure(shadow: config?.shadow)
-    }
-    
     override func setupSubviews() {
         super.setupSubviews()
         
@@ -90,11 +81,11 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         mainStack.snp.makeConstraints { make in
             make.edges.equalTo(content.snp.margins)
         }
-        content.setupCustomMargins(all: .large)
+        content.setupCustomMargins(all: .huge)
         
         mainStack.addArrangedSubview(methodTitleLabel)
         methodTitleLabel.snp.makeConstraints { make in
-            make.height.equalTo(Margins.large.rawValue)
+            make.height.equalTo(Margins.huge.rawValue)
         }
         mainStack.addArrangedSubview(selectorStack)
         selectorStack.snp.makeConstraints { make in

@@ -94,15 +94,15 @@ class ManageCurrencyCell: UITableViewCell {
     
     private func setState() {
         if listType == .add {
-            button.setTitle(L10n.TokenList.add, for: .normal)
-            button.setTitle(L10n.TokenList.remove, for: .selected)
+            button.setTitle(L10n.TokenList.add.uppercased(), for: .normal)
+            button.setTitle(L10n.TokenList.remove.uppercased(), for: .selected)
             button.setTitleColor(LightColors.primary, for: .normal)
-            button.setTitleColor(LightColors.primary.withAlphaComponent(0.2), for: .selected)
+            button.setTitleColor(LightColors.Error.one, for: .selected)
             button.setTitleColor(LightColors.primary.withAlphaComponent(0.4), for: .disabled)
             button.layer.borderColor = LightColors.primary.cgColor
         } else {
-            button.setTitle(L10n.TokenList.remove, for: .normal)
-            button.setTitle(L10n.TokenList.remove, for: .selected)
+            button.setTitle(L10n.TokenList.remove.uppercased(), for: .normal)
+            button.setTitle(L10n.TokenList.remove.uppercased(), for: .selected)
             button.setTitleColor(LightColors.Error.one, for: .normal)
             button.setTitleColor(LightColors.Error.one.withAlphaComponent(0.2), for: .selected)
             button.setTitleColor(LightColors.Error.one.withAlphaComponent(0.4), for: .disabled)
