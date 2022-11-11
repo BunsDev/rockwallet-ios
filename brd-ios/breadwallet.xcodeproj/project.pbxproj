@@ -107,7 +107,6 @@
 		7141BB5D2249543600F7ECF2 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141BB5C2249543600F7ECF2 /* InfoView.swift */; };
 		716F824321F91D9A0064E6F4 /* AppRatingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */; };
 		71904FB72225A1F900A6D027 /* announcement-promo.json in Resources */ = {isa = PBXBuildFile; fileRef = 71904FB62225A1F800A6D027 /* announcement-promo.json */; };
-		71904FB92225AB3900A6D027 /* AnnouncementPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71904FB82225AB3900A6D027 /* AnnouncementPromptView.swift */; };
 		71904FBB2228132100A6D027 /* announcement-supported.json in Resources */ = {isa = PBXBuildFile; fileRef = 71904FBA2228132100A6D027 /* announcement-supported.json */; };
 		71988B0821EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71988B0721EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift */; };
 		71988B0921EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71988B0721EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift */; };
@@ -902,7 +901,6 @@
 		7141BB5C2249543600F7ECF2 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfoView.swift; path = src/Views/InfoView.swift; sourceTree = "<group>"; };
 		716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingManagerTests.swift; sourceTree = "<group>"; };
 		71904FB62225A1F800A6D027 /* announcement-promo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "announcement-promo.json"; path = "json/announcement-promo.json"; sourceTree = "<group>"; };
-		71904FB82225AB3900A6D027 /* AnnouncementPromptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnnouncementPromptView.swift; path = src/Views/AnnouncementPromptView.swift; sourceTree = "<group>"; };
 		71904FBA2228132100A6D027 /* announcement-supported.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "announcement-supported.json"; path = "json/announcement-supported.json"; sourceTree = "<group>"; };
 		71988B0721EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BRUserAgentHeaderGenerator.swift; path = src/Platform/BRUserAgentHeaderGenerator.swift; sourceTree = "<group>"; };
 		71988B0A21EF8D06008B8EA0 /* BRUserAgentHeaderGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRUserAgentHeaderGeneratorTests.swift; sourceTree = "<group>"; };
@@ -3034,7 +3032,6 @@
 				CEBF32F31DDCE12900348FC6 /* AccountFooterView.swift */,
 				CEBF32F11DDCE10D00348FC6 /* AccountHeaderView.swift */,
 				CEF3E82C1DE528BF007C0A9E /* AlertView.swift */,
-				71904FB82225AB3900A6D027 /* AnnouncementPromptView.swift */,
 				CE41327522CACA05002391E6 /* BalanceCell.swift */,
 				CEE20C2E1EA3E5820086F724 /* BlinkingView.swift */,
 				CEBF32ED1DDBC30000348FC6 /* BRDButton.swift */,
@@ -3799,7 +3796,6 @@
 				7ED427F628755FDF00AA19A8 /* SwapHeaderView.swift in Sources */,
 				7B02D6262859200400C5C384 /* KYCCameraPreviewView.swift in Sources */,
 				7ED83ACE284F373200261565 /* KYCLevelTwoEntryViewController.swift in Sources */,
-				71904FB92225AB3900A6D027 /* AnnouncementPromptView.swift in Sources */,
 				CE0822641FCD1BD100EF371D /* HomeScreenViewController.swift in Sources */,
 				7ED83AFA284F40EB00261565 /* CheckListViewController.swift in Sources */,
 				7BB22E49285B8D60003E37AC /* ContentSizedTableView.swift in Sources */,
