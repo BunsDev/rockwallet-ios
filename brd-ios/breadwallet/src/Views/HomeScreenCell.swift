@@ -52,7 +52,7 @@ class HomeScreenCell: UITableViewCell, Subscriber {
             UIView.crossfade(tokenBalance, syncIndicator,
                              toRight: isSyncIndicatorVisible,
                              duration: isSyncIndicatorVisible == oldValue ? 0.0 : 0.3)
-            fiatBalance.textColor = (isSyncIndicatorVisible || !(currency?.isSupported ?? false)) ? .transparentBlack : LightColors.Text.two
+            fiatBalance.textColor = (isSyncIndicatorVisible || !(currency?.isSupported ?? false)) ? LightColors.Disabled.one : LightColors.Text.two
         }
     }
     
