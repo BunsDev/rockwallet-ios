@@ -69,7 +69,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
-              let toCurrency = dataStore?.toAmount?.currency else {
+              let toCurrency = dataStore?.toAmount?.currency,
+              let paymentSegmentValue = viewAction.paymentSegmentValue else {
             presenter?.presentError(actionResponse: .init(error: BuyErrors.noQuote(from: C.usdCurrencyCode,
                                                                                    to: dataStore?.toAmount?.currency.code)))
             return
@@ -78,6 +79,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         let to: Amount
         
         dataStore?.values = viewAction
+        dataStore?.paymentSegmentValue = paymentSegmentValue
         
         if let value = viewAction.tokenValue,
            let crypto = ExchangeFormatter.current.number(from: value)?.decimalValue {
@@ -90,7 +92,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                            card: dataStore?.paymentCard,
                                                            quote: dataStore?.quote,
                                                            handleErrors: true,
-                                                           paymentSegmentValue: viewAction.paymentSegmentValue))
+                                                           paymentSegmentValue: dataStore?.paymentSegmentValue))
             return
         }
         
@@ -100,7 +102,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.paymentCard,
                                                        quote: dataStore?.quote,
-                                                       paymentSegmentValue: viewAction.paymentSegmentValue))
+                                                       paymentSegmentValue: dataStore?.paymentSegmentValue))
     }
     
     func getExchangeRate(viewAction: Models.Rate.ViewAction) {

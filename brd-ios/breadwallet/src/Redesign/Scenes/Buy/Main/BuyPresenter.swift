@@ -61,7 +61,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let text = String(format: "1 %@ = %@ %@", to.uppercased(), ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", from)
         let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
         let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        let limitText = String(format: L10n.Buy.buyLimits(minText, maxText))
+        let limitText = paymentSegment.selectedIndex?.limitMessage
         
         exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                       timer: TimerViewModel(till: quote.timestamp,
@@ -98,6 +98,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             cardModel = CardSelectionViewModel(title: .text("ACH Payments"), subtitle: .text("Link bank account"), userInteractionEnabled: true)
         }
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
+        
+        let limitText = actionResponse.paymentSegmentValue?.limitMessage
+        viewController?.displayExchangeRate(responseDisplay: .init(rate: exchangeRateViewModel, limits: .text(limitText)))
         
         guard actionResponse.handleErrors else { return }
         let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
