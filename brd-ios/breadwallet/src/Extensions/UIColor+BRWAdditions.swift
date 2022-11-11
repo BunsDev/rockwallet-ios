@@ -35,14 +35,6 @@ extension UIColor {
         return UIColor(red: 250.0/255.0, green: 251.0/255.0, blue: 252.0/255.0, alpha: 1.0)
     }
 
-    static var cameraGuidePositive: UIColor {
-        return UIColor(red: 72.0/255.0, green: 240.0/255.0, blue: 184.0/255.0, alpha: 1.0)
-    }
-
-    static var cameraGuideNegative: UIColor {
-        return UIColor(red: 240.0/255.0, green: 74.0/255.0, blue: 93.0/255.0, alpha: 1.0)
-    }
-
     static var pink: UIColor {
         return UIColor(red: 252.0/255.0, green: 83.0/255.0, blue: 148.0/255.0, alpha: 1.0)
     }
@@ -81,21 +73,5 @@ extension UIColor {
 
     static var transparentIconBackground: UIColor {
         return UIColor(white: 1.0, alpha: 0.25)
-    }
-
-    static var onboardingSubheadingText: UIColor {
-        return UIColor(hex: "8B89A1")
-    }
-
-    static var onboardingSkipButtonTitle: UIColor {
-        return UIColor(hex: "8B89A1")
-    }
-
-    static var secondaryButton: UIColor {
-        return UIColor(red: 245.0/255.0, green: 247.0/255.0, blue: 250.0/255.0, alpha: 1.0)
-    }
-
-    static var darkLine: UIColor {
-        return UIColor(red: 36.0/255.0, green: 35.0/255.0, blue: 38.0/255.0, alpha: 1.0)
     }
 }

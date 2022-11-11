@@ -66,9 +66,7 @@ class HomeScreenCell: UITableViewCell, Subscriber {
         accessibilityIdentifier = viewModel.currency.name
         currency = viewModel.currency
         iconImageView.wrappedView.setup(with: .image(viewModel.currency.imageSquareBackground))
-        iconImageView.configure(background: BackgroundConfiguration(tintColor: viewModel.currency.isSupported ? .white : .disabledBackground,
-                                                                    border: .init(borderWidth: 0,
-                                                                                  cornerRadius: .fullRadius)))
+        iconImageView.configure(background: BackgroundConfiguration(border: .init(borderWidth: 0, cornerRadius: .fullRadius)))
         currencyName.text = viewModel.currency.name
         price.text = viewModel.exchangeRate
         fiatBalance.text = viewModel.fiatBalance
