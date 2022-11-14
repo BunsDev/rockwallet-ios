@@ -27,4 +27,7 @@ class TimeoutViewController: BaseInfoViewController {
             })
         ]
     }
+    override var buttonConfigurations: [ButtonConfiguration] {
+        return [Presets.Button.primary]
+    }
 }

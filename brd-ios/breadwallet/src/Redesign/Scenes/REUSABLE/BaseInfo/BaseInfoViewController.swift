@@ -27,10 +27,10 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     override var closeImage: UIImage? { return .init(named: "")}
     
     override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
         verticalButtons.wrappedView.configure(with: .init(buttons: buttonConfigurations))
         verticalButtons.wrappedView.setup(with: .init(buttons: buttonViewModels))
-        
-        super.setupVerticalButtons()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

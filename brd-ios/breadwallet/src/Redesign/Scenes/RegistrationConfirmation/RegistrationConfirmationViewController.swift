@@ -26,6 +26,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
     // MARK: - Overrides
     
     override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
         continueButton.configure(with: Presets.Button.primary)
         continueButton.setup(with: .init(title: L10n.Button.confirm,
                                          enabled: false,
@@ -36,8 +38,6 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
         guard let config = continueButton.config, let model = continueButton.viewModel else { return }
         verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
         verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
-        
-        super.setupVerticalButtons()
     }
     
     override func setupSubviews() {

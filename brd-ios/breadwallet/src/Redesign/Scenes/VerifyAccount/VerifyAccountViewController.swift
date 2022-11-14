@@ -17,6 +17,8 @@ class VerifyAccountViewController: BaseTableViewController<KYCCoordinator,
     // MARK: - Overrides
     
     override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
         verticalButtons.wrappedView.configure(with: .init(buttons: [Presets.Button.primary,
                                                                     Presets.Button.noBorders]))
         verticalButtons.wrappedView.setup(with: .init(buttons: [.init(title: L10n.Button.verify,
@@ -28,8 +30,6 @@ class VerifyAccountViewController: BaseTableViewController<KYCCoordinator,
             self?.laterTapped()
         })
         ]))
-        
-        super.setupVerticalButtons()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

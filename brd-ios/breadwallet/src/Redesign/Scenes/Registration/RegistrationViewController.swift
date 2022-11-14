@@ -23,6 +23,8 @@ class RegistrationViewController: BaseTableViewController<RegistrationCoordinato
     }()
     
     override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
         continueButton.configure(with: Presets.Button.primary)
         continueButton.setup(with: .init(title: L10n.RecoverWallet.next,
                                          enabled: false,
@@ -33,8 +35,6 @@ class RegistrationViewController: BaseTableViewController<RegistrationCoordinato
         guard let config = continueButton.config, let model = continueButton.viewModel else { return }
         verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
         verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
-        
-        super.setupVerticalButtons()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

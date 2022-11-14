@@ -23,14 +23,14 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
     // MARK: - Overrides
     
     override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
         verticalButtons.wrappedView.configure(with: .init(buttons: [Presets.Button.primary]))
         verticalButtons.wrappedView.setup(with: .init(buttons: [.init(title: L10n.Button.confirm,
                                                                       callback: { [weak self] in
             self?.buttonTapped()
         })
         ]))
-        
-        super.setupVerticalButtons()
     }
     
     override func prepareData() {

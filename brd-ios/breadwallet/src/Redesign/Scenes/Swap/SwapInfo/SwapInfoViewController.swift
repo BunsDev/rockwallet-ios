@@ -24,7 +24,6 @@ class SwapInfoViewController: BaseInfoViewController {
         
         return L10n.Swap.swapStatus(to)
     }
-    
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: L10n.Swap.backToHome, callback: { [weak self] in
@@ -34,5 +33,9 @@ class SwapInfoViewController: BaseInfoViewController {
                 (self?.coordinator as? SwapCoordinator)?.showExchangeDetails(with: self?.dataStore?.itemId, type: .swapTransaction)
             })
         ]
+    }
+    override var buttonConfigurations: [ButtonConfiguration] {
+        return [Presets.Button.primary,
+                Presets.Button.noBorders]
     }
 }

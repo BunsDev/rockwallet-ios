@@ -15,6 +15,7 @@ extension Scenes {
 }
 
 class SuccessViewController: BaseInfoViewController {
+    var transactionType: Transaction.TransactionType = .defaultTransaction
     override var imageName: String? { return "success" }
     override var titleText: String? { return L10n.Buy.purchaseSuccessTitle }
     override var descriptionText: String? { return L10n.Buy.purchaseSuccessText }
@@ -28,11 +29,8 @@ class SuccessViewController: BaseInfoViewController {
             })
         ]
     }
-    
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
                 Presets.Button.noBorders]
     }
-    
-    var transactionType: Transaction.TransactionType = .defaultTransaction
 }

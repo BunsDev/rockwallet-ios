@@ -68,10 +68,6 @@ class VerticalButtonsView: FEView<VerticalButtonsConfiguration, VerticalButtonsV
     
     // MARK: Helpers
     
-    func isEmpty() -> Bool {
-        return stack.arrangedSubviews.isEmpty
-    }
-    
     func getButton(_ from: FEButton) -> FEButton? {
         return (stack.arrangedSubviews as? [FEButton])?.first(where: { $0.viewModel?.title?.lowercased() == from.viewModel?.title?.lowercased() }) as? FEButton
     }

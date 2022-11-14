@@ -8,7 +8,9 @@
 //  See the LICENSE file at the project root for license information.
 //
 
-// currently not used, but if we need to, we can expand the VC with this protocol instead of enum directly
+import UIKit
+
+// Currently not used, but if we need to, we can expand the VC with this protocol instead of enum directly
 protocol SimpleMessage {
     var iconName: String { get }
     var title: String { get }
@@ -66,14 +68,11 @@ enum FailureReason: SimpleMessage {
     }
 }
 
-import UIKit
-
 extension Scenes {
     static let Failure = FailureViewController.self
 }
 
 class FailureViewController: BaseInfoViewController {
-    
     var failure: FailureReason? {
         didSet {
             prepareData()
@@ -101,5 +100,9 @@ class FailureViewController: BaseInfoViewController {
                 }
             })
         ]
+    }
+    override var buttonConfigurations: [ButtonConfiguration] {
+        return [Presets.Button.primary,
+                Presets.Button.noBorders]
     }
 }
