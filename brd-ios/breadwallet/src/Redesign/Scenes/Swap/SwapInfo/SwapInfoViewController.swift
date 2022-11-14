@@ -15,7 +15,6 @@ extension Scenes {
 }
 
 class SwapInfoViewController: BaseInfoViewController {
-    
     typealias Item = (from: String, to: String)
     
     override var imageName: String? { return "celebrate" }
@@ -28,24 +27,12 @@ class SwapInfoViewController: BaseInfoViewController {
     
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: L10n.Swap.backToHome),
-            .init(title: L10n.Swap.details, isUnderlined: true)
+            .init(title: L10n.Swap.backToHome, callback: { [weak self] in
+                self?.coordinator?.goBack(completion: {})
+            }),
+            .init(title: L10n.Swap.details, isUnderlined: true, callback: { [weak self] in
+                (self?.coordinator as? SwapCoordinator)?.showExchangeDetails(with: self?.dataStore?.itemId, type: .swapTransaction)
+            })
         ]
-    }
-    
-    override var buttonCallbacks: [(() -> Void)] {
-        return [
-            homeTapped,
-            swapDetailsTapped
-        ]
-    }
-    
-    func homeTapped() {
-        coordinator?.goBack(completion: {})
-    }
-    
-    func swapDetailsTapped() {
-        guard let itemId = dataStore?.itemId else { return }
-        (coordinator as? SwapCoordinator)?.showSwapDetails(exchangeId: itemId)
     }
 }

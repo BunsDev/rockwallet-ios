@@ -84,26 +84,22 @@ class FailureViewController: BaseInfoViewController {
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: failure?.firstButtonTitle),
-            .init(title: failure?.secondButtonTitle, isUnderlined: true)
+            .init(title: failure?.firstButtonTitle, callback: { [weak self] in
+                self?.coordinator?.popToRoot(completion: {
+                    if self?.failure == .buy {
+                        (self?.navigationController?.topViewController as? BuyViewController)?.didTriggerGetData?()
+                    } else if self?.failure == .swap {
+                        (self?.navigationController?.topViewController as? SwapViewController)?.didTriggerGetExchangeRate?()
+                    }
+                })
+            }),
+            .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
+                if self?.failure == .buy {
+                    self?.coordinator?.showSupport()
+                } else if self?.failure == .swap {
+                    self?.coordinator?.goBack(completion: {})
+                }
+            })
         ]
-    }
-
-    override var buttonCallbacks: [(() -> Void)] {
-        return [
-            first,
-            second
-        ]
-    }
-
-    var firstCallback: (() -> Void)?
-    var secondCallback: (() -> Void)?
-    
-    func first() {
-        firstCallback?()
-    }
-
-    func second() {
-        secondCallback?()
     }
 }

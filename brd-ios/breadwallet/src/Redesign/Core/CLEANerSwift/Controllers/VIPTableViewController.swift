@@ -87,7 +87,20 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.contentInset.top = topInsetValue
         
+        setupVerticalButtons()
+        
         view.backgroundColor = LightColors.Background.two
+    }
+    
+    func setupVerticalButtons() {
+        view.addSubview(verticalButtons)
+        verticalButtons.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+        }
+        
+//        view.layoutIfNeeded()
+        
+        tableView.contentInset.bottom = verticalButtons.frame.height
     }
     
     func setRoundedShadowBackground() {

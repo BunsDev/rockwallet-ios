@@ -232,6 +232,7 @@
 		7BDB4A102806FA190031F015 /* brd-tokens-staging.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0E2806FA190031F015 /* brd-tokens-staging.tar */; };
 		7BDB4A112806FA190031F015 /* brd-tokens.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0F2806FA190031F015 /* brd-tokens.tar */; };
 		7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */; };
+		7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */; };
 		7C0A3ACE210A0E1D006C2783 /* NotificationAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0A3ACD210A0E1D006C2783 /* NotificationAuthorizer.swift */; };
 		7C0F3DC42124A81100531E54 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0F3DC32124A81100531E54 /* Backend.swift */; };
 		7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1931CC2327371A0061DE20 /* CoreDatabase.swift */; };
@@ -1027,6 +1028,7 @@
 		7BDB4A0E2806FA190031F015 /* brd-tokens-staging.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; name = "brd-tokens-staging.tar"; path = "Resources/brd-tokens-staging.tar"; sourceTree = "<group>"; };
 		7BDB4A0F2806FA190031F015 /* brd-tokens.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; name = "brd-tokens.tar"; path = "Resources/brd-tokens.tar"; sourceTree = "<group>"; };
 		7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardInputDetailsView.swift; sourceTree = "<group>"; };
+		7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalButtonsView.swift; sourceTree = "<group>"; };
 		7C0A3ACD210A0E1D006C2783 /* NotificationAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationAuthorizer.swift; path = src/NotificationAuthorizer.swift; sourceTree = "<group>"; };
 		7C0F3DC32124A81100531E54 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Backend.swift; path = src/Backend.swift; sourceTree = "<group>"; };
 		7C1931CC2327371A0061DE20 /* CoreDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDatabase.swift; sourceTree = "<group>"; };
@@ -2443,6 +2445,7 @@
 				7EC0F8B928881C680037145C /* TitleValueView.swift */,
 				7EC0F8BB28892E2E0037145C /* IconDescriptionView.swift */,
 				7ED427F528755FDF00AA19A8 /* SwapHeaderView.swift */,
+				7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4063,6 +4066,7 @@
 				7EC0F8BA28881C680037145C /* TitleValueView.swift in Sources */,
 				CEE20C361EA5B4620086F724 /* Constants.swift in Sources */,
 				7BDB49F72806F0BA0031F015 /* BRTar.swift in Sources */,
+				7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */,
 				7EBC6AF528488B10000A301F /* RegistrationCoordinator.swift in Sources */,
 				CEEC707F1E8D6B4100EF788E /* MenuViewController.swift in Sources */,
 				7ECCA9952874266200F99368 /* FESegmentControl.swift in Sources */,

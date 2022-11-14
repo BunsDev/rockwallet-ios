@@ -20,26 +20,19 @@ class SuccessViewController: BaseInfoViewController {
     override var descriptionText: String? { return L10n.Buy.purchaseSuccessText }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: L10n.Swap.backToHome),
-            .init(title: L10n.Buy.details, isUnderlined: true)
-        ]
-    }
-
-    override var buttonCallbacks: [(() -> Void)] {
-        return [
-            first,
-            second
+            .init(title: L10n.Swap.backToHome, callback: { [weak self] in
+                self?.coordinator?.goBack(completion: {})
+            }),
+            .init(title: L10n.Buy.details, isUnderlined: true, callback: { [weak self] in
+                self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
+            })
         ]
     }
     
-    var firstCallback: (() -> Void)?
-    var secondCallback: (() -> Void)?
+    override var buttonConfigurations: [ButtonConfiguration] {
+        return [Presets.Button.primary,
+                Presets.Button.noBorders]
+    }
     
-    func first() {
-        firstCallback?()
-    }
-
-    func second() {
-        secondCallback?()
-    }
+    var transactionType: Transaction.TransactionType = .defaultTransaction
 }

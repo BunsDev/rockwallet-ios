@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import SnapKit
 
 enum Kyc2: String, Equatable {
     case notStarted = "KYC2_NOT_STARTED"
