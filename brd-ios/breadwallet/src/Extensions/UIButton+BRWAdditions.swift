@@ -23,12 +23,12 @@ extension UIButton {
     static func outline(title: String) -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
-        button.titleLabel?.font = UIFont.customBody(size: 14.0)
-        button.tintColor = .white
+        button.titleLabel?.font = Fonts.button
+        button.tintColor = LightColors.Text.one
         button.backgroundColor = LightColors.primary
         button.layer.cornerRadius = 6
         button.layer.borderWidth = 0.5
-        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderColor = LightColors.Text.one.cgColor
         return button
     }
     
@@ -70,6 +70,7 @@ extension UIButton {
         
         button.imageView?.contentMode = .scaleAspectFit
         button.accessibilityLabel = accessibilityLabel
+        button.tintColor = LightColors.Text.three
         return button
     }
     
