@@ -577,6 +577,9 @@
 		C491AC0028A6432500E79954 /* BuyOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABFF28A6432500E79954 /* BuyOrderView.swift */; };
 		C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */; };
 		C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */; };
+		C4C7299D2922400A00A3CE24 /* LinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = C4C7299C2922400A00A3CE24 /* LinkKit */; };
+		C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */; };
+		C4C729A129225F3A00A3CE24 /* PlaidPublicToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */; };
 		C4D5E7FF284951DD000BEE6F /* VerifyAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5E7F8284951DD000BEE6F /* VerifyAccountStore.swift */; };
 		C4D5E800284951DD000BEE6F /* VerifyAccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5E7F9284951DD000BEE6F /* VerifyAccountPresenter.swift */; };
 		C4D5E801284951DD000BEE6F /* VerifyAccountModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5E7FA284951DD000BEE6F /* VerifyAccountModels.swift */; };
@@ -1339,6 +1342,8 @@
 		C491ABFF28A6432500E79954 /* BuyOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOrderView.swift; sourceTree = "<group>"; };
 		C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeHistoryWorker.swift; sourceTree = "<group>"; };
 		C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesWorker.swift; sourceTree = "<group>"; };
+		C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidLinkToken.swift; sourceTree = "<group>"; };
+		C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidPublicToken.swift; sourceTree = "<group>"; };
 		C4D5E7F8284951DD000BEE6F /* VerifyAccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAccountStore.swift; sourceTree = "<group>"; };
 		C4D5E7F9284951DD000BEE6F /* VerifyAccountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAccountPresenter.swift; sourceTree = "<group>"; };
 		C4D5E7FA284951DD000BEE6F /* VerifyAccountModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAccountModels.swift; sourceTree = "<group>"; };
@@ -1529,6 +1534,7 @@
 				7B2C9AFC27D9270B00D5135C /* IQKeyboardManagerSwift in Frameworks */,
 				7B05888128A2431E00D7C971 /* Frames in Frameworks */,
 				7E18DBF328C8C2C600B83E3B /* WalletKit in Frameworks */,
+				C4C7299D2922400A00A3CE24 /* LinkKit in Frameworks */,
 				22717B062315D3E300F77F4E /* CloudKit.framework in Frameworks */,
 				223DB21B1DF69F0F0076A151 /* libbz2.framework in Frameworks */,
 			);
@@ -2185,6 +2191,8 @@
 				7EC0F8AB2887D8C40037145C /* SwapWorker.swift */,
 				C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */,
 				7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */,
+				C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */,
+				C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -3367,6 +3375,7 @@
 				7E18DBF228C8C2C600B83E3B /* WalletKit */,
 				7EEBAE8928E7099400686CA3 /* SnapKit */,
 				7E0E365828E70D0F00539D99 /* Cosmos */,
+				C4C7299C2922400A00A3CE24 /* LinkKit */,
 			);
 			productName = breadwallet;
 			productReference = 75A2A7901DA5934300A983D8 /* breadwallet.app */;
@@ -3533,6 +3542,7 @@
 				7B05887F28A2431E00D7C971 /* XCRemoteSwiftPackageReference "frames-ios" */,
 				7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "WalletKitSwift" */,
 				7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
 			);
 			productRefGroup = 75A2A7911DA5934300A983D8 /* Products */;
 			projectDirPath = "";
@@ -4091,6 +4101,7 @@
 				CE977109216FA16300B9F621 /* SegwitViewController.swift in Sources */,
 				7BBBF4E0287421CF00E4D36B /* SwapMainVIP.swift in Sources */,
 				71173059220CCC91001931B3 /* PromptView.swift in Sources */,
+				C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */,
 				7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */,
 				7ECCA9992874342C00F99368 /* FETimerView.swift in Sources */,
 				7EF45F502845352400D1F7B0 /* KYCBasicPresenter.swift in Sources */,
@@ -4178,6 +4189,7 @@
 				3A0063BE2509D36500C74A97 /* ExtendedTouchArea.swift in Sources */,
 				3A3D63DE22F10B58000DE920 /* ManageWalletsViewController.swift in Sources */,
 				7ED83AFD284F418E00261565 /* KYCDocumentWorker.swift in Sources */,
+				C4C729A129225F3A00A3CE24 /* PlaidPublicToken.swift in Sources */,
 				CE20C9011DBBFFF800C8397A /* Actions.swift in Sources */,
 				CE20C9191DBE7B8200C8397A /* State.swift in Sources */,
 				CEEC70811E90C04700EF788E /* SeparatorCell.swift in Sources */,
@@ -5492,6 +5504,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/plaid/plaid-link-ios";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -5524,6 +5544,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		C4C7299C2922400A00A3CE24 /* LinkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */;
+			productName = LinkKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
