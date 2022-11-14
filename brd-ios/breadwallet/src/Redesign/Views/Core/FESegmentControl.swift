@@ -25,19 +25,6 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
     enum Values: String, CaseIterable {
         case card
         case ach
-        
-        var limitMessage: String {
-            switch self {
-            case .card:
-                return "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day."
-            case .ach:
-                return """
-Currently, minimum for buying with ACH is $30 USD and maximum is $100 USD per day. At the moment lifetime limit is $1,000 USD.
-
-It currently takes 7-10 days to process a purchase with ACH.
-"""
-            }
-        }
     }
     
     var config: SegmentControlConfiguration?
@@ -45,6 +32,7 @@ It currently takes 7-10 days to process a purchase with ACH.
     
     var didChangeValue: ((Values) -> Void)?
     
+    // TODO: Localize
     convenience init() {
         let items = [
             "BUY WITH CARD",

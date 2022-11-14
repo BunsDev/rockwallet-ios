@@ -80,6 +80,20 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
     }
     
+    func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
+        guard let publicToken = dataStore?.publicToken else { return }
+        
+        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: publicToken)) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.toAmount?.currency,

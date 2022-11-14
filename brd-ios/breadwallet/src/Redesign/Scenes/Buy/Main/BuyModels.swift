@@ -134,4 +134,12 @@ enum BuyModels {
             var linkToken: String
         }
     }
+    
+    struct PlaidPublicToken {
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {}
+    }
 }

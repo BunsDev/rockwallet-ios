@@ -124,7 +124,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             }
             
             view.didTapSelectAsset = { [weak self] in
-                self?.interactor?.navigateAssetSelector(viewAction: .init())
+                if self?.dataStore?.paymentSegmentValue == .card {
+                    self?.interactor?.navigateAssetSelector(viewAction: .init())
+                }
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -279,6 +281,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken)
     }
     
+    func displayPublicTokenSuccess(responseDisplay: BuyModels.PlaidPublicToken.ResponseDisplay) {
+        print("Plaid link success")
+    }
+    
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
             LoadingView.hide()
@@ -302,6 +308,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     // MARK: Start Plaid Link using a Link token
     func createLinkTokenConfiguration(linkToken: String) -> LinkTokenConfiguration {
         var linkConfiguration = LinkTokenConfiguration(token: linkToken) { success in
+            self.dataStore?.publicToken = success.publicToken
             print("public-token: \(success.publicToken) metadata: \(success.metadata)")
         }
         

@@ -17,14 +17,19 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var to: Decimal?
     var values: BuyModels.Amounts.ViewAction = .init()
     var paymentSegmentValue: FESegmentControl.Values = .ach
+    var publicToken: String?
     
     override init() {
         super.init()
-        guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first
-        else {
-            return
+        let selectedCurrency: Currency
+        if paymentSegmentValue == .ach {
+            guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == "usdc" }) ?? Store.state.currencies.first else { return }
+            selectedCurrency = currency
+        } else {
+            guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first  else { return  }
+            selectedCurrency = currency
         }
-        toAmount = .zero(currency)
+        toAmount = .zero(selectedCurrency)
     }
     
     var feeAmount: Amount? {

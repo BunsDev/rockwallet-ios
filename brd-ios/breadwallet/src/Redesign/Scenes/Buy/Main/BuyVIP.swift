@@ -21,6 +21,7 @@ protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
     func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction)
+    func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction)
 }
 
 protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
@@ -30,6 +31,7 @@ protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
     func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse)
+    func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse)
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
@@ -39,6 +41,7 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay)
+    func displayPublicTokenSuccess(responseDisplay: BuyModels.PlaidPublicToken.ResponseDisplay)
 }
 
 protocol BuyDataStore: BaseDataStore, FetchDataStore {
@@ -57,6 +60,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore {
     
     var autoSelectDefaultPaymentMethod: Bool { get set }
     var paymentSegmentValue: FESegmentControl.Values { get set }
+    var publicToken: String? { get set }
 }
 
 protocol BuyDataPassing {
