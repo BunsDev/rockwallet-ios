@@ -99,22 +99,18 @@ class BaseCoordinator: NSObject,
     }
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
-        open(scene: Scenes.Success) { vc in
-            vc.prepareData()
+        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+            upgradeAccountOrShowPopup(role: .kyc1) { showPopup in
+                guard showPopup else { return }
+
+                self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
+                    vc?.dataStore?.currencies = currencies
+                    vc?.dataStore?.coreSystem = coreSystem
+                    vc?.dataStore?.keyStore = keyStore
+                    vc?.dataStore?.isKYCLevelTwo = self?.isKYCLevelTwo
+                }
+            }
         }
-        
-//        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-//            upgradeAccountOrShowPopup(role: .kyc1) { showPopup in
-//                guard showPopup else { return }
-//
-//                self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
-//                    vc?.dataStore?.currencies = currencies
-//                    vc?.dataStore?.coreSystem = coreSystem
-//                    vc?.dataStore?.keyStore = keyStore
-//                    vc?.dataStore?.isKYCLevelTwo = self?.isKYCLevelTwo
-//                }
-//            }
-//        }
     }
     
     func showBuy(coreSystem: CoreSystem?, keyStore: KeyStore?) {
@@ -169,7 +165,7 @@ class BaseCoordinator: NSObject,
         open(scene: ExchangeDetailsViewController.self) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId
-            vc.dataStore?.transactionType = .buyTransaction
+            vc.dataStore?.transactionType = type
             vc.prepareData()
         }
     }
