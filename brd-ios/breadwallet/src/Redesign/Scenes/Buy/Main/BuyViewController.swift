@@ -18,6 +18,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }()
     
     var didTriggerGetData: (() -> Void)?
+    private var supportedCurrencies: [SupportedCurrency]?
     
     // MARK: - Overrides
     
@@ -191,9 +192,18 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
+        switch dataStore?.paymentSegmentValue {
+        case .ach:
+            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == "USDC" }) {
+                supportedCurrencies = [usdCurrency]
+            }
+        default:
+            supportedCurrencies = dataStore?.supportedCurrencies
+        }
+        
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: dataStore?.currencies,
-                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] item in
+                                       supportedCurrencies: supportedCurrencies) { [weak self] item in
             guard let item = item as? AssetViewModel else { return }
             self?.interactor?.setAssets(viewAction: .init(currency: item.subtitle))
         }
