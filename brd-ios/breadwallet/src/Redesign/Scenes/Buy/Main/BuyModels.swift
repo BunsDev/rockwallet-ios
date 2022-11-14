@@ -122,4 +122,16 @@ enum BuyModels {
             let title: String
         }
     }
+    
+    struct PlaidLinkToken {
+        struct ViewAction {}
+        
+        struct ActionResponse {
+            var linkToken: String
+        }
+        
+        struct ResponseDisplay {
+            var linkToken: String
+        }
+    }
 }

@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import LinkKit
+
+protocol LinkOAuthHandling {
+    var linkHandler: Handler? { get }
+}
 
 class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, BuyPresenter, BuyStore>, BuyResponseDisplays {
     
@@ -17,6 +22,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return button
     }()
     
+    var linkHandler: Handler?
     var didTriggerGetData: (() -> Void)?
     private var supportedCurrencies: [SupportedCurrency]?
     
@@ -140,7 +146,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                self?.interactor?.getPaymentCards(viewAction: .init())
+                switch self?.dataStore?.paymentSegmentValue {
+                case .ach:
+                    self?.interactor?.getLinkToken(viewAction: .init())
+                default:
+                    self?.interactor?.getPaymentCards(viewAction: .init())
+                }
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -264,6 +275,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                       quote: dataStore?.quote)
     }
     
+    func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
+        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken)
+    }
+    
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
             LoadingView.hide()
@@ -280,5 +295,40 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         coordinator?.showMessage(with: responseDisplay.error,
                                  model: responseDisplay.model,
                                  configuration: responseDisplay.config)
+    }
+    
+    // MARK: - Additional Helpers
+    
+    // MARK: Start Plaid Link using a Link token
+    func createLinkTokenConfiguration(linkToken: String) -> LinkTokenConfiguration {
+        var linkConfiguration = LinkTokenConfiguration(token: linkToken) { success in
+            print("public-token: \(success.publicToken) metadata: \(success.metadata)")
+        }
+        
+        linkConfiguration.onExit = { exit in
+            if let error = exit.error {
+                print("exit with \(error)\n\(exit.metadata)")
+            } else {
+                print("exit with \(exit.metadata)")
+            }
+        }
+        
+        linkConfiguration.onEvent = { event in
+            print("Link Event: \(event)")
+        }
+        
+        return linkConfiguration
+    }
+    
+    func presentPlaidLinkUsingLinkToken(linkToken: String) {
+        let linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken)
+        let result = Plaid.create(linkConfiguration)
+        switch result {
+        case .failure(let error):
+            print("Unable to create Plaid handler due to: \(error)")
+        case .success(let handler):
+            handler.open(presentUsing: .viewController(self))
+            linkHandler = handler
+        }
     }
 }

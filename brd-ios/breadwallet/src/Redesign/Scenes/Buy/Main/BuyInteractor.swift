@@ -67,6 +67,19 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
     }
     
+    func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction) {
+        PlaidLinkTokenWorker().execute() { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let linkToken = response?.linkToken else { return }
+                self?.presenter?.presentLinkToken(actionResponse: .init(linkToken: linkToken))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.toAmount?.currency,

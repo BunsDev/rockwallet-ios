@@ -20,6 +20,7 @@ protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
     func setAssets(viewAction: BuyModels.Assets.ViewAction)
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
+    func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction)
 }
 
 protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
@@ -28,6 +29,7 @@ protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
     func presentExchangeRate(actionResponse: BuyModels.Rate.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
+    func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse)
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
@@ -36,6 +38,7 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
+    func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay)
 }
 
 protocol BuyDataStore: BaseDataStore, FetchDataStore {

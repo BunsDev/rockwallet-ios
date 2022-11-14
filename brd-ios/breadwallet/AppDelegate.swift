@@ -58,7 +58,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        return applicationController.application(application, continue: userActivity, restorationHandler: restorationHandler)
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let webpageURL = userActivity.webpageURL else {
+            return false
+        }
+
+        // The Plaid Link SDK ignores unexpected URLs passed to `continue(from:)` as
+        // per Apple’s recommendations, so there is no need to filter out unrelated URLs.
+        // Doing so may prevent a valid URL from being passed to `continue(from:)` and
+        // OAuth may not continue as expected.
+        guard let linkOAuthHandler = window?.rootViewController as? LinkOAuthHandling,
+            let handler = linkOAuthHandler.linkHandler
+        else {
+            return false
+        }
+
+        // Continue the Link flow
+        handler.continue(from: webpageURL)
+        return true
     }
 
     // stdout is redirected to C.logFilePath for testflight and debug builds

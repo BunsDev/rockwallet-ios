@@ -139,6 +139,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayNavigateAssetSelector(responseDisplay: .init(title: L10n.Swap.iWant))
     }
     
+    func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse) {
+        viewController?.displayLinkToken(responseDisplay: .init(linkToken: actionResponse.linkToken))
+    }
+    
     func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
         guard !isAccessDenied(error: actionResponse.error) else { return }
         
