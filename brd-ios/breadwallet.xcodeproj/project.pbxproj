@@ -349,6 +349,7 @@
 		7E5CB3B22835090E00EC787E /* FETextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3792835090E00EC787E /* FETextField.swift */; };
 		7E5CB3B32835090E00EC787E /* FEImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB37A2835090E00EC787E /* FEImageView.swift */; };
 		7E5CB3B42835090E00EC787E /* FEButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB37B2835090E00EC787E /* FEButton.swift */; };
+		7E6729282923A28100A2B612 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6729272923A28100A2B612 /* ComingSoonViewController.swift */; };
 		7E67680328479765007EC155 /* ResendConfirmationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67680228479765007EC155 /* ResendConfirmationWorker.swift */; };
 		7E852748286C551C0058F4C0 /* ServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E852747286C551C0058F4C0 /* ServerResponse.swift */; };
 		7E87B32A2853368E0097671F /* KYCDocumentUploadWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E87B3292853368E0097671F /* KYCDocumentUploadWorker.swift */; };
@@ -1139,6 +1140,7 @@
 		7E5CB3792835090E00EC787E /* FETextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FETextField.swift; sourceTree = "<group>"; };
 		7E5CB37A2835090E00EC787E /* FEImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FEImageView.swift; sourceTree = "<group>"; };
 		7E5CB37B2835090E00EC787E /* FEButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FEButton.swift; sourceTree = "<group>"; };
+		7E6729272923A28100A2B612 /* ComingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComingSoonViewController.swift; path = ComingSoon/ComingSoonViewController.swift; sourceTree = "<group>"; };
 		7E67680228479765007EC155 /* ResendConfirmationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendConfirmationWorker.swift; sourceTree = "<group>"; };
 		7E852747286C551C0058F4C0 /* ServerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerResponse.swift; sourceTree = "<group>"; };
 		7E87B3292853368E0097671F /* KYCDocumentUploadWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCDocumentUploadWorker.swift; sourceTree = "<group>"; };
@@ -2466,6 +2468,14 @@
 			path = Wrappers;
 			sourceTree = "<group>";
 		};
+		7E6729262923A22900A2B612 /* ComingSoon */ = {
+			isa = PBXGroup;
+			children = (
+				7E6729272923A28100A2B612 /* ComingSoonViewController.swift */,
+			);
+			name = ComingSoon;
+			sourceTree = "<group>";
+		};
 		7E852746286C550F0058F4C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2713,6 +2723,7 @@
 			isa = PBXGroup;
 			children = (
 				7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */,
+				7E6729262923A22900A2B612 /* ComingSoon */,
 				7EF45F472845352400D1F7B0 /* KYCLevelOne */,
 				7ED83ACC284F372000261565 /* KYCLevelTwo */,
 			);
@@ -3803,6 +3814,7 @@
 				7C5AC8A6203B93D3001B221E /* TxListCell.swift in Sources */,
 				7EBC6B0A2848ABC5000A301F /* RegistrationConfirmationViewController.swift in Sources */,
 				71A3171222A6E5F10088F97C /* BRAPIClient+Messages.swift in Sources */,
+				7E6729282923A28100A2B612 /* ComingSoonViewController.swift in Sources */,
 				CE45C1FB1E74F89C002C3847 /* WalletInfo.swift in Sources */,
 				CEE659E71F65A936001FF29D /* RetryTimer.swift in Sources */,
 				CE90571A1DFF18B2006BA848 /* ScanViewController.swift in Sources */,

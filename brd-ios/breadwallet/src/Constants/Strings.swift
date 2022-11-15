@@ -715,6 +715,20 @@ internal enum L10n {
       return L10n.tr("Localizable", "CloudBackup.warningBody", String(describing: p1), fallback: "Your iCloud backup will be erased after %1$@ more incorrect PIN attempts.")
     }
   }
+  internal enum ComingSoon {
+    /// Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.
+    /// 
+    /// You can still safely send and receive digital assets to your wallet in the meantime.
+    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
+    /// Coming soon!
+    internal static let title = L10n.tr("Localizable", "ComingSoon.title", fallback: "Coming soon!")
+    internal enum Buttons {
+      /// BACK TO HOME
+      internal static let backHome = L10n.tr("Localizable", "ComingSoon.buttons.backHome", fallback: "BACK TO HOME")
+      /// Contat support
+      internal static let contactSupport = L10n.tr("Localizable", "ComingSoon.buttons.contactSupport", fallback: "Contat support")
+    }
+  }
   internal enum ConfirmGift {
     /// Paper Wallet Amount
     internal static let paperWalletAmount = L10n.tr("Localizable", "ConfirmGift.paperWalletAmount", fallback: "Paper Wallet Amount")
