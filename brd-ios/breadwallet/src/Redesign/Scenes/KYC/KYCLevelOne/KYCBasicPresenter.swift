@@ -61,8 +61,7 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
         if item.country == "US" {
             sections.append(.state)
             sectionRows[.state] = [
-                // TODO: localize
-                TextFieldModel(title: "State",
+                TextFieldModel(title: L10n.Account.state,
                                value: item.stateName,
                                trailing: .imageName("chevron-down"))
             ]

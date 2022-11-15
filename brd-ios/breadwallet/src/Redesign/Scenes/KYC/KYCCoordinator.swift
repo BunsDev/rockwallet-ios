@@ -71,8 +71,7 @@ class KYCCoordinator: BaseCoordinator,
                     scene: Scenes.ItemSelection,
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = states
-            // TODO: localize
-            vc?.dataStore?.sceneTitle = "Select state"
+            vc?.dataStore?.sceneTitle = L10n.Account.selectState
             vc?.itemSelected = { item in
                 selected?(item as? USState)
             }
