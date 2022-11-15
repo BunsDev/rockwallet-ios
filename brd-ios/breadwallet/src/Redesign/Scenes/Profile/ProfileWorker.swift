@@ -17,6 +17,11 @@ enum CustomerRole: String, Codable {
     case kyc2
 }
 
+enum ExchangeFlow {
+    case buy
+    case swap
+}
+
 struct ProfileResponseData: ModelResponse {
     var country: String?
     var state: String?

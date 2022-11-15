@@ -108,11 +108,14 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
     }
     
     func validate(viewAction: KYCBasicModels.Validate.ViewAction) {
-        let isValid = FieldValidator.validate(fields: [dataStore?.firstName,
+        var isValid = FieldValidator.validate(fields: [dataStore?.firstName,
                                                        dataStore?.lastName,
-                                                       dataStore?.state,
                                                        dataStore?.country,
                                                        dataStore?.birthDateString])
+        if dataStore?.country == "US" {
+            // only US customers need to fill out the state field
+            isValid = isValid && FieldValidator.validate(fields: [dataStore?.state])
+        }
         
         presenter?.presentValidate(actionResponse: .init(isValid: isValid))
     }

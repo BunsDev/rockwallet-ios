@@ -116,7 +116,7 @@
 /* Upgrade your limits label in profile screen */
 "Account.UpgradeLimits" = "Upgrade your limits";
 
-"Account.UpgradeVerificationIdentity" = "You need to upgrade your verification status before you can buy or swap assets.";
+"Account.UpgradeVerificationIdentity" = "You need to upgrade your verification status before you can buy assets.";
 
 /* You need to be at least 18 years old to complete Level 1 verification label in verify account */
 "Account.Verification" = "You need to be at least 18 years old to complete Level 1 verification";
@@ -135,7 +135,7 @@
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
 
-"Account.VerifyIdentity" = "We need to verify your identity before you can buy or swap assets.";
+"Account.VerifyIdentity" = "We need to verify your identity before you can %@ assets.";
 
 /* Verify personal information text explanation */
 "Account.VerifyPersonalInformation" = "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.";
