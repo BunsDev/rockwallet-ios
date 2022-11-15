@@ -100,7 +100,7 @@ class BaseCoordinator: NSObject,
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(role: .kyc1) { showPopup in
+            upgradeAccountOrShowPopup(flow: .swap, role: .kyc1) { showPopup in
                 guard showPopup else { return }
 
                 self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
@@ -115,7 +115,7 @@ class BaseCoordinator: NSObject,
     
     func showBuy(coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(role: .kyc2) { showPopup in
+            upgradeAccountOrShowPopup(flow: .buy, role: UserManager.shared.profile?.status == .levelOne ? .kyc2 : .kyc1) { showPopup in
                 guard showPopup else { return }
                 
                 self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
@@ -268,7 +268,8 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    func upgradeAccountOrShowPopup(role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
+    //TODO: refactor this once the "coming soon" screen is added
+    func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?
         
@@ -300,6 +301,7 @@ class BaseCoordinator: NSObject,
                     
                     let coordinator = KYCCoordinator(navigationController: nvc)
                     coordinator.role = role
+                    coordinator.flow = flow
                     coordinator.start()
                     coordinator.parentCoordinator = self
                     self?.childCoordinators.append(coordinator)

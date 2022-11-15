@@ -16,6 +16,7 @@ class KYCCoordinator: BaseCoordinator,
                       KYCDocumentPickerRoutes,
                       DocumentReviewRoutes {
     var role: CustomerRole?
+    var flow: ExchangeFlow?
     
     override func start() {
         switch UserManager.shared.profile?.status {
@@ -28,6 +29,7 @@ class KYCCoordinator: BaseCoordinator,
         default:
             open(scene: Scenes.VerifyAccount) { [weak self] vc in
                 vc.role = self?.role
+                vc.flow = self?.flow
             }
         }
     }
