@@ -14,60 +14,23 @@ class VerifyAccountViewController: BaseTableViewController<KYCCoordinator,
     
     override var isModalDismissableEnabled: Bool { return false }
     
-    lazy var verifyButton: WrapperView<FEButton> = {
-        let button = WrapperView<FEButton>()
-        return button
-    }()
-    
-    lazy var laterButton: WrapperView<FEButton> = {
-        let button = WrapperView<FEButton>()
-        return button
-    }()
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        // TODO: Cleanup bottom buttons on all screens.
-        
-        view.addSubview(verifyButton)
-        view.addSubview(laterButton)
-        
-        verifyButton.snp.makeConstraints { make in
-            make.centerX.leading.equalToSuperview()
-            make.bottom.equalTo(laterButton.snp.top)
-        }
-        
-        verifyButton.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
-            make.edges.equalTo(verifyButton.snp.margins)
-        }
-        
-        verifyButton.setupCustomMargins(top: .small, leading: .large, bottom: .large, trailing: .large)
-        
-        verifyButton.wrappedView.configure(with: Presets.Button.primary)
-        verifyButton.wrappedView.setup(with: .init(title: L10n.Button.verify))
-        
-        verifyButton.wrappedView.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
-        laterButton.snp.makeConstraints { make in
-            make.centerX.leading.equalToSuperview()
-            make.bottom.equalTo(view.snp.bottomMargin)
-        }
-        
-        laterButton.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.medium.rawValue)
-            make.edges.equalTo(laterButton.snp.margins)
-        }
-        
-        laterButton.setupCustomMargins(top: .small, leading: .large, bottom: .small, trailing: .large)
-        
-        laterButton.wrappedView.configure(with: Presets.Button.noBorders)
-        laterButton.wrappedView.setup(with: .init(title: L10n.Button.maybeLater, isUnderlined: true))
-        
-        laterButton.wrappedView.addTarget(self, action: #selector(laterTapped), for: .touchUpInside)
-    }
-    
     // MARK: - Overrides
+    
+    override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
+        verticalButtons.wrappedView.configure(with: .init(buttons: [Presets.Button.primary,
+                                                                    Presets.Button.noBorders]))
+        verticalButtons.wrappedView.setup(with: .init(buttons: [.init(title: L10n.Button.verify,
+                                                                      callback: { [weak self] in
+            self?.buttonTapped()
+        }), .init(title: L10n.Button.maybeLater,
+                  isUnderlined: true,
+                  callback: { [weak self] in
+            self?.laterTapped()
+        })
+        ]))
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell

@@ -584,6 +584,12 @@
 /* 3D Secure label on buy flow */
 "Buy.3DSecure" = "3D Secure";
 
+"Buy.achFee" = "ACH fee (%s)";
+
+"Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
+
+"Buy.achPayments" = "ACH Payments";
+
 /* Add card title for buy cryptos */
 "Buy.AddCard" = "Add card";
 
@@ -597,9 +603,11 @@
 "Buy.BillingAddress" = "Billing address";
 
 /* Buy min and max limit text */
-"Buy.BuyLimits" = "Currently, minimum limit for buy is $%@ USD and maximum limit is $%@ USD/day.";
+"Buy.BuyLimits" = "Currently, minimum for Buy is $%@ USD and maximum is $%@ USD/day.";
 
-"Buy.BuyLimits.android" = "Currently, minimum limit for buy is $30.00 USD and maximum limit is $500.00 USD per day.";
+"Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
+
+"Buy.buyWithCard" = "Buy with card";
 
 /* Card label on add card flow */
 "Buy.Card" = "Card";
@@ -645,12 +653,16 @@
 /* First Name label in billing address view on buy flow */
 "Buy.FirstName" = "First Name";
 
+"Buy.fundWithAch" = "Fund with ACH";
+
 "Buy.InvalidExpirationDate" = "Entered expiration date is not valid!";
 
 "Buy.iWant" = "I want";
 
 /* Last Name label in billing address view on buy flow */
 "Buy.LastName" = "Last Name";
+
+"Buy.linkBankAccount" = "Link bank account";
 
 /* Month and year label in add card flow */
 "Buy.MonthYear" = "MM/YY";
@@ -712,10 +724,14 @@
 
 "Buy.Terms.android" = "By placing this order you agree to our %@";
 
+"Buy.transferFromBank" = "Transfer from bank account";
+
 /* Try a different payment method button title in failure buy screen */
 "Buy.TryAnotherPayment" = "Try a different payment method";
 
 "Buy.txHashHeader" = "%@ Transaction ID";
+
+"Buy.understandAndAgree" = "I understand and agree";
 
 /* Your order label in buy flow */
 "Buy.YourOrder" = "Your order:";
@@ -1713,7 +1729,7 @@
 "RecoveryKeyFlow.unlinkWallet" = "Unlink your wallet from this device.";
 
 /* Subtitle displayed to the user on the intro screen when unlinking a wallet. */
-"RecoveryKeyFlow.unlinkWalletSubtext" = "Start a new wallet by unlinking your device from the currently installed wallet.";
+"RecoveryKeyFlow.unlinkWalletSubtext" = "Start a new wallet by unlinking your device from the currently-installed wallet.";
 
 /* Warning displayed when the user starts the process of unlinking a wallet */
 "RecoveryKeyFlow.unlinkWalletWarning" = "Wallet must be recovered to regain access.";
@@ -2336,7 +2352,7 @@
 "Swap.SwapAgain" = "Swap again";
 
 /* Swap min and max limit text */
-"Swap.SwapLimits" = "Currently, minimum limit for swap is $%@ USD and maximum limit is $%@ USD/day.";
+"Swap.SwapLimits" = "Currently, minimum for Swap is $%@ USD and maximum is $%@ USD/day.";
 
 "Swap.Swapping" = "Swapping %1$@/%2$@";
 
