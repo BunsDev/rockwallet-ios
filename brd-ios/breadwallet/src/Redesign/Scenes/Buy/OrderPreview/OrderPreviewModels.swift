@@ -16,6 +16,7 @@ enum OrderPreviewModels {
     typealias Item = (to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?)
     
     enum Sections: Sectionable {
+        case achNotification
         case orderInfoCard
         case payment
         case termsAndConditions
@@ -108,5 +109,17 @@ enum OrderPreviewModels {
         struct ResponseDisplay {
             var paymentReference: String
         }
+    }
+    
+    struct Tickbox {
+        struct ViewAction {
+            var value: Bool
+        }
+        
+        struct ActionResponse {
+            var value: Bool
+        }
+        
+        struct ResponseDisplay {}
     }
 }
