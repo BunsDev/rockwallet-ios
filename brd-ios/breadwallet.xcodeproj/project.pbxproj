@@ -3343,6 +3343,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75A2A7E31DA5934400A983D8 /* Build configuration list for PBXNativeTarget "breadwallet" */;
 			buildPhases = (
+				7E67292529239E5100A2B612 /* SwiftGen */,
 				CEE0EF531EBF8C8A0018DB36 /* Icon Versioning */,
 				75A2A78C1DA5934300A983D8 /* Sources */,
 				75A2A78D1DA5934300A983D8 /* Frameworks */,
@@ -3682,6 +3683,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ ! -f .env ]; then\n    echo \".env file not found or configured properlly.\"\n    exit 1\nfi\n\nsource \".env\"\nhost=\"$API_URL/blocksatoshi\"\n\njson=$(curl -k -v -X POST -H 'Content-type: application/json' -d '{\"deviceID\": \"b21f2253-51e1-4346-92b0-e32323733067\", \"pubKey\": \"rCxDp6qD8uGqK2Z3UgeQ5bvTCZegqGfVexyz5XkbvwfW\"}'  https://${host}/wallet/token)\n\ntoken=\"$(echo $json | sed \"s/{.*\\\"token\\\":\\\"\\([^\\\"]*\\).*}/\\1/g\"):sig\"\n\n./scripts/download_bundles.sh $host\n./scripts/download_currencylist.sh $host $token\n\n";
+		};
+		7E67292529239E5100A2B612 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\nswift run -c release swiftgen --config Resources/swiftgen.yml\n";
 		};
 		7E67772628C9C4910052927A /* Generate localization */ = {
 			isa = PBXShellScriptBuildPhase;

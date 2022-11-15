@@ -101,6 +101,10 @@ internal enum L10n {
     internal static let retakePhoto = L10n.tr("Localizable", "Account.RetakePhoto", fallback: "Retake photo")
     /// Select country
     internal static let selectCountry = L10n.tr("Localizable", "Account.SelectCountry", fallback: "Select country")
+    /// Select state
+    internal static let selectState = L10n.tr("Localizable", "Account.SelectState", fallback: "Select state")
+    /// State title label in select state view
+    internal static let state = L10n.tr("Localizable", "Account.State", fallback: "State")
     /// Submit your photo for document id title
     internal static let submitPhoto = L10n.tr("Localizable", "Account.SubmitPhoto", fallback: "Submit your photo")
     /// Swap and buy limit per day description label
