@@ -5,13 +5,13 @@ phrase:
       project_id: "389f9cee76464e67a65ffd66d3f4d395"
       params:
         file_format: strings
-        locale_id: en
+        locale_id: en-US
         update_translations: true
     - file: ./brd-ios/breadwalletWidget/en.lproj/BreadWalletWidget.strings
       project_id: "fd548746242c61f1dbc394156c78b468"
       params:
         file_format: strings
-        locale_id: en
+        locale_id: en-US
         update_translations: true
   pull:
     targets:
