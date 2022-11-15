@@ -49,9 +49,6 @@
 /* Country title label in select countries view */
 "Account.Country" = "Country";
 
-/* State title label in select state view */
-"Account.State" = "State";
-
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Create a RockWallet account by entering your email address.";
 
@@ -106,6 +103,9 @@
 "Account.SelectCountry" = "Select country";
 
 "Account.SelectState" = "Select state";
+
+/* State title label in select state view */
+"Account.State" = "State";
 
 /* Submit your photo for document id title */
 "Account.SubmitPhoto" = "Submit your photo";
@@ -820,6 +820,14 @@
 
 "CloudBackup.warningBody" = "Your iCloud backup will be erased after %1$@ more incorrect PIN attempts.";
 
+"ComingSoon.body" = "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
+
+"ComingSoon.buttons.backHome" = "BACK TO HOME";
+
+"ComingSoon.buttons.contactSupport" = "Contat support";
+
+"ComingSoon.title" = "Coming soon!";
+
 /* Amount to Send: ($1.00) */
 "Confirmation.amountLabel" = "Amount to Send:";
 
@@ -954,7 +962,7 @@
 "ErrorMessages.emailUnavailableTitle" = "Email Unavailable";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLowAddEth" = "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet. ";
+"ErrorMessages.ethBalanceLowAddEth" = "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
 
 "ErrorMessages.exchangeFailed" = "Swap failed. Reason: %@.";
 
@@ -1399,7 +1407,7 @@
 "OnboardingPageFour.title" = "Start investing today with as little as $50!";
 
 /* Onboarding screen Page 1 title */
-"OnboardingPageOne.title" = "Empowering you in the emerging digital asset economy";
+"OnboardingPageOne.title" = "Empowering you to navigate the digital asset economy easily and securely";
 
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Invest and diversify with RockWallet, easily and securely.";
@@ -3106,10 +3114,3 @@
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
-"ComingSoon.title" = "Coming soon!";
-
-"ComingSoon.body" = "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
-
-"ComingSoon.buttons.backHome" = "BACK TO HOME";
-
-"ComingSoon.buttons.contactSupport" = "Contat support";
