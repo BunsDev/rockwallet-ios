@@ -105,6 +105,8 @@
 
 "Account.SelectCountry" = "Select country";
 
+"Account.SelectState" = "Select state";
+
 /* Submit your photo for document id title */
 "Account.SubmitPhoto" = "Submit your photo";
 
