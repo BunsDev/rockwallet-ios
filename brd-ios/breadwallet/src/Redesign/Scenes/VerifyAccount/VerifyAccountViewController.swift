@@ -8,13 +8,14 @@ extension Scenes {
 
 class VerifyAccountViewController: BaseInfoViewController {
     var role: CustomerRole?
+    var flow: ExchangeFlow?
     
     override var imageName: String? {
-        switch role {
-        case .kyc1:
+        switch flow {
+        case .swap:
             return "il_setup"
             
-        case .kyc2:
+        case .buy:
             return "verification"
             
         default:
@@ -23,11 +24,14 @@ class VerifyAccountViewController: BaseInfoViewController {
     }
     override var titleText: String? { return L10n.Account.messageVerifyAccount }
     override var descriptionText: String? {
-        switch role {
-        case .kyc1:
-            return L10n.Account.verifyIdentity
+        switch (role, flow) {
+        case (.kyc1, .swap):
+            return L10n.Account.verifyIdentity(L10n.HomeScreen.trade.lowercased())
             
-        case .kyc2:
+        case (.kyc1, .buy):
+            return L10n.Account.verifyIdentity(L10n.HomeScreen.buy.lowercased())
+            
+        case (.kyc2, _):
             return L10n.Account.upgradeVerificationIdentity
             
         default:
