@@ -226,7 +226,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             } else if self?.dataStore?.quote?.fromFee?.fee != nil,
                       from.currency.isEthereum {
                 // Not enough ETH for Swap + Fee
-                let value = self?.dataStore?.fromFeeAmount?.tokenValue ?? self?.dataStore?.quote?.fromFee?.fee ?? 0
+                let value = (self?.dataStore?.from?.tokenValue ?? 0) + (self?.dataStore?.fromFeeAmount?.tokenValue ?? self?.dataStore?.quote?.fromFee?.fee ?? 0)
                 let error = SwapErrors.balanceTooLow(balance: value, currency: from.currency.code)
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             } else if self?.dataStore?.quote?.fromFee?.fee != nil {
@@ -311,6 +311,16 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                    depositQuantity: fromTokenValue,
                                    withdrawalQuantity: toTokenValue,
                                    destination: address)
+        
+        // We need to make sure the swap from amount is still less than the balance
+        if let balance = sender?.wallet.currency.state?.balance {
+            let amount = dataStore?.from ?? Amount(decimalAmount: 0, isFiat: false, currency: dataStore?.from?.currency ?? balance.currency)
+            if amount > balance {
+                let error = SwapErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
+                self.presenter?.presentError(actionResponse: .init(error: error))
+                return
+            }
+        }
         
         SwapWorker().execute(requestData: data) { [weak self] result in
             switch result {

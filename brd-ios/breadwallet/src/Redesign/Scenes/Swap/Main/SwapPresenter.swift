@@ -162,7 +162,8 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 
             case _ where fiatValue > (actionResponse.baseBalance?.fiatValue ?? 0):
                 // Value higher than balance
-                let error = SwapErrors.balanceTooLow(balance: fromFee?.tokenValue ?? 0, currency: actionResponse.from?.currency.code ?? "")
+                let value = tokenValue + (fromFee?.tokenValue ?? 0)
+                let error = SwapErrors.balanceTooLow(balance: value, currency: actionResponse.from?.currency.code ?? "")
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
