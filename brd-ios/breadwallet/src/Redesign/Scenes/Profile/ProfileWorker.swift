@@ -17,7 +17,7 @@ enum CustomerRole: String, Codable {
     case kyc2
 }
 
-enum BuySwap {
+enum ExchangeFlow {
     case buy
     case swap
 }

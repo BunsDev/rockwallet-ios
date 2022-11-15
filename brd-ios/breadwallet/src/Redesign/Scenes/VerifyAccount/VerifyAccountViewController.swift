@@ -8,7 +8,7 @@ extension Scenes {
 
 class VerifyAccountViewController: BaseInfoViewController {
     var role: CustomerRole?
-    var flow: BuySwap?
+    var flow: ExchangeFlow?
     
     override var imageName: String? {
         switch flow {

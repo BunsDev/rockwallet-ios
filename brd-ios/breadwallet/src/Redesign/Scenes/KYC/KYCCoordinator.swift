@@ -16,7 +16,7 @@ class KYCCoordinator: BaseCoordinator,
                       KYCDocumentPickerRoutes,
                       DocumentReviewRoutes {
     var role: CustomerRole?
-    var flow: BuySwap?
+    var flow: ExchangeFlow?
     
     override func start() {
         switch UserManager.shared.profile?.status {
