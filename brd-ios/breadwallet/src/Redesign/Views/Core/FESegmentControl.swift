@@ -32,11 +32,10 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
     
     var didChangeValue: ((Values) -> Void)?
     
-    // TODO: Localize
     convenience init() {
         let items = [
-            "BUY WITH CARD",
-            "FUND WITH ACH"
+            L10n.Buy.buyWithCard.uppercased(),
+            L10n.Buy.fundWithAch.uppercased()
         ]
         
         self.init(items: items)

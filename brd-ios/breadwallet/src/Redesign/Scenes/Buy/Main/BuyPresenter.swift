@@ -31,10 +31,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         paymentSegment = SegmentControlViewModel(selectedIndex: .ach)
         
-        // TODO: Localize
         switch paymentSegment.selectedIndex {
         case .ach:
-            paymentMethod = CardSelectionViewModel(title: .text("ACH Payments"), subtitle: .text("Link bank account"), userInteractionEnabled: true)
+            paymentMethod = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
+                                                   subtitle: .text(L10n.Buy.linkBankAccount),
+                                                   userInteractionEnabled: true)
         default:
             paymentMethod = CardSelectionViewModel()
         }
@@ -96,7 +97,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         } else if actionResponse.paymentSegmentValue == .card {
             cardModel = .init(userInteractionEnabled: true)
         } else {
-            cardModel = CardSelectionViewModel(title: .text("ACH Payments"), subtitle: .text("Link bank account"), userInteractionEnabled: true)
+            cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
+                                               subtitle: .text(L10n.Buy.linkBankAccount),
+                                               userInteractionEnabled: true)
         }
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
