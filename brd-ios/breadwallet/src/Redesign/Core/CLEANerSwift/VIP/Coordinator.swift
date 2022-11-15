@@ -268,6 +268,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
+    //TODO: refactor this once the "coming soon" screen is added
     func upgradeAccountOrShowPopup(flow: BuySwap? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?
