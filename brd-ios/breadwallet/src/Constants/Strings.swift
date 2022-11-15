@@ -874,7 +874,7 @@ internal enum L10n {
     internal static let emailUnavailableTitle = L10n.tr("Localizable", "ErrorMessages.emailUnavailableTitle", fallback: "Email Unavailable")
     /// Not enough ETH for transaction fee
     internal static func ethBalanceLowAddEth(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", p1, fallback: "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet. ")
+      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", p1, fallback: "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.")
     }
     /// Swap failed. Reason: %@.
     internal static func exchangeFailed(_ p1: Any) -> String {
@@ -1271,7 +1271,7 @@ internal enum L10n {
   }
   internal enum OnboardingPageOne {
     /// Onboarding screen Page 1 title
-    internal static let title = L10n.tr("Localizable", "OnboardingPageOne.title", fallback: "Empowering you in the emerging digital asset economy")
+    internal static let title = L10n.tr("Localizable", "OnboardingPageOne.title", fallback: "Empowering you to navigate the digital asset economy easily and securely")
   }
   internal enum OnboardingPageThree {
     /// Onboarding screen Page 3 subtitle
