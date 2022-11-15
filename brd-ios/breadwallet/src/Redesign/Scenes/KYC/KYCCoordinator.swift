@@ -14,8 +14,7 @@ import UIKit
 class KYCCoordinator: BaseCoordinator,
                       KYCBasicRoutes,
                       KYCDocumentPickerRoutes,
-                      DocumentReviewRoutes,
-                      VerifyAccountRoutes {
+                      DocumentReviewRoutes {
     var role: CustomerRole?
     
     override func start() {
@@ -28,27 +27,7 @@ class KYCCoordinator: BaseCoordinator,
             
         default:
             open(scene: Scenes.VerifyAccount) { [weak self] vc in
-                guard let role = self?.role else { return }
-                
-                let coverImageName: String
-                let subtitleMessage: String
-                
-                switch role {
-                case .kyc1:
-                    coverImageName = "il_setup"
-                    subtitleMessage = L10n.Account.verifyIdentity
-                    
-                case .kyc2:
-                    coverImageName = "verification"
-                    subtitleMessage = L10n.Account.upgradeVerificationIdentity
-                    
-                default:
-                    coverImageName = ""
-                    subtitleMessage = ""
-                }
-                
-                vc.dataStore?.coverImageName = coverImageName
-                vc.dataStore?.subtitleMessage = subtitleMessage
+                vc.role = self?.role
             }
         }
     }
@@ -61,6 +40,19 @@ class KYCCoordinator: BaseCoordinator,
             vc?.dataStore?.sceneTitle = L10n.Account.selectCountry
             vc?.itemSelected = { item in
                 selected?(item as? Country)
+            }
+            vc?.prepareData()
+        }
+    }
+    
+    func showStateSelector(states: [USState], selected: ((USState?) -> Void)?) {
+        openModally(coordinator: ItemSelectionCoordinator.self,
+                    scene: Scenes.ItemSelection,
+                    presentationStyle: .formSheet) { vc in
+            vc?.dataStore?.items = states
+            vc?.dataStore?.sceneTitle = L10n.Account.selectState
+            vc?.itemSelected = { item in
+                selected?(item as? USState)
             }
             vc?.prepareData()
         }

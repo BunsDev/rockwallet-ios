@@ -101,6 +101,10 @@ internal enum L10n {
     internal static let retakePhoto = L10n.tr("Localizable", "Account.RetakePhoto", fallback: "Retake photo")
     /// Select country
     internal static let selectCountry = L10n.tr("Localizable", "Account.SelectCountry", fallback: "Select country")
+    /// Select state
+    internal static let selectState = L10n.tr("Localizable", "Account.SelectState", fallback: "Select state")
+    /// State title label in select state view
+    internal static let state = L10n.tr("Localizable", "Account.State", fallback: "State")
     /// Submit your photo for document id title
     internal static let submitPhoto = L10n.tr("Localizable", "Account.SubmitPhoto", fallback: "Submit your photo")
     /// Swap and buy limit per day description label
@@ -711,6 +715,20 @@ internal enum L10n {
       return L10n.tr("Localizable", "CloudBackup.warningBody", String(describing: p1), fallback: "Your iCloud backup will be erased after %1$@ more incorrect PIN attempts.")
     }
   }
+  internal enum ComingSoon {
+    /// Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.
+    /// 
+    /// You can still safely send and receive digital assets to your wallet in the meantime.
+    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
+    /// Coming soon!
+    internal static let title = L10n.tr("Localizable", "ComingSoon.title", fallback: "Coming soon!")
+    internal enum Buttons {
+      /// BACK TO HOME
+      internal static let backHome = L10n.tr("Localizable", "ComingSoon.buttons.backHome", fallback: "BACK TO HOME")
+      /// Contat support
+      internal static let contactSupport = L10n.tr("Localizable", "ComingSoon.buttons.contactSupport", fallback: "Contat support")
+    }
+  }
   internal enum ConfirmGift {
     /// Paper Wallet Amount
     internal static let paperWalletAmount = L10n.tr("Localizable", "ConfirmGift.paperWalletAmount", fallback: "Paper Wallet Amount")
@@ -856,7 +874,7 @@ internal enum L10n {
     internal static let emailUnavailableTitle = L10n.tr("Localizable", "ErrorMessages.emailUnavailableTitle", fallback: "Email Unavailable")
     /// Not enough ETH for transaction fee
     internal static func ethBalanceLowAddEth(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", p1, fallback: "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet. ")
+      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", p1, fallback: "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.")
     }
     /// Swap failed. Reason: %@.
     internal static func exchangeFailed(_ p1: Any) -> String {
@@ -1253,7 +1271,7 @@ internal enum L10n {
   }
   internal enum OnboardingPageOne {
     /// Onboarding screen Page 1 title
-    internal static let title = L10n.tr("Localizable", "OnboardingPageOne.title", fallback: "Empowering you in the emerging digital asset economy")
+    internal static let title = L10n.tr("Localizable", "OnboardingPageOne.title", fallback: "Empowering you to navigate the digital asset economy easily and securely")
   }
   internal enum OnboardingPageThree {
     /// Onboarding screen Page 3 subtitle

@@ -2,76 +2,50 @@
 //  Copyright © 2022 RockWallet, LLC. All rights reserved.
 //
 
-import UIKit
+extension Scenes {
+    static let VerifyAccount = VerifyAccountViewController.self
+}
 
-class VerifyAccountViewController: BaseTableViewController<KYCCoordinator,
-                                   VerifyAccountInteractor,
-                                   VerifyAccountPresenter,
-                                   VerifyAccountStore>,
-                                   VerifyAccountResponseDisplays {
+class VerifyAccountViewController: BaseInfoViewController {
+    var role: CustomerRole?
     
-    typealias Models = VerifyAccountModels
-    
-    override var isModalDismissableEnabled: Bool { return false }
-    
-    // MARK: - Overrides
-    
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        verticalButtons.wrappedView.configure(with: .init(buttons: [Presets.Button.primary,
-                                                                    Presets.Button.noBorders]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [.init(title: L10n.Button.verify,
-                                                                      callback: { [weak self] in
-            self?.buttonTapped()
-        }), .init(title: L10n.Button.maybeLater,
-                  isUnderlined: true,
-                  callback: { [weak self] in
-            self?.laterTapped()
-        })
-        ]))
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
-        case .image:
-            cell = self.tableView(tableView, coverCellForRowAt: indexPath)
-            cell.contentView.setupCustomMargins(vertical: .extraExtraHuge, horizontal: .large)
+    override var imageName: String? {
+        switch role {
+        case .kyc1:
+            return "il_setup"
             
-        case .title:
-            cell = self.tableView(tableView, titleLabelCellForRowAt: indexPath)
-            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center))
-            cell.contentView.setupCustomMargins(vertical: .large, horizontal: .extraExtraHuge)
-            
-        case .description:
-            cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
-            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, textAlignment: .center))
-            cell.contentView.setupCustomMargins(vertical: .large, horizontal: .extraExtraHuge)
+        case .kyc2:
+            return "verification"
             
         default:
-            cell = super.tableView(tableView, cellForRowAt: indexPath)
+            return ""
         }
-        
-        cell.setBackground(with: Presets.Background.transparent)
-        cell.setupCustomMargins(vertical: .huge, horizontal: .large)
-        
-        return cell
     }
-
-    // MARK: - User Interaction
-    
-    override func buttonTapped() {
-        super.buttonTapped()
-        
-        coordinator?.showVerifications()
+    override var titleText: String? { return L10n.Account.messageVerifyAccount }
+    override var descriptionText: String? {
+        switch role {
+        case .kyc1:
+            return L10n.Account.verifyIdentity
+            
+        case .kyc2:
+            return L10n.Account.upgradeVerificationIdentity
+            
+        default:
+            return ""
+        }
     }
-
-    @objc func laterTapped() {
-        coordinator?.goBack(completion: {})
+    override var buttonViewModels: [ButtonViewModel] {
+        return [
+            .init(title: L10n.Button.verify, callback: { [weak self] in
+                self?.coordinator?.showVerifications()
+            }),
+            .init(title: L10n.Button.maybeLater, isUnderlined: true, callback: { [weak self] in
+                self?.coordinator?.goBack(completion: {})
+            })
+        ]
     }
-    
-    // MARK: - VerifyAccountResponseDisplay
-
-    // MARK: - Additional Helpers
+    override var buttonConfigurations: [ButtonConfiguration] {
+        return [Presets.Button.primary,
+                Presets.Button.noBorders]
+    }
 }
