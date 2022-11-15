@@ -102,7 +102,7 @@ class BaseCoordinator: NSObject,
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
             upgradeAccountOrShowPopup(role: .kyc1) { showPopup in
                 guard showPopup else { return }
-                
+
                 self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
                     vc?.dataStore?.currencies = currencies
                     vc?.dataStore?.coreSystem = coreSystem
@@ -159,6 +159,25 @@ class BaseCoordinator: NSObject,
         // There are problems with showing this vc from both menu and profile menu.
         // Cannot get it work reliably. Navigation Controllers are messed up.
         // More hint: deleteAccountCallback inside ModalPresenter.
+    }
+    
+    func showExchangeDetails(with exchangeId: String?, type: Transaction.TransactionType) {
+        open(scene: ExchangeDetailsViewController.self) { vc in
+            vc.navigationItem.hidesBackButton = true
+            vc.dataStore?.itemId = exchangeId
+            vc.dataStore?.transactionType = type
+            vc.prepareData()
+        }
+    }
+    
+    func showSupport() {
+        guard let url = URL(string: C.supportLink) else { return }
+        let webViewController = SimpleWebViewController(url: url)
+        webViewController.setup(with: .init(title: L10n.MenuButton.support))
+        let navController = RootNavigationController(rootViewController: webViewController)
+        webViewController.setAsNonDismissableModal()
+        
+        navigationController.present(navController, animated: true)
     }
     
     // TODO: There are 2 goBack functions. Unify them. 
