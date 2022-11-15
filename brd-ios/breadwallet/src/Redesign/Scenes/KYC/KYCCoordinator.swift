@@ -66,6 +66,19 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
+    func showStateSelector(states: [USState], selected: ((USState?) -> Void)?) {
+        openModally(coordinator: ItemSelectionCoordinator.self,
+                    scene: Scenes.ItemSelection,
+                    presentationStyle: .formSheet) { vc in
+            vc?.dataStore?.items = states
+            vc?.dataStore?.sceneTitle = L10n.Account.selectCountry
+            vc?.itemSelected = { item in
+                selected?(item as? USState)
+            }
+            vc?.prepareData()
+        }
+    }
+    
     func showDocumentReview(checklist: [ChecklistItemViewModel], image: UIImage) {
         let controller = DocumentReviewViewController()
         controller.dataStore?.checklist = checklist
