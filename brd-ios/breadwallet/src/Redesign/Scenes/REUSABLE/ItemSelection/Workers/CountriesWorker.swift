@@ -26,12 +26,12 @@ struct Country: Model, ItemSelectable {
 }
 class CountriesMapper: ModelMapper<CountriesResponseData, [Country]> {
     override func getModel(from response: CountriesResponseData?) -> [Country]? {
-        guard var countries = response?.countries.compactMap({ return Country(code: $0.iso2, name: $0.localizedName) }),
-              let firstIndexUS = countries.firstIndex(where: { $0.code == "US" }) else { return nil }
+        var countries = response?.countries.compactMap({ return Country(code: $0.iso2, name: $0.localizedName) })
         
-        let us = countries[firstIndexUS]
-        countries.remove(at: firstIndexUS)
-        countries.insert(us, at: 0)
+        if let firstIndexUS = countries?.firstIndex(where: { $0.code == "US" }), let us = countries?[firstIndexUS] {
+            countries?.remove(at: firstIndexUS)
+            countries?.insert(us, at: 0)
+        }
         
         return countries
     }
