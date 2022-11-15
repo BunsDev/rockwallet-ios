@@ -500,6 +500,14 @@ internal enum L10n {
   internal enum Buy {
     /// 3D Secure label on buy flow
     internal static let _3DSecure = L10n.tr("Localizable", "Buy.3DSecure", fallback: "3D Secure")
+    /// ACH fee (%s)
+    internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
+    }
+    /// Currently, ACH payments will take 7-10 days to complete.
+    internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
+    /// ACH Payments
+    internal static let achPayments = L10n.tr("Localizable", "Buy.achPayments", fallback: "ACH Payments")
     /// Add card title for buy cryptos
     internal static let addCard = L10n.tr("Localizable", "Buy.AddCard", fallback: "Add card")
     /// Add a debit or credit card label on add card flow
@@ -510,8 +518,10 @@ internal enum L10n {
     internal static let billingAddress = L10n.tr("Localizable", "Buy.BillingAddress", fallback: "Billing address")
     /// Buy min and max limit text
     internal static func buyLimits(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum limit for buy is $%@ USD and maximum limit is $%@ USD/day.")
+      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Buy is $%@ USD and maximum is $%@ USD/day.")
     }
+    /// Buy with card
+    internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "Buy with card")
     /// Card label on add card flow
     internal static let card = L10n.tr("Localizable", "Buy.Card", fallback: "Card")
     /// CVV label in add card flow
@@ -544,12 +554,16 @@ internal enum L10n {
     internal static let failureTransactionMessage = L10n.tr("Localizable", "Buy.FailureTransactionMessage", fallback: "Please contact your card issuer/bank or try again with a different payment method.")
     /// First Name label in billing address view on buy flow
     internal static let firstName = L10n.tr("Localizable", "Buy.FirstName", fallback: "First Name")
+    /// Fund with ACH
+    internal static let fundWithAch = L10n.tr("Localizable", "Buy.fundWithAch", fallback: "Fund with ACH")
     /// Entered expiration date is not valid!
     internal static let invalidExpirationDate = L10n.tr("Localizable", "Buy.InvalidExpirationDate", fallback: "Entered expiration date is not valid!")
     /// I want
     internal static let iWant = L10n.tr("Localizable", "Buy.iWant", fallback: "I want")
     /// Last Name label in billing address view on buy flow
     internal static let lastName = L10n.tr("Localizable", "Buy.LastName", fallback: "Last Name")
+    /// Link bank account
+    internal static let linkBankAccount = L10n.tr("Localizable", "Buy.linkBankAccount", fallback: "Link bank account")
     /// Month and year label in add card flow
     internal static let monthYear = L10n.tr("Localizable", "Buy.MonthYear", fallback: "MM/YY")
     /// Network fee message in order preview screen
@@ -588,19 +602,23 @@ internal enum L10n {
     internal static let stateProvince = L10n.tr("Localizable", "Buy.StateProvince", fallback: "State/Province")
     /// By placing this order you agree to our terms message when ordering
     internal static let terms = L10n.tr("Localizable", "Buy.Terms", fallback: "By placing this order you agree to our")
+    /// Transfer from bank account
+    internal static let transferFromBank = L10n.tr("Localizable", "Buy.transferFromBank", fallback: "Transfer from bank account")
     /// Try a different payment method button title in failure buy screen
     internal static let tryAnotherPayment = L10n.tr("Localizable", "Buy.TryAnotherPayment", fallback: "Try a different payment method")
     /// %@ Transaction ID
     internal static func txHashHeader(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Buy.txHashHeader", String(describing: p1), fallback: "%@ Transaction ID")
     }
+    /// I understand and agree
+    internal static let understandAndAgree = L10n.tr("Localizable", "Buy.understandAndAgree", fallback: "I understand and agree")
     /// Your order label in buy flow
     internal static let yourOrder = L10n.tr("Localizable", "Buy.YourOrder", fallback: "Your order:")
     /// ZIP/Postal Code label in billing address view on buy flow
     internal static let zipPostalCode = L10n.tr("Localizable", "Buy.ZIPPostalCode", fallback: "ZIP/Postal Code")
     internal enum BuyLimits {
-      /// Currently, minimum limit for buy is $30.00 USD and maximum limit is $500.00 USD per day.
-      internal static let android = L10n.tr("Localizable", "Buy.BuyLimits.android", fallback: "Currently, minimum limit for buy is $30.00 USD and maximum limit is $500.00 USD per day.")
+      /// Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.
+      internal static let android = L10n.tr("Localizable", "Buy.BuyLimits.android", fallback: "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.")
     }
     internal enum RemoveCard {
       /// Are you sure you want to remove card ending in %@?
@@ -1561,7 +1579,7 @@ internal enum L10n {
     /// Title displayed to the user on the intro screen when unlinking a wallet
     internal static let unlinkWallet = L10n.tr("Localizable", "RecoveryKeyFlow.unlinkWallet", fallback: "Unlink your wallet from this device.")
     /// Subtitle displayed to the user on the intro screen when unlinking a wallet.
-    internal static let unlinkWalletSubtext = L10n.tr("Localizable", "RecoveryKeyFlow.unlinkWalletSubtext", fallback: "Start a new wallet by unlinking your device from the currently installed wallet.")
+    internal static let unlinkWalletSubtext = L10n.tr("Localizable", "RecoveryKeyFlow.unlinkWalletSubtext", fallback: "Start a new wallet by unlinking your device from the currently-installed wallet.")
     /// Warning displayed when the user starts the process of unlinking a wallet
     internal static let unlinkWalletWarning = L10n.tr("Localizable", "RecoveryKeyFlow.unlinkWalletWarning", fallback: "Wallet must be recovered to regain access.")
     /// Title displayed to the user on the intro screen when wiping a wallet
@@ -2052,7 +2070,7 @@ internal enum L10n {
     internal static let swapAgain = L10n.tr("Localizable", "Swap.SwapAgain", fallback: "Swap again")
     /// Swap min and max limit text
     internal static func swapLimits(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Swap.SwapLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum limit for swap is $%@ USD and maximum limit is $%@ USD/day.")
+      return L10n.tr("Localizable", "Swap.SwapLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Swap is $%@ USD and maximum is $%@ USD/day.")
     }
     /// Swapping %1$@/%2$@
     internal static func swapping(_ p1: Any, _ p2: Any) -> String {
