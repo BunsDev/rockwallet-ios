@@ -650,7 +650,6 @@
 		CE92F9F41DED59E80046B516 /* UIView+AnimationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92F9F31DED59E80046B516 /* UIView+AnimationAdditions.swift */; };
 		CE92F9F61DEDF6890046B516 /* UIViewControllerContextTransitioning+BRAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92F9F51DEDF6890046B516 /* UIViewControllerContextTransitioning+BRAdditions.swift */; };
 		CE977109216FA16300B9F621 /* SegwitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE977108216FA16300B9F621 /* SegwitViewController.swift */; };
-		CE97710B216FB50B00B9F621 /* EnableSegwitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE97710A216FB50B00B9F621 /* EnableSegwitView.swift */; };
 		CE97710D216FF20F00B9F621 /* SegwitEnabledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE97710C216FF20F00B9F621 /* SegwitEnabledView.swift */; };
 		CEA05CC31F21B53C00D850F0 /* FeeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA05CC21F21B53C00D850F0 /* FeeSelector.swift */; };
 		CEA2480023DE819D00B18BC6 /* AttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA247FF23DE819D00B18BC6 /* AttributeCell.swift */; };
@@ -1418,7 +1417,6 @@
 		CE92F9F31DED59E80046B516 /* UIView+AnimationAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+AnimationAdditions.swift"; path = "src/Extensions/UIView+AnimationAdditions.swift"; sourceTree = "<group>"; };
 		CE92F9F51DEDF6890046B516 /* UIViewControllerContextTransitioning+BRAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewControllerContextTransitioning+BRAdditions.swift"; path = "src/Extensions/UIViewControllerContextTransitioning+BRAdditions.swift"; sourceTree = "<group>"; };
 		CE977108216FA16300B9F621 /* SegwitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegwitViewController.swift; path = src/ViewControllers/SegwitViewController.swift; sourceTree = "<group>"; };
-		CE97710A216FB50B00B9F621 /* EnableSegwitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnableSegwitView.swift; path = src/Views/EnableSegwitView.swift; sourceTree = "<group>"; };
 		CE97710C216FF20F00B9F621 /* SegwitEnabledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegwitEnabledView.swift; path = src/Views/SegwitEnabledView.swift; sourceTree = "<group>"; };
 		CEA05CC21F21B53C00D850F0 /* FeeSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeeSelector.swift; path = src/ViewControllers/FeeSelector.swift; sourceTree = "<group>"; };
 		CEA247FF23DE819D00B18BC6 /* AttributeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AttributeCell.swift; path = src/Views/SendViewCells/AttributeCell.swift; sourceTree = "<group>"; };
@@ -3043,7 +3041,6 @@
 				CEA362671E00EE320061FC0E /* CameraGuideView.swift */,
 				7CBC6B2F2177D72600899AFB /* DelistedTokenView.swift */,
 				CE4C1CC51ED65D830063E184 /* DrawableCircle.swift */,
-				CE97710A216FB50B00B9F621 /* EnableSegwitView.swift */,
 				CE6DCC261E6108D50044257B /* EnterPhraseCell.swift */,
 				E89C0610216A8BE70012CE0D /* GetUserEmailPromptView.swift */,
 				CEEC70911E95DA4400EF788E /* GradientSwitch.swift */,
@@ -4028,7 +4025,6 @@
 				CE5E6C941EB7964900A476DB /* WalletDisabledView.swift in Sources */,
 				7ED427F328755CB200AA19A8 /* ExchangeDetailsViewController.swift in Sources */,
 				CEF3E8341DE57166007C0A9E /* AnimatableIcon.swift in Sources */,
-				CE97710B216FB50B00B9F621 /* EnableSegwitView.swift in Sources */,
 				7EF45F8B284768C100D1F7B0 /* ItemSelectionViewController.swift in Sources */,
 				CEF3E8321DE55540007C0A9E /* CheckView.swift in Sources */,
 				4F3AB11A25D53F4300B378DC /* ExternalAPIClient.swift in Sources */,
