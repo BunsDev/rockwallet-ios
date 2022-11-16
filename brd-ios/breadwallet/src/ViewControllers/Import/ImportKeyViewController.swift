@@ -42,6 +42,33 @@ class ImportKeyViewController: UIViewController, Subscriber {
     private let importingActivity = BRActivityViewController(message: L10n.Import.importing)
     private let unlockingActivity = BRActivityViewController(message: L10n.Import.unlockingActivity)
     private var viewModel: (any TxViewModel)?
+    private lazy var importConfirmationAlert: FEPopupView = {
+        let alert = FEPopupView()
+        alert.configure(with: Presets.Popup.normal)
+        alert.alpha = 0
+        
+        let close = {
+            UIView.spring(Presets.Animation.duration) { [weak self] in
+                alert.alpha = 0
+                self?.alertBlurView.alpha = 0
+            } completion: { [weak self] _ in
+                alert.removeFromSuperview()
+                self?.alertBlurView.removeFromSuperview()
+            }
+        }
+        alert.closeCallback = close
+        alert.buttonCallbacks = [close]
+        
+        return alert
+    }()
+    
+    private lazy var alertBlurView: UIVisualEffectView = {
+        let blur = UIBlurEffect(style: .dark)
+        let view = UIVisualEffectView(effect: blur)
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.alpha = 0.0
+        return view
+    }()
     
     // Previously scanned QR code passed to init()
     private var initialQRCode: QRCode?
@@ -190,17 +217,38 @@ class ImportKeyViewController: UIViewController, Subscriber {
     private func confirmImport(fromSweeper sweeper: WalletSweeper, fee: TransferFeeBasis) {
         let balanceAmount = Amount(cryptoAmount: sweeper.balance!, currency: wallet.currency)
         let feeAmount = Amount(cryptoAmount: fee.fee, currency: wallet.currency)
-        let balanceText = "\(balanceAmount.fiatDescription) (\(balanceAmount.description))"
-        let feeText = "\(feeAmount.fiatDescription)"
-        let message = L10n.Import.confirm(balanceText, feeText)
-        let alert = UIAlertController(title: L10n.Import.title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: L10n.Import.importButton, style: .default, handler: { _ in
+        let message = L10n.Import.confirm(balanceAmount.fiatDescription, feeAmount.fiatDescription)
+        
+        importConfirmationAlert.setup(with: .init(title: .text(L10n.Import.title),
+                                                  body: message,
+                                                  buttons: [
+                                                    .init(title: L10n.Button.continueAction),
+                                                    .init(title: L10n.Button.cancel)
+                                                  ], closeButton: .init(image: "close")))
+        
+        importConfirmationAlert.buttonCallbacks.insert({
             self.present(self.importingActivity, animated: true)
             self.submit(sweeper: sweeper, fee: fee)
-        }))
-        present(alert, animated: true)
+        }, at: 0)
+        
+        navigationController?.view.addSubview(alertBlurView)
+        navigationController?.view.addSubview(importConfirmationAlert)
+        
+        alertBlurView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        importConfirmationAlert.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().offset(Margins.medium.rawValue)
+            make.height.equalTo(313)
+        }
+        
+        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            self?.importConfirmationAlert.alpha = 1
+            self?.alertBlurView.alpha = 1
+        }
     }
+    
     private func submit(sweeper: WalletSweeper, fee: TransferFeeBasis) {
         guard let transfer = sweeper.submit(estimatedFeeBasis: fee) else {
             importingActivity.dismiss(animated: true)

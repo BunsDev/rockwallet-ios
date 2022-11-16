@@ -1066,7 +1066,7 @@ internal enum L10n {
     internal static let checking = L10n.tr("Localizable", "Import.checking", fallback: "Checking private key balance...")
     /// Sweep private key confirmation message
     internal static func confirm(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Import.confirm", String(describing: p1), String(describing: p2), fallback: "Send %1$@ from this private key into your wallet? The bitcoin network will receive a fee of %2$@.")
+      return L10n.tr("Localizable", "Import.confirm", String(describing: p1), String(describing: p2), fallback: "You are importing %@ from this private key into your RockWallet. There will be a network fee of %@.")
     }
     /// [Redeem] the funds stored on this private key.
     internal static let importButton = L10n.tr("Localizable", "Import.importButton", fallback: "Sweep")
