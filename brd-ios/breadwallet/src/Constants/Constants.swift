@@ -69,6 +69,7 @@ struct C {
     }
     
     static let usLocaleCode = "en_US"
+    static let countryUS = "US"
     
     static let usdCurrencyCode = "USD"
     static let euroCurrencyCode = "EUR"

@@ -24,7 +24,7 @@ class KYCBasicStore: NSObject, BaseDataStore, KYCBasicDataStore {
     var countries: [Country]?
     
     var needsState: Bool {
-        return country == "US"
+        return country == C.countryUS
     }
     // MARK: - Aditional helpers
 }
