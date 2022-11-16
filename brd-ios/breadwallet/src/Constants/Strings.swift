@@ -1066,7 +1066,7 @@ internal enum L10n {
     internal static let checking = L10n.tr("Localizable", "Import.checking", fallback: "Checking private key balance...")
     /// Sweep private key confirmation message
     internal static func confirm(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Import.confirm", String(describing: p1), String(describing: p2), fallback: "Send %1$@ from this private key into your wallet? The bitcoin network will receive a fee of %2$@.")
+      return L10n.tr("Localizable", "Import.confirm", String(describing: p1), String(describing: p2), fallback: "You are importing %@ from this private key into your RockWallet. There will be a network fee of %@.")
     }
     /// [Redeem] the funds stored on this private key.
     internal static let importButton = L10n.tr("Localizable", "Import.importButton", fallback: "Sweep")
@@ -1696,6 +1696,8 @@ internal enum L10n {
     }
   }
   internal enum Segwit {
+    /// Segwit enabled confirmation body
+    internal static let confirmationConfirmationBody = L10n.tr("Localizable", "Segwit.ConfirmationConfirmationBody", fallback: "Thank you for helping move bitcoin forward!")
     /// Segwit enabled confirmation title
     internal static let confirmationConfirmationTitle = L10n.tr("Localizable", "Segwit.ConfirmationConfirmationTitle", fallback: "You have enabled SegWit!")
     /// Segwit instructions
@@ -1866,6 +1868,10 @@ internal enum L10n {
     }
     /// Section title for a collection of different settings screens, one for each currency
     internal static let currencySettings = L10n.tr("Localizable", "Settings.currencySettings", fallback: "Currency Settings")
+    /// Debug crash
+    internal static let debugCrash = L10n.tr("Localizable", "Settings.DebugCrash", fallback: "Debug crash")
+    /// Developer Options
+    internal static let developerOptions = L10n.tr("Localizable", "Settings.DeveloperOptions", fallback: "Developer Options")
     /// Join Early access label
     internal static let earlyAccess = L10n.tr("Localizable", "Settings.earlyAccess", fallback: "Join Early Access")
     /// Enable segwit.
@@ -1912,6 +1918,8 @@ internal enum L10n {
     internal static let viewLegacyAddressReceiveTitle = L10n.tr("Localizable", "Settings.ViewLegacyAddressReceiveTitle", fallback: "Receive Bitcoin")
     /// Wallet Settings section header
     internal static let wallet = L10n.tr("Localizable", "Settings.wallet", fallback: "Wallets")
+    /// Web Platform Debug URL
+    internal static let webDebugUrl = L10n.tr("Localizable", "Settings.WebDebugUrl", fallback: "Web Platform Debug URL")
     /// Unlink/delete your wallet from the current device.
     internal static let wipe = L10n.tr("Localizable", "Settings.wipe", fallback: "Unlink from this device")
     internal enum TouchIdLimit {
@@ -2178,8 +2186,26 @@ internal enum L10n {
     }
   }
   internal enum Title {
+    /// Auto-enter PIN
+    internal static let autoEnterPin = L10n.tr("Localizable", "Title.AutoEnterPin", fallback: "Auto-enter PIN")
+    /// Connection Settings Override
+    internal static let connectionSettingsOverride = L10n.tr("Localizable", "Title.ConnectionSettingsOverride", fallback: "Connection Settings Override")
+    /// Fast Sync
+    internal static let fastSync = L10n.tr("Localizable", "Title.FastSync", fallback: "Fast Sync")
+    /// Lock Wallet
+    internal static let lockWallet = L10n.tr("Localizable", "Title.LockWallet", fallback: "Lock Wallet")
+    /// RockWallet - Feedback
+    internal static let rockwalletFeedback = L10n.tr("Localizable", "Title.RockwalletFeedback", fallback: "RockWallet - Feedback")
+    /// Save
+    internal static let save = L10n.tr("Localizable", "Title.Save", fallback: "Save")
     /// Search assets
     internal static let searchAssets = L10n.tr("Localizable", "Title.searchAssets", fallback: "Search assets")
+    /// Send Logs
+    internal static let sendLogs = L10n.tr("Localizable", "Title.SendLogs", fallback: "Send Logs")
+    /// Suppress paper key prompt
+    internal static let suppressPaperKeyPrompt = L10n.tr("Localizable", "Title.SuppressPaperKeyPrompt", fallback: "Suppress paper key prompt")
+    /// Unlink Wallet (no prompt)
+    internal static let unlinkWalletNoPrompt = L10n.tr("Localizable", "Title.UnlinkWalletNoPrompt", fallback: "Unlink Wallet (no prompt)")
   }
   internal enum TokenList {
     /// Add [this item to the list]
