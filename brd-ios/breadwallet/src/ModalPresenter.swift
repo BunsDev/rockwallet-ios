@@ -426,7 +426,6 @@ class ModalPresenter: Subscriber {
                 self.system.connectionMode(for: btc) == .p2p_only
             }
             btcItems.append(nodeSelection)
-            
             btcItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
                 menuNav.dismiss(animated: true, completion: { [weak self] in
                     guard let self = self else { return }
@@ -524,6 +523,7 @@ class ModalPresenter: Subscriber {
     
     func presentMenu() {
         let menuNav = RootNavigationController()
+        menuNav.modalPresentationStyle = .overFullScreen
         // MARK: Preferences
         let preferencesItems = preparePreferencesMenuItems(menuNav: menuNav)
         
@@ -794,6 +794,7 @@ class ModalPresenter: Subscriber {
     
     private func presentKeyImport(wallet: Wallet, scanResult: QRCode? = nil) {        
         let nc = RootNavigationController()
+        nc.modalPresentationStyle = .overFullScreen
         let start = ImportKeyViewController(wallet: wallet, initialQRCode: scanResult)
         start.addCloseNavigationItem()
         let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.importWallet, currency: wallet.currency, position: .right)

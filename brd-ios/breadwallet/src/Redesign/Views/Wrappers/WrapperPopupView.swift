@@ -29,6 +29,7 @@ struct WrapperPopupViewModel<VM: ViewModel>: ViewModel {
     var cancel: ButtonViewModel?
     
     var wrappedView: VM?
+    var hideSeparator = false
 }
 
 class WrapperPopupView<T: ViewProtocol & UIView>: UIView,
@@ -215,6 +216,7 @@ class WrapperPopupView<T: ViewProtocol & UIView>: UIView,
         
         confirmButton.setup(with: viewModel.confirm)
         cancelButton.setup(with: viewModel.cancel)
+        lineView.isHidden = viewModel.hideSeparator
         
         guard headerLeadingView.isHidden,
               headerTitleLabel.isHidden,
