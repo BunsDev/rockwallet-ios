@@ -18,7 +18,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     weak var viewController: OrderPreviewViewController?
     
     // TODO: update it according to BE data
-    var isAchAccount = false
+    private var isAchAccount = false
 
     // MARK: - OrderPreviewActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
