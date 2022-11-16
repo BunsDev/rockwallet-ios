@@ -900,10 +900,6 @@ internal enum L10n {
     internal static func noQuoteForPair(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.noQuoteForPair", String(describing: p1), String(describing: p2), fallback: "No quote for currency pair %@-%@.")
     }
-    /// %@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.
-    internal static func notEnoughEthForFee(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.notEnoughEthForFee", String(describing: p1), fallback: "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.")
-    }
     /// The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.
     internal static func overDailyLimit(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.overDailyLimit", String(describing: p1), fallback: "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.")

@@ -992,8 +992,6 @@
 /* Accepts 2 parameters:, - first currency code, - second currency code */
 "ErrorMessages.noQuoteForPair" = "No quote for currency pair %@-%@.";
 
-"ErrorMessages.notEnoughEthForFee" = "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
-
 "ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overExchangeLimit" = "Over exchange limit.";
