@@ -65,14 +65,14 @@ class MenuViewController: UITableViewController, Subscriber {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: WrapperTableViewCell<MenuCell> = tableView.dequeueReusableCell(for: indexPath) else { return UITableViewCell() }
-        
+        cell.shouldHighlight = true
         cell.setup { view in
             view.set(item: visibleItems[indexPath.row])
         }
         
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         visibleItems[indexPath.row].callback()
         tableView.deselectRow(at: indexPath, animated: true)
