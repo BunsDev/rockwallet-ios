@@ -9,10 +9,6 @@
 import UIKit
 
 class MenuViewController: UITableViewController, Subscriber {
-    
-    let standardItemHeight: CGFloat = 56.0
-    let subtitleItemHeight: CGFloat = 62.0
-    
     init(items: [MenuItem], title: String, faqButton: UIButton? = nil) {
         self.items = items
         self.faqButton = faqButton
@@ -37,7 +33,7 @@ class MenuViewController: UITableViewController, Subscriber {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(MenuCell.self, forCellReuseIdentifier: MenuCell.cellIdentifier)
+        tableView.register(WrapperTableViewCell<MenuCell>.self)
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = LightColors.Outline.one
@@ -68,8 +64,11 @@ class MenuViewController: UITableViewController, Subscriber {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MenuCell.cellIdentifier, for: indexPath) as? MenuCell else { return UITableViewCell() }
-        cell.set(item: visibleItems[indexPath.row])
+        guard let cell: WrapperTableViewCell<MenuCell> = tableView.dequeueReusableCell(for: indexPath) else { return UITableViewCell() }
+        
+        cell.setup { view in
+            view.set(item: visibleItems[indexPath.row])
+        }
         
         return cell
     }
@@ -83,9 +82,9 @@ class MenuViewController: UITableViewController, Subscriber {
         let item = items[indexPath.row]
         
         if let subTitle = item.subTitle, !subTitle.isEmpty {
-            return subtitleItemHeight
+            return ViewSizes.Common.hugeCommon.rawValue
         } else {
-            return standardItemHeight
+            return ViewSizes.Common.largeCommon.rawValue
         }
     }
     
