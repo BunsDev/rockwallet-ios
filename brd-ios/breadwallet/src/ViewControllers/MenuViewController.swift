@@ -42,9 +42,9 @@ class MenuViewController: UITableViewController, Subscriber {
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = LightColors.Outline.one
         tableView.backgroundColor = LightColors.Background.one
+        tableView.backgroundView?.backgroundColor = LightColors.Background.one
         
         if let button = faqButton {
-            button.tintColor = LightColors.Text.three
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         }
         
@@ -70,7 +70,6 @@ class MenuViewController: UITableViewController, Subscriber {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MenuCell.cellIdentifier, for: indexPath) as? MenuCell else { return UITableViewCell() }
         cell.set(item: visibleItems[indexPath.row])
-        cell.setBackground(with: Presets.Background.transparent)
         
         return cell
     }
