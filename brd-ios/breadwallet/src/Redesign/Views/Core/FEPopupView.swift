@@ -118,7 +118,6 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
         mainStack.addArrangedSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().priority(.low)
-            make.height.equalTo(ViewSizes.small.rawValue)
         }
         
         mainStack.addArrangedSubview(scrollView)

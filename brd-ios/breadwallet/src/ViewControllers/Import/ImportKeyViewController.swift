@@ -42,32 +42,15 @@ class ImportKeyViewController: UIViewController, Subscriber {
     private let importingActivity = BRActivityViewController(message: L10n.Import.importing)
     private let unlockingActivity = BRActivityViewController(message: L10n.Import.unlockingActivity)
     private var viewModel: (any TxViewModel)?
-    private lazy var importConfirmationAlert: FEPopupView = {
-        let alert = FEPopupView()
-        alert.configure(with: Presets.Popup.normal)
-        alert.alpha = 0
-        
-        let close = {
-            UIView.spring(Presets.Animation.duration) { [weak self] in
-                alert.alpha = 0
-                self?.alertBlurView.alpha = 0
-            } completion: { [weak self] _ in
-                alert.removeFromSuperview()
-                self?.alertBlurView.removeFromSuperview()
-            }
-        }
-        alert.closeCallback = close
-        alert.buttonCallbacks = [close]
-        
+    private lazy var importConfirmationAlert: WrapperPopupView<TitleValueView> = {
+        let alert = WrapperPopupView<TitleValueView>()
+        alert.configure(with: .init(background: .init(backgroundColor: LightColors.Background.one, border: Presets.Border.commonPlain),
+                                    trailing: Presets.Button.blackIcon,
+                                    confirm: Presets.Button.primary,
+                                    cancel: Presets.Button.secondary,
+                                    wrappedView: Presets.TitleValue.alert))
+        alert.wrappedView.axis = .vertical
         return alert
-    }()
-    
-    private lazy var alertBlurView: UIVisualEffectView = {
-        let blur = UIBlurEffect(style: .dark)
-        let view = UIVisualEffectView(effect: blur)
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.alpha = 0.0
-        return view
     }()
     
     // Previously scanned QR code passed to init()
@@ -219,33 +202,25 @@ class ImportKeyViewController: UIViewController, Subscriber {
         let feeAmount = Amount(cryptoAmount: fee.fee, currency: wallet.currency)
         let message = L10n.Import.confirm(balanceAmount.fiatDescription, feeAmount.fiatDescription)
         
-        importConfirmationAlert.setup(with: .init(title: .text(L10n.Import.title),
-                                                  body: message,
-                                                  buttons: [
-                                                    .init(title: L10n.Button.continueAction),
-                                                    .init(title: L10n.Button.cancel)
-                                                  ], closeButton: .init(image: "close")))
+        importConfirmationAlert.setup(with: .init(trailing: .init(image: "close"),
+                                                  confirm: .init(title: L10n.Button.continueAction),
+                                                  cancel: .init(title: L10n.Button.cancel),
+                                                  wrappedView: .init(title: .text(L10n.Import.title),
+                                                                     value: .text(message)),
+                                                 hideSeparator: true))
         
-        importConfirmationAlert.buttonCallbacks.insert({
+        importConfirmationAlert.confirmCallback = {
             self.present(self.importingActivity, animated: true)
             self.submit(sweeper: sweeper, fee: fee)
-        }, at: 0)
-        
-        navigationController?.view.addSubview(alertBlurView)
+        }
         navigationController?.view.addSubview(importConfirmationAlert)
         
-        alertBlurView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         importConfirmationAlert.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.leading.equalToSuperview().offset(Margins.medium.rawValue)
-            make.height.equalTo(313)
+            make.edges.equalToSuperview()
         }
         
         UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
             self?.importConfirmationAlert.alpha = 1
-            self?.alertBlurView.alpha = 1
         }
     }
     
