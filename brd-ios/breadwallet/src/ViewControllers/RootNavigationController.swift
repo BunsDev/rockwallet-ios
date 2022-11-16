@@ -62,8 +62,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = LightColors.primary
             tintColor = LightColors.Contrast.two
             
-        case is DefaultCurrencyViewController,
-            is ShareDataViewController,
+        case is ShareDataViewController,
             is BuyViewController,
             is SwapViewController,
             is AddCardViewController,

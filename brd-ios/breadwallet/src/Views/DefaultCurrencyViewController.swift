@@ -9,7 +9,6 @@
 import UIKit
 
 class DefaultCurrencyViewController: UITableViewController, Subscriber {
-    private let cellIdentifier = "CellIdentifier"
     private let fiatCurrencies = CurrencyFileManager.getCurrencyMetaDataFromCache(type: .fiatCurrencies)
     
     private var selectedCurrencyCode = Store.state.defaultCurrencyCode {
@@ -32,11 +31,12 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(SeparatorCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.register(WrapperTableViewCell<UITableViewCell>.self)
+        tableView.rowHeight = ViewSizes.large.rawValue
+        tableView.estimatedRowHeight = ViewSizes.large.rawValue
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = LightColors.Background.one
-        view.backgroundColor = LightColors.Background.one
         
         title = L10n.Settings.currency
         
@@ -62,7 +62,7 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        guard let cell: WrapperTableViewCell<UITableViewCell> = tableView.dequeueReusableCell(for: indexPath) else { return UITableViewCell() }
         
         let currency = fiatCurrencies[indexPath.row]
         
@@ -70,8 +70,8 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
         cell.textLabel?.font = Fonts.Subtitle.two
         cell.textLabel?.textColor = LightColors.Text.three
         
-        cell.contentView.backgroundColor = LightColors.Background.two
-        cell.backgroundColor = LightColors.Background.two
+        cell.contentView.backgroundColor = LightColors.Background.one
+        cell.backgroundColor = LightColors.Background.one
         cell.accessoryView = nil
         
         if currency.code == selectedCurrencyCode {

@@ -40,9 +40,9 @@ struct MenuItem {
         self.callback = callback
     }
     
-    init(title: String, icon: UIImage? = nil, color: UIColor? = nil, subMenu: [MenuItem], rootNav: UINavigationController, faqButton: UIButton? = nil) {
+    init(title: String, icon: UIImage? = nil, subMenu: [MenuItem], rootNav: RootNavigationController, faqButton: UIButton? = nil) {
         let subMenuVC = MenuViewController(items: subMenu, title: title, faqButton: faqButton)
-        self.init(title: title, icon: icon, color: color, accessoryText: nil) {
+        self.init(title: title, icon: icon, accessoryText: nil) {
             rootNav.pushViewController(subMenuVC, animated: true)
         }
     }
