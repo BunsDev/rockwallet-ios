@@ -798,7 +798,6 @@ class ModalPresenter: Subscriber {
         let start = ImportKeyViewController(wallet: wallet, initialQRCode: scanResult)
         start.addCloseNavigationItem()
         let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.importWallet, currency: wallet.currency, position: .right)
-        faqButton.tintColor = LightColors.Contrast.two
         start.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: faqButton)]
         nc.pushViewController(start, animated: true)
         topViewController?.present(nc, animated: true, completion: nil)

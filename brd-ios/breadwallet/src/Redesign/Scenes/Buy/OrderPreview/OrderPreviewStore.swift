@@ -38,6 +38,9 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var paymentReference: String?
     var paymentstatus: AddCard.Status?
     
+    // TODO: update it according to BE data
+    var isAchAccount: Bool = false
+    
     // MARK: - Aditional helpers
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?

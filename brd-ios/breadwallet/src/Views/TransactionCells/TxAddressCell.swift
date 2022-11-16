@@ -29,7 +29,7 @@ class TxAddressCell: TxDetailRowCell {
             addressButton.constraint(.trailing, toView: container),
             addressButton.constraint(.top, toView: container),
             addressButton.constraint(.bottom, toView: container)
-            ])
+        ])
     }
     
     override func setupStyle() {
