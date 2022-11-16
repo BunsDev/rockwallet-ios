@@ -1696,6 +1696,8 @@ internal enum L10n {
     }
   }
   internal enum Segwit {
+    /// Segwit enabled confirmation body
+    internal static let confirmationConfirmationBody = L10n.tr("Localizable", "Segwit.ConfirmationConfirmationBody", fallback: "Thank you for helping move bitcoin forward!")
     /// Segwit enabled confirmation title
     internal static let confirmationConfirmationTitle = L10n.tr("Localizable", "Segwit.ConfirmationConfirmationTitle", fallback: "You have enabled SegWit!")
     /// Segwit instructions
