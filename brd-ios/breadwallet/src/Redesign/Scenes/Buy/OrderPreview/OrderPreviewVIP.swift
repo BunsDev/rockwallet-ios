@@ -21,6 +21,7 @@ protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions {
     func updateCvv(viewAction: OrderPreviewModels.CvvValidation.ViewAction)
     func showCvvInfoPopup(viewAction: OrderPreviewModels.CvvInfoPopup.ViewAction)
     func submit(viewAction: OrderPreviewModels.Submit.ViewAction)
+    func toggleTickbox(viewAction: OrderPreviewModels.Tickbox.ViewAction)
 }
 
 protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses {
@@ -30,13 +31,14 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse)
     func presentCvvInfoPopup(actionResponse: OrderPreviewModels.CvvInfoPopup.ActionResponse)
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse)
+    func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse)
 }
 
 protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
     func displayTermsAndConditions(responseDisplay: OrderPreviewModels.TermsAndConditions.ResponseDisplay)
     func displayTimeOut(responseDisplay: OrderPreviewModels.ExpirationValidations.ResponseDisplay)
     func displayInfoPopup(responseDisplay: OrderPreviewModels.InfoPopup.ResponseDisplay)
-    func displayCvv(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay)
+    func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay)
     func displayCvvInfoPopup(responseDisplay: OrderPreviewModels.CvvInfoPopup.ResponseDisplay)
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay)
 }
@@ -51,6 +53,7 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
     var cvv: String? { get set }
     var paymentReference: String? { get set }
     var paymentstatus: AddCard.Status? { get set }
+    var isAchAccount: Bool { get set }
 }
 
 protocol OrderPreviewDataPassing {
