@@ -1156,7 +1156,7 @@
 "Import.checking" = "Checking private key balance...";
 
 /* Sweep private key confirmation message */
-"Import.confirm" = "Send %1$@ from this private key into your wallet? The bitcoin network will receive a fee of %2$@.";
+"Import.confirm" = "You are importing %@ from this private key into your RockWallet. There will be a network fee of %@.";
 
 /* Duplicate key error message */
 "Import.Error.duplicate" = "This private key is already in your wallet.";

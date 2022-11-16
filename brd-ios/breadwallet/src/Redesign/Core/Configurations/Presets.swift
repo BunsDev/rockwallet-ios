@@ -355,6 +355,9 @@ extension Presets {
         
         static var verticalSmall = TitleValueConfiguration(title: .init(font: Fonts.Body.three, textColor: LightColors.Text.two, numberOfLines: 1),
                                                            value: .init(font: Fonts.Body.three, textColor: LightColors.Text.two, textAlignment: .right))
+        
+        static var alert = TitleValueConfiguration(title: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center, numberOfLines: 1),
+                                                   value: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center))
     }
 }
 
