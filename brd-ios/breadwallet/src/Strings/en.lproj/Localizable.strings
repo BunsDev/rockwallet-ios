@@ -992,8 +992,6 @@
 /* Accepts 2 parameters:, - first currency code, - second currency code */
 "ErrorMessages.noQuoteForPair" = "No quote for currency pair %@-%@.";
 
-"ErrorMessages.notEnoughEthForFee" = "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
-
 "ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overExchangeLimit" = "Over exchange limit.";
@@ -1156,7 +1154,7 @@
 "Import.checking" = "Checking private key balance...";
 
 /* Sweep private key confirmation message */
-"Import.confirm" = "Send %1$@ from this private key into your wallet? The bitcoin network will receive a fee of %2$@.";
+"Import.confirm" = "You are importing %@ from this private key into your RockWallet. There will be a network fee of %@.";
 
 /* Duplicate key error message */
 "Import.Error.duplicate" = "This private key is already in your wallet.";
@@ -1881,6 +1879,9 @@
 /* Security center fingerprint authentication button */
 "SecurityCenter.touchIdTitle.android" = "Fingerprint Authentication";
 
+/* Segwit enabled confirmation body */
+"Segwit.ConfirmationConfirmationBody" = "Thank you for helping move bitcoin forward!";
+
 /* Segwit enabled confirmation title */
 "Segwit.ConfirmationConfirmationTitle" = "You have enabled SegWit!";
 
@@ -2095,6 +2096,11 @@
 /* Section title for a collection of different settings screens, one for each currency */
 "Settings.currencySettings" = "Currency Settings";
 
+/* Debug crash */
+"Settings.DebugCrash" = "Debug crash";
+
+"Settings.DeveloperOptions" = "Developer Options";
+
 /* Join Early access label */
 "Settings.earlyAccess" = "Join Early Access";
 
@@ -2163,6 +2169,8 @@
 
 /* Wallet Settings section header */
 "Settings.wallet" = "Wallets";
+
+"Settings.WebDebugUrl" = "Web Platform Debug URL";
 
 /* Unlink/delete your wallet from the current device. */
 "Settings.wipe" = "Unlink from this device";
@@ -2430,8 +2438,26 @@
 /* 6 s (6 seconds) */
 "TimeSince.seconds" = "%1$@ s";
 
+"Title.AutoEnterPin" = "Auto-enter PIN";
+
+"Title.ConnectionSettingsOverride" = "Connection Settings Override";
+
+"Title.FastSync" = "Fast Sync";
+
+"Title.LockWallet" = "Lock Wallet";
+
+"Title.RockwalletFeedback" = "RockWallet - Feedback";
+
+"Title.Save" = "Save";
+
 /* Search assets */
 "Title.searchAssets" = "Search assets";
+
+"Title.SendLogs" = "Send Logs";
+
+"Title.SuppressPaperKeyPrompt" = "Suppress paper key prompt";
+
+"Title.UnlinkWalletNoPrompt" = "Unlink Wallet (no prompt)";
 
 /* Add [this item to the list] */
 "TokenList.add" = "Add";

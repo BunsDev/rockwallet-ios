@@ -13,7 +13,6 @@
 			buildPhases = (
 				7E390A2A27F57D15003C929D /* Download */,
 				7E67772628C9C4910052927A /* Generate localization */,
-				7EDC2EED291A68D600FF9F34 /* SwiftGen */,
 			);
 			dependencies = (
 			);
@@ -650,8 +649,6 @@
 		CE92F9F41DED59E80046B516 /* UIView+AnimationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92F9F31DED59E80046B516 /* UIView+AnimationAdditions.swift */; };
 		CE92F9F61DEDF6890046B516 /* UIViewControllerContextTransitioning+BRAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92F9F51DEDF6890046B516 /* UIViewControllerContextTransitioning+BRAdditions.swift */; };
 		CE977109216FA16300B9F621 /* SegwitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE977108216FA16300B9F621 /* SegwitViewController.swift */; };
-		CE97710B216FB50B00B9F621 /* EnableSegwitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE97710A216FB50B00B9F621 /* EnableSegwitView.swift */; };
-		CE97710D216FF20F00B9F621 /* SegwitEnabledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE97710C216FF20F00B9F621 /* SegwitEnabledView.swift */; };
 		CEA05CC31F21B53C00D850F0 /* FeeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA05CC21F21B53C00D850F0 /* FeeSelector.swift */; };
 		CEA2480023DE819D00B18BC6 /* AttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA247FF23DE819D00B18BC6 /* AttributeCell.swift */; };
 		CEA362681E00EE320061FC0E /* CameraGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA362671E00EE320061FC0E /* CameraGuideView.swift */; };
@@ -705,7 +702,6 @@
 		CEE659E71F65A936001FF29D /* RetryTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE659E61F65A936001FF29D /* RetryTimer.swift */; };
 		CEE65DF01E39056F0002994D /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE65DEF1E39056F0002994D /* Rate.swift */; };
 		CEEC707F1E8D6B4100EF788E /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC707E1E8D6B4100EF788E /* MenuViewController.swift */; };
-		CEEC70811E90C04700EF788E /* SeparatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC70801E90C04700EF788E /* SeparatorCell.swift */; };
 		CEEC70831E90C07C00EF788E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC70821E90C07C00EF788E /* MenuItem.swift */; };
 		CEEC70861E94397D00EF788E /* UserDefaults+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC70851E94397D00EF788E /* UserDefaults+Additions.swift */; };
 		CEEC70881E943DC900EF788E /* TouchIdEnabledTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC70871E943DC900EF788E /* TouchIdEnabledTests.swift */; };
@@ -1418,8 +1414,6 @@
 		CE92F9F31DED59E80046B516 /* UIView+AnimationAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+AnimationAdditions.swift"; path = "src/Extensions/UIView+AnimationAdditions.swift"; sourceTree = "<group>"; };
 		CE92F9F51DEDF6890046B516 /* UIViewControllerContextTransitioning+BRAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewControllerContextTransitioning+BRAdditions.swift"; path = "src/Extensions/UIViewControllerContextTransitioning+BRAdditions.swift"; sourceTree = "<group>"; };
 		CE977108216FA16300B9F621 /* SegwitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegwitViewController.swift; path = src/ViewControllers/SegwitViewController.swift; sourceTree = "<group>"; };
-		CE97710A216FB50B00B9F621 /* EnableSegwitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnableSegwitView.swift; path = src/Views/EnableSegwitView.swift; sourceTree = "<group>"; };
-		CE97710C216FF20F00B9F621 /* SegwitEnabledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegwitEnabledView.swift; path = src/Views/SegwitEnabledView.swift; sourceTree = "<group>"; };
 		CEA05CC21F21B53C00D850F0 /* FeeSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeeSelector.swift; path = src/ViewControllers/FeeSelector.swift; sourceTree = "<group>"; };
 		CEA247FF23DE819D00B18BC6 /* AttributeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AttributeCell.swift; path = src/Views/SendViewCells/AttributeCell.swift; sourceTree = "<group>"; };
 		CEA362671E00EE320061FC0E /* CameraGuideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraGuideView.swift; path = src/Views/CameraGuideView.swift; sourceTree = "<group>"; };
@@ -1474,7 +1468,6 @@
 		CEE659EA1F68A8BB001FF29D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = it; path = it.lproj/BIP39Words.plist; sourceTree = "<group>"; };
 		CEE65DEF1E39056F0002994D /* Rate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Rate.swift; path = src/Models/Rate.swift; sourceTree = "<group>"; };
 		CEEC707E1E8D6B4100EF788E /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = src/ViewControllers/MenuViewController.swift; sourceTree = "<group>"; };
-		CEEC70801E90C04700EF788E /* SeparatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeparatorCell.swift; path = src/Views/SeparatorCell.swift; sourceTree = "<group>"; };
 		CEEC70821E90C07C00EF788E /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuItem.swift; path = src/Models/MenuItem.swift; sourceTree = "<group>"; };
 		CEEC70851E94397D00EF788E /* UserDefaults+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserDefaults+Additions.swift"; path = "src/Extensions/UserDefaults+Additions.swift"; sourceTree = "<group>"; };
 		CEEC70871E943DC900EF788E /* TouchIdEnabledTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIdEnabledTests.swift; sourceTree = "<group>"; };
@@ -3043,7 +3036,6 @@
 				CEA362671E00EE320061FC0E /* CameraGuideView.swift */,
 				7CBC6B2F2177D72600899AFB /* DelistedTokenView.swift */,
 				CE4C1CC51ED65D830063E184 /* DrawableCircle.swift */,
-				CE97710A216FB50B00B9F621 /* EnableSegwitView.swift */,
 				CE6DCC261E6108D50044257B /* EnterPhraseCell.swift */,
 				E89C0610216A8BE70012CE0D /* GetUserEmailPromptView.swift */,
 				CEEC70911E95DA4400EF788E /* GradientSwitch.swift */,
@@ -3064,8 +3056,6 @@
 				CEC6AA3C1DEE687000EE5AFD /* RadialGradientView.swift */,
 				CE8F0AE21EB91BB500AA7642 /* SearchHeaderView.swift */,
 				7B36D2FA290BA77C00FB6842 /* GradientView.swift */,
-				CE97710C216FF20F00B9F621 /* SegwitEnabledView.swift */,
-				CEEC70801E90C04700EF788E /* SeparatorCell.swift */,
 				7C9724651FF07B9A004248C4 /* StatusPip.swift */,
 				CEA9178520C07FBB00F29B31 /* SyncingHeaderView.swift */,
 				7C230E742037AD52002F0FF1 /* SyncingIndicator.swift */,
@@ -3717,25 +3707,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/opt/homebrew/bin/phrase pull\n";
 		};
-		7EDC2EED291A68D600FF9F34 /* SwiftGen */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftGen;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\nswift run -c release swiftgen --config Resources/swiftgen.yml\n";
-		};
 		CEE0EF531EBF8C8A0018DB36 /* Icon Versioning */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -4028,7 +3999,6 @@
 				CE5E6C941EB7964900A476DB /* WalletDisabledView.swift in Sources */,
 				7ED427F328755CB200AA19A8 /* ExchangeDetailsViewController.swift in Sources */,
 				CEF3E8341DE57166007C0A9E /* AnimatableIcon.swift in Sources */,
-				CE97710B216FB50B00B9F621 /* EnableSegwitView.swift in Sources */,
 				7EF45F8B284768C100D1F7B0 /* ItemSelectionViewController.swift in Sources */,
 				CEF3E8321DE55540007C0A9E /* CheckView.swift in Sources */,
 				4F3AB11A25D53F4300B378DC /* ExternalAPIClient.swift in Sources */,
@@ -4197,8 +4167,6 @@
 				C4C729A129225F3A00A3CE24 /* PlaidPublicToken.swift in Sources */,
 				CE20C9011DBBFFF800C8397A /* Actions.swift in Sources */,
 				CE20C9191DBE7B8200C8397A /* State.swift in Sources */,
-				CEEC70811E90C04700EF788E /* SeparatorCell.swift in Sources */,
-				CE97710D216FF20F00B9F621 /* SegwitEnabledView.swift in Sources */,
 				7EC21A1F28991A6500FED711 /* BillingAddressPresenter.swift in Sources */,
 				7C230E752037AD52002F0FF1 /* SyncingIndicator.swift in Sources */,
 				7EB8FD222897D212000FF75C /* BuyStore.swift in Sources */,
@@ -4606,6 +4574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_VERSION = 5.0.1;
 				BRCORE_CONFIGURATION = Debug;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -4675,6 +4644,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_VERSION = 5.0.1;
 				BRCORE_CONFIGURATION = Release;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -4771,7 +4741,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
-				MARKETING_VERSION = 5.0.1;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4823,7 +4793,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
-				MARKETING_VERSION = 5.0.1;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4971,6 +4941,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_VERSION = 5.0.1;
 				BRCORE_CONFIGURATION = Staging;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5067,7 +5038,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
-				MARKETING_VERSION = 5.0.1;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
