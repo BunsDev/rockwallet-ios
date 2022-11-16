@@ -9,9 +9,6 @@
 import UIKit
 
 class MenuCell: UITableViewCell {
-    
-    static let cellIdentifier = "MenuCell"
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     }

@@ -44,7 +44,7 @@ class NewDeviceWorker: BaseApiWorker<NewDeviceMapper> {
     
     override func getHeaders() -> [String: String] {
         let formatter = DateFormatter()
-        formatter.locale = .init(identifier: "US")
+        formatter.locale = .init(identifier: C.countryUS)
         formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
         let dateString = formatter.string(from: Date())
         

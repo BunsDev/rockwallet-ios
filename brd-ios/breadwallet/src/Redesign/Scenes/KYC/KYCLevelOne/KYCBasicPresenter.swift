@@ -58,7 +58,7 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
                                trailing: .imageName("chevron-down"))
             ]
         ]
-        if item.country == "US" {
+        if item.country == C.countryUS {
             sections.append(.state)
             sectionRows[.state] = [
                 TextFieldModel(title: L10n.Account.state,

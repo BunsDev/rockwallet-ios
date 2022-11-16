@@ -23,7 +23,6 @@ protocol Coordinatable: CoordinatableRoutes {
     init(navigationController: UINavigationController)
     
     func childDidFinish(child: Coordinatable)
-    func goBack(completion: (() -> Void)?)
     func start()
 }
 
@@ -191,10 +190,6 @@ class BaseCoordinator: NSObject,
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
-    func goBack() {
-        goBack(completion: nil)
-    }
-    
     func goBack(completion: (() -> Void)? = nil) {
         guard parentCoordinator != nil,
               parentCoordinator?.navigationController != navigationController else {

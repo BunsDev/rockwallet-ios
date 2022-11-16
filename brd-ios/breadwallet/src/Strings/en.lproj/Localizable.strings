@@ -1881,11 +1881,11 @@
 /* Security center fingerprint authentication button */
 "SecurityCenter.touchIdTitle.android" = "Fingerprint Authentication";
 
-/* Segwit enabled confirmation title */
-"Segwit.ConfirmationConfirmationTitle" = "You have enabled SegWit!";
-
 /* Segwit enabled confirmation body */
 "Segwit.ConfirmationConfirmationBody" = "Thank you for helping move bitcoin forward!";
+
+/* Segwit enabled confirmation title */
+"Segwit.ConfirmationConfirmationTitle" = "You have enabled SegWit!";
 
 /* Segwit instructions */
 "Segwit.ConfirmationInstructionsInstructions" = "SegWit support is still a beta feature.\n\nOnce SegWit is enabled, it will not be possible\nto disable it. You will be able to find the legacy address under Settings. \n\nSome third-party services, including crypto trading, may be unavailable to users who have enabled SegWit. In case of emergency, you will be able to generate a legacy address from Preferences > BTC Settings. \n\nSegWit will automatically be enabled for all\nusers in a future update.";
@@ -2098,6 +2098,11 @@
 /* Section title for a collection of different settings screens, one for each currency */
 "Settings.currencySettings" = "Currency Settings";
 
+/* Debug crash */
+"Settings.DebugCrash" = "Debug crash";
+
+"Settings.DeveloperOptions" = "Developer Options";
+
 /* Join Early access label */
 "Settings.earlyAccess" = "Join Early Access";
 
@@ -2166,6 +2171,8 @@
 
 /* Wallet Settings section header */
 "Settings.wallet" = "Wallets";
+
+"Settings.WebDebugUrl" = "Web Platform Debug URL";
 
 /* Unlink/delete your wallet from the current device. */
 "Settings.wipe" = "Unlink from this device";
@@ -2433,8 +2440,26 @@
 /* 6 s (6 seconds) */
 "TimeSince.seconds" = "%1$@ s";
 
+"Title.AutoEnterPin" = "Auto-enter PIN";
+
+"Title.ConnectionSettingsOverride" = "Connection Settings Override";
+
+"Title.FastSync" = "Fast Sync";
+
+"Title.LockWallet" = "Lock Wallet";
+
+"Title.RockwalletFeedback" = "RockWallet - Feedback";
+
+"Title.Save" = "Save";
+
 /* Search assets */
 "Title.searchAssets" = "Search assets";
+
+"Title.SendLogs" = "Send Logs";
+
+"Title.SuppressPaperKeyPrompt" = "Suppress paper key prompt";
+
+"Title.UnlinkWalletNoPrompt" = "Unlink Wallet (no prompt)";
 
 /* Add [this item to the list] */
 "TokenList.add" = "Add";
