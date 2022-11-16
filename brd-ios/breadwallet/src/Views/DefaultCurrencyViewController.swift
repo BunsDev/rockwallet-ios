@@ -9,19 +9,10 @@
 import UIKit
 
 class DefaultCurrencyViewController: UITableViewController, Subscriber {
-    init() {
-        self.selectedCurrencyCode = Store.state.defaultCurrencyCode
-        super.init(style: .plain)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private let cellIdentifier = "CellIdentifier"
     private let fiatCurrencies = CurrencyFileManager.getCurrencyMetaDataFromCache(type: .fiatCurrencies)
     
-    private var selectedCurrencyCode: String {
+    private var selectedCurrencyCode = Store.state.defaultCurrencyCode {
         didSet {
             let filtered = fiatCurrencies.enumerated().filter({ $0.1.code == selectedCurrencyCode || $0.1.code == oldValue })
             let paths: [IndexPath] = filtered.map({ IndexPath(row: $0.0, section: 0 )})
@@ -42,10 +33,10 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
         super.viewDidLoad()
         
         tableView.register(SeparatorCell.self, forCellReuseIdentifier: cellIdentifier)
-        self.selectedCurrencyCode = Store.state.defaultCurrencyCode
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = LightColors.Background.one
+        view.backgroundColor = LightColors.Background.one
         
         title = L10n.Settings.currency
         
@@ -57,9 +48,7 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
         super.viewDidAppear(animated)
         
         // Scroll to the selected display currency.
-        if let index = fiatCurrencies.firstIndex(where: {
-            return $0.code.lowercased() == selectedCurrencyCode.lowercased()
-        }) {
+        if let index = fiatCurrencies.firstIndex(where: { return $0.code.lowercased() == selectedCurrencyCode.lowercased() }) {
             tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .middle, animated: true)
         }
     }
