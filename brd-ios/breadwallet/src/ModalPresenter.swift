@@ -154,14 +154,14 @@ class ModalPresenter: Subscriber {
             }
         }
         
-        Store.subscribe(self, name: .handleGift(URL(string: "")!)) { [weak self] in
-            guard let trigger = $0, let `self` = self else { return }
-            if case let .handleGift(url) = trigger {
-                if let gift = QRCode(url: url, viewModel: nil) {
-                    self.handleGift(qrCode: gift)
-                }
-            }
-        }
+//        Store.subscribe(self, name: .handleGift(URL(string: "")!)) { [weak self] in
+//            guard let trigger = $0, let `self` = self else { return }
+//            if case let .handleGift(url) = trigger {
+//                if let gift = QRCode(url: url, viewModel: nil) {
+//                    self.handleGift(qrCode: gift)
+//                }
+//            }
+//        }
         
         Store.subscribe(self, name: .reImportGift(nil)) { [weak self] in
             guard let trigger = $0, let `self` = self else { return }
