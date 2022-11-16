@@ -23,7 +23,7 @@ protocol Coordinatable: CoordinatableRoutes {
     init(navigationController: UINavigationController)
     
     func childDidFinish(child: Coordinatable)
-    func goBack()
+    func goBack(completion: (() -> Void)?)
     func start()
 }
 
@@ -102,6 +102,11 @@ class BaseCoordinator: NSObject,
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
             upgradeAccountOrShowPopup(flow: .swap, role: .kyc1) { showPopup in
                 guard showPopup else { return }
+                
+                guard UserManager.shared.profile?.canSwap == true else {
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon)
+                    return
+                }
 
                 self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
                     vc?.dataStore?.currencies = currencies
@@ -117,6 +122,11 @@ class BaseCoordinator: NSObject,
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
             upgradeAccountOrShowPopup(flow: .buy, role: UserManager.shared.profile?.status == .levelOne ? .kyc2 : .kyc1) { showPopup in
                 guard showPopup else { return }
+                
+                guard UserManager.shared.profile?.canBuy == true else {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon)
+                    return
+                }
                 
                 self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
                     vc?.dataStore?.coreSystem = coreSystem
@@ -180,18 +190,9 @@ class BaseCoordinator: NSObject,
         navigationController.present(navController, animated: true)
     }
     
-    // TODO: There are 2 goBack functions. Unify them. 
     /// Determines whether the viewcontroller or navigation stack are being dismissed
     func goBack() {
-        // if the same coordinator is used in a flow, we dont want to remove it from the parent
-        guard navigationController.viewControllers.count < 1 else { return }
-
-        guard navigationController.isBeingDismissed
-                || navigationController.presentedViewController?.isBeingDismissed == true
-                || navigationController.presentedViewController?.isMovingFromParent == true
-                || parentCoordinator?.navigationController == navigationController
-        else { return }
-        parentCoordinator?.childDidFinish(child: self)
+        goBack(completion: nil)
     }
     
     func goBack(completion: (() -> Void)? = nil) {
