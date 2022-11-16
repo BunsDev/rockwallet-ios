@@ -112,7 +112,7 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
                                                        dataStore?.lastName,
                                                        dataStore?.country,
                                                        dataStore?.birthDateString])
-        if dataStore?.country == "US" {
+        if dataStore?.needsState == true {
             // only US customers need to fill out the state field
             isValid = isValid && FieldValidator.validate(fields: [dataStore?.state])
         }
@@ -124,10 +124,14 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
         guard let firstName = dataStore?.firstName,
               let lastName = dataStore?.lastName,
               let country = dataStore?.country,
-              let state = dataStore?.state,
               let birthDateText = dataStore?.birthDateString,
-              let birthDate = dataStore?.birthdate else {
-            return
+              let birthDate = dataStore?.birthdate
+        else { return }
+        
+        var state: String?
+        if dataStore?.needsState == true {
+            guard let usState = dataStore?.state else { return }
+            state = usState
         }
         
         guard let legalDate = Calendar.current.date(byAdding: .year, value: -18, to: Date()),
