@@ -13,7 +13,7 @@ import WalletKit
 
 enum OrderPreviewModels {
     
-    typealias Item = (to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?)
+    typealias Item = (to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?, isAchAccount: Bool?)
     
     enum Sections: Sectionable {
         case achNotification

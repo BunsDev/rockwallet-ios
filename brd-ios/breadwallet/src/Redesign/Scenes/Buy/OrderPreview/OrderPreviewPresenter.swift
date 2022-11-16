@@ -16,16 +16,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     typealias Models = OrderPreviewModels
 
     weak var viewController: OrderPreviewViewController?
-    
-    // TODO: update it according to BE data
-    private var isAchAccount = false
 
     // MARK: - OrderPreviewActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
               let toAmount = item.to,
               let quote = item.quote,
-              let card = item.card else { return }
+              let card = item.card,
+              let isAchAccount = item.isAchAccount else { return }
         
         let to = toAmount.fiatValue
         let infoImage = UIImage(named: "help")?.withRenderingMode(.alwaysOriginal)
