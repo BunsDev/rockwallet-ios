@@ -11,7 +11,7 @@ protocol FEError: Error {
 
 struct GeneralError: FEError {
     var errorMessage: String = L10n.ErrorMessages.unknownError
-    var errorType: ServerResponse.ErrorType?
+    var errorType: ServerResponse.ErrorType? = .empty
 }
 
 enum NetworkingError: FEError {
