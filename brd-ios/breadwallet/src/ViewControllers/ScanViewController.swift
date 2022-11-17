@@ -58,7 +58,7 @@ class ScanViewController: UIViewController {
 
     override func viewDidLoad() {
         view.backgroundColor = .black
-        toolbar.backgroundColor = .secondaryButton
+        toolbar.backgroundColor = LightColors.Background.one
         toolbar.distribution = .fillEqually
         
         view.addSubview(toolbar)

@@ -54,7 +54,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
         
     private let warning = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     private var pinView: PinView
-    private let pinPadBackground = UIView(color: .almostBlack)
+    private let pinPadBackground = UIView(color: LightColors.Text.one)
     private let pinPad = PinPadViewController(style: .clear, keyboardType: .pinPad, maxDigits: 0, shouldShowBiometrics: false)
     private let spacer = UIView()
     private let keyMaster: KeyMaster
@@ -411,16 +411,9 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
     
     func presentResetPinSuccess(newPin: String) {
-        let resetPinSuccess = ResetPinViewController()
-        resetPinSuccess.resetFromDisabledSuccess = { [weak self] in
-            self?.dismiss(animated: true, completion: {
-                self?.resetFromDisabledSuccess?(newPin)
-            })
-        }
-        let nc = RootNavigationController(rootViewController: resetPinSuccess)
-        nc.modalPresentationStyle = .overFullScreen
-        nc.isNavigationBarHidden = true
-        present(nc, animated: true)
+        dismiss(animated: true, completion: { [weak self] in
+            self?.resetFromDisabledSuccess?(newPin)
+        })
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

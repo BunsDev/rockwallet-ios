@@ -32,18 +32,26 @@ class ImportKeyViewController: UIViewController, Subscriber {
     }
 
     private let wallet: Wallet
-    private let header = RadialGradientView(backgroundColor: .blue, offset: 64.0)
-    private let illustration = UIImageView(image: #imageLiteral(resourceName: "ImportIllustration"))
-    private let message = UILabel.wrapping(font: .customBody(size: 16.0), color: .almostBlack)
-    private let warning = UILabel.wrapping(font: .customBody(size: 16.0), color: .almostBlack)
-    private let button = BRDButton(title: L10n.Import.scan, type: .primary)
-    private let bullet = UIImageView(image: #imageLiteral(resourceName: "deletecircle"))
-    private let leftCaption = UILabel.wrapping(font: .customMedium(size: 13.0), color: .darkText)
-    private let rightCaption = UILabel.wrapping(font: .customMedium(size: 13.0), color: .darkText)
+    private let header = UIView()
+    private let illustration = UIImageView(image: .init(named: "ImportIllustration"))
+    private let message = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
+    private let warning = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
+    private let button = BRDButton(title: L10n.Import.scan, type: .secondary)
+    private let bullet = UIImageView(image: .init(named: "cancel"))
     private let balanceActivity = BRActivityViewController(message: L10n.Import.checking)
     private let importingActivity = BRActivityViewController(message: L10n.Import.importing)
     private let unlockingActivity = BRActivityViewController(message: L10n.Import.unlockingActivity)
     private var viewModel: (any TxViewModel)?
+    private lazy var importConfirmationAlert: WrapperPopupView<TitleValueView> = {
+        let alert = WrapperPopupView<TitleValueView>()
+        alert.configure(with: .init(background: .init(backgroundColor: LightColors.Background.one, border: Presets.Border.commonPlain),
+                                    trailing: Presets.Button.blackIcon,
+                                    confirm: Presets.Button.primary,
+                                    cancel: Presets.Button.secondary,
+                                    wrappedView: Presets.TitleValue.alert))
+        alert.wrappedView.axis = .vertical
+        return alert
+    }()
     
     // Previously scanned QR code passed to init()
     private var initialQRCode: QRCode?
@@ -53,6 +61,8 @@ class ImportKeyViewController: UIViewController, Subscriber {
         addSubviews()
         addConstraints()
         setInitialData()
+        title = L10n.Import.title
+        navigationController?.view.layoutIfNeeded()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,8 +85,6 @@ class ImportKeyViewController: UIViewController, Subscriber {
     private func addSubviews() {
         view.addSubview(header)
         header.addSubview(illustration)
-        header.addSubview(leftCaption)
-        header.addSubview(rightCaption)
         view.addSubview(message)
         view.addSubview(button)
         view.addSubview(bullet)
@@ -84,50 +92,40 @@ class ImportKeyViewController: UIViewController, Subscriber {
     }
 
     private func addConstraints() {
-        header.constrainTopCorners(sidePadding: 0, topPadding: 0)
         header.constrain([
-            header.constraint(.height, constant: E.isIPhoneX ? 250.0 : 220.0) ])
+            header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            header.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            header.heightAnchor.constraint(equalToConstant: 160)])
         illustration.constrain([
-            illustration.constraint(.width, constant: 64.0),
-            illustration.constraint(.height, constant: 84.0),
+            illustration.constraint(.top, toView: header, constant: Margins.large.rawValue),
+            illustration.heightAnchor.constraint(equalToConstant: 69),
             illustration.constraint(.centerX, toView: header),
-            illustration.constraint(.centerY, toView: header, constant: E.isIPhoneX ? 4.0 : -Margins.small.rawValue) ])
-        leftCaption.constrain([
-            leftCaption.topAnchor.constraint(equalTo: illustration.bottomAnchor, constant: Margins.small.rawValue),
-            leftCaption.trailingAnchor.constraint(equalTo: header.centerXAnchor, constant: -Margins.large.rawValue),
-            leftCaption.widthAnchor.constraint(equalToConstant: 80.0)])
-        rightCaption.constrain([
-            rightCaption.topAnchor.constraint(equalTo: illustration.bottomAnchor, constant: Margins.small.rawValue),
-            rightCaption.leadingAnchor.constraint(equalTo: header.centerXAnchor, constant: Margins.large.rawValue),
-            rightCaption.widthAnchor.constraint(equalToConstant: 80.0)])
+            illustration.constraint(.bottom, toView: header, constant: -Margins.extraExtraHuge.rawValue)])
         message.constrain([
             message.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.large.rawValue),
-            message.topAnchor.constraint(equalTo: header.bottomAnchor, constant: Margins.large.rawValue),
-            message.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.large.rawValue) ])
+            message.topAnchor.constraint(equalTo: header.bottomAnchor, constant: Margins.huge.rawValue),
+            message.centerXAnchor.constraint(equalTo: view.centerXAnchor) ])
         bullet.constrain([
             bullet.leadingAnchor.constraint(equalTo: message.leadingAnchor),
-            bullet.topAnchor.constraint(equalTo: message.bottomAnchor, constant: Margins.extraHuge.rawValue),
-            bullet.widthAnchor.constraint(equalToConstant: 16.0),
-            bullet.heightAnchor.constraint(equalToConstant: 16.0) ])
+            bullet.topAnchor.constraint(equalTo: message.bottomAnchor, constant: Margins.huge.rawValue) ])
         warning.constrain([
             warning.leadingAnchor.constraint(equalTo: bullet.trailingAnchor, constant: Margins.large.rawValue),
             warning.topAnchor.constraint(equalTo: bullet.topAnchor),
             warning.trailingAnchor.constraint(equalTo: message.trailingAnchor) ])
         button.constrain([
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.huge.rawValue),
-            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Margins.extraHuge.rawValue),
-            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.huge.rawValue),
-            button.constraint(.height, constant: ViewSizes.Common.defaultCommon.rawValue) ])
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.large.rawValue),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Margins.huge.rawValue),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.constraint(.height, constant: ViewSizes.Common.largeCommon.rawValue) ])
     }
 
     private func setInitialData() {
-        view.backgroundColor = .darkBackground
-        illustration.contentMode = .scaleAspectFill
+        view.backgroundColor = LightColors.Background.one
+        header.backgroundColor = LightColors.primary
+        illustration.contentMode = .scaleAspectFit
+        bullet.tintColor = LightColors.Text.two
         message.text = L10n.Import.message
-        leftCaption.text = L10n.Import.leftCaption
-        leftCaption.textAlignment = .center
-        rightCaption.text = L10n.Import.rightCaption
-        rightCaption.textAlignment = .center
         warning.text = L10n.Import.warning
 
         // Set up the tap handler for the "Scan Private Key" button.
@@ -202,17 +200,30 @@ class ImportKeyViewController: UIViewController, Subscriber {
     private func confirmImport(fromSweeper sweeper: WalletSweeper, fee: TransferFeeBasis) {
         let balanceAmount = Amount(cryptoAmount: sweeper.balance!, currency: wallet.currency)
         let feeAmount = Amount(cryptoAmount: fee.fee, currency: wallet.currency)
-        let balanceText = "\(balanceAmount.fiatDescription) (\(balanceAmount.description))"
-        let feeText = "\(feeAmount.fiatDescription)"
-        let message = L10n.Import.confirm(balanceText, feeText)
-        let alert = UIAlertController(title: L10n.Import.title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: L10n.Import.importButton, style: .default, handler: { _ in
+        let message = L10n.Import.confirm(balanceAmount.fiatDescription, feeAmount.fiatDescription)
+        
+        importConfirmationAlert.setup(with: .init(trailing: .init(image: "close"),
+                                                  confirm: .init(title: L10n.Button.continueAction),
+                                                  cancel: .init(title: L10n.Button.cancel),
+                                                  wrappedView: .init(title: .text(L10n.Import.title),
+                                                                     value: .text(message)),
+                                                 hideSeparator: true))
+        
+        importConfirmationAlert.confirmCallback = {
             self.present(self.importingActivity, animated: true)
             self.submit(sweeper: sweeper, fee: fee)
-        }))
-        present(alert, animated: true)
+        }
+        navigationController?.view.addSubview(importConfirmationAlert)
+        
+        importConfirmationAlert.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            self?.importConfirmationAlert.alpha = 1
+        }
     }
+    
     private func submit(sweeper: WalletSweeper, fee: TransferFeeBasis) {
         guard let transfer = sweeper.submit(estimatedFeeBasis: fee) else {
             importingActivity.dismiss(animated: true)
@@ -335,10 +346,6 @@ class ImportKeyViewController: UIViewController, Subscriber {
             guard let self = self else { return }
             self.dismiss(animated: true)
         })))
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 
     required init?(coder aDecoder: NSCoder) {

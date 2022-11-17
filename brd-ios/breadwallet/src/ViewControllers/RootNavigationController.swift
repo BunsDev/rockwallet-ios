@@ -11,9 +11,8 @@
 import UIKit
 
 class RootNavigationController: UINavigationController, UINavigationControllerDelegate {
-    private var backgroundColor = LightColors.Background.two
-    private var tintColor = LightColors.Text.three
-    private var currentViewController = UIViewController()
+    private var backgroundColor = UIColor.clear
+    private var tintColor = UIColor.clear
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         guard let vc = topViewController else { return .default }
@@ -33,18 +32,21 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        decideInterface(for: currentViewController)
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        currentViewController = viewController
-        
         decideInterface(for: viewController)
     }
     
     func decideInterface(for viewController: UIViewController?) {
+        guard let viewController = viewController else {
+            backgroundColor = LightColors.Contrast.one
+            tintColor = LightColors.Contrast.one
+            
+            setNormalNavigationBar()
+            return
+        }
+        
         switch viewController {
-        case is AccountViewController, is HomeScreenViewController:
+        case is AccountViewController,
+            is HomeScreenViewController:
             backgroundColor = .clear
             tintColor = LightColors.Text.three
             
@@ -56,8 +58,11 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = .clear
             tintColor = LightColors.Background.two
             
-        case is DefaultCurrencyViewController,
-            is ShareDataViewController,
+        case is ImportKeyViewController:
+            backgroundColor = LightColors.primary
+            tintColor = LightColors.Contrast.two
+            
+        case is ShareDataViewController,
             is BuyViewController,
             is SwapViewController,
             is AddCardViewController,
@@ -84,7 +89,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         }
         
         let item = SimpleBackBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        viewController?.navigationItem.backBarButtonItem = item
+        viewController.navigationItem.backBarButtonItem = item
         
         setNormalNavigationBar()
     }
@@ -110,15 +115,23 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         navigationBar.standardAppearance = scrollAppearance
         navigationBar.compactAppearance = scrollAppearance
         
+        let tint = tintColor
         UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
-            self?.navigationBar.tintColor = self?.tintColor ?? .clear
+            self?.navigationBar.tintColor = tint
+            self?.navigationItem.titleView?.tintColor = tint
+            self?.navigationItem.leftBarButtonItems?.forEach { $0.tintColor = tint }
+            self?.navigationItem.rightBarButtonItems?.forEach { $0.tintColor = tint }
+            self?.navigationItem.leftBarButtonItem?.tintColor = tint
+            self?.navigationItem.rightBarButtonItem?.tintColor = tint
             self?.navigationBar.layoutIfNeeded()
         }
         
+        navigationBar.prefersLargeTitles = false
         navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font: Fonts.Title.six, NSAttributedString.Key.foregroundColor: tintColor
+            NSAttributedString.Key.font: Fonts.Title.six,
+            NSAttributedString.Key.foregroundColor: tint
         ]
         
-        navigationBar.prefersLargeTitles = false
+        view.backgroundColor = backgroundColor
     }
 }

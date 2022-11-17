@@ -20,7 +20,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard let reference = dataStore?.paymentReference else {
-            let item: Models.Item = (to: dataStore?.to, from: dataStore?.from, quote: dataStore?.quote, networkFee: dataStore?.networkFee, card: dataStore?.card)
+            let item: Models.Item = (to: dataStore?.to, from: dataStore?.from, quote: dataStore?.quote, networkFee: dataStore?.networkFee, card: dataStore?.card, isAchAccount: dataStore?.isAchAccount)
             presenter?.presentData(actionResponse: .init(item: item))
             return
         }
@@ -112,6 +112,10 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     func showTermsAndConditions(viewAction: OrderPreviewModels.TermsAndConditions.ViewAction) {
         guard let url = URL(string: C.termsAndConditions) else { return }
         presenter?.presentTermsAndConditions(actionResponse: .init(url: url))
+    }
+    
+    func toggleTickbox(viewAction: OrderPreviewModels.Tickbox.ViewAction) {
+        presenter?.presentToggleTickbox(actionResponse: .init(value: viewAction.value))
     }
     
     // TODO: add rate refreshing logic!

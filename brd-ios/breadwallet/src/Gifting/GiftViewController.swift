@@ -375,9 +375,9 @@ class GiftViewController: UIViewController {
                         self.present(share, animated: true, completion: nil)
                     }
                 case .creationError(let message):
-                    self.showAlert(title: L10n.Alerts.sendFailure, message: message, buttonLabel: L10n.Button.ok)
+                    self.showAlert(title: L10n.Alerts.sendFailure, message: message)
                 case .publishFailure(let code, let message):
-                    self.showAlert(title: L10n.Alerts.sendFailure, message: "\(message) (\(code))", buttonLabel: L10n.Button.ok)
+                    self.showAlert(title: L10n.Alerts.sendFailure, message: "\(message) (\(code))")
                 case .insufficientGas(let rpcErrorMessage):
                     print("blah: \(rpcErrorMessage)")
                     //self.showInsufficientGasError()

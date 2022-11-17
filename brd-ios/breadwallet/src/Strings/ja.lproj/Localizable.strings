@@ -74,7 +74,7 @@
 "Alert.error" = "エラー";
 
 /* Keystore error */
-"Alert.keystore.generic.android" = "Android OSのKeystoreに問題があります。hello@rockwallet.com にお問い合わせください。";
+"Alert.keystore.generic.android" = "Android OSのKeystoreに問題があります。support@rockwallet.com にお問い合わせください。";
 
 /* KeyStore error, keys are invalidated */
 "Alert.keystore.invalidated.android" = "お使いのAndroidロック画面が無効にされたため、暗号化されたブレッドのデータはつい最近無効になりました。";
@@ -1309,9 +1309,6 @@
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "このタイプのトークンを送金するには、ウォレットに%1$s以上保有していなければなりません。今すぐイーサリアムのウォレットに移動しますか?";
-
-/* Your ethereum balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "イーサリアムの残高不足";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "送金先のアドレスが無効な%1$sアドレスです。";

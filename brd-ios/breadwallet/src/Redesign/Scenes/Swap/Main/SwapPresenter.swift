@@ -146,7 +146,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             presentError(actionResponse: .init(error: SwapErrors.pendingSwap))
             hasError = true
         } else {
-            let fiatValue = actionResponse.from?.fiatValue ?? 0
+            let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
             let tokenValue = actionResponse.from?.tokenValue ?? 0
             let tokenCode = actionResponse.from?.currency.code.uppercased() ?? ""
             let profile = UserManager.shared.profile
@@ -166,7 +166,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
-            case _ where tokenValue < minimumValue:
+            case _ where fiatValue < minimumValue:
                 // Value below minimum crypto
                 presentError(actionResponse: .init(error: SwapErrors.tooLow(amount: minimumValue, currency: tokenCode)))
                 hasError = true
