@@ -33,10 +33,6 @@ enum BuyErrors: FEError {
     }
     
     var errorMessage: String {
-        guard errorType == .exchangesUnavailable else {
-            return L10n.ErrorMessages.exchangesUnavailable
-        }
-        
         switch self {
         case .tooLow(let amount, let currency):
             return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
