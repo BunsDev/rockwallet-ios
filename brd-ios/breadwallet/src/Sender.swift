@@ -62,7 +62,7 @@ class Sender: Subscriber {
             submitTimeoutTimer?.invalidate()
         }
     }
-    private let submitTimeout: TimeInterval = 60.0
+    private let submitTimeout: TimeInterval = 20.0 // 60.0 is original setting
 
     private var isOriginatingTransferNeeded: Bool {
         return wallet.currency.tokenType == .erc20
