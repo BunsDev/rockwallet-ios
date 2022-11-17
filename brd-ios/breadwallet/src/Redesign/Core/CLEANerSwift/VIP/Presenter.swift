@@ -21,7 +21,7 @@ extension Presenter {
         
         if let error = error as? NetworkingError, error == .sessionExpired {
             responseDisplay = .init(error: error)
-        } else if let error = error as? SwapErrors {
+        } else if let error = error as? ExchangeErrors {
             let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
             let config = Presets.InfoView.error
             responseDisplay = .init(model: model, config: config)

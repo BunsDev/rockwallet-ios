@@ -1,5 +1,5 @@
 // 
-//  SwapErrors.swift
+//  ExchangeErrors.swift
 //  breadwallet
 //
 //  Created by Rok on 19/07/2022.
@@ -10,12 +10,12 @@
 
 import Foundation
 
-enum SwapErrors: FEError {
+enum ExchangeErrors: FEError {
     case noQuote(from: String?, to: String?)
     /// Param 1: amount, param 2 currency symbol
-    case tooLow(amount: Decimal, currency: String)
+    case tooLow(amount: Decimal, currency: String, reason: FailureReason)
     /// Param 1: amount, param 2 currency symbol
-    case tooHigh(amount: Decimal, currency: String)
+    case tooHigh(amount: Decimal, currency: String, reason: FailureReason)
     /// Param 1: amount, param 2 currency symbol
     case balanceTooLow(balance: Decimal, currency: String)
     case overDailyLimit(limit: Decimal)
@@ -31,11 +31,12 @@ enum SwapErrors: FEError {
     case pinConfirmation
     case pendingSwap
     case selectAssets
+    case authorizationFailed
     
-    var errorType: ServerResponse.ErrorType? {
+    var errorType: ServerResponse.ErrorType {
         switch self {
         case .supportedCurrencies(let error):
-            return (error as? NetworkingError)?.errorType
+            return (error as? NetworkingError)?.errorType ?? .empty
             
         default:
             return .empty
@@ -47,12 +48,25 @@ enum SwapErrors: FEError {
         case .balanceTooLow(let amount, let currency):
             return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.crypto.string(for: amount) ?? "", currency, currency)
             
-        case .tooLow(let amount, let currency):
-            return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
+        case .tooLow(let amount, let currency, let reason):
+            switch reason {
+            case .buy:
+                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
+                
+            case .swap:
+                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
+                
+            }
             
-        case .tooHigh(let amount, let currency):
-            return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
-            
+        case .tooHigh(let amount, let currency, let reason):
+            switch reason {
+            case .buy:
+                return L10n.ErrorMessages.amountTooHigh(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
+                
+            case .swap:
+                return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
+                
+            }
         case .overDailyLimit(let limit):
             return L10n.ErrorMessages.overDailyLimit(ExchangeFormatter.fiat.string(for: limit) ?? "")
             
@@ -96,6 +110,9 @@ enum SwapErrors: FEError {
             
         case .selectAssets:
             return L10n.ErrorMessages.selectAssets
+            
+        case .authorizationFailed:
+            return L10n.ErrorMessages.authorizationFailed
             
         }
     }
