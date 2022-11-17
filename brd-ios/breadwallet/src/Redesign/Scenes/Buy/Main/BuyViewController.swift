@@ -278,7 +278,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
         presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
-            self?.interactor?.setPublicToken(viewAction: .init(publicToken: self?.dataStore?.publicToken ?? ""))
+            self?.interactor?.setPublicToken(viewAction: .init())
         })
     }
     
@@ -312,6 +312,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     func createLinkTokenConfiguration(linkToken: String, completion: (() -> Void)? = nil) -> LinkTokenConfiguration {
         var linkConfiguration = LinkTokenConfiguration(token: linkToken) { success in
             self.dataStore?.publicToken = success.publicToken
+            self.dataStore?.mask = success.metadata.accounts.first?.mask
             completion?()
         }
         

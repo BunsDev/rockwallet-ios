@@ -18,6 +18,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var values: BuyModels.Amounts.ViewAction = .init()
     var paymentSegmentValue: FESegmentControl.Values = .bankAccount
     var publicToken: String?
+    var mask: String?
     
     override init() {
         super.init()
