@@ -55,8 +55,8 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.presenter?.presentData(actionResponse: .init(item: item))
                 self?.getExchangeRate(viewAction: .init(getFees: false))
                 
-            case .failure:
-                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.selectAssets))
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.supportedCurrencies(error: error)))
             }
         }
     }
@@ -83,6 +83,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             case .failure:
                 self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.quoteFail))
             }
+            
             group.leave()
         }
         

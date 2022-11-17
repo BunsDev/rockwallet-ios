@@ -120,7 +120,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             case .failure(let error):
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
-                    self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.quoteFail))
+                    self?.presenter?.presentError(actionResponse: .init(error: BuyErrors.selectAssets))
                     return
                 }
                 
