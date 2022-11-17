@@ -86,8 +86,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             case .success:
                 self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
                 
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+            case .failure:
+                self?.presenter?.presentFailure(actionResponse: .init())
             }
         }
     }

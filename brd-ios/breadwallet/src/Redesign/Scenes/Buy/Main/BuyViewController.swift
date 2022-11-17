@@ -282,8 +282,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         })
     }
     
-    func displayPublicTokenSuccess(responseDisplay: BuyModels.PlaidPublicToken.ResponseDisplay) {
-        print("Plaid link success")
+    func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
+        coordinator?.showFailure(failure: .bankAccount)
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
