@@ -226,8 +226,6 @@ class ImportKeyViewController: UIViewController, Subscriber {
     
     private func submit(sweeper: WalletSweeper, fee: TransferFeeBasis) {
         guard let transfer = sweeper.submit(estimatedFeeBasis: fee) else {
-//            importingActivity.dismiss(animated: true)
-//            return showErrorMessage(L10n.Alerts.sendFailure)
             self.importingActivity.dismiss(animated: true) {
                 self.showErrorMessage(L10n.Alerts.sendFailure)
             }
