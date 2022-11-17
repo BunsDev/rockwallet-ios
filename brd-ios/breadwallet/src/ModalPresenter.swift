@@ -10,13 +10,12 @@ import UIKit
 import LocalAuthentication
 import SwiftUI
 import WalletKit
-import WebKit
 
 // swiftlint:disable type_body_length
 // swiftlint:disable cyclomatic_complexity
 
 class ModalPresenter: Subscriber {
-
+    
     // MARK: - Public
     
     init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?, deleteAccountCallback: (() -> Void)?) {
@@ -40,7 +39,6 @@ class ModalPresenter: Subscriber {
     private var deleteAccountCallback: (() -> Void)?
     private let modalTransitionDelegate: ModalTransitionDelegate
     private let messagePresenter = MessageUIPresenter()
-    private let securityCenterNavigationDelegate = SecurityCenterNavigationDelegate()
     private let verifyPinTransitionDelegate = PinTransitioningDelegate()
     private var currentRequest: PaymentRequest?
     private var menuNavController: RootNavigationController?
@@ -48,7 +46,6 @@ class ModalPresenter: Subscriber {
     private let system: CoreSystem
     
     private func addSubscriptions() {
-
         Store.lazySubscribe(self,
                             selector: { $0.rootModal != $1.rootModal },
                             callback: { [weak self] in self?.presentModal($0.rootModal) })
@@ -59,7 +56,7 @@ class ModalPresenter: Subscriber {
                 self?.presentFaq(articleId: articleId, currency: currency)
             }
         })
-
+        
         //Subscribe to prompt actions
         Store.subscribe(self, name: .promptUpgradePin, callback: { [weak self] _ in
             self?.presentUpgradePin()
@@ -79,7 +76,7 @@ class ModalPresenter: Subscriber {
                 self?.handleFile(file)
             }
         })
-
+        
         //URLs
         Store.subscribe(self, name: .paymentRequest(nil), callback: { [weak self] in
             guard let trigger = $0 else { return }
@@ -141,7 +138,7 @@ class ModalPresenter: Subscriber {
                 let display: (UIImage?) -> Void = { (image) in
                     let notificationVC = InAppNotificationViewController(notification, image: image)
                     let navigationController = RootNavigationController(rootViewController: notificationVC)
-                    topVC.present(navigationController, animated: true, completion: nil)
+                    topVC.present(navigationController, animated: true)
                 }
                 
                 // Fetch the image first so that it's ready when we display the notification
@@ -157,14 +154,14 @@ class ModalPresenter: Subscriber {
             }
         }
         
-        Store.subscribe(self, name: .handleGift(URL(string: "foo.com")!)) { [weak self] in
-            guard let trigger = $0, let `self` = self else { return }
-            if case let .handleGift(url) = trigger {
-                if let gift = QRCode(url: url, viewModel: nil) {
-                    self.handleGift(qrCode: gift)
-                }
-            }
-        }
+//        Store.subscribe(self, name: .handleGift(URL(string: "")!)) { [weak self] in
+//            guard let trigger = $0, let `self` = self else { return }
+//            if case let .handleGift(url) = trigger {
+//                if let gift = QRCode(url: url, viewModel: nil) {
+//                    self.handleGift(qrCode: gift)
+//                }
+//            }
+//        }
         
         Store.subscribe(self, name: .reImportGift(nil)) { [weak self] in
             guard let trigger = $0, let `self` = self else { return }
@@ -184,11 +181,11 @@ class ModalPresenter: Subscriber {
         wallet.createSweeper(forKey: privKey) { result in
             DispatchQueue.main.async {
                 let giftView = RedeemGiftViewController(qrCode: qrCode, wallet: wallet, sweeperResult: result)
-                self.topViewController?.present(giftView, animated: true, completion: nil)
+                self.topViewController?.present(giftView, animated: true)
             }
         }
     }
-
+    
     private func presentModal(_ type: RootModal) {
         guard let vc = rootModalViewController(type) else {
             Store.perform(action: RootModalActions.Present(modal: .none))
@@ -212,7 +209,7 @@ class ModalPresenter: Subscriber {
         
         topViewController?.present(navController, animated: true)
     }
-
+    
     private func rootModalViewController(_ type: RootModal) -> UIViewController? {
         switch type {
         case .none:
@@ -231,7 +228,7 @@ class ModalPresenter: Subscriber {
                 self?.messagePresenter.presenter = self?.topViewController
                 self?.messagePresenter.presentShareSheet(text: uri, image: qrCode)
             }
-                        
+            
             return ModalViewController(childViewController: requestVc)
         case .receiveLegacy:
             guard let btc = Currencies.shared.btc else { return nil }
@@ -239,7 +236,7 @@ class ModalPresenter: Subscriber {
         case .gift:
             guard let currency = Currencies.shared.btc else { return nil }
             guard let wallet = system.wallet(for: currency),
-                let kvStore = Backend.kvStore else { assertionFailure(); return nil }
+                  let kvStore = Backend.kvStore else { assertionFailure(); return nil }
             let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
             let giftView = GiftViewController(sender: sender, wallet: wallet, currency: currency)
             
@@ -254,7 +251,7 @@ class ModalPresenter: Subscriber {
                 vc.modalPresentationStyle = .overFullScreen
                 vc.modalPresentationCapturesStatusBarAppearance = true
                 giftView?.view.isFrameChangeBlocked = true
-                giftView?.present(vc, animated: true, completion: nil)
+                giftView?.present(vc, animated: true)
             }
             giftView.onPublishSuccess = { [weak self] in
                 self?.alertPresenter?.presentAlert(.sendSuccess, completion: {})
@@ -268,10 +265,10 @@ class ModalPresenter: Subscriber {
             return makeStakeView(currency: currency)
         }
     }
-
+    
     private func makeStakeView(currency: Currency) -> UIViewController? {
         guard let wallet = system.wallet(for: currency),
-            let kvStore = Backend.kvStore else { assertionFailure(); return nil }
+              let kvStore = Backend.kvStore else { assertionFailure(); return nil }
         let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
         let stakeView = StakeViewController(currency: currency, sender: sender)
         stakeView.presentVerifyPin = { [weak self, weak stakeView] bodyText, success in
@@ -285,29 +282,29 @@ class ModalPresenter: Subscriber {
             vc.modalPresentationStyle = .overFullScreen
             vc.modalPresentationCapturesStatusBarAppearance = true
             stakeView?.view.isFrameChangeBlocked = true
-            stakeView?.present(vc, animated: true, completion: nil)
+            stakeView?.present(vc, animated: true)
         }
         stakeView.onPublishSuccess = { [weak self] in
             self?.alertPresenter?.presentAlert(.sendSuccess, completion: {})
         }
         return ModalViewController(childViewController: stakeView)
     }
-
+    
     private func makeSendView(currency: Currency) -> UIViewController? {
         guard let wallet = system.wallet(for: currency),
-            let kvStore = Backend.kvStore else { assertionFailure(); return nil }
+              let kvStore = Backend.kvStore else { assertionFailure(); return nil }
         guard !(currency.state?.isRescanning ?? false) else {
             let alert = UIAlertController(title: L10n.Alert.error, message: L10n.Send.isRescanning, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .cancel, handler: nil))
-            topViewController?.present(alert, animated: true, completion: nil)
+            topViewController?.present(alert, animated: true)
             return nil
         }
-
+        
         let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
         let sendVC = SendViewController(sender: sender,
                                         initialRequest: currentRequest)
         currentRequest = nil
-
+        
         let root = ModalViewController(childViewController: sendVC)
         sendVC.presentScan = presentScan(parent: root, currency: currency)
         sendVC.presentVerifyPin = { [weak self, weak root] bodyText, success in
@@ -321,18 +318,18 @@ class ModalPresenter: Subscriber {
             vc.modalPresentationStyle = .overFullScreen
             vc.modalPresentationCapturesStatusBarAppearance = true
             root.view.isFrameChangeBlocked = true
-            root.present(vc, animated: true, completion: nil)
+            root.present(vc, animated: true)
         }
-
+        
         sendVC.onPublishSuccess = { [weak self] in
             self?.alertPresenter?.presentAlert(.sendSuccess, completion: {})
         }
         
-        topViewController?.present(root, animated: true, completion: nil)
+        topViewController?.present(root, animated: true)
         
         return nil
     }
-
+    
     private func makeReceiveView(currency: Currency, isRequestAmountVisible: Bool, isBTCLegacy: Bool = false) -> UIViewController? {
         let receiveVC = ReceiveViewController(currency: currency, isRequestAmountVisible: isRequestAmountVisible, isBTCLegacy: isBTCLegacy)
         let root = ModalViewController(childViewController: receiveVC)
@@ -345,7 +342,7 @@ class ModalPresenter: Subscriber {
         
         return root
     }
-
+    
     private func presentLoginScan() {
         guard let top = topViewController else { return }
         let present = presentScan(parent: top, currency: nil)
@@ -360,7 +357,7 @@ class ModalPresenter: Subscriber {
                     self.currentRequest = request
                     self.presentModal(.send(currency: request.currency))
                 }
-                top.present(alert, animated: true, completion: nil)
+                top.present(alert, animated: true)
                 
             case .privateKey:
                 let alert = UIAlertController(title: L10n.Settings.importTitle, message: nil, preferredStyle: .actionSheet)
@@ -375,7 +372,7 @@ class ModalPresenter: Subscriber {
                     }
                 }))
                 alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
-                top.present(alert, animated: true, completion: nil)
+                top.present(alert, animated: true)
             case .deepLink(let url):
                 UIApplication.shared.open(url)
             case .invalid:
@@ -391,7 +388,7 @@ class ModalPresenter: Subscriber {
         guard let menuNav = topViewController as? RootNavigationController else { return }
         let items = preparePreferencesMenuItems(menuNav: menuNav)
         let rootMenu = MenuViewController(items: items, title: L10n.Settings.preferences)
-        self.topViewController?.show(rootMenu, sender: nil)
+        topViewController?.show(rootMenu, sender: nil)
     }
     
     func presentSecuritySettings() {
@@ -401,7 +398,7 @@ class ModalPresenter: Subscriber {
                                           title: L10n.MenuButton.security,
                                           faqButton: UIButton.buildFaqButton(articleId: ArticleIds.securityCenter, position: .right))
         
-        self.topViewController?.show(rootMenu, sender: nil)
+        topViewController?.show(rootMenu, sender: nil)
     }
     
     private func preparePreferencesMenuItems(menuNav: RootNavigationController) -> [MenuItem] {
@@ -482,7 +479,7 @@ class ModalPresenter: Subscriber {
         }
         var ethMenu = MenuItem(title: L10n.Settings.currencyPageTitle(Currencies.shared.eth?.name ?? ""), subMenu: ethItems, rootNav: menuNav)
         ethMenu.shouldShow = { return !ethItems.isEmpty }
-
+        
         // MARK: Preferences
         let preferencesItems: [MenuItem] = [
             // Display Currency
@@ -498,7 +495,7 @@ class ModalPresenter: Subscriber {
             btcMenu,
             bchMenu,
             ethMenu,
-
+            
             // Share Anonymous Data
             MenuItem(title: L10n.Settings.shareData, callback: {
                 menuNav.pushViewController(ShareDataViewController(), animated: true)
@@ -557,7 +554,7 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }
                 
-                let feedback = EmailFeedbackManager.Feedback(recipients: C.feedbackEmail, subject: "RockWallet - Feedback", body: "")
+                let feedback = EmailFeedbackManager.Feedback(recipients: C.feedbackEmail, subject: L10n.Title.rockwalletFeedback, body: "")
                 if let feedbackManager = EmailFeedbackManager(feedback: feedback, on: topVc) {
                     self?.feedbackManager = feedbackManager
                     
@@ -577,62 +574,62 @@ class ModalPresenter: Subscriber {
         if E.isSimulator || E.isDebug || E.isTestFlight {
             var developerItems = [MenuItem]()
             
-            developerItems.append(MenuItem(title: "Fast Sync", callback: { [weak self] in
+            developerItems.append(MenuItem(title: L10n.Title.fastSync, callback: { [weak self] in
                 self?.presentConnectionModeScreen(menuNav: menuNav)
             }))
             
-            developerItems.append(MenuItem(title: "Send Logs") { [weak self] in
+            developerItems.append(MenuItem(title: L10n.Title.sendLogs) { [weak self] in
                 self?.showEmailLogsModal()
             })
-
-            developerItems.append(MenuItem(title: "Lock Wallet") {
+            
+            developerItems.append(MenuItem(title: L10n.Title.lockWallet) {
                 Store.trigger(name: .lock)
             })
             
-            developerItems.append(MenuItem(title: "Unlink Wallet (no prompt)") {
+            developerItems.append(MenuItem(title: L10n.Title.unlinkWalletNoPrompt) {
                 Store.trigger(name: .wipeWalletNoPrompt)
             })
             
             if E.isDebug { // for dev/debugging use only
                 // For test wallets with a PIN of 111111, the PIN is auto entered on startup.
-                developerItems.append(MenuItem(title: "Auto-enter PIN",
-                                               accessoryText: { UserDefaults.debugShouldAutoEnterPIN ? "ON" : "OFF" },
+                developerItems.append(MenuItem(title: L10n.Title.autoEnterPin,
+                                               accessoryText: { UserDefaults.debugShouldAutoEnterPIN ? L10n.PushNotifications.on.uppercased() : L10n.PushNotifications.off.uppercased() },
                                                callback: {
-                                                _ = UserDefaults.toggleAutoEnterPIN()
-                                                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                    _ = UserDefaults.toggleAutoEnterPIN()
+                    (menuNav.topViewController as? MenuViewController)?.reloadMenu()
                 }))
                 
-                developerItems.append(MenuItem(title: "Connection Settings Override",
+                developerItems.append(MenuItem(title: L10n.Title.connectionSettingsOverride,
                                                accessoryText: { UserDefaults.debugConnectionModeOverride.description },
                                                callback: {
-                                                UserDefaults.cycleConnectionModeOverride()
-                                                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                    UserDefaults.cycleConnectionModeOverride()
+                    (menuNav.topViewController as? MenuViewController)?.reloadMenu()
                 }))
             }
             
             // For test wallets, suppresses the paper key prompt on the home screen.
-            developerItems.append(MenuItem(title: "Suppress paper key prompt",
-                                           accessoryText: { UserDefaults.debugShouldSuppressPaperKeyPrompt ? "ON" : "OFF" },
+            developerItems.append(MenuItem(title: L10n.Title.suppressPaperKeyPrompt,
+                                           accessoryText: { UserDefaults.debugShouldSuppressPaperKeyPrompt ? L10n.PushNotifications.on.uppercased() : L10n.PushNotifications.off.uppercased() },
                                            callback: {
-                                            _ = UserDefaults.toggleSuppressPaperKeyPrompt()
-                                            (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                _ = UserDefaults.toggleSuppressPaperKeyPrompt()
+                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
             }))
             
             // always show the app rating when viewing transactions if 'ON' AND Suppress is 'OFF' (see below)
             developerItems.append(MenuItem(title: "App rating on enter wallet",
-                                           accessoryText: { UserDefaults.debugShowAppRatingOnEnterWallet ? "ON" : "OFF" },
+                                           accessoryText: { UserDefaults.debugShowAppRatingOnEnterWallet ? L10n.PushNotifications.on.uppercased() : L10n.PushNotifications.off.uppercased() },
                                            callback: {
-                                            _ = UserDefaults.toggleShowAppRatingPromptOnEnterWallet()
-                                            (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                _ = UserDefaults.toggleShowAppRatingPromptOnEnterWallet()
+                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
             }))
-
+            
             developerItems.append(MenuItem(title: "Suppress app rating prompt",
                                            accessoryText: { UserDefaults.debugSuppressAppRatingPrompt ? "ON" : "OFF" },
                                            callback: {
-                                            _ = UserDefaults.toggleSuppressAppRatingPrompt()
-                                            (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                _ = UserDefaults.toggleSuppressAppRatingPrompt()
+                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
             }))
-
+            
             // Shows a preview of the paper key.
             if UserDefaults.debugShouldAutoEnterPIN, let paperKey = keyStore.seedPhrase(pin: "111111") {
                 let words = paperKey.components(separatedBy: " ")
@@ -641,94 +638,94 @@ class ModalPresenter: Subscriber {
                 developerItems.append(MenuItem(title: "Paper key preview",
                                                accessoryText: { UserDefaults.debugShouldShowPaperKeyPreview ? preview : "" },
                                                callback: {
-                                                _ = UserDefaults.togglePaperKeyPreview()
-                                                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                    _ = UserDefaults.togglePaperKeyPreview()
+                    (menuNav.topViewController as? MenuViewController)?.reloadMenu()
                 }))
             }
-                        
+            
             developerItems.append(MenuItem(title: "Reset User Defaults",
                                            callback: {
-                                            UserDefaults.resetAll()
-                                            menuNav.showAlert(title: "", message: "User defaults reset")
-                                            (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                UserDefaults.resetAll()
+                menuNav.showAlert(title: "", message: "User defaults reset")
+                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
             }))
-
+            
             developerItems.append(MenuItem(title: "Clear Core persistent storage and exit",
                                            callback: { [weak self] in
-                                            guard let self = self else { return }
-                                            self.system.shutdown {
-                                                fatalError("forced exit")
-                                            }
+                guard let self = self else { return }
+                self.system.shutdown {
+                    fatalError("forced exit")
+                }
             }))
             
             developerItems.append(
                 MenuItem(title: "API Host",
                          accessoryText: { Backend.apiClient.host }, callback: {
-                            let alert = UIAlertController(title: "Set API Host", message: "Clear and save to reset", preferredStyle: .alert)
-                            alert.addTextField(configurationHandler: { textField in
-                                textField.text = Backend.apiClient.host
-                                textField.keyboardType = .URL
-                                textField.clearButtonMode = .always
-                            })
-
-                            alert.addAction(UIAlertAction(title: "Save", style: .default) { (_) in
-                                guard let newHost = alert.textFields?.first?.text, !newHost.isEmpty else {
-                                    UserDefaults.debugBackendHost = nil
-                                    Backend.apiClient.host = C.backendHost
-                                    (menuNav.topViewController as? MenuViewController)?.reloadMenu()
-                                    return
-                                }
-                                let originalHost = Backend.apiClient.host
-                                Backend.apiClient.host = newHost
-                                Backend.apiClient.me { (success, _, _) in
-                                    if success {
-                                        UserDefaults.debugBackendHost = newHost
-                                        (menuNav.topViewController as? MenuViewController)?.reloadMenu()
-                                    } else {
-                                        Backend.apiClient.host = originalHost
-                                    }
-                                }
-                            })
-
-                            alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
-
-                            menuNav.present(alert, animated: true, completion: nil)
-                }))
+                             let alert = UIAlertController(title: "Set API Host", message: "Clear and save to reset", preferredStyle: .alert)
+                             alert.addTextField(configurationHandler: { textField in
+                                 textField.text = Backend.apiClient.host
+                                 textField.keyboardType = .URL
+                                 textField.clearButtonMode = .always
+                             })
+                             
+                             alert.addAction(UIAlertAction(title: L10n.Title.save, style: .default) { (_) in
+                                 guard let newHost = alert.textFields?.first?.text, !newHost.isEmpty else {
+                                     UserDefaults.debugBackendHost = nil
+                                     Backend.apiClient.host = C.backendHost
+                                     (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                                     return
+                                 }
+                                 let originalHost = Backend.apiClient.host
+                                 Backend.apiClient.host = newHost
+                                 Backend.apiClient.me { (success, _, _) in
+                                     if success {
+                                         UserDefaults.debugBackendHost = newHost
+                                         (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                                     } else {
+                                         Backend.apiClient.host = originalHost
+                                     }
+                                 }
+                             })
+                             
+                             alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
+                             
+                             menuNav.present(alert, animated: true)
+                         }))
             
             developerItems.append(
-                MenuItem(title: "Web Platform Debug URL",
+                MenuItem(title: L10n.Settings.webDebugUrl,
                          accessoryText: { UserDefaults.platformDebugURL?.absoluteString ?? "<not set>" }, callback: {
-                            let alert = UIAlertController(title: "Set debug URL", message: "Clear and save to reset", preferredStyle: .alert)
-                            alert.addTextField(configurationHandler: { textField in
-                                textField.text = UserDefaults.platformDebugURL?.absoluteString ?? ""
-                                textField.keyboardType = .URL
-                                textField.clearButtonMode = .always
-                            })
-
-                            alert.addAction(UIAlertAction(title: "Save", style: .default) { (_) in
-                                guard let input = alert.textFields?.first?.text,
-                                    !input.isEmpty,
-                                    let debugURL = URL(string: input) else {
-                                    UserDefaults.platformDebugURL = nil
-                                    (menuNav.topViewController as? MenuViewController)?.reloadMenu()
-                                    return
-                                }
-                                UserDefaults.platformDebugURL = debugURL
-                                (menuNav.topViewController as? MenuViewController)?.reloadMenu()
-                            })
-
-                            alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
-
-                            menuNav.present(alert, animated: true, completion: nil)
-                }))
+                             let alert = UIAlertController(title: "Set debug URL", message: "Clear and save to reset", preferredStyle: .alert)
+                             alert.addTextField(configurationHandler: { textField in
+                                 textField.text = UserDefaults.platformDebugURL?.absoluteString ?? ""
+                                 textField.keyboardType = .URL
+                                 textField.clearButtonMode = .always
+                             })
+                             
+                             alert.addAction(UIAlertAction(title: L10n.Title.save, style: .default) { (_) in
+                                 guard let input = alert.textFields?.first?.text,
+                                       !input.isEmpty,
+                                       let debugURL = URL(string: input) else {
+                                     UserDefaults.platformDebugURL = nil
+                                     (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                                     return
+                                 }
+                                 UserDefaults.platformDebugURL = debugURL
+                                 (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                             })
+                             
+                             alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
+                             
+                             menuNav.present(alert, animated: true)
+                         }))
             
-            developerItems.append(MenuItem(title: "Debug crash") {
-                fatalError("Debug crash")
+            developerItems.append(MenuItem(title: L10n.Settings.debugCrash) {
+                fatalError(L10n.Settings.debugCrash)
             })
-
-            rootItems.append(MenuItem(title: "Developer Options", icon: nil, subMenu: developerItems, rootNav: menuNav, faqButton: nil))
+            
+            rootItems.append(MenuItem(title: L10n.Settings.developerOptions, icon: nil, subMenu: developerItems, rootNav: menuNav, faqButton: nil))
         }
-                
+        
         let rootMenu = MenuViewController(items: rootItems,
                                           title: L10n.Settings.title)
         rootMenu.addCloseNavigationItem(side: .right)
@@ -736,7 +733,7 @@ class ModalPresenter: Subscriber {
         
         self.menuNavController = menuNav
         
-        self.topViewController?.present(menuNav, animated: true, completion: nil)
+        self.topViewController?.present(menuNav, animated: true)
     }
     
     private func presentConnectionModeScreen(menuNav: UINavigationController) {
@@ -769,7 +766,7 @@ class ModalPresenter: Subscriber {
             parent?.present(vc, animated: true, completion: {})
         }
     }
-
+    
     private func presentWritePaperKey(fromViewController vc: UIViewController) {
         RecoveryKeyFlowController.enterRecoveryKeyFlow(pin: nil,
                                                        keyMaster: self.keyStore,
@@ -789,27 +786,26 @@ class ModalPresenter: Subscriber {
                 })
             })))
         }
-        topViewController?.present(alert, animated: true, completion: nil)
+        topViewController?.present(alert, animated: true)
     }
     
-    private func presentKeyImport(wallet: Wallet, scanResult: QRCode? = nil) {        
+    private func presentKeyImport(wallet: Wallet, scanResult: QRCode? = nil) {
         let nc = RootNavigationController()
         nc.modalPresentationStyle = .overFullScreen
         let start = ImportKeyViewController(wallet: wallet, initialQRCode: scanResult)
         start.addCloseNavigationItem()
         let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.importWallet, currency: wallet.currency, position: .right)
-        faqButton.tintColor = LightColors.Contrast.two
         start.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: faqButton)]
         nc.pushViewController(start, animated: true)
-        topViewController?.present(nc, animated: true, completion: nil)
+        topViewController?.present(nc, animated: true)
     }
-
+    
     // MARK: - Prompts
-
+    
     func presentExportTransfers() {
         let alert = UIAlertController(title: L10n.ExportTransfers.header, message: L10n.ExportTransfers.body, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.ExportTransfers.confirmExport, style: .default, handler: { (_) in
-            self.topViewController?.present(BRActivityViewController(message: ""), animated: true, completion: nil)
+            self.topViewController?.present(BRActivityViewController(message: ""), animated: true)
             DispatchQueue.global(qos: .background).async {
                 guard let csvFile = CsvExporter.instance.exportTransfers(wallets: self.system.wallets) else {
                     DispatchQueue.main.async {
@@ -824,47 +820,41 @@ class ModalPresenter: Subscriber {
                 DispatchQueue.main.async {
                     self.topViewController?.dismiss(animated: true) {
                         let activityViewController = UIActivityViewController(activityItems: [csvFile], applicationActivities: nil)
-                        self.topViewController?.present(activityViewController, animated: true, completion: nil)
+                        self.topViewController?.present(activityViewController, animated: true)
                     }
                 }
             }
         }))
         alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
-        topViewController?.present(alert, animated: true, completion: nil)
+        topViewController?.present(alert, animated: true)
     }
     
     func presentBiometricsMenuItem() {
-        let biometricsSettings = BiometricsSettingsViewController(self.keyStore)
-        biometricsSettings.addCloseNavigationItem()
+        let biometricsSettings = BiometricsSettingsViewController(keyStore)
         let nc = RootNavigationController(rootViewController: biometricsSettings)
-        nc.isNavigationBarHidden = true
-        nc.delegate = securityCenterNavigationDelegate
-        topViewController?.present(nc, animated: true, completion: nil)
+        biometricsSettings.addCloseNavigationItem()
+        topViewController?.present(nc, animated: true)
     }
-
+    
     private func promptShareData() {
         let shareData = ShareDataViewController()
         let nc = RootNavigationController(rootViewController: shareData)
-        nc.isNavigationBarHidden = true
-        nc.delegate = securityCenterNavigationDelegate
         shareData.addCloseNavigationItem()
-        topViewController?.present(nc, animated: true, completion: nil)
+        topViewController?.present(nc, animated: true)
     }
-
+    
     func presentWritePaperKey() {
         guard let vc = topViewController else { return }
         presentWritePaperKey(fromViewController: vc)
     }
-
+    
     func presentUpgradePin() {
         let updatePin = UpdatePinViewController(keyMaster: keyStore, type: .update)
         let nc = RootNavigationController(rootViewController: updatePin)
-        nc.isNavigationBarHidden = true
-        nc.delegate = securityCenterNavigationDelegate
         updatePin.addCloseNavigationItem()
-        topViewController?.present(nc, animated: true, completion: nil)
+        topViewController?.present(nc, animated: true)
     }
-
+    
     private func handleFile(_ file: Data) {
         //TODO:CRYPTO payment request -- what is this use case?
         /*
@@ -892,17 +882,17 @@ class ModalPresenter: Subscriber {
             if let memo = ack.memo {
                 let alert = UIAlertController(title: "", message: memo, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .cancel, handler: nil))
-                topViewController?.present(alert, animated: true, completion: nil)
+                topViewController?.present(alert, animated: true)
             }
-        //TODO - handle payment type
+            //TODO - handle payment type
         } else {
             let alert = UIAlertController(title: L10n.Alert.error, message: L10n.PaymentProtocol.Errors.corruptedDocument, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .cancel, handler: nil))
-            topViewController?.present(alert, animated: true, completion: nil)
+            topViewController?.present(alert, animated: true)
         }
- */
+         */
     }
-
+    
     private func handlePaymentRequest(request: PaymentRequest) {
         self.currentRequest = request
         
@@ -911,7 +901,7 @@ class ModalPresenter: Subscriber {
             
             return
         }
-
+        
         showAccountView(currency: request.currency, animated: false) {
             self.presentModal(.send(currency: request.currency))
         }
@@ -920,7 +910,7 @@ class ModalPresenter: Subscriber {
     private func showAccountView(currency: Currency, animated: Bool, completion: (() -> Void)?) {
         let pushAccountView = {
             guard let nc = self.topViewController?.navigationController as? RootNavigationController,
-                nc.viewControllers.count == 1 else { return }
+                  nc.viewControllers.count == 1 else { return }
             let accountViewController = AccountViewController(currency: currency, wallet: self.system.wallet(for: currency))
             nc.pushViewController(accountViewController, animated: animated)
             completion?()
@@ -948,7 +938,7 @@ class ModalPresenter: Subscriber {
             }
         }
     }
-
+    
     private func handleScanQrURL() {
         guard !Store.state.isLoginRequired else { presentLoginScan(); return }
         if topViewController is AccountViewController || topViewController is LoginViewController {
@@ -961,7 +951,7 @@ class ModalPresenter: Subscriber {
             }
         }
     }
-
+    
     private func authenticateForPlatform(prompt: String, allowBiometricAuth: Bool, callback: @escaping (PlatformAuthResult) -> Void) {
         if allowBiometricAuth && keyStore.isBiometricsEnabledForUnlocking {
             keyStore.authenticate(withBiometricsPrompt: prompt, completion: { result in
@@ -980,20 +970,20 @@ class ModalPresenter: Subscriber {
             self.verifyPinForPlatform(prompt: prompt, callback: callback)
         }
     }
-
+    
     private func verifyPinForPlatform(prompt: String, callback: @escaping (PlatformAuthResult) -> Void) {
         let verify = VerifyPinViewController(bodyText: prompt,
                                              pinLength: Store.state.pinLength,
                                              walletAuthenticator: keyStore,
                                              pinAuthenticationType: .unlocking,
                                              success: { pin in
-                                                callback(.success(pin))
+            callback(.success(pin))
         })
         verify.didCancel = { callback(.cancelled) }
         verify.transitioningDelegate = verifyPinTransitionDelegate
         verify.modalPresentationStyle = .overFullScreen
         verify.modalPresentationCapturesStatusBarAppearance = true
-        topViewController?.present(verify, animated: true, completion: nil)
+        topViewController?.present(verify, animated: true)
     }
     
     private func confirmTransaction(currency: Currency, amount: Amount, fee: Amount, displayFeeLevel: FeeLevel, address: String, callback: @escaping (Bool) -> Void) {
@@ -1009,9 +999,9 @@ class ModalPresenter: Subscriber {
         confirm.cancelCallback = {
             callback(false)
         }
-        topViewController?.present(confirm, animated: true, completion: nil)
+        topViewController?.present(confirm, animated: true)
     }
-
+    
     private var topViewController: UIViewController? {
         var viewController = window.rootViewController
         if let nc = viewController as? UINavigationController {
@@ -1022,7 +1012,7 @@ class ModalPresenter: Subscriber {
         }
         return viewController
     }
-
+    
     private func showLightWeightAlert(message: String) {
         let alert = LightWeightAlert(message: message)
         guard let view = UIApplication.shared.activeWindow else { return }
@@ -1041,7 +1031,7 @@ class ModalPresenter: Subscriber {
             })
         })
     }
-
+    
     private func showEmailLogsModal() {
         self.messagePresenter.presenter = self.topViewController
         self.messagePresenter.presentEmailLogs()
@@ -1078,11 +1068,11 @@ class ModalPresenter: Subscriber {
                 guard let self = self else { return }
                 self.presentWritePaperKey(fromViewController: menuNav)
             },
-
+            
             // Portfolio data for widget
             MenuItem(title: L10n.Settings.shareWithWidget,
                      accessoryText: { [weak self] in
-                         self?.system.widgetDataShareService.sharingEnabled ?? false ? "ON" : "OFF"
+                         self?.system.widgetDataShareService.sharingEnabled ?? false ? L10n.PushNotifications.on.uppercased() : L10n.PushNotifications.off.uppercased()
                      },
                      callback: { [weak self] in
                          self?.system.widgetDataShareService.sharingEnabled.toggle()
@@ -1108,29 +1098,5 @@ class ModalPresenter: Subscriber {
         }
         
         return securityItems
-    }
-}
-
-class SecurityCenterNavigationDelegate: NSObject, UINavigationControllerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-
-        guard let transitionCoordinator = navigationController.topViewController?.transitionCoordinator else { return }
-        
-        if transitionCoordinator.isInteractive {
-            transitionCoordinator.notifyWhenInteractionChanges { context in
-                //We only want to style the view controller if the
-                //pop animation wasn't cancelled
-                if !context.isCancelled {
-                    self.setStyle(navigationController: navigationController)
-                }
-            }
-        } else {
-            setStyle(navigationController: navigationController)
-        }
-    }
-
-    func setStyle(navigationController: UINavigationController) {
-        navigationController.isNavigationBarHidden = false
     }
 }

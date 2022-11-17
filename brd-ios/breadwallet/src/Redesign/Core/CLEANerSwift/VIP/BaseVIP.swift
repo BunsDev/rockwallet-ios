@@ -22,7 +22,7 @@ protocol BaseDataPassing {
 
 protocol CoordinatableRoutes: NSObject,
                               MessageDisplayable {
-    func goBack()
+    func goBack(completion: (() -> Void)?)
 }
 
 protocol MessageDisplayable {
