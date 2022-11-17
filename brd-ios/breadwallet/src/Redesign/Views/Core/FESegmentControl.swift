@@ -24,7 +24,7 @@ struct SegmentControlViewModel: ViewModel {
 class FESegmentControl: UISegmentedControl, ViewProtocol {
     enum Values: String, CaseIterable {
         case card
-        case ach
+        case bankAccount
     }
     
     var config: SegmentControlConfiguration?

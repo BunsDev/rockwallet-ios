@@ -24,7 +24,7 @@ enum ExchangeEndpoints: String, URLType {
     case paymentStatus = "payment-status?reference=%@"
     
     case plaidLinkToken = "plaid-link-token"
-    case plaidPublicToken = "plaid-public_token"
+    case plaidPublicToken = "plaid-public-token"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

@@ -81,9 +81,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
-        guard let publicToken = dataStore?.publicToken else { return }
-        
-        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: publicToken)) { [weak self] result in
+        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: viewAction.publicToken)) { [weak self] result in
             switch result {
             case .success:
                 self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
@@ -185,7 +183,11 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.dataStore?.allPaymentCards = data
+                if self?.dataStore?.paymentSegmentValue == .card {
+                    self?.dataStore?.allPaymentCards = data?.filter { $0.type == .card }
+                } else {
+                    self?.dataStore?.allPaymentCards = data?.filter { $0.type == .bankAccount }
+                }
                 
                 if self?.dataStore?.autoSelectDefaultPaymentMethod == true {
                     self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first

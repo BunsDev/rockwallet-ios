@@ -16,13 +16,13 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var values: BuyModels.Amounts.ViewAction = .init()
-    var paymentSegmentValue: FESegmentControl.Values = .ach
+    var paymentSegmentValue: FESegmentControl.Values = .bankAccount
     var publicToken: String?
     
     override init() {
         super.init()
         let selectedCurrency: Currency
-        if paymentSegmentValue == .ach {
+        if paymentSegmentValue == .bankAccount {
             guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == "usdc" }) ?? Store.state.currencies.first else { return }
             selectedCurrency = currency
         } else {

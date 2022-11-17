@@ -141,7 +141,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             
             view.didTapSelectCard = { [weak self] in
                 switch self?.dataStore?.paymentSegmentValue {
-                case .ach:
+                case .bankAccount:
                     self?.interactor?.getLinkToken(viewAction: .init())
                 default:
                     self?.interactor?.getPaymentCards(viewAction: .init())
@@ -199,7 +199,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
         switch dataStore?.paymentSegmentValue {
-        case .ach:
+        case .bankAccount:
             if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == "USDC" }) {
                 supportedCurrencies = [usdCurrency]
             }
@@ -277,7 +277,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
-        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken)
+        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
+            self?.interactor?.setPublicToken(viewAction: .init(publicToken: self?.dataStore?.publicToken ?? ""))
+        })
     }
     
     func displayPublicTokenSuccess(responseDisplay: BuyModels.PlaidPublicToken.ResponseDisplay) {
@@ -307,10 +309,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     // MARK: - Additional Helpers
     
     // MARK: Start Plaid Link using a Link token
-    func createLinkTokenConfiguration(linkToken: String) -> LinkTokenConfiguration {
+    func createLinkTokenConfiguration(linkToken: String, completion: (() -> Void)? = nil) -> LinkTokenConfiguration {
         var linkConfiguration = LinkTokenConfiguration(token: linkToken) { success in
             self.dataStore?.publicToken = success.publicToken
-            print("public-token: \(success.publicToken) metadata: \(success.metadata)")
+            completion?()
         }
         
         linkConfiguration.onExit = { exit in
@@ -328,8 +330,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return linkConfiguration
     }
     
-    func presentPlaidLinkUsingLinkToken(linkToken: String) {
-        let linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken)
+    func presentPlaidLinkUsingLinkToken(linkToken: String, completion: (() -> Void)? = nil) {
+        let linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken, completion: completion)
         let result = Plaid.create(linkConfiguration)
         switch result {
         case .failure(let error):

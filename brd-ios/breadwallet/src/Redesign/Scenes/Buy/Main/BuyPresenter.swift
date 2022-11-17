@@ -29,10 +29,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        paymentSegment = SegmentControlViewModel(selectedIndex: .ach)
+        paymentSegment = SegmentControlViewModel(selectedIndex: .bankAccount)
         
         switch paymentSegment.selectedIndex {
-        case .ach:
+        case .bankAccount:
             paymentMethod = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                    subtitle: .text(L10n.Buy.linkBankAccount),
                                                    userInteractionEnabled: true)
@@ -94,6 +94,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                               cardNumber: .text(paymentCard.displayName),
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
+        } else if let paymentCard = actionResponse.card, actionResponse.paymentSegmentValue == .bankAccount {
+            cardModel = .init(title: .text(L10n.Buy.achPayments),
+                              logo: .imageName("bank"),
+                              cardNumber: .text(paymentCard.displayBankName),
+                              userInteractionEnabled: true) // need to be false, only one bank account can be added
         } else if actionResponse.paymentSegmentValue == .card {
             cardModel = .init(userInteractionEnabled: true)
         } else {

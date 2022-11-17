@@ -35,6 +35,7 @@ enum BuyModels {
         struct ActionResponse {
             var amount: Amount?
             var card: PaymentCard?
+            var bankAccount: PaymentCard?
             var quote: Quote?
             var handleErrors = false
             var paymentSegmentValue: FESegmentControl.Values?
@@ -136,7 +137,9 @@ enum BuyModels {
     }
     
     struct PlaidPublicToken {
-        struct ViewAction {}
+        struct ViewAction {
+            var publicToken: String
+        }
         
         struct ActionResponse {}
         
