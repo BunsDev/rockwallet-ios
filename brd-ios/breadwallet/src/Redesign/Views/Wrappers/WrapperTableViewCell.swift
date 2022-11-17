@@ -45,6 +45,12 @@ class WrapperTableViewCell<T: UIView>: UITableViewCell, Wrappable, Reusable, Ide
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         // TODO: fix this logic to work with selectionStyle
+        
+        guard shouldHighlight else { return }
+        
+        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            self?.contentView.backgroundColor = highlighted ? LightColors.Background.three : .clear
+        }
     }
     
     var shouldHighlight: Bool = false

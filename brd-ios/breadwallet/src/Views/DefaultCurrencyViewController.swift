@@ -7,32 +7,23 @@
 //
 
 import UIKit
-// import CoinGecko
 
 class DefaultCurrencyViewController: UITableViewController, Subscriber {
-
-    init() {
-        self.selectedCurrencyCode = Store.state.defaultCurrencyCode
-        super.init(style: .plain)
-    }
-
-    private let cellIdentifier = "CellIdentifier"
     private let fiatCurrencies = CurrencyFileManager.getCurrencyMetaDataFromCache(type: .fiatCurrencies)
     
-    private var selectedCurrencyCode: String {
+    private var selectedCurrencyCode = Store.state.defaultCurrencyCode {
         didSet {
-            // Grab index paths of new and old rows when the currency changes
             let filtered = fiatCurrencies.enumerated().filter({ $0.1.code == selectedCurrencyCode || $0.1.code == oldValue })
             let paths: [IndexPath] = filtered.map({ IndexPath(row: $0.0, section: 0 )})
             
             tableView.beginUpdates()
-            tableView.reloadRows(at: paths, with: .automatic)
+            tableView.reloadRows(at: paths, with: .none)
             tableView.endUpdates()
             
             Store.perform(action: DefaultCurrency.SetDefault(selectedCurrencyCode))
         }
     }
-
+    
     deinit {
         Store.unsubscribe(self)
     }
@@ -40,19 +31,16 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(SeparatorCell.self, forCellReuseIdentifier: cellIdentifier)
-        self.selectedCurrencyCode = Store.state.defaultCurrencyCode
-
+        tableView.register(WrapperTableViewCell<UITableViewCell>.self)
+        tableView.rowHeight = ViewSizes.large.rawValue
+        tableView.estimatedRowHeight = ViewSizes.large.rawValue
+        
         tableView.separatorStyle = .none
         tableView.backgroundColor = LightColors.Background.one
-
-        let titleLabel = UILabel(font: .customBold(size: 17.0), color: .almostBlack)
-        titleLabel.text = L10n.Settings.currency
-        titleLabel.sizeToFit()
-        navigationItem.titleView = titleLabel
-
-        let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.displayCurrency, currency: nil, position: .right)
-        faqButton.tintColor = LightColors.Text.one
+        
+        title = L10n.Settings.currency
+        
+        let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.displayCurrency, position: .right)
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: faqButton)]
     }
     
@@ -60,9 +48,7 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
         super.viewDidAppear(animated)
         
         // Scroll to the selected display currency.
-        if let index = self.fiatCurrencies.firstIndex(where: {
-            return $0.code.lowercased() == self.selectedCurrencyCode.lowercased()
-        }) {
+        if let index = fiatCurrencies.firstIndex(where: { return $0.code.lowercased() == selectedCurrencyCode.lowercased() }) {
             tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .middle, animated: true)
         }
     }
@@ -70,39 +56,35 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fiatCurrencies.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-
+        guard let cell: WrapperTableViewCell<UITableViewCell> = tableView.dequeueReusableCell(for: indexPath) else { return UITableViewCell() }
+        
         let currency = fiatCurrencies[indexPath.row]
-        let code = currency.code
-
-        cell.textLabel?.text = "\(currency.code) (\(Rate.symbolMap[code] ?? currency.code)) - \(currency.name)"
-        cell.textLabel?.font = UIFont.customBody(size: 14.0)
-        cell.textLabel?.textColor = .black
-
+        
+        cell.textLabel?.text = "\(currency.code) (\(Rate.symbolMap[currency.code] ?? currency.code)) - \(currency.name)"
+        cell.textLabel?.font = Fonts.Subtitle.two
+        cell.textLabel?.textColor = LightColors.Text.three
+        
+        cell.contentView.backgroundColor = LightColors.Background.one
+        cell.backgroundColor = LightColors.Background.one
+        cell.accessoryView = nil
+        
         if currency.code == selectedCurrencyCode {
-            let check = UIImageView(image: #imageLiteral(resourceName: "CircleCheck").withRenderingMode(.alwaysTemplate))
-            check.tintColor = LightColors.Text.one
+            let check = UIImageView(image: UIImage(named: "check2-circled")?.withRenderingMode(.alwaysTemplate))
+            check.tintColor = LightColors.primary
             cell.accessoryView = check
-        } else {
-            cell.accessoryView = nil
         }
-        cell.contentView.backgroundColor = LightColors.Background.two
-        cell.backgroundColor = LightColors.Background.two
+        
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currency = fiatCurrencies[indexPath.row]
         selectedCurrencyCode = currency.code
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

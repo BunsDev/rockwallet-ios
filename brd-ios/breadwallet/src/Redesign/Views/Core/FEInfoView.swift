@@ -28,6 +28,7 @@ struct InfoViewConfiguration: Configurable {
     var title: LabelConfiguration?
     var description: LabelConfiguration?
     var button: ButtonConfiguration?
+    var tickboxItem: TickboxItemConfiguration?
     
     var background: BackgroundConfiguration?
     var shadow: ShadowConfiguration?
@@ -43,6 +44,7 @@ struct InfoViewModel: ViewModel {
     var title: LabelViewModel?
     var description: LabelViewModel?
     var button: ButtonViewModel?
+    var tickbox: TickboxItemViewModel?
     
     var dismissType: DismissType = .auto
 }
@@ -50,6 +52,8 @@ struct InfoViewModel: ViewModel {
 class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
     var headerButtonCallback: (() -> Void)?
     var trailingButtonCallback: (() -> Void)?
+    var didFinish: (() -> Void)?
+    var toggleTickboxCallback: ((Bool) -> Void)?
     
     // MARK: Lazy UI
     
@@ -118,7 +122,10 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         return view
     }()
     
-    var didFinish: (() -> Void)?
+    private lazy var tickboxItemView: TickboxItemView = {
+        let tickboxItemView = TickboxItemView()
+        return tickboxItemView
+    }()
     
     // MARK: Overrides
     override func setupSubviews() {
@@ -171,6 +178,11 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         
         buttonsStackView.addArrangedSubview(bottomButton)
         
+        verticalStackView.addArrangedSubview(tickboxItemView)
+        tickboxItemView.snp.makeConstraints { make in
+            make.height.equalTo(Margins.extraLarge.rawValue)
+        }
+        
         let fillerView = UIView()
         buttonsStackView.addArrangedSubview(fillerView)
         fillerView.snp.makeConstraints { make in
@@ -195,6 +207,7 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         titleLabel.configure(with: config.title)
         descriptionLabel.configure(with: config.description)
         bottomButton.configure(with: config.button)
+        tickboxItemView.configure(with: config.tickboxItem)
         
         shadowView = self
         backgroundView = self
@@ -228,6 +241,9 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         bottomButton.setup(with: viewModel.button)
         buttonsStackView.isHidden = viewModel.button == nil
         
+        tickboxItemView.setup(with: viewModel.tickbox)
+        tickboxItemView.isHidden = viewModel.tickbox == nil
+        
         switch viewModel.dismissType {
         case .auto:
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
@@ -253,6 +269,10 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         
         headerStackView.isHidden = true
         
+        tickboxItemView.didToggleTickbox = { [weak self] value in
+            self?.tickboxTapped(value: value)
+        }
+        
         layoutIfNeeded()
     }
     
@@ -266,6 +286,10 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
     
     @objc private func viewTapped() {
         didFinish?()
+    }
+    
+    func tickboxTapped(value: Bool) {
+        toggleTickboxCallback?(value)
     }
     
     private func toggleVisibility(isShown: Bool) {
