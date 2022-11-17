@@ -22,15 +22,25 @@ enum SwapErrors: FEError {
     case overLifetimeLimit(limit: Decimal)
     case overDailyLimitLevel2(limit: Decimal)
     case notEnouthEthForFee(currency: String)
-    // Unoficial errors
+    case failed(error: Error?)
+    case supportedCurrencies(error: Error?)
     case quoteFail
     case noFees
     case networkFee
     case overExchangeLimit
     case pinConfirmation
-    case failed(error: Error?)
     case pendingSwap
     case selectAssets
+    
+    var errorType: ServerResponse.ErrorType? {
+        switch self {
+        case .supportedCurrencies(let error):
+            return (error as? NetworkingError)?.errorType
+            
+        default:
+            return .empty
+        }
+    }
     
     var errorMessage: String {
         switch self {
@@ -77,12 +87,16 @@ enum SwapErrors: FEError {
             
         case .failed(let error):
             return L10n.ErrorMessages.exchangeFailed(error?.localizedDescription ?? "")
-        
+            
+        case .supportedCurrencies:
+            return L10n.ErrorMessages.exchangesUnavailable
+            
         case .pendingSwap:
             return L10n.ErrorMessages.pendingExchange
             
         case .selectAssets:
             return L10n.ErrorMessages.selectAssets
+            
         }
     }
 }
