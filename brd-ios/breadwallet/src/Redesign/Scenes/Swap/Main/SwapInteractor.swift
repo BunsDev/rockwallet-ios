@@ -25,11 +25,11 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard dataStore?.currencies.isEmpty == false else { return }
         
-        ExchangeManager.shared.reload()
-        
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
+                ExchangeManager.shared.reload()
+                
                 guard let currencies = currencies,
                       currencies.count >= 2 else {
                     self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.selectAssets))

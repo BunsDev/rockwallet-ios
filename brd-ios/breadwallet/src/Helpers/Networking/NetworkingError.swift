@@ -100,7 +100,7 @@ public class NetworkingErrorManager {
             return NetworkingError.noConnection
         }
         
-        var serverResponse = ServerResponse.parse(from: data, type: ServerResponse.self)
+        let serverResponse = ServerResponse.parse(from: data, type: ServerResponse.self)
         let errorType = ServerResponse.ErrorType(rawValue: serverResponse?.errorType ?? "")
         var error = serverResponse?.error
         error?.errorType = errorType

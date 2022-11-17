@@ -18,37 +18,33 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     // MARK: - BuyViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard let currency = dataStore?.toAmount?.currency else {
-            return
-        }
-
-        ExchangeManager.shared.reload()
-        
-        fetchCards { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success:
-                self.getExchangeRate(viewAction: .init())
-                self.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency), paymentCard: self.dataStore?.paymentCard)))
-                self.presenter?.presentAssets(actionResponse: .init(amount: self.dataStore?.toAmount,
-                                                                    card: self.dataStore?.paymentCard,
-                                                                    quote: self.dataStore?.quote))
-                
-            case .failure(let error):
-                self.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
-        
-        guard dataStore?.supportedCurrencies?.isEmpty != false else { return }
+        guard let currency = dataStore?.toAmount?.currency, dataStore?.supportedCurrencies?.isEmpty != false else { return }
         
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
+                ExchangeManager.shared.reload()
+                
                 self?.dataStore?.supportedCurrencies = currencies
                 
+                self?.fetchCards { [weak self] result in
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success:
+                        self.getExchangeRate(viewAction: .init())
+                        self.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency), paymentCard: self.dataStore?.paymentCard)))
+                        self.presenter?.presentAssets(actionResponse: .init(amount: self.dataStore?.toAmount,
+                                                                            card: self.dataStore?.paymentCard,
+                                                                            quote: self.dataStore?.quote))
+                        
+                    case .failure(let error):
+                        self.presenter?.presentError(actionResponse: .init(error: error))
+                    }
+                }
+                
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                self?.presenter?.presentError(actionResponse: .init(error: BuyErrors.supportedCurrencies(error: error)))
             }
         }
     }
