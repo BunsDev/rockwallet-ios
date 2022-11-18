@@ -10,7 +10,7 @@ import UIKit
 
 class SegwitViewController: UIViewController {
     
-    let logo = UIImageView(image: UIImage(named: "SegWitLogo"))
+    let logo = UIImageView(image: Asset.segWitLogo.image)
     let label = UILabel.wrapping(font: .customBody(size: 14.0), color: LightColors.Text.one)
     let button = BRDButton(title: L10n.Segwit.enable, type: .secondary)
     private lazy var enabledView: WrapperView<FEInfoView> = {

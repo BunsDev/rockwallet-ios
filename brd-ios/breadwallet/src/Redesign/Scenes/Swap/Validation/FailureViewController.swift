@@ -22,6 +22,8 @@ protocol SimpleMessage {
 enum FailureReason: SimpleMessage {
     case buy
     case swap
+    case plaidConnection
+    case bankAccount
     
     var iconName: String {
         return "error"
@@ -29,11 +31,14 @@ enum FailureReason: SimpleMessage {
     
     var title: String {
         switch self {
-        case .buy:
+        case .buy, .bankAccount:
             return L10n.Buy.errorProcessingPayment
             
         case .swap:
             return L10n.Swap.errorProcessingTransaction
+            
+        case .plaidConnection:
+            return L10n.Buy.plaidErrorTitle
         }
     }
     
@@ -44,6 +49,12 @@ enum FailureReason: SimpleMessage {
             
         case .swap:
             return L10n.Swap.failureSwapMessage
+            
+        case .plaidConnection:
+            return L10n.Buy.plaidErrorDescription
+            
+        case .bankAccount:
+            return L10n.Buy.bankAccountFailureText
         }
     }
     
@@ -54,12 +65,18 @@ enum FailureReason: SimpleMessage {
             
         case .swap:
             return L10n.Swap.retry
+            
+        case .plaidConnection:
+            return L10n.PaymentConfirmation.tryAgain
+            
+        case .bankAccount:
+            return L10n.PaymentConfirmation.tryAgain
         }
     }
     
     var secondButtonTitle: String? {
         switch self {
-        case .buy:
+        case .buy, .plaidConnection, .bankAccount:
             return L10n.UpdatePin.contactSupport
             
         case .swap:

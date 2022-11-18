@@ -32,7 +32,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         
         let sectionRows: [Models.Section: [Any]] = [
             .image: [
-                ImageViewModel.imageName("email")
+                ImageViewModel.image(Asset.email.image)
             ],
             .title: [
                 LabelViewModel.text(L10n.AccountCreation.verifyEmail)

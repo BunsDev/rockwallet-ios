@@ -220,7 +220,7 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
     
     private lazy var statusImageView: WrapperView<FEImageView> = {
         let view = WrapperView<FEImageView>()
-        view.wrappedView.setup(with: .init(.imageName("selected")))
+        view.wrappedView.setup(with: .init(.image(Asset.selected.image)))
         view.tintColor = LightColors.primary
         return view
     }()
@@ -232,7 +232,7 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
     
     private lazy var arrowImageView: WrapperView<FEImageView> = {
         let view = WrapperView<FEImageView>()
-        view.wrappedView.setup(with: .init(.imageName("forward")))
+        view.wrappedView.setup(with: .init(.image(Asset.forward.image)))
         return view
     }()
     

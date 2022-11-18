@@ -43,7 +43,7 @@ struct TxDetailViewModel: TxViewModel, Hashable {
             let text = " " + L10n.TransactionDetails.completeTimestampHeader
             let attributedString = NSMutableAttributedString(string: text)
             let icon = NSTextAttachment()
-            icon.image = #imageLiteral(resourceName: "CircleCheckSolid").withRenderingMode(.alwaysTemplate).tinted(with: LightColors.Success.one)
+            icon.image = Asset.circleCheckSolid.image.withRenderingMode(.alwaysTemplate).tinted(with: LightColors.Success.one)
             icon.bounds = CGRect(x: 0, y: -2.0, width: 14.0, height: 14.0)
             let iconString = NSAttributedString(attachment: icon)
             attributedString.insert(iconString, at: 0)

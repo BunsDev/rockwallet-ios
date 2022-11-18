@@ -6,45 +6,34 @@ import Foundation
 
 protocol FEError: Error {
     var errorMessage: String { get }
+    var errorType: ServerResponse.ErrorType { get }
 }
 
 struct GeneralError: FEError {
     var errorMessage: String = L10n.ErrorMessages.unknownError
+    var errorType: ServerResponse.ErrorType = .empty
 }
 
 enum NetworkingError: FEError {
     case general
     case noConnection
-    /// Status code 101
     case accessDenied
-    /// Status code 103
     case parameterMissing
-    /// Status code 105
     case sessionExpired
-    
     case sessionNotVerified
-    
     case dataUnavailable
-    
     case unprocessableEntity
-    
     case serverAtCapacity
+    case exchangesUnavailable
     
     var errorMessage: String {
         switch self {
         case .general:
             return L10n.ErrorMessages.networkIssues
-
+            
         case .noConnection:
             return L10n.ErrorMessages.checkInternet
-//        case .parameterMissing:
-//            <#code#>
-//        case .sessionExpired:
-//            <#code#>
-//        case .sessionNotVerified:
-//            <#code#>
-//        case .unprocessableEntity:
-//            <#code#>
+            
         case .accessDenied:
             return L10n.ErrorMessages.accessDenied
             
@@ -53,6 +42,16 @@ enum NetworkingError: FEError {
             
         default:
             return L10n.ErrorMessages.unknownError
+        }
+    }
+    
+    var errorType: ServerResponse.ErrorType {
+        switch self {
+        case .exchangesUnavailable:
+            return .exchangesUnavailable
+            
+        default:
+            return .empty
         }
     }
     
@@ -77,7 +76,13 @@ enum NetworkingError: FEError {
             self = .unprocessableEntity
             
         case 503:
-            self = .serverAtCapacity
+            switch error?.errorType {
+            case .exchangesUnavailable:
+                self = .exchangesUnavailable
+            
+            default:
+                self = .serverAtCapacity
+            }
             
         default:
             return nil
@@ -95,7 +100,10 @@ public class NetworkingErrorManager {
             return NetworkingError.noConnection
         }
         
-        let error = ServerResponse.parse(from: data, type: ServerResponse.self)?.error
+        let serverResponse = ServerResponse.parse(from: data, type: ServerResponse.self)
+        let errorType = ServerResponse.ErrorType(rawValue: serverResponse?.errorType ?? "") ?? .empty
+        var error = serverResponse?.error
+        error?.errorType = errorType
         
         guard let error = NetworkingError(error: error) else { return error }
         
@@ -103,14 +111,7 @@ public class NetworkingErrorManager {
     }
     
     static func getImageUploadEncodingError() -> FEError? {
-        // TODO: is this right?
+        // TODO: Is this right?
         return GeneralError(errorMessage: "Image encoding failed.")
-    }
-    
-    static fileprivate func isErrorStatusCode(_ statusCode: Int) -> Bool {
-        if case 400 ... 599 = statusCode {
-            return true
-        }
-        return false
     }
 }

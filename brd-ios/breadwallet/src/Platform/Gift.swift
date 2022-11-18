@@ -49,22 +49,22 @@ extension Gift {
         return UIImage.qrCode(from: url)?.resize(CGSize(width: 300.0, height: 300.0))
     }
     
-    func createImage() -> UIImage? {
-        guard let background = UIImage(named: "GiftCard") else { return nil }
-        guard let qr = UIImage.qrCode(from: url)?.resize(CGSize(width: 300.0, height: 300.0)) else { return nil }
-        
-        let size = background.size
-        UIGraphicsBeginImageContext(size)
-
-        let backGroundSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        background.draw(in: backGroundSize)
-
-        let qrSize = CGRect(x: 561, y: 150, width: qr.size.width, height: qr.size.height)
-        qr.draw(in: qrSize, blendMode: .normal, alpha: 1.0)
-
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        return newImage
-    }
+//    func createImage() -> UIImage? {
+//        guard let background = UIImage(named: "GiftCard") else { return nil }
+//        guard let qr = UIImage.qrCode(from: url)?.resize(CGSize(width: 300.0, height: 300.0)) else { return nil }
+//        
+//        let size = background.size
+//        UIGraphicsBeginImageContext(size)
+//
+//        let backGroundSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+//        background.draw(in: backGroundSize)
+//
+//        let qrSize = CGRect(x: 561, y: 150, width: qr.size.width, height: qr.size.height)
+//        qr.draw(in: qrSize, blendMode: .normal, alpha: 1.0)
+//
+//        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+//        UIGraphicsEndImageContext()
+//        
+//        return newImage
+//    }
 }

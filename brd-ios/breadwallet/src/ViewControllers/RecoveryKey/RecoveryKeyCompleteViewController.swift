@@ -23,7 +23,7 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
         }
     }
 
-    private let lockSuccessIcon = UIImageView(image: UIImage(named: "celebrate"))
+    private let lockSuccessIcon = UIImageView(image: Asset.celebrate.image)
     private let headingLabel = UILabel.wrapping(font: Fonts.Title.six, color: LightColors.Text.three)
     private let subheadingLabel = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     

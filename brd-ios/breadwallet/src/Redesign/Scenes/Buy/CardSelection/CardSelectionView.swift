@@ -26,7 +26,7 @@ struct CardSelectionViewModel: ViewModel {
     var logo: ImageViewModel?
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
-    var arrow: ImageViewModel? = .imageName("chevron-right")
+    var arrow: ImageViewModel? = .image(Asset.chevronRight.image)
     var userInteractionEnabled = false
 }
 
@@ -104,6 +104,8 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.moreButtonCallback = { [weak self] in
             self?.moreButtonTapped()
         }
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped(_:))))
     }
     
     override func configure(with config: CardSelectionConfiguration?) {
@@ -129,22 +131,16 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.isHidden = viewModel?.logo == nil
         
         arrowImageView.setup(with: viewModel?.arrow)
-        arrowImageView.isHidden = viewModel?.expiration != nil && titleLabel.isHidden
+        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden) || viewModel?.userInteractionEnabled == false
         
         cardDetailsView.setup(with: .init(logo: viewModel?.logo,
                                           title: titleLabel.isHidden == true ? viewModel?.title : nil,
                                           cardNumber: viewModel?.cardNumber,
                                           expiration: viewModel?.expiration,
-                                          moreOption: arrowImageView.isHidden))
+                                          moreOption: false))
         
         spacerView.isHidden = arrowImageView.isHidden
-        
-        guard viewModel?.userInteractionEnabled == true else {
-            gestureRecognizers?.forEach { removeGestureRecognizer($0) }
-            return
-        }
-        
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped(_:))))
+        isUserInteractionEnabled = viewModel?.userInteractionEnabled == true
     }
     
     @objc private func cardSelectorTapped(_ sender: Any) {

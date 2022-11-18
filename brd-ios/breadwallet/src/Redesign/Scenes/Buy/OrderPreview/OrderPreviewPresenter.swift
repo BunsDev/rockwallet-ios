@@ -26,7 +26,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
               let isAchAccount = item.isAchAccount else { return }
         
         let to = toAmount.fiatValue
-        let infoImage = UIImage(named: "help")?.withRenderingMode(.alwaysOriginal)
+        let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         let toFiatValue = toAmount.fiatValue
         let toCryptoValue = ExchangeFormatter.crypto.string(for: toAmount.tokenValue) ?? ""
         let toCryptoDisplayImage = item.to?.currency.imageSquareBackground
@@ -110,6 +110,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             ],
             .payment: [
                 PaymentMethodViewModel(logo: card.displayImage,
+                                       type: card.type,
                                        cardNumber: .text(card.displayName),
                                        expiration: .text(CardDetailsFormatter.formatExpirationDate(month: card.expiryMonth, year: card.expiryYear)))
             ],

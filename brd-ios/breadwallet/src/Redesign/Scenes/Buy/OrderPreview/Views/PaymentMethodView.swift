@@ -18,13 +18,14 @@ struct PaymentMethodConfiguration: Configurable {
 }
 
 struct PaymentMethodViewModel: ViewModel {
-    var methodTitle: LabelViewModel? = .text(L10n.Buy.paymentMethod)
+    var methodTitle: LabelViewModel?
     var logo: ImageViewModel?
+    var type: PaymentCard.PaymentType?
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
     var cvvTitle: TitleValueViewModel? = .init(title: .text(L10n.Buy.confirmCVV),
                                                value: .text(""),
-                                               infoImage: .image(UIImage(named: "help")?.withRenderingMode(.alwaysOriginal)))
+                                               infoImage: .image(Asset.help.image.withRenderingMode(.alwaysOriginal)))
     var cvv: TextFieldModel? = .init(placeholder: L10n.Buy.cardCVV)
 }
 
@@ -123,7 +124,17 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     override func setup(with viewModel: PaymentMethodViewModel?) {
         super.setup(with: viewModel)
         
-        methodTitleLabel.setup(with: viewModel?.methodTitle)
+        switch viewModel?.type {
+        case .bankAccount:
+            setupForAch()
+            
+        default:
+            setupForCard()
+        }
+    }
+    
+    private func setupForCard() {
+        methodTitleLabel.setup(with: .text(L10n.Buy.paymentMethod))
         methodTitleLabel.isHidden = viewModel?.methodTitle == nil
         
         cvvTitle.setup(with: viewModel?.cvvTitle)
@@ -135,6 +146,15 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         cardDetailsView.setup(with: .init(logo: viewModel?.logo,
                                           cardNumber: viewModel?.cardNumber,
                                           expiration: viewModel?.expiration))
+    }
+    
+    private func setupForAch() {
+        methodTitleLabel.setup(with: .text(L10n.Buy.transferFromBank))
+        cvvTextField.isHidden = true
+        cvvTitle.isHidden = true
+        
+        cardDetailsView.setup(with: .init(logo: viewModel?.logo,
+                                          cardNumber: viewModel?.cardNumber))
     }
     
     // MARK: - User interaction

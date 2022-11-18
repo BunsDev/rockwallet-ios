@@ -51,7 +51,7 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     lazy var infoButton: UIButton = {
         let infoButton = UIButton()
-        infoButton.setImage(UIImage(named: "info")?.tinted(with: LightColors.Text.two), for: .normal)
+        infoButton.setImage(Asset.info.image.tinted(with: LightColors.Text.two), for: .normal)
         infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         
         return infoButton

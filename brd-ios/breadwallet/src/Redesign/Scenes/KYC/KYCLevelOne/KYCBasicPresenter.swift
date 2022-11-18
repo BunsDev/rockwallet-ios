@@ -55,7 +55,7 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
             .country: [
                 TextFieldModel(title: L10n.Account.country,
                                value: item.countryFullName,
-                               trailing: .imageName("chevron-down"))
+                               trailing: .image(Asset.chevronDown.image))
             ]
         ]
         if item.country == C.countryUS {
@@ -63,7 +63,7 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
             sectionRows[.state] = [
                 TextFieldModel(title: L10n.Account.state,
                                value: item.stateName,
-                               trailing: .imageName("chevron-down"))
+                               trailing: .image(Asset.chevronDown.image))
             ]
         }
         sections.append(contentsOf: [.birthdate, .confirm])
