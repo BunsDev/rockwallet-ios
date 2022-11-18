@@ -6,12 +6,12 @@ import Foundation
 
 protocol FEError: Error {
     var errorMessage: String { get }
-    var errorType: ServerResponse.ErrorType? { get }
+    var errorType: ServerResponse.ErrorType { get }
 }
 
 struct GeneralError: FEError {
     var errorMessage: String = L10n.ErrorMessages.unknownError
-    var errorType: ServerResponse.ErrorType? = .empty
+    var errorType: ServerResponse.ErrorType = .empty
 }
 
 enum NetworkingError: FEError {
@@ -45,7 +45,7 @@ enum NetworkingError: FEError {
         }
     }
     
-    var errorType: ServerResponse.ErrorType? {
+    var errorType: ServerResponse.ErrorType {
         switch self {
         case .exchangesUnavailable:
             return .exchangesUnavailable
@@ -101,7 +101,7 @@ public class NetworkingErrorManager {
         }
         
         let serverResponse = ServerResponse.parse(from: data, type: ServerResponse.self)
-        let errorType = ServerResponse.ErrorType(rawValue: serverResponse?.errorType ?? "")
+        let errorType = ServerResponse.ErrorType(rawValue: serverResponse?.errorType ?? "") ?? .empty
         var error = serverResponse?.error
         error?.errorType = errorType
         
@@ -111,14 +111,7 @@ public class NetworkingErrorManager {
     }
     
     static func getImageUploadEncodingError() -> FEError? {
-        // TODO: is this right?
+        // TODO: Is this right?
         return GeneralError(errorMessage: "Image encoding failed.")
-    }
-    
-    static fileprivate func isErrorStatusCode(_ statusCode: Int) -> Bool {
-        if case 400 ... 599 = statusCode {
-            return true
-        }
-        return false
     }
 }
