@@ -62,7 +62,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     private lazy var logoImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.image = UIImage(named: "logo_icon")
+        view.image = Asset.logoIcon.image
         return view
     }()
     
@@ -95,11 +95,11 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     // We are not using pullToRefreshControl.isRefreshing because when you trigger reload() it is already refreshing. We need a variable that tracks the real refreshing of the resources.
     private var isRefreshing = false
     
-    private let tabBarButtons = [(L10n.Button.home, UIImage(named: "home"), #selector(showHome)),
-                                 (L10n.HomeScreen.trade, UIImage(named: "trade"), #selector(trade)),
-                                 (L10n.HomeScreen.buy, UIImage(named: "buy"), #selector(buy)),
-                                 (L10n.Button.profile, UIImage(named: "user"), #selector(profile)),
-                                 (L10n.HomeScreen.menu, UIImage(named: "more"), #selector(menu))]
+    private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
+                                 (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
+                                 (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
+                                 (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
+                                 (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
     
     // MARK: - Lifecycle
     

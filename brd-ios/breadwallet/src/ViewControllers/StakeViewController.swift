@@ -302,7 +302,7 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
         let bakerIconLoadingView = UIView()
         let arrow = UIImageView()
         
-        arrow.image = UIImage(named: "RightArrow")?.withRenderingMode(.alwaysTemplate)
+        arrow.image = Asset.rightArrow.image.withRenderingMode(.alwaysTemplate)
         arrow.tintColor = LightColors.Text.one
         
         let feeText = baker?.feeString ?? ""
@@ -393,7 +393,7 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
         selectBakerLabel.textColor = .black
         selectBakerLabel.text = L10n.Staking.selectBakerTitle
         let arrow = UIImageView()
-        arrow.image = UIImage(named: "RightArrow")?.withRenderingMode(.alwaysTemplate)
+        arrow.image = Asset.rightArrow.image.withRenderingMode(.alwaysTemplate)
         arrow.tintColor = .white
         
         selectBakerButton.addSubview(currencyIcon)

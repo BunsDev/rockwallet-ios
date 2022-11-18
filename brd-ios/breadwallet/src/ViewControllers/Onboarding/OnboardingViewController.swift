@@ -436,7 +436,7 @@ class OnboardingViewController: UIViewController {
     }
     
     private func addBackAndSkipButtons() {
-        let image = UIImage(named: "back")
+        let image = Asset.back.image
         
         backButton.alpha = 0
         skipButton.alpha = 0

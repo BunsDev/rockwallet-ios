@@ -40,7 +40,7 @@ struct EnableKeychainView: View {
                     .lineLimit(nil)
             }
             .padding(.bottom, Margins.large.rawValue)
-            Image("Keychain")
+            Image(uiImage: Asset.keychain.image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding([.leading, .trailing], 40)
