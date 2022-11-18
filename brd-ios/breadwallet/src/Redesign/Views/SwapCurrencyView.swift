@@ -328,7 +328,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         hideFeeAndAmountsStackView(noFee: noFee)
         
         decidePlaceholder()
-        selectorImageView.isHidden = viewModel.selectionDisabled
+        let image: UIImage? = viewModel.selectionDisabled ? nil : .init(named: "chevron-down")
+        selectorImageView.setup(with: .image(image))
     }
     
     func hideFeeAndAmountsStackView(noFee: Bool) {
