@@ -53,7 +53,7 @@ class AddressCell: UIView {
 
     let textField = UITextField()
     let paste = BRDButton(title: L10n.Send.pasteLabel, type: .tertiary)
-    let scan = BRDButton(title: "", type: .tertiary, image: .init(named: "qr"))
+    let scan = BRDButton(title: "", type: .tertiary, image: Asset.qr.image)
     fileprivate let contentLabel = UILabel(font: Fonts.Body.one, color: LightColors.Text.two)
     private let label = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.two)
     fileprivate let gr = UITapGestureRecognizer()

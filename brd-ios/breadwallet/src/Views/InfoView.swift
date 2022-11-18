@@ -44,7 +44,7 @@ class InfoView: UIView {
         infoLabel.adjustsFontSizeToFitWidth = true
         infoLabel.minimumScaleFactor = 0.5
         
-        infoImageView.image = .init(named: "warning")
+        infoImageView.image = Asset.warning.image
         infoImageView.contentMode = .center
         infoImageView.tintColor = LightColors.Error.one
         infoImageView.backgroundColor = LightColors.Background.cards

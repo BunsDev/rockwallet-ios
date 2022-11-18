@@ -416,7 +416,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         let infoConfig: InfoViewConfiguration = Presets.InfoView.verification
         var infoViewModel = profile?.status.viewModel
-        infoViewModel?.headerTrailing = .init(image: "close")
+        infoViewModel?.headerTrailing = .init(image: Asset.close.name)
         
         kycStatusPromptView.configure(with: infoConfig)
         kycStatusPromptView.setup(with: infoViewModel)
