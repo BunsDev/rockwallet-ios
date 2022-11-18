@@ -216,7 +216,7 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
-        coordinator?.showFailure()
+        coordinator?.showFailure(failure: .buy)
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {

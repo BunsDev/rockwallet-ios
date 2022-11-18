@@ -33,6 +33,7 @@ protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
     func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse)
     func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse)
+    func presentFailure(actionResponse: BuyModels.Failure.ActionResponse)
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
@@ -42,7 +43,7 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay)
-    func displayPublicTokenSuccess(responseDisplay: BuyModels.PlaidPublicToken.ResponseDisplay)
+    func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay)
 }
 
 protocol BuyDataStore: BaseDataStore, FetchDataStore {
@@ -62,6 +63,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore {
     var autoSelectDefaultPaymentMethod: Bool { get set }
     var paymentMethod: FESegmentControl.Values? { get set }
     var publicToken: String? { get set }
+    var mask: String? { get set }
 }
 
 protocol BuyDataPassing {

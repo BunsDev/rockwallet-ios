@@ -136,9 +136,15 @@ enum BuyModels {
     }
     
     struct PlaidPublicToken {
-        struct ViewAction {
-            var publicToken: String
-        }
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {}
+    }
+    
+    struct Failure {
+        struct ViewAction {}
         
         struct ActionResponse {}
         

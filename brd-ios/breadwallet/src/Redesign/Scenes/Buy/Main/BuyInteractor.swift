@@ -77,13 +77,13 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
-        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: viewAction.publicToken)) { [weak self] result in
+        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken, mask: dataStore?.mask)) { [weak self] result in
             switch result {
             case .success:
                 self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
                 
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+            case .failure:
+                self?.presenter?.presentFailure(actionResponse: .init())
             }
         }
     }

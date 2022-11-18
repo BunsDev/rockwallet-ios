@@ -518,6 +518,8 @@ internal enum L10n {
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
     /// ACH Payments
     internal static let achPayments = L10n.tr("Localizable", "Buy.achPayments", fallback: "ACH Payments")
+    /// ACH payment method was added successfully
+    internal static let achSuccess = L10n.tr("Localizable", "Buy.achSuccess", fallback: "ACH payment method was added successfully")
     /// Add card title for buy cryptos
     internal static let addCard = L10n.tr("Localizable", "Buy.AddCard", fallback: "Add card")
     /// Add a debit or credit card label on add card flow
@@ -588,6 +590,10 @@ internal enum L10n {
     internal static let paymentMethod = L10n.tr("Localizable", "Buy.PaymentMethod", fallback: "Payment method")
     /// Pay with label in buy flow
     internal static let payWith = L10n.tr("Localizable", "Buy.PayWith", fallback: "Pay with")
+    /// Please check with your bank or try again later.
+    internal static let plaidErrorDescription = L10n.tr("Localizable", "Buy.plaidErrorDescription", fallback: "Please check with your bank or try again later.")
+    /// There was an error connecting your account via Plaid
+    internal static let plaidErrorTitle = L10n.tr("Localizable", "Buy.plaidErrorTitle", fallback: "There was an error connecting your account via Plaid")
     /// Processing payment
     internal static let processingPayment = L10n.tr("Localizable", "Buy.ProcessingPayment", fallback: "Processing payment")
     /// Purchase success text in purchase details screen

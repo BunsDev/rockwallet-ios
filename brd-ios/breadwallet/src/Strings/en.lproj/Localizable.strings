@@ -3144,3 +3144,9 @@
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
+"Buy.plaidErrorTitle" = "There was an error connecting your account via Plaid";
+
+"Buy.plaidErrorDescription" = "Please check with your bank or try again later.";
+
+"Buy.achSuccess" = "ACH payment method was added successfully";
+
