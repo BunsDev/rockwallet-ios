@@ -20,6 +20,7 @@ struct PaymentMethodConfiguration: Configurable {
 struct PaymentMethodViewModel: ViewModel {
     var methodTitle: LabelViewModel? = .text(L10n.Buy.paymentMethod)
     var logo: ImageViewModel?
+    var type: FESegmentControl.Values?
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
     var cvvTitle: TitleValueViewModel? = .init(title: .text(L10n.Buy.confirmCVV),
