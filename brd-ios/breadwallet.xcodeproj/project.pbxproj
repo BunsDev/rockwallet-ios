@@ -374,6 +374,7 @@
 		7E9B13FD2857404600BD9EF5 /* DocumentReviewVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F62857404600BD9EF5 /* DocumentReviewVIP.swift */; };
 		7E9B13FE2857404600BD9EF5 /* DocumentReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F72857404600BD9EF5 /* DocumentReviewViewController.swift */; };
 		7E9B13FF2857404600BD9EF5 /* DocumentReviewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F82857404600BD9EF5 /* DocumentReviewInteractor.swift */; };
+		7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */; };
 		7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */; };
 		7EB838462849D49A00C7CC05 /* ScrollableButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */; };
 		7EB838482849DD8200C7CC05 /* FELink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838472849DD8200C7CC05 /* FELink.swift */; };
@@ -1154,6 +1155,7 @@
 		7E9B13F62857404600BD9EF5 /* DocumentReviewVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewVIP.swift; sourceTree = "<group>"; };
 		7E9B13F72857404600BD9EF5 /* DocumentReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewViewController.swift; sourceTree = "<group>"; };
 		7E9B13F82857404600BD9EF5 /* DocumentReviewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewInteractor.swift; sourceTree = "<group>"; };
+		7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchCreateWorker.swift; sourceTree = "<group>"; };
 		7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+DefaultReceiveAddress.swift"; sourceTree = "<group>"; };
 		7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableButtonsView.swift; sourceTree = "<group>"; };
 		7EB838472849DD8200C7CC05 /* FELink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FELink.swift; sourceTree = "<group>"; };
@@ -2534,6 +2536,14 @@
 			path = DocumentReview;
 			sourceTree = "<group>";
 		};
+		7E9FADBF2927AA1F00B471A7 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		7EB8FD192897D1F3000FF75C /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -2863,6 +2873,7 @@
 		C491ABEF28A6393F00E79954 /* OrderPreview */ = {
 			isa = PBXGroup;
 			children = (
+				7E9FADBF2927AA1F00B471A7 /* Workers */,
 				C491ABFE28A6430900E79954 /* Views */,
 				C491ABF228A6395C00E79954 /* OrderPreviewPresenter.swift */,
 				C491ABF128A6395C00E79954 /* OrderPreviewStore.swift */,
@@ -3981,6 +3992,7 @@
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,
 				7EBC6B092848ABC5000A301F /* RegistrationConfirmationVIP.swift in Sources */,
+				7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */,
 				7E8E97A0283F48EE008606B0 /* NavigationItemView.swift in Sources */,
 				C416BE0628509C4E0020ACCD /* KYCLevelTwoPostValidation.swift in Sources */,
 				22A9A9461DF61945000F0016 /* BRAPIClient.swift in Sources */,
