@@ -28,13 +28,13 @@ class PinPadViewController: UICollectionViewController {
         func image(forStyle: PinPadStyle) -> UIImage {
             switch self {
             case .delete:
-                return #imageLiteral(resourceName: "Delete").withRenderingMode(.alwaysTemplate)
+                return Asset.delete.image.withRenderingMode(.alwaysTemplate)
             case .biometrics:
                 switch forStyle {
                 case .clear:
-                    return LAContext.biometricType() == .face ? #imageLiteral(resourceName: "CutoutFaceId").withRenderingMode(.alwaysTemplate) : #imageLiteral(resourceName: "TouchIDCutout").withRenderingMode(.alwaysTemplate)
+                    return LAContext.biometricType() == .face ? Asset.cutoutFaceId.image.withRenderingMode(.alwaysTemplate) : #imageLiteral(resourceName: "TouchIDCutout").withRenderingMode(.alwaysTemplate)
                 case .white:
-                    return LAContext.biometricType() == .face ? #imageLiteral(resourceName: "FaceId").withRenderingMode(.alwaysTemplate) : #imageLiteral(resourceName: "TouchId").withRenderingMode(.alwaysTemplate)
+                    return LAContext.biometricType() == .face ? Asset.faceId.image.withRenderingMode(.alwaysTemplate) : #imageLiteral(resourceName: "TouchId").withRenderingMode(.alwaysTemplate)
                 }
                 
             }

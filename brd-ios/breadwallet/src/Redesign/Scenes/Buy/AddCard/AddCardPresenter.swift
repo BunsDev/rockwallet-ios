@@ -28,7 +28,6 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
             .confirm
         ]
         
-        let trailingImage = UIImage(named: "help")?.withRenderingMode(.alwaysOriginal)
         bankCardInputDetailsViewModel = BankCardInputDetailsViewModel(number: .init(leading: .imageName("card"),
                                                                                     title: L10n.Buy.cardNumber,
                                                                                     value: item.cardNumber),
@@ -36,7 +35,7 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
                                                                                         value: item.cardExpDateString),
                                                                       cvv: .init(title: L10n.Buy.cardCVV,
                                                                                  value: item.cardCVV,
-                                                                                 trailing: .image(trailingImage)))
+                                                                                 trailing: .image(Asset.help.image.withRenderingMode(.alwaysOriginal))))
         
         let sectionRows: [Models.Section: [Any]] = [
             .cardDetails: [

@@ -75,7 +75,7 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
         cell.accessoryView = nil
         
         if currency.code == selectedCurrencyCode {
-            let check = UIImageView(image: UIImage(named: "check2-circled")?.withRenderingMode(.alwaysTemplate))
+            let check = UIImageView(image: Asset.check2Circled.image.withRenderingMode(.alwaysTemplate))
             check.tintColor = LightColors.primary
             cell.accessoryView = check
         }
