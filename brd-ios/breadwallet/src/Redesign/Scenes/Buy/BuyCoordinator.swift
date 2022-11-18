@@ -50,6 +50,7 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
             vc.navigationItem.hidesBackButton = true
             vc.transactionType = transactionType
             vc.dataStore?.itemId = paymentReference
+            vc.success = transactionType == .buyTransaction ? .buy : .bankAccount
         }
     }
     

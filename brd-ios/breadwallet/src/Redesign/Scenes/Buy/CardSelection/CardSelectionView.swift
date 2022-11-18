@@ -26,7 +26,7 @@ struct CardSelectionViewModel: ViewModel {
     var logo: ImageViewModel?
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
-    var arrow: ImageViewModel? = .imageName("chevron-right")
+    var arrow: ImageViewModel? = .image(Asset.chevronRight.image)
     var userInteractionEnabled = false
 }
 

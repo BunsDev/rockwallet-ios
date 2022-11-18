@@ -28,7 +28,7 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
             .confirm
         ]
         
-        bankCardInputDetailsViewModel = BankCardInputDetailsViewModel(number: .init(leading: .imageName("card"),
+        bankCardInputDetailsViewModel = BankCardInputDetailsViewModel(number: .init(leading: .image(Asset.card.image),
                                                                                     title: L10n.Buy.cardNumber,
                                                                                     value: item.cardNumber),
                                                                       expiration: .init(title: L10n.Buy.monthYear,

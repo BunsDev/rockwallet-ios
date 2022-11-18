@@ -138,7 +138,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     
     private lazy var selectorImageView: FEImageView = {
         let view = FEImageView()
-        view.setup(with: .imageName("chevron-down"))
+        view.setup(with: .image(Asset.chevronDown.image))
         view.setupCustomMargins(all: .extraSmall)
         view.tintColor = LightColors.primary
         return view

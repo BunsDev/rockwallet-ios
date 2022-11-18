@@ -17,7 +17,7 @@ struct TimerConfiguration: Configurable {
 
 struct TimerViewModel: ViewModel {
     var till: Double = 0
-    var image = ImageViewModel.imageName("timelapse")
+    var image = ImageViewModel.image(Asset.timelapse.image)
     var repeats = false
 }
 

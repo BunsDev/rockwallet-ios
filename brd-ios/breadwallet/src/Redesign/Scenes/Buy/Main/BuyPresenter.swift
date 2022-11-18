@@ -94,7 +94,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                               userInteractionEnabled: true)
         } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .bankAccount {
             cardModel = .init(title: .text(L10n.Buy.achPayments),
-                              logo: .imageName("bank"),
+                              logo: .image(Asset.bank.image),
                               cardNumber: .text(paymentCard.displayName),
                               userInteractionEnabled: false)
             cryptoModel.selectionDisabled = true
