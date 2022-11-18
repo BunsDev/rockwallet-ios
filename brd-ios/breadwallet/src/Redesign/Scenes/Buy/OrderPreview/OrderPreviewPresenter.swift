@@ -110,7 +110,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             ],
             .payment: [
                 PaymentMethodViewModel(logo: card.displayImage,
-                                       type: card.type
+                                       type: card.type,
                                        cardNumber: .text(card.displayName),
                                        expiration: .text(CardDetailsFormatter.formatExpirationDate(month: card.expiryMonth, year: card.expiryYear)))
             ],
