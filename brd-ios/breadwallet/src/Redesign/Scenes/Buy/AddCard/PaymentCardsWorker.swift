@@ -59,7 +59,7 @@ struct PaymentCard: ItemSelectable, Hashable {
     var displayImage: ImageViewModel? {
         switch type {
         case .bankAccount:
-            return .imageName("bank")
+            return .image(Asset.bank.image) 
         default:
             return .imageName(scheme.rawValue)
         }
