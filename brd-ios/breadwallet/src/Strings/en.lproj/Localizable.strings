@@ -3156,3 +3156,8 @@
 
 "Buy.achSuccess" = "ACH payment method was added successfully";
 
+"Buy.bankAccountSuccessTitle" = "Your purchase is being processed";
+
+"Buy.bankAccountSuccessText" = "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";
+
+"Buy.bankAccountFailureText" = "Please try again or select a different payment method.";

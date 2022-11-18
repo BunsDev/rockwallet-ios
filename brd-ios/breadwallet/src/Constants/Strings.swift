@@ -528,6 +528,12 @@ internal enum L10n {
     internal static let addDebitCreditCard = L10n.tr("Localizable", "Buy.AddDebitCreditCard", fallback: "Add a debit or credit card")
     /// Address label in billing address view on buy flow
     internal static let address = L10n.tr("Localizable", "Buy.Address", fallback: "Address")
+    /// Please try again or select a different payment method.
+    internal static let bankAccountFailureText = L10n.tr("Localizable", "Buy.bankAccountFailureText", fallback: "Please try again or select a different payment method.")
+    /// It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.
+    internal static let bankAccountSuccessText = L10n.tr("Localizable", "Buy.bankAccountSuccessText", fallback: "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.")
+    /// Your purchase is being processed
+    internal static let bankAccountSuccessTitle = L10n.tr("Localizable", "Buy.bankAccountSuccessTitle", fallback: "Your purchase is being processed")
     /// Billing address label on buy flow
     internal static let billingAddress = L10n.tr("Localizable", "Buy.BillingAddress", fallback: "Billing address")
     /// Buy min and max limit text
