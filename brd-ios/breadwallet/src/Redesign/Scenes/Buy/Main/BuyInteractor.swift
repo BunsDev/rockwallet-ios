@@ -55,7 +55,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             
             switch result {
             case .success:
-                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self.dataStore?.allPaymentCards ?? []))
+                let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .card }
+                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
                 
             case .failure(let error):
                 self.presenter?.presentError(actionResponse: .init(error: error))
@@ -183,11 +184,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
-                if self?.dataStore?.paymentMethod == .card {
-                    self?.dataStore?.allPaymentCards = data?.filter { $0.type == .card }
-                } else {
-                    self?.dataStore?.allPaymentCards = data?.filter { $0.type == .bankAccount }
-                }
+                self?.dataStore?.allPaymentCards = data
                 
                 if self?.dataStore?.autoSelectDefaultPaymentMethod == true {
                     self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first
@@ -205,6 +202,23 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
+        var paymentCards: [PaymentCard]?
+        
+        if dataStore?.paymentMethod == .card {
+            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .card }
+            if let currency = Store.state.currencies.first(where: { $0.code == C.BTC }) ?? Store.state.currencies.first {
+                dataStore?.toAmount = .zero(currency)
+            }
+        } else {
+            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .bankAccount }
+            if let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) {
+                dataStore?.toAmount = .zero(currency)
+            }
+        }
+        
+        if dataStore?.autoSelectDefaultPaymentMethod == true {
+            dataStore?.paymentCard = paymentCards?.first
+        }
         
         getExchangeRate(viewAction: .init())
     }

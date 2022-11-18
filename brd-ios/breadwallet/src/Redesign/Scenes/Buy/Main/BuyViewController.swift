@@ -200,7 +200,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
         switch dataStore?.paymentMethod {
         case .bankAccount:
-            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == "USDC" }) {
+            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDC }) {
                 supportedCurrencies = [usdCurrency]
             }
         default:

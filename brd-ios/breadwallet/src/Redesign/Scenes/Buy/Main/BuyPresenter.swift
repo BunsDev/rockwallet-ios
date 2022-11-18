@@ -26,7 +26,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        let paymentSegment = SegmentControlViewModel(selectedIndex: .bankAccount)
+        let paymentSegment = SegmentControlViewModel(selectedIndex: .card)
         
         let paymentMethodViewModel: CardSelectionViewModel
         switch paymentSegment.selectedIndex {
