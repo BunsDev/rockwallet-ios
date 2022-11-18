@@ -60,11 +60,18 @@ struct QuoteModelResponse: ModelResponse {
         var rate: Decimal?
         var depositRate: Decimal?
     }
+    
+    struct AchFee: Codable {
+        var achFeeFixedUsd: Decimal?
+        var achFeePercentage: Decimal?
+    }
+    
     var fromFeeCurrency: Fee?
     var toFeeCurrency: Fee?
     var fromFee: Decimal?
     var toFee: Decimal?
     var buyFees: Decimal?
+    var achFees: AchFee?
 }
 
 struct Quote {
@@ -81,6 +88,7 @@ struct Quote {
     var fromFee: EstimateFee?
     var toFee: EstimateFee?
     var buyFee: Decimal?
+    var buyFeeUsd: Decimal?
 }
 
 struct EstimateFee: Model {
@@ -116,7 +124,8 @@ class QuoteMapper: ModelMapper<QuoteModelResponse, Quote> {
                      toFeeRate: response.toFeeCurrency?.rate,
                      fromFee: fromFee,
                      toFee: toFee,
-                     buyFee: response.buyFees)
+                     buyFee: response.buyFees ?? response.achFees?.achFeePercentage,
+                     buyFeeUsd: response.achFees?.achFeeFixedUsd)
     }
 }
 
