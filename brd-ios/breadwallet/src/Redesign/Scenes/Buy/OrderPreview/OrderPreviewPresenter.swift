@@ -43,9 +43,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue + networkFee + cardFee) ?? "", fiatCurrency)
-        let cardAchFee: TitleValueViewModel = isAchAccount ? .init(title: .text(L10n.Buy.achFee("\(quote.buyFee ?? 0)%")),
-                                                                   value: .text(cardFeeText),
-                                                                   infoImage: .image(infoImage)) :
+        let cardAchFee: TitleValueViewModel = isAchAccount ? .init(title: .text(L10n.Buy.achFee("$1.00 + \(quote.buyFee ?? 0)%")),
+                                                                   value: .text(cardFeeText)) :
             .init(title: .text("\(L10n.Swap.cardFee) (\(quote.buyFee ?? 0)%)"),
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
