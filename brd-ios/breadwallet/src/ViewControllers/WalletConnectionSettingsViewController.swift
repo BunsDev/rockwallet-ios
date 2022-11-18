@@ -26,7 +26,7 @@ class WalletConnectionSettingsViewController: UIViewController {
     private let explanationLabel = UITextView()
     private let footerLabel = UILabel.wrapping(font: Fonts.Body.three, color: LightColors.Text.two)
     private let toggleSwitch = UISwitch()
-    private let footerLogo = UIImageView(image: UIImage(named: "BlocksetLogoWhite"))
+    private let footerLogo = UIImageView(image: Asset.blocksetLogoWhite.image)
     private let mainBackground = UIView(color: LightColors.primary.withAlphaComponent(0.5))
     private let footerBackground = UIView(color: .clear)
     

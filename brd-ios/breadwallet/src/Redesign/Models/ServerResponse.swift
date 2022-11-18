@@ -13,7 +13,6 @@ import Foundation
 struct ServerResponse: Decodable {
     enum ErrorType: String, Decodable {
         case exchangesUnavailable = "Exchanges unavailable"
-        case empty
     }
     
     var result: String?

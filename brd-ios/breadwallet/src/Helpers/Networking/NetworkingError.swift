@@ -11,7 +11,7 @@ protocol FEError: Error {
 
 struct GeneralError: FEError {
     var errorMessage: String = L10n.ErrorMessages.unknownError
-    var errorType: ServerResponse.ErrorType? = .empty
+    var errorType: ServerResponse.ErrorType?
 }
 
 enum NetworkingError: FEError {
@@ -51,7 +51,7 @@ enum NetworkingError: FEError {
             return .exchangesUnavailable
             
         default:
-            return .empty
+            return nil
         }
     }
     
@@ -111,14 +111,7 @@ public class NetworkingErrorManager {
     }
     
     static func getImageUploadEncodingError() -> FEError? {
-        // TODO: is this right?
+        // TODO: Is this right?
         return GeneralError(errorMessage: "Image encoding failed.")
-    }
-    
-    static fileprivate func isErrorStatusCode(_ statusCode: Int) -> Bool {
-        if case 400 ... 599 = statusCode {
-            return true
-        }
-        return false
     }
 }

@@ -27,6 +27,7 @@ struct SwapCurrencyViewModel: ViewModel {
     var formattedTokenFeeString: String?
     var title: LabelViewModel?
     var feeDescription: LabelViewModel?
+    var selectionDisabled = false
 }
 
 class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>, UITextFieldDelegate {
@@ -137,7 +138,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     
     private lazy var selectorImageView: FEImageView = {
         let view = FEImageView()
-        view.setup(with: .imageName("chevron-down"))
+        view.setup(with: .image(Asset.chevronDown.image))
         view.setupCustomMargins(all: .extraSmall)
         view.tintColor = LightColors.primary
         return view
@@ -327,6 +328,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         hideFeeAndAmountsStackView(noFee: noFee)
         
         decidePlaceholder()
+        let image: UIImage? = viewModel.selectionDisabled ? nil : Asset.chevronDown.image
+        selectorImageView.setup(with: .image(image))
     }
     
     func hideFeeAndAmountsStackView(noFee: Bool) {

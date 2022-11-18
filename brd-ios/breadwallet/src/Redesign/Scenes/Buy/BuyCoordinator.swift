@@ -50,13 +50,14 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
             vc.navigationItem.hidesBackButton = true
             vc.transactionType = transactionType
             vc.dataStore?.itemId = paymentReference
+            vc.success = transactionType == .buyTransaction ? .buy : .bankAccount
         }
     }
     
-    func showFailure() {
+    func showFailure(failure: FailureReason) {
         open(scene: Scenes.Failure) { vc in
             vc.navigationItem.hidesBackButton = true
-            vc.failure = FailureReason.buy
+            vc.failure = failure
         }
     }
     

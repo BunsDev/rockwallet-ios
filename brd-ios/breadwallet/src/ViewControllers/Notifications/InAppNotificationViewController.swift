@@ -63,7 +63,7 @@ class InAppNotificationViewController: UIViewController {
     }
     
     private func addCloseButton() {
-        let close = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal),
+        let close = UIBarButtonItem(image: Asset.close.image.withRenderingMode(.alwaysOriginal),
                                     style: .plain,
                                     target: self,
                                     action: #selector(onCloseButton))
