@@ -57,7 +57,7 @@ class BaseRecoveryKeyViewController: UIViewController {
     func showCloseButton() {
         switch closeButtonStyle {
         case .close:
-            let close = UIBarButtonItem(image: UIImage(named: "close"),
+            let close = UIBarButtonItem(image: Asset.close.image,
                                         style: .plain,
                                         target: self,
                                         action: #selector(onCloseButton))
@@ -79,7 +79,7 @@ class BaseRecoveryKeyViewController: UIViewController {
     }
     
     func showBackButton() {
-        let back = UIBarButtonItem(image: UIImage(named: "back"),
+        let back = UIBarButtonItem(image: Asset.back.image,
                                    style: .plain,
                                    target: self,
                                    action: #selector(onBackButton))

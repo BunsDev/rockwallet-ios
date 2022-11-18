@@ -33,7 +33,7 @@ extension UIButton {
     }
     
     static func buildModernCloseButton(position: NavBarButtonPosition) -> UIButton {
-        let button = UIButton.icon(image: UIImage(named: "close"),
+        let button = UIButton.icon(image: Asset.close.image,
                                    accessibilityLabel: L10n.AccessibilityLabels.close,
                                    position: position)
         button.tintColor = LightColors.Text.three
@@ -41,7 +41,7 @@ extension UIButton {
     }
     
     static func buildFaqButton(articleId: String, currency: Currency? = nil, position: NavBarButtonPosition, tapped: (() -> Void)? = nil) -> UIButton {
-        let button = UIButton.icon(image: UIImage(named: "help"), accessibilityLabel: L10n.AccessibilityLabels.faq, position: position)
+        let button = UIButton.icon(image: Asset.help.image, accessibilityLabel: L10n.AccessibilityLabels.faq, position: position)
         button.tintColor = LightColors.Text.three
         
         button.tap = {

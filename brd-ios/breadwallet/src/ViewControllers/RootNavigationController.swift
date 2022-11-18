@@ -95,7 +95,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     }
     
     func setNormalNavigationBar() {
-        let backImage = UIImage(named: "back")
+        let backImage = Asset.back.image
         
         let normalAppearance = UINavigationBarAppearance()
         normalAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)

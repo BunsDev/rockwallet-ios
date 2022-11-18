@@ -72,7 +72,7 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
     
     private lazy var moreButton: FEButton = {
         let view = FEButton()
-        view.setImage(UIImage(named: "more"), for: .normal)
+        view.setImage(Asset.more.image, for: .normal)
         return view
     }()
 

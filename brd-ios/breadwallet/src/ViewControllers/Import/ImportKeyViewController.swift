@@ -33,7 +33,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
 
     private let wallet: Wallet
     private let header = UIView()
-    private let illustration = UIImageView(image: .init(named: "ImportIllustration"))
+    private let illustration = UIImageView(image: Asset.importIllustration.image)
     private let message = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     private let warning = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     private let button = BRDButton(title: L10n.Import.scan, type: .secondary)

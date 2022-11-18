@@ -281,7 +281,7 @@ class RecoveryKeyWordInputView: UIView, UITextFieldDelegate {
     }
     
     var clearInputImage: UIImage? {
-        return UIImage(named: "warning")?.tinted(with: LightColors.Error.one)
+        return Asset.warning.image.tinted(with: LightColors.Error.one)
     }
     
     var validInput = true {

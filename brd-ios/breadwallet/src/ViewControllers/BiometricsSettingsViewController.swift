@@ -25,8 +25,8 @@ class BiometricsSettingsViewController: UIViewController, Subscriber {
         return biometricType == .touch ? L10n.TouchIdSettings.transactionsTitleText : L10n.FaceIDSettings.transactionsTitleText
     }
     
-    var imageName: String {
-        return biometricType == .touch ? "TouchId-Large" : "FaceId-Large"
+    var image: UIImage {
+        return biometricType == .touch ? Asset.touchIdLarge.image : Asset.faceIdLarge.image
     }
     
     private let imageView = UIImageView()
@@ -153,7 +153,7 @@ class BiometricsSettingsViewController: UIViewController, Subscriber {
     }
 
     private func setData() {
-        imageView.image = UIImage(named: imageName)
+        imageView.image = image
         imageView.tintColor = LightColors.primary
         explanationLabel.text = explanatoryText
         unlockTitleLabel.text = unlockTitleText
