@@ -702,9 +702,9 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     private func showInsufficientGasError() {
         guard let feeAmount = self.currentFeeBasis?.fee else { return assertionFailure() }
         
-        let message = L10n.Send.insufficientGasMessage(feeAmount.description)
+        let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
 
-        let alertController = UIAlertController(title: L10n.Send.insufficientGasTitle, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: L10n.Send.insufficientGasTitle(feeAmount.currency.name), message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: L10n.Button.yes, style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             Store.trigger(name: .showCurrency(self.sender.wallet.feeCurrency))
