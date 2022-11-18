@@ -102,7 +102,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .swap, role: .kyc1) { showPopup in
                 guard showPopup else { return }
                 
-                guard UserManager.shared.profile?.canSwap == true else {
+                if UserManager.shared.profile?.canSwap == false {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon)
                     return
                 }
@@ -122,7 +122,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy, role: UserManager.shared.profile?.status == .levelOne ? .kyc2 : .kyc1) { showPopup in
                 guard showPopup else { return }
                 
-                guard UserManager.shared.profile?.canBuy == true else {
+                if UserManager.shared.profile?.canBuy == false {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon)
                     return
                 }
