@@ -125,11 +125,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         case _ where fiat < minimumAmount,
                             _ where minimumAmount > maximumAmount:
             // Value below minimum Fiat
-            presentError(actionResponse: .init(error: BuyErrors.tooLow(amount: minimumAmount, currency: C.usdCurrencyCode)))
+            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: C.usdCurrencyCode, reason: .buy)))
             
         case _ where fiat > maximumAmount:
             // Over exchange limit ???
-            presentError(actionResponse: .init(error: BuyErrors.tooHigh(amount: maximumAmount, currency: C.usdCurrencyCode)))
+            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: C.usdCurrencyCode, reason: .buy)))
             
         default:
             // Remove error

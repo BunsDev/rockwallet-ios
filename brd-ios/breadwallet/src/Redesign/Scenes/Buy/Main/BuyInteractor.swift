@@ -44,7 +44,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 }
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: BuyErrors.supportedCurrencies(error: error)))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
             }
         }
     }
@@ -91,9 +91,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
-              let toCurrency = dataStore?.toAmount?.currency
-        else {
-            presenter?.presentError(actionResponse: .init(error: BuyErrors.noQuote(from: C.usdCurrencyCode,
+              let toCurrency = dataStore?.toAmount?.currency else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: C.usdCurrencyCode,
                                                                                    to: dataStore?.toAmount?.currency.code)))
             return
         }
@@ -150,7 +149,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             case .failure(let error):
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
-                    self?.presenter?.presentError(actionResponse: .init(error: BuyErrors.selectAssets))
+                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
                 
