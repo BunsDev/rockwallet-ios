@@ -21,7 +21,7 @@ enum ExchangeErrors: FEError {
     case overDailyLimit(limit: Decimal)
     case overLifetimeLimit(limit: Decimal)
     case overDailyLimitLevel2(limit: Decimal)
-    case notEnouthEthForFee(currency: String)
+    case notEnoughEthForFee(currency: String)
     case failed(error: Error?)
     case supportedCurrencies(error: Error?)
     case quoteFail
@@ -96,7 +96,7 @@ enum ExchangeErrors: FEError {
         case  .pinConfirmation:
             return L10n.ErrorMessages.pinConfirmationFailed
             
-        case .notEnouthEthForFee(let currency):
+        case .notEnoughEthForFee(let currency):
             return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
             
         case .failed(let error):
