@@ -56,6 +56,10 @@ enum ExchangeErrors: FEError {
             case .swap:
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
                 
+            case.bankAccount:
+                // TODO: Add error messages
+                return ""
+                
             }
             
         case .tooHigh(let amount, let currency, let reason):
@@ -65,6 +69,10 @@ enum ExchangeErrors: FEError {
                 
             case .swap:
                 return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
+                
+            case.bankAccount:
+                // TODO: Add error messages
+                return ""
                 
             }
         case .overDailyLimit(let limit):

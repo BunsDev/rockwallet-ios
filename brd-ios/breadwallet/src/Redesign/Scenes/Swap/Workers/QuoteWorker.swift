@@ -10,14 +10,35 @@
 
 import Foundation
 
+enum QuoteType {
+    case swap
+    case buy(FESegmentControl.Values?)
+    
+    var value: String {
+        switch self {
+        case .swap:
+            return "SWAP"
+        case .buy(let paymentType):
+            switch paymentType {
+            case .card:
+                return "BUY_CARD"
+            default:
+                return "BUY_ACH"
+            }
+        }
+    }
+}
+
 struct QuoteRequestData: RequestModelData {
     var from: String?
     var to: String?
+    var type: QuoteType = .swap
     
     func getParameters() -> [String: Any] {
         let params = [
             "from": from,
-            "to": to
+            "to": to,
+            "type": type.value
         ]
         return params.compactMapValues { $0 }
     }
@@ -105,7 +126,7 @@ class QuoteWorker: BaseApiWorker<QuoteMapper> {
               let from = urlParams.from,
               let to = urlParams.to
         else { return "" }
-        
-        return APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to)
+        let type = urlParams.type.value
+        return APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, type)
     }
 }

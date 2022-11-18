@@ -15,6 +15,10 @@ struct CardDetailsFormatter {
         return "**** **** **** \(last4)"
     }
     
+    static func formatBankNumber(last4: String) -> String {
+        return "**\(last4.dropFirst())"
+    }
+    
     static func formatExpirationDate(month: Int, year: Int) -> String {
         let formattedMonth = String(format: "%02d", month)
         
