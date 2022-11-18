@@ -33,7 +33,7 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
         sectionRows = [
             Models.Section.order: [
                 OrderViewModel(title: "RockWallet Order ID",
-                               value: NSAttributedString(string: "13rXEZoh5NFj4q9aasdfkLp2..."),
+                               value: NSAttributedString(string: "13rXEZoh5NFj4q9aasdfkLp2Fj4q9aasdfkFj4q9aasdfkFj4q9aasdfk"),
                                isCopyable: true)
             ]
         ]
@@ -172,8 +172,9 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
                                 body: text,
                                 buttons: [
                                     .init(title: "Donate"),
-                                    .init(title: "Donate", image: "close"),
-                                    .init(image: "close")
+                                    .init(title: "Donate",
+                                          image: Asset.close.name),
+                                    .init(image: Asset.close.name)
                                 ]))
         popup.closeCallback = { [weak self] in
             self?.hideInfo()

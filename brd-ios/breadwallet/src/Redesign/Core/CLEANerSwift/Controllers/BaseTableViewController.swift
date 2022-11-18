@@ -17,7 +17,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
                                                              FetchResponseDisplays {
     override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String { return "close" }
-    override var closeImage: UIImage? { return .init(named: "close")}
+    override var closeImage: UIImage? { return Asset.close.image}
 
     // MARK: - Cleaner Swift Setup
 
@@ -31,7 +31,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
               navigationItem.rightBarButtonItem?.image != closeImage
         else { return }
         
-        let closeButton = UIBarButtonItem(image: .init(named: "close"),
+        let closeButton = UIBarButtonItem(image: Asset.close.image,
                                           style: .plain,
                                           target: self,
                                           action: closeAction)

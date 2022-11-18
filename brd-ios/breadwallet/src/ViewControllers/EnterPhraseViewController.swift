@@ -90,7 +90,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
                                                 style: .plain,
                                                 target: self,
                                                 action: #selector(dismissFlow))
-            barButtonItem.image = .init(named: "close")
+            barButtonItem.image = Asset.close.image
             navigationItem.rightBarButtonItem = barButtonItem
             
             navigationItem.setHidesBackButton(true, animated: false)

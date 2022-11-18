@@ -35,7 +35,7 @@ class OnboardingViewController: UIViewController {
     // restoration, PIN creation, etc.
     private var didExitWithAction: DidExitOnboardingWithAction?
         
-    private let logoImageView: UIImageView = .init(image: .init(named: "logo_vertical_white"))
+    private let logoImageView: UIImageView = .init(image: Asset.logoVerticalWhite.image)
     
     private var showingLogo: Bool = false {
         didSet {
