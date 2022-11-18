@@ -94,6 +94,7 @@ enum BuyModels {
         }
         
         struct ActionResponse {
+            var method: FESegmentControl.Values
             var quote: Quote?
             var from: String?
             var to: String?
