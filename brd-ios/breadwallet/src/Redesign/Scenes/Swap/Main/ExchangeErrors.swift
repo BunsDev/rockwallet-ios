@@ -1,5 +1,5 @@
 // 
-//  SwapErrors.swift
+//  ExchangeErrors.swift
 //  breadwallet
 //
 //  Created by Rok on 19/07/2022.
@@ -10,39 +10,71 @@
 
 import Foundation
 
-enum SwapErrors: FEError {
+enum ExchangeErrors: FEError {
     case noQuote(from: String?, to: String?)
     /// Param 1: amount, param 2 currency symbol
-    case tooLow(amount: Decimal, currency: String)
+    case tooLow(amount: Decimal, currency: String, reason: FailureReason)
     /// Param 1: amount, param 2 currency symbol
-    case tooHigh(amount: Decimal, currency: String)
+    case tooHigh(amount: Decimal, currency: String, reason: FailureReason)
     /// Param 1: amount, param 2 currency symbol
     case balanceTooLow(balance: Decimal, currency: String)
     case overDailyLimit(limit: Decimal)
     case overLifetimeLimit(limit: Decimal)
     case overDailyLimitLevel2(limit: Decimal)
-    case notEnouthEthForFee(currency: String)
-    // Unoficial errors
+    case notEnoughEthForFee(currency: String)
+    case failed(error: Error?)
+    case supportedCurrencies(error: Error?)
     case quoteFail
     case noFees
     case networkFee
     case overExchangeLimit
     case pinConfirmation
-    case failed(error: Error?)
     case pendingSwap
     case selectAssets
+    case authorizationFailed
+    
+    var errorType: ServerResponse.ErrorType? {
+        switch self {
+        case .supportedCurrencies(let error):
+            return (error as? NetworkingError)?.errorType
+            
+        default:
+            return nil
+        }
+    }
     
     var errorMessage: String {
         switch self {
         case .balanceTooLow(let amount, let currency):
             return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.crypto.string(for: amount) ?? "", currency, currency)
             
-        case .tooLow(let amount, let currency):
-            return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
+        case .tooLow(let amount, let currency, let reason):
+            switch reason {
+            case .buy:
+                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
+                
+            case .swap:
+                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
+                
+            case.plaidConnection, .bankAccount:
+                // TODO: Add error messages
+                return ""
+                
+            }
             
-        case .tooHigh(let amount, let currency):
-            return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
-            
+        case .tooHigh(let amount, let currency, let reason):
+            switch reason {
+            case .buy:
+                return L10n.ErrorMessages.amountTooHigh(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
+                
+            case .swap:
+                return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
+                
+            case.plaidConnection, .bankAccount:
+                // TODO: Add error messages
+                return ""
+                
+            }
         case .overDailyLimit(let limit):
             return L10n.ErrorMessages.overDailyLimit(ExchangeFormatter.fiat.string(for: limit) ?? "")
             
@@ -72,17 +104,24 @@ enum SwapErrors: FEError {
         case  .pinConfirmation:
             return L10n.ErrorMessages.pinConfirmationFailed
             
-        case .notEnouthEthForFee(let currency):
+        case .notEnoughEthForFee(let currency):
             return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
             
         case .failed(let error):
             return L10n.ErrorMessages.exchangeFailed(error?.localizedDescription ?? "")
-        
+            
+        case .supportedCurrencies:
+            return L10n.ErrorMessages.exchangesUnavailable
+            
         case .pendingSwap:
             return L10n.ErrorMessages.pendingExchange
             
         case .selectAssets:
             return L10n.ErrorMessages.selectAssets
+            
+        case .authorizationFailed:
+            return L10n.ErrorMessages.authorizationFailed
+            
         }
     }
 }

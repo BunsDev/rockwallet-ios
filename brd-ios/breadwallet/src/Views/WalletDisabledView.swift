@@ -59,7 +59,7 @@ class WalletDisabledView: UIView {
     private lazy var faq: UIButton = {
         let faq = UIButton()
         faq.tintColor = LightColors.Text.one
-        faq.setBackgroundImage(UIImage(named: "help"), for: .normal)
+        faq.setBackgroundImage(Asset.help.image, for: .normal)
         
         return faq
     }()
@@ -75,7 +75,7 @@ class WalletDisabledView: UIView {
     }()
     
     private lazy var unlockWalletImage: UIImageView = {
-        let unlockWalletImage = UIImageView(image: UIImage(named: "unlock-wallet-disabled"))
+        let unlockWalletImage = UIImageView(image: Asset.unlockWalletDisabled.image)
         unlockWalletImage.contentMode = .scaleAspectFit
         
         return unlockWalletImage

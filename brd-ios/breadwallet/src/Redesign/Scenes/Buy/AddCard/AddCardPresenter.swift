@@ -28,15 +28,14 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
             .confirm
         ]
         
-        let trailingImage = UIImage(named: "help")?.withRenderingMode(.alwaysOriginal)
-        bankCardInputDetailsViewModel = BankCardInputDetailsViewModel(number: .init(leading: .imageName("card"),
+        bankCardInputDetailsViewModel = BankCardInputDetailsViewModel(number: .init(leading: .image(Asset.card.image),
                                                                                     title: L10n.Buy.cardNumber,
                                                                                     value: item.cardNumber),
                                                                       expiration: .init(title: L10n.Buy.monthYear,
                                                                                         value: item.cardExpDateString),
                                                                       cvv: .init(title: L10n.Buy.cardCVV,
                                                                                  value: item.cardCVV,
-                                                                                 trailing: .image(trailingImage)))
+                                                                                 trailing: .image(Asset.help.image.withRenderingMode(.alwaysOriginal))))
         
         let sectionRows: [Models.Section: [Any]] = [
             .cardDetails: [
@@ -68,7 +67,7 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
     
     func presentCvvInfoPopup(actionResponse: AddCardModels.CvvInfoPopup.ActionResponse) {
         let model = PopupViewModel(title: .text(L10n.Buy.securityCode),
-                                   imageName: "cards",
+                                   imageName: Asset.cards.name,
                                    body: L10n.Buy.securityCodePopup)
         
         viewController?.displayCvvInfoPopup(responseDisplay: .init(model: model))

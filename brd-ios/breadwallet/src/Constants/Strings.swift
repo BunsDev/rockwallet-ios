@@ -510,16 +510,30 @@ internal enum L10n {
     internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
     }
+    /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. 
+    /// 
+    /// It currently takes 7-10 days to process a purchase with ACH.
+    internal static func achLimits(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Buy.achLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.")
+    }
     /// Currently, ACH payments will take 7-10 days to complete.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
     /// ACH Payments
     internal static let achPayments = L10n.tr("Localizable", "Buy.achPayments", fallback: "ACH Payments")
+    /// ACH payment method was added successfully
+    internal static let achSuccess = L10n.tr("Localizable", "Buy.achSuccess", fallback: "ACH payment method was added successfully")
     /// Add card title for buy cryptos
     internal static let addCard = L10n.tr("Localizable", "Buy.AddCard", fallback: "Add card")
     /// Add a debit or credit card label on add card flow
     internal static let addDebitCreditCard = L10n.tr("Localizable", "Buy.AddDebitCreditCard", fallback: "Add a debit or credit card")
     /// Address label in billing address view on buy flow
     internal static let address = L10n.tr("Localizable", "Buy.Address", fallback: "Address")
+    /// Please try again or select a different payment method.
+    internal static let bankAccountFailureText = L10n.tr("Localizable", "Buy.bankAccountFailureText", fallback: "Please try again or select a different payment method.")
+    /// It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.
+    internal static let bankAccountSuccessText = L10n.tr("Localizable", "Buy.bankAccountSuccessText", fallback: "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.")
+    /// Your purchase is being processed
+    internal static let bankAccountSuccessTitle = L10n.tr("Localizable", "Buy.bankAccountSuccessTitle", fallback: "Your purchase is being processed")
     /// Billing address label on buy flow
     internal static let billingAddress = L10n.tr("Localizable", "Buy.BillingAddress", fallback: "Billing address")
     /// Buy min and max limit text
@@ -584,6 +598,10 @@ internal enum L10n {
     internal static let paymentMethod = L10n.tr("Localizable", "Buy.PaymentMethod", fallback: "Payment method")
     /// Pay with label in buy flow
     internal static let payWith = L10n.tr("Localizable", "Buy.PayWith", fallback: "Pay with")
+    /// Please check with your bank or try again later.
+    internal static let plaidErrorDescription = L10n.tr("Localizable", "Buy.plaidErrorDescription", fallback: "Please check with your bank or try again later.")
+    /// There was an error connecting your account via Plaid
+    internal static let plaidErrorTitle = L10n.tr("Localizable", "Buy.plaidErrorTitle", fallback: "There was an error connecting your account via Plaid")
     /// Processing payment
     internal static let processingPayment = L10n.tr("Localizable", "Buy.ProcessingPayment", fallback: "Processing payment")
     /// Purchase success text in purchase details screen
@@ -884,6 +902,8 @@ internal enum L10n {
     }
     /// We are currently having issues making a swap between this pair of coins. Please try again later.
     internal static let exchangeQuoteFailed = L10n.tr("Localizable", "ErrorMessages.ExchangeQuoteFailed", fallback: "We are currently having issues making a swap between this pair of coins. Please try again later.")
+    /// We are having temporary network issues. Please try again later.
+    internal static let exchangesUnavailable = L10n.tr("Localizable", "ErrorMessages.ExchangesUnavailable", fallback: "We are having temporary network issues. Please try again later.")
     /// Messaging unavailable alert title
     internal static let messagingUnavailableMessage = L10n.tr("Localizable", "ErrorMessages.messagingUnavailableMessage", fallback: "This device isn't configured to send messages.")
     /// Messaging unavailable alert title
@@ -1755,11 +1775,13 @@ internal enum L10n {
     /// Insufficient funds error
     internal static let insufficientFunds = L10n.tr("Localizable", "Send.insufficientFunds", fallback: "Insufficient Funds")
     /// e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token.
-    internal static func insufficientGasMessage(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Send.insufficientGasMessage", String(describing: p1), fallback: "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your Ethereum wallet now?")
+    internal static func insufficientGasMessage(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Send.insufficientGasMessage", String(describing: p1), String(describing: p2), fallback: "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?")
     }
-    /// Your ethereum balance is insufficient to complete this action.
-    internal static let insufficientGasTitle = L10n.tr("Localizable", "Send.insufficientGasTitle", fallback: "Insufficient Ethereum Balance")
+    /// Your balance is insufficient to complete this action.
+    internal static func insufficientGasTitle(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Send.insufficientGasTitle", p1, fallback: "Insufficient %s Balance")
+    }
     /// e.g. The destination is not a valid (bitcoin) address.
     internal static func invalidAddressMessage(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Send.invalidAddressMessage", String(describing: p1), fallback: "The destination address is not a valid %1$@ address.")
@@ -1815,7 +1837,7 @@ internal enum L10n {
     /// Send button label (for special case where the user specified send amount is too high and does not leave a balance to cover fees.)
     internal static let sendMaximum = L10n.tr("Localizable", "Send.sendMaximum", fallback: "Send maximum amount?")
     /// Error message when send request times out and we are not sure weather it succesfull or not.
-    internal static let timeOutBody = L10n.tr("Localizable", "Send.timeOutBody", fallback: "Timed out waiting for network response. Please wait 30 minutes for confirmation before retrying.")
+    internal static let timeOutBody = L10n.tr("Localizable", "Send.timeOutBody", fallback: "Timed out waiting for network response. Please wait 60 seconds for confirmation before retrying.")
     /// Send screen title (as in "this is the screen for sending money")
     internal static let title = L10n.tr("Localizable", "Send.title", fallback: "Send")
     /// Send money to label
@@ -2310,12 +2332,18 @@ internal enum L10n {
     internal static let pending = L10n.tr("Localizable", "Transaction.pending", fallback: "Pending")
     /// Pending purchase label in transaction view
     internal static let pendingPurchase = L10n.tr("Localizable", "Transaction.PendingPurchase", fallback: "Pending purchase")
+    /// Pending purchase with ACH
+    internal static let pendingPurchaseWithAch = L10n.tr("Localizable", "Transaction.PendingPurchaseWithAch", fallback: "Pending purchase with ACH")
     /// Pending swap label in transaction view
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
     /// Purchased label in transaction view
     internal static let purchased = L10n.tr("Localizable", "Transaction.Purchased", fallback: "Purchased")
+    /// Purchased with ACH
+    internal static let purchasedWithAch = L10n.tr("Localizable", "Transaction.PurchasedWithAch", fallback: "Purchased with ACH")
     /// Purchase failed label in transaction view
     internal static let purchaseFailed = L10n.tr("Localizable", "Transaction.PurchaseFailed", fallback: "Purchase failed")
+    /// Purchase with ACH failed
+    internal static let purchaseFailedWithAch = L10n.tr("Localizable", "Transaction.PurchaseFailedWithAch", fallback: "Purchase with ACH failed")
     /// Receive status text: 'In progress: 20%'
     internal static func receivedStatus(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Transaction.receivedStatus", String(describing: p1), fallback: "In progress: %1$@")

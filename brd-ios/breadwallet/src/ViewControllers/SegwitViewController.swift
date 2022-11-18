@@ -10,7 +10,7 @@ import UIKit
 
 class SegwitViewController: UIViewController {
     
-    let logo = UIImageView(image: UIImage(named: "SegWitLogo"))
+    let logo = UIImageView(image: Asset.segWitLogo.image)
     let label = UILabel.wrapping(font: .customBody(size: 14.0), color: LightColors.Text.one)
     let button = BRDButton(title: L10n.Segwit.enable, type: .secondary)
     private lazy var enabledView: WrapperView<FEInfoView> = {
@@ -33,7 +33,7 @@ class SegwitViewController: UIViewController {
                                     cancel: Presets.Button.secondary,
                                     wrappedView: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center)))
         
-        alert.setup(with: .init(trailing: .init(image: "close"),
+        alert.setup(with: .init(trailing: .init(image: Asset.close.name),
                                 confirm: .init(title: L10n.Button.continueAction),
                                 cancel: .init(title: L10n.Button.cancel),
                                 wrappedView: .text(L10n.Segwit.confirmChoiceLayout),

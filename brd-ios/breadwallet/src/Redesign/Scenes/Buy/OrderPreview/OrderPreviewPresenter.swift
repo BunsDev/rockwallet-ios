@@ -26,7 +26,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
               let isAchAccount = item.isAchAccount else { return }
         
         let to = toAmount.fiatValue
-        let infoImage = UIImage(named: "help")?.withRenderingMode(.alwaysOriginal)
+        let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         let toFiatValue = toAmount.fiatValue
         let toCryptoValue = ExchangeFormatter.crypto.string(for: toAmount.tokenValue) ?? ""
         let toCryptoDisplayImage = item.to?.currency.imageSquareBackground
@@ -43,9 +43,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue + networkFee + cardFee) ?? "", fiatCurrency)
-        let cardAchFee: TitleValueViewModel = isAchAccount ? .init(title: .text(L10n.Buy.achFee("\(quote.buyFee ?? 0)%")),
-                                                                   value: .text(cardFeeText),
-                                                                   infoImage: .image(infoImage)) :
+        let cardAchFee: TitleValueViewModel = isAchAccount ? .init(title: .text(L10n.Buy.achFee("$\(quote.buyFeeUsd ?? 0) + \(quote.buyFee ?? 0)%")),
+                                                                   value: .text(cardFeeText)) :
             .init(title: .text("\(L10n.Swap.cardFee) (\(quote.buyFee ?? 0)%)"),
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
@@ -110,6 +109,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             ],
             .payment: [
                 PaymentMethodViewModel(logo: card.displayImage,
+                                       type: card.type,
                                        cardNumber: .text(card.displayName),
                                        expiration: .text(CardDetailsFormatter.formatExpirationDate(month: card.expiryMonth, year: card.expiryYear)))
             ],
@@ -148,7 +148,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentCvvInfoPopup(actionResponse: OrderPreviewModels.CvvInfoPopup.ActionResponse) {
         let model = PopupViewModel(title: .text(L10n.Buy.securityCode),
-                                   imageName: "cards",
+                                   imageName: Asset.cards.name,
                                    body: L10n.Buy.securityCodePopup)
         
         viewController?.displayCvvInfoPopup(responseDisplay: .init(model: model))

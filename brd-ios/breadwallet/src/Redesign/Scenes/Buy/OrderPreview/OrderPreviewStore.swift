@@ -39,7 +39,9 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var paymentstatus: AddCard.Status?
     
     // TODO: update it according to BE data
-    var isAchAccount: Bool = false
+    var isAchAccount: Bool {
+        return card?.type == .bankAccount
+    }
     
     // MARK: - Aditional helpers
     var coreSystem: CoreSystem?

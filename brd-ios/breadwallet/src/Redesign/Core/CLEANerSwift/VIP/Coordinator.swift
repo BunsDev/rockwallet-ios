@@ -102,7 +102,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .swap, role: .kyc1) { showPopup in
                 guard showPopup else { return }
                 
-                guard UserManager.shared.profile?.canSwap == true else {
+                if UserManager.shared.profile?.canSwap == false {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon)
                     return
                 }
@@ -122,7 +122,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy, role: UserManager.shared.profile?.status == .levelOne ? .kyc2 : .kyc1) { showPopup in
                 guard showPopup else { return }
                 
-                guard UserManager.shared.profile?.canBuy == true else {
+                if UserManager.shared.profile?.canBuy == false {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon)
                     return
                 }
@@ -271,20 +271,18 @@ class BaseCoordinator: NSObject,
         
         switch UserManager.shared.profileResult {
         case .success(let profile):
-            guard let profile = profile else { return }
-            
-            let roles = profile.roles
-            let status = profile.status
+            let roles = profile?.roles
+            let status = profile?.status
             isKYCLevelTwo = status == .levelTwo(.levelTwo)
             
-            if roles.contains(.unverified)
-                || roles.isEmpty == true
-                || status == .emailPending
-                || status == .none {
+            if roles?.contains(.unverified) == true
+                || roles?.isEmpty == true
+                || status == VerificationStatus.emailPending
+                || status == VerificationStatus.none {
                 coordinator = RegistrationCoordinator(navigationController: nvc)
                 
             } else if let kycLevel = role,
-                      roles.contains(kycLevel) {
+                      roles?.contains(kycLevel) == true {
                 completion?(true)
             } else if role == nil {
                 completion?(true)

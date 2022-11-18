@@ -63,17 +63,17 @@ extension ProfileModels.NavigationItems {
     var model: NavigationViewModel {
         switch self {
         case .paymentMethods:
-            return .init(image: .imageName("card"),
+            return .init(image: .image(Asset.card.image),
                          label: .text(L10n.Buy.paymentMethod),
                          button: .init(image: nil))
             
         case .security:
-            return .init(image: .imageName("lock_closed"),
+            return .init(image: .image(Asset.lockClosed.image),
                          label: .text(L10n.MenuButton.security),
                          button: .init(image: nil))
 
         case .preferences:
-            return .init(image: .imageName("settings"),
+            return .init(image: .image(Asset.settings.image),
                          label: .text(L10n.Settings.preferences),
                          button: .init(image: nil))
         }

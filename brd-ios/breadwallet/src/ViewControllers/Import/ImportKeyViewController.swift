@@ -33,11 +33,11 @@ class ImportKeyViewController: UIViewController, Subscriber {
 
     private let wallet: Wallet
     private let header = UIView()
-    private let illustration = UIImageView(image: .init(named: "ImportIllustration"))
+    private let illustration = UIImageView(image: Asset.importIllustration.image)
     private let message = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     private let warning = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     private let button = BRDButton(title: L10n.Import.scan, type: .secondary)
-    private let bullet = UIImageView(image: .init(named: "cancel"))
+    private let bullet = UIImageView(image: Asset.cancel.image)
     private let balanceActivity = BRActivityViewController(message: L10n.Import.checking)
     private let importingActivity = BRActivityViewController(message: L10n.Import.importing)
     private let unlockingActivity = BRActivityViewController(message: L10n.Import.unlockingActivity)
@@ -202,7 +202,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
         let feeAmount = Amount(cryptoAmount: fee.fee, currency: wallet.currency)
         let message = L10n.Import.confirm(balanceAmount.fiatDescription, feeAmount.fiatDescription)
         
-        importConfirmationAlert.setup(with: .init(trailing: .init(image: "close"),
+        importConfirmationAlert.setup(with: .init(trailing: .init(image: Asset.close.name),
                                                   confirm: .init(title: L10n.Button.continueAction),
                                                   cancel: .init(title: L10n.Button.cancel),
                                                   wrappedView: .init(title: .text(L10n.Import.title),

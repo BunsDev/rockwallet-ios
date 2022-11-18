@@ -118,8 +118,8 @@ class PromptView: UIView {
     }
     
     func styleDismissButton() {
-        let normalImg = UIImage(named: "close")?.tinted(with: LightColors.Text.three)
-        let highlightedImg = UIImage(named: "close")?.tinted(with: LightColors.Text.three.withAlphaComponent(0.5))
+        let normalImg = Asset.close.image.tinted(with: LightColors.Text.three)
+        let highlightedImg = Asset.close.image.tinted(with: LightColors.Text.three.withAlphaComponent(0.5))
         
         dismissButton.setImage(normalImg, for: .normal)
         dismissButton.setImage(highlightedImg, for: .highlighted)
@@ -147,7 +147,7 @@ class PromptView: UIView {
         imageView.backgroundColor = LightColors.Background.cards
         imageView.layer.cornerRadius = imageViewSize / 2.0
         imageView.contentMode = .center
-        imageView.image = UIImage(named: "alert")?.tinted(with: LightColors.primary)
+        imageView.image = Asset.alert.image.tinted(with: LightColors.primary)
         
         container.backgroundColor = LightColors.Background.three
         container.layer.cornerRadius = CornerRadius.common.rawValue
