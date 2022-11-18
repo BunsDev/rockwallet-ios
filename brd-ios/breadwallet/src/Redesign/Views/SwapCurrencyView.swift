@@ -27,6 +27,7 @@ struct SwapCurrencyViewModel: ViewModel {
     var formattedTokenFeeString: String?
     var title: LabelViewModel?
     var feeDescription: LabelViewModel?
+    var selectionDisabled = false
 }
 
 class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>, UITextFieldDelegate {
@@ -327,6 +328,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         hideFeeAndAmountsStackView(noFee: noFee)
         
         decidePlaceholder()
+        selectorImageView.isHidden = viewModel.selectionDisabled
     }
     
     func hideFeeAndAmountsStackView(noFee: Bool) {

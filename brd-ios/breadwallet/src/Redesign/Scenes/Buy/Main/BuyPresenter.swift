@@ -12,12 +12,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     typealias Models = BuyModels
 
     weak var viewController: BuyViewController?
+    private var exchangeRateViewModel: ExchangeRateViewModel = .init()
+    private var paymentMethod: FESegmentControl.Values?
 
     // MARK: - BuyActionResponses
-    
-    private var exchangeRateViewModel = ExchangeRateViewModel()
-    private var paymentSegment = SegmentControlViewModel()
-    private var paymentMethod = CardSelectionViewModel()
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let sections: [Models.Sections] = [
@@ -29,22 +27,23 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        paymentSegment = SegmentControlViewModel(selectedIndex: .bankAccount)
+        let paymentSegment = SegmentControlViewModel(selectedIndex: .bankAccount)
         
+        let paymentMethodViewModel: CardSelectionViewModel
         switch paymentSegment.selectedIndex {
         case .bankAccount:
-            paymentMethod = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
+            paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                    subtitle: .text(L10n.Buy.linkBankAccount),
                                                    userInteractionEnabled: true)
         default:
-            paymentMethod = CardSelectionViewModel()
+            paymentMethodViewModel = CardSelectionViewModel()
         }
 
         let sectionRows: [Models.Sections: [ViewModel]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
-            .paymentMethod: [paymentMethod],
+            .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
                 LabelViewModel.text("")
             ]
@@ -63,7 +62,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let text = String(format: "1 %@ = %@ %@", to.uppercased(), ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", from)
         let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
         let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        let limitText = String(format: L10n.Buy.buyLimits(minText, maxText))
+        let limitText = paymentMethod == .bankAccount ? L10n.Buy.achLimits : String(format: L10n.Buy.buyLimits(minText, maxText))
         
         exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                       timer: TimerViewModel(till: quote.timestamp,
@@ -75,7 +74,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse) {
-        let cryptoModel: SwapCurrencyViewModel
+        paymentMethod = actionResponse.paymentMethod
+        var cryptoModel: SwapCurrencyViewModel
         let cardModel: CardSelectionViewModel
         
         let fromFiatValue = actionResponse.amount?.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: actionResponse.amount?.fiatValue)
@@ -89,26 +89,44 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
-        if let paymentCard = actionResponse.card, actionResponse.paymentSegmentValue == .card {
+        if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .card {
             cardModel = .init(logo: paymentCard.displayImage,
                               cardNumber: .text(paymentCard.displayName),
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
-        } else if let paymentCard = actionResponse.card, actionResponse.paymentSegmentValue == .bankAccount {
+        } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .bankAccount {
             cardModel = .init(title: .text(L10n.Buy.achPayments),
                               logo: .imageName("bank"),
                               cardNumber: .text(paymentCard.displayBankName),
-                              userInteractionEnabled: true) // need to be false, only one bank account can be added
-        } else if actionResponse.paymentSegmentValue == .card {
+                              userInteractionEnabled: false)
+            cryptoModel.selectionDisabled = true
+        } else if actionResponse.paymentMethod == .card {
             cardModel = .init(userInteractionEnabled: true)
         } else {
             cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                subtitle: .text(L10n.Buy.linkBankAccount),
                                                userInteractionEnabled: true)
+            cryptoModel.selectionDisabled = true
         }
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
+        presentLimits(quote: actionResponse.quote)
         
         guard actionResponse.handleErrors else { return }
+        handleError(actionResponse: actionResponse)
+    }
+    
+    private func presentLimits(quote: Quote?) {
+        guard let quote = quote else { return }
+        let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
+        let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
+        
+        let limitText = paymentMethod == .bankAccount ? L10n.Buy.achLimits : String(format: L10n.Buy.buyLimits(minText, maxText))
+        
+        viewController?.displayExchangeRate(responseDisplay: .init(rate: exchangeRateViewModel,
+                                                                   limits: .text(limitText)))
+    }
+    
+    private func handleError(actionResponse: BuyModels.Assets.ActionResponse) {
         let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
         let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
         let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
@@ -131,6 +149,14 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             // Remove error
             presentError(actionResponse: .init(error: nil))
         }
+    }
+    
+    private func presentAchData(actionResponse: BuyModels.Assets.ActionResponse) {
+        
+    }
+    
+    private func presentCardData(actionResponse: BuyModels.Assets.ActionResponse) {
+        
     }
     
     func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse) {
