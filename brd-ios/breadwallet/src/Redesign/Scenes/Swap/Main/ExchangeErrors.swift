@@ -56,7 +56,7 @@ enum ExchangeErrors: FEError {
             case .swap:
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
                 
-            case.bankAccount:
+            case.plaidConnection, .bankAccount:
                 // TODO: Add error messages
                 return ""
                 
@@ -70,7 +70,7 @@ enum ExchangeErrors: FEError {
             case .swap:
                 return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
                 
-            case.bankAccount:
+            case.plaidConnection, .bankAccount:
                 // TODO: Add error messages
                 return ""
                 
