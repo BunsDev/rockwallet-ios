@@ -64,7 +64,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction) {
-        PlaidLinkTokenWorker().execute() { [weak self] result in
+        PlaidLinkTokenWorker().execute { [weak self] result in
             switch result {
             case .success(let response):
                 guard let linkToken = response?.linkToken else { return }
@@ -90,8 +90,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
-              let toCurrency = dataStore?.toAmount?.currency,
-              let paymentSegmentValue = viewAction.paymentSegmentValue else {
+              let toCurrency = dataStore?.toAmount?.currency
+        else {
             presenter?.presentError(actionResponse: .init(error: BuyErrors.noQuote(from: C.usdCurrencyCode,
                                                                                    to: dataStore?.toAmount?.currency.code)))
             return
@@ -100,7 +100,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         let to: Amount
         
         dataStore?.values = viewAction
-        dataStore?.paymentSegmentValue = paymentSegmentValue
         
         if let value = viewAction.tokenValue,
            let crypto = ExchangeFormatter.current.number(from: value)?.decimalValue {
@@ -113,7 +112,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                            card: dataStore?.paymentCard,
                                                            quote: dataStore?.quote,
                                                            handleErrors: true,
-                                                           paymentSegmentValue: dataStore?.paymentSegmentValue))
+                                                           paymentMethod: dataStore?.paymentMethod))
             return
         }
         
@@ -123,7 +122,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.paymentCard,
                                                        quote: dataStore?.quote,
-                                                       paymentSegmentValue: dataStore?.paymentSegmentValue))
+                                                       paymentMethod: dataStore?.paymentMethod))
     }
     
     func getExchangeRate(viewAction: Models.Rate.ViewAction) {
@@ -179,7 +178,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
-                if self?.dataStore?.paymentSegmentValue == .card {
+                if self?.dataStore?.paymentMethod == .card {
                     self?.dataStore?.allPaymentCards = data?.filter { $0.type == .card }
                 } else {
                     self?.dataStore?.allPaymentCards = data?.filter { $0.type == .bankAccount }
@@ -197,5 +196,14 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             
             completion?(result)
         }
+    }
+    
+    func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
+        dataStore?.paymentMethod = viewAction.method
+        
+        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
+                                                       card: dataStore?.paymentCard,
+                                                       quote: dataStore?.quote,
+                                                       paymentMethod: dataStore?.paymentMethod))
     }
 }

@@ -38,7 +38,7 @@ enum BuyModels {
             var bankAccount: PaymentCard?
             var quote: Quote?
             var handleErrors = false
-            var paymentSegmentValue: FESegmentControl.Values?
+            var paymentMethod: FESegmentControl.Values?
         }
         
         struct ResponseDisplay {
@@ -75,7 +75,6 @@ enum BuyModels {
         struct ViewAction {
             var fiatValue: String?
             var tokenValue: String?
-            var paymentSegmentValue: FESegmentControl.Values?
         }
     }
     
@@ -146,6 +145,16 @@ enum BuyModels {
     
     struct Failure {
         struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {}
+    }
+    
+    struct PaymentMethod {
+        struct ViewAction {
+            var method: FESegmentControl.Values
+        }
         
         struct ActionResponse {}
         

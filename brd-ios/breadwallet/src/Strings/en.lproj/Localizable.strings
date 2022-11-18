@@ -595,6 +595,8 @@
 
 "Buy.achPayments" = "ACH Payments";
 
+"Buy.achLimits" = "Currently, minimum for buying with ACH is $30 USD and maximum is $100 USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
+
 /* Add card title for buy cryptos */
 "Buy.AddCard" = "Add card";
 

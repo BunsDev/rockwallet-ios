@@ -16,14 +16,14 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var values: BuyModels.Amounts.ViewAction = .init()
-    var paymentSegmentValue: FESegmentControl.Values = .bankAccount
+    var paymentMethod: FESegmentControl.Values? = .bankAccount
     var publicToken: String?
     var mask: String?
     
     override init() {
         super.init()
         let selectedCurrency: Currency
-        if paymentSegmentValue == .bankAccount {
+        if paymentMethod == .bankAccount {
             guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == "usdc" }) ?? Store.state.currencies.first else { return }
             selectedCurrency = currency
         } else {
@@ -53,7 +53,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
-    
     var autoSelectDefaultPaymentMethod = true
     
     // MARK: - Aditional helpers

@@ -22,6 +22,7 @@ protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
     func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction)
     func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction)
+    func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
 }
 
 protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
@@ -60,7 +61,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore {
     var keyStore: KeyStore? { get set }
     
     var autoSelectDefaultPaymentMethod: Bool { get set }
-    var paymentSegmentValue: FESegmentControl.Values { get set }
+    var paymentMethod: FESegmentControl.Values? { get set }
     var publicToken: String? { get set }
     var mask: String? { get set }
 }

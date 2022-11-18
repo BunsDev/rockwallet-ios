@@ -116,7 +116,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             }
             
             view.didTapSelectAsset = { [weak self] in
-                if self?.dataStore?.paymentSegmentValue == .card {
+                if self?.dataStore?.paymentMethod == .card {
                     self?.interactor?.navigateAssetSelector(viewAction: .init())
                 }
             }
@@ -140,7 +140,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                switch self?.dataStore?.paymentSegmentValue {
+                switch self?.dataStore?.paymentMethod {
                 case .bankAccount:
                     self?.interactor?.getLinkToken(viewAction: .init())
                 default:
@@ -168,7 +168,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
-                self?.interactor?.setAmount(viewAction: .init(paymentSegmentValue: segment))
+                self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
             }
         }
         
@@ -198,7 +198,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
-        switch dataStore?.paymentSegmentValue {
+        switch dataStore?.paymentMethod {
         case .bankAccount:
             if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == "USDC" }) {
                 supportedCurrencies = [usdCurrency]
