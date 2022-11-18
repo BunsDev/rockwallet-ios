@@ -25,7 +25,7 @@ struct PaymentMethodViewModel: ViewModel {
     var expiration: LabelViewModel?
     var cvvTitle: TitleValueViewModel? = .init(title: .text(L10n.Buy.confirmCVV),
                                                value: .text(""),
-                                               infoImage: .image(UIImage(named: "help")?.withRenderingMode(.alwaysOriginal)))
+                                               infoImage: .image(Asset.help.image.withRenderingMode(.alwaysOriginal)))
     var cvv: TextFieldModel? = .init(placeholder: L10n.Buy.cardCVV)
 }
 
