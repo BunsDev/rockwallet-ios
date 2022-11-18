@@ -13,7 +13,6 @@ import Foundation
 struct ServerResponse: Decodable {
     enum ErrorType: String, Decodable {
         case exchangesUnavailable = "Exchanges unavailable"
-        case empty
     }
     
     var result: String?
@@ -26,6 +25,6 @@ struct ServerResponse: Decodable {
         var serverMessage: String?
         var statusCode: Int { return Int(code ?? "") ?? -1 }
         var errorMessage: String { return serverMessage ?? ""  }
-        var errorType: ErrorType
+        var errorType: ErrorType?
     }
 }

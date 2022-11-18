@@ -33,13 +33,13 @@ enum ExchangeErrors: FEError {
     case selectAssets
     case authorizationFailed
     
-    var errorType: ServerResponse.ErrorType {
+    var errorType: ServerResponse.ErrorType? {
         switch self {
         case .supportedCurrencies(let error):
-            return (error as? NetworkingError)?.errorType ?? .empty
+            return (error as? NetworkingError)?.errorType
             
         default:
-            return .empty
+            return nil
         }
     }
     
