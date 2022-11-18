@@ -19,6 +19,18 @@ enum BuyErrors: FEError {
     case pinConfirmation
     case authorizationFailed
     case quoteFail
+    case supportedCurrencies(error: Error?)
+    case selectAssets
+    
+    var errorType: ServerResponse.ErrorType? {
+        switch self {
+        case .supportedCurrencies(let error):
+            return (error as? NetworkingError)?.errorType
+            
+        default:
+            return .empty
+        }
+    }
     
     var errorMessage: String {
         switch self {
@@ -33,7 +45,7 @@ enum BuyErrors: FEError {
             let to = to ?? "/"
             return L10n.ErrorMessages.noQuoteForPair(from, to)
             
-        case  .pinConfirmation:
+        case .pinConfirmation:
             return L10n.ErrorMessages.pinConfirmationFailed
             
         case .authorizationFailed:
@@ -41,6 +53,12 @@ enum BuyErrors: FEError {
             
         case .quoteFail:
             return L10n.ErrorMessages.exchangeQuoteFailed
+            
+        case .supportedCurrencies:
+            return L10n.ErrorMessages.exchangesUnavailable
+            
+        case .selectAssets:
+            return L10n.ErrorMessages.selectAssets
             
         }
     }

@@ -890,6 +890,8 @@ internal enum L10n {
     }
     /// We are currently having issues making a swap between this pair of coins. Please try again later.
     internal static let exchangeQuoteFailed = L10n.tr("Localizable", "ErrorMessages.ExchangeQuoteFailed", fallback: "We are currently having issues making a swap between this pair of coins. Please try again later.")
+    /// We are having temporary network issues. Please try again later.
+    internal static let exchangesUnavailable = L10n.tr("Localizable", "ErrorMessages.ExchangesUnavailable", fallback: "We are having temporary network issues. Please try again later.")
     /// Messaging unavailable alert title
     internal static let messagingUnavailableMessage = L10n.tr("Localizable", "ErrorMessages.messagingUnavailableMessage", fallback: "This device isn't configured to send messages.")
     /// Messaging unavailable alert title
