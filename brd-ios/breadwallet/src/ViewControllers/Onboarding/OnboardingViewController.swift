@@ -35,7 +35,7 @@ class OnboardingViewController: UIViewController {
     // restoration, PIN creation, etc.
     private var didExitWithAction: DidExitOnboardingWithAction?
         
-    private let logoImageView: UIImageView = .init(image: .init(named: "logo_vertical_white"))
+    private let logoImageView: UIImageView = .init(image: Asset.logoVerticalWhite.image)
     
     private var showingLogo: Bool = false {
         didSet {
@@ -436,7 +436,7 @@ class OnboardingViewController: UIViewController {
     }
     
     private func addBackAndSkipButtons() {
-        let image = UIImage(named: "back")
+        let image = Asset.back.image
         
         backButton.alpha = 0
         skipButton.alpha = 0

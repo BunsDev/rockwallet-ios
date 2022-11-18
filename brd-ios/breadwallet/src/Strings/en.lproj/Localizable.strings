@@ -595,6 +595,8 @@
 
 "Buy.achPayments" = "ACH Payments";
 
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
+
 /* Add card title for buy cryptos */
 "Buy.AddCard" = "Add card";
 
@@ -1973,10 +1975,10 @@
 "Send.insufficientFunds" = "Insufficient Funds";
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
-"Send.insufficientGasMessage" = "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your Ethereum wallet now?";
+"Send.insufficientGasMessage" = "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?";
 
-/* Your ethereum balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "Insufficient Ethereum Balance";
+/* Your balance is insufficient to complete this action. */
+"Send.insufficientGasTitle" = "Insufficient %s Balance";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "The destination address is not a valid %1$@ address.";
@@ -2051,7 +2053,7 @@
 "Send.sendMaximum" = "Send maximum amount?";
 
 /* Error message when send request times out and we are not sure weather it succesfull or not. */
-"Send.timeOutBody" = "Timed out waiting for network response. Please wait 30 minutes for confirmation before retrying.";
+"Send.timeOutBody" = "Timed out waiting for network response. Please wait 60 seconds for confirmation before retrying.";
 
 /* Send screen title (as in "this is the screen for sending money") */
 "Send.title" = "Send";
@@ -2580,14 +2582,20 @@
 /* Pending purchase label in transaction view */
 "Transaction.PendingPurchase" = "Pending purchase";
 
+"Transaction.PendingPurchaseWithAch" = "Pending purchase with ACH";
+
 /* Pending swap label in transaction view */
 "Transaction.PendingSwap" = "Pending swap";
 
 /* Purchased label in transaction view */
 "Transaction.Purchased" = "Purchased";
 
+"Transaction.PurchasedWithAch" = "Purchased with ACH";
+
 /* Purchase failed label in transaction view */
 "Transaction.PurchaseFailed" = "Purchase failed";
+
+"Transaction.PurchaseFailedWithAch" = "Purchase with ACH failed";
 
 /* Receive status text: 'In progress: 20%' */
 "Transaction.receivedStatus" = "In progress: %1$@";
@@ -3142,3 +3150,14 @@
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
+"Buy.plaidErrorTitle" = "There was an error connecting your account via Plaid";
+
+"Buy.plaidErrorDescription" = "Please check with your bank or try again later.";
+
+"Buy.achSuccess" = "ACH payment method was added successfully";
+
+"Buy.bankAccountSuccessTitle" = "Your purchase is being processed";
+
+"Buy.bankAccountSuccessText" = "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";
+
+"Buy.bankAccountFailureText" = "Please try again or select a different payment method.";

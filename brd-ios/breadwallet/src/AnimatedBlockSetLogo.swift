@@ -58,7 +58,7 @@ class AnimatedBlockSetLogo: UIView {
     }
     
     private func bindData() {
-        imageView.image = UIImage(named: "blockset")
+        imageView.image = Asset.blockset.image
     }
     
     func showDots() {

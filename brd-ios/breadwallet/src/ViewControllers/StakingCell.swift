@@ -76,7 +76,7 @@ class StakingCell: UIView, Subscriber {
         title.text = L10n.Staking.stakingTitle
         statusFlag.layer.cornerRadius = CornerRadius.common.rawValue
         statusFlag.clipsToBounds = true
-        indicatorView.image = UIImage(named: "RightArrow")
+        indicatorView.image = Asset.rightArrow.image
         
         updateStakingStatus()
         

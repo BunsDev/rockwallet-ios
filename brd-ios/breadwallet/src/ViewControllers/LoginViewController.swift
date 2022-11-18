@@ -69,7 +69,7 @@ class LoginViewController: UIViewController, Subscriber {
     }()
     private let disabledView: WalletDisabledView
     private var logo: UIImageView = {
-        let view = UIImageView(image: .init(named: "logo_icon"))
+        let view = UIImageView(image: Asset.logoIcon.image)
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -196,7 +196,7 @@ class LoginViewController: UIViewController, Subscriber {
     func setupCloseButton() {
         guard case .confirm = pinViewStyle else { return }
 
-        let closeButton = UIBarButtonItem(image: .init(named: "close"),
+        let closeButton = UIBarButtonItem(image: Asset.close.image,
                                           style: .plain,
                                           target: self,
                                           action: #selector(dismissModal))

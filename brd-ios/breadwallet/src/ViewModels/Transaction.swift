@@ -37,15 +37,15 @@ enum TransactionStatus: String, Hashable, ModelResponse {
     var viewModel: AssetViewModel? {
         switch self {
         case .pending:
-            return .init(icon: UIImage(named: "pendingIcon"), title: L10n.Staking.statusPending)
+            return .init(icon: Asset.pendingIcon.image, title: L10n.Staking.statusPending)
         case .complete:
-            return .init(icon: UIImage(named: "completeIcon"), title: L10n.Transaction.complete)
+            return .init(icon: Asset.completeIcon.image, title: L10n.Transaction.complete)
         case .failed:
-            return .init(icon: UIImage(named: "errorIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.failed)
+            return .init(icon: Asset.errorIcon.image.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.failed)
         case .refunded:
-            return .init(icon: UIImage(named: "refundedIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.refunded)
+            return .init(icon: Asset.refundedIcon.image.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.refunded)
         case .manuallySettled:
-            return .init(icon: UIImage(named: "completeIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.manuallySettled)
+            return .init(icon: Asset.completeIcon.image.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.manuallySettled)
         default:
             return nil
         }

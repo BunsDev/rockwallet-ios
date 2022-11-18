@@ -90,7 +90,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
                                                 style: .plain,
                                                 target: self,
                                                 action: #selector(dismissFlow))
-            barButtonItem.image = .init(named: "close")
+            barButtonItem.image = Asset.close.image
             navigationItem.rightBarButtonItem = barButtonItem
             
             navigationItem.setHidesBackButton(true, animated: false)
@@ -102,7 +102,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func setBackButton() {
-        let back = UIBarButtonItem(image: UIImage(named: "back"),
+        let back = UIBarButtonItem(image: Asset.back.image,
                                    style: .plain,
                                    target: self,
                                    action: #selector(onBackButton))

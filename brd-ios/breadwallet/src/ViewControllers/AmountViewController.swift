@@ -90,7 +90,7 @@ class AmountViewController: UIViewController {
     
     lazy var infoButton: UIButton = {
         let infoButton = UIButton()
-        infoButton.setImage(UIImage(named: "info"), for: .normal)
+        infoButton.setImage(Asset.info.image, for: .normal)
         infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         infoButton.isHidden = true
         

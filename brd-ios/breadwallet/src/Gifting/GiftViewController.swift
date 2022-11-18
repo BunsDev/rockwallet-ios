@@ -35,7 +35,7 @@ class GiftViewController: UIViewController {
     private let coinGeckoClient = CoinGeckoClient()
     private let gradientView = GradientView()
     private let headerView = GiftHeaderView()
-    private let qr = UIImageView(image: UIImage(named: "GiftQR"))
+    private let qr = UIImageView(image: Asset.empty.image)
     private let header = UILabel.wrapping(font: Fonts.Title.one, color: LightColors.Contrast.two)
     private let subHeader = UILabel.wrapping(font: Fonts.Body.one, color: LightColors.Contrast.two.withAlphaComponent(0.85))
     private let amountHeader = UILabel(font: Fonts.Body.three, color: LightColors.Contrast.two)

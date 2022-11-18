@@ -10,21 +10,70 @@
 
 import UIKit
 
+enum SuccessReason: SimpleMessage {
+    case buy
+    case bankAccount
+    
+    var iconName: String {
+        return "success"
+    }
+    
+    var title: String {
+        switch self {
+        case .buy:
+            return L10n.Buy.purchaseSuccessTitle
+            
+        case .bankAccount:
+            return L10n.Buy.bankAccountSuccessTitle
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .buy:
+            return L10n.Buy.purchaseSuccessText
+            
+        case .bankAccount:
+            return L10n.Buy.bankAccountSuccessText
+        }
+    }
+    
+    var firstButtonTitle: String? {
+        switch self {
+        default:
+            return L10n.Swap.backToHome
+        }
+    }
+    
+    var secondButtonTitle: String? {
+        switch self {
+        default:
+            return L10n.Buy.details
+        }
+    }
+}
+
 extension Scenes {
     static let Success = SuccessViewController.self
 }
 
 class SuccessViewController: BaseInfoViewController {
+    var success: SuccessReason? {
+        didSet {
+            prepareData()
+        }
+    }
+    
     var transactionType: Transaction.TransactionType = .defaultTransaction
-    override var imageName: String? { return "success" }
-    override var titleText: String? { return L10n.Buy.purchaseSuccessTitle }
-    override var descriptionText: String? { return L10n.Buy.purchaseSuccessText }
+    override var imageName: String? { return success?.iconName }
+    override var titleText: String? { return success?.title }
+    override var descriptionText: String? { return success?.description }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: L10n.Swap.backToHome, callback: { [weak self] in
+            .init(title: success?.firstButtonTitle, callback: { [weak self] in
                 self?.coordinator?.goBack(completion: {})
             }),
-            .init(title: L10n.Buy.details, isUnderlined: true, callback: { [weak self] in
+            .init(title: success?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
                 self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
             })
         ]

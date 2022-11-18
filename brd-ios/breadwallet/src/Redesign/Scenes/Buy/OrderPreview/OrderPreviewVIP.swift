@@ -53,7 +53,7 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
     var cvv: String? { get set }
     var paymentReference: String? { get set }
     var paymentstatus: AddCard.Status? { get set }
-    var isAchAccount: Bool { get set }
+    var isAchAccount: Bool { get }
 }
 
 protocol OrderPreviewDataPassing {

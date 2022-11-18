@@ -83,7 +83,7 @@ class AddCardInteractor: NSObject, Interactor, AddCardViewActions {
                 self?.presenter?.presentSubmit(actionResponse: .init(checkoutToken: response))
                 
             case .failure:
-                self?.presenter?.presentError(actionResponse: .init(error: BuyErrors.authorizationFailed))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.authorizationFailed))
             }
         }
     }

@@ -24,7 +24,7 @@ enum DemoModels {
         case asset
         case order
         
-        var header: AccessoryType? { return .advanced(.init(named: "swap"), "ROK", "ZELOOOO drago") }
+        var header: AccessoryType? { return .advanced(Asset.swap.image, "ROK", "ZELOOOO drago") }
         var footer: AccessoryType? { return nil }
     }
     

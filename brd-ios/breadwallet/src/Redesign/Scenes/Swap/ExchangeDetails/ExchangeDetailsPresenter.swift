@@ -130,7 +130,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                topRightText: "\(formattedCurrencyAmountString) / $\(formattedUsdAmountString) \(currencyCode)")
             ],
             Models.Section.image: [
-                ImageViewModel.image(UIImage(named: "arrow-down")?.tinted(with: LightColors.Text.three))
+                ImageViewModel.image(Asset.arrowDown.image.tinted(with: LightColors.Text.three))
             ],
             Models.Section.toCurrency: [
                 toCurrencyAssetViewModel
@@ -165,7 +165,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
     
     private static func generateAttributedOrderValue(with value: String, isCopyable: Bool) -> NSAttributedString {
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(named: "copy")?.withRenderingMode(.alwaysOriginal)
+        imageAttachment.image = Asset.copy.image.withRenderingMode(.alwaysOriginal)
         imageAttachment.bounds = CGRect(x: 0,
                                         y: -Margins.extraSmall.rawValue,
                                         width: ViewSizes.extraSmall.rawValue,

@@ -111,7 +111,7 @@ class AlertPresenter: Subscriber {
 
     private func showNotReachable() {
         guard notReachableAlert == nil else { return }
-        let alert = InAppAlert(message: L10n.Alert.noInternet, image: #imageLiteral(resourceName: "BrokenCloud"))
+        let alert = InAppAlert(message: L10n.Alert.noInternet, image: Asset.brokenCloud.image)
         notReachableAlert = alert
         
         guard let window = UIApplication.shared.activeWindow else { return }
