@@ -47,11 +47,22 @@ struct PaymentCard: ItemSelectable, Hashable {
     var image: UIImage?
     var accountName: String
     
-    var displayName: String? { return CardDetailsFormatter.formatNumber(last4: last4) }
-    var displayBankName: String? { return "\(accountName) - \(CardDetailsFormatter.formatBankNumber(last4: last4))" }
+    var displayName: String? {
+        switch type {
+        case .bankAccount:
+            return "\(accountName) - \(CardDetailsFormatter.formatBankNumber(last4: last4))"
+        default:
+            return CardDetailsFormatter.formatNumber(last4: last4)
+        }   
+    }
     
     var displayImage: ImageViewModel? {
-        return .imageName(scheme.rawValue)
+        switch type {
+        case .bankAccount:
+            return .image(Asset.bank.image) 
+        default:
+            return .imageName(scheme.rawValue)
+        }
     }
 }
 
