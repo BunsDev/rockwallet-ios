@@ -283,7 +283,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
-        coordinator?.showFailure(failure: .bankAccount)
+        coordinator?.showFailure(failure: .plaidConnection)
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
