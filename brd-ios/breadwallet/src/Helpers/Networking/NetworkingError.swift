@@ -6,12 +6,12 @@ import Foundation
 
 protocol FEError: Error {
     var errorMessage: String { get }
-    var errorType: ServerResponse.ErrorType { get }
+    var errorType: ServerResponse.ErrorType? { get }
 }
 
 struct GeneralError: FEError {
     var errorMessage: String = L10n.ErrorMessages.unknownError
-    var errorType: ServerResponse.ErrorType = .empty
+    var errorType: ServerResponse.ErrorType?
 }
 
 enum NetworkingError: FEError {
@@ -45,13 +45,13 @@ enum NetworkingError: FEError {
         }
     }
     
-    var errorType: ServerResponse.ErrorType {
+    var errorType: ServerResponse.ErrorType? {
         switch self {
         case .exchangesUnavailable:
             return .exchangesUnavailable
             
         default:
-            return .empty
+            return nil
         }
     }
     
@@ -101,7 +101,7 @@ public class NetworkingErrorManager {
         }
         
         let serverResponse = ServerResponse.parse(from: data, type: ServerResponse.self)
-        let errorType = ServerResponse.ErrorType(rawValue: serverResponse?.errorType ?? "") ?? .empty
+        let errorType = ServerResponse.ErrorType(rawValue: serverResponse?.errorType ?? "")
         var error = serverResponse?.error
         error?.errorType = errorType
         
