@@ -13,7 +13,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
 
     weak var viewController: BuyViewController?
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
-    private var paymentMethod: FESegmentControl.Values?
 
     // MARK: - BuyActionResponses
     
@@ -58,11 +57,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
               let quote = actionResponse.quote else {
             return
         }
-        
+
         let text = String(format: "1 %@ = %@ %@", to.uppercased(), ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", from)
         let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
         let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        let limitText = paymentMethod == .bankAccount ? L10n.Buy.achLimits(minText, maxText) : L10n.Buy.buyLimits(minText, maxText)
+        let limitText = actionResponse.method == .bankAccount ? L10n.Buy.achLimits(minText, maxText) : L10n.Buy.buyLimits(minText, maxText)
         
         exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                       timer: TimerViewModel(till: quote.timestamp,
@@ -74,7 +73,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse) {
-        paymentMethod = actionResponse.paymentMethod
         var cryptoModel: SwapCurrencyViewModel
         let cardModel: CardSelectionViewModel
         
@@ -109,21 +107,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             cryptoModel.selectionDisabled = true
         }
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
-        presentLimits(quote: actionResponse.quote)
         
         guard actionResponse.handleErrors else { return }
         handleError(actionResponse: actionResponse)
-    }
-    
-    private func presentLimits(quote: Quote?) {
-        guard let quote = quote else { return }
-        let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
-        let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        
-        let limitText = paymentMethod == .bankAccount ? L10n.Buy.achLimits(minText, maxText) : L10n.Buy.buyLimits(minText, maxText)
-        
-        viewController?.displayExchangeRate(responseDisplay: .init(rate: exchangeRateViewModel,
-                                                                   limits: .text(limitText)))
     }
     
     private func handleError(actionResponse: BuyModels.Assets.ActionResponse) {

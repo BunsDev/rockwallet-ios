@@ -126,17 +126,20 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func getExchangeRate(viewAction: Models.Rate.ViewAction) {
-        guard let toCurrency = dataStore?.toAmount?.currency.code else { return }
+        guard let toCurrency = dataStore?.toAmount?.currency.code,
+                let method = dataStore?.paymentMethod
+        else { return }
         
         let data = QuoteRequestData(from: C.usdCurrencyCode.lowercased(),
                                     to: toCurrency,
-                                    type: .buy(dataStore?.paymentMethod))
+                                    type: .buy(method))
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let quote):
                 self?.dataStore?.quote = quote
                 
-                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
+                self?.presenter?.presentExchangeRate(actionResponse: .init(method: method,
+                                                                           quote: quote,
                                                                            from: C.usdCurrencyCode,
                                                                            to: toCurrency))
                 
@@ -202,6 +205,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
+        
         getExchangeRate(viewAction: .init())
     }
 }
