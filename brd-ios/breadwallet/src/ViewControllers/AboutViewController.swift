@@ -7,7 +7,7 @@ import UIKit
 class AboutViewController: UIViewController {
     private lazy var aboutHeaderView: UIImageView = {
         let logo = UIImageView()
-        logo.image = UIImage(named: "logo_vertical")
+        logo.image = Asset.logoVertical.image
         
         return logo
     }()

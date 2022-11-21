@@ -75,7 +75,7 @@ class EnterPhraseCell: UICollectionViewCell {
     // MARK: - Private
     let textField = UITextField()
     private let nextField = UIButton.icon(image: #imageLiteral(resourceName: "RightArrow"), accessibilityLabel: L10n.RecoverWallet.rightArrow, position: .middle)
-    private let previousField = UIButton.icon(image: #imageLiteral(resourceName: "LeftArrow"), accessibilityLabel: L10n.RecoverWallet.leftArrow, position: .middle)
+    private let previousField = UIButton.icon(image: Asset.leftArrow.image, accessibilityLabel: L10n.RecoverWallet.leftArrow, position: .middle)
     private let done = UIButton(type: .system)
     fileprivate let focusBar = UIView(color: LightColors.primary)
     fileprivate var hasDisplayedInvalidState = false
@@ -133,9 +133,9 @@ class EnterPhraseCell: UICollectionViewCell {
     }
 
     private var accessoryView: UIView {
-        let view = UIView(color: .secondaryButton)
+        let view = UIView(color: LightColors.Background.one)
         view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 44)
-        let topBorder = UIView(color: .secondaryShadow)
+        let topBorder = UIView(color: LightColors.Outline.one)
         view.addSubview(topBorder)
         view.addSubview(previousField)
         view.addSubview(nextField)

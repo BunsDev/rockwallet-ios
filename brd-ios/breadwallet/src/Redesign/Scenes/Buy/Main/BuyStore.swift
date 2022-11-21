@@ -16,14 +16,21 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var values: BuyModels.Amounts.ViewAction = .init()
+    var paymentMethod: FESegmentControl.Values? = .card
+    var publicToken: String?
+    var mask: String?
     
     override init() {
         super.init()
-        guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first
-        else {
-            return
+        let selectedCurrency: Currency
+        if paymentMethod == .bankAccount {
+            guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else { return }
+            selectedCurrency = currency
+        } else {
+            guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first  else { return  }
+            selectedCurrency = currency
         }
-        toAmount = .zero(currency)
+        toAmount = .zero(selectedCurrency)
     }
     
     var feeAmount: Amount? {
@@ -46,7 +53,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
-    
     var autoSelectDefaultPaymentMethod = true
     
     // MARK: - Aditional helpers

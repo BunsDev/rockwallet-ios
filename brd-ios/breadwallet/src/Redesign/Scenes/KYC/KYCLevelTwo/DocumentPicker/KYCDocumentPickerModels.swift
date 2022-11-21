@@ -39,7 +39,7 @@ enum KYCDocumentPickerModels {
         
         struct ResponseDisplay {
             var model: KYCCameraImagePickerModel?
-            var device: AVCaptureDevice
+            var isSelfie: Bool
             var checklist: [ChecklistItemViewModel]
         }
     }

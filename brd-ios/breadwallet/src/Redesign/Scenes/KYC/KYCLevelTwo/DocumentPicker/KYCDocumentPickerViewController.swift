@@ -36,7 +36,7 @@ class KYCDocumentPickerViewController: BaseTableViewController<KYCCoordinator,
         case .documents:
             cell = self.tableView(tableView, navigationCellForRowAt: indexPath)
             (cell as? WrapperTableViewCell<NavigationItemView>)?.setup({ view in
-                view.configure(with: .init(image: Presets.Image.primary,
+                view.configure(with: .init(image: BackgroundConfiguration(tintColor: LightColors.Text.one),
                                            label: .init(font: Fonts.Body.one,
                                                         textColor: LightColors.Contrast.one),
                                            background: .init(backgroundColor: LightColors.Background.cards)))
@@ -79,7 +79,7 @@ class KYCDocumentPickerViewController: BaseTableViewController<KYCCoordinator,
         LoadingView.hide()
         
         coordinator?.showImagePicker(model: responseDisplay.model,
-                                     device: responseDisplay.device) { [weak self] image in
+                                     isSelfie: responseDisplay.isSelfie) { [weak self] image in
             guard let image = image else { return }
             self?.coordinator?.showDocumentReview(checklist: responseDisplay.checklist, image: image)
         }
@@ -96,6 +96,6 @@ class KYCDocumentPickerViewController: BaseTableViewController<KYCCoordinator,
 
 protocol ImagePickable: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func showImagePicker(model: KYCCameraImagePickerModel?,
-                         device: AVCaptureDevice,
+                         isSelfie: Bool,
                          completion: ((UIImage?) -> Void)?)
 }

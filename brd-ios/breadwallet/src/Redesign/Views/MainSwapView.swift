@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import SnapKit
 
 struct MainSwapConfiguration: Configurable {
     var shadow: ShadowConfiguration?
@@ -52,7 +51,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
     
     private lazy var swapButton: FEButton = {
         let view = FEButton()
-        view.setImage(UIImage(named: "swap"), for: .normal)
+        view.setImage(Asset.swap.image, for: .normal)
         view.addTarget(self, action: #selector(switchPlacesButtonTapped), for: .touchUpInside)
         return view
     }()

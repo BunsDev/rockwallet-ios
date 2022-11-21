@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import SnapKit
 
 enum Kyc2: String, Equatable {
     case notStarted = "KYC2_NOT_STARTED"
@@ -104,7 +103,7 @@ enum VerificationStatus: Equatable {
         switch self {
         case .none, .email:
             return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.Account.accountLimits),
-                                 headerTrailing: .init(image: "info"),
+                                 headerTrailing: .init(image: Asset.info.name),
                                  status: VerificationStatus.none,
                                  description: .text(L10n.Account.fullAccess),
                                  button: .init(title: L10n.VerifyAccount.button.uppercased()),
@@ -112,34 +111,34 @@ enum VerificationStatus: Equatable {
             
         case .emailPending, .levelTwo(.submitted):
             return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.Account.accountLimits),
-                                 headerTrailing: .init(image: "info"),
+                                 headerTrailing: .init(image: Asset.info.name),
                                  status: VerificationStatus.emailPending,
                                  description: .text(L10n.Account.verifiedAccountMessage),
                                  dismissType: .persistent)
             
         case .levelOne, .levelTwo(.notStarted):
             return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.Account.accountLimits),
-                                 headerTrailing: .init(image: "info"),
+                                 headerTrailing: .init(image: Asset.info.name),
                                  status: VerificationStatus.levelOne,
                                  description: .text(L10n.Account.currentLimit),
                                  button: .init(title: L10n.Account.upgradeLimits.uppercased()),
                                  dismissType: .persistent)
         case .levelTwo(.levelTwo):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
-                                 headerTrailing: .init(image: "info"),
+                                 headerTrailing: .init(image: Asset.info.name),
                                  status: VerificationStatus.levelTwo(.levelTwo),
                                  description: .text(L10n.Account.swapAndBuyLimit),
                                  dismissType: .persistent)
         case .levelTwo(.expired), .levelTwo(.resubmit):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
-                                 headerTrailing: .init(image: "info"),
+                                 headerTrailing: .init(image: Asset.info.name),
                                  status: VerificationStatus.levelTwo(.resubmit),
                                  description: .text(L10n.Account.dataIssues),
                                  button: .init(title: L10n.Account.verificationDeclined.uppercased()),
                                  dismissType: .persistent)
         case .levelTwo(.declined):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
-                                 headerTrailing: .init(image: "info"),
+                                 headerTrailing: .init(image: Asset.info.name),
                                  status: VerificationStatus.levelTwo(.declined),
                                  description: .text(L10n.Account.dataIssues),
                                  button: .init(title: L10n.Account.verificationDeclined.uppercased()),
@@ -157,7 +156,6 @@ struct VerificationConfiguration: Configurable {
     var shadow: ShadowConfiguration?
     var background: BackgroundConfiguration?
     var title: LabelConfiguration?
-    // TODO: custom
     var status: StatusViewConfiguration?
     var infoButton: ButtonConfiguration?
     var description: LabelConfiguration?
@@ -172,7 +170,6 @@ enum KYC {
 struct VerificationViewModel: ViewModel {
     var kyc: KYC
     var title: LabelViewModel?
-    // TODO: custom
     var status: VerificationStatus
     var infoButton: ButtonViewModel?
     var description: LabelViewModel?
@@ -223,7 +220,7 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
     
     private lazy var statusImageView: WrapperView<FEImageView> = {
         let view = WrapperView<FEImageView>()
-        view.wrappedView.setup(with: .init(.imageName("selected")))
+        view.wrappedView.setup(with: .init(.image(Asset.selected.image)))
         view.tintColor = LightColors.primary
         return view
     }()
@@ -235,7 +232,7 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
     
     private lazy var arrowImageView: WrapperView<FEImageView> = {
         let view = WrapperView<FEImageView>()
-        view.wrappedView.setup(with: .init(.imageName("forward")))
+        view.wrappedView.setup(with: .init(.image(Asset.forward.image)))
         return view
     }()
     

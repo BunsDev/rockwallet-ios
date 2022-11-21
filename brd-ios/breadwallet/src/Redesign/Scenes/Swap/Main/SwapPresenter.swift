@@ -140,10 +140,10 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             || actionResponse.from?.currency.code == actionResponse.to?.currency.code {
             let first = actionResponse.from?.currency.code
             let second = actionResponse.to?.currency.code
-            presentError(actionResponse: .init(error: SwapErrors.noQuote(from: first, to: second)))
+            presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: first, to: second)))
             hasError = true
         } else if ExchangeManager.shared.canSwap(actionResponse.from?.currency) == false {
-            presentError(actionResponse: .init(error: SwapErrors.pendingSwap))
+            presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
             hasError = true
         } else {
             let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
@@ -162,32 +162,31 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 
             case _ where fiatValue > (actionResponse.baseBalance?.fiatValue ?? 0):
                 // Value higher than balance
-                let value = tokenValue + (fromFee?.tokenValue ?? 0)
-                let error = SwapErrors.balanceTooLow(balance: value, currency: actionResponse.from?.currency.code ?? "")
+                let error = ExchangeErrors.balanceTooLow(balance: fromFee?.tokenValue ?? 0, currency: actionResponse.from?.currency.code ?? "")
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
             case _ where fiatValue < minimumValue:
                 // Value below minimum crypto
-                presentError(actionResponse: .init(error: SwapErrors.tooLow(amount: minimumValue, currency: tokenCode)))
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: tokenCode, reason: .swap)))
                 hasError = true
                 
             case _ where fiatValue > dailyLimit:
                 // Over daily limit
-                let limit = UserManager.shared.profile?.swapAllowanceDaily ?? 0
-                let error = profile?.status == .levelTwo(.levelTwo) ? SwapErrors.overDailyLimitLevel2(limit: limit) : SwapErrors.overDailyLimit(limit: limit)
+                let limit = profile?.swapAllowanceDaily ?? 0
+                let error = profile?.status == .levelTwo(.levelTwo) ? ExchangeErrors.overDailyLimitLevel2(limit: limit) : ExchangeErrors.overDailyLimit(limit: limit)
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
             case _ where fiatValue > lifetimeLimit:
                 // Over lifetime limit
-                let limit = UserManager.shared.profile?.swapAllowanceLifetime ?? 0
-                presentError(actionResponse: .init(error: SwapErrors.overLifetimeLimit(limit: limit)))
+                let limit = profile?.swapAllowanceLifetime ?? 0
+                presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
                 hasError = true
                 
             case _ where fiatValue > exchangeLimit:
                 // Over exchange limit ???!
-                presentError(actionResponse: .init(error: SwapErrors.overExchangeLimit))
+                presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
                 hasError = true
                 
             default:
@@ -212,14 +211,14 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
         guard !isAccessDenied(error: actionResponse.error) else { return }
         
-        if let error = actionResponse.error as? SwapErrors, error.errorMessage == SwapErrors.selectAssets.errorMessage {
+        if let error = actionResponse.error as? ExchangeErrors, error.errorMessage == ExchangeErrors.selectAssets.errorMessage {
             presentAssetInfoPopup(actionResponse: .init())
         } else if let error = actionResponse.error as? FEError {
             let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
             let config = Presets.InfoView.error
             
             switch error.errorMessage {
-            case SwapErrors.quoteFail.errorMessage:
+            case ExchangeErrors.quoteFail.errorMessage:
                 viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: .init(),
                                                                            accountLimits: nil))
                 

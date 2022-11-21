@@ -17,7 +17,7 @@ struct ChecklistItemConfiguration: Configurable {
 
 struct ChecklistItemViewModel: ViewModel {
     var title: LabelViewModel?
-    var image: ImageViewModel? = .imageName("check")
+    var image: ImageViewModel? = .image(Asset.check.image)
 }
 
 class ChecklistItemView: FEView<ChecklistItemConfiguration, ChecklistItemViewModel> {

@@ -17,8 +17,8 @@ class StakingCell: UIView, Subscriber {
     private let currency: Currency
     private let title = UILabel(font: .customBody(size: 14), color: LightColors.Text.one)
     private var indicatorView = UIImageView()
-    private let topPadding = UIView(color: .whiteTint)
-    private let bottomPadding = UIView(color: .whiteTint)
+    private let topPadding = UIView(color: LightColors.Background.one)
+    private let bottomPadding = UIView(color: LightColors.Background.one)
     private let statusFlag = UILabel(font: .customBody(size: 11))
     private var wallet: Wallet?
     
@@ -76,7 +76,7 @@ class StakingCell: UIView, Subscriber {
         title.text = L10n.Staking.stakingTitle
         statusFlag.layer.cornerRadius = CornerRadius.common.rawValue
         statusFlag.clipsToBounds = true
-        indicatorView.image = UIImage(named: "RightArrow")
+        indicatorView.image = Asset.rightArrow.image
         
         updateStakingStatus()
         

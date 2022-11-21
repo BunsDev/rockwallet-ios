@@ -12,10 +12,12 @@ import Foundation
 
 struct PlaidPublicTokenRequestData: RequestModelData {
     let publicToken: String?
+    let mask: String?
     
     func getParameters() -> [String: Any] {
         return [
-            "public_token": publicToken ?? ""
+            "public_token": publicToken ?? "",
+            "mask": mask ?? ""
         ]
     }
 }

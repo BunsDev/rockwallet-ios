@@ -35,7 +35,7 @@ class OnboardingViewController: UIViewController {
     // restoration, PIN creation, etc.
     private var didExitWithAction: DidExitOnboardingWithAction?
         
-    private let logoImageView: UIImageView = .init(image: .init(named: "logo_vertical_white"))
+    private let logoImageView: UIImageView = .init(image: Asset.logoVerticalWhite.image)
     
     private var showingLogo: Bool = false {
         didSet {
@@ -309,7 +309,7 @@ class OnboardingViewController: UIViewController {
             // create the subheadings
             let subheadingLabel = makeHeadingLabel(text: page.subheading, 
                                                    font: UIFont.onboardingSubheading(),
-                                                   color: .onboardingSubheadingText)
+                                                   color: LightColors.Contrast.two)
             view.addSubview(subheadingLabel)
             
             animationConstraint = subheadingLabel.topAnchor.constraint(equalTo: headingLabel.bottomAnchor, 
@@ -436,7 +436,7 @@ class OnboardingViewController: UIViewController {
     }
     
     private func addBackAndSkipButtons() {
-        let image = UIImage(named: "back")
+        let image = Asset.back.image
         
         backButton.alpha = 0
         skipButton.alpha = 0
@@ -461,7 +461,7 @@ class OnboardingViewController: UIViewController {
         
         skipButton.setTitle(L10n.Onboarding.skip, for: .normal)
         skipButton.titleLabel?.font = UIFont.onboardingSkipButton()
-        skipButton.setTitleColor(.onboardingSkipButtonTitle, for: .normal)
+        skipButton.setTitleColor(LightColors.Text.three, for: .normal)
         skipButton.addTarget(self, action: #selector(skipTapped(sender:)), for: .touchUpInside)
         
         view.addSubview(skipButton)

@@ -6,7 +6,7 @@ import UIKit
 
 class AboutHeaderView: UIView {
     private lazy var mainLogoView: UIImageView = {
-        let mainLogoView = UIImageView(image: UIImage(named: "logo_icon"))
+        let mainLogoView = UIImageView(image: Asset.logoIcon.image)
         mainLogoView.translatesAutoresizingMaskIntoConstraints = false
         mainLogoView.contentMode = .scaleAspectFit
         
@@ -14,7 +14,7 @@ class AboutHeaderView: UIView {
     }()
     
     private lazy var mainLogoTextView: UIImageView = {
-        let mainLogoTextView = UIImageView(image: UIImage(named: "logo"))
+        let mainLogoTextView = UIImageView(image: Asset.logo.image)
         mainLogoTextView.translatesAutoresizingMaskIntoConstraints = false
         mainLogoTextView.contentMode = .scaleAspectFit
         
@@ -22,7 +22,7 @@ class AboutHeaderView: UIView {
     }()
     
     private lazy var separator: UIView = {
-        let separator = UIView(color: .secondaryShadow)
+        let separator = UIView(color: LightColors.Outline.two)
         separator.translatesAutoresizingMaskIntoConstraints = false
         
         return separator

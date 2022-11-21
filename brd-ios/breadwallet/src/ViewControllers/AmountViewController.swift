@@ -90,7 +90,7 @@ class AmountViewController: UIViewController {
     
     lazy var infoButton: UIButton = {
         let infoButton = UIButton()
-        infoButton.setImage(UIImage(named: "info"), for: .normal)
+        infoButton.setImage(Asset.info.image, for: .normal)
         infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         infoButton.isHidden = true
         
@@ -340,7 +340,7 @@ class AmountViewController: UIViewController {
         }
         
         if let max = maximum {
-            amountLabel.textColor = amount > max ? UIColor.cameraGuideNegative : .darkText
+            amountLabel.textColor = amount > max ? LightColors.Error.one : LightColors.Text.two
         }
     }
 

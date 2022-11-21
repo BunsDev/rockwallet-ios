@@ -36,8 +36,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     }
     
     func decideInterface(for viewController: UIViewController?) {
-        // TODO: This needs to be cleaned up and maybe work in an adaptive way?!
-        
         guard let viewController = viewController else {
             backgroundColor = LightColors.Contrast.one
             tintColor = LightColors.Contrast.one
@@ -47,7 +45,8 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         }
         
         switch viewController {
-        case is AccountViewController, is HomeScreenViewController:
+        case is AccountViewController,
+            is HomeScreenViewController:
             backgroundColor = .clear
             tintColor = LightColors.Text.three
             
@@ -63,8 +62,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = LightColors.primary
             tintColor = LightColors.Contrast.two
             
-        case is DefaultCurrencyViewController,
-            is ShareDataViewController,
+        case is ShareDataViewController,
             is BuyViewController,
             is SwapViewController,
             is AddCardViewController,
@@ -97,7 +95,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
     }
     
     func setNormalNavigationBar() {
-        let backImage = UIImage(named: "back")
+        let backImage = Asset.back.image
         
         let normalAppearance = UINavigationBarAppearance()
         normalAppearance.setBackIndicatorImage(backImage, transitionMaskImage: backImage)

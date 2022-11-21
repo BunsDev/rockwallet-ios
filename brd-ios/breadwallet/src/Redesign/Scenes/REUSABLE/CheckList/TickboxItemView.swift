@@ -21,8 +21,8 @@ struct TickboxItemViewModel: ViewModel {
 class TickboxItemView: FEView<TickboxItemConfiguration, TickboxItemViewModel> {
     private lazy var checkmarkButton: FEButton = {
         let view = FEButton()
-        view.setImage(UIImage(named: "checkbox"), for: .normal)
-        view.setImage(UIImage(named: "checkbox-selected"), for: .selected)
+        view.setImage(Asset.checkbox.image, for: .normal)
+        view.setImage(Asset.checkboxSelected.image, for: .selected)
         view.addTarget(self, action: #selector(tickboxTapped), for: .touchUpInside)
         return view
     }()

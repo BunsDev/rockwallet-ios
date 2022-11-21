@@ -17,8 +17,14 @@ enum CustomerRole: String, Codable {
     case kyc2
 }
 
+enum ExchangeFlow {
+    case buy
+    case swap
+}
+
 struct ProfileResponseData: ModelResponse {
     var country: String?
+    var state: String?
     var dateOfBirth: String?
     var firstName: String?
     var lastName: String?
@@ -28,6 +34,7 @@ struct ProfileResponseData: ModelResponse {
     var roles: [CustomerRole]
     
     var exchangeLimits: ExchangeLimits?
+    var kycAccessRights: AccessRights
     
     struct ExchangeLimits: Codable {
         var swapAllowanceLifetime: Decimal
@@ -41,10 +48,18 @@ struct ProfileResponseData: ModelResponse {
         var usedBuyLifetime: Decimal
         var usedBuyDaily: Decimal
     }
+    
+    struct AccessRights: Codable {
+        var hasSwapAccess: Bool
+        var hasBuyAccess: Bool
+        var hasAchAccess: Bool
+        var restrictionReason: String?
+    }
 }
 
 struct Profile: Model {
     var country: String?
+    var state: String?
     var dateOfBirth: String?
     var firstName: String?
     var lastName: String?
@@ -62,6 +77,11 @@ struct Profile: Model {
     var usedBuyLifetime: Decimal
     var usedBuyDaily: Decimal
     var roles: [CustomerRole]
+    
+    var canBuy: Bool
+    var canSwap: Bool
+    var canUseAch: Bool
+    var restrictionReason: String?
     
     var swapDailyRemainingLimit: Decimal {
         return swapAllowanceDaily - usedSwapDaily
@@ -97,6 +117,7 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
         let usedBuyDaily = limits?.usedBuyDaily ?? 0
 
         return .init(country: response.country,
+                     state: response.state,
                      dateOfBirth: response.dateOfBirth,
                      firstName: response.firstName,
                      lastName: response.lastName,
@@ -113,7 +134,11 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      usedSwapDaily: usedSwapDaily,
                      usedBuyLifetime: usedBuyLifetime,
                      usedBuyDaily: usedBuyDaily,
-                     roles: response.roles)
+                     roles: response.roles,
+                     canBuy: response.kycAccessRights.hasBuyAccess,
+                     canSwap: response.kycAccessRights.hasSwapAccess,
+                     canUseAch: response.kycAccessRights.hasAchAccess,
+                     restrictionReason: response.kycAccessRights.restrictionReason)
     }
 }
 

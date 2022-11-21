@@ -10,19 +10,38 @@ import UIKit
 
 class SegwitViewController: UIViewController {
     
-    let logo = UIImageView(image: UIImage(named: "SegWitLogo"))
-    let label = UILabel.wrapping(font: .customBody(size: 14.0), color: .almostBlack)
-    let button = BRDButton(title: L10n.Segwit.enable, type: .primary)
-    let confirmView = EnableSegwitView()
-    let enabled = SegwitEnabledView()
+    let logo = UIImageView(image: Asset.segWitLogo.image)
+    let label = UILabel.wrapping(font: .customBody(size: 14.0), color: LightColors.Text.one)
+    let button = BRDButton(title: L10n.Segwit.enable, type: .secondary)
+    private lazy var enabledView: WrapperView<FEInfoView> = {
+        let view = WrapperView<FEInfoView>()
+        view.configure(background: .init(backgroundColor: LightColors.Background.three, border: Presets.Border.commonPlain))
+        view.wrappedView.configure(with: .init(title: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.three),
+                                               description: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)))
+        view.wrappedView.setup(with: .init(title: .text(L10n.Segwit.confirmationConfirmationTitle),
+                                           description: .text(L10n.Segwit.confirmationConfirmationBody)))
+        view.content.setupCustomMargins(all: .extraLarge)
+        view.alpha = 0
+        return view
+    }()
     
-    var buttonXConstraintStart: NSLayoutConstraint?
-    var buttonXConstraintEnd: NSLayoutConstraint?
-    var confirmXConstraintStart: NSLayoutConstraint?
-    var confirmXConstraintEnd: NSLayoutConstraint?
-    var confirmXConstraintFinal: NSLayoutConstraint?
-    var enabledYConstraintStart: NSLayoutConstraint?
-    var enabledYConstraintEnd: NSLayoutConstraint?
+    private lazy var segwitAlert: WrapperPopupView<FELabel> = {
+        let alert = WrapperPopupView<FELabel>()
+        alert.configure(with: .init(background: .init(backgroundColor: LightColors.Background.one, border: Presets.Border.commonPlain),
+                                    trailing: Presets.Button.blackIcon,
+                                    confirm: Presets.Button.primary,
+                                    cancel: Presets.Button.secondary,
+                                    wrappedView: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center)))
+        
+        alert.setup(with: .init(trailing: .init(image: Asset.close.name),
+                                confirm: .init(title: L10n.Button.continueAction),
+                                cancel: .init(title: L10n.Button.cancel),
+                                wrappedView: .text(L10n.Segwit.confirmChoiceLayout),
+                                hideSeparator: true))
+        alert.confirmCallback = didContinue
+        alert.alpha = 0
+        return alert
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +54,6 @@ class SegwitViewController: UIViewController {
         view.addSubview(logo)
         view.addSubview(label)
         view.addSubview(button)
-        view.addSubview(confirmView)
-        view.addSubview(enabled)
     }
     
     private func addConstraints() {
@@ -50,28 +67,11 @@ class SegwitViewController: UIViewController {
             label.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: Margins.huge.rawValue),
             label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.huge.rawValue)])
         
-        buttonXConstraintStart = button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        buttonXConstraintEnd = button.trailingAnchor.constraint(equalTo: view.leadingAnchor, constant: -Margins.large.rawValue)
         button.constrain([
-            buttonXConstraintStart,
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             button.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -Margins.custom(6)),
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Margins.huge.rawValue),
-            button.heightAnchor.constraint(equalToConstant: 48.0)])
-        
-        confirmXConstraintStart = confirmView.leadingAnchor.constraint(equalTo: view.trailingAnchor, constant: Margins.large.rawValue)
-        confirmXConstraintEnd = confirmView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        confirmXConstraintFinal = confirmView.trailingAnchor.constraint(equalTo: view.leadingAnchor, constant: -Margins.large.rawValue)
-        confirmView.constrain([
-            confirmView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Margins.huge.rawValue),
-            confirmXConstraintStart,
-            confirmView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -Margins.custom(6))])
-        
-        enabledYConstraintStart = enabled.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 50.0)
-        enabledYConstraintEnd = enabled.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Margins.large.rawValue)
-        enabled.constrain([
-            enabledYConstraintStart,
-            enabled.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            enabled.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -Margins.custom(6))])
+            button.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue)])
     }
     
     private func setInitialData() {
@@ -83,56 +83,42 @@ class SegwitViewController: UIViewController {
         button.tap = { [weak self] in
             self?.showConfirmView()
         }
-        
-        confirmView.didCancel = { [weak self] in
-            self?.hideConfirmView()
-        }
-        
-        confirmView.didContinue = { [weak self] in
-            self?.didContinue()
-        }
-        
-        enabled.home.tap = { [weak self] in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
-        }
-        
     }
     
     private func didContinue() {
+        button.title = L10n.Segwit.homeButton.uppercased()
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
         UserDefaults.hasOptedInSegwit = true
         Store.trigger(name: .optInSegWit)
-        UIView.spring(0.6, animations: {
-            self.confirmXConstraintEnd?.isActive = false
-            self.enabledYConstraintStart?.isActive = false
-            NSLayoutConstraint.activate([self.confirmXConstraintFinal!, self.enabledYConstraintEnd!])
-            self.view.layoutIfNeeded()
-        }, completion: { _ in
-            self.enabled.checkView.drawCircle()
-            self.enabled.checkView.drawCheckBox()
-        })
-    }
-    
-    private func hideConfirmView() {
-        UIView.spring(Presets.Animation.duration, animations: {
-            self.button.isHidden = false
-            self.confirmXConstraintEnd?.isActive = false
-            self.buttonXConstraintEnd?.isActive = false
-            NSLayoutConstraint.activate([self.confirmXConstraintStart!, self.buttonXConstraintStart!])
-            self.view.layoutIfNeeded()
-        }, completion: { _ in
-        })
+        
+        view.addSubview(enabledView)
+        
+        enabledView.snp.makeConstraints { make in
+            make.bottom.equalTo(button.snp.top).offset(-Margins.huge.rawValue)
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(Margins.large.rawValue)
+            make.height.equalTo(ViewSizes.extraExtraHuge.rawValue)
+        }
+        
+        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            self?.enabledView.alpha = 1
+        }
     }
     
     private func showConfirmView() {
-        UIView.spring(Presets.Animation.duration, animations: {
-            self.buttonXConstraintStart?.isActive = false
-            self.confirmXConstraintStart?.isActive = false
-            NSLayoutConstraint.activate([self.confirmXConstraintEnd!, self.buttonXConstraintEnd!])
-            self.view.layoutIfNeeded()
-        }, completion: { _ in
-        })
+        guard enabledView.superview == nil else {
+            navigationController?.dismiss(animated: true)
+            return
+        }
+        navigationController?.view.addSubview(segwitAlert)
+        segwitAlert.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            self?.segwitAlert.alpha = 1
+        }
     }
     
 }

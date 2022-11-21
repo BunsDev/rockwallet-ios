@@ -3,3 +3,9 @@ strings:
   outputs:
     - templateName: structured-swift5
       output: ../../breadwallet/src/Constants/Strings.swift
+xcassets:
+  inputs:
+    - ../../breadwallet/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: ../../breadwallet/src/Constants/Assets.swift

@@ -48,7 +48,7 @@ class ProfileView: FEView<ProfileConfiguration, ProfileViewModel> {
     
     private lazy var editImageView: WrapperView<FEImageView> = {
         let view = WrapperView<FEImageView>()
-        view.wrappedView.setup(with: .init(.imageName("edit")))
+        view.wrappedView.setup(with: .init(.image(Asset.edit.image)))
         view.isUserInteractionEnabled = false
         view.isHidden = true
         return view
