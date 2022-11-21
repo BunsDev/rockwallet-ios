@@ -3160,3 +3160,5 @@
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
+"Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
+
