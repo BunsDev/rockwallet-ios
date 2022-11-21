@@ -14,7 +14,6 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/cosmos.git",
       "state" : {
-        "branch" : "main",
         "revision" : "a300c97b1db75696f935e01029faccc4eac1459e"
       }
     },
