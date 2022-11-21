@@ -119,7 +119,7 @@ class BaseCoordinator: NSObject,
     
     func showBuy(coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .buy, role: UserManager.shared.profile?.status == .levelOne ? .kyc2 : .kyc1) { showPopup in
+            upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
                 guard showPopup else { return }
                 
                 if UserManager.shared.profile?.canBuy == false {
