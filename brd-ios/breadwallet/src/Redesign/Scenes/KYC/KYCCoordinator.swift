@@ -132,9 +132,15 @@ class KYCCoordinator: BaseCoordinator,
 
 extension KYCCoordinator: ImagePickable {
     func showImagePicker(model: KYCCameraImagePickerModel?,
-                         device: AVCaptureDevice,
+                         isSelfie: Bool,
                          completion: ((UIImage?) -> Void)?) {
         let controller = KYCCameraViewController()
+        let device: AVCaptureDevice?
+        if isSelfie {
+            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+        } else {
+            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        }
         
         let backButtonVisibility = navigationController.children.last is KYCDocumentPickerViewController == false
         controller.navigationItem.hidesBackButton = backButtonVisibility

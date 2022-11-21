@@ -21,7 +21,7 @@ struct KYCCameraImagePickerModel: ViewModel {
     var confirmation: LabelViewModel?
 }
 
-class KYCCameraViewController: UIViewController, ViewProtocol {
+class KYCCameraViewController: UIViewController, ViewProtocol, UIPickerViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     private var spinner: UIActivityIndicatorView!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -133,13 +133,15 @@ class KYCCameraViewController: UIViewController, ViewProtocol {
         sessionQueue.async {
             self.configureSession()
             
-            guard let videoDeviceInput = self.videoDeviceInput else { return }
-            let dimensions = CMVideoFormatDescriptionGetDimensions(videoDeviceInput.device.activeFormat.formatDescription)
-            let height = CGFloat(dimensions.height)
-            let width = CGFloat(dimensions.width)
-            
-            DispatchQueue.main.async {
-                self.previewView.snp.makeConstraints { make in
+            DispatchQueue.main.async { [weak self] in
+                guard let videoDeviceInput = self?.videoDeviceInput else {
+                    return
+                }
+                let dimensions = CMVideoFormatDescriptionGetDimensions(videoDeviceInput.device.activeFormat.formatDescription)
+                let height = CGFloat(dimensions.height)
+                let width = CGFloat(dimensions.width)
+                
+                self?.previewView.snp.makeConstraints { make in
                     make.centerX.centerY.equalToSuperview()
                     make.height.equalToSuperview().multipliedBy((height / width) * 0.8)
                     make.width.equalToSuperview()
@@ -151,6 +153,19 @@ class KYCCameraViewController: UIViewController, ViewProtocol {
             self.spinner = UIActivityIndicatorView()
             self.spinner.color = UIColor.yellow
             self.previewView.addSubview(self.spinner)
+        }
+    }
+    
+    private func showLibrary() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .photoLibrary
+            self.navigationController?.present(picker, animated: true, completion: nil)
         }
     }
     
@@ -187,15 +202,17 @@ class KYCCameraViewController: UIViewController, ViewProtocol {
                 }
                 
             case .configurationFailed:
-                DispatchQueue.main.async {
-                    let alertController = UIAlertController(title: nil, message: L10n.Alert.unableCapture, preferredStyle: .alert)
-                    
-                    alertController.addAction(UIAlertAction(title: NSLocalizedString(L10n.Button.ok, comment: ""),
-                                                            style: .cancel,
-                                                            handler: nil))
-                    
-                    self.present(alertController, animated: true, completion: nil)
-                }
+                self.showLibrary()
+//
+//                DispatchQueue.main.async {
+//                    let alertController = UIAlertController(title: nil, message: L10n.Alert.unableCapture, preferredStyle: .alert)
+//
+//                    alertController.addAction(UIAlertAction(title: NSLocalizedString(L10n.Button.ok, comment: ""),
+//                                                            style: .cancel,
+//                                                            handler: nil))
+//
+//                    self.present(alertController, animated: true, completion: nil)
+//                }
             }
         }
     }
@@ -419,6 +436,19 @@ class KYCCameraViewController: UIViewController, ViewProtocol {
             self.inProgressPhotoCaptureDelegates[photoCaptureProcessor.requestedPhotoSettings.uniqueID] = photoCaptureProcessor
             self.photoOutput.capturePhoto(with: photoSettings, delegate: photoCaptureProcessor)
         }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        var newImage: UIImage
+        if let possibleImage = info[.editedImage] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info[.originalImage] as? UIImage {
+            newImage = possibleImage
+        } else {
+            return
+        }
+        photoSelected?(newImage)
     }
     
     // MARK: KVO and Notifications
