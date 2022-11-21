@@ -29,7 +29,7 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
     
     private lazy var continueButton: FEButton = {
         let view = FEButton()
-        view.configure(with: Presets.Button.secondary)
+        view.configure(with: Presets.Button.primary)
         view.setup(with: .init(title: L10n.RecoveryKeyFlow.goToWalletButtonTitle))
         return view
     }()
@@ -74,7 +74,7 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
         constrainContinueButton(continueButton)
         
         let titles = [L10n.RecoveryKeyFlow.successHeading, L10n.RecoveryKeyFlow.successSubheading]
-        let xInsets: CGFloat = E.isSmallScreen ? 40 : 62
+        let xInsets: CGFloat = E.isSmallScreen ? Margins.extraExtraHuge.rawValue : Margins.extraExtraHuge.rawValue * 2
         
         continueButton.setup(with: .init(title: shouldShowGoToWalletButton ? L10n.RecoveryKeyFlow.goToWalletButtonTitle : L10n.Button.done))
         

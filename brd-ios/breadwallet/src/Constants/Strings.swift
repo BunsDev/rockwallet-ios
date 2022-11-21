@@ -1646,8 +1646,6 @@ internal enum L10n {
     internal static let title1 = L10n.tr("Localizable", "RecoveryKeyOnboarding.title1", fallback: "Generate your private Recovery Phrase")
     /// Write down your Recovery Phrase
     internal static let title2 = L10n.tr("Localizable", "RecoveryKeyOnboarding.title2", fallback: "Write down your Recovery Phrase")
-    /// Keep your Recovery Phrase in a secure location
-    internal static let title3 = L10n.tr("Localizable", "RecoveryKeyOnboarding.title3", fallback: "Keep your Recovery Phrase in a secure location")
     /// Generate your private Recovery Phrase
     internal static let titlePage1 = L10n.tr("Localizable", "RecoveryKeyOnboarding.titlePage1", fallback: "Generate your private Recovery Phrase")
   }
