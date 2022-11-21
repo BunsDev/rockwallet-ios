@@ -203,16 +203,6 @@ class KYCCameraViewController: UIViewController, ViewProtocol, UIPickerViewDeleg
                 
             case .configurationFailed:
                 self.showLibrary()
-//
-//                DispatchQueue.main.async {
-//                    let alertController = UIAlertController(title: nil, message: L10n.Alert.unableCapture, preferredStyle: .alert)
-//
-//                    alertController.addAction(UIAlertAction(title: NSLocalizedString(L10n.Button.ok, comment: ""),
-//                                                            style: .cancel,
-//                                                            handler: nil))
-//
-//                    self.present(alertController, animated: true, completion: nil)
-//                }
             }
         }
     }
