@@ -5469,8 +5469,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/cosmos.git";
 			requirement = {
-				kind = revision;
-				revision = a300c97b1db75696f935e01029faccc4eac1459e;
+				kind = exactVersion;
+				version = 5.0.2;
 			};
 		};
 		7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
