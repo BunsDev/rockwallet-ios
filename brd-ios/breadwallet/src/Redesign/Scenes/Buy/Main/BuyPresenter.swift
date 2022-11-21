@@ -10,10 +10,11 @@ import UIKit
 
 final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     typealias Models = BuyModels
-
+    
     weak var viewController: BuyViewController?
+    
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
-
+    
     // MARK: - BuyActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
@@ -32,12 +33,12 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         switch paymentSegment.selectedIndex {
         case .bankAccount:
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
-                                                   subtitle: .text(L10n.Buy.linkBankAccount),
-                                                   userInteractionEnabled: true)
+                                                            subtitle: .text(L10n.Buy.linkBankAccount),
+                                                            userInteractionEnabled: true)
         default:
             paymentMethodViewModel = CardSelectionViewModel()
         }
-
+        
         let sectionRows: [Models.Sections: [ViewModel]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
@@ -50,14 +51,14 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
-
+    
     func presentExchangeRate(actionResponse: BuyModels.Rate.ActionResponse) {
         guard let from = actionResponse.from,
               let to = actionResponse.to,
               let quote = actionResponse.quote else {
             return
         }
-
+        
         let text = String(format: "1 %@ = %@ %@", to.uppercased(), ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", from)
         let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
         let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
@@ -117,6 +118,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
         let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
         
+        let profile = UserManager.shared.profile
+        let lifetimeLimit = profile?.buyLifetimeRemainingLimit ?? 0
+        
         switch fiat {
         case _ where fiat <= 0:
             // Fiat value is below 0
@@ -127,8 +131,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             // Value below minimum Fiat
             presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: C.usdCurrencyCode, reason: .buy)))
             
+        case _ where fiat > lifetimeLimit:
+            // Over lifetime limit
+            let limit = UserManager.shared.profile?.buyAllowanceLifetime ?? 0
+            presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
+            
         case _ where fiat > maximumAmount:
-            // Over exchange limit ???
+            // Over exchange limit
             presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: C.usdCurrencyCode, reason: .buy)))
             
         default:
@@ -185,5 +194,5 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     // MARK: - Additional Helpers
-
+    
 }
