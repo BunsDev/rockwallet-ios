@@ -126,17 +126,18 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             // Fiat value is below 0
             presentError(actionResponse: .init(error: nil))
             
-        case _ where fiat < minimumAmount,
-                            _ where minimumAmount > maximumAmount:
+        case _ where fiat < minimumAmount:
             // Value below minimum Fiat
             presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: C.usdCurrencyCode, reason: .buy)))
             
-        case _ where fiat > lifetimeLimit:
+        case _ where fiat > lifetimeLimit,
+            _ where minimumAmount > lifetimeLimit:
             // Over lifetime limit
             let limit = profile?.buyAllowanceLifetime ?? 0
             presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
             
-        case _ where fiat > maximumAmount:
+        case _ where fiat > maximumAmount,
+            _ where minimumAmount > maximumAmount:
             // Over exchange limit
             presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: C.usdCurrencyCode, reason: .buy)))
             
