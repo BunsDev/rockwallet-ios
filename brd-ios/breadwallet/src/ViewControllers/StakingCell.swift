@@ -12,7 +12,7 @@ import UIKit
 
 class StakingCell: UIView, Subscriber {
     
-    private let iconContainer = UIView(color: .transparentIconBackground)
+    private let iconContainer = UIView(color: .clear)
     private let icon = UIImageView()
     private let currency: Currency
     private let title = UILabel(font: .customBody(size: 14), color: LightColors.Text.one)

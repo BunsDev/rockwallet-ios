@@ -28,9 +28,9 @@ class PhraseView: UIView {
         label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.small.rawValue, left: Margins.large.rawValue, bottom: -Margins.small.rawValue, right: -Margins.large.rawValue))
         label.textColor = .black
         label.text = phrase
-        label.font = UIFont.customBold(size: 16.0)
+        label.font = Fonts.Subtitle.one
         label.textAlignment = .center
-        backgroundColor = .pink
+        backgroundColor = LightColors.Error.two
         layer.cornerRadius = 10.0
     }
 
