@@ -44,7 +44,7 @@ class VerifyAccountViewController: BaseInfoViewController {
                 self?.coordinator?.showVerifications()
             }),
             .init(title: L10n.Button.maybeLater, isUnderlined: true, callback: { [weak self] in
-                self?.coordinator?.goBack(completion: {})
+                self?.coordinator?.dismissFlow()
             })
         ]
     }

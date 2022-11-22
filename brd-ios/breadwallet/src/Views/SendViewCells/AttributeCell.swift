@@ -111,7 +111,7 @@ class AttributeCell: UIView {
         textField.keyboardType = attributeDefintion.keyboardType
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
-        label.textColor = .grayTextTint
+        label.textColor = LightColors.Text.one
         contentLabel.lineBreakMode = .byTruncatingMiddle
 
         textField.editingChanged = { [weak self] in

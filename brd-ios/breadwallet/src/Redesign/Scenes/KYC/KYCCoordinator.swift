@@ -116,11 +116,6 @@ class KYCCoordinator: BaseCoordinator,
     
     // MARK: - Aditional helpers
     
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
-    }
-    
     @objc func popFlow(sender: UIBarButtonItem) {
         if navigationController.children.count == 1 {
             dismissFlow()

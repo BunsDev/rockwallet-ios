@@ -198,9 +198,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     func displaySubmit(responseDisplay: KYCBasicModels.Submit.ResponseDisplay) {
         coordinator?.showOverlay(with: .success) {
             UserManager.shared.refresh { [weak self] _ in
-                self?.coordinator?.goBack(completion: {
-                    // TODO: .goBack() does not work!
-                })
+                self?.coordinator?.dismissFlow()
             }
         }
     }

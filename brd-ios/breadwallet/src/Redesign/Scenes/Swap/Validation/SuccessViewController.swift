@@ -71,7 +71,7 @@ class SuccessViewController: BaseInfoViewController {
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: success?.firstButtonTitle, callback: { [weak self] in
-                self?.coordinator?.goBack(completion: {})
+                self?.coordinator?.dismissFlow()
             }),
             .init(title: success?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
                 self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
