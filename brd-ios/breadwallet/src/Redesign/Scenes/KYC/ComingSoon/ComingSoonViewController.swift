@@ -23,7 +23,7 @@ class ComingSoonViewController: BaseInfoViewController {
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: L10n.ComingSoon.Buttons.backHome, callback: { [weak self] in
-                self?.coordinator?.goBack()
+                self?.coordinator?.dismissFlow()
             }),
             .init(title: L10n.ComingSoon.Buttons.contactSupport, isUnderlined: true, callback: { [weak self] in
                 self?.coordinator?.showSupport()
