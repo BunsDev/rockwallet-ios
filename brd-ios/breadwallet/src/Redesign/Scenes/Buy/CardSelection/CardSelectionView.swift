@@ -133,14 +133,16 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         arrowImageView.setup(with: viewModel?.arrow)
         arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden) || viewModel?.userInteractionEnabled == false
         
+        let moreOption = viewModel?.expiration != nil && titleLabel.isHidden
+        
         cardDetailsView.setup(with: .init(logo: viewModel?.logo,
                                           title: titleLabel.isHidden == true ? viewModel?.title : nil,
                                           cardNumber: viewModel?.cardNumber,
                                           expiration: viewModel?.expiration,
-                                          moreOption: false))
+                                          moreOption: moreOption))
         
         spacerView.isHidden = arrowImageView.isHidden
-        isUserInteractionEnabled = viewModel?.userInteractionEnabled == true
+        isUserInteractionEnabled = viewModel?.userInteractionEnabled == true || moreOption
     }
     
     @objc private func cardSelectorTapped(_ sender: Any) {

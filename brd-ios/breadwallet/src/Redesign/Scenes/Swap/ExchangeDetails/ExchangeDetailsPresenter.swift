@@ -84,6 +84,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let transactionFromValue = String(describing: detail.source.transactionId ?? "")
         let transactionToValue = String(describing: detail.destination.transactionId ?? detail.status.rawValue.localizedCapitalized)
         let transactionToValueIsCopyable = detail.destination.transactionId != nil
+        let displayFeeTitle = detail.source.paymentInstrument.type == .card ? L10n.Swap.cardFee : L10n.Buy.achFeeText
         
         var toCurrencyAssetViewModel = AssetViewModel()
         
@@ -112,7 +113,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
             Models.Section.buyOrder: [
                 BuyOrderViewModel(rateValue: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                                   amount: .init(title: .text("\(L10n.Swap.amountPurchased)"), value: .text(amountText), infoImage: nil),
-                                  cardFee: .init(title: .text("\(L10n.Swap.cardFee)"),
+                                  cardFee: .init(title: .text(displayFeeTitle),
                                                  value: .text(cardFeeText),
                                                  infoImage: nil),
                                   networkFee: .init(title: .text("\(L10n.Swap.miningNetworkFee)"), value: .text(networkFeeText), infoImage: nil),
