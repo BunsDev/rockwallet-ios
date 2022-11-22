@@ -192,8 +192,9 @@ class BaseCoordinator: NSObject,
     /// Determines whether the viewcontroller or navigation stack are being dismissed
     func goBack(completion: (() -> Void)? = nil) {
         guard parentCoordinator != nil,
-              parentCoordinator?.navigationController != navigationController else {
-            navigationController.popViewController(animated: true)
+              parentCoordinator?.navigationController != navigationController,
+              navigationController.viewControllers.count == 0 else {
+                  completion?()
             return
         }
         navigationController.dismiss(animated: true) {
@@ -203,9 +204,7 @@ class BaseCoordinator: NSObject,
     }
     
     func popToRoot(completion: (() -> Void)? = nil) {
-        navigationController.popToRootViewController(animated: true) {
-            completion?()
-        }
+        navigationController.popToRootViewController(animated: true, completion: completion)
     }
 
     /// Remove the child coordinator from the stack after iit finnished its flow
