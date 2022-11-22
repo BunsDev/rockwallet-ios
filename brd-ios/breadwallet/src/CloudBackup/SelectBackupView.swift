@@ -76,7 +76,7 @@ struct BackupCell: View {
     let backup: CloudBackup
     @SwiftUI.Binding var isOn: Bool
     
-    private let gradient = Gradient(colors: [Color(UIColor.gradientStart), Color(UIColor.gradientEnd)])
+    private let gradient = Gradient(colors: [])
     
     var body: some View {
         HStack {

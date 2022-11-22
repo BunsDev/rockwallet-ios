@@ -13,7 +13,7 @@ import UIKit
 class GiftCurrencyCell: UIView {
 
     private let currency = Currencies.shared.btc
-    private let iconContainer = UIView(color: .transparentIconBackground)
+    private let iconContainer = UIView(color: .clear)
     private let icon = UIImageView()
     private let currencyName = UILabel(font: Fonts.Body.one, color: LightColors.Text.one)
     private let price = UILabel(font: Fonts.Body.three, color: LightColors.Text.two)

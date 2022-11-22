@@ -22,7 +22,7 @@ class RedeemContainer: UIView {
         didLayout = true
         let gradient = CAGradientLayer()
         gradient.frame = bounds
-        gradient.colors = [UIColor.gradientStart.cgColor, UIColor.gradientEnd.cgColor] as [Any]
+        gradient.colors = []
         gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
         gradient.startPoint = CGPoint(x: 1.0, y: 0.0)
         gradient.cornerRadius = cornerRadius
