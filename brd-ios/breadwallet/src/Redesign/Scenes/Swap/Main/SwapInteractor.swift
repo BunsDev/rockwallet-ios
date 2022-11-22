@@ -317,7 +317,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         if let balance = sender?.wallet.currency.state?.balance {
             let amount = dataStore?.from ?? Amount(decimalAmount: 0, isFiat: false, currency: dataStore?.from?.currency ?? balance.currency)
             if amount > balance {
-                let error = SwapErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
+                let error = ExchangeErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
                 self.presenter?.presentError(actionResponse: .init(error: error))
                 return
             }
