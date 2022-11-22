@@ -313,6 +313,16 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                    withdrawalQuantity: toTokenValue,
                                    destination: address)
         
+        // We need to make sure the swap from amount is still less than the balance
+        if let balance = sender?.wallet.currency.state?.balance {
+            let amount = dataStore?.from ?? Amount(decimalAmount: 0, isFiat: false, currency: dataStore?.from?.currency ?? balance.currency)
+            if amount > balance {
+                let error = ExchangeErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
+                self.presenter?.presentError(actionResponse: .init(error: error))
+                return
+            }
+        }
+        
         SwapWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
