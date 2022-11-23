@@ -352,8 +352,6 @@ class ApplicationController: Subscriber {
     
     private func afterLoginFlow() {
         UserManager.shared.refresh { [weak self] result in
-            self?.homeScreenViewController?.showPrompts?()
-            
             switch result {
             case .success(let profile):
                 guard profile?.status == VerificationStatus.none || profile?.status == .emailPending || profile?.roles.contains(.unverified) == true else { return }
@@ -387,12 +385,6 @@ class ApplicationController: Subscriber {
     
     private func addHomeScreenHandlers(homeScreen: HomeScreenViewController,
                                        navigationController: UINavigationController) {
-        
-        homeScreen.showPrompts = { [weak self] in
-            // TODO: Should be refactored with Coordinators.
-            self?.homeScreenViewController?.attemptShowKYCPrompt()
-        }
-        
         homeScreen.didSelectCurrency = { [unowned self] currency in
             let wallet = self.coreSystem.wallet(for: currency)
             let accountViewController = AccountViewController(currency: currency, wallet: wallet)
@@ -435,9 +427,7 @@ class ApplicationController: Subscriber {
                     coordinator?.showVerificationsModally()
                 }
 
-            case .failure(let error):
-                guard (error as? NetworkingError) == .sessionExpired else { return }
-                
+            case .failure:
                 coordinator?.showRegistration(shouldShowProfile: true)
                 
             default:

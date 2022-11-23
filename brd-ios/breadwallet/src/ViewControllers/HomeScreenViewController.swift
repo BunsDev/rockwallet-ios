@@ -72,7 +72,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
-    var showPrompts: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
     var isInExchangeFlow = false
@@ -124,7 +123,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         isRefreshing = true
         
         UserManager.shared.refresh { [weak self] _ in
-            self?.attemptShowKYCPrompt()
+            self?.attemptShowGeneralPrompt()
         }
         
         Currencies.shared.reloadCurrencies()
@@ -146,7 +145,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        attemptShowKYCPrompt()
+        attemptShowGeneralPrompt()
     }
     
     override func viewDidLoad() {
@@ -180,7 +179,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         subHeaderView.addSubview(totalAssetsTitleLabel)
         subHeaderView.addSubview(totalAssetsAmountLabel)
         
-        view.addSubview(promptContainerStack)
+        view.addSubview(promptContainerScrollView)
+        promptContainerScrollView.addSubview(promptContainerStack)
         
         assetListTableView.refreshControl = pullToRefreshControl
         pullToRefreshControl.layer.zPosition = assetListTableView.view.layer.zPosition - 1
@@ -206,16 +206,24 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             logoImageView.widthAnchor.constraint(equalToConstant: 40),
             logoImageView.heightAnchor.constraint(equalToConstant: 48)])
         
+        promptContainerScrollView.constrain([
+            promptContainerScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.large.rawValue),
+            promptContainerScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.large.rawValue),
+            promptContainerScrollView.topAnchor.constraint(equalTo: subHeaderView.bottomAnchor, constant: Margins.medium.rawValue),
+            promptContainerScrollView.heightAnchor.constraint(equalToConstant: ViewSizes.minimum.rawValue).priority(.defaultLow)])
+        
         promptContainerStack.constrain([
-            promptContainerStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.large.rawValue),
-            promptContainerStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.large.rawValue),
-            promptContainerStack.topAnchor.constraint(equalTo: subHeaderView.bottomAnchor, constant: Margins.huge.rawValue),
-            promptContainerStack.heightAnchor.constraint(equalToConstant: ViewSizes.minimum.rawValue).priority(.defaultLow)])
+            promptContainerStack.leadingAnchor.constraint(equalTo: promptContainerScrollView.leadingAnchor),
+            promptContainerStack.trailingAnchor.constraint(equalTo: promptContainerScrollView.trailingAnchor),
+            promptContainerStack.topAnchor.constraint(equalTo: promptContainerScrollView.topAnchor),
+            promptContainerStack.bottomAnchor.constraint(equalTo: promptContainerScrollView.bottomAnchor),
+            promptContainerStack.heightAnchor.constraint(equalTo: promptContainerScrollView.heightAnchor),
+            promptContainerStack.widthAnchor.constraint(equalTo: promptContainerScrollView.widthAnchor)])
         
         addChildViewController(assetListTableView, layout: {
             assetListTableView.view.constrain([
                 assetListTableView.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                assetListTableView.view.topAnchor.constraint(equalTo: promptContainerStack.bottomAnchor),
+                assetListTableView.view.topAnchor.constraint(equalTo: promptContainerScrollView.bottomAnchor, constant: Margins.medium.rawValue),
                 assetListTableView.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                 assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
@@ -278,17 +286,24 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             self.updateAmountsForWidgets()
         })
         
-        // prompts
+        // Prompts
         Store.subscribe(self, name: .didUpgradePin, callback: { _ in
-            if self.generalPromptView.type == .upgradePin {
-                self.hidePrompt(self.generalPromptView)
-                
-            }
+            self.hidePrompt(.upgradePin)
         })
         
         Store.subscribe(self, name: .didWritePaperKey, callback: { _ in
-            if self.generalPromptView.type == .paperKey {
-                self.hidePrompt(self.generalPromptView)
+            self.hidePrompt(.paperKey)
+        })
+        
+        Store.subscribe(self, name: .didApplyKyc, callback: { _ in
+            self.hidePrompt(.kyc)
+        })
+        
+        Reachability.addDidChangeCallback({ [weak self] isReachable in
+            self?.hidePrompt(.noInternet)
+            
+            if !isReachable {
+                self?.attemptShowGeneralPrompt()
             }
         })
         
@@ -359,104 +374,81 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private lazy var promptContainerStack: UIStackView = {
         let view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         view.distribution = .fill
         return view
     }()
     
-    private var kycStatusPromptView = FEInfoView()
-    private var generalPromptView = PromptView()
+    private lazy var promptContainerScrollView: UIScrollView = {
+        let view = UIScrollView()
+        return view
+    }()
+    
+    private var generalPromptView: PromptView?
     
     private func attemptShowGeneralPrompt() {
-        guard promptContainerStack.arrangedSubviews.isEmpty == true,
-              let nextPrompt = PromptFactory.nextPrompt(walletAuthenticator: walletAuthenticator) else { return }
-        
-        generalPromptView = PromptFactory.createPromptView(prompt: nextPrompt, presenter: self)
-        
-        nextPrompt.didPrompt()
-        
-        generalPromptView.dismissButton.tap = { [unowned self] in
-            self.hidePrompt(self.generalPromptView)
-        }
-        
-        if !generalPromptView.shouldHandleTap {
-            generalPromptView.continueButton.tap = { [unowned self] in
+        UserManager.shared.refresh { [weak self] _ in
+            guard let self = self,
+                  let nextPrompt = PromptFactory.nextPrompt(walletAuthenticator: self.walletAuthenticator) else { return }
+            
+            self.generalPromptView = PromptFactory.createPromptView(prompt: nextPrompt, presenter: self)
+            
+            nextPrompt.didPrompt()
+            
+            self.layoutPrompts(self.generalPromptView)
+            
+            self.generalPromptView?.kycStatusView.headerButtonCallback = { [weak self] in
+                self?.hidePrompt(.kyc)
+            }
+            
+            self.generalPromptView?.kycStatusView.trailingButtonCallback = { [weak self] in
+                self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+            }
+            
+            self.generalPromptView?.dismissButton.tap = { [unowned self] in
+                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type else { return }
+                self.hidePrompt(firstType)
+            }
+            
+            self.generalPromptView?.continueButton.tap = { [unowned self] in
                 if let trigger = nextPrompt.trigger {
                     Store.trigger(name: trigger)
                 }
                 
-                self.hidePrompt(self.generalPromptView)
+                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type else { return }
+                self.hidePrompt(firstType)
             }
         }
-        
-        layoutPrompts(generalPromptView)
     }
     
-    func attemptShowKYCPrompt() {
-        let profileResult = UserManager.shared.profileResult
+    private func hidePrompt(_ promptType: PromptType) {
+        guard let prompt = (promptContainerStack.arrangedSubviews as? [PromptView])?.first(where: { $0.type == promptType }) else { return }
         
-        switch profileResult {
-        case .success(let profile):
-            if profile?.status.hasKYC == true {
-                hidePrompt(kycStatusPromptView)
-                attemptShowGeneralPrompt()
-            } else {
-                setupKYCPrompt(result: profileResult)
-            }
-            
-        default:
-            attemptShowGeneralPrompt()
-        }
-    }
-    
-    private func setupKYCPrompt(result: Result<Profile?, Error>?) {
-        guard case .success(let profile) = result,
-              promptContainerStack.arrangedSubviews.isEmpty == true else { return }
-        
-        let infoConfig: InfoViewConfiguration = Presets.InfoView.verification
-        var infoViewModel = profile?.status.viewModel
-        infoViewModel?.headerTrailing = .init(image: Asset.close.name)
-        
-        kycStatusPromptView.configure(with: infoConfig)
-        kycStatusPromptView.setup(with: infoViewModel)
-        
-        kycStatusPromptView.setupCustomMargins(all: .large)
-        
-        kycStatusPromptView.headerButtonCallback = { [weak self] in
-            self?.hidePrompt(self?.kycStatusPromptView)
-        }
-        
-        kycStatusPromptView.trailingButtonCallback = { [weak self] in
-            self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
-        }
-        
-        layoutPrompts(kycStatusPromptView)
-    }
-    
-    private func hidePrompt(_ prompt: UIView?) {
-        guard let prompt = prompt else { return }
+        let next = promptContainerStack.arrangedSubviews.dropFirst().first
+        next?.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
         
         UIView.animate(withDuration: Presets.Animation.duration, delay: 0, options: .curveLinear) {
             prompt.transform = .init(translationX: UIScreen.main.bounds.width, y: 0)
-            prompt.alpha = 0.0
             prompt.isHidden = true
+            
+            next?.isHidden = false
+            next?.transform = .identity
         } completion: { [weak self] _ in
+            prompt.removeFromSuperview()
+            
             self?.promptContainerStack.layoutIfNeeded()
             self?.view.layoutIfNeeded()
         }
     }
     
-    private func layoutPrompts(_ prompt: UIView?) {
-        guard let prompt = prompt else { return }
+    private func layoutPrompts(_ prompt: PromptView?) {
+        guard let prompt = prompt,
+              (promptContainerStack.arrangedSubviews as? [PromptView])?.contains(where: { $0.type == prompt.type }) == false else { return }
         
-        prompt.alpha = 0.0
+        promptContainerStack.insertArrangedSubview(prompt, at: 0)
         
-        promptContainerStack.addArrangedSubview(prompt)
-        
-        UIView.animate(withDuration: Presets.Animation.duration, delay: 0, options: .curveLinear) {
-            prompt.alpha = 1.0
-            prompt.isHidden = false
+        UIView.animate(withDuration: Presets.Animation.duration, delay: 0, options: .curveLinear) { [weak self] in
+            self?.promptContainerStack.arrangedSubviews.dropFirst().forEach({ $0.isHidden = true })
         } completion: { [weak self] _ in
             self?.promptContainerStack.layoutIfNeeded()
             self?.view.layoutIfNeeded()

@@ -95,18 +95,14 @@
 		71014F7C2327E49400DA1373 /* fiat_currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 71014F7B2327E49400DA1373 /* fiat_currencies.json */; };
 		710B036421F8C208007E8A2A /* AppRatingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B036321F8C208007E8A2A /* AppRatingManager.swift */; };
 		71173059220CCC91001931B3 /* PromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71173058220CCC91001931B3 /* PromptView.swift */; };
-		71249913221F44FE00BEA491 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71249912221F44FE00BEA491 /* Announcement.swift */; };
 		71249916221F466800BEA491 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71249915221F466800BEA491 /* Prompt.swift */; };
 		71249918222046EB00BEA491 /* PromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71249917222046EB00BEA491 /* PromptTests.swift */; };
-		7124991B22204E6C00BEA491 /* announcement-email.json in Resources */ = {isa = PBXBuildFile; fileRef = 7124991A22204E6C00BEA491 /* announcement-email.json */; };
 		7138BABB223062F50059091E /* NotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7138BABA223062F40059091E /* NotificationTests.swift */; };
 		713CD8872240117A004657D4 /* RecoveryKeyFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713CD8862240117A004657D4 /* RecoveryKeyFlowController.swift */; };
 		713CD88A2240198A004657D4 /* RecoveryKeyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */; };
 		7141BB5B2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */; };
 		7141BB5D2249543600F7ECF2 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141BB5C2249543600F7ECF2 /* InfoView.swift */; };
 		716F824321F91D9A0064E6F4 /* AppRatingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */; };
-		71904FB72225A1F900A6D027 /* announcement-promo.json in Resources */ = {isa = PBXBuildFile; fileRef = 71904FB62225A1F800A6D027 /* announcement-promo.json */; };
-		71904FBB2228132100A6D027 /* announcement-supported.json in Resources */ = {isa = PBXBuildFile; fileRef = 71904FBA2228132100A6D027 /* announcement-supported.json */; };
 		71988B0821EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71988B0721EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift */; };
 		71988B0921EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71988B0721EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift */; };
 		71988B0B21EF8D06008B8EA0 /* BRUserAgentHeaderGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71988B0A21EF8D06008B8EA0 /* BRUserAgentHeaderGeneratorTests.swift */; };
@@ -716,7 +712,6 @@
 		CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */; };
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
-		E89C0611216A8BE70012CE0D /* GetUserEmailPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0610216A8BE70012CE0D /* GetUserEmailPromptView.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
 
@@ -882,18 +877,14 @@
 		71014F7B2327E49400DA1373 /* fiat_currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fiat_currencies.json; path = Resources/fiat_currencies.json; sourceTree = "<group>"; };
 		710B036321F8C208007E8A2A /* AppRatingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppRatingManager.swift; path = src/Utilities/AppRatingManager.swift; sourceTree = "<group>"; };
 		71173058220CCC91001931B3 /* PromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PromptView.swift; path = src/Views/PromptView.swift; sourceTree = "<group>"; };
-		71249912221F44FE00BEA491 /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Announcement.swift; path = src/Models/Prompts/Announcement.swift; sourceTree = "<group>"; };
 		71249915221F466800BEA491 /* Prompt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Prompt.swift; path = src/Models/Prompts/Prompt.swift; sourceTree = "<group>"; };
 		71249917222046EB00BEA491 /* PromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptTests.swift; sourceTree = "<group>"; };
-		7124991A22204E6C00BEA491 /* announcement-email.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "announcement-email.json"; path = "json/announcement-email.json"; sourceTree = "<group>"; };
 		7138BABA223062F40059091E /* NotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTests.swift; sourceTree = "<group>"; };
 		713CD8862240117A004657D4 /* RecoveryKeyFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecoveryKeyFlowController.swift; path = src/FlowControllers/RecoveryKeyFlowController.swift; sourceTree = "<group>"; };
 		713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecoveryKeyIntroViewController.swift; path = src/ViewControllers/RecoveryKey/RecoveryKeyIntroViewController.swift; sourceTree = "<group>"; };
 		7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WriteRecoveryKeyViewController.swift; path = src/ViewControllers/RecoveryKey/WriteRecoveryKeyViewController.swift; sourceTree = "<group>"; };
 		7141BB5C2249543600F7ECF2 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfoView.swift; path = src/Views/InfoView.swift; sourceTree = "<group>"; };
 		716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingManagerTests.swift; sourceTree = "<group>"; };
-		71904FB62225A1F800A6D027 /* announcement-promo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "announcement-promo.json"; path = "json/announcement-promo.json"; sourceTree = "<group>"; };
-		71904FBA2228132100A6D027 /* announcement-supported.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "announcement-supported.json"; path = "json/announcement-supported.json"; sourceTree = "<group>"; };
 		71988B0721EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BRUserAgentHeaderGenerator.swift; path = src/Platform/BRUserAgentHeaderGenerator.swift; sourceTree = "<group>"; };
 		71988B0A21EF8D06008B8EA0 /* BRUserAgentHeaderGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BRUserAgentHeaderGeneratorTests.swift; sourceTree = "<group>"; };
 		71A3170F22A6D55A0088F97C /* InAppNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAppNotificationViewController.swift; path = src/ViewControllers/Notifications/InAppNotificationViewController.swift; sourceTree = "<group>"; };
@@ -1481,7 +1472,6 @@
 		CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AmountViewController.swift; path = src/ViewControllers/AmountViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
-		E89C0610216A8BE70012CE0D /* GetUserEmailPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetUserEmailPromptView.swift; path = src/Views/GetUserEmailPromptView.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1730,20 +1720,9 @@
 		71249914221F465000BEA491 /* Prompts */ = {
 			isa = PBXGroup;
 			children = (
-				71249912221F44FE00BEA491 /* Announcement.swift */,
 				71249915221F466800BEA491 /* Prompt.swift */,
 			);
 			name = Prompts;
-			sourceTree = "<group>";
-		};
-		7124991922204CF700BEA491 /* json */ = {
-			isa = PBXGroup;
-			children = (
-				71904FBA2228132100A6D027 /* announcement-supported.json */,
-				71904FB62225A1F800A6D027 /* announcement-promo.json */,
-				7124991A22204E6C00BEA491 /* announcement-email.json */,
-			);
-			name = json;
 			sourceTree = "<group>";
 		};
 		713CD88822401946004657D4 /* RecoverKey */ = {
@@ -1879,7 +1858,6 @@
 				7C9BC590231843A50011732F /* WalletConnectionSettingsTests.swift */,
 				CE6DCC2A1E63D6290044257B /* WalletCreationTests.swift */,
 				CEA7E6751F057D77001F8C27 /* WalletInfoTest.swift */,
-				7124991922204CF700BEA491 /* json */,
 				3A7605E524CF6A050057C1F4 /* KeyStore Tests */,
 				CE4CA7B81EE0C89F00373F11 /* Platform */,
 			);
@@ -3039,7 +3017,6 @@
 				7CBC6B2F2177D72600899AFB /* DelistedTokenView.swift */,
 				CE4C1CC51ED65D830063E184 /* DrawableCircle.swift */,
 				CE6DCC261E6108D50044257B /* EnterPhraseCell.swift */,
-				E89C0610216A8BE70012CE0D /* GetUserEmailPromptView.swift */,
 				CEEC70911E95DA4400EF788E /* GradientSwitch.swift */,
 				CE0822651FCE059A00EF371D /* HomeScreenCell.swift */,
 				CED341321EF5A5C00014912A /* InAppAlert.swift */,
@@ -3578,9 +3555,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71904FB72225A1F900A6D027 /* announcement-promo.json in Resources */,
-				7124991B22204E6C00BEA491 /* announcement-email.json in Resources */,
-				71904FBB2228132100A6D027 /* announcement-supported.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3848,7 +3822,6 @@
 				7E5CB3B32835090E00EC787E /* FEImageView.swift in Sources */,
 				7EF45F532845352400D1F7B0 /* KYCBasicVIP.swift in Sources */,
 				CEA05CC31F21B53C00D850F0 /* FeeSelector.swift in Sources */,
-				E89C0611216A8BE70012CE0D /* GetUserEmailPromptView.swift in Sources */,
 				7BDB4A012806F40D0031F015 /* ExchangeUpdater.swift in Sources */,
 				CE20C8F21DBAF71500C8397A /* ApplicationController.swift in Sources */,
 				7B54E5A527F4A2B0002DD1E4 /* Generic.swift in Sources */,
@@ -4100,7 +4073,6 @@
 				7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */,
 				7ECCA99D28745E0400F99368 /* AssetView.swift in Sources */,
 				7C35E712200AC2080064808F /* TxViewModel.swift in Sources */,
-				71249913221F44FE00BEA491 /* Announcement.swift in Sources */,
 				7ED83AED284F384F00261565 /* KYCDocumentPickerInteractor.swift in Sources */,
 				71F829422321953F00B3C76E /* AlertPresenter.swift in Sources */,
 				7E5CB3AF2835090E00EC787E /* FELabel.swift in Sources */,
