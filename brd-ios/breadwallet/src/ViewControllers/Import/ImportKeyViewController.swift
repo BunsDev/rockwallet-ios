@@ -256,7 +256,6 @@ class ImportKeyViewController: UIViewController, Subscriber {
         
         // TODO: quick (not) fix... basically we just dismiss loading, cause WK is not returning any event updates
         importingActivity.dismiss(animated: true) {
-            self.markAsReclaimed()
             self.showSuccess()
         }
     }
