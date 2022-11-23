@@ -120,6 +120,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                   totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)),
                                   paymentMethod: .init(methodTitle: .text(L10n.Swap.paidWith),
                                                        logo: detail.source.paymentInstrument.displayImage,
+                                                       type: detail.source.paymentInstrument.type,
                                                        cardNumber: .text(detail.source.paymentInstrument.displayName),
                                                        expiration: .text(CardDetailsFormatter.formatExpirationDate(month: detail.source.paymentInstrument.expiryMonth,
                                                                                                                    year: detail.source.paymentInstrument.expiryYear)),
