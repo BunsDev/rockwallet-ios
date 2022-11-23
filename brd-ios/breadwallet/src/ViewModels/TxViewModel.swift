@@ -203,12 +203,6 @@ extension DateFormatter {
         return df
     }()
     
-    static let shortDateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.setLocalizedDateFormatFromTemplate("MMM d")
-        return df
-    }()
-
     static let mediumDateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.setLocalizedDateFormatFromTemplate("MMM d, yyyy")
