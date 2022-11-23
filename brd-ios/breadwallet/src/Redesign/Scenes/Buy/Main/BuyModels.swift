@@ -154,7 +154,8 @@ enum BuyModels {
     
     struct PaymentMethod {
         struct ViewAction {
-            var method: PaymentCard.PaymentType
+            // TODO: ENABLE THIS
+            let method: PaymentCard.PaymentType = .buyCard
         }
         
         struct ActionResponse {}

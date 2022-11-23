@@ -19,7 +19,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let sections: [Models.Sections] = [
-            .segment,
+            // TODO: ENABLE THIS
+//            .segment,
             .rateAndTimer,
             .from,
             .paymentMethod,

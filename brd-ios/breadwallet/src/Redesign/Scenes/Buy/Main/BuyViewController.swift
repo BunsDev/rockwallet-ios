@@ -166,9 +166,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.configure(with: .init())
             view.setup(with: model)
             
-            view.didChangeValue = { [weak self] segment in
+            view.didChangeValue = { [weak self] _ in
                 self?.view.endEditing(true)
-                self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
+                // TODO: ENABLE THIS
+//                self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
             }
         }
         
