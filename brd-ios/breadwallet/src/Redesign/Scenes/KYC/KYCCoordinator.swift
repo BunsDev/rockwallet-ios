@@ -116,11 +116,6 @@ class KYCCoordinator: BaseCoordinator,
     
     // MARK: - Aditional helpers
     
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
-    }
-    
     @objc func popFlow(sender: UIBarButtonItem) {
         if navigationController.children.count == 1 {
             dismissFlow()
@@ -132,9 +127,15 @@ class KYCCoordinator: BaseCoordinator,
 
 extension KYCCoordinator: ImagePickable {
     func showImagePicker(model: KYCCameraImagePickerModel?,
-                         device: AVCaptureDevice,
+                         isSelfie: Bool,
                          completion: ((UIImage?) -> Void)?) {
         let controller = KYCCameraViewController()
+        let device: AVCaptureDevice?
+        if isSelfie {
+            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+        } else {
+            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        }
         
         let backButtonVisibility = navigationController.children.last is KYCDocumentPickerViewController == false
         controller.navigationItem.hidesBackButton = backButtonVisibility

@@ -27,6 +27,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         self.sender = sender
         self.initialRequest = initialRequest
         self.balance = currency.state?.balance ?? Amount.zero(currency)
+        self.maximum = self.balance
         addressCell = AddressCell(currency: currency)
         amountView = AmountViewController(currency: currency, isPinPadExpandedAtLaunch: false)
         attributeCell = AttributeCell(currency: currency)
@@ -71,9 +72,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                 amountView.forceUpdateAmount(amount: max)
             }
         }
-    }
-    private var minimum: Amount? {
-        didSet { sender.minimum = minimum }
     }
     
     private var amount: Amount? {
@@ -264,6 +262,8 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             }
             self?.isSendingMax = true
             self?.amountView.forceUpdateAmount(amount: max)
+            
+            self?.updateFeesMax()
         }
     }
     
@@ -288,6 +288,36 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             }
         }
     }
+    
+    @objc private func updateFeesMax() {
+        guard let amount = amount else { return }
+        guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
+        
+        sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let fee):
+                    self?.currentFeeBasis = fee
+                    self?.sendButton.isEnabled = true
+                    
+                    guard let feeBasis = self?.currentFeeBasis,
+                          let feeCurrency = self?.sender.wallet.feeCurrency else {
+                        return
+                    }
+                    let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
+                    let value = amount - fee
+                    self?.amountView.forceUpdateAmount(amount: value)
+                    
+                case .failure:
+                    self?.sendButton.isEnabled = false
+                    
+                    _ = self?.handleValidationResult(.insufficientFunds)
+                }
+                
+                self?.amountView.updateBalanceLabel()
+            }
+        }
+    }
 
     // returns Balance Text, Fee Text and isUserInteractionEnabled for balanceLabel
     private func balanceTextForAmount(_ amount: Amount?, rate: Rate?) -> (NSAttributedString?, NSAttributedString?, Bool) {
@@ -295,8 +325,10 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         let balanceAmount = Amount(amount: maximum ?? balance, rate: rate, minimumFractionDigits: 0)
         var feeOutput = ""
         if let amount = amount, !amount.isZero, let feeBasis = currentFeeBasis {
-            var feeAmount = Amount(cryptoAmount: feeBasis.fee, currency: sender.wallet.feeCurrency)
-            feeAmount.rate = rate
+            let fee = Amount(cryptoAmount: feeBasis.fee, currency: sender.wallet.feeCurrency)
+            let feeAmount = Amount(amount: fee,
+                                   rate: (amountView.selectedRate != nil) ? sender.wallet.feeCurrency.state?.currentRate : nil,
+                                   maximumFractionDigits: Amount.highPrecisionDigits)
             let feeText = feeAmount.description
             feeOutput = L10n.Send.fee(feeText)
         }
@@ -487,11 +519,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             showAlert(title: L10n.Alert.error, message: message)
             
         case .insufficientFunds:
-            if currency.isERC20Token {
-                showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
-            } else {
-                showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientFunds)
-            }
+            showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientFunds)
             
         case .failed:
             showAlert(title: L10n.Alert.error, message: L10n.Send.creatTransactionError)
@@ -702,15 +730,20 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     private func showInsufficientGasError() {
         guard let feeAmount = self.currentFeeBasis?.fee else { return assertionFailure() }
         
-        let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
-
-        let alertController = UIAlertController(title: L10n.Send.insufficientGasTitle(feeAmount.currency.name), message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: L10n.Button.yes, style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
-            Store.trigger(name: .showCurrency(self.sender.wallet.feeCurrency))
-        }))
-        alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel, handler: nil))
-        present(alertController, animated: true, completion: nil)
+        if currency.isERC20Token {
+            showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
+        } else {
+            let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
+            
+            let alertController = UIAlertController(title: L10n.Send.insufficientGasTitle(feeAmount.currency.name), message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: L10n.Button.yes, style: .default, handler: { [weak self] _ in
+                guard let self = self else { return }
+                Store.trigger(name: .showCurrency(self.sender.wallet.feeCurrency))
+            }))
+            alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel, handler: nil))
+            present(alertController, animated: true, completion: nil)
+        }
+        
     }
 
     required init?(coder aDecoder: NSCoder) {

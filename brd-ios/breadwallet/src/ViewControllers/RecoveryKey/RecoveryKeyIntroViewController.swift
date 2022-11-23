@@ -179,8 +179,6 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
                     } else {
                         self.showBackButton()
                     }
-                    
-                    self.continueButton.configure(with: self.onLastPage ? Presets.Button.secondary : Presets.Button.primary)
                 }
             }
         }

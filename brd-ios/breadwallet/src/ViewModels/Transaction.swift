@@ -160,6 +160,7 @@ class Transaction {
     enum TransactionType: String, Hashable {
         case swapTransaction = "SWAP"
         case buyTransaction = "BUY"
+        case buyAchTransaction = "BUY_ACH"
         case defaultTransaction
     }
     
@@ -171,7 +172,7 @@ class Transaction {
     
     var status: TransactionStatus {
         switch transactionType {
-        case .defaultTransaction, .buyTransaction:
+        case .defaultTransaction, .buyTransaction, .buyAchTransaction:
             switch transfer.state {
             case .created, .signed, .submitted, .pending:
                 return .pending
@@ -181,15 +182,17 @@ class Transaction {
                     return .invalid
                 }
                 
+                let buyTransaction = transactionType == .buyTransaction || transactionType == .buyAchTransaction
+                
                 switch Int(confirmations) {
                 case 0:
-                    return transactionType == .buyTransaction ? (swapTransationStatus ?? .failed) : .pending
+                    return buyTransaction ? (swapTransationStatus ?? .failed) : .pending
                     
                 case 1..<currency.confirmationsUntilFinal:
                     return .confirmed
                     
                 default:
-                    return transactionType == .buyTransaction ? (swapTransationStatus ?? .failed) : .complete
+                    return buyTransaction ? (swapTransationStatus ?? .failed) : .complete
                     
                 }
             case .failed, .deleted:

@@ -76,7 +76,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             is KYCDocumentPickerViewController,
             is SimpleWebViewController,
             is VerifyAccountViewController,
-            is SwapInfoViewController,
             is OrderPreviewViewController,
             is BaseInfoViewController,
             is ItemSelectionViewController:

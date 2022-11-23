@@ -125,7 +125,7 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         super.setup(with: viewModel)
         
         switch viewModel?.type {
-        case .bankAccount:
+        case .buyAch:
             setupForAch()
             
         default:
@@ -134,7 +134,7 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     }
     
     private func setupForCard() {
-        methodTitleLabel.setup(with: .text(L10n.Buy.paymentMethod))
+        methodTitleLabel.setup(with: viewModel?.methodTitle)
         methodTitleLabel.isHidden = viewModel?.methodTitle == nil
         
         cvvTitle.setup(with: viewModel?.cvvTitle)

@@ -119,7 +119,7 @@ class BaseCoordinator: NSObject,
     
     func showBuy(coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .buy, role: UserManager.shared.profile?.status == .levelOne ? .kyc2 : .kyc1) { showPopup in
+            upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
                 guard showPopup else { return }
                 
                 if UserManager.shared.profile?.canBuy == false {
@@ -146,6 +146,11 @@ class BaseCoordinator: NSObject,
             vc.dataStore?.profile = UserManager.shared.profile
             vc.prepareData()
         }
+    }
+    
+    func dismissFlow() {
+        navigationController.dismiss(animated: true)
+        parentCoordinator?.childDidFinish(child: self)
     }
     
     func showVerificationsModally() {
@@ -190,22 +195,34 @@ class BaseCoordinator: NSObject,
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
-    func goBack(completion: (() -> Void)? = nil) {
+    /// SHOULD NEVER BE CALLED MANUALLY
+    func goBack() {
         guard parentCoordinator != nil,
-              parentCoordinator?.navigationController != navigationController else {
-            navigationController.popViewController(animated: true)
+              parentCoordinator?.navigationController != navigationController,
+              navigationController.viewControllers.count < 1 else {
             return
         }
-        navigationController.dismiss(animated: true) {
-            completion?()
-        }
+        navigationController.dismiss(animated: true)
         parentCoordinator?.childDidFinish(child: self)
     }
     
     func popToRoot(completion: (() -> Void)? = nil) {
-        navigationController.popToRootViewController(animated: true) {
-            completion?()
+        navigationController.popToRootViewController(animated: true, completion: completion)
+    }
+    
+    func showBuy() {
+        guard let vc = navigationController.viewControllers.first as? BuyViewController else {
+            return
         }
+        navigationController.popToViewController(vc, animated: true)
+    }
+    
+    func showSwap() {
+        guard let vc = navigationController.viewControllers.first as? SwapViewController else {
+            return
+        }
+        vc.didTriggerGetExchangeRate?()
+        navigationController.popToViewController(vc, animated: true)
     }
 
     /// Remove the child coordinator from the stack after iit finnished its flow
@@ -287,22 +304,20 @@ class BaseCoordinator: NSObject,
             } else if role == nil {
                 completion?(true)
             } else if let role = role {
-                checkProfileforRole(role: role) { [weak self] hasRole in
-                    guard hasRole == false else {
-                        completion?(true)
-                        return
-                    }
-                    
-                    let coordinator = KYCCoordinator(navigationController: nvc)
-                    coordinator.role = role
-                    coordinator.flow = flow
-                    coordinator.start()
-                    coordinator.parentCoordinator = self
-                    self?.childCoordinators.append(coordinator)
-                    self?.navigationController.show(coordinator.navigationController, sender: nil)
-                    
-                    completion?(false)
+                guard profile?.roles.contains(role) == false else {
+                    completion?(true)
+                    return
                 }
+                    
+                let coordinator = KYCCoordinator(navigationController: nvc)
+                coordinator.role = role
+                coordinator.flow = flow
+                coordinator.start()
+                coordinator.parentCoordinator = self
+                childCoordinators.append(coordinator)
+                navigationController.show(coordinator.navigationController, sender: nil)
+                
+                completion?(false)
             }
             
         case .failure(let error):

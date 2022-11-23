@@ -23,7 +23,6 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
   internal static let blocksetLogoWhite = ImageAsset(name: "BlocksetLogoWhite")
-  internal static let brokenCloud = ImageAsset(name: "BrokenCloud")
   internal static let circleCheckSolid = ImageAsset(name: "CircleCheckSolid")
   internal static let cutoutFaceId = ImageAsset(name: "CutoutFaceId")
   internal static let delete = ImageAsset(name: "Delete")

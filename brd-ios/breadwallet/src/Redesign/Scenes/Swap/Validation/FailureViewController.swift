@@ -20,10 +20,10 @@ protocol SimpleMessage {
 }
 
 enum FailureReason: SimpleMessage {
-    case buy
+    case buyCard
+    case buyAch
     case swap
     case plaidConnection
-    case bankAccount
     
     var iconName: String {
         return "error"
@@ -31,7 +31,7 @@ enum FailureReason: SimpleMessage {
     
     var title: String {
         switch self {
-        case .buy, .bankAccount:
+        case .buyCard, .buyAch:
             return L10n.Buy.errorProcessingPayment
             
         case .swap:
@@ -44,7 +44,7 @@ enum FailureReason: SimpleMessage {
     
     var description: String {
         switch self {
-        case .buy:
+        case .buyCard:
             return L10n.Buy.failureTransactionMessage
             
         case .swap:
@@ -53,14 +53,14 @@ enum FailureReason: SimpleMessage {
         case .plaidConnection:
             return L10n.Buy.plaidErrorDescription
             
-        case .bankAccount:
+        case .buyAch:
             return L10n.Buy.bankAccountFailureText
         }
     }
     
     var firstButtonTitle: String? {
         switch self {
-        case .buy:
+        case .buyCard:
             return L10n.Buy.tryAnotherPayment
             
         case .swap:
@@ -69,14 +69,14 @@ enum FailureReason: SimpleMessage {
         case .plaidConnection:
             return L10n.PaymentConfirmation.tryAgain
             
-        case .bankAccount:
+        case .buyAch:
             return L10n.PaymentConfirmation.tryAgain
         }
     }
     
     var secondButtonTitle: String? {
         switch self {
-        case .buy, .plaidConnection, .bankAccount:
+        case .buyCard, .plaidConnection, .buyAch:
             return L10n.UpdatePin.contactSupport
             
         case .swap:
@@ -100,20 +100,17 @@ class FailureViewController: BaseInfoViewController {
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: failure?.firstButtonTitle, callback: { [weak self] in
-                self?.coordinator?.popToRoot(completion: {
-                    if self?.failure == .buy {
-                        (self?.navigationController?.topViewController as? BuyViewController)?.didTriggerGetData?()
-                    } else if self?.failure == .swap {
-                        (self?.navigationController?.topViewController as? SwapViewController)?.didTriggerGetExchangeRate?()
-                    }
-                })
-            }),
+            .init(title: failure?.firstButtonTitle) { [weak self] in
+                if self?.failure == .swap {
+                    self?.coordinator?.showSwap()
+                } else {
+                    self?.coordinator?.showBuy()
+                }},
             .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
-                if self?.failure == .buy {
+                if self?.failure == .buyCard {
                     self?.coordinator?.showSupport()
                 } else if self?.failure == .swap {
-                    self?.coordinator?.goBack(completion: {})
+                    self?.coordinator?.dismissFlow()
                 }
             })
         ]

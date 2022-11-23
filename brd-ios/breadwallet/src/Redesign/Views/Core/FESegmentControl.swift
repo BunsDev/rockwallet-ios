@@ -18,19 +18,14 @@ struct SegmentControlConfiguration: Configurable {
 
 struct SegmentControlViewModel: ViewModel {
     /// Passing 'nil' leaves the control deselected
-    var selectedIndex: FESegmentControl.Values?
+    var selectedIndex: PaymentCard.PaymentType?
 }
 
 class FESegmentControl: UISegmentedControl, ViewProtocol {
-    enum Values: String, CaseIterable {
-        case card
-        case bankAccount
-    }
-    
     var config: SegmentControlConfiguration?
     var viewModel: SegmentControlViewModel?
     
-    var didChangeValue: ((Values) -> Void)?
+    var didChangeValue: ((PaymentCard.PaymentType) -> Void)?
     
     convenience init() {
         let items = [
@@ -81,13 +76,13 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
         
         valueChanged = { [weak self] in
             guard let selectedSegmentIndex = self?.selectedSegmentIndex, selectedSegmentIndex >= 0 else { return }
-            self?.didChangeValue?(Values.allCases[selectedSegmentIndex])
+            self?.didChangeValue?(PaymentCard.PaymentType.allCases[selectedSegmentIndex])
         }
     }
     
     func setup(with viewModel: SegmentControlViewModel?) {
         guard let index = viewModel?.selectedIndex,
-              let filteredIndex = Values.allCases.firstIndex(where: { $0 == index }) else {
+              let filteredIndex = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == index }) else {
             selectedSegmentIndex = UISegmentedControl.noSegment
             return
         }
