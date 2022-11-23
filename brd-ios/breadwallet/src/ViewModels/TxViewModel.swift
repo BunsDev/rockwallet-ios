@@ -180,8 +180,6 @@ extension TxViewModel {
     private func exchangeStatusIconDecider(status: TransactionStatus?) -> StatusIcon {
         if transactionType == .swapTransaction { return .exchange }
         
-        let status = status ?? .failed
-        
         return transactionType == .buyTransaction || transactionType == .buyAchTransaction ? .receive : .send
     }
     
