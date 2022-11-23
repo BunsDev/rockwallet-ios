@@ -510,6 +510,8 @@ internal enum L10n {
     internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
     }
+    /// ACH fee (fixed fee + % (TBD)
+    internal static let achFeeText = L10n.tr("Localizable", "Buy.achFeeText", fallback: "ACH fee (fixed fee + % (TBD)")
     /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. 
     /// 
     /// It currently takes 7-10 days to process a purchase with ACH.
@@ -1348,6 +1350,10 @@ internal enum L10n {
     internal static let transactionCancelled = L10n.tr("Localizable", "Platform.transaction_cancelled", fallback: "Transaction Cancelled")
   }
   internal enum Prompts {
+    internal enum ConnectionIssues {
+      /// Connection issues
+      internal static let title = L10n.tr("Localizable", "Prompts.ConnectionIssues.title", fallback: "Connection issues")
+    }
     internal enum Email {
       /// Body text for a prompt that asks the user to subscribe to email updates to find out product updates.
       internal static let body = L10n.tr("Localizable", "Prompts.Email.body", fallback: "Be the first to receive important support and product updates")
@@ -1646,8 +1652,6 @@ internal enum L10n {
     internal static let title1 = L10n.tr("Localizable", "RecoveryKeyOnboarding.title1", fallback: "Generate your private Recovery Phrase")
     /// Write down your Recovery Phrase
     internal static let title2 = L10n.tr("Localizable", "RecoveryKeyOnboarding.title2", fallback: "Write down your Recovery Phrase")
-    /// Keep your Recovery Phrase in a secure location
-    internal static let title3 = L10n.tr("Localizable", "RecoveryKeyOnboarding.title3", fallback: "Keep your Recovery Phrase in a secure location")
     /// Generate your private Recovery Phrase
     internal static let titlePage1 = L10n.tr("Localizable", "RecoveryKeyOnboarding.titlePage1", fallback: "Generate your private Recovery Phrase")
   }

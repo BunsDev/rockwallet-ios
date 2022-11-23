@@ -591,11 +591,15 @@
 
 "Buy.achFee" = "ACH fee (%s)";
 
+"Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
+
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
+
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
 
 "Buy.achPayments" = "ACH Payments";
 
-"Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
+"Buy.achSuccess" = "ACH payment method was added successfully";
 
 /* Add card title for buy cryptos */
 "Buy.AddCard" = "Add card";
@@ -605,6 +609,12 @@
 
 /* Address label in billing address view on buy flow */
 "Buy.Address" = "Address";
+
+"Buy.bankAccountFailureText" = "Please try again or select a different payment method.";
+
+"Buy.bankAccountSuccessText" = "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";
+
+"Buy.bankAccountSuccessTitle" = "Your purchase is being processed";
 
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Billing address";
@@ -691,6 +701,10 @@
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Pay with";
+
+"Buy.plaidErrorDescription" = "Please check with your bank or try again later.";
+
+"Buy.plaidErrorTitle" = "There was an error connecting your account via Plaid";
 
 "Buy.ProcessingPayment" = "Processing payment";
 
@@ -1467,6 +1481,8 @@
 
 "Platform.transaction_cancelled" = "Transaction Cancelled";
 
+"Prompts.ConnectionIssues.title" = "Connection issues";
+
 /* Body text for a prompt that asks the user to subscribe to email updates to find out product updates. */
 "Prompts.Email.body" = "Be the first to receive important support and product updates";
 
@@ -1779,8 +1795,6 @@
 "RecoveryKeyOnboarding.title1" = "Generate your private Recovery Phrase";
 
 "RecoveryKeyOnboarding.title2" = "Write down your Recovery Phrase";
-
-"RecoveryKeyOnboarding.title3" = "Keep your Recovery Phrase in a secure location";
 
 "RecoveryKeyOnboarding.titlePage1" = "Generate your private Recovery Phrase";
 
@@ -3150,14 +3164,3 @@
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
-"Buy.plaidErrorTitle" = "There was an error connecting your account via Plaid";
-
-"Buy.plaidErrorDescription" = "Please check with your bank or try again later.";
-
-"Buy.achSuccess" = "ACH payment method was added successfully";
-
-"Buy.bankAccountSuccessTitle" = "Your purchase is being processed";
-
-"Buy.bankAccountSuccessText" = "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";
-
-"Buy.bankAccountFailureText" = "Please try again or select a different payment method.";

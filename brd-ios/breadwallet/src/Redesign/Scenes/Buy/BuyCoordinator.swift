@@ -50,7 +50,7 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
             vc.navigationItem.hidesBackButton = true
             vc.transactionType = transactionType
             vc.dataStore?.itemId = paymentReference
-            vc.success = transactionType == .buyTransaction ? .buy : .bankAccount
+            vc.success = transactionType == .buyTransaction ? .buyCard : .buyAch
         }
     }
     
@@ -135,11 +135,6 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
     }
     
     // MARK: - Aditional helpers
-    
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
-    }
 }
 
 extension BuyCoordinator {

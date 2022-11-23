@@ -47,9 +47,4 @@ class RegistrationCoordinator: BaseCoordinator, RegistrationRoutes {
     }
     
     // MARK: - Aditional helpers
-    
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
-    }
 }

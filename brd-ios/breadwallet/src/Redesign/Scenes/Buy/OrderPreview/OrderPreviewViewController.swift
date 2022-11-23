@@ -216,7 +216,7 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
-        let failure: FailureReason = dataStore?.isAchAccount ?? false ? .bankAccount : .buy
+        let failure: FailureReason = dataStore?.isAchAccount ?? false ? .buyAch : .buyCard
         coordinator?.showFailure(failure: failure)
     }
     

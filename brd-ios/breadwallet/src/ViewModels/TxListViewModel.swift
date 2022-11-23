@@ -50,7 +50,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .swapTransaction:
             return handleSwapTransactions()
             
-        case .buyTransaction:
+        case .buyTransaction, .buyAchTransaction:
             return handleBuyTransactions()
         }
     }
@@ -77,15 +77,17 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleBuyTransactions() -> String {
+        let isBuy = transactionType == .buyTransaction
+        
         switch status {
         case .invalid, .failed, .refunded:
-            return L10n.Transaction.purchaseFailed
+            return isBuy ? L10n.Transaction.purchaseFailed : L10n.Transaction.purchaseFailedWithAch
     
         case .complete, .manuallySettled, .confirmed:
-            return L10n.Transaction.purchased
+            return isBuy ? L10n.Transaction.purchased : L10n.Transaction.purchasedWithAch
             
         default:
-            return L10n.Transaction.pendingPurchase
+            return isBuy ? L10n.Transaction.pendingPurchase : L10n.Transaction.pendingPurchaseWithAch
         }
     }
     

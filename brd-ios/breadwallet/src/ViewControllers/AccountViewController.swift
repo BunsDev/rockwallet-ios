@@ -252,7 +252,7 @@ class AccountViewController: UIViewController, Subscriber {
             
             present(transactionDetails, animated: true)
             
-        case .swapTransaction, .buyTransaction:
+        case .swapTransaction, .buyTransaction, .buyAchTransaction:
             let vc = ExchangeDetailsViewController()
             vc.isModalDismissable = false
             vc.dataStore?.itemId = String(transaction.tx?.swapOrderId ?? transaction.swap?.orderId ?? -1)

@@ -159,13 +159,13 @@ extension TxViewModel {
         }
         
         switch tx.transactionType {
-        case .defaultTransaction, .buyTransaction:
-            if tx.confirmations < currency.confirmationsUntilFinal, tx.transactionType != .buyTransaction {
+        case .defaultTransaction, .buyTransaction, .buyAchTransaction:
+            if tx.confirmations < currency.confirmationsUntilFinal, tx.transactionType != .buyTransaction, tx.transactionType != .buyAchTransaction {
                 return tx.direction == .received ? .receive : .send
-            } else if tx.transactionType == .buyTransaction {
+            } else if tx.transactionType == .buyTransaction || tx.transactionType == .buyAchTransaction {
                 return exchangeStatusIconDecider(status: tx.status)
             } else if tx.status == .invalid {
-                return tx.transactionType == .buyTransaction ? .receive : .send
+                return tx.transactionType == .buyTransaction || tx.transactionType == .buyAchTransaction ? .receive : .send
             } else if tx.direction == .received || tx.direction == .recovered {
                 return .receive
             }
@@ -180,17 +180,7 @@ extension TxViewModel {
     private func exchangeStatusIconDecider(status: TransactionStatus?) -> StatusIcon {
         if transactionType == .swapTransaction { return .exchange }
         
-        let status = status ?? .failed
-        
-        if status == .complete || status == .manuallySettled || status == .confirmed {
-            return transactionType == .buyTransaction ? .receive : .send
-        }
-        
-        if status == .pending {
-            return transactionType == .buyTransaction ? .receive : .send
-        }
-        
-        return transactionType == .buyTransaction ? .receive : .send
+        return transactionType == .buyTransaction || transactionType == .buyAchTransaction ? .receive : .send
     }
     
     var gift: Gift? {
@@ -213,29 +203,9 @@ extension DateFormatter {
         return df
     }()
     
-    static let shortDateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.setLocalizedDateFormatFromTemplate("MMM d")
-        return df
-    }()
-
     static let mediumDateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.setLocalizedDateFormatFromTemplate("MMM d, yyyy")
         return df
     }()
-}
-
-private extension String {
-    var smallCondensed: String {
-        let start = String(self[..<index(startIndex, offsetBy: 5)])
-        let end = String(self[index(endIndex, offsetBy: -5)...])
-        return start + "..." + end
-    }
-    
-    var largeCondensed: String {
-        let start = String(self[..<index(startIndex, offsetBy: 10)])
-        let end = String(self[index(endIndex, offsetBy: -10)...])
-        return start + "..." + end
-    }
 }

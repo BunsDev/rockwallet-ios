@@ -34,7 +34,7 @@ struct ProfileResponseData: ModelResponse {
     var roles: [CustomerRole]
     
     var exchangeLimits: ExchangeLimits?
-    var kycAccessRights: AccessRights
+    var kycAccessRights: AccessRights?
     
     struct ExchangeLimits: Codable {
         var swapAllowanceLifetime: Decimal
@@ -135,10 +135,10 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      usedBuyLifetime: usedBuyLifetime,
                      usedBuyDaily: usedBuyDaily,
                      roles: response.roles,
-                     canBuy: response.kycAccessRights.hasBuyAccess,
-                     canSwap: response.kycAccessRights.hasSwapAccess,
-                     canUseAch: response.kycAccessRights.hasAchAccess,
-                     restrictionReason: response.kycAccessRights.restrictionReason)
+                     canBuy: response.kycAccessRights?.hasBuyAccess ?? false,
+                     canSwap: response.kycAccessRights?.hasSwapAccess ?? false,
+                     canUseAch: response.kycAccessRights?.hasAchAccess ?? false,
+                     restrictionReason: response.kycAccessRights?.restrictionReason)
     }
 }
 

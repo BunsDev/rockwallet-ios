@@ -284,10 +284,9 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
                                blurred: true,
                                with: responseDisplay.popupViewModel,
                                config: responseDisplay.popupConfig,
-                               closeButtonCallback: { [weak self] in
-            self?.coordinator?.goBack(completion: {})
-        }, callbacks: [ { [weak self] in
-            self?.coordinator?.goBack(completion: {})
+                               closeButtonCallback: coordinator?.dismissFlow,
+                               callbacks: [ { [weak self] in
+            self?.coordinator?.dismissFlow()
         }])
     }
     

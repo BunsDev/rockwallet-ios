@@ -18,7 +18,7 @@ class SelectBakerCell: UITableViewCell {
     
     static let CellHeight: CGFloat = 70.0
     fileprivate let iconSize: CGFloat = 40.0
-    private let bakerIcon = UIImageView(color: .transparentIconBackground)
+    private let bakerIcon = UIImageView(color: .clear)
     private let bakerIconLoadingView = UIView()
     private let iconLoadingSpinner = UIActivityIndicatorView(style: .medium)
     private let bakerName = UILabel(font: Fonts.Title.three, color: .darkGray)

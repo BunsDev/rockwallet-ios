@@ -58,20 +58,10 @@ final class KYCDocumentPickerPresenter: NSObject, Presenter, KYCDocumentPickerAc
             checklist = [ChecklistItemViewModel(title: .text(L10n.AccountKYCLevelTwo.faceCaptureInstructions)),
                          ChecklistItemViewModel(title: .text(L10n.AccountKYCLevelTwo.faceVisibleConfirmation))]
         }
-        
-        var device: AVCaptureDevice?
-        
-        if actionResponse.isSelfie {
-            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
-        } else {
-            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
-        }
-        
-        guard let device = device else { return }
-        
+
         viewController?.displayTakePhoto(responseDisplay: .init(model: .init(instruction: .text(instructions),
                                                                              confirmation: .text(confirmation)),
-                                                                device: device,
+                                                                isSelfie: actionResponse.isSelfie,
                                                                 checklist: checklist))
     }
     

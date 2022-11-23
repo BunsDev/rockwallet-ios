@@ -124,7 +124,7 @@ class VIPViewController<C: CoordinatableRoutes,
         parent?.presentationController?.delegate = self
         guard parent == nil else { return }
 
-        coordinator?.goBack(completion: nil)
+        coordinator?.goBack()
     }
 
     func setupCloseButton(closeAction: Selector) {
@@ -147,7 +147,7 @@ class VIPViewController<C: CoordinatableRoutes,
     @objc func dismissModal() {
         ExchangeCurrencyHelper.revertIfNeeded(coordinator: coordinator, completion: { [weak self] in
             self?.navigationController?.dismiss(animated: true, completion: {
-                self?.coordinator?.goBack(completion: nil)
+                self?.coordinator?.goBack()
             })
         })
     }
@@ -157,7 +157,7 @@ class VIPViewController<C: CoordinatableRoutes,
     }
 
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        coordinator?.goBack(completion: nil)
+        coordinator?.goBack()
     }
 
     func setupSubviews() {
