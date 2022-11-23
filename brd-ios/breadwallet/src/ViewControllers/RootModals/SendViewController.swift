@@ -254,13 +254,20 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         }
         
         amountView.didTapMax = { [weak self] in
-            guard let max = self?.maximum else {
+            guard var max = self?.maximum else {
                 //This is highly unlikely to be reached because the button should be disabled
                 //if a maximum doesn't exist
                 self?.showErrorMessage(L10n.Send.Error.maxError)
                 return
             }
             self?.isSendingMax = true
+            
+            if max.currency.network.name == "Ethereum" {
+                let adjustTokenVal = max.tokenValue * 0.05
+                let adjustAmount = Amount(tokenString: "\(adjustTokenVal)", currency: max.currency)
+                max = max - adjustAmount
+            }
+            
             self?.amountView.forceUpdateAmount(amount: max)
             
             self?.updateFeesMax()
@@ -305,7 +312,12 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                         return
                     }
                     let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
-                    let value = amount - fee
+                    
+                    var value = amount
+                    if amount.currency == fee.currency {
+                        value = amount > fee ? amount - fee : amount
+                    }
+                    
                     self?.amountView.forceUpdateAmount(amount: value)
                     
                 case .failure:
