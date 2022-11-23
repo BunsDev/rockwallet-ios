@@ -591,6 +591,8 @@
 
 "Buy.achFee" = "ACH fee (%s)";
 
+"Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
+
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
 
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
@@ -1478,6 +1480,8 @@
 "PaymentProtocol.Errors.untrustedCertificate" = "untrusted certificate";
 
 "Platform.transaction_cancelled" = "Transaction Cancelled";
+
+"Prompts.ConnectionIssues.title" = "Connection issues";
 
 /* Body text for a prompt that asks the user to subscribe to email updates to find out product updates. */
 "Prompts.Email.body" = "Be the first to receive important support and product updates";
@@ -3159,6 +3163,4 @@
 "WritePaperPhrase.warning" = "For security purposes, do not screenshot or email these words.";
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
-
-"Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
 
