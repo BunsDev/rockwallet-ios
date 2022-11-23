@@ -11,7 +11,6 @@
 import UIKit
 
 class AlertPresenter: Subscriber {
-
     private let window: UIWindow
     private let alertHeight: CGFloat = 260.0
     private var notReachableAlert: InAppAlert?
@@ -31,10 +30,6 @@ class AlertPresenter: Subscriber {
         self.window = window
 
         addSubscriptions()
-
-        if !Reachability.isReachable {
-            showNotReachable()
-        }
     }
     
     private func addSubscriptions() {
@@ -50,14 +45,6 @@ class AlertPresenter: Subscriber {
         Store.lazySubscribe(self,
                             selector: { $0.alert != $1.alert && $1.alert != .none },
                             callback: { [weak self] in self?.handleAlertChange($0.alert) })
-        
-        Reachability.addDidChangeCallback({ [weak self] isReachable in
-            if isReachable {
-                self?.hideNotReachable()
-            } else {
-                self?.showNotReachable()
-            }
-        })
     }
     
     private func handleAlertChange(_ type: AlertType) {
@@ -108,41 +95,4 @@ class AlertPresenter: Subscriber {
             })
         })
     }
-
-    private func showNotReachable() {
-        guard notReachableAlert == nil else { return }
-        let alert = InAppAlert(message: L10n.Alert.noInternet, image: Asset.brokenCloud.image)
-        notReachableAlert = alert
-        
-        guard let window = UIApplication.shared.activeWindow else { return }
-        
-        let size = window.bounds.size
-        window.addSubview(alert)
-        let bottomConstraint = alert.bottomAnchor.constraint(equalTo: window.topAnchor)
-        alert.constrain([
-            alert.constraint(.width, constant: size.width),
-            alert.constraint(.height, constant: InAppAlert.height),
-            alert.constraint(.leading, toView: window, constant: nil),
-            bottomConstraint ])
-        window.layoutIfNeeded()
-        alert.bottomConstraint = bottomConstraint
-        alert.hide = {
-            self.hideNotReachable()
-        }
-        UIView.spring(Presets.Animation.duration, animations: {
-            alert.bottomConstraint?.constant = InAppAlert.height
-            window.layoutIfNeeded()
-        }, completion: {_ in})
-    }
-    
-    private func hideNotReachable() {
-        UIView.animate(withDuration: Presets.Animation.duration, animations: {
-            self.notReachableAlert?.bottomConstraint?.constant = 0.0
-            self.notReachableAlert?.superview?.layoutIfNeeded()
-        }, completion: { _ in
-            self.notReachableAlert?.removeFromSuperview()
-            self.notReachableAlert = nil
-        })
-    }
-
 }
