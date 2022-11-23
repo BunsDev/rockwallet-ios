@@ -21,7 +21,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let sections: [Models.Sections] = [
             // TODO: REVERT THIS
 //            .segment,
-            .title,
             .rateAndTimer,
             .from,
             .paymentMethod,

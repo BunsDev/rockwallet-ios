@@ -17,7 +17,6 @@ enum BuyModels {
     
     enum Sections: Sectionable {
         // TODO: REVERT THIS
-        case title
 //        case segment
         case rateAndTimer
         case accountLimits
