@@ -159,13 +159,13 @@ extension TxViewModel {
         }
         
         switch tx.transactionType {
-        case .defaultTransaction, .buyTransaction:
-            if tx.confirmations < currency.confirmationsUntilFinal, tx.transactionType != .buyTransaction {
+        case .defaultTransaction, .buyTransaction, .buyAchTransaction:
+            if tx.confirmations < currency.confirmationsUntilFinal, tx.transactionType != .buyTransaction, tx.transactionType != .buyAchTransaction {
                 return tx.direction == .received ? .receive : .send
-            } else if tx.transactionType == .buyTransaction {
+            } else if tx.transactionType == .buyTransaction || tx.transactionType == .buyAchTransaction {
                 return exchangeStatusIconDecider(status: tx.status)
             } else if tx.status == .invalid {
-                return tx.transactionType == .buyTransaction ? .receive : .send
+                return tx.transactionType == .buyTransaction || tx.transactionType == .buyAchTransaction ? .receive : .send
             } else if tx.direction == .received || tx.direction == .recovered {
                 return .receive
             }
@@ -182,15 +182,7 @@ extension TxViewModel {
         
         let status = status ?? .failed
         
-        if status == .complete || status == .manuallySettled || status == .confirmed {
-            return transactionType == .buyTransaction ? .receive : .send
-        }
-        
-        if status == .pending {
-            return transactionType == .buyTransaction ? .receive : .send
-        }
-        
-        return transactionType == .buyTransaction ? .receive : .send
+        return transactionType == .buyTransaction || transactionType == .buyAchTransaction ? .receive : .send
     }
     
     var gift: Gift? {

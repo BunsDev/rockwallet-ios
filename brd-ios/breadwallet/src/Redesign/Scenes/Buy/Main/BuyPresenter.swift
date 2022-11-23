@@ -27,11 +27,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        let paymentSegment = SegmentControlViewModel(selectedIndex: .card)
+        let paymentSegment = SegmentControlViewModel(selectedIndex: .buyCard)
         
         let paymentMethodViewModel: CardSelectionViewModel
         switch paymentSegment.selectedIndex {
-        case .bankAccount:
+        case .buyAch:
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)
@@ -62,7 +62,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let text = String(format: "1 %@ = %@ %@", to.uppercased(), ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", from)
         let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
         let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        let limitText = actionResponse.method == .bankAccount ? L10n.Buy.achLimits(minText, maxText) : L10n.Buy.buyLimits(minText, maxText)
+        let limitText = actionResponse.method == .buyAch ? L10n.Buy.achLimits(minText, maxText) : L10n.Buy.buyLimits(minText, maxText)
         
         exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                       timer: TimerViewModel(till: quote.timestamp,
@@ -88,18 +88,18 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
-        if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .card {
+        if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyCard {
             cardModel = .init(logo: paymentCard.displayImage,
                               cardNumber: .text(paymentCard.displayName),
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
-        } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .bankAccount {
+        } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyAch {
             cardModel = .init(title: .text(L10n.Buy.achPayments),
                               logo: .image(Asset.bank.image),
                               cardNumber: .text(paymentCard.displayName),
                               userInteractionEnabled: false)
             cryptoModel.selectionDisabled = true
-        } else if actionResponse.paymentMethod == .card {
+        } else if actionResponse.paymentMethod == .buyCard {
             cardModel = .init(userInteractionEnabled: true)
         } else {
             cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
@@ -128,7 +128,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             
         case _ where fiat < minimumAmount:
             // Value below minimum Fiat
-            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: C.usdCurrencyCode, reason: .buy)))
+            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: C.usdCurrencyCode, reason: .buyCard)))
             
         case _ where fiat > lifetimeLimit,
             _ where minimumAmount > lifetimeLimit:
@@ -139,7 +139,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         case _ where fiat > maximumAmount,
             _ where minimumAmount > maximumAmount:
             // Over exchange limit
-            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: C.usdCurrencyCode, reason: .buy)))
+            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: C.usdCurrencyCode, reason: .buyCard)))
             
         default:
             // Remove error

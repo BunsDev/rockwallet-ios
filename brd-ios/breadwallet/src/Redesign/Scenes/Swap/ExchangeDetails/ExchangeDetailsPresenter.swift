@@ -34,7 +34,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                 Models.Section.transactionTo
             ]
             
-        case .buyTransaction:
+        case .buyTransaction, .buyAchTransaction:
             sections = [
                 Models.Section.header,
                 Models.Section.toCurrency,
@@ -84,7 +84,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let transactionFromValue = String(describing: detail.source.transactionId ?? "")
         let transactionToValue = String(describing: detail.destination.transactionId ?? detail.status.rawValue.localizedCapitalized)
         let transactionToValueIsCopyable = detail.destination.transactionId != nil
-        let displayFeeTitle = detail.source.paymentInstrument.type == .card ? L10n.Swap.cardFee : L10n.Buy.achFeeText
+        let displayFeeTitle = detail.source.paymentInstrument.type == .buyCard ? L10n.Swap.cardFee : L10n.Buy.achFeeText
         
         var toCurrencyAssetViewModel = AssetViewModel()
         
@@ -94,7 +94,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                                       title: "\(L10n.TransactionDetails.addressToHeader) \(detail.destination.currency)",
                                                       topRightText: "\(formattedCurrencyAmountDestination) / $\(formattedUsdAmountDestination) \(currencyCode)")
             
-        case .buyTransaction:
+        case .buyTransaction, .buyAchTransaction:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
                                                       title: "\(formattedCurrencyAmountDestination) \(detail.destination.currency)",
                                                       topRightText: nil)

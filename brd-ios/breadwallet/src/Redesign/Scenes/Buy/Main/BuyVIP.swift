@@ -61,7 +61,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore {
     var keyStore: KeyStore? { get set }
     
     var autoSelectDefaultPaymentMethod: Bool { get set }
-    var paymentMethod: FESegmentControl.Values? { get set }
+    var paymentMethod: PaymentCard.PaymentType? { get set }
     var publicToken: String? { get set }
     var mask: String? { get set }
 }
