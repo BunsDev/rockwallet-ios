@@ -215,17 +215,3 @@ extension DateFormatter {
         return df
     }()
 }
-
-private extension String {
-    var smallCondensed: String {
-        let start = String(self[..<index(startIndex, offsetBy: 5)])
-        let end = String(self[index(endIndex, offsetBy: -5)...])
-        return start + "..." + end
-    }
-    
-    var largeCondensed: String {
-        let start = String(self[..<index(startIndex, offsetBy: 10)])
-        let end = String(self[index(endIndex, offsetBy: -10)...])
-        return start + "..." + end
-    }
-}
