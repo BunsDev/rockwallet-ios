@@ -55,7 +55,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             
             switch result {
             case .success:
-                let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .card }
+                let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
                 self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
                 
             case .failure(let error):
@@ -203,13 +203,13 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         var paymentCards: [PaymentCard]?
         
-        if dataStore?.paymentMethod == .card {
-            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .card }
+        if dataStore?.paymentMethod == .buyCard {
+            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
             if let currency = Store.state.currencies.first(where: { $0.code == C.BTC }) ?? Store.state.currencies.first {
                 dataStore?.toAmount = .zero(currency)
             }
         } else {
-            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .bankAccount }
+            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .buyAch }
             if let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) {
                 dataStore?.toAmount = .zero(currency)
             }

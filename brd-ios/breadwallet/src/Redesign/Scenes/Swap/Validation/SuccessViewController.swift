@@ -11,8 +11,8 @@
 import UIKit
 
 enum SuccessReason: SimpleMessage {
-    case buy
-    case bankAccount
+    case buyCard
+    case buyAch
     
     var iconName: String {
         return "success"
@@ -20,20 +20,20 @@ enum SuccessReason: SimpleMessage {
     
     var title: String {
         switch self {
-        case .buy:
+        case .buyCard:
             return L10n.Buy.purchaseSuccessTitle
             
-        case .bankAccount:
+        case .buyAch:
             return L10n.Buy.bankAccountSuccessTitle
         }
     }
     
     var description: String {
         switch self {
-        case .buy:
+        case .buyCard:
             return L10n.Buy.purchaseSuccessText
             
-        case .bankAccount:
+        case .buyAch:
             return L10n.Buy.bankAccountSuccessText
         }
     }
