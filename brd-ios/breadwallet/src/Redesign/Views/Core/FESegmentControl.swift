@@ -50,7 +50,11 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
             foregroundImageView.layer.removeAnimation(forKey: "SelectionBounds")
             foregroundImageView.layer.masksToBounds = true
             foregroundImageView.layer.cornerRadius = foregroundImageView.frame.height / 2
-            foregroundImageView.backgroundColor = .white
+            
+            for i in 0...numberOfSegments-1 {
+                let backgroundSegmentView = subviews[i]
+                backgroundSegmentView.isHidden = true
+            }
         }
     }
     
