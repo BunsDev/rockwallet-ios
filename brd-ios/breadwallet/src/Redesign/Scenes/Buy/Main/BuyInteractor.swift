@@ -200,9 +200,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
-        // TODO: ENABLE THIS
-//        dataStore?.paymentMethod = viewAction.method
-        dataStore?.paymentMethod = .buyCard
+        dataStore?.paymentMethod = viewAction.method
         
         var paymentCards: [PaymentCard]?
         

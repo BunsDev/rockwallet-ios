@@ -16,8 +16,7 @@ enum BuyModels {
     }
     
     enum Sections: Sectionable {
-        // TODO: REVERT THIS
-//        case segment
+        case segment
         case rateAndTimer
         case accountLimits
         case from
@@ -155,8 +154,7 @@ enum BuyModels {
     
     struct PaymentMethod {
         struct ViewAction {
-            // TODO: ENABLE THIS
-            let method: PaymentCard.PaymentType = .buyCard
+            let method: PaymentCard.PaymentType
         }
         
         struct ActionResponse {}
