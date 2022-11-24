@@ -51,7 +51,7 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
             foregroundImageView.layer.masksToBounds = true
             foregroundImageView.layer.cornerRadius = foregroundImageView.frame.height / 2
             
-            for i in 0...numberOfSegments-1 {
+            for i in 0..<numberOfSegments {
                 let backgroundSegmentView = subviews[i]
                 backgroundSegmentView.isHidden = true
             }
