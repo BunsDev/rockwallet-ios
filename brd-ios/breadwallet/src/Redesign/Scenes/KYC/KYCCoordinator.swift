@@ -36,7 +36,7 @@ class KYCCoordinator: BaseCoordinator,
                 switch role {
                 case .kyc1:
                     coverImageName = "il_setup"
-                    subtitleMessage = L10n.Account.verifyIdentity
+                    subtitleMessage = L10n.Account.verifyIdentityPlain
                     
                 case .kyc2:
                     coverImageName = "verification"

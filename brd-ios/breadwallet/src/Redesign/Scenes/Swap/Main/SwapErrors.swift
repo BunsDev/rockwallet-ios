@@ -73,7 +73,7 @@ enum SwapErrors: FEError {
             return L10n.ErrorMessages.pinConfirmationFailed
             
         case .notEnouthEthForFee(let currency):
-            return L10n.ErrorMessages.notEnoughEthForFee(currency)
+            return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
             
         case .failed(let error):
             return L10n.ErrorMessages.exchangeFailed(error?.localizedDescription ?? "")
