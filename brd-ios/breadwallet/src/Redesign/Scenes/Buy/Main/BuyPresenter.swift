@@ -19,8 +19,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let sections: [Models.Sections] = [
-            // TODO: REVERT THIS
-//            .segment,
+            .segment,
             .rateAndTimer,
             .from,
             .paymentMethod,
@@ -41,8 +40,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
         
         let sectionRows: [Models.Sections: [ViewModel]] =  [
-            // TODO: REVERT THIS
-//            .segment: [paymentSegment],
+            .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
             .paymentMethod: [paymentMethodViewModel],
