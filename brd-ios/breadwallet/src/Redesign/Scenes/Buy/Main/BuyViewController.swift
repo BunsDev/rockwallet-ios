@@ -29,10 +29,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     // MARK: - Overrides
     
-    override var sceneLeftAlignedTitle: String? {
-        return L10n.HomeScreen.buy
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -70,9 +66,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Sections {
-            // TODO: REVERT THIS
-//        case .segment:
-//            cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
+        case .segment:
+            cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
             
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
@@ -172,10 +167,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.configure(with: .init())
             view.setup(with: model)
             
-            view.didChangeValue = { [weak self] _ in
+            view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
-                // TODO: ENABLE THIS
-//                self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
+                self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
             }
         }
         
