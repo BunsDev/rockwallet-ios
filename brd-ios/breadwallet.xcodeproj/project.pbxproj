@@ -5468,16 +5468,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/WalletKitSwift.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = e4c3dcc76d7346c40a9af42cea38a6653b28acda;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/cosmos.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 5.0.2;
 			};
 		};
 		7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
