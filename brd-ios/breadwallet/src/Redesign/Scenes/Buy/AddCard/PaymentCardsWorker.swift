@@ -88,13 +88,6 @@ struct PaymentCardsRequestData: RequestModelData {
 }
 
 class PaymentCardsWorker: BaseApiWorker<PaymentCardsMapper> {
-    override func getHeaders() -> [String: String] {
-        return [
-            "Authorization": UserDefaults.kycSessionKeyValue,
-            "endpoint-version": "2"
-        ].compactMapValues { $0 }
-    }
-    
     override func getUrl() -> String {
         return ExchangeEndpoints.paymentInstruments.url
     }
