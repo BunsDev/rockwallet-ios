@@ -747,7 +747,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     /// Insufficient gas for ERC20 token transfer
     private func showInsufficientGasError() {
-        if currency.isEthereumCompatible {
+        if currency.isERC20Token {
             showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
         } else {
             guard let feeAmount = currentFeeBasis?.fee else { return assertionFailure() }
