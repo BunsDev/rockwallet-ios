@@ -331,7 +331,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     private func handleEstimateFeeError() {
         sendButton.isEnabled = false
         
-        if currency.isEthereumCompatible {
+        if currency.isERC20Token {
             _ = handleValidationResult(.insufficientGas)
         } else {
             _ = handleValidationResult(.insufficientFunds)
@@ -750,7 +750,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         if currency.isERC20Token {
             showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
         } else {
-            guard let feeAmount = currentFeeBasis?.fee else { return assertionFailure() }
+            guard let feeAmount = currentFeeBasis?.fee else { return }
             
             let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
             
@@ -762,7 +762,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel, handler: nil))
             present(alertController, animated: true, completion: nil)
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
