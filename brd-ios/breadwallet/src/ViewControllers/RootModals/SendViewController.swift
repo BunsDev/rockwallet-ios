@@ -262,7 +262,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             }
             self?.isSendingMax = true
             
-            if max.currency.network.name == "Ethereum" {
+            if max.currency.network.name == Currencies.shared.eth?.name {
                 let adjustTokenVal = max.tokenValue * 0.05
                 let adjustAmount = Amount(tokenString: "\(adjustTokenVal)", currency: max.currency)
                 max = max - adjustAmount
@@ -286,9 +286,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     self?.sendButton.isEnabled = true
                     
                 case .failure:
-                    self?.sendButton.isEnabled = false
-                    
-                    _ = self?.handleValidationResult(.insufficientFunds)
+                    self?.handleEstimateFeeError()
                 }
                 
                 self?.amountView.updateBalanceLabel()
@@ -321,13 +319,22 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     self?.amountView.forceUpdateAmount(amount: value)
                     
                 case .failure:
-                    self?.sendButton.isEnabled = false
-                    
-                    _ = self?.handleValidationResult(.insufficientFunds)
+                    self?.handleEstimateFeeError()
                 }
                 
                 self?.amountView.updateBalanceLabel()
             }
+        }
+    }
+    
+    // TODO: WalletKit is not throwing the right error. Instead, we are always getting "WalletKit.Wallet.FeeEstimationError.ServiceError" error.
+    private func handleEstimateFeeError() {
+        sendButton.isEnabled = false
+        
+        if currency.isEthereumCompatible {
+            _ = handleValidationResult(.insufficientGas)
+        } else {
+            _ = handleValidationResult(.insufficientFunds)
         }
     }
     
@@ -740,11 +747,11 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     /// Insufficient gas for ERC20 token transfer
     private func showInsufficientGasError() {
-        guard let feeAmount = self.currentFeeBasis?.fee else { return assertionFailure() }
-        
-        if currency.isERC20Token {
+        if currency.isEthereumCompatible {
             showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
         } else {
+            guard let feeAmount = currentFeeBasis?.fee else { return assertionFailure() }
+            
             let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
             
             let alertController = UIAlertController(title: L10n.Send.insufficientGasTitle(feeAmount.currency.name), message: message, preferredStyle: .alert)
