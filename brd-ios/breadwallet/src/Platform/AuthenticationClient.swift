@@ -248,8 +248,7 @@ extension URLRequest {
     
     mutating func decorate() {
         setValue(UserDefaults.deviceID, forHTTPHeaderField: "X-Device-ID")
-        setValue("\(E.isTestnet ? 1 : 0)", forHTTPHeaderField: "X-Bitcoin-Testnet")
-        setValue("\((E.isTestFlight || E.isDebug) ? 1 : 0)", forHTTPHeaderField: "X-Testflight")
+        // TODO: slovenian locale returns en_SI .. that might be problematic
         setValue(Locale.current.identifier, forHTTPHeaderField: "Accept-Language")
         setValue(BRUserAgentHeaderGenerator.userAgentHeader, forHTTPHeaderField: "User-Agent")
         
