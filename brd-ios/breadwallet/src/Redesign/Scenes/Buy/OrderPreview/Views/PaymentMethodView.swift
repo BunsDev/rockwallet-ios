@@ -125,7 +125,7 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         super.setup(with: viewModel)
         
         switch viewModel?.type {
-        case .bankAccount:
+        case .buyAch:
             setupForAch()
             
         default:

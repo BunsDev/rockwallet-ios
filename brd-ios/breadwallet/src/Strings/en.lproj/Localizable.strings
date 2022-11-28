@@ -137,6 +137,8 @@
 
 "Account.VerifyIdentity" = "We need to verify your identity before you can %@ assets.";
 
+"Account.VerifyIdentityPlain" = "We need to verify your identity before you can buy or swap assets.";
+
 /* Verify personal information text explanation */
 "Account.VerifyPersonalInformation" = "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.";
 
@@ -591,6 +593,8 @@
 
 "Buy.achFee" = "ACH fee (%s)";
 
+"Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
+
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
 
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
@@ -742,6 +746,8 @@
 "Buy.Terms" = "By placing this order you agree to our";
 
 "Buy.Terms.android" = "By placing this order you agree to our %@";
+
+"Buy.TransactionError" = "Transaction error";
 
 "Buy.transferFromBank" = "Transfer from bank account";
 
@@ -954,6 +960,14 @@
 "EME.permissions.paymentRequest" = "Request %1$@ payment";
 
 "ErrorMessages.accessDenied" = "You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.";
+
+"ErrorMessages.Ach.AccountClosed" = "Unfortunately, the linked bank account is closed. Please try adding a different bank account or a different payment method.";
+
+"ErrorMessages.Ach.AccountFrozen" = "Unfortunately, there was an error while processing your transaction. Please try again later or contact your bank for additional assistance.";
+
+"ErrorMessages.Ach.ErrorWhileProcessing" = "Unfortunately, there was an error while processing your transaction. Please try again later or select a different payment method.";
+
+"ErrorMessages.Ach.InsufficientFunds" = "Unfortunately the transaction could not be completed due to insufficient funds in your bank account. Please try again later";
 
 /* The currency amount is to high for exchange. Accepts 2 parameters:, - maxiumum amount, - currency code */
 "ErrorMessages.AmountTooHigh" = "The amount is higher than your daily limit of %@ %@. Please enter a lower amount.";
@@ -1478,6 +1492,8 @@
 "PaymentProtocol.Errors.untrustedCertificate" = "untrusted certificate";
 
 "Platform.transaction_cancelled" = "Transaction Cancelled";
+
+"Prompts.ConnectionIssues.title" = "Connection issues";
 
 /* Body text for a prompt that asks the user to subscribe to email updates to find out product updates. */
 "Prompts.Email.body" = "Be the first to receive important support and product updates";
@@ -3159,6 +3175,4 @@
 "WritePaperPhrase.warning" = "For security purposes, do not screenshot or email these words.";
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
-
-"Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
 

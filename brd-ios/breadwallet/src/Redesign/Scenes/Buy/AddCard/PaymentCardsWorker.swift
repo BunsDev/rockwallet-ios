@@ -32,9 +32,9 @@ struct PaymentCard: ItemSelectable, Hashable {
         case none = "card"
     }
     
-    enum PaymentType: String {
-        case card = "card"
-        case bankAccount = "bank_account"
+    enum PaymentType: String, CaseIterable {
+        case buyCard = "card"
+        case buyAch = "bank_account"
     }
     
     var type: PaymentType
@@ -49,7 +49,7 @@ struct PaymentCard: ItemSelectable, Hashable {
     
     var displayName: String? {
         switch type {
-        case .bankAccount:
+        case .buyAch:
             return "\(accountName) - \(CardDetailsFormatter.formatBankNumber(last4: last4))"
         default:
             return CardDetailsFormatter.formatNumber(last4: last4)
@@ -58,7 +58,7 @@ struct PaymentCard: ItemSelectable, Hashable {
     
     var displayImage: ImageViewModel? {
         switch type {
-        case .bankAccount:
+        case .buyAch:
             return .image(Asset.bank.image) 
         default:
             return .imageName(scheme.rawValue)
@@ -69,7 +69,7 @@ struct PaymentCard: ItemSelectable, Hashable {
 class PaymentCardsMapper: ModelMapper<PaymentCardsResponseData, [PaymentCard]> {
     override func getModel(from response: PaymentCardsResponseData?) -> [PaymentCard] {
         return response?.paymentInstruments.compactMap {
-            return PaymentCard(type: PaymentCard.PaymentType(rawValue: $0.type) ?? .card,
+            return PaymentCard(type: PaymentCard.PaymentType(rawValue: $0.type) ?? .buyCard,
                                id: $0.id ?? "",
                                fingerprint: $0.fingerprint ?? "",
                                expiryMonth: $0.expiryMonth ?? 0,
@@ -88,13 +88,6 @@ struct PaymentCardsRequestData: RequestModelData {
 }
 
 class PaymentCardsWorker: BaseApiWorker<PaymentCardsMapper> {
-    override func getHeaders() -> [String: String] {
-        return [
-            "Authorization": UserDefaults.kycSessionKeyValue,
-            "endpoint-version": "2"
-        ].compactMapValues { $0 }
-    }
-    
     override func getUrl() -> String {
         return ExchangeEndpoints.paymentInstruments.url
     }

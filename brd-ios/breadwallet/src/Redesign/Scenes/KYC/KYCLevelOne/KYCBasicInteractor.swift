@@ -148,6 +148,8 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
         KYCLevelOneWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
+                Store.trigger(name: .didApplyKyc)
+                
                 self?.presenter?.presentSubmit(actionResponse: .init())
                 
             case .failure(let error):

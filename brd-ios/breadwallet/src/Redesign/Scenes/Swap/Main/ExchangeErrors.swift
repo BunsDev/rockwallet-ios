@@ -50,13 +50,13 @@ enum ExchangeErrors: FEError {
             
         case .tooLow(let amount, let currency, let reason):
             switch reason {
-            case .buy:
+            case .buyCard:
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
                 
             case .swap:
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
                 
-            case.plaidConnection, .bankAccount:
+            case.plaidConnection, .buyAch:
                 // TODO: Add error messages
                 return ""
                 
@@ -64,13 +64,13 @@ enum ExchangeErrors: FEError {
             
         case .tooHigh(let amount, let currency, let reason):
             switch reason {
-            case .buy:
+            case .buyCard:
                 return L10n.ErrorMessages.amountTooHigh(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
                 
             case .swap:
                 return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
                 
-            case.plaidConnection, .bankAccount:
+            case .plaidConnection, .buyAch:
                 // TODO: Add error messages
                 return ""
                 

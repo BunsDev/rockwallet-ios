@@ -61,9 +61,9 @@ enum TriggerName {
     case didUpgradePin
     case txMetaDataUpdated(String)
     case promptShareData
+    case didApplyKyc
     case didWritePaperKey
     case wipeWalletNoPrompt
-    case didFetchAnnouncements([Announcement])
     case showCurrency(Currency?)
     case fetchInbox
     case optInSegWit
@@ -118,6 +118,8 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.didUpgradePin, .didUpgradePin):
         return true
+    case (.didApplyKyc, .didApplyKyc):
+        return true
     case (.txMetaDataUpdated, .txMetaDataUpdated):
         return true
     case (.promptShareData, .promptShareData):
@@ -125,8 +127,6 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
     case (.didWritePaperKey, .didWritePaperKey):
         return true
     case (.wipeWalletNoPrompt, .wipeWalletNoPrompt):
-        return true
-    case (.didFetchAnnouncements, .didFetchAnnouncements):
         return true
     case (.showCurrency, .showCurrency):
         return true

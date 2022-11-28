@@ -84,6 +84,9 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         
         containerStack.addArrangedSubview(mainStack)
         mainStack.addArrangedSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue / 2)
+        }
         mainStack.addArrangedSubview(subtitleLabel)
         mainStack.addArrangedSubview(cardDetailsView)
         

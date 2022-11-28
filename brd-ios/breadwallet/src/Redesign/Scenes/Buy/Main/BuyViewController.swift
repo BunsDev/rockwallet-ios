@@ -24,6 +24,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     var linkHandler: Handler?
     var didTriggerGetData: (() -> Void)?
+    
     private var supportedCurrencies: [SupportedCurrency]?
     
     // MARK: - Overrides
@@ -116,7 +117,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             }
             
             view.didTapSelectAsset = { [weak self] in
-                if self?.dataStore?.paymentMethod == .card {
+                if self?.dataStore?.paymentMethod == .buyCard {
                     self?.interactor?.navigateAssetSelector(viewAction: .init())
                 }
             }
@@ -141,7 +142,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             
             view.didTapSelectCard = { [weak self] in
                 switch self?.dataStore?.paymentMethod {
-                case .bankAccount:
+                case .buyAch:
                     self?.interactor?.getLinkToken(viewAction: .init())
                 default:
                     self?.interactor?.getPaymentCards(viewAction: .init())
@@ -199,7 +200,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
         switch dataStore?.paymentMethod {
-        case .bankAccount:
+        case .buyAch:
             if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDC }) {
                 supportedCurrencies = [usdCurrency]
             }

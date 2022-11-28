@@ -129,6 +129,8 @@ internal enum L10n {
     internal static func verifyIdentity(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Account.VerifyIdentity", String(describing: p1), fallback: "We need to verify your identity before you can %@ assets.")
     }
+    /// We need to verify your identity before you can buy or swap assets.
+    internal static let verifyIdentityPlain = L10n.tr("Localizable", "Account.VerifyIdentityPlain", fallback: "We need to verify your identity before you can buy or swap assets.")
     /// Verify personal information text explanation
     internal static let verifyPersonalInformation = L10n.tr("Localizable", "Account.VerifyPersonalInformation", fallback: "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.")
     /// Welcome title on registration screen
@@ -628,6 +630,8 @@ internal enum L10n {
     internal static let stateProvince = L10n.tr("Localizable", "Buy.StateProvince", fallback: "State/Province")
     /// By placing this order you agree to our terms message when ordering
     internal static let terms = L10n.tr("Localizable", "Buy.Terms", fallback: "By placing this order you agree to our")
+    /// Transaction error
+    internal static let transactionError = L10n.tr("Localizable", "Buy.TransactionError", fallback: "Transaction error")
     /// Transfer from bank account
     internal static let transferFromBank = L10n.tr("Localizable", "Buy.transferFromBank", fallback: "Transfer from bank account")
     /// Try a different payment method button title in failure buy screen
@@ -952,6 +956,16 @@ internal enum L10n {
     internal static let temporaryNetworkIssues = L10n.tr("Localizable", "ErrorMessages.temporaryNetworkIssues", fallback: "We are having temporary issues connecting to our network. Please try again later.")
     /// Unknown error text message
     internal static let unknownError = L10n.tr("Localizable", "ErrorMessages.UnknownError", fallback: "Unknown error.")
+    internal enum Ach {
+      /// Unfortunately, the linked bank account is closed. Please try adding a different bank account or a different payment method.
+      internal static let accountClosed = L10n.tr("Localizable", "ErrorMessages.Ach.AccountClosed", fallback: "Unfortunately, the linked bank account is closed. Please try adding a different bank account or a different payment method.")
+      /// Unfortunately, there was an error while processing your transaction. Please try again later or contact your bank for additional assistance.
+      internal static let accountFrozen = L10n.tr("Localizable", "ErrorMessages.Ach.AccountFrozen", fallback: "Unfortunately, there was an error while processing your transaction. Please try again later or contact your bank for additional assistance.")
+      /// Unfortunately, there was an error while processing your transaction. Please try again later or select a different payment method.
+      internal static let errorWhileProcessing = L10n.tr("Localizable", "ErrorMessages.Ach.ErrorWhileProcessing", fallback: "Unfortunately, there was an error while processing your transaction. Please try again later or select a different payment method.")
+      /// Unfortunately the transaction could not be completed due to insufficient funds in your bank account. Please try again later
+      internal static let insufficientFunds = L10n.tr("Localizable", "ErrorMessages.Ach.InsufficientFunds", fallback: "Unfortunately the transaction could not be completed due to insufficient funds in your bank account. Please try again later")
+    }
     internal enum Kyc {
       /// You must be at least 18 years old to complete Level 1 and 2 verification.
       internal static let underage = L10n.tr("Localizable", "ErrorMessages.Kyc.Underage", fallback: "You must be at least 18 years old to complete Level 1 and 2 verification.")
@@ -1350,6 +1364,10 @@ internal enum L10n {
     internal static let transactionCancelled = L10n.tr("Localizable", "Platform.transaction_cancelled", fallback: "Transaction Cancelled")
   }
   internal enum Prompts {
+    internal enum ConnectionIssues {
+      /// Connection issues
+      internal static let title = L10n.tr("Localizable", "Prompts.ConnectionIssues.title", fallback: "Connection issues")
+    }
     internal enum Email {
       /// Body text for a prompt that asks the user to subscribe to email updates to find out product updates.
       internal static let body = L10n.tr("Localizable", "Prompts.Email.body", fallback: "Be the first to receive important support and product updates")

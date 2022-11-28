@@ -40,7 +40,7 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     
     // TODO: update it according to BE data
     var isAchAccount: Bool {
-        return card?.type == .bankAccount
+        return card?.type == .buyAch
     }
     
     // MARK: - Aditional helpers
