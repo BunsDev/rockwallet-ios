@@ -35,7 +35,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                         self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: L10n.Buy.paymentFailed)))
                         return
                     }
-                        self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: errorMessage)))
+                    self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: errorMessage)))
                     return
                 }
                 self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference ?? ""))
