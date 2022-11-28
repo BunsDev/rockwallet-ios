@@ -48,6 +48,7 @@ struct AddCard: Model {
         case accountClosed = "30046"
         case accountFrozen = "30R16"
         case insufficientFuds = "20051"
+        case none = ""
         
         var errorMessage: String? {
             switch self {
@@ -59,6 +60,10 @@ struct AddCard: Model {
                 
             case .insufficientFuds:
                 return L10n.ErrorMessages.Ach.insufficientFunds
+                
+            case .none:
+                return L10n.ErrorMessages.Ach.errorWhileProcessing
+                
             }
         }
     }
