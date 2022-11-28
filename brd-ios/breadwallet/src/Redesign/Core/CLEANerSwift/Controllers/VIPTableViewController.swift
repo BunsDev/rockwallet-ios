@@ -136,6 +136,8 @@ class VIPTableViewController<C: CoordinatableRoutes,
         }
         
         tableView.verticalScrollIndicatorInsets.right = -huge
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
