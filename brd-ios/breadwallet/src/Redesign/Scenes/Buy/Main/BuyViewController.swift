@@ -294,11 +294,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
-        guard responseDisplay.error != nil else {
-            coordinator?.hideMessage()
-            return
-        }
-        
         continueButton.viewModel?.enabled = false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
