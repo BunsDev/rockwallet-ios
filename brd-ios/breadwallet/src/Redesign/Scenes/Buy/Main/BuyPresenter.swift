@@ -18,13 +18,16 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     // MARK: - BuyActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let sections: [Models.Sections] = [
-            .segment,
+        var sections: [Models.Sections] = [
             .rateAndTimer,
             .from,
             .paymentMethod,
             .accountLimits
         ]
+        
+        if UserManager.shared.profile?.canUseAch == true {
+            sections.insert(.segment, at: 0)
+        }
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         let paymentSegment = SegmentControlViewModel(selectedIndex: .buyCard)
