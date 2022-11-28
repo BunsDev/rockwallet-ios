@@ -14,6 +14,7 @@ struct AddCardResponseData: ModelResponse {
     var status: String?
     var paymentReference: String?
     var redirectUrl: String?
+    var responseCode: String?
 }
 
 struct AddCard: Model {
@@ -43,16 +44,42 @@ struct AddCard: Model {
         }
     }
     
+    enum ResponseCodes: String {
+        case accountClosed = "30046"
+        case accountFrozen = "30R16"
+        case insufficientFuds = "20051"
+        case none = ""
+        
+        var errorMessage: String? {
+            switch self {
+            case .accountClosed:
+                return L10n.ErrorMessages.Ach.accountClosed
+                
+            case .accountFrozen:
+                return L10n.ErrorMessages.Ach.accountFrozen
+                
+            case .insufficientFuds:
+                return L10n.ErrorMessages.Ach.insufficientFunds
+                
+            case .none:
+                return L10n.ErrorMessages.Ach.errorWhileProcessing
+                
+            }
+        }
+    }
+    
     var status: Status
     var paymentReference: String
     var redirectUrl: String?
+    var responseCode: ResponseCodes?
 }
 
 class AddCardMapper: ModelMapper<AddCardResponseData, AddCard> {
     override func getModel(from response: AddCardResponseData?) -> AddCard {
         return AddCard(status: AddCard.Status(rawValue: response?.status ?? "") ?? .none,
                        paymentReference: response?.paymentReference ?? "",
-                       redirectUrl: response?.redirectUrl)
+                       redirectUrl: response?.redirectUrl,
+                       responseCode: AddCard.ResponseCodes(rawValue: response?.responseCode ?? ""))
     }
 }
 
