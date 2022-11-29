@@ -21,8 +21,8 @@ struct TxListViewModel: TxViewModel, Hashable {
         if let tx = tx {
             var amount = tx.amount
 
+            // This is the originating tx of a token transfer, so the amount is 0 but we want to show the fee
             if tokenTransferCode != nil {
-                // this is the originating tx of a token transfer, so the amount is 0 but we want to show the fee
                 amount = tx.fee
             }
 
@@ -94,8 +94,8 @@ struct TxListViewModel: TxViewModel, Hashable {
     private func handleSwapTransactions() -> String {
         let sourceCurrency = swapSourceCurrency?.code.uppercased() ?? ""
         let destinationCurrency = swapDestinationCurrency?.code.uppercased() ?? ""
-        let isOnSource = currency?.code.uppercased() == swapSourceCurrency?.code.uppercased()
-        let swapString = isOnSource ? "to \(destinationCurrency)" : "from \(sourceCurrency)"
+        let isOnSource = currency?.code.uppercased() == destinationCurrency
+        let swapString = isOnSource ? "from \(sourceCurrency)" : "to \(destinationCurrency)"
         
         switch status {
         case .complete, .manuallySettled:

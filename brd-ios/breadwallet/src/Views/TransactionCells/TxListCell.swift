@@ -48,9 +48,9 @@ class TxListCell: UITableViewCell, Identifiable {
         
         let status = viewModel.tx?.status ?? viewModel.swap?.status ?? .pending
         
-        iconImageView.image = viewModel.icon.icon?.tinted(with: status.tintColor)
+        iconImageView.image = viewModel.icon?.tinted(with: status.tintColor)
         iconImageView.backgroundColor = status.backgroundColor
-
+        
         amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
         titleLabel.text = viewModel.shortTimestamp
         descriptionLabel.text = viewModel.shortDescription
