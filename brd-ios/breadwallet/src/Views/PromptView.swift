@@ -28,62 +28,67 @@ class PromptView: UIView {
     
     let dismissButton = UIButton(type: .custom)
     let continueButton = UIButton(type: .custom)
+    
     let prompt: Prompt?
+    let kycStatusView = FEInfoView()
     
-    let imageView = UIImageView()
-    let title = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.three)
-    let body = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.one)
-    let container = UIView()
-    
-    private let imageViewSize: CGFloat = 32.0
+    private let imageView = UIImageView()
+    private let title = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.three)
+    private let body = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.one)
+    private let container = UIView()
     
     var type: PromptType? {
         return prompt?.type
     }
     
-    var shouldHandleTap: Bool {
-        return false
-    }
-    
     var shouldAddContinueButton: Bool {
-        return true
+        return prompt?.type == .noInternet ? false : true
     }
     
-    func setup() {
-        addSubviews()
-        setupConstraints()
-        setupStyle()
-        
-        title.numberOfLines = 0
-        
-        title.text = prompt?.title ?? ""
-        body.text = prompt?.body ?? ""
+    private func setup() {
+        if type == .kyc {
+            let infoConfig: InfoViewConfiguration = Presets.InfoView.verification
+            var infoViewModel = UserManager.shared.profile?.status.viewModel ?? VerificationStatus.none.viewModel
+            infoViewModel?.headerTrailing = .init(image: Asset.close.name)
+            
+            kycStatusView.configure(with: infoConfig)
+            kycStatusView.setup(with: infoViewModel)
+            kycStatusView.setupCustomMargins(all: .large)
+            
+            addSubview(kycStatusView)
+            kycStatusView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        } else {
+            addSubviews()
+            setupConstraints()
+            setupStyle()
+            
+            title.numberOfLines = 0
+            
+            title.text = prompt?.title ?? ""
+            body.text = prompt?.body ?? ""
+        }
     }
     
-    var containerBackgroundColor: UIColor {
-        return LightColors.Background.one
-    }
-    
-    func addSubviews() {
+    private func addSubviews() {
         addSubview(container)
         container.addSubview(imageView)
         container.addSubview(title)
         container.addSubview(body)
         container.addSubview(dismissButton)
+        
         if shouldAddContinueButton {
             container.addSubview(continueButton)
         }
     }
     
-    func setupConstraints() {
-        container.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.large.rawValue,
-                                                           left: 0,
-                                                           bottom: -Margins.large.rawValue,
-                                                           right: 0))
+    private func setupConstraints() {
+        container.constrain(toSuperviewEdges: .zero)
         
         imageView.constrain([
-            imageView.heightAnchor.constraint(equalToConstant: imageViewSize),
-            imageView.widthAnchor.constraint(equalToConstant: imageViewSize),
+            imageView.heightAnchor.constraint(equalToConstant: ViewSizes.medium.rawValue),
+            imageView.widthAnchor.constraint(equalToConstant: ViewSizes.medium.rawValue),
             imageView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: Margins.large.rawValue),
             imageView.centerYAnchor.constraint(equalTo: container.centerYAnchor)
             ])
@@ -114,18 +119,22 @@ class PromptView: UIView {
                 continueButton.heightAnchor.constraint(equalToConstant: ViewSizes.extraSmall.rawValue),
                 continueButton.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -Margins.large.rawValue)
                 ])
+        } else {
+            body.constrain([
+                body.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -Margins.large.rawValue)
+            ])
         }
     }
     
-    func styleDismissButton() {
-        let normalImg = UIImage(named: "close")?.tinted(with: LightColors.Text.three)
-        let highlightedImg = UIImage(named: "close")?.tinted(with: LightColors.Text.three.withAlphaComponent(0.5))
+    private func styleDismissButton() {
+        let normalImg = Asset.close.image.tinted(with: LightColors.Text.three)
+        let highlightedImg = Asset.close.image.tinted(with: LightColors.Text.three.withAlphaComponent(0.5))
         
         dismissButton.setImage(normalImg, for: .normal)
         dismissButton.setImage(highlightedImg, for: .highlighted)
     }
     
-    func styleContinueButton() {
+    private func styleContinueButton() {
         continueButton.setTitleColor(LightColors.Text.three, for: .normal)
         continueButton.setTitleColor(LightColors.Text.three.withAlphaComponent(0.5), for: .disabled)
         continueButton.setTitleColor(LightColors.Text.two, for: .highlighted)
@@ -145,11 +154,11 @@ class PromptView: UIView {
         styleContinueButton()
         
         imageView.backgroundColor = LightColors.Background.cards
-        imageView.layer.cornerRadius = imageViewSize / 2.0
+        imageView.layer.cornerRadius = ViewSizes.medium.rawValue / 2.0
         imageView.contentMode = .center
-        imageView.image = UIImage(named: "alert")?.tinted(with: LightColors.primary)
+        imageView.image = prompt?.alertIcon
         
-        container.backgroundColor = LightColors.Background.three
+        container.backgroundColor = prompt?.backgroundColor
         container.layer.cornerRadius = CornerRadius.common.rawValue
     }
 }

@@ -22,7 +22,7 @@ class RedeemContainer: UIView {
         didLayout = true
         let gradient = CAGradientLayer()
         gradient.frame = bounds
-        gradient.colors = [UIColor.gradientStart.cgColor, UIColor.gradientEnd.cgColor] as [Any]
+        gradient.colors = []
         gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
         gradient.startPoint = CGPoint(x: 1.0, y: 0.0)
         gradient.cornerRadius = cornerRadius
@@ -49,7 +49,7 @@ class RedeemGiftViewController: UIViewController, Subscriber {
     private let separator = UIView(color: .white)
     private let icon = UIImageView()
     private let body = UILabel(font: Fonts.Body.one, color: LightColors.Contrast.two)
-    private let redeem = BRDButton(title: "Redeem", type: .secondaryTransparent)
+    private let redeem = BRDButton(title: "Redeem", type: .secondary)
     private let statusCircle = LinkStatusCircle(colour: LightColors.Contrast.two)
     private let confetti = ConfettiView()
     private let transitioner = RedeemTransitioningDelegate()

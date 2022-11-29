@@ -9,58 +9,25 @@
 import UIKit
 import LocalAuthentication
 
-/**
- *  Definitions to support prompts that appear at the top of the home screen.
- */
-
-// Some prompts, such as email subscription prompts, have two steps: initialDisplay and confirmation, each of
-// which can have its own text and image content.
-enum PromptPageStep: Int {
-    case initialDisplay
-    case confirmation
-    var step: Int { return rawValue }
-}
-
-//
-// Keys which can be found in the JSON data returned from the /announcements server endpoint.
-// The endpoint returns an array of 'pages,' each of which specifies an id (a.k.a., slug), text, image, etc.
-//
-enum PromptKey: String {
-    case id = "slug"    // the server sends 'slug' but we'll call it 'id'
-    case type
-    case pages
-    case title
-    case titleKey
-    case body
-    case bodyKey
-    case imageName
-    case imageUrl
-    case emailList
-    
-    var key: String { return rawValue }
-}
-
-// Defines the types and priority ordering of prompts. Only one prompt can appear on
-// the home screen at at time.
+// Defines the types and priority ordering of prompts. Only one prompt can appear on the home screen at at time.
 enum PromptType: Int {
-    
-    // N.B. The ordering in this enum determines the priority ordering of the prompts,
-    // using the `order` var.
     case none
+    case noInternet
+    case kyc
     case upgradePin
     case paperKey
     case noPasscode
     case biometrics
-    case announcement
     
     var order: Int { return rawValue }
     
     static var defaultTypes: [PromptType] = {
-        return [.upgradePin, .paperKey, .noPasscode, .biometrics]
+        return [.noInternet, .kyc, .upgradePin, .paperKey, .noPasscode, .biometrics]
     }()
     
     var title: String {
         switch self {
+        case .noInternet: return L10n.Prompts.ConnectionIssues.title
         case .biometrics: return LAContext.biometricType() == .face ? L10n.Prompts.FaceId.title : L10n.Prompts.TouchId.title
         case .paperKey: return L10n.Prompts.PaperKey.title
         case .upgradePin: return L10n.Prompts.UpgradePin.title
@@ -71,17 +38,19 @@ enum PromptType: Int {
     
     var name: String {
         switch self {
+        case .noInternet: return "noInternetPrompt"
+        case .kyc: return "kycPrompt"
         case .biometrics: return "biometricsPrompt"
         case .paperKey: return "paperKeyPrompt"
         case .upgradePin: return "upgradePinPrompt"
         case .noPasscode: return "noPasscodePrompt"
-        case .announcement: return "announcementPrompt"
         default: return ""
         }
     }
-
+    
     var body: String {
         switch self {
+        case .noInternet: return L10n.Alert.noInternet
         case .biometrics: return LAContext.biometricType() == .face ? L10n.Prompts.FaceId.body : L10n.Prompts.TouchId.body
         case .paperKey: return L10n.Prompts.PaperKey.body
         case .upgradePin: return L10n.Prompts.UpgradePin.body
@@ -89,14 +58,27 @@ enum PromptType: Int {
         default: return ""
         }
     }
-
+    
+    var backgroundColor: UIColor {
+        switch self {
+        case .noInternet: return LightColors.Error.two
+        default: return LightColors.Background.three
+        }
+    }
+    
+    var alertIcon: UIImage? {
+        switch self {
+        case .noInternet: return Asset.warning.image.tinted(with: LightColors.primary)
+        default: return Asset.alert.image.tinted(with: LightColors.primary)
+        }
+    }
+    
     // This is the trigger that happens when the prompt is tapped
     var trigger: TriggerName? {
         switch self {
         case .biometrics: return .promptBiometrics
         case .paperKey: return .promptPaperKey
         case .upgradePin: return .promptUpgradePin
-        case .noPasscode: return nil
         default: return nil
         }
     }
@@ -104,7 +86,6 @@ enum PromptType: Int {
 
 // Standard protocol for prompts that are shown to the user, typically at the top of the home screen.
 protocol Prompt {
-    
     /**
      *  The type for this prompt, which is used to determine whether to show the prompt
      *  and in which order relative to other prompts.
@@ -122,6 +103,16 @@ protocol Prompt {
     var order: Int { get }
     
     /**
+     *  Background color of prompt.
+     */
+    var backgroundColor: UIColor { get }
+    
+    /**
+     *  Alert icon of prompt.
+     */
+    var alertIcon: UIImage? { get }
+    
+    /**
      *  The title displayed with this prompt. e.g., "Action Required" for the paper key prompt.
      */
     var title: String { get }
@@ -130,23 +121,6 @@ protocol Prompt {
      *  The body displayed with this prompt. e.g., "Your paper key must be saved..."
      */
     var body: String { get }
-    
-    /**
-     *  Optional footnote text displayed with this prompt.
-     */
-    var footnote: String? { get }
-    
-    /**
-     *  Optional image name for an icon to be displayed with the prompt, assuming the name corresponds
-     *  to an image asset that included the asset catalog.
-     */
-    var imageName: String? { get }
-    
-    /**
-     *  Optional image url for an icon to be displayed with the prompt. If imageName() corresponds to a valid
-     *  image, this value is ignored.
-     */
-    var imageUrl: String? { get }
     
     /**
      *  The trigger that should be invoked when this prompt is tapped.
@@ -166,10 +140,9 @@ protocol Prompt {
 }
 
 //
-// default Prompt implementation
+// Default Prompt implementation
 //
 extension Prompt {
-    
     var type: PromptType {
         return .none
     }
@@ -182,6 +155,14 @@ extension Prompt {
         return type.order
     }
     
+    var backgroundColor: UIColor {
+        return type.backgroundColor
+    }
+    
+    var alertIcon: UIImage? {
+        return type.alertIcon
+    }
+    
     var title: String {
         return type.title
     }
@@ -189,39 +170,34 @@ extension Prompt {
     var body: String {
         return type.body
     }
-    
-    var footnote: String? {
-        return nil
-    }
-    
-    var imageName: String? {
-        return nil
-    }
-    
-    var imageUrl: String? {
-        return nil
-    }
-    
     var trigger: TriggerName? {
         return type.trigger
     }
     
-    // default implementation based on the type of prompt
+    // Default implementation based on the type of prompt
     func shouldPrompt(walletAuthenticator: WalletAuthenticator?) -> Bool {
         switch type {
+        case .noInternet:
+            return !Reachability.isReachable
+            
+        case .kyc:
+            let hasKYC = UserManager.shared.profile?.status.hasKYC
+            return hasKYC == false || hasKYC == nil
+            
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }
-            guard let authenticator = walletAuthenticator, !authenticator .isBiometricsEnabledForUnlocking else { return false }
+            guard let authenticator = walletAuthenticator, !authenticator.isBiometricsEnabledForUnlocking else { return false }
+            
             return true
+            
         case .paperKey:
             return UserDefaults.walletRequiresBackup && !UserDefaults.debugShouldSuppressPaperKeyPrompt
         case .upgradePin:
-            if let authenticator = walletAuthenticator, authenticator.pinLength != 6 {
-                return true
-            }
-            return false
+            return walletAuthenticator?.pinLength != 6
+            
         case .noPasscode:
             return !LAContext.isPasscodeEnabled
+            
         default:
             return false
         }
@@ -230,10 +206,8 @@ extension Prompt {
     func didPrompt() {}
 }
 
-// Struct for basic prompts that include a Dismiss and Continue button, such as the
-// paper-key prompt.
+// Struct for basic prompts that include a Dismiss and Continue button, such as the paper-key prompt.
 struct StandardPrompt: Prompt {
-
     var promptType: PromptType
     
     init(type: PromptType) {
@@ -251,50 +225,14 @@ struct StandardPrompt: Prompt {
     }
 }
 
-/**
- *  Protocol for obtaining an email address from the user, optionally for a specific mailing list.
- */
-protocol EmailCollectingPrompt: Prompt {
-
-    /**
-     *  Title text for the page displayed when the email subscription has been confirmed.
-     */
-    var confirmationTitle: String { get }
-
-    /**
-     *  Body text for the page displayed when the email subscription has been confirmed.
-     */
-    var confirmationBody: String { get }
-
-    /**
-     *  Text for a footnote to be displayed when the email subscription is confirmed.
-     */
-    var confirmationFootnote: String? { get }
-    
-    /**
-     *  Name for an image to be displayed when the email subscription is confirmed.
-     */
-    var confirmationImageName: String? { get }
-    
-    /**
-     *  The email subscription list to which the user will be subscribed if a valid email address
-     *  is submitted.
-     */
-    var emailList: String? { get }
-    
-    /**
-     *  To be invoked by the get-email prompt view when the user has successfully subscribed to updates.
-     */
-    func didSubscribe()
-}
-
-// Creates prompt views based on a given type. The 'email' type requires a more
-// sophisticated view with an email input field.
 class PromptFactory: Subscriber {
+    private static let shared = PromptFactory()
     
-    private static let shared: PromptFactory = PromptFactory()
-    
-    private var prompts: [Prompt] = [Prompt]()
+    private var prompts = [Prompt]() {
+        didSet {
+            prompts.sort(by: { return $0.order < $1.order })
+        }
+    }
     
     init() {
         addDefaultPrompts()
@@ -304,51 +242,23 @@ class PromptFactory: Subscriber {
         return shared.prompts.count
     }
     
-    // Invoked from BRAPIClient.fetchAnnouncements()
-    static func didFetchAnnouncements(announcements: [Announcement]) {
-        let supported = announcements.filter({ $0.isSupported })
-        
-        if supported.isEmpty {
-            return
-        }
-
-        supported.forEach({
-            if $0.isGetEmailAnnouncement {
-                shared.prompts.append(AnnouncementBasedEmailCollectingPrompt(announcement: $0))
-            } else {
-                shared.prompts.append(StandardAnnouncementPrompt(announcement: $0))
-            }
-        })
-        
-        shared.sort()
-    }
-    
     static func nextPrompt(walletAuthenticator: WalletAuthenticator) -> Prompt? {
         let prompts = PromptFactory.shared.prompts
-        let next = prompts.first(where: { $0.shouldPrompt(walletAuthenticator: walletAuthenticator) })
+        
+        let next = prompts.first(where: {
+            Reachability.isReachable ? $0.shouldPrompt(walletAuthenticator: walletAuthenticator):  $0.type == .noInternet
+        })
         
         return next
     }
     
     static func createPromptView(prompt: Prompt, presenter: UIViewController) -> PromptView {
-        if let emailPrompt = prompt as? EmailCollectingPrompt {
-            return GetUserEmailPromptView(prompt: emailPrompt, presenter: presenter)
-        } else if let announcementPrompt = prompt as? AnnouncementBasedPrompt {
-            return AnnouncementPromptView(prompt: announcementPrompt)
-        } else {
-            return PromptView(prompt: prompt)
-        }
+        return PromptView(prompt: prompt)
     }
     
     private func addDefaultPrompts() {
-        PromptType.defaultTypes.forEach { (type) in
+        PromptType.defaultTypes.forEach { type in
             prompts.append(StandardPrompt(type: type))
         }
-        
-        sort()
-    }
-    
-    private func sort() {
-        prompts.sort(by: { return $0.order < $1.order })
     }
 }

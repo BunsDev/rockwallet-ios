@@ -8,7 +8,9 @@
 //  See the LICENSE file at the project root for license information.
 //
 
-// currently not used, but if we need to, we can expand the VC with this protocol instead of enum directly
+import UIKit
+
+// Currently not used, but if we need to, we can expand the VC with this protocol instead of enum directly
 protocol SimpleMessage {
     var iconName: String { get }
     var title: String { get }
@@ -18,8 +20,10 @@ protocol SimpleMessage {
 }
 
 enum FailureReason: SimpleMessage {
-    case buy
+    case buyCard
+    case buyAch
     case swap
+    case plaidConnection
     
     var iconName: String {
         return "error"
@@ -27,37 +31,52 @@ enum FailureReason: SimpleMessage {
     
     var title: String {
         switch self {
-        case .buy:
+        case .buyCard, .buyAch:
             return L10n.Buy.errorProcessingPayment
             
         case .swap:
             return L10n.Swap.errorProcessingTransaction
+            
+        case .plaidConnection:
+            return L10n.Buy.plaidErrorTitle
         }
     }
     
     var description: String {
         switch self {
-        case .buy:
+        case .buyCard:
             return L10n.Buy.failureTransactionMessage
             
         case .swap:
             return L10n.Swap.failureSwapMessage
+            
+        case .plaidConnection:
+            return L10n.Buy.plaidErrorDescription
+            
+        case .buyAch:
+            return L10n.Buy.bankAccountFailureText
         }
     }
     
     var firstButtonTitle: String? {
         switch self {
-        case .buy:
+        case .buyCard:
             return L10n.Buy.tryAnotherPayment
             
         case .swap:
             return L10n.Swap.retry
+            
+        case .plaidConnection:
+            return L10n.PaymentConfirmation.tryAgain
+            
+        case .buyAch:
+            return L10n.PaymentConfirmation.tryAgain
         }
     }
     
     var secondButtonTitle: String? {
         switch self {
-        case .buy:
+        case .buyCard, .plaidConnection, .buyAch:
             return L10n.UpdatePin.contactSupport
             
         case .swap:
@@ -66,14 +85,11 @@ enum FailureReason: SimpleMessage {
     }
 }
 
-import UIKit
-
 extension Scenes {
     static let Failure = FailureViewController.self
 }
 
 class FailureViewController: BaseInfoViewController {
-    
     var failure: FailureReason? {
         didSet {
             prepareData()
@@ -84,26 +100,23 @@ class FailureViewController: BaseInfoViewController {
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: failure?.firstButtonTitle),
-            .init(title: failure?.secondButtonTitle, isUnderlined: true)
+            .init(title: failure?.firstButtonTitle) { [weak self] in
+                if self?.failure == .swap {
+                    self?.coordinator?.showSwap()
+                } else {
+                    self?.coordinator?.showBuy()
+                }},
+            .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
+                if self?.failure == .buyCard {
+                    self?.coordinator?.showSupport()
+                } else if self?.failure == .swap {
+                    self?.coordinator?.dismissFlow()
+                }
+            })
         ]
     }
-
-    override var buttonCallbacks: [(() -> Void)] {
-        return [
-            first,
-            second
-        ]
-    }
-
-    var firstCallback: (() -> Void)?
-    var secondCallback: (() -> Void)?
-    
-    func first() {
-        firstCallback?()
-    }
-
-    func second() {
-        secondCallback?()
+    override var buttonConfigurations: [ButtonConfiguration] {
+        return [Presets.Button.primary,
+                Presets.Button.noBorders]
     }
 }

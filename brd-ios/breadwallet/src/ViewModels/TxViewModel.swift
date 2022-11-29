@@ -153,44 +153,39 @@ extension TxViewModel {
         return code
     }
     
-    var icon: StatusIcon {
-        guard let tx = tx, let currency = currency else {
-            return exchangeStatusIconDecider(status: swap?.status)
-        }
-        
-        switch tx.transactionType {
-        case .defaultTransaction, .buyTransaction:
-            if tx.confirmations < currency.confirmationsUntilFinal, tx.transactionType != .buyTransaction {
-                return tx.direction == .received ? .receive : .send
-            } else if tx.transactionType == .buyTransaction {
-                return exchangeStatusIconDecider(status: tx.status)
-            } else if tx.status == .invalid {
-                return tx.transactionType == .buyTransaction ? .receive : .send
-            } else if tx.direction == .received || tx.direction == .recovered {
-                return .receive
+    var icon: UIImage? {
+        return iconDecider(transactionType: tx?.transactionType ?? transactionType,
+                           status: tx?.status ?? status,
+                           direction: tx?.direction ?? direction)
+    }
+    
+    private func iconDecider(transactionType: Transaction.TransactionType, status: TransactionStatus, direction: TransferDirection) -> UIImage? {
+        switch transactionType {
+        case .buyTransaction, .buyAchTransaction:
+            switch status {
+            case .confirmed, .complete, .manuallySettled, .pending:
+                return direction == .received ? Asset.receive.image : Asset.send.image
+                
+            case .invalid, .refunded, .failed:
+                return Asset.loader.image
+                
+            }
+            
+        case .defaultTransaction:
+            if direction == .received || direction == .recovered {
+                return Asset.receive.image
+                
+            } else if direction == .sent {
+                return Asset.send.image
+                
             }
             
         case .swapTransaction:
-            return .exchange
+            return Asset.exchange.image
+        
         }
         
-        return .send
-    }
-    
-    private func exchangeStatusIconDecider(status: TransactionStatus?) -> StatusIcon {
-        if transactionType == .swapTransaction { return .exchange }
-        
-        let status = status ?? .failed
-        
-        if status == .complete || status == .manuallySettled || status == .confirmed {
-            return transactionType == .buyTransaction ? .receive : .send
-        }
-        
-        if status == .pending {
-            return transactionType == .buyTransaction ? .receive : .send
-        }
-        
-        return transactionType == .buyTransaction ? .receive : .send
+        return nil
     }
     
     var gift: Gift? {
@@ -213,29 +208,9 @@ extension DateFormatter {
         return df
     }()
     
-    static let shortDateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.setLocalizedDateFormatFromTemplate("MMM d")
-        return df
-    }()
-
     static let mediumDateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.setLocalizedDateFormatFromTemplate("MMM d, yyyy")
         return df
     }()
-}
-
-private extension String {
-    var smallCondensed: String {
-        let start = String(self[..<index(startIndex, offsetBy: 5)])
-        let end = String(self[index(endIndex, offsetBy: -5)...])
-        return start + "..." + end
-    }
-    
-    var largeCondensed: String {
-        let start = String(self[..<index(startIndex, offsetBy: 10)])
-        let end = String(self[index(endIndex, offsetBy: -10)...])
-        return start + "..." + end
-    }
 }

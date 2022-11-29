@@ -17,7 +17,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
                                                              FetchResponseDisplays {
     override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String { return "close" }
-    override var closeImage: UIImage? { return .init(named: "close")}
+    override var closeImage: UIImage? { return Asset.close.image}
 
     // MARK: - Cleaner Swift Setup
 
@@ -31,7 +31,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
               navigationItem.rightBarButtonItem?.image != closeImage
         else { return }
         
-        let closeButton = UIBarButtonItem(image: .init(named: "close"),
+        let closeButton = UIBarButtonItem(image: Asset.close.image,
                                           style: .plain,
                                           target: self,
                                           action: closeAction)
@@ -46,14 +46,13 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     override func setupSubviews() {
         super.setupSubviews()
+        
         view.backgroundColor = LightColors.Background.two
         tableView.backgroundColor = .clear
         
-        // TODO: register proper accessoryViews
         tableView.registerAccessoryView(WrapperAccessoryView<FELabel>.self)
         tableView.registerAccessoryView(WrapperAccessoryView<FEButton>.self)
         tableView.registerAccessoryView(WrapperAccessoryView<AssetView>.self)
-        // TODO: register base cells
         tableView.register(WrapperTableViewCell<FELabel>.self)
         tableView.register(WrapperTableViewCell<FEButton>.self)
         tableView.register(WrapperTableViewCell<FETextField>.self)

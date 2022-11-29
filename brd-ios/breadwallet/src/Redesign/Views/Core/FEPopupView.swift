@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import SnapKit
 
 struct PopupConfiguration: Configurable {
     var background: BackgroundConfiguration?
@@ -24,7 +23,7 @@ struct PopupViewModel: ViewModel {
     var imageName: String?
     var body: String?
     var buttons: [ButtonViewModel] = []
-    var closeButton: ButtonViewModel? = .init(image: "close")
+    var closeButton: ButtonViewModel? = .init(image: Asset.close.name)
 }
 
 class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {

@@ -20,6 +20,9 @@ protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
     func setAssets(viewAction: BuyModels.Assets.ViewAction)
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
+    func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction)
+    func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction)
+    func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
 }
 
 protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
@@ -28,6 +31,9 @@ protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
     func presentExchangeRate(actionResponse: BuyModels.Rate.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
+    func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse)
+    func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse)
+    func presentFailure(actionResponse: BuyModels.Failure.ActionResponse)
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
@@ -36,6 +42,8 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
+    func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay)
+    func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay)
 }
 
 protocol BuyDataStore: BaseDataStore, FetchDataStore {
@@ -53,6 +61,9 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore {
     var keyStore: KeyStore? { get set }
     
     var autoSelectDefaultPaymentMethod: Bool { get set }
+    var paymentMethod: PaymentCard.PaymentType? { get set }
+    var publicToken: String? { get set }
+    var mask: String? { get set }
 }
 
 protocol BuyDataPassing {

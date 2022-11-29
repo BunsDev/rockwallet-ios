@@ -45,6 +45,9 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         case .country:
             cell = self.tableView(tableView, countryTextFieldCellForRowAt: indexPath)
             
+        case .state:
+            cell = self.tableView(tableView, countryTextFieldCellForRowAt: indexPath)
+            
         case .birthdate:
             cell = self.tableView(tableView, dateCellForRowAt: indexPath)
             
@@ -156,6 +159,9 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         case .country:
             interactor?.pickCountry(viewAction: .init())
             
+        case .state:
+            interactor?.pickState(viewAction: .init())
+            
         default:
             return
         }
@@ -175,6 +181,12 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         }
     }
     
+    func displayState(responseDisplay: KYCBasicModels.SelectState.ResponseDisplay) {
+        coordinator?.showStateSelector(states: responseDisplay.states) { [weak self] model in
+            self?.interactor?.pickState(viewAction: .init(state: model))
+        }
+    }
+    
     func displayValidate(responseDisplay: KYCBasicModels.Validate.ResponseDisplay) {
         guard let section = sections.firstIndex(of: Models.Section.confirm),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
@@ -186,9 +198,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     func displaySubmit(responseDisplay: KYCBasicModels.Submit.ResponseDisplay) {
         coordinator?.showOverlay(with: .success) {
             UserManager.shared.refresh { [weak self] _ in
-                self?.coordinator?.goBack(completion: {
-                    // TODO: .goBack() does not work!
-                })
+                self?.coordinator?.dismissFlow()
             }
         }
     }

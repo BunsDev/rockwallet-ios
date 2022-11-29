@@ -17,7 +17,7 @@ struct TimerConfiguration: Configurable {
 
 struct TimerViewModel: ViewModel {
     var till: Double = 0
-    var image = ImageViewModel.imageName("timelapse")
+    var image = ImageViewModel.image(Asset.timelapse.image)
     var repeats = false
 }
 
@@ -75,7 +75,6 @@ class FETimerView: FEView<TimerConfiguration, TimerViewModel> {
         let dateValue = TimeInterval(viewModel.till / 1000.0)
         triggerDate = Date(timeIntervalSince1970: dateValue)
         
-        // TODO: replace with animation
         iconView.setup(with: viewModel.image)
         
         invalidate()

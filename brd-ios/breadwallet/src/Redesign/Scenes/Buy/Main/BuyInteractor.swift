@@ -18,37 +18,33 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     // MARK: - BuyViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard let currency = dataStore?.toAmount?.currency else {
-            return
-        }
-
-        ExchangeManager.shared.reload()
-        
-        fetchCards { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success:
-                self.getExchangeRate(viewAction: .init())
-                self.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency), paymentCard: self.dataStore?.paymentCard)))
-                self.presenter?.presentAssets(actionResponse: .init(amount: self.dataStore?.toAmount,
-                                                                    card: self.dataStore?.paymentCard,
-                                                                    quote: self.dataStore?.quote))
-                
-            case .failure(let error):
-                self.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
-        
-        guard dataStore?.supportedCurrencies?.isEmpty != false else { return }
+        guard let currency = dataStore?.toAmount?.currency, dataStore?.supportedCurrencies?.isEmpty != false else { return }
         
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
+                ExchangeManager.shared.reload()
+                
                 self?.dataStore?.supportedCurrencies = currencies
                 
+                self?.fetchCards { [weak self] result in
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success:
+                        self.getExchangeRate(viewAction: .init())
+                        self.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency), paymentCard: self.dataStore?.paymentCard)))
+                        self.presenter?.presentAssets(actionResponse: .init(amount: self.dataStore?.toAmount,
+                                                                            card: self.dataStore?.paymentCard,
+                                                                            quote: self.dataStore?.quote))
+                        
+                    case .failure(let error):
+                        self.presenter?.presentError(actionResponse: .init(error: error))
+                    }
+                }
+                
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
             }
         }
     }
@@ -59,7 +55,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             
             switch result {
             case .success:
-                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self.dataStore?.allPaymentCards ?? []))
+                let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
+                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
                 
             case .failure(let error):
                 self.presenter?.presentError(actionResponse: .init(error: error))
@@ -67,10 +64,35 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
     }
     
+    func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction) {
+        PlaidLinkTokenWorker().execute { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let linkToken = response?.linkToken else { return }
+                self?.presenter?.presentLinkToken(actionResponse: .init(linkToken: linkToken))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
+    func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
+        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken, mask: dataStore?.mask)) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
+                
+            case .failure:
+                self?.presenter?.presentFailure(actionResponse: .init())
+            }
+        }
+    }
+    
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.toAmount?.currency else {
-            presenter?.presentError(actionResponse: .init(error: BuyErrors.noQuote(from: C.usdCurrencyCode,
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: C.usdCurrencyCode,
                                                                                    to: dataStore?.toAmount?.currency.code)))
             return
         }
@@ -89,7 +111,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                            card: dataStore?.paymentCard,
                                                            quote: dataStore?.quote,
-                                                           handleErrors: true))
+                                                           handleErrors: true,
+                                                           paymentMethod: dataStore?.paymentMethod))
             return
         }
         
@@ -98,19 +121,25 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.paymentCard,
-                                                       quote: dataStore?.quote))
+                                                       quote: dataStore?.quote,
+                                                       paymentMethod: dataStore?.paymentMethod))
     }
     
     func getExchangeRate(viewAction: Models.Rate.ViewAction) {
-        guard let toCurrency = dataStore?.toAmount?.currency.code else { return }
+        guard let toCurrency = dataStore?.toAmount?.currency.code,
+                let method = dataStore?.paymentMethod
+        else { return }
         
-        let data = QuoteRequestData(from: C.usdCurrencyCode.lowercased(), to: toCurrency)
+        let data = QuoteRequestData(from: C.usdCurrencyCode.lowercased(),
+                                    to: toCurrency,
+                                    type: .buy(method))
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let quote):
                 self?.dataStore?.quote = quote
                 
-                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
+                self?.presenter?.presentExchangeRate(actionResponse: .init(method: method,
+                                                                           quote: quote,
                                                                            from: C.usdCurrencyCode,
                                                                            to: toCurrency))
                 
@@ -120,7 +149,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             case .failure(let error):
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
-                    self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.quoteFail))
+                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
                 
@@ -168,5 +197,29 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             
             completion?(result)
         }
+    }
+    
+    func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
+        dataStore?.paymentMethod = viewAction.method
+        
+        var paymentCards: [PaymentCard]?
+        
+        if dataStore?.paymentMethod == .buyCard {
+            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
+            if let currency = Store.state.currencies.first(where: { $0.code == C.BTC }) ?? Store.state.currencies.first {
+                dataStore?.toAmount = .zero(currency)
+            }
+        } else {
+            paymentCards = dataStore?.allPaymentCards?.filter { $0.type == .buyAch }
+            if let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) {
+                dataStore?.toAmount = .zero(currency)
+            }
+        }
+        
+        if dataStore?.autoSelectDefaultPaymentMethod == true {
+            dataStore?.paymentCard = paymentCards?.first
+        }
+        
+        getExchangeRate(viewAction: .init())
     }
 }

@@ -14,14 +14,18 @@ enum ExchangeEndpoints: String, URLType {
     static var baseURL: String = "https://" + E.apiUrl + "blocksatoshi/exchange/%@"
     
     case supportedCurrencies = "supported-currencies"
-    case quote = "quote?from=%@&to=%@"
+    case quote = "quote?from=%@&to=%@&type=%@"
     case create = "create"
+    case ach = "ach/create"
     case details = "exchange/%@"
     case history = "exchanges"
-    case paymentInstruments = "payment-instruments"
+    case paymentInstruments = "v2/payment-instruments"
     case paymentInstrument = "payment-instrument"
     case paymentInstrumentId = "payment-instrument?instrument_id=%@"
     case paymentStatus = "payment-status?reference=%@"
+    
+    case plaidLinkToken = "plaid-link-token"
+    case plaidPublicToken = "plaid-public-token"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

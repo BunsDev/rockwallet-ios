@@ -23,7 +23,6 @@ protocol Coordinatable: CoordinatableRoutes {
     init(navigationController: UINavigationController)
     
     func childDidFinish(child: Coordinatable)
-    func goBack()
     func start()
 }
 
@@ -100,9 +99,14 @@ class BaseCoordinator: NSObject,
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(role: .kyc1) { showPopup in
+            upgradeAccountOrShowPopup(flow: .swap, role: .kyc1) { showPopup in
                 guard showPopup else { return }
                 
+                if UserManager.shared.profile?.canSwap == false {
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon)
+                    return
+                }
+
                 self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
                     vc?.dataStore?.currencies = currencies
                     vc?.dataStore?.coreSystem = coreSystem
@@ -115,8 +119,13 @@ class BaseCoordinator: NSObject,
     
     func showBuy(coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(role: .kyc2) { showPopup in
+            upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
                 guard showPopup else { return }
+                
+                if UserManager.shared.profile?.canBuy == false {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon)
+                    return
+                }
                 
                 self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
                     vc?.dataStore?.coreSystem = coreSystem
@@ -137,6 +146,11 @@ class BaseCoordinator: NSObject,
             vc.dataStore?.profile = UserManager.shared.profile
             vc.prepareData()
         }
+    }
+    
+    func dismissFlow() {
+        navigationController.dismiss(animated: true)
+        parentCoordinator?.childDidFinish(child: self)
     }
     
     func showVerificationsModally() {
@@ -161,36 +175,54 @@ class BaseCoordinator: NSObject,
         // More hint: deleteAccountCallback inside ModalPresenter.
     }
     
-    // TODO: There are 2 goBack functions. Unify them. 
-    /// Determines whether the viewcontroller or navigation stack are being dismissed
-    func goBack() {
-        // if the same coordinator is used in a flow, we dont want to remove it from the parent
-        guard navigationController.viewControllers.count < 1 else { return }
-
-        guard navigationController.isBeingDismissed
-                || navigationController.presentedViewController?.isBeingDismissed == true
-                || navigationController.presentedViewController?.isMovingFromParent == true
-                || parentCoordinator?.navigationController == navigationController
-        else { return }
-        parentCoordinator?.childDidFinish(child: self)
+    func showExchangeDetails(with exchangeId: String?, type: Transaction.TransactionType) {
+        open(scene: ExchangeDetailsViewController.self) { vc in
+            vc.navigationItem.hidesBackButton = true
+            vc.dataStore?.itemId = exchangeId
+            vc.dataStore?.transactionType = type
+            vc.prepareData()
+        }
     }
     
-    func goBack(completion: (() -> Void)? = nil) {
+    func showSupport() {
+        guard let url = URL(string: C.supportLink) else { return }
+        let webViewController = SimpleWebViewController(url: url)
+        webViewController.setup(with: .init(title: L10n.MenuButton.support))
+        let navController = RootNavigationController(rootViewController: webViewController)
+        webViewController.setAsNonDismissableModal()
+        
+        navigationController.present(navController, animated: true)
+    }
+    
+    /// Determines whether the viewcontroller or navigation stack are being dismissed
+    /// SHOULD NEVER BE CALLED MANUALLY
+    func goBack() {
         guard parentCoordinator != nil,
-              parentCoordinator?.navigationController != navigationController else {
-            navigationController.popViewController(animated: true)
+              parentCoordinator?.navigationController != navigationController,
+              navigationController.viewControllers.count < 1 else {
             return
         }
-        navigationController.dismiss(animated: true) {
-            completion?()
-        }
+        navigationController.dismiss(animated: true)
         parentCoordinator?.childDidFinish(child: self)
     }
     
     func popToRoot(completion: (() -> Void)? = nil) {
-        navigationController.popToRootViewController(animated: true) {
-            completion?()
+        navigationController.popToRootViewController(animated: true, completion: completion)
+    }
+    
+    func showBuy() {
+        guard let vc = navigationController.viewControllers.first as? BuyViewController else {
+            return
         }
+        navigationController.popToViewController(vc, animated: true)
+    }
+    
+    func showSwap() {
+        guard let vc = navigationController.viewControllers.first as? SwapViewController else {
+            return
+        }
+        vc.didTriggerGetExchangeRate?()
+        navigationController.popToViewController(vc, animated: true)
     }
 
     /// Remove the child coordinator from the stack after iit finnished its flow
@@ -249,45 +281,43 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    func upgradeAccountOrShowPopup(role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
+    //TODO: refactor this once the "coming soon" screen is added
+    func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?
         
         switch UserManager.shared.profileResult {
         case .success(let profile):
-            guard let profile = profile else { return }
-            
-            let roles = profile.roles
-            let status = profile.status
+            let roles = profile?.roles
+            let status = profile?.status
             isKYCLevelTwo = status == .levelTwo(.levelTwo)
             
-            if roles.contains(.unverified)
-                || roles.isEmpty == true
-                || status == .emailPending
-                || status == .none {
+            if roles?.contains(.unverified) == true
+                || roles?.isEmpty == true
+                || status == VerificationStatus.emailPending
+                || status == VerificationStatus.none {
                 coordinator = RegistrationCoordinator(navigationController: nvc)
                 
             } else if let kycLevel = role,
-                      roles.contains(kycLevel) {
+                      roles?.contains(kycLevel) == true {
                 completion?(true)
             } else if role == nil {
                 completion?(true)
             } else if let role = role {
-                checkProfileforRole(role: role) { [weak self] hasRole in
-                    guard hasRole == false else {
-                        completion?(true)
-                        return
-                    }
-                    
-                    let coordinator = KYCCoordinator(navigationController: nvc)
-                    coordinator.role = role
-                    coordinator.start()
-                    coordinator.parentCoordinator = self
-                    self?.childCoordinators.append(coordinator)
-                    self?.navigationController.show(coordinator.navigationController, sender: nil)
-                    
-                    completion?(false)
+                guard profile?.roles.contains(role) == false else {
+                    completion?(true)
+                    return
                 }
+                    
+                let coordinator = KYCCoordinator(navigationController: nvc)
+                coordinator.role = role
+                coordinator.flow = flow
+                coordinator.start()
+                coordinator.parentCoordinator = self
+                childCoordinators.append(coordinator)
+                navigationController.show(coordinator.navigationController, sender: nil)
+                
+                completion?(false)
             }
             
         case .failure(let error):

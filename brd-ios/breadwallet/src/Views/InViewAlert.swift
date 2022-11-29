@@ -96,7 +96,7 @@ class InViewAlert: UIView {
         case .primary:
             return LightColors.Background.three
         case .secondary:
-            return .grayBackgroundTint
+            return LightColors.Background.cards
         }
     }
 

@@ -33,6 +33,9 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Sections {
+        case .achNotification:
+            cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
+            
         case .orderInfoCard:
             cell = self.tableView(tableView, orderCellForRowAt: indexPath)
             
@@ -40,11 +43,17 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
             cell = self.tableView(tableView, paymentMethodCellForRowAt: indexPath)
             
         case .termsAndConditions:
-            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            guard let isAchAccount = dataStore?.isAchAccount else { return UITableViewCell() }
             
-            let wrappedCell = cell as? WrapperTableViewCell<FELabel>
-            wrappedCell?.isUserInteractionEnabled = true
-            wrappedCell?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(termsAndConditionsTapped(_:))))
+            if isAchAccount {
+                cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
+            } else {
+                cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+                
+                let wrappedCell = cell as? WrapperTableViewCell<FELabel>
+                wrappedCell?.isUserInteractionEnabled = true
+                wrappedCell?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(termsAndConditionsTapped(_:))))
+            }
             
         case .submit:
             cell = self.tableView(tableView, buttonCellForRowAt: indexPath)
@@ -123,6 +132,33 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+              let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.setup { view in
+                view.setup(with: model)
+                view.configure(with: Presets.InfoView.tickbox)
+                view.setupCustomMargins(all: .large)
+                
+                view.trailingButtonCallback = { [weak self] in
+                    self?.interactor?.showTermsAndConditions(viewAction: .init())
+                }
+                
+                view.toggleTickboxCallback = { [weak self] value in
+                    self?.interactor?.toggleTickbox(viewAction: .init(value: value))
+                }
+            }
+        }
+        
+        return cell
+    }
 
     // MARK: - User Interaction
     
@@ -168,7 +204,8 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay) {
         LoadingView.hide()
         
-        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference)
+        let transactionType: Transaction.TransactionType = dataStore?.isAchAccount ?? false ? .buyAchTransaction : .buyTransaction
+        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference, transactionType: transactionType)
     }
     
     func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay) {
@@ -180,10 +217,11 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
-        coordinator?.showFailure()
+        let failure: FailureReason = dataStore?.isAchAccount ?? false ? .buyAch : .buyCard
+        coordinator?.showFailure(failure: failure)
     }
     
-    func displayCvv(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
+    func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
         guard let section = sections.firstIndex(of: Models.Sections.submit),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         

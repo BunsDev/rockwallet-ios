@@ -61,23 +61,27 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                                                       usdAmount: source?.usdAmount ?? 0,
                                                       transactionId: source?.transactionId,
                                                       usdFee: source?.usdFee ?? 0,
-                                                      paymentInstrument: PaymentCard(id: sourceCard?.id ?? "",
+                                                      paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: sourceCard?.type ?? "") ?? .buyCard,
+                                                                                     id: sourceCard?.id ?? "",
                                                                                      fingerprint: sourceCard?.fingerprint ?? "",
                                                                                      expiryMonth: sourceCard?.expiryMonth ?? 0,
                                                                                      expiryYear: sourceCard?.expiryYear ?? 0,
                                                                                      scheme: PaymentCard.Scheme(rawValue: sourceCard?.scheme ?? "") ?? .none,
-                                                                                     last4: sourceCard?.last4 ?? ""))
+                                                                                     last4: sourceCard?.last4 ?? "",
+                                                                                     accountName: sourceCard?.accountName ?? ""))
         let destinationData = SwapDetail.SourceDestination(currency: destination?.currency?.uppercased() ?? "",
                                                            currencyAmount: destination?.currencyAmount ?? 0,
                                                            usdAmount: destination?.usdAmount ?? 0,
                                                            transactionId: destination?.transactionId,
                                                            usdFee: destination?.usdFee ?? 0,
-                                                           paymentInstrument: PaymentCard(id: destinationCard?.id ?? "",
+                                                           paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: sourceCard?.type ?? "") ?? .buyCard,
+                                                                                          id: destinationCard?.id ?? "",
                                                                                           fingerprint: destinationCard?.fingerprint ?? "",
                                                                                           expiryMonth: destinationCard?.expiryMonth ?? 0,
                                                                                           expiryYear: destinationCard?.expiryYear ?? 0,
                                                                                           scheme: PaymentCard.Scheme(rawValue: destinationCard?.scheme ?? "") ?? .none,
-                                                                                          last4: destinationCard?.last4 ?? ""))
+                                                                                          last4: destinationCard?.last4 ?? "",
+                                                                                          accountName: sourceCard?.accountName ?? ""))
 
         return SwapDetail(orderId: Int(response?.orderId ?? 0),
                           status: .init(string: response?.status) ?? .failed,

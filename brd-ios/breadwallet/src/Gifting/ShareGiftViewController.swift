@@ -27,7 +27,7 @@ class ShareGiftView: UIView {
     private let name = UILabel(font: Fonts.Title.one, color: UIColor.white)
     private let subHeader = UILabel(font: Fonts.Title.two, color: UIColor.white)
     private let separator = UIView(color: UIColor.white.withAlphaComponent(0.15))
-    private let logo = UIImageView(image: UIImage(named: "logo"))
+    private let logo = UIImageView(image: Asset.logo.image)
     private let totalLabel = UILabel(font: Fonts.Body.one, color: UIColor.white)
     private let total = UILabel(font: Fonts.Title.one, color: UIColor.white)
     private let cell: GiftCurrencyCell

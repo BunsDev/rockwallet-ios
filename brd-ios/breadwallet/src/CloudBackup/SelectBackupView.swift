@@ -48,7 +48,7 @@ struct SelectBackupView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 4.0)
-                    .fill(Color(UIColor.primaryButton))
+                    .fill(Color(LightColors.primaryPressed))
                     .opacity(self.selectedBackup == nil ? 0.3 : 1.0)
                 Text(L10n.Button.continueAction)
                     .foregroundColor(Color(LightColors.Text.one))
@@ -76,7 +76,7 @@ struct BackupCell: View {
     let backup: CloudBackup
     @SwiftUI.Binding var isOn: Bool
     
-    private let gradient = Gradient(colors: [Color(UIColor.gradientStart), Color(UIColor.gradientEnd)])
+    private let gradient = Gradient(colors: [])
     
     var body: some View {
         HStack {

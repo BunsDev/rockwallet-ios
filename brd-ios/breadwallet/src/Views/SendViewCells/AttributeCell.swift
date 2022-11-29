@@ -44,12 +44,12 @@ class AttributeCell: UIView {
     private let label = UILabel(font: .customBody(size: 16.0))
     fileprivate let gr = UITapGestureRecognizer()
     fileprivate let tapView = UIView()
-    private let border = UIView(color: .secondaryShadow)
+    private let border = UIView(color: LightColors.Outline.two)
     
     lazy var infoButton: UIButton = {
         let infoButton = UIButton()
-        infoButton.setImage(UIImage(named: "faqIcon"), for: .normal)
-        infoButton.tintColor = .gray2
+        infoButton.setImage(Asset.help.image, for: .normal)
+        infoButton.tintColor = LightColors.Text.three
         infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         
         return infoButton
@@ -111,7 +111,7 @@ class AttributeCell: UIView {
         textField.keyboardType = attributeDefintion.keyboardType
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
-        label.textColor = .grayTextTint
+        label.textColor = LightColors.Text.one
         contentLabel.lineBreakMode = .byTruncatingMiddle
 
         textField.editingChanged = { [weak self] in
@@ -136,11 +136,11 @@ class AttributeCell: UIView {
                                       preferredStyle: .actionSheet)
         
         let titleAttributes = [NSAttributedString.Key.font: Fonts.AlertActionSheet.title,
-                               NSAttributedString.Key.foregroundColor: UIColor.almostBlack]
+                               NSAttributedString.Key.foregroundColor: LightColors.Text.one]
         let titleString = NSAttributedString(string: L10n.Send.whatIsDestinationTag, attributes: titleAttributes)
         
         let messageAttributes = [NSAttributedString.Key.font: Fonts.AlertActionSheet.body,
-                                 NSAttributedString.Key.foregroundColor: UIColor.almostBlack]
+                                 NSAttributedString.Key.foregroundColor: LightColors.Text.one]
         let message = L10n.Send.destinationTagText
         let messageString = NSAttributedString(string: message, attributes: messageAttributes)
         

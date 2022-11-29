@@ -69,6 +69,7 @@ struct C {
     }
     
     static let usLocaleCode = "en_US"
+    static let countryUS = "US"
     
     static let usdCurrencyCode = "USD"
     static let euroCurrencyCode = "EUR"
@@ -79,6 +80,7 @@ struct C {
     static let BCH = "BCH"
     static let ETH = "ETH"
     static let BSV = "BSV"
+    static let USDC = "USDC"
     
     static var backendHost: String {
         if let debugBackendHost = UserDefaults.debugBackendHost {

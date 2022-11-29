@@ -25,14 +25,14 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard dataStore?.currencies.isEmpty == false else { return }
         
-        ExchangeManager.shared.reload()
-        
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
+                ExchangeManager.shared.reload()
+                
                 guard let currencies = currencies,
                       currencies.count >= 2 else {
-                    self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.selectAssets))
+                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
                 self?.dataStore?.supportedCurrencies = currencies
@@ -42,7 +42,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 guard let from = enabled?.first,
                       let to = enabled?.first(where: { $0.code != from.code })
                 else {
-                    self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.selectAssets))
+                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
                 self?.dataStore?.from = .zero(from)
@@ -55,8 +55,8 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.presenter?.presentData(actionResponse: .init(item: item))
                 self?.getExchangeRate(viewAction: .init(getFees: false))
                 
-            case .failure:
-                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.selectAssets))
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
             }
         }
     }
@@ -64,7 +64,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     func getExchangeRate(viewAction: SwapModels.Rate.ViewAction) {
         guard let from = dataStore?.from?.currency,
               let to = dataStore?.to?.currency else {
-            presenter?.presentError(actionResponse: .init(error: SwapErrors.selectAssets))
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
             return
         }
         
@@ -81,14 +81,15 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                                            to: to))
                 
             case .failure:
-                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.quoteFail))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.quoteFail))
             }
+            
             group.leave()
         }
         
         guard let baseCurrency = from.coinGeckoId,
               let termCurrency = to.coinGeckoId else {
-            presenter?.presentError(actionResponse: .init(error: SwapErrors.noQuote(from: from.code, to: to.code)))
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: from.code, to: to.code)))
             return
         }
         
@@ -209,7 +210,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         guard let from = dataStore?.from,
               let fromAddress = from.currency.wallet?.defaultReceiveAddress,
               let sender = sender else {
-            presenter?.presentError(actionResponse: .init(error: SwapErrors.noFees))
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
             return
         }
         
@@ -227,14 +228,14 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                       from.currency.isEthereum {
                 // Not enough ETH for Swap + Fee
                 let value = self?.dataStore?.fromFeeAmount?.tokenValue ?? self?.dataStore?.quote?.fromFee?.fee ?? 0
-                let error = SwapErrors.balanceTooLow(balance: value, currency: from.currency.code)
+                let error = ExchangeErrors.balanceTooLow(balance: value, currency: from.currency.code)
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             } else if self?.dataStore?.quote?.fromFee?.fee != nil {
                 // Not enough ETH for fee
-                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.notEnouthEthForFee(currency: from.currency.code)))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.notEnoughEthForFee(currency: from.currency.code)))
             } else {
                 // No quote and no WK fee
-                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.noFees))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
             }
         }
     }
@@ -312,6 +313,16 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                    withdrawalQuantity: toTokenValue,
                                    destination: address)
         
+        // We need to make sure the swap from amount is still less than the balance
+        if let balance = sender?.wallet.currency.state?.balance {
+            let amount = dataStore?.from ?? Amount(decimalAmount: 0, isFiat: false, currency: dataStore?.from?.currency ?? balance.currency)
+            if amount > balance {
+                let error = ExchangeErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
+                self.presenter?.presentError(actionResponse: .init(error: error))
+                return
+            }
+        }
+        
         SwapWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
@@ -319,7 +330,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.createTransaction(from: data)
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.failed(error: error)))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.failed(error: error)))
             }
         }
     }
@@ -354,7 +365,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
               let currency = dataStore.currencies.first(where: { $0.code == swap?.currency }),
               let wallet = dataStore.coreSystem?.wallet(for: currency),
               let kvStore = Backend.kvStore, let keyStore = dataStore.keyStore else {
-            presenter?.presentError(actionResponse: .init(error: SwapErrors.noFees))
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
             return
         }
         
@@ -363,7 +374,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
               let fee = dataStore.fromFee,
               let exchangeId = dataStore.swap?.exchangeId
         else {
-            presenter?.presentError(actionResponse: .init(error: SwapErrors.noFees))
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
             return
         }
         
@@ -380,7 +391,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         case .ok:
             sender.sendTransaction(allowBiometrics: false, exchangeId: exchangeId) { [weak self] data in
                 guard let pin: String = try? keychainItem(key: KeychainKey.pin) else {
-                    self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.pinConfirmation))
+                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.pinConfirmation))
                     return
                 }
                 data(pin)
@@ -401,14 +412,14 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                     error = GeneralError(errorMessage: message)
                     
                 case .insufficientGas:
-                    error = SwapErrors.networkFee
+                    error = ExchangeErrors.networkFee
                     
                 case .publishFailure(let code, let message):
                     error = GeneralError(errorMessage: "Error \(code): \(message)")
                 }
                 
                 guard let error = error else { return }
-                self?.presenter?.presentError(actionResponse: .init(error: SwapErrors.failed(error: error)))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.failed(error: error)))
             }
             
         case .failed:
@@ -421,22 +432,22 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             error = GeneralError(errorMessage: "Own address")
             
         case .insufficientFunds:
-            error = SwapErrors.balanceTooLow(balance: dataStore.fromFeeAmount?.tokenValue ?? dataStore.quote?.fromFee?.fee ?? 0, currency: currency.code)
+            error = ExchangeErrors.balanceTooLow(balance: dataStore.fromFeeAmount?.tokenValue ?? dataStore.quote?.fromFee?.fee ?? 0, currency: currency.code)
             
         case .noExchangeRate:
-            error = SwapErrors.noQuote(from: dataStore.from?.currency.code, to: dataStore.to?.currency.code)
+            error = ExchangeErrors.noQuote(from: dataStore.from?.currency.code, to: dataStore.to?.currency.code)
             
         case .noFees:
-            error = SwapErrors.noFees
+            error = ExchangeErrors.noFees
             
         case .outputTooSmall(let amount):
-            error = SwapErrors.tooLow(amount: amount.tokenValue, currency: amount.currency.code)
+            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: amount.currency.code, reason: .swap)
             
         case .invalidRequest(let string):
             error = GeneralError(errorMessage: string)
             
         case .paymentTooSmall(let amount):
-            error = SwapErrors.tooLow(amount: amount.tokenValue, currency: amount.currency.code)
+            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: amount.currency.code, reason: .swap)
             
         case .usedAddress:
             error = GeneralError(errorMessage: "Used address")
@@ -445,7 +456,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             error = GeneralError(errorMessage: "Not certified \(string)")
             
         case .insufficientGas:
-            error = SwapErrors.networkFee
+            error = ExchangeErrors.networkFee
         }
         
         guard let error = error else { return }

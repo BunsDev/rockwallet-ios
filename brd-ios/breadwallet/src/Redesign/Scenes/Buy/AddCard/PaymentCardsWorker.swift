@@ -12,12 +12,14 @@ import UIKit
 
 struct PaymentCardsResponseData: ModelResponse {
     struct PaymentInstrument: ModelResponse {
+        var type: String
         var id: String?
         var fingerprint: String?
         var expiryMonth: Int?
         var expiryYear: Int?
         var scheme: String?
         var last4: String?
+        var accountName: String?
     }
     
     var paymentInstruments: [PaymentInstrument]
@@ -30,6 +32,12 @@ struct PaymentCard: ItemSelectable, Hashable {
         case none = "card"
     }
     
+    enum PaymentType: String, CaseIterable {
+        case buyCard = "card"
+        case buyAch = "bank_account"
+    }
+    
+    var type: PaymentType
     var id: String
     var fingerprint: String
     var expiryMonth: Int
@@ -37,22 +45,38 @@ struct PaymentCard: ItemSelectable, Hashable {
     var scheme: Scheme
     var last4: String
     var image: UIImage?
+    var accountName: String
     
-    var displayName: String? { return CardDetailsFormatter.formatNumber(last4: last4) }
+    var displayName: String? {
+        switch type {
+        case .buyAch:
+            return "\(accountName) - \(CardDetailsFormatter.formatBankNumber(last4: last4))"
+        default:
+            return CardDetailsFormatter.formatNumber(last4: last4)
+        }   
+    }
+    
     var displayImage: ImageViewModel? {
-        return .imageName(scheme.rawValue)
+        switch type {
+        case .buyAch:
+            return .image(Asset.bank.image) 
+        default:
+            return .imageName(scheme.rawValue)
+        }
     }
 }
 
 class PaymentCardsMapper: ModelMapper<PaymentCardsResponseData, [PaymentCard]> {
     override func getModel(from response: PaymentCardsResponseData?) -> [PaymentCard] {
         return response?.paymentInstruments.compactMap {
-            return PaymentCard(id: $0.id ?? "",
+            return PaymentCard(type: PaymentCard.PaymentType(rawValue: $0.type) ?? .buyCard,
+                               id: $0.id ?? "",
                                fingerprint: $0.fingerprint ?? "",
                                expiryMonth: $0.expiryMonth ?? 0,
                                expiryYear: $0.expiryYear ?? 0,
                                scheme: PaymentCard.Scheme(rawValue: $0.scheme ?? "") ?? .none,
-                               last4: $0.last4 ?? "")
+                               last4: $0.last4 ?? "",
+                               accountName: $0.accountName ?? "")
         } ?? []
     }
 }

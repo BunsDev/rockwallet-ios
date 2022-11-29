@@ -22,12 +22,12 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         return L10n.HomeScreen.trade
     }
     
-    lazy var confirmButton: WrapperView<FEButton> = {
-        let button = WrapperView<FEButton>()
-        return button
-    }()
-    
     var didTriggerGetExchangeRate: (() -> Void)?
+    
+    lazy var continueButton: FEButton = {
+        let view = FEButton()
+        return view
+    }()
     
     // MARK: - Overrides
     
@@ -43,32 +43,24 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.delaysContentTouches = false
         
-        // TODO: Same code as CheckListViewController. Refactor
-        view.addSubview(confirmButton)
-        confirmButton.snp.makeConstraints { make in
-            make.centerX.leading.equalToSuperview()
-            make.bottom.equalTo(view.snp.bottomMargin)
-        }
-        
-        confirmButton.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
-            make.edges.equalTo(confirmButton.snp.margins)
-        }
-        
-        confirmButton.setupCustomMargins(top: .small, leading: .large, bottom: .large, trailing: .large)
-        
-        tableView.snp.remakeConstraints { make in
-            make.leading.centerX.top.equalToSuperview()
-            make.bottom.equalTo(confirmButton.snp.top)
-        }
-        
-        confirmButton.wrappedView.configure(with: Presets.Button.primary)
-        confirmButton.wrappedView.setup(with: .init(title: L10n.Button.confirm, enabled: false))
-        confirmButton.wrappedView.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
         didTriggerGetExchangeRate = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
         }
+    }
+    
+    override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
+        continueButton.configure(with: Presets.Button.primary)
+        continueButton.setup(with: .init(title: L10n.Button.confirm,
+                                         enabled: false,
+                                         callback: { [weak self] in
+            self?.buttonTapped()
+        }))
+        
+        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
+        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
+        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -156,7 +148,8 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     private func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            confirmButton.wrappedView.isEnabled = false
+            continueButton.viewModel?.enabled = false
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
             return nil
         }
@@ -181,7 +174,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
-        guard let error = responseDisplay.error as? SwapErrors else {
+        guard let error = responseDisplay.error as? ExchangeErrors else {
             coordinator?.hideMessage()
             return
         }
@@ -204,7 +197,8 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         // TODO: Extract to VIPBaseViewController
         LoadingView.hide()
         
-        confirmButton.wrappedView.isEnabled = responseDisplay.continueEnabled
+        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
         tableView.beginUpdates()
         
@@ -290,10 +284,9 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
                                blurred: true,
                                with: responseDisplay.popupViewModel,
                                config: responseDisplay.popupConfig,
-                               closeButtonCallback: { [weak self] in
-            self?.coordinator?.goBack(completion: {})
-        }, callbacks: [ { [weak self] in
-            self?.coordinator?.goBack(completion: {})
+                               closeButtonCallback: coordinator?.dismissFlow,
+                               callbacks: [ { [weak self] in
+            self?.coordinator?.dismissFlow()
         }])
     }
     

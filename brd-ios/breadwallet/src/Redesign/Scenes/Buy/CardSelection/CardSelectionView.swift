@@ -26,7 +26,7 @@ struct CardSelectionViewModel: ViewModel {
     var logo: ImageViewModel?
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
-    var arrow: ImageViewModel? = .imageName("chevron-right")
+    var arrow: ImageViewModel? = .image(Asset.chevronRight.image)
     var userInteractionEnabled = false
 }
 
@@ -84,6 +84,9 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         
         containerStack.addArrangedSubview(mainStack)
         mainStack.addArrangedSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue / 2)
+        }
         mainStack.addArrangedSubview(subtitleLabel)
         mainStack.addArrangedSubview(cardDetailsView)
         
@@ -104,6 +107,8 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.moreButtonCallback = { [weak self] in
             self?.moreButtonTapped()
         }
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped(_:))))
     }
     
     override func configure(with config: CardSelectionConfiguration?) {
@@ -129,22 +134,18 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.isHidden = viewModel?.logo == nil
         
         arrowImageView.setup(with: viewModel?.arrow)
-        arrowImageView.isHidden = viewModel?.expiration != nil && titleLabel.isHidden
+        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden) || viewModel?.userInteractionEnabled == false
+        
+        let moreOption = viewModel?.expiration != nil && titleLabel.isHidden
         
         cardDetailsView.setup(with: .init(logo: viewModel?.logo,
                                           title: titleLabel.isHidden == true ? viewModel?.title : nil,
                                           cardNumber: viewModel?.cardNumber,
                                           expiration: viewModel?.expiration,
-                                          moreOption: arrowImageView.isHidden))
+                                          moreOption: moreOption))
         
         spacerView.isHidden = arrowImageView.isHidden
-        
-        guard viewModel?.userInteractionEnabled == true else {
-            gestureRecognizers?.forEach { removeGestureRecognizer($0) }
-            return
-        }
-        
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped(_:))))
+        isUserInteractionEnabled = viewModel?.userInteractionEnabled == true || moreOption
     }
     
     @objc private func cardSelectorTapped(_ sender: Any) {

@@ -364,7 +364,7 @@ class StartFlowPresenter: Subscriber {
 // This is displayed over the home screen before the login screen is pushed.
 private class StartupScreen: UIViewController {
     
-    private var logo = UIImageView(image: .init(named: "logo"))
+    private var logo = UIImageView(image: Asset.logo.image)
     
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     

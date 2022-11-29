@@ -23,10 +23,16 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
         }
     }
 
-    private let lockSuccessIcon = UIImageView(image: UIImage(named: "celebrate"))
+    private let lockSuccessIcon = UIImageView(image: Asset.celebrate.image)
     private let headingLabel = UILabel.wrapping(font: Fonts.Title.six, color: LightColors.Text.three)
     private let subheadingLabel = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
-    private var continueButton = BRDButton(title: L10n.RecoveryKeyFlow.goToWalletButtonTitle, type: .secondary)
+    
+    private lazy var continueButton: FEButton = {
+        let view = FEButton()
+        view.configure(with: Presets.Button.primary)
+        view.setup(with: .init(title: L10n.RecoveryKeyFlow.goToWalletButtonTitle))
+        return view
+    }()
     
     init(fromOnboarding: Bool, proceedToWallet: (() -> Void)?) {
         super.init()
@@ -68,9 +74,9 @@ class RecoveryKeyCompleteViewController: BaseRecoveryKeyViewController {
         constrainContinueButton(continueButton)
         
         let titles = [L10n.RecoveryKeyFlow.successHeading, L10n.RecoveryKeyFlow.successSubheading]
-        let xInsets: CGFloat = E.isSmallScreen ? 40 : 62
+        let xInsets: CGFloat = E.isSmallScreen ? Margins.extraExtraHuge.rawValue : Margins.extraExtraHuge.rawValue * 2
         
-        continueButton.title = shouldShowGoToWalletButton ? L10n.RecoveryKeyFlow.goToWalletButtonTitle : L10n.Button.done
+        continueButton.setup(with: .init(title: shouldShowGoToWalletButton ? L10n.RecoveryKeyFlow.goToWalletButtonTitle : L10n.Button.done))
         
         // Define anchor/constant pairs for the label top constraints
         let topConstraints: [(a: NSLayoutYAxisAnchor, c: CGFloat)] = [(lockSuccessIcon.bottomAnchor, 38),

@@ -31,7 +31,7 @@ final class RegistrationPresenter: NSObject, Presenter, RegistrationActionRespon
         
         let sectionRows: [Models.Section: [Any]] = [
             .image: [
-                ImageViewModel.imageName("setup-2")
+                ImageViewModel.image(Asset.setup2.image)
             ],
             .title: [
                 LabelViewModel.text(item.type?.title)
@@ -40,7 +40,6 @@ final class RegistrationPresenter: NSObject, Presenter, RegistrationActionRespon
                 LabelViewModel.text(item.type?.instructions)
             ],
             .email: [
-                // TODO: validator?
                 TextFieldModel(title: L10n.Receive.emailButton, value: item.email)
             ],
             .tickbox: [

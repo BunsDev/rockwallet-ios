@@ -7,21 +7,25 @@
 //
 
 import UIKit
+import LinkKit
+
+protocol LinkOAuthHandling {
+    var linkHandler: Handler? { get }
+}
 
 class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, BuyPresenter, BuyStore>, BuyResponseDisplays {
     
     typealias Models = BuyModels
     
-    override var sceneLeftAlignedTitle: String? {
-        return L10n.HomeScreen.buy
-    }
-    
-    lazy var continueButton: WrapperView<FEButton> = {
-        let button = WrapperView<FEButton>()
-        return button
+    lazy var continueButton: FEButton = {
+        let view = FEButton()
+        return view
     }()
     
+    var linkHandler: Handler?
     var didTriggerGetData: (() -> Void)?
+    
+    private var supportedCurrencies: [SupportedCurrency]?
     
     // MARK: - Overrides
     
@@ -34,41 +38,37 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     override func setupSubviews() {
         super.setupSubviews()
         
+        tableView.register(WrapperTableViewCell<FESegmentControl>.self)
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
         tableView.register(WrapperTableViewCell<CardSelectionView>.self)
         tableView.delaysContentTouches = false
-        
-        // TODO: Same code as CheckListViewController. Refactor
-        view.addSubview(continueButton)
-        continueButton.snp.makeConstraints { make in
-            make.centerX.leading.equalToSuperview()
-            make.bottom.equalTo(view.snp.bottomMargin)
-        }
-        
-        continueButton.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
-            make.edges.equalTo(continueButton.snp.margins)
-        }
-        
-        continueButton.setupCustomMargins(top: .small, leading: .large, bottom: .large, trailing: .large)
-        
-        tableView.snp.remakeConstraints { make in
-            make.leading.centerX.top.equalToSuperview()
-            make.bottom.equalTo(continueButton.snp.top)
-        }
-        
-        continueButton.wrappedView.configure(with: Presets.Button.primary)
-        continueButton.wrappedView.setup(with: .init(title: L10n.Button.continueAction, enabled: false))
-        continueButton.wrappedView.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         didTriggerGetData = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
     }
     
+    override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        
+        continueButton.configure(with: Presets.Button.primary)
+        continueButton.setup(with: .init(title: L10n.Button.continueAction,
+                                         enabled: false,
+                                         callback: { [weak self] in
+            self?.buttonTapped()
+        }))
+        
+        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
+        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
+        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Sections {
+        case .segment:
+            cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
+            
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -78,7 +78,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         case .from:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
 
-        case .to:
+        case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
         default:
@@ -117,7 +117,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             }
             
             view.didTapSelectAsset = { [weak self] in
-                self?.interactor?.navigateAssetSelector(viewAction: .init())
+                if self?.dataStore?.paymentMethod == .buyCard {
+                    self?.interactor?.navigateAssetSelector(viewAction: .init())
+                }
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -139,7 +141,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                self?.interactor?.getPaymentCards(viewAction: .init())
+                switch self?.dataStore?.paymentMethod {
+                case .buyAch:
+                    self?.interactor?.getLinkToken(viewAction: .init())
+                default:
+                    self?.interactor?.getPaymentCards(viewAction: .init())
+                }
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -148,10 +155,32 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
+              let model = sectionRows[section]?[indexPath.row] as? SegmentControlViewModel
+        else {
+            return UITableViewCell()
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+            
+            view.didChangeValue = { [weak self] segment in
+                self?.view.endEditing(true)
+                self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
+            }
+        }
+        
+        return cell
+    }
+    
     private func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.wrappedView.isEnabled = false
+            continueButton.viewModel?.enabled = false
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
             return nil
         }
@@ -170,9 +199,18 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
+        switch dataStore?.paymentMethod {
+        case .buyAch:
+            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDC }) {
+                supportedCurrencies = [usdCurrency]
+            }
+        default:
+            supportedCurrencies = dataStore?.supportedCurrencies
+        }
+        
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: dataStore?.currencies,
-                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] item in
+                                       supportedCurrencies: supportedCurrencies) { [weak self] item in
             guard let item = item as? AssetViewModel else { return }
             self?.interactor?.setAssets(viewAction: .init(currency: item.subtitle))
         }
@@ -188,15 +226,20 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(of: Models.Sections.from),
-              let toSection = sections.firstIndex(of: Models.Sections.to),
+              let toSection = sections.firstIndex(of: Models.Sections.paymentMethod),
               let fromCell = tableView.cellForRow(at: .init(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: .init(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView>
-        else { return continueButton.wrappedView.isEnabled = false }
+              let toCell = tableView.cellForRow(at: .init(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+            continueButton.viewModel?.enabled = false
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+            
+            return
+        }
         
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
         
-        continueButton.wrappedView.isEnabled = dataStore?.isFormValid ?? false
+        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay) {
@@ -211,7 +254,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 }
             }
         } else {
-            continueButton.wrappedView.isEnabled = false
+            continueButton.viewModel?.enabled = false
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         }
         
         if let section = sections.firstIndex(of: Models.Sections.accountLimits),
@@ -233,6 +277,16 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                       quote: dataStore?.quote)
     }
     
+    func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
+        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
+            self?.interactor?.setPublicToken(viewAction: .init())
+        })
+    }
+    
+    func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
+        coordinator?.showFailure(failure: .plaidConnection)
+    }
+    
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
             LoadingView.hide()
@@ -240,14 +294,50 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
-        guard responseDisplay.error != nil else {
-            coordinator?.hideMessage()
-            return
+        if responseDisplay.error != nil {
+            continueButton.viewModel?.enabled = false
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         }
         
-        continueButton.wrappedView.isEnabled = false
         coordinator?.showMessage(with: responseDisplay.error,
                                  model: responseDisplay.model,
                                  configuration: responseDisplay.config)
+    }
+    
+    // MARK: - Additional Helpers
+    
+    // MARK: Start Plaid Link using a Link token
+    func createLinkTokenConfiguration(linkToken: String, completion: (() -> Void)? = nil) -> LinkTokenConfiguration {
+        var linkConfiguration = LinkTokenConfiguration(token: linkToken) { success in
+            self.dataStore?.publicToken = success.publicToken
+            self.dataStore?.mask = success.metadata.accounts.first?.mask
+            completion?()
+        }
+        
+        linkConfiguration.onExit = { exit in
+            if let error = exit.error {
+                print("exit with \(error)\n\(exit.metadata)")
+            } else {
+                print("exit with \(exit.metadata)")
+            }
+        }
+        
+        linkConfiguration.onEvent = { event in
+            print("Link Event: \(event)")
+        }
+        
+        return linkConfiguration
+    }
+    
+    func presentPlaidLinkUsingLinkToken(linkToken: String, completion: (() -> Void)? = nil) {
+        let linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken, completion: completion)
+        let result = Plaid.create(linkConfiguration)
+        switch result {
+        case .failure(let error):
+            print("Unable to create Plaid handler due to: \(error)")
+        case .success(let handler):
+            handler.open(presentUsing: .viewController(self))
+            linkHandler = handler
+        }
     }
 }

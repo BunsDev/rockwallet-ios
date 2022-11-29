@@ -19,7 +19,7 @@ struct ExchangeRateConfiguration: Configurable {
 
 struct ExchangeRateViewModel: ViewModel {
     var exchangeRate: String?
-    var timer: TimerViewModel? = TimerViewModel(till: 0, image: .imageName("timelapse"), repeats: true)
+    var timer: TimerViewModel? = TimerViewModel(till: 0, image: .image(Asset.timelapse.image), repeats: true)
     var showTimer = true
 }
 
@@ -50,10 +50,8 @@ class ExchangeRateView: FEView<ExchangeRateConfiguration, ExchangeRateViewModel>
         return view
     }()
     
-    // TODO: Unused till we implement animations.
     private lazy var refreshImageView: FEImageView = {
         let view = FEImageView()
-        view.setup(with: .imageName("rotate_left"))
         view.alpha = 0
         return view
     }()

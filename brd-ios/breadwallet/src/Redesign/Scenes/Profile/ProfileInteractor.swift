@@ -22,7 +22,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
             case .success(let data):
                 self?.dataStore?.profile = data
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item(title: data?.email,
-                                                                                     image: "avatar",
+                                                                                     image: Asset.avatar.name,
                                                                                      status: data?.status)))
                 
             case .failure(let error):
@@ -40,7 +40,8 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
             
             switch result {
             case .success:
-                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self.dataStore?.allPaymentCards ?? []))
+                let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
+                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
                 
             case .failure(let error):
                 self.presenter?.presentError(actionResponse: .init(error: error))

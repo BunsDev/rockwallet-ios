@@ -21,8 +21,8 @@ struct TxListViewModel: TxViewModel, Hashable {
         if let tx = tx {
             var amount = tx.amount
 
+            // This is the originating tx of a token transfer, so the amount is 0 but we want to show the fee
             if tokenTransferCode != nil {
-                // this is the originating tx of a token transfer, so the amount is 0 but we want to show the fee
                 amount = tx.fee
             }
 
@@ -50,7 +50,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .swapTransaction:
             return handleSwapTransactions()
             
-        case .buyTransaction:
+        case .buyTransaction, .buyAchTransaction:
             return handleBuyTransactions()
         }
     }
@@ -77,23 +77,25 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleBuyTransactions() -> String {
+        let isBuy = transactionType == .buyTransaction
+        
         switch status {
         case .invalid, .failed, .refunded:
-            return L10n.Transaction.purchaseFailed
+            return isBuy ? L10n.Transaction.purchaseFailed : L10n.Transaction.purchaseFailedWithAch
     
         case .complete, .manuallySettled, .confirmed:
-            return L10n.Transaction.purchased
+            return isBuy ? L10n.Transaction.purchased : L10n.Transaction.purchasedWithAch
             
         default:
-            return L10n.Transaction.pendingPurchase
+            return isBuy ? L10n.Transaction.pendingPurchase : L10n.Transaction.pendingPurchaseWithAch
         }
     }
     
     private func handleSwapTransactions() -> String {
         let sourceCurrency = swapSourceCurrency?.code.uppercased() ?? ""
         let destinationCurrency = swapDestinationCurrency?.code.uppercased() ?? ""
-        let isOnSource = currency?.code.uppercased() == swapSourceCurrency?.code.uppercased()
-        let swapString = isOnSource ? "to \(destinationCurrency)" : "from \(sourceCurrency)"
+        let isOnSource = currency?.code.uppercased() == destinationCurrency
+        let swapString = isOnSource ? "from \(sourceCurrency)" : "to \(destinationCurrency)"
         
         switch status {
         case .complete, .manuallySettled:

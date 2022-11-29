@@ -11,15 +11,14 @@ import UIKit
 struct MenuItem {
     
     enum Icon {
-        static let scan = UIImage(named: "qr")
-        static let feedback = UIImage(named: "love")
-        static let wallet = UIImage(named: "wallet")
-        static let preferences = UIImage(named: "settings")
-        static let security = UIImage(named: "lock")
-        static let support = UIImage(named: "chat")
-        static let about = UIImage(named: "info")
-        static let atmMap = UIImage(named: "placemark")
-        static let export = UIImage(named: "withdrawal")
+        static let scan = Asset.qr.image
+        static let feedback = Asset.love.image
+        static let wallet = Asset.wallet.image
+        static let preferences = Asset.settings.image
+        static let support = Asset.chat.image
+        static let about = Asset.info.image
+        static let atmMap = Asset.placemark.image
+        static let export = Asset.withdrawal.image
     }
     
     var title: String
@@ -40,9 +39,9 @@ struct MenuItem {
         self.callback = callback
     }
     
-    init(title: String, icon: UIImage? = nil, color: UIColor? = nil, subMenu: [MenuItem], rootNav: UINavigationController, faqButton: UIButton? = nil) {
+    init(title: String, icon: UIImage? = nil, subMenu: [MenuItem], rootNav: RootNavigationController, faqButton: UIButton? = nil) {
         let subMenuVC = MenuViewController(items: subMenu, title: title, faqButton: faqButton)
-        self.init(title: title, icon: icon, color: color, accessoryText: nil) {
+        self.init(title: title, icon: icon, accessoryText: nil) {
             rootNav.pushViewController(subMenuVC, animated: true)
         }
     }

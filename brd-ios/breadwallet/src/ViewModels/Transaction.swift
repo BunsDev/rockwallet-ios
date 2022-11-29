@@ -37,35 +37,36 @@ enum TransactionStatus: String, Hashable, ModelResponse {
     var viewModel: AssetViewModel? {
         switch self {
         case .pending:
-            return .init(icon: UIImage(named: "pendingIcon"), title: L10n.Staking.statusPending)
-        case .complete:
-            return .init(icon: UIImage(named: "completeIcon"), title: L10n.Transaction.complete)
-        case .failed:
-            return .init(icon: UIImage(named: "errorIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.failed)
+            return .init(icon: Asset.pendingIcon.image, title: L10n.Staking.statusPending)
+            
+        case .complete, .confirmed:
+            return .init(icon: Asset.completeIcon.image, title: L10n.Transaction.complete)
+            
+        case .failed, .invalid:
+            return .init(icon: Asset.errorIcon.image.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.failed)
+            
         case .refunded:
-            return .init(icon: UIImage(named: "refundedIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.refunded)
+            return .init(icon: Asset.refundedIcon.image.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.refunded)
+            
         case .manuallySettled:
-            return .init(icon: UIImage(named: "completeIcon")?.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.manuallySettled)
-        default:
-            return nil
+            return .init(icon: Asset.completeIcon.image.withRenderingMode(.alwaysOriginal), title: L10n.Transaction.manuallySettled)
+            
         }
     }
 
     var backgroundColor: UIColor {
         switch self {
         case .pending: return LightColors.Pending.two
-        case .failed: return LightColors.Error.two
-        case .complete, .confirmed: return LightColors.Success.two
-        default: return .clear
+        case .failed, .invalid, .refunded: return LightColors.Error.two
+        case .complete, .confirmed, .manuallySettled: return LightColors.Success.two
         }
     }
     
     var tintColor: UIColor {
         switch self {
         case .pending: return LightColors.Pending.one
-        case .failed: return LightColors.Error.one
-        case .complete, .confirmed: return LightColors.Success.one
-        default: return .clear
+        case .failed, .invalid, .refunded: return LightColors.Error.one
+        case .complete, .confirmed, .manuallySettled: return LightColors.Success.one
         }
     }
 }
@@ -160,6 +161,7 @@ class Transaction {
     enum TransactionType: String, Hashable {
         case swapTransaction = "SWAP"
         case buyTransaction = "BUY"
+        case buyAchTransaction = "BUY_ACH"
         case defaultTransaction
     }
     
@@ -171,7 +173,7 @@ class Transaction {
     
     var status: TransactionStatus {
         switch transactionType {
-        case .defaultTransaction, .buyTransaction:
+        case .defaultTransaction, .buyTransaction, .buyAchTransaction:
             switch transfer.state {
             case .created, .signed, .submitted, .pending:
                 return .pending
@@ -181,15 +183,17 @@ class Transaction {
                     return .invalid
                 }
                 
+                let buyTransaction = transactionType == .buyTransaction || transactionType == .buyAchTransaction
+                
                 switch Int(confirmations) {
                 case 0:
-                    return transactionType == .buyTransaction ? (swapTransationStatus ?? .failed) : .pending
+                    return buyTransaction ? (swapTransationStatus ?? .failed) : .pending
                     
                 case 1..<currency.confirmationsUntilFinal:
                     return .confirmed
                     
                 default:
-                    return transactionType == .buyTransaction ? (swapTransationStatus ?? .failed) : .complete
+                    return buyTransaction ? (swapTransationStatus ?? .failed) : .complete
                     
                 }
             case .failed, .deleted:

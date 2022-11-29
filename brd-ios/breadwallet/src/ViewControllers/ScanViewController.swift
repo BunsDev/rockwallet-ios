@@ -36,7 +36,7 @@ class ScanViewController: UIViewController {
     fileprivate let session = AVCaptureSession()
     private let toolbar = UIStackView()
     private let close = UIButton.buildModernCloseButton(position: .middle)
-    private let flash = UIButton.icon(image: #imageLiteral(resourceName: "Flash"), accessibilityLabel: L10n.Scanner.flashButtonLabel, position: .middle)
+    private let flash = UIButton.icon(image: Asset.flash.image, accessibilityLabel: L10n.Scanner.flashButtonLabel, position: .middle)
     private let cameraRoll: UIButton = {
         let button: UIButton
         button = UIButton.icon(image: UIImage(systemName: "photo.on.rectangle") ?? UIImage(), accessibilityLabel: "import", position: .middle)

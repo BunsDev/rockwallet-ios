@@ -22,12 +22,12 @@ class InAppAlert: UIView {
     var hide: (() -> Void)?
 
     private let close = UIButton.buildModernCloseButton(position: .middle)
-    private let message = UILabel.wrapping(font: .customBody(size: 16.0), color: .whiteTint)
+    private let message = UILabel.wrapping(font: .customBody(size: 16.0), color: LightColors.Background.one)
     private let image = UIImageView()
 
     override func draw(_ rect: CGRect) {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let colors = [UIColor.blueGradientStart.cgColor, UIColor.blueGradientEnd.cgColor] as CFArray
+        let colors = [LightColors.primary.cgColor, LightColors.primaryPressed.cgColor] as CFArray
         let locations: [CGFloat] = [0.0, 1.0]
         guard let gradient = CGGradient(colorsSpace: colorSpace, colors: colors, locations: locations) else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -53,7 +53,7 @@ class InAppAlert: UIView {
         close.tap = { [weak self] in
             self?.dismiss()
         }
-        close.tintColor = .whiteTint
+        close.tintColor = LightColors.Background.one
         message.textAlignment = .center
     }
 

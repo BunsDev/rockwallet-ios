@@ -10,14 +10,37 @@
 
 import Foundation
 
+enum QuoteType {
+    case swap
+    case buy(PaymentCard.PaymentType?)
+    
+    var value: String {
+        switch self {
+        case .swap:
+            return "SWAP"
+        case .buy(let paymentType):
+            switch paymentType {
+            case .buyCard:
+                return "BUY_CARD"
+            case .buyAch:
+                return "BUY_ACH"
+            default:
+                return ""
+            }
+        }
+    }
+}
+
 struct QuoteRequestData: RequestModelData {
     var from: String?
     var to: String?
+    var type: QuoteType = .swap
     
     func getParameters() -> [String: Any] {
         let params = [
             "from": from,
-            "to": to
+            "to": to,
+            "type": type.value
         ]
         return params.compactMapValues { $0 }
     }
@@ -39,11 +62,18 @@ struct QuoteModelResponse: ModelResponse {
         var rate: Decimal?
         var depositRate: Decimal?
     }
+    
+    struct AchFee: Codable {
+        var achFeeFixedUsd: Decimal?
+        var achFeePercentage: Decimal?
+    }
+    
     var fromFeeCurrency: Fee?
     var toFeeCurrency: Fee?
     var fromFee: Decimal?
     var toFee: Decimal?
     var buyFees: Decimal?
+    var achFees: AchFee?
 }
 
 struct Quote {
@@ -60,6 +90,7 @@ struct Quote {
     var fromFee: EstimateFee?
     var toFee: EstimateFee?
     var buyFee: Decimal?
+    var buyFeeUsd: Decimal?
 }
 
 struct EstimateFee: Model {
@@ -95,7 +126,8 @@ class QuoteMapper: ModelMapper<QuoteModelResponse, Quote> {
                      toFeeRate: response.toFeeCurrency?.rate,
                      fromFee: fromFee,
                      toFee: toFee,
-                     buyFee: response.buyFees)
+                     buyFee: response.buyFees ?? response.achFees?.achFeePercentage,
+                     buyFeeUsd: response.achFees?.achFeeFixedUsd)
     }
 }
 
@@ -105,7 +137,7 @@ class QuoteWorker: BaseApiWorker<QuoteMapper> {
               let from = urlParams.from,
               let to = urlParams.to
         else { return "" }
-        
-        return APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to)
+        let type = urlParams.type.value
+        return APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, type)
     }
 }

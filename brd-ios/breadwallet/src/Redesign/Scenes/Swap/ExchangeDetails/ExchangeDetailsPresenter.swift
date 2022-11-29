@@ -34,7 +34,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                 Models.Section.transactionTo
             ]
             
-        case .buyTransaction:
+        case .buyTransaction, .buyAchTransaction:
             sections = [
                 Models.Section.header,
                 Models.Section.toCurrency,
@@ -84,6 +84,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let transactionFromValue = String(describing: detail.source.transactionId ?? "")
         let transactionToValue = String(describing: detail.destination.transactionId ?? detail.status.rawValue.localizedCapitalized)
         let transactionToValueIsCopyable = detail.destination.transactionId != nil
+        let displayFeeTitle = detail.source.paymentInstrument.type == .buyCard ? L10n.Swap.cardFee : L10n.Buy.achFeeText
         
         var toCurrencyAssetViewModel = AssetViewModel()
         
@@ -93,7 +94,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                                       title: "\(L10n.TransactionDetails.addressToHeader) \(detail.destination.currency)",
                                                       topRightText: "\(formattedCurrencyAmountDestination) / $\(formattedUsdAmountDestination) \(currencyCode)")
             
-        case .buyTransaction:
+        case .buyTransaction, .buyAchTransaction:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
                                                       title: "\(formattedCurrencyAmountDestination) \(detail.destination.currency)",
                                                       topRightText: nil)
@@ -112,13 +113,14 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
             Models.Section.buyOrder: [
                 BuyOrderViewModel(rateValue: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                                   amount: .init(title: .text("\(L10n.Swap.amountPurchased)"), value: .text(amountText), infoImage: nil),
-                                  cardFee: .init(title: .text("\(L10n.Swap.cardFee)"),
+                                  cardFee: .init(title: .text(displayFeeTitle),
                                                  value: .text(cardFeeText),
                                                  infoImage: nil),
                                   networkFee: .init(title: .text("\(L10n.Swap.miningNetworkFee)"), value: .text(networkFeeText), infoImage: nil),
                                   totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)),
                                   paymentMethod: .init(methodTitle: .text(L10n.Swap.paidWith),
                                                        logo: detail.source.paymentInstrument.displayImage,
+                                                       type: detail.source.paymentInstrument.type,
                                                        cardNumber: .text(detail.source.paymentInstrument.displayName),
                                                        expiration: .text(CardDetailsFormatter.formatExpirationDate(month: detail.source.paymentInstrument.expiryMonth,
                                                                                                                    year: detail.source.paymentInstrument.expiryYear)),
@@ -130,7 +132,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                topRightText: "\(formattedCurrencyAmountString) / $\(formattedUsdAmountString) \(currencyCode)")
             ],
             Models.Section.image: [
-                ImageViewModel.image(UIImage(named: "arrow-down")?.tinted(with: LightColors.Text.three))
+                ImageViewModel.image(Asset.arrowDown.image.tinted(with: LightColors.Text.three))
             ],
             Models.Section.toCurrency: [
                 toCurrencyAssetViewModel
@@ -165,7 +167,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
     
     private static func generateAttributedOrderValue(with value: String, isCopyable: Bool) -> NSAttributedString {
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(named: "copy")?.withRenderingMode(.alwaysOriginal)
+        imageAttachment.image = Asset.copy.image.withRenderingMode(.alwaysOriginal)
         imageAttachment.bounds = CGRect(x: 0,
                                         y: -Margins.extraSmall.rawValue,
                                         width: ViewSizes.extraSmall.rawValue,
