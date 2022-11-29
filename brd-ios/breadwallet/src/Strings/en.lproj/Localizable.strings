@@ -944,6 +944,8 @@
 /* Exchange rate label */
 "DefaultCurrency.rateLabel" = "Exchange Rate";
 
+"Disabled.disabledUntil" = "Disabled until";
+
 /* The wallet is disabled. */
 "Disabled.title" = "Wallet disabled";
 
@@ -2430,6 +2432,8 @@
 "Swap.youReceive" = "You receive";
 
 "Swap.youSend" = "You send";
+
+"Symbols.lock" = "\u{1F512}";
 
 /* Syncing view done syncing state header text */
 "SyncingView.activity" = "Activity";

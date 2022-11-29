@@ -850,6 +850,8 @@ internal enum L10n {
     internal static let rateLabel = L10n.tr("Localizable", "DefaultCurrency.rateLabel", fallback: "Exchange Rate")
   }
   internal enum Disabled {
+    /// Disabled until
+    internal static let disabledUntil = L10n.tr("Localizable", "Disabled.disabledUntil", fallback: "Disabled until")
     /// The wallet is disabled.
     internal static let title = L10n.tr("Localizable", "Disabled.title", fallback: "Wallet disabled")
   }
@@ -2182,8 +2184,6 @@ internal enum L10n {
   internal enum Symbols {
     /// u{1F512}
     internal static let lock = L10n.tr("Localizable", "Symbols.lock", fallback: "u{1F512}")
-    /// u{2009}
-    internal static let narrowSpace = L10n.tr("Localizable", "Symbols.narrowSpace", fallback: "u{2009}")
   }
   internal enum SyncingView {
     /// Syncing view done syncing state header text
