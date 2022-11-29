@@ -92,7 +92,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     private var shouldLockExpandingChart = false
     private var isScrubbing = false
     var setHostContentOffset: ((CGFloat) -> Void)?
-    static let headerViewMinHeight: CGFloat = 160.0
+    static let headerViewMinHeight: CGFloat = 180.0
     static var headerViewMaxHeight: CGFloat {
         return Self.shouldShowMarketData ? 375.0 + AccountHeaderView.marketDataHeight : 375.0
     }

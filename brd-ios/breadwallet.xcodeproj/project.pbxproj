@@ -12,7 +12,7 @@
 			buildConfigurationList = 7E390A2927F57D11003C929D /* Build configuration list for PBXAggregateTarget "syncResources" */;
 			buildPhases = (
 				7E390A2A27F57D15003C929D /* Download */,
-				7E67772628C9C4910052927A /* Generate localization */,
+				7E67772628C9C4910052927A /* Phrase */,
 			);
 			dependencies = (
 			);
@@ -68,7 +68,6 @@
 		3A6FD42D24E456B800068ECE /* KeyStoreUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6FD42C24E456B800068ECE /* KeyStoreUtils.swift */; };
 		3A6FD42F24E4570900068ECE /* KeyStore+CloudBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6FD42E24E4570900068ECE /* KeyStore+CloudBackup.swift */; };
 		3A7605F424CF6A680057C1F4 /* CloudBackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7605F324CF6A680057C1F4 /* CloudBackupTests.swift */; };
-		3A858B2C250A7A9300812B36 /* TxStatusIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A858B2B250A7A9300812B36 /* TxStatusIcon.swift */; };
 		3A93890922A303800081FCF9 /* BezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A93890722A3037F0081FCF9 /* BezierView.swift */; };
 		3A93890A22A303800081FCF9 /* CubicCurveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A93890822A3037F0081FCF9 /* CubicCurveAlgorithm.swift */; };
 		3AB3EE11227A27DD00414616 /* ASADataFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3EE10227A27DD00414616 /* ASADataFormatterTests.swift */; };
@@ -850,7 +849,6 @@
 		3A6FD42C24E456B800068ECE /* KeyStoreUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreUtils.swift; sourceTree = "<group>"; };
 		3A6FD42E24E4570900068ECE /* KeyStore+CloudBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyStore+CloudBackup.swift"; sourceTree = "<group>"; };
 		3A7605F324CF6A680057C1F4 /* CloudBackupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudBackupTests.swift; sourceTree = "<group>"; };
-		3A858B2B250A7A9300812B36 /* TxStatusIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TxStatusIcon.swift; path = src/Views/TxStatusIcon.swift; sourceTree = "<group>"; };
 		3A93890722A3037F0081FCF9 /* BezierView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BezierView.swift; path = src/Views/Charts/BezierView.swift; sourceTree = "<group>"; };
 		3A93890822A3037F0081FCF9 /* CubicCurveAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CubicCurveAlgorithm.swift; path = src/Views/Charts/CubicCurveAlgorithm.swift; sourceTree = "<group>"; };
 		3AB3EE10227A27DD00414616 /* ASADataFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASADataFormatterTests.swift; sourceTree = "<group>"; };
@@ -3052,7 +3050,6 @@
 				CECCE5AC1E04AD4100D99448 /* SendViewCells */,
 				CEBF32F71DDD191300348FC6 /* TransactionCells */,
 				3A1D416D250957A00089FE63 /* MarketDataView.swift */,
-				3A858B2B250A7A9300812B36 /* TxStatusIcon.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3666,24 +3663,24 @@
 			shellPath = /bin/sh;
 			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\nswift run -c release swiftgen --config Resources/swiftgen.yml\n";
 		};
-		7E67772628C9C4910052927A /* Generate localization */ = {
+		7E67772628C9C4910052927A /* Phrase */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
 			);
-			name = "Generate localization";
+			name = Phrase;
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/homebrew/bin/phrase pull\n";
+			shellScript = "PHRASE_PATH=$(which phrase)\nif [ -z \"${PHRASE_PATH}\" ];\nthen\n    $PHRASE_PATH pull\n    echo Localization updated\n    exit 0\nelse\n    echo Please install Phrase\n    exit 1\nfi\n";
 		};
 		CEE0EF531EBF8C8A0018DB36 /* Icon Versioning */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4199,7 +4196,6 @@
 				7EF45F522845352400D1F7B0 /* KYCBasicStore.swift in Sources */,
 				3A1D416E250957A00089FE63 /* MarketDataView.swift in Sources */,
 				7EBC6B0D2848B81A000A301F /* CodeInputView.swift in Sources */,
-				3A858B2C250A7A9300812B36 /* TxStatusIcon.swift in Sources */,
 				CE36454C1E7B42850079D0CF /* WhiteDecimalPad.swift in Sources */,
 				CE5F21D91E4A922700C47B8E /* DismissLoginAnimator.swift in Sources */,
 				7ECCA99B28744CD600F99368 /* ExchangeRateView.swift in Sources */,
@@ -4890,6 +4886,7 @@
 		};
 		7E390A2127F57D11003C929D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EF514B428EB5B6D004A31C5 /* debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
@@ -4899,6 +4896,7 @@
 		};
 		7E390A2527F57D11003C929D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EF514B628EB5B6D004A31C5 /* prod.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
@@ -5176,6 +5174,7 @@
 		};
 		7ECCA98D2872FD1000F99368 /* Staging */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EF514B528EB5B6D004A31C5 /* staging.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
