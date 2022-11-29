@@ -153,34 +153,39 @@ extension TxViewModel {
         return code
     }
     
-    var icon: StatusIcon {
-        guard let tx = tx, let currency = currency else {
-            return exchangeStatusIconDecider(status: swap?.status)
-        }
-        
-        switch tx.transactionType {
-        case .defaultTransaction, .buyTransaction, .buyAchTransaction:
-            if tx.confirmations < currency.confirmationsUntilFinal, tx.transactionType != .buyTransaction, tx.transactionType != .buyAchTransaction {
-                return tx.direction == .received ? .receive : .send
-            } else if tx.transactionType == .buyTransaction || tx.transactionType == .buyAchTransaction {
-                return exchangeStatusIconDecider(status: tx.status)
-            } else if tx.status == .invalid {
-                return tx.transactionType == .buyTransaction || tx.transactionType == .buyAchTransaction ? .receive : .send
-            } else if tx.direction == .received || tx.direction == .recovered {
-                return .receive
+    var icon: UIImage? {
+        return iconDecider(transactionType: tx?.transactionType ?? transactionType,
+                           status: tx?.status ?? status,
+                           direction: tx?.direction ?? direction)
+    }
+    
+    private func iconDecider(transactionType: Transaction.TransactionType, status: TransactionStatus, direction: TransferDirection) -> UIImage? {
+        switch transactionType {
+        case .buyTransaction, .buyAchTransaction:
+            switch status {
+            case .confirmed, .complete, .manuallySettled, .pending:
+                return direction == .received ? Asset.receive.image : Asset.send.image
+                
+            case .invalid, .refunded, .failed:
+                return Asset.loader.image
+                
+            }
+            
+        case .defaultTransaction:
+            if direction == .received || direction == .recovered {
+                return Asset.receive.image
+                
+            } else if direction == .sent {
+                return Asset.send.image
+                
             }
             
         case .swapTransaction:
-            return .exchange
+            return Asset.exchange.image
+        
         }
         
-        return .send
-    }
-    
-    private func exchangeStatusIconDecider(status: TransactionStatus?) -> StatusIcon {
-        if transactionType == .swapTransaction { return .exchange }
-        
-        return transactionType == .buyTransaction || transactionType == .buyAchTransaction ? .receive : .send
+        return nil
     }
     
     var gift: Gift? {
