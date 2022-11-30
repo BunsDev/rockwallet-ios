@@ -11,7 +11,7 @@ import UIKit
 class DelistedTokenView: UIView {
     
     private let currency: Currency
-    private let label = UILabel(font: .customBody(size: 14.0), color: .white)
+    private let label = UILabel(font: Fonts.Body.two, color: .white)
     private let button = UIButton.outline(title: L10n.Button.moreInfo)
     
     init(currency: Currency) {

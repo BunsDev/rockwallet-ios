@@ -16,7 +16,7 @@ class StartNavigationDelegate: NSObject, UINavigationControllerDelegate {
             navigationController.navigationBar.tintColor = .white
             navigationController.navigationBar.titleTextAttributes = [
                 NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.font: UIFont.customBold(size: 17.0)
+                NSAttributedString.Key.font: Fonts.Title.six
             ]
         }
         
@@ -24,7 +24,7 @@ class StartNavigationDelegate: NSObject, UINavigationControllerDelegate {
             navigationController.navigationBar.tintColor = LightColors.Text.one
             navigationController.navigationBar.titleTextAttributes = [
                 NSAttributedString.Key.foregroundColor: LightColors.primary,
-                NSAttributedString.Key.font: UIFont.customBold(size: 17.0)
+                NSAttributedString.Key.font: Fonts.Title.six
             ]
         }
         
@@ -32,7 +32,7 @@ class StartNavigationDelegate: NSObject, UINavigationControllerDelegate {
             navigationController.navigationBar.tintColor = LightColors.Text.one
             navigationController.navigationBar.titleTextAttributes = [
                 NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.font: UIFont.customBold(size: 17.0)
+                NSAttributedString.Key.font: Fonts.Title.six
             ]
             
             //Stop being able to swipe back from updating pin view
@@ -45,7 +45,7 @@ class StartNavigationDelegate: NSObject, UINavigationControllerDelegate {
             navigationController.navigationBar.tintColor = LightColors.Text.one
             navigationController.navigationBar.titleTextAttributes = [
                 NSAttributedString.Key.foregroundColor: LightColors.primary,
-                NSAttributedString.Key.font: UIFont.customBold(size: 17.0)
+                NSAttributedString.Key.font: Fonts.Title.six
             ]
         }
     }

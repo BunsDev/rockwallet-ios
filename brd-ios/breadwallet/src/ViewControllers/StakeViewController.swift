@@ -26,8 +26,8 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
     
     var parentView: UIView? //ModalPresentable
     
-    private let titleLabel = UILabel(font: .customBold(size: 17.0))
-    private let caption = UILabel(font: .customBody(size: 15.0))
+    private let titleLabel = UILabel(font: Fonts.Body.one)
+    private let caption = UILabel(font: Fonts.Body.one)
     private let stakeButton = BRDButton(title: L10n.Staking.stake, type: .primary)
     private let selectBakerButton = UIButton()
     private let changeBakerButton = UIButton()
@@ -294,10 +294,10 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
         changeBakerButton.layer.cornerRadius = CornerRadius.extraSmall.rawValue
         changeBakerButton.layer.masksToBounds = true
         changeBakerButton.backgroundColor = currency.colors.0
-        let bakerName = UILabel(font: .customBold(size: 18.0), color: .white)
-        let bakerFee = UILabel(font: .customBody(size: 12.0), color: UIColor.white.withAlphaComponent(0.6))
-        let bakerROI = UILabel(font: .customBold(size: 18.0), color: .white)
-        let bakerROIHeader = UILabel(font: .customBody(size: 12.0), color: UIColor.white.withAlphaComponent(0.6))
+        let bakerName = UILabel(font: Fonts.Title.six, color: .white)
+        let bakerFee = UILabel(font: Fonts.Body.three, color: UIColor.white.withAlphaComponent(0.6))
+        let bakerROI = UILabel(font: Fonts.Title.six, color: .white)
+        let bakerROIHeader = UILabel(font: Fonts.Body.three, color: UIColor.white.withAlphaComponent(0.6))
         let bakerIcon = UIImageView()
         let bakerIconLoadingView = UIView()
         let arrow = UIImageView()
@@ -389,7 +389,7 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
         currencyIcon.layer.cornerRadius = CornerRadius.extraSmall.rawValue
         currencyIcon.layer.masksToBounds = true
         currencyIcon.tintColor = .white
-        let selectBakerLabel = UILabel(font: .customBold(size: 16.0))
+        let selectBakerLabel = UILabel(font: Fonts.Title.six)
         selectBakerLabel.textColor = .black
         selectBakerLabel.text = L10n.Staking.selectBakerTitle
         let arrow = UIImageView()
@@ -418,10 +418,10 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
     
     private func buildInfoView(with baker: Baker?) {
         bakerInfoView.subviews.forEach {$0.removeFromSuperview()}
-        let bakerName = UILabel(font: .customBody(size: 20.0), color: .darkGray)
-        let bakerFee = UILabel(font: .customBody(size: 12.0), color: .lightGray)
-        let bakerROI = UILabel(font: .customBody(size: 20.0), color: .darkGray)
-        let bakerROIHeader = UILabel(font: .customBody(size: 12.0), color: .lightGray)
+        let bakerName = UILabel(font: Fonts.Body.one, color: .darkGray)
+        let bakerFee = UILabel(font: Fonts.Body.three, color: .lightGray)
+        let bakerROI = UILabel(font: Fonts.Body.one, color: .darkGray)
+        let bakerROIHeader = UILabel(font: Fonts.Body.three, color: .lightGray)
         bakerName.adjustsFontSizeToFitWidth = true
         let bakerIcon = UIImageView()
         let bakerIconLoadingView = UIView()
@@ -492,7 +492,7 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
     private func buildTxPendingView() {
         bakerInfoView.subviews.forEach {$0.removeFromSuperview()}
         let pendingSpinner = UIActivityIndicatorView(style: .medium)
-        let pendingLabel = UILabel(font: .customBold(size: 20.0), color: .darkGray)
+        let pendingLabel = UILabel(font: Fonts.Title.five, color: .darkGray)
 
         pendingLabel.text = L10n.Staking.pendingTransaction
         

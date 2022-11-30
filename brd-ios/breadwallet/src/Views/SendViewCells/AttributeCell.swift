@@ -40,8 +40,8 @@ class AttributeCell: UIView {
     }
 
     let textField = UITextField()
-    fileprivate let contentLabel = UILabel(font: .customBody(size: 14.0), color: .darkText)
-    private let label = UILabel(font: .customBody(size: 16.0))
+    fileprivate let contentLabel = UILabel(font: Fonts.Body.two, color: .darkText)
+    private let label = UILabel(font: Fonts.Body.one)
     fileprivate let gr = UITapGestureRecognizer()
     fileprivate let tapView = UIView()
     private let border = UIView(color: LightColors.Outline.two)
