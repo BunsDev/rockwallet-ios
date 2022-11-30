@@ -40,13 +40,20 @@ struct ProfileResponseData: ModelResponse {
         var swapAllowanceLifetime: Decimal
         var swapAllowanceDaily: Decimal
         var swapAllowancePerExchange: Decimal
+        var usedSwapLifetime: Decimal
+        var usedSwapDaily: Decimal
+        
         var buyAllowanceLifetime: Decimal
         var buyAllowanceDaily: Decimal
         var buyAllowancePerPurchase: Decimal
-        var usedSwapLifetime: Decimal
-        var usedSwapDaily: Decimal
         var usedBuyLifetime: Decimal
         var usedBuyDaily: Decimal
+        
+        var buyAchAllowanceLifetime: Decimal
+        var buyAchAllowanceDaily: Decimal
+        var buyAchAllowancePerPurchase: Decimal
+        var usedBuyAchLifetime: Decimal
+        var usedBuyAchDaily: Decimal
     }
     
     struct AccessRights: Codable {
@@ -66,16 +73,25 @@ struct Profile: Model {
     var email: String?
     var status: VerificationStatus
     var failureReason: String?
+    
     var swapAllowanceLifetime: Decimal
     var swapAllowanceDaily: Decimal
     var swapAllowancePerExchange: Decimal
+    var usedSwapLifetime: Decimal
+    var usedSwapDaily: Decimal
+    
     var buyAllowanceLifetime: Decimal
     var buyAllowanceDaily: Decimal
     var buyAllowancePerPurchase: Decimal
-    var usedSwapLifetime: Decimal
-    var usedSwapDaily: Decimal
     var usedBuyLifetime: Decimal
     var usedBuyDaily: Decimal
+    
+    var achAllowanceLifetime: Decimal
+    var achAllowanceDaily: Decimal
+    var achAllowancePerPurchase: Decimal
+    var usedAchLifetime: Decimal
+    var usedAchDaily: Decimal
+    
     var roles: [CustomerRole]
     
     var canBuy: Bool
@@ -97,6 +113,14 @@ struct Profile: Model {
     
     var buyLifetimeRemainingLimit: Decimal {
         return buyAllowanceLifetime - usedBuyLifetime
+    }
+    
+    var achDailyRemainingLimit: Decimal {
+        return achAllowanceDaily - usedAchDaily
+    }
+    
+    var achLifetimeRemainingLimit: Decimal {
+        return achAllowanceLifetime - usedAchLifetime
     }
 }
 
@@ -127,13 +151,18 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      swapAllowanceLifetime: swapAllowanceLifetime,
                      swapAllowanceDaily: swapAllowanceDaily,
                      swapAllowancePerExchange: swapAllowancePerExchange,
+                     usedSwapLifetime: usedSwapLifetime,
+                     usedSwapDaily: usedSwapDaily,
                      buyAllowanceLifetime: buyAllowanceLifetime,
                      buyAllowanceDaily: buyAllowanceDaily,
                      buyAllowancePerPurchase: buyAllowancePerPurchase,
-                     usedSwapLifetime: usedSwapLifetime,
-                     usedSwapDaily: usedSwapDaily,
                      usedBuyLifetime: usedBuyLifetime,
                      usedBuyDaily: usedBuyDaily,
+                     achAllowanceLifetime: limits?.buyAchAllowanceLifetime ?? 0,
+                     achAllowanceDaily: limits?.buyAchAllowanceDaily ?? 0,
+                     achAllowancePerPurchase: limits?.buyAchAllowancePerPurchase ?? 0,
+                     usedAchLifetime: limits?.usedBuyAchLifetime ?? 0,
+                     usedAchDaily: limits?.usedBuyAchDaily ?? 0,
                      roles: response.roles,
                      canBuy: response.kycAccessRights?.hasBuyAccess ?? false,
                      canSwap: response.kycAccessRights?.hasSwapAccess ?? false,
