@@ -1092,7 +1092,8 @@ class ModalPresenter: Subscriber {
             self?.deleteAccountCallback?()
         }
         
-        if UserManager.shared.profile?.roles.contains(.customer) == true {
+        if UserManager.shared.profile?.roles.contains(.customer) == true,
+           UserDefaults.email != nil {
             securityItems.append(deleteAccount)
         }
         
