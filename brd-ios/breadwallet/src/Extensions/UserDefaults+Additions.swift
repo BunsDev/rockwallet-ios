@@ -52,7 +52,6 @@ private let balanceKey = "balanceKey"
 private let walletToken = "sessionKey"
 private let kycSessionKey = "kycSessionKey"
 private let cachedErrors = "cachedErrors"
-private let userEmail = "registrationEmail"
 
 typealias ResettableBooleanSetting = [String: Bool]
 typealias ResettableObjectSetting = String
@@ -123,16 +122,6 @@ extension UserDefaults {
         }
         
         set { defaults.set(newValue, forKey: deviceIdKey) }
-    }
-    
-    /// After the user goes through the registration flow, we
-    /// save his email in local storage
-    static var email: String? {
-        get {
-            return defaults.string(forKey: userEmail)
-        }
-        
-        set { defaults.set(newValue, forKey: userEmail) }
     }
     
     /// Wipe the wallet with no prompts in case user did not press Finish or X button in the popup. Popup indicates wallet is wiped, but to keep the popup on screen, we wipe the wallet after the popup is dismissed.
