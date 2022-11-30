@@ -459,9 +459,6 @@ class LoginViewController: UIViewController, Subscriber {
         let remaining = keyMaster.pinAttemptsRemaining
         let timestamp = keyMaster.walletDisabledUntil
         let disabledUntil = Date(timeIntervalSince1970: timestamp)
-        let firstLine = "\(L10n.UpdatePin.remainingAttempts) \(remaining)"
-        let secondLine = "\(L10n.UpdatePin.disabledUntil) \(disabledUntil)"
-        debugLabel.text = "\(firstLine)\n\(secondLine)"
     }
     
     private func wipeFromDisabledGesture() {
