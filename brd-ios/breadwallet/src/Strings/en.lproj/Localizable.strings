@@ -595,7 +595,7 @@
 
 "Buy.achFee" = "ACH fee (%s)";
 
-"Buy.achFeeText" = "ACH fee (fixed fee + %% (TBD)";
+"Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
 
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.\n\nIt currently takes 7-10 days to process a purchase with ACH";
 

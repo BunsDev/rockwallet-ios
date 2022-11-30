@@ -132,14 +132,21 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
         let swapAllowanceLifetime = limits?.swapAllowanceLifetime ?? 0
         let swapAllowanceDaily = limits?.swapAllowanceDaily ?? 0
         let swapAllowancePerExchange = limits?.swapAllowancePerExchange ?? 0
+        let usedSwapDaily = limits?.usedSwapDaily ?? 0
+        let usedBuyLifetime = limits?.usedBuyLifetime ?? 0
+        
         let buyAllowanceLifetime = limits?.buyAllowanceLifetime ?? 0
         let buyAllowanceDaily = limits?.buyAllowanceDaily ?? 0
         let buyAllowancePerPurchase = limits?.buyAllowancePerPurchase ?? 0
         let usedSwapLifetime = limits?.usedSwapLifetime ?? 0
-        let usedSwapDaily = limits?.usedSwapDaily ?? 0
-        let usedBuyLifetime = limits?.usedBuyLifetime ?? 0
         let usedBuyDaily = limits?.usedBuyDaily ?? 0
-
+        
+        let achAllowanceLifetime = limits?.buyAchAllowanceLifetime ?? 0
+        let achAllowanceDaily = limits?.buyAchAllowanceDaily ?? 0
+        let achAllowancePerPurchase = limits?.buyAchAllowancePerPurchase ?? 0
+        let usedAchLifetime = limits?.usedBuyAchLifetime ?? 0
+        let usedAchDaily = limits?.usedBuyAchDaily ?? 0
+        
         return .init(country: response.country,
                      state: response.state,
                      dateOfBirth: response.dateOfBirth,
@@ -158,11 +165,11 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      buyAllowancePerPurchase: buyAllowancePerPurchase,
                      usedBuyLifetime: usedBuyLifetime,
                      usedBuyDaily: usedBuyDaily,
-                     achAllowanceLifetime: limits?.buyAchAllowanceLifetime ?? 0,
-                     achAllowanceDaily: limits?.buyAchAllowanceDaily ?? 0,
-                     achAllowancePerPurchase: limits?.buyAchAllowancePerPurchase ?? 0,
-                     usedAchLifetime: limits?.usedBuyAchLifetime ?? 0,
-                     usedAchDaily: limits?.usedBuyAchDaily ?? 0,
+                     achAllowanceLifetime: achAllowanceLifetime,
+                     achAllowanceDaily: achAllowanceDaily,
+                     achAllowancePerPurchase: achAllowancePerPurchase,
+                     usedAchLifetime: usedAchLifetime,
+                     usedAchDaily: usedAchDaily,
                      roles: response.roles,
                      canBuy: response.kycAccessRights?.hasBuyAccess ?? false,
                      canSwap: response.kycAccessRights?.hasSwapAccess ?? false,
