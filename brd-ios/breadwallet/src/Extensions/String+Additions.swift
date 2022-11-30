@@ -27,22 +27,6 @@ extension String {
         return applyingTransform(.toUnicodeName, reverse: false) ?? ""
     }
 
-    func ltrim(_ chars: Set<Character>) -> String {
-        if let index = self.firstIndex(where: {!chars.contains($0)}) {
-            return String(self[index..<self.endIndex])
-        } else {
-            return ""
-        }
-    }
-    
-    func rtrim(_ chars: Set<Character>) -> String {
-        if let index = self.reversed().firstIndex(where: {!chars.contains($0)}) {
-            return String(self[self.startIndex...self.index(before: index.base)])
-        } else {
-            return ""
-        }
-    }
-    
     func trim(_ string: String) -> String {
         return replacingOccurrences(of: string, with: "")
     }
@@ -51,12 +35,6 @@ extension String {
         guard count > length else { return self }
         let lastIndex = index(startIndex, offsetBy: length)
         return String(self[..<lastIndex])
-    }
-
-    func nsRange(from range: Range<Index>) -> NSRange {
-        let location = utf16.distance(from: utf16.startIndex, to: range.lowerBound)
-        let length = utf16.distance(from: range.lowerBound, to: range.upperBound)
-        return NSRange(location: location, length: length)
     }
 
     func truncateMiddle(to length: Int = 10) -> String {
@@ -123,37 +101,12 @@ extension String {
         return self.removing(prefix: "0x")
     }
     
-    var withHexPrefix: String {
-        guard !self.hasPrefix("0x") else { return self }
-        return "0x\(self)"
-    }
-    
-    var trimmedLeadingZeros: String {
-        let trimmed = self.ltrim(["0"])
-        return trimmed.isEmpty ? "0" : trimmed
-    }
-    
     public func leftPadding(toLength: Int, withPad character: Character) -> String {
         if count < toLength {
             return String(repeatElement(character, count: toLength - count)) + self
         } else {
             return String(self[index(self.startIndex, offsetBy: count - toLength)...])
         }
-    }
-    
-    func leftTrim(toLength: Int) -> String {
-        let offset = max(0, count - toLength)
-        return String(self[index(self.startIndex, offsetBy: offset)...])
-    }
-    
-    /// Hex string padded to 32-bytes
-    var paddedHexString: String {
-        return self.withoutHexPrefix.leftPadding(toLength: 64, withPad: "0").withHexPrefix
-    }
-    
-    /// Hex string with 0-padding removed down to 20-bytes
-    var unpaddedHexString: String {
-        return self.withoutHexPrefix.leftTrim(toLength: 40).withHexPrefix
     }
     
     func removing(prefix: String) -> String {
