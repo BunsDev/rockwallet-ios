@@ -12,7 +12,7 @@ class RegistrationCoordinator: BaseCoordinator, RegistrationRoutes {
     // MARK: - RegistrationRoutes
     
     override func start() {
-        if UserDefaults.email == nil {
+        if UserDefaults.kycSessionKeyValue == nil {
             return open(scene: Scenes.Registration) { vc in
                 vc.navigationItem.hidesBackButton = true
             }

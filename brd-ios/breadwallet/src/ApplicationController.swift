@@ -364,7 +364,6 @@ class ApplicationController: Subscriber {
                     NewDeviceWorker().execute(requestData: newDeviceRequestData) { [weak self] result in
                         switch result {
                         case .success(let data):
-                            UserDefaults.email = data?.email
                             UserDefaults.kycSessionKeyValue = data?.sessionKey
                             
                             self?.coordinator?.showRegistration()

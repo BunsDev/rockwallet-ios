@@ -25,15 +25,9 @@ class UserManager: NSObject {
             case .success(let profile):
                 self?.profile = profile
                 
-                if let email = profile?.email {
-                    UserDefaults.email = email
-                }
-                
             case .failure(let error):
                 self?.error = error
                 self?.profile = nil
-                
-                UserDefaults.email = nil
             }
             
             DispatchQueue.main.async {

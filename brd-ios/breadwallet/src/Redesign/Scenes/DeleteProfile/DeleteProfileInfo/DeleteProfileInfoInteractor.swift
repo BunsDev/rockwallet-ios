@@ -30,7 +30,6 @@ class DeleteProfileInfoInteractor: NSObject, Interactor, DeleteProfileInfoViewAc
                 UserManager.shared.profile = nil
 
                 UserDefaults.shouldWipeWalletNoPrompt = true
-                UserDefaults.email = nil
                 UserDefaults.kycSessionKeyValue = nil
                 UserDefaults.deviceID = ""
 
