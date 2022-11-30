@@ -43,7 +43,7 @@ class GiftViewController: UIViewController {
     private let bottomBorder = UIView(color: .white)
     private let createButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Create", for: .normal)
+        button.setTitle(L10n.CreateGift.create, for: .normal)
         button.tintColor = .white
         button.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         button.layer.cornerRadius = 4
