@@ -75,6 +75,8 @@ internal enum L10n {
     internal static let deleteAccount = L10n.tr("Localizable", "Account.DeleteAccount", fallback: "Delete account")
     /// Delisted token alert banner message
     internal static let delistedToken = L10n.tr("Localizable", "Account.delistedToken", fallback: "This token has been delisted. \n\nYou may still be able to send these tokens to another platform. For more details, visit our support page.")
+    /// Email
+    internal static let email = L10n.tr("Localizable", "Account.Email", fallback: "Email")
     /// $10000 per BTC
     internal static func exchangeRate(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "Account.exchangeRate", String(describing: p1), String(describing: p2), fallback: "%1$@ per %2$@")
@@ -158,7 +160,7 @@ internal enum L10n {
     /// Not Now button label.
     internal static let notNow = L10n.tr("Localizable", "AccountCreation.notNow", fallback: "Not Now")
     /// Re-send my code label
-    internal static let resendCode = L10n.tr("Localizable", "AccountCreation.ResendCode", fallback: "Re-send my code")
+    internal static let resendCode = L10n.tr("Localizable", "AccountCreation.ResendCode", fallback: "Resend my code")
     /// Creating Account progress Label
     internal static let timeout = L10n.tr("Localizable", "AccountCreation.timeout", fallback: "The Request timed out. Please try again later.")
     /// Confirm Account Creation Title
@@ -514,11 +516,11 @@ internal enum L10n {
     }
     /// ACH fee (fixed fee + % (TBD)
     internal static let achFeeText = L10n.tr("Localizable", "Buy.achFeeText", fallback: "ACH fee (fixed fee + % (TBD)")
-    /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is $1,000 USD. 
+    /// Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.
     /// 
-    /// It currently takes 7-10 days to process a purchase with ACH.
-    internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.")
+    /// It currently takes 7-10 days to process a purchase with ACH
+    internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.\n\nIt currently takes 7-10 days to process a purchase with ACH")
     }
     /// Currently, ACH payments will take 7-10 days to complete.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
@@ -896,6 +898,8 @@ internal enum L10n {
     }
     /// Check your internet connection message
     internal static let checkInternet = L10n.tr("Localizable", "ErrorMessages.CheckInternet", fallback: "Please, check your internet connection and try again later.")
+    /// Something went wrong! Try again later.
+    internal static let `default` = L10n.tr("Localizable", "ErrorMessages.default", fallback: "Something went wrong! Try again later.")
     /// Email unavailable alert title
     internal static let emailUnavailableMessage = L10n.tr("Localizable", "ErrorMessages.emailUnavailableMessage", fallback: "This device isn't configured to send email with the iOS mail app.")
     /// Email unavailable alert title
@@ -1261,6 +1265,12 @@ internal enum L10n {
       }
     }
   }
+  internal enum NoInternet {
+    /// We couldn’t connect to the server. Please check your internet connection and try again.
+    internal static let body = L10n.tr("Localizable", "NoInternet.Body", fallback: "We couldn’t connect to the server. Please check your internet connection and try again.")
+    /// Check your connection
+    internal static let title = L10n.tr("Localizable", "NoInternet.Title", fallback: "Check your connection")
+  }
   internal enum NodeSelector {
     /// Node selection mode is automatic
     internal static let automatic = L10n.tr("Localizable", "NodeSelector.automatic", fallback: "Automatic")
@@ -1338,7 +1348,7 @@ internal enum L10n {
   internal enum PaymentProtocol {
     internal enum Errors {
       /// Bad Payment request alert title
-      internal static let badPaymentRequest = L10n.tr("Localizable", "PaymentProtocol.Errors.badPaymentRequest", fallback: "Bad Payment Request")
+      internal static let badPaymentRequest = L10n.tr("Localizable", "PaymentProtocol.Errors.badPaymentRequest", fallback: "Your transaction request couldn’t be completed. Please try again.")
       /// Error opening payment protocol file message
       internal static let corruptedDocument = L10n.tr("Localizable", "PaymentProtocol.Errors.corruptedDocument", fallback: "Unsupported or corrupted document")
       /// Missing certificate payment protocol error message
@@ -1795,8 +1805,8 @@ internal enum L10n {
     /// Insufficient funds error
     internal static let insufficientFunds = L10n.tr("Localizable", "Send.insufficientFunds", fallback: "Insufficient Funds")
     /// e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token.
-    internal static func insufficientGasMessage(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Send.insufficientGasMessage", String(describing: p1), String(describing: p2), fallback: "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?")
+    internal static func insufficientGasMessage(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Send.insufficientGasMessage", p1, fallback: "You %1%s in your wallet in order to send this digital asset. Please add more ETH to your wallet and try again.")
     }
     /// Your balance is insufficient to complete this action.
     internal static func insufficientGasTitle(_ p1: UnsafePointer<CChar>) -> String {
@@ -1843,9 +1853,9 @@ internal enum L10n {
     /// PayID label
     internal static let payIdToLabel = L10n.tr("Localizable", "Send.payId_toLabel", fallback: "PayString")
     /// Could not publish transaction alert title
-    internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Could not publish transaction.")
+    internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Your transaction request couldn’t be completed. Please try again.")
     /// Could not load remote request error message
-    internal static let remoteRequestError = L10n.tr("Localizable", "Send.remoteRequestError", fallback: "Could not load payment request")
+    internal static let remoteRequestError = L10n.tr("Localizable", "Send.remoteRequestError", fallback: "Your payment attempt couldn’t be completed. Please try again.")
     /// Scan button label
     internal static let scanLabel = L10n.tr("Localizable", "Send.scanLabel", fallback: "Scan")
     /// Title for error when send request times out and we are not sure weather it succesfull or not.
@@ -2655,7 +2665,7 @@ internal enum L10n {
     /// Update PIN title
     internal static let setNewPinTitle = L10n.tr("Localizable", "UpdatePin.setNewPinTitle", fallback: "Set your PIN")
     /// Update PIN failure error message.
-    internal static let setPinError = L10n.tr("Localizable", "UpdatePin.setPinError", fallback: "Sorry, could not update PIN.")
+    internal static let setPinError = L10n.tr("Localizable", "UpdatePin.setPinError", fallback: "Something went wrong updating your PIN. Please try again.")
     /// Update PIN failure alert view title
     internal static let setPinErrorTitle = L10n.tr("Localizable", "UpdatePin.setPinErrorTitle", fallback: "Update PIN Error")
     /// Number of attempts left on pin entry screen

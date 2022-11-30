@@ -69,6 +69,8 @@
 /* Delisted token alert banner message */
 "Account.delistedToken" = "This token has been delisted. \n\nYou may still be able to send these tokens to another platform. For more details, visit our support page.";
 
+"Account.Email" = "Email";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ per %2$@";
 
@@ -176,7 +178,7 @@
 "AccountCreation.notNow" = "Not Now";
 
 /* Re-send my code label */
-"AccountCreation.ResendCode" = "Re-send my code";
+"AccountCreation.ResendCode" = "Resend my code";
 
 /* Creating Account progress Label */
 "AccountCreation.timeout" = "The Request timed out. Please try again later.";
@@ -595,7 +597,7 @@
 
 "Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
 
-"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.\n\nIt currently takes 7-10 days to process a purchase with ACH";
 
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
 
@@ -984,6 +986,8 @@
 
 /* Check your internet connection message */
 "ErrorMessages.CheckInternet" = "Please, check your internet connection and try again later.";
+
+"ErrorMessages.default" = "Something went wrong! Try again later.";
 
 /* Email unavailable alert title */
 "ErrorMessages.emailUnavailableMessage" = "This device isn't configured to send email with the iOS mail app.";
@@ -1415,6 +1419,10 @@
 /* Node Selector view title */
 "NodeSelector.title" = "Bitcoin Nodes";
 
+"NoInternet.Body" = "We couldn’t connect to the server. Please check your internet connection and try again.";
+
+"NoInternet.Title" = "Check your connection";
+
 /* Onboarding screen 'I'll browse first' button */
 "Onboarding.browseFirst" = "I'll browse first";
 
@@ -1467,7 +1475,7 @@
 "PaymentConfirmation.TryAgain" = "Try again";
 
 /* Bad Payment request alert title */
-"PaymentProtocol.Errors.badPaymentRequest" = "Bad Payment Request";
+"PaymentProtocol.Errors.badPaymentRequest" = "Your transaction request couldn’t be completed. Please try again.";
 
 /* Error opening payment protocol file message */
 "PaymentProtocol.Errors.corruptedDocument" = "Unsupported or corrupted document";
@@ -2003,7 +2011,7 @@
 "Send.insufficientFunds" = "Insufficient Funds";
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
-"Send.insufficientGasMessage" = "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?";
+"Send.insufficientGasMessage" = "You %1%s in your wallet in order to send this digital asset. Please add more ETH to your wallet and try again.";
 
 /* Your balance is insufficient to complete this action. */
 "Send.insufficientGasTitle" = "Insufficient %s Balance";
@@ -2060,10 +2068,10 @@
 "Send.payId_toLabel" = "PayString";
 
 /* Could not publish transaction alert title */
-"Send.publishTransactionError" = "Could not publish transaction.";
+"Send.publishTransactionError" = "Your transaction request couldn’t be completed. Please try again.";
 
 /* Could not load remote request error message */
-"Send.remoteRequestError" = "Could not load payment request";
+"Send.remoteRequestError" = "Your payment attempt couldn’t be completed. Please try again.";
 
 /* Scan button label */
 "Send.scanLabel" = "Scan";
@@ -2917,7 +2925,7 @@
 "UpdatePin.setNewPinTitle" = "Set your PIN";
 
 /* Update PIN failure error message. */
-"UpdatePin.setPinError" = "Sorry, could not update PIN.";
+"UpdatePin.setPinError" = "Something went wrong updating your PIN. Please try again.";
 
 /* Update PIN failure alert view title */
 "UpdatePin.setPinErrorTitle" = "Update PIN Error";

@@ -41,8 +41,8 @@ class SyncingView: UIView {
         setInitialData()
     }
 
-    private let header = UILabel(font: .customBold(size: 14.0))
-    private let date = UILabel(font: .customBody(size: 13.0))
+    private let header = UILabel(font: Fonts.Subtitle.two)
+    private let date = UILabel(font: Fonts.Body.three)
 
     private let progressBackground: UIView = {
         let view = UIView()
