@@ -39,5 +39,9 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
         presenter?.presentCopyValue(actionResponse: .init())
     }
     
+    func showInfoPopup(viewAction: ExchangeDetailsModels.InfoPopup.ViewAction) {
+        presenter?.presentInfoPopup(actionResponse: .init())
+    }
+    
     // MARK: - Aditional helpers
 }

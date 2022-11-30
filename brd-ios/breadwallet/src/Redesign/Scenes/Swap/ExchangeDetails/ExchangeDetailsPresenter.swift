@@ -57,7 +57,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let formattedUsdAmountString = ExchangeFormatter.fiat.string(for: detail.source.usdAmount) ?? ""
         let formattedCurrencyAmountString = ExchangeFormatter.crypto.string(for: detail.source.currencyAmount) ?? ""
-        
+        let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         let formattedUsdAmountDestination = ExchangeFormatter.fiat.string(for: detail.destination.usdAmount) ?? ""
         let formattedCurrencyAmountDestination = ExchangeFormatter.crypto.string(for: detail.destination.currencyAmount) ?? ""
         
@@ -116,7 +116,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                   cardFee: .init(title: .text(displayFeeTitle),
                                                  value: .text(cardFeeText),
                                                  infoImage: nil),
-                                  networkFee: .init(title: .text("\(L10n.Swap.miningNetworkFee)"), value: .text(networkFeeText), infoImage: nil),
+                                  networkFee: .init(title: .text(L10n.Swap.miningNetworkFee), value: .text(networkFeeText), infoImage: .image(infoImage)),
                                   totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)),
                                   paymentMethod: .init(methodTitle: .text(L10n.Swap.paidWith),
                                                        logo: detail.source.paymentInstrument.displayImage,
@@ -161,6 +161,13 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
     func presentCopyValue(actionResponse: ExchangeDetailsModels.CopyValue.ActionResponse) {
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
                                                               config: Presets.InfoView.verification))
+    }
+    
+    func presentInfoPopup(actionResponse: ExchangeDetailsModels.InfoPopup.ActionResponse) {
+        let model: PopupViewModel = .init(title: .text(L10n.Buy.networkFees),
+                                          body: L10n.Buy.networkFeeMessage)
+        
+        viewController?.displayInfoPopup(responseDisplay: .init(model: model))
     }
 
     // MARK: - Additional Helpers

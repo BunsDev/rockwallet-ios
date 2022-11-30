@@ -77,21 +77,13 @@ class BaseCoordinator: NSObject,
         navigationController.show(nvc, sender: nil)
     }
     
-    func showRegistration(shouldShowProfile: Bool = false) {
+    func showRegistration() {
         guard navigationController.presentedViewController?.children.contains(where: { $0 is RegistrationConfirmationViewController }) == nil else { return }
         
         let nvc = RootNavigationController()
         let coordinator = RegistrationCoordinator(navigationController: nvc)
         coordinator.start()
         coordinator.parentCoordinator = self
-        
-        if let vc = coordinator.navigationController.children.first(where: { $0 is RegistrationViewController }) as? RegistrationViewController {
-            vc.dataStore?.shouldShowProfile = shouldShowProfile
-        }
-        
-        if let vc = coordinator.navigationController.children.first(where: { $0 is RegistrationConfirmationViewController }) as? RegistrationConfirmationViewController {
-            vc.dataStore?.shouldShowProfile = shouldShowProfile
-        }
         
         childCoordinators.append(coordinator)
         navigationController.show(coordinator.navigationController, sender: nil)
@@ -153,7 +145,7 @@ class BaseCoordinator: NSObject,
         parentCoordinator?.childDidFinish(child: self)
     }
     
-    func showVerificationsModally() {
+    func showAccountVerification() {
         openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification) { vc in
             vc?.dataStore?.profile = UserManager.shared.profile
             vc?.prepareData()
