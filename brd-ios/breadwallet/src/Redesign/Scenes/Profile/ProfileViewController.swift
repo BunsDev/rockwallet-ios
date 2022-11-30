@@ -15,8 +15,8 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                              ProfileResponseDisplays {
     typealias Models = ProfileModels
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         interactor?.getData(viewAction: .init())
     }
