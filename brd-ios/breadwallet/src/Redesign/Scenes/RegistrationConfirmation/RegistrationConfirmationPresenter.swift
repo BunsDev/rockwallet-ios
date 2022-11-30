@@ -15,7 +15,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
 
     // MARK: - RegistrationConfirmationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let email = actionResponse.item as? String
+        let email = UserManager.shared.profile?.email as? String
+        
         let sections: [Models.Section] = [
             .image,
             .title,
@@ -56,7 +57,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
     }
     
     func presentConfirm(actionResponse: RegistrationConfirmationModels.Confirm.ActionResponse) {
-        viewController?.displayConfirm(responseDisplay: .init(shouldShowProfile: actionResponse.shouldShowProfile))
+        viewController?.displayConfirm(responseDisplay: .init())
     }
     
     func presentResend(actionResponse: RegistrationConfirmationModels.Resend.ActionResponse) {

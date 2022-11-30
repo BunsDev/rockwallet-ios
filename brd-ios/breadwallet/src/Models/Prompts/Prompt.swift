@@ -182,7 +182,7 @@ extension Prompt {
             
         case .kyc:
             let hasKYC = UserManager.shared.profile?.status.hasKYC
-            return hasKYC == false || hasKYC == nil
+            return hasKYC == false
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }

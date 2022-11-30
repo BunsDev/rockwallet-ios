@@ -56,7 +56,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     
     private let chartView: ChartView
     private let priceChangeView = PriceChangeView(style: .percentAndAbsolute)
-    private let priceDateLabel = UILabel(font: .customBody(size: 14.0))
+    private let priceDateLabel = UILabel(font: Fonts.Body.two)
     private let balanceCell: BalanceCell
     private var graphButtons: [HistoryPeriodButton] = HistoryPeriod.allCases.map { HistoryPeriodButton(historyPeriod: $0) }
     

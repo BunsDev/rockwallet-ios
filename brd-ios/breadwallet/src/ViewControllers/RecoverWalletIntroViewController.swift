@@ -20,7 +20,7 @@ class RecoverWalletIntroViewController: UIViewController {
     private let didTapNext: () -> Void
     private let header = RadialGradientView(backgroundColor: .purple)
     private let nextButton = BRDButton(title: L10n.RecoverWallet.next, type: .primary)
-    private let label = UILabel(font: .customBody(size: 16.0), color: .white)
+    private let label = UILabel(font: Fonts.Body.one, color: .white)
     private let illustration = UIImageView(image: #imageLiteral(resourceName: "RecoverWalletIllustration"))
 
     override func viewDidLoad() {

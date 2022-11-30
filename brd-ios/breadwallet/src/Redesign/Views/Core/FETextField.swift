@@ -27,8 +27,8 @@ struct TextFieldConfiguration: Configurable {
     var shadow: ShadowConfiguration?
     var background: BackgroundConfiguration?
     
-    var autocapitalizationType: UITextAutocapitalizationType = .sentences
-    var autocorrectionType: UITextAutocorrectionType = .default
+    var autocapitalizationType: UITextAutocapitalizationType = .none
+    var autocorrectionType: UITextAutocorrectionType = .no
     var keyboardType: UIKeyboardType = .default
     var isSecureTextEntry: Bool = false
 }
