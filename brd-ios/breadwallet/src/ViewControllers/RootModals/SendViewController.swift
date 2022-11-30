@@ -752,7 +752,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         } else {
             guard let feeAmount = currentFeeBasis?.fee else { return }
             
-            let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
+            let message = L10n.Send.insufficientGasMessage(feeAmount.description)
             
             let alertController = UIAlertController(title: L10n.Send.insufficientGasTitle(feeAmount.currency.name), message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: L10n.Button.yes, style: .default, handler: { [weak self] _ in
