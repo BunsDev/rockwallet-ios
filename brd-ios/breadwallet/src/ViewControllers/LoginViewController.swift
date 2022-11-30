@@ -461,7 +461,6 @@ class LoginViewController: UIViewController, Subscriber {
         let disabledUntil = Date(timeIntervalSince1970: timestamp)
         let firstLine = "\(L10n.UpdatePin.remainingAttempts) \(remaining)"
         let secondLine = "\(L10n.UpdatePin.disabledUntil) \(disabledUntil)"
-        debugLabel.text = "\(firstLine)\n\(secondLine)"
     }
     
     private func wipeFromDisabledGesture() {
