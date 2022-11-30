@@ -38,12 +38,8 @@ enum RegistrationConfirmationModels {
     
     struct Confirm {
         struct ViewAction {}
-        struct ActionResponse {
-            var shouldShowProfile: Bool
-        }
-        struct ResponseDisplay {
-            var shouldShowProfile: Bool
-        }
+        struct ActionResponse {}
+        struct ResponseDisplay {}
     }
     
     struct Resend {

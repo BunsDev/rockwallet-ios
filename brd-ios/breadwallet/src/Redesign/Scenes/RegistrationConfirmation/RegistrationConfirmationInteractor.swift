@@ -39,7 +39,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             case .success:
                 UserManager.shared.refresh()
                 
-                self?.presenter?.presentConfirm(actionResponse: .init(shouldShowProfile: self?.dataStore?.shouldShowProfile ?? false))
+                self?.presenter?.presentConfirm(actionResponse: .init())
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))

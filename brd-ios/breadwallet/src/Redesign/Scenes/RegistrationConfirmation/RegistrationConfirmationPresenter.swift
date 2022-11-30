@@ -56,7 +56,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
     }
     
     func presentConfirm(actionResponse: RegistrationConfirmationModels.Confirm.ActionResponse) {
-        viewController?.displayConfirm(responseDisplay: .init(shouldShowProfile: actionResponse.shouldShowProfile))
+        viewController?.displayConfirm(responseDisplay: .init())
     }
     
     func presentResend(actionResponse: RegistrationConfirmationModels.Resend.ActionResponse) {

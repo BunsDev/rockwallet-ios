@@ -140,11 +140,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
         coordinator?.showOverlay(with: .success) { [weak self] in
-            if responseDisplay.shouldShowProfile {
-                self?.coordinator?.showProfile()
-            } else {
-                self?.coordinator?.dismissFlow()
-            }
+            self?.coordinator?.dismissFlow()
         }
     }
     

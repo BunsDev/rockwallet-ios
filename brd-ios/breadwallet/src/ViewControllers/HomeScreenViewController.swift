@@ -389,6 +389,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     private func attemptShowGeneralPrompt() {
         UserManager.shared.refresh { [weak self] _ in
             guard let self = self,
+                  self.generalPromptView == nil, // For now, we are supporting one prompt per session only. Logic for multiple popups is ready but needs to be tested.
                   let nextPrompt = PromptFactory.nextPrompt(walletAuthenticator: self.walletAuthenticator) else { return }
             
             self.generalPromptView = PromptFactory.createPromptView(prompt: nextPrompt, presenter: self)
