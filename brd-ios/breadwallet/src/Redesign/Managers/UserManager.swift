@@ -23,7 +23,12 @@ class UserManager: NSObject {
             
             switch result {
             case .success(let profile):
+                self?.error = nil
                 self?.profile = profile
+                
+                if let email = profile?.email {
+                    UserDefaults.email = email
+                }
                 
             case .failure(let error):
                 self?.error = error
