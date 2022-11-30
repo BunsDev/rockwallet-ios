@@ -308,7 +308,7 @@ class OnboardingViewController: UIViewController {
 
             // create the subheadings
             let subheadingLabel = makeHeadingLabel(text: page.subheading, 
-                                                   font: UIFont.onboardingSubheading(),
+                                                   font: Fonts.Subtitle.two,
                                                    color: LightColors.Contrast.two)
             view.addSubview(subheadingLabel)
             
@@ -460,7 +460,7 @@ class OnboardingViewController: UIViewController {
             ])
         
         skipButton.setTitle(L10n.Onboarding.skip, for: .normal)
-        skipButton.titleLabel?.font = UIFont.onboardingSkipButton()
+        skipButton.titleLabel?.font = Fonts.button
         skipButton.setTitleColor(LightColors.Text.three, for: .normal)
         skipButton.addTarget(self, action: #selector(skipTapped(sender:)), for: .touchUpInside)
         

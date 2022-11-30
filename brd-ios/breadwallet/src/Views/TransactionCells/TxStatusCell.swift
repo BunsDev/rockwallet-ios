@@ -14,7 +14,7 @@ class TxStatusCell: UITableViewCell, Subscriber {
     
     private let container = UIView()
     private lazy var statusLabel: UILabel = {
-        let label = UILabel(font: UIFont.customBody(size: 14.0))
+        let label = UILabel(font: Fonts.Body.two)
         label.textColor = .darkGray
         label.textAlignment = .center
         return label

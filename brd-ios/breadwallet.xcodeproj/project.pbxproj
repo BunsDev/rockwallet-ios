@@ -505,8 +505,6 @@
 		9F3C307825DA926800C7C398 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF292F1EF9D76F005C330A /* Environment.swift */; };
 		9F3C307F25DA929600C7C398 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEA35D4232A9D1200FB58C4 /* Identifier.swift */; };
 		9F3C308625DA929600C7C398 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEA35D4232A9D1200FB58C4 /* Identifier.swift */; };
-		9F3C30A925DA954300C7C398 /* UIFont+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E9F1DC2F9F50066731D /* UIFont+BRWAdditions.swift */; };
-		9F3C30B025DA954300C7C398 /* UIFont+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E9F1DC2F9F50066731D /* UIFont+BRWAdditions.swift */; };
 		9F3C311B25DAC14900C7C398 /* Numeric+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDDE55325D5B79D00E42BE3 /* Numeric+Extensions.swift */; };
 		9F3C313E25DACEDA00C7C398 /* ColorOption+ExtensionUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C313B25DACEDA00C7C398 /* ColorOption+ExtensionUI.swift */; };
 		9F3C313F25DACEDA00C7C398 /* ColorOption+ExtensionUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C313B25DACEDA00C7C398 /* ColorOption+ExtensionUI.swift */; };
@@ -650,7 +648,6 @@
 		CEAA9E911DC0FDFE0066731D /* UIViewPropertyAnimator+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E901DC0FDFE0066731D /* UIViewPropertyAnimator+BRWAdditions.swift */; };
 		CEAA9E951DC1659F0066731D /* UILabel+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E941DC1659F0066731D /* UILabel+BRWAdditions.swift */; };
 		CEAA9E971DC18E1F0066731D /* PhraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E961DC18E1F0066731D /* PhraseView.swift */; };
-		CEAA9EA01DC2F9F50066731D /* UIFont+BRWAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9E9F1DC2F9F50066731D /* UIFont+BRWAdditions.swift */; };
 		CEAA9EA61DC3246F0066731D /* StartNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9EA51DC3246F0066731D /* StartNavigationDelegate.swift */; };
 		CEAA9EA81DC3342E0066731D /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA9EA71DC3342E0066731D /* PinView.swift */; };
 		CEB909F51E5FE63D001804DC /* EnterPhraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB909F41E5FE63D001804DC /* EnterPhraseViewController.swift */; };
@@ -1408,7 +1405,6 @@
 		CEAA9E901DC0FDFE0066731D /* UIViewPropertyAnimator+BRWAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewPropertyAnimator+BRWAdditions.swift"; path = "src/Extensions/UIViewPropertyAnimator+BRWAdditions.swift"; sourceTree = "<group>"; };
 		CEAA9E941DC1659F0066731D /* UILabel+BRWAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UILabel+BRWAdditions.swift"; path = "src/Extensions/UILabel+BRWAdditions.swift"; sourceTree = "<group>"; };
 		CEAA9E961DC18E1F0066731D /* PhraseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhraseView.swift; path = src/Views/PhraseView.swift; sourceTree = "<group>"; };
-		CEAA9E9F1DC2F9F50066731D /* UIFont+BRWAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIFont+BRWAdditions.swift"; path = "src/Extensions/UIFont+BRWAdditions.swift"; sourceTree = "<group>"; };
 		CEAA9EA51DC3246F0066731D /* StartNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartNavigationDelegate.swift; path = src/FlowControllers/StartNavigationDelegate.swift; sourceTree = "<group>"; };
 		CEAA9EA71DC3342E0066731D /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PinView.swift; path = src/Views/PinView.swift; sourceTree = "<group>"; };
 		CEB909F41E5FE63D001804DC /* EnterPhraseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnterPhraseViewController.swift; path = src/ViewControllers/EnterPhraseViewController.swift; sourceTree = "<group>"; };
@@ -2955,7 +2951,6 @@
 				CE20C9161DBE6F2A00C8397A /* UIButton+BRWAdditions.swift */,
 				CEAA9E901DC0FDFE0066731D /* UIViewPropertyAnimator+BRWAdditions.swift */,
 				CEAA9E941DC1659F0066731D /* UILabel+BRWAdditions.swift */,
-				CEAA9E9F1DC2F9F50066731D /* UIFont+BRWAdditions.swift */,
 				CE92F9F31DED59E80046B516 /* UIView+AnimationAdditions.swift */,
 				CE92F9F51DEDF6890046B516 /* UIViewControllerContextTransitioning+BRAdditions.swift */,
 				CEC6AA3A1DEE4EB000EE5AFD /* CGRect+Additions.swift */,
@@ -4125,7 +4120,6 @@
 				7CE940E61FEB8A5F005A2B53 /* TxDetailRowCell.swift in Sources */,
 				3AFAD94F25699112005853E8 /* TxGiftCell.swift in Sources */,
 				7B2E5056289A5F02008CACD8 /* AddCardPresenter.swift in Sources */,
-				CEAA9EA01DC2F9F50066731D /* UIFont+BRWAdditions.swift in Sources */,
 				CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */,
 				CEBF32F21DDCE10D00348FC6 /* AccountHeaderView.swift in Sources */,
 				CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */,
@@ -4314,7 +4308,6 @@
 				7BDB49FA2806F23E0031F015 /* BRTar.swift in Sources */,
 				7E50C722290BE0F90036AA9F /* ThemeManager.swift in Sources */,
 				7EF2999727E3B9C700A2238A /* SimplePrice.swift in Sources */,
-				9F3C30B025DA954300C7C398 /* UIFont+BRWAdditions.swift in Sources */,
 				7E50C724290BE1100036AA9F /* UIColor+init.swift in Sources */,
 				9F3C308625DA929600C7C398 /* Identifier.swift in Sources */,
 				7E50C720290BE0EE0036AA9F /* Colors.swift in Sources */,
@@ -4368,7 +4361,6 @@
 				7EF299A027E3B9DA00A2238A /* MarketChart.swift in Sources */,
 				9FDDE57925D5B85000E42BE3 /* AssetListWidget.swift in Sources */,
 				9FDDE55A25D5B79D00E42BE3 /* Numeric+Extensions.swift in Sources */,
-				9F3C30A925DA954300C7C398 /* UIFont+BRWAdditions.swift in Sources */,
 				9F3C313E25DACEDA00C7C398 /* ColorOption+ExtensionUI.swift in Sources */,
 				A2439D019C08106D6E14D70A /* MarketInfo.swift in Sources */,
 				7EF2999D27E3B9DA00A2238A /* ApiClient.swift in Sources */,

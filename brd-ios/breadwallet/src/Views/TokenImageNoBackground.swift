@@ -28,7 +28,7 @@ class RenderedIconBase: UIView {
         label.frame = bounds
         label.text = "\(code.first!)"
         label.textColor = .white
-        label.font = UIFont.customBold(size: 45.0)
+        label.font = Fonts.Title.two
         label.textAlignment = .center
     }
     
