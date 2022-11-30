@@ -90,7 +90,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                 }
                 
                 view.trailingButtonCallback = { [weak self] in
-                    self?.coordinator?.showVerificationScreen(for: self?.dataStore?.profile)
+                    self?.coordinator?.showAccountVerification()
                 }
             }
         }

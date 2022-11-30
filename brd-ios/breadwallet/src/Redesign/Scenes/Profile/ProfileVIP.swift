@@ -46,5 +46,4 @@ protocol ProfileRoutes: CoordinatableRoutes {
     func showSecuirtySettings()
     func showPreferences()
     func showExport()
-    func showVerificationScreen(for profile: Profile?)
 }
