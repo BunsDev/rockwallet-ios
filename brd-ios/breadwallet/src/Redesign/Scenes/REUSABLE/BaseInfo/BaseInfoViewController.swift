@@ -80,7 +80,7 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
             view.configure(with: Presets.Background.transparent)
             view.setup(with: .imageName(value))
             view.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(ViewSizes.illustration.rawValue)
+                make.top.equalToSuperview().inset(ViewSizes.extraExtraHuge.rawValue)
             }
         }
         
