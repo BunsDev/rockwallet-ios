@@ -335,7 +335,7 @@ class LoginViewController: UIViewController, Subscriber {
         let label = UILabel(font: Fonts.Body.one)
         label.textColor = LightColors.Text.two
         label.alpha = 0.0
-        let lock = UIImageView(image: #imageLiteral(resourceName: "unlock"))
+        let lock = UIImageView(image: Asset.unlock.image)
         lock.alpha = 0.0
 
         view.addSubview(label)
