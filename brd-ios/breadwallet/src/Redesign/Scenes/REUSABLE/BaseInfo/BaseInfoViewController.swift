@@ -79,6 +79,9 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
         cell.setup { view in
             view.configure(with: Presets.Background.transparent)
             view.setup(with: .imageName(value))
+            view.snp.makeConstraints { make in
+                make.top.equalToSuperview().inset(ViewSizes.illustration.rawValue)
+            }
         }
         
         return cell
