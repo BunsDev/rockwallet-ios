@@ -21,7 +21,7 @@ class RecoverWalletIntroViewController: UIViewController {
     private let header = RadialGradientView(backgroundColor: .purple)
     private let nextButton = BRDButton(title: L10n.RecoverWallet.next, type: .primary)
     private let label = UILabel(font: Fonts.Body.one, color: .white)
-    private let illustration = UIImageView(image: #imageLiteral(resourceName: "RecoverWalletIllustration"))
+    private let illustration = UIImageView(image: Asset.recoverWalletIllustration.image)
 
     override func viewDidLoad() {
         addSubviews()
