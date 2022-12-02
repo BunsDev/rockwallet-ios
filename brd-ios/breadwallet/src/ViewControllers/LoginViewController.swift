@@ -169,8 +169,6 @@ class LoginViewController: UIViewController, Subscriber {
             guard let self = self else { return }
             self.faqButtonPressed()
         }
-        
-        updateDebugLabel()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -386,8 +384,6 @@ class LoginViewController: UIViewController, Subscriber {
         let attempts = keyMaster.pinAttemptsRemaining == 7 ? L10n.UpdatePin.twoAttempts : L10n.UpdatePin.oneAttempt
         let message = "\(L10n.UpdatePin.incorrectPin) \(attempts)"
         showToastMessage(message: message)
-        
-        updateDebugLabel()
     }
 
     private var shouldUseBiometrics: Bool {
@@ -452,13 +448,6 @@ class LoginViewController: UIViewController, Subscriber {
     private var isWalletDisabled: Bool {
         let now = Date().timeIntervalSince1970
         return keyMaster.walletDisabledUntil > now
-    }
-    
-    private func updateDebugLabel() {
-        guard E.isDebug else { return }
-        let remaining = keyMaster.pinAttemptsRemaining
-        let timestamp = keyMaster.walletDisabledUntil
-        let disabledUntil = Date(timeIntervalSince1970: timestamp)
     }
     
     private func wipeFromDisabledGesture() {
