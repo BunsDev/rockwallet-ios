@@ -3658,7 +3658,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PHRASE_PATH=$(which phrase)\nif [ -z \"${PHRASE_PATH}\" ];\nthen\n    $PHRASE_PATH pull\n    echo Localization updated\n    exit 0\nelse\n    echo Please install Phrase\n    exit 1\nfi\n";
+			shellScript = "cd ..\n/opt/homebrew/bin/phrase pull\n";
 		};
 		CEE0EF531EBF8C8A0018DB36 /* Icon Versioning */ = {
 			isa = PBXShellScriptBuildPhase;

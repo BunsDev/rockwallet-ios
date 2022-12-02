@@ -477,9 +477,6 @@
 /* Email unavailable alert title */
 "ErrorMessages.emailUnavailableTitle" = "Correo electrónico no disponible";
 
-/* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
-
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "RockWallet no se puede autenticar debido a un error de tu versión de Android. [Por favor pulsa aquí para más información]";
 
@@ -2028,8 +2025,6 @@
 /* (this transaction was) Sent to this address: */
 "TransactionDirection.to" = "Enviado a esta dirección";
 
-"UDomains.invalid" = "Invalid address.";
-
 /* Disabled until date */
 "UnlockScreen.disabled" = "Desactivado hasta: %1$@";
 
@@ -2092,9 +2087,6 @@
 
 /* Re-Enter new PIN instruction */
 "UpdatePin.reEnterNew" = "Vuelve a introducir tu nuevo PIN.";
-
-/* Enter PIN header */
-"UpdatePin.securedWallet" = "Secured wallet";
 
 /* Update PIN title */
 "UpdatePin.setNewPinTitle" = "Set your new PIN";
