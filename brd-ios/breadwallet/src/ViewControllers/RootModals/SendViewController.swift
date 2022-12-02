@@ -327,18 +327,17 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         }
     }
     
-    // TODO: WalletKit is not throwing the right error. Instead, we are always getting "WalletKit.Wallet.FeeEstimationError.ServiceError" error.
     private func handleEstimateFeeError(error: Error) {
         sendButton.isEnabled = false
         
         if currency.isERC20Token {
             _ = handleValidationResult(.insufficientGas)
         } else {
-            if error as! WalletKit.Wallet.FeeEstimationError == WalletKit.Wallet.FeeEstimationError.InsufficientFunds {
+            if error as? WalletKit.Wallet.FeeEstimationError == WalletKit.Wallet.FeeEstimationError.InsufficientFunds {
                 _ = handleValidationResult(.insufficientFunds)
-            } else if error as! WalletKit.Wallet.FeeEstimationError == WalletKit.Wallet.FeeEstimationError.InsufficientGas {
-                if let amt = amount {
-                    if amt > balance {
+            } else if error as? WalletKit.Wallet.FeeEstimationError == WalletKit.Wallet.FeeEstimationError.InsufficientGas {
+                if let amount = amount {
+                    if amount > balance {
                         _ = handleValidationResult(.insufficientFunds)
                     } else {
                         _ = handleValidationResult(.insufficientGas)

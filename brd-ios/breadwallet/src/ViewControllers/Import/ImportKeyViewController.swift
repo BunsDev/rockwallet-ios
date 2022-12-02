@@ -307,7 +307,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
         case .InsufficientFunds:
             showErrorMessage(L10n.Send.insufficientFunds)
         case .InsufficientGas:
-            showErrorMessage(L10n.Send.insufficientFunds)
+            showErrorMessage(L10n.Send.insufficientGas)
         case .ServiceError:
             showErrorMessage(L10n.Import.Error.serviceError)
         case .ServiceUnavailable:

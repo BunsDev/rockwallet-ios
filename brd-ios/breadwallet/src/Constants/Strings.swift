@@ -1804,6 +1804,8 @@ internal enum L10n {
     internal static let identityNotCertified = L10n.tr("Localizable", "Send.identityNotCertified", fallback: "Payee identity isn't certified.")
     /// Insufficient funds error
     internal static let insufficientFunds = L10n.tr("Localizable", "Send.insufficientFunds", fallback: "Insufficient Funds")
+    /// Insufficient gas error
+    internal static let insufficientGas = L10n.tr("Localizable", "Send.insufficientGas", fallback: "Insufficient funds for gas.")
     /// e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token.
     internal static func insufficientGasMessage(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Send.insufficientGasMessage", p1, fallback: "You %1%s in your wallet in order to send this digital asset. Please add more ETH to your wallet and try again.")
