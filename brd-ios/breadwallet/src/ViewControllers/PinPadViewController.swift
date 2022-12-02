@@ -32,9 +32,9 @@ class PinPadViewController: UICollectionViewController {
             case .biometrics:
                 switch forStyle {
                 case .clear:
-                    return LAContext.biometricType() == .face ? Asset.cutoutFaceId.image.withRenderingMode(.alwaysTemplate) : #imageLiteral(resourceName: "TouchIDCutout").withRenderingMode(.alwaysTemplate)
+                    return LAContext.biometricType() == .face ? Asset.cutoutFaceId.image.withRenderingMode(.alwaysTemplate) : Asset.touchIDCutout.image.withRenderingMode(.alwaysTemplate)
                 case .white:
-                    return LAContext.biometricType() == .face ? Asset.faceId.image.withRenderingMode(.alwaysTemplate) : #imageLiteral(resourceName: "TouchId").withRenderingMode(.alwaysTemplate)
+                    return LAContext.biometricType() == .face ? Asset.faceId.image.withRenderingMode(.alwaysTemplate) : Asset.touchId.image.withRenderingMode(.alwaysTemplate)
                 }
                 
             }
