@@ -145,7 +145,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 case .buyAch:
                     self?.interactor?.getLinkToken(viewAction: .init())
                 default:
-                    self?.interactor?.getPaymentCards(viewAction: .init())
+                    self?.interactor?.getPaymentCards(viewAction: .init(getCards: true))
                 }
             }
             
@@ -302,6 +302,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         coordinator?.showMessage(with: responseDisplay.error,
                                  model: responseDisplay.model,
                                  configuration: responseDisplay.config)
+    }
+    
+    func displayAchData(actionResponse: BuyModels.AchData.ActionResponse) {
+        interactor?.getPaymentCards(viewAction: .init())
     }
     
     // MARK: - Additional Helpers
