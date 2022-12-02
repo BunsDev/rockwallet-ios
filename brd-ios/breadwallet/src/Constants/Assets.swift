@@ -37,7 +37,6 @@ internal enum Asset {
   internal static let security = ImageAsset(name: "security")
   internal static let trade = ImageAsset(name: "trade")
   internal static let recoverWalletIllustration = ImageAsset(name: "RecoverWalletIllustration")
-  internal static let recoveryKeyLockImageSuccess = ImageAsset(name: "RecoveryKeyLockImageSuccess")
   internal static let deleteAlert = ImageAsset(name: "deleteAlert")
   internal static let avatar = ImageAsset(name: "avatar")
   internal static let ad = ImageAsset(name: "AD")

@@ -31,7 +31,7 @@ class RequestAmountViewController: UIViewController {
     private let qrCode = UIImageView()
     private let address = UILabel(font: Fonts.Body.one, color: LightColors.Text.one)
     private let addressPopout = InViewAlert(type: .primary)
-    private let share = BRDButton(title: L10n.Receive.share.uppercased(), type: .tertiary, image: #imageLiteral(resourceName: "Share"))
+    private let share = BRDButton(title: L10n.Receive.share.uppercased(), type: .tertiary, image: Asset.share.image)
     private let border = UIView()
     private var topSharePopoutConstraint: NSLayoutConstraint?
     private let receiveAddress: String

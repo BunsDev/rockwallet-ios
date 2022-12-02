@@ -60,7 +60,9 @@ enum BuyModels {
     }
     
     struct PaymentCards {
-        struct ViewAction {}
+        struct ViewAction {
+            var getCards: Bool?
+        }
         
         struct ActionResponse {
             var allPaymentCards: [PaymentCard]
@@ -156,6 +158,14 @@ enum BuyModels {
         struct ViewAction {
             let method: PaymentCard.PaymentType
         }
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {}
+    }
+    
+    struct AchData {
+        struct ViewAction {}
         
         struct ActionResponse {}
         
