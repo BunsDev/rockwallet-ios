@@ -79,7 +79,8 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             is VerifyAccountViewController,
             is OrderPreviewViewController,
             is BaseInfoViewController,
-            is ItemSelectionViewController:
+            is ItemSelectionViewController,
+            is BillingAddressViewController:
             backgroundColor = LightColors.Background.two
             tintColor = LightColors.Text.three
             
