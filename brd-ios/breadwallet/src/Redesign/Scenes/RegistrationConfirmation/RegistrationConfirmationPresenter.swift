@@ -15,7 +15,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
 
     // MARK: - RegistrationConfirmationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let email = UserManager.shared.profile?.email as? String
+        let email = actionResponse.item as? String
         
         let sections: [Models.Section] = [
             .image,

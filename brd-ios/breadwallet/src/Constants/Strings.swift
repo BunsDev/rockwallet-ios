@@ -75,6 +75,8 @@ internal enum L10n {
     internal static let deleteAccount = L10n.tr("Localizable", "Account.DeleteAccount", fallback: "Delete account")
     /// Delisted token alert banner message
     internal static let delistedToken = L10n.tr("Localizable", "Account.delistedToken", fallback: "This token has been delisted. \n\nYou may still be able to send these tokens to another platform. For more details, visit our support page.")
+    /// Email
+    internal static let email = L10n.tr("Localizable", "Account.Email", fallback: "Email")
     /// $10000 per BTC
     internal static func exchangeRate(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "Account.exchangeRate", String(describing: p1), String(describing: p2), fallback: "%1$@ per %2$@")
@@ -158,7 +160,7 @@ internal enum L10n {
     /// Not Now button label.
     internal static let notNow = L10n.tr("Localizable", "AccountCreation.notNow", fallback: "Not Now")
     /// Re-send my code label
-    internal static let resendCode = L10n.tr("Localizable", "AccountCreation.ResendCode", fallback: "Re-send my code")
+    internal static let resendCode = L10n.tr("Localizable", "AccountCreation.ResendCode", fallback: "Resend my code")
     /// Creating Account progress Label
     internal static let timeout = L10n.tr("Localizable", "AccountCreation.timeout", fallback: "The Request timed out. Please try again later.")
     /// Confirm Account Creation Title
@@ -166,7 +168,7 @@ internal enum L10n {
     /// Verify your email label
     internal static let verifyEmail = L10n.tr("Localizable", "AccountCreation.VerifyEmail", fallback: "Verify your email")
     /// Why the wallet is disabled text
-    internal static let walletDisabled = L10n.tr("Localizable", "AccountCreation.WalletDisabled", fallback: "If you enter an incorrect wallet PIN too many times, your wallet will become disabled for a certain amount of time.\nThis is to prevent someone else from trying to guess your PIN by quickly making many guesses.\nIf your wallet is disabled, wait until the time shown and you will be able to enter your PIN again.\n\nIf you continue to enter the incorrect PIN, the amount of waiting time in between attempts will increase. Eventually, the app will reset and you can start a new wallet.\n\nIf you have the recovery phrase for your wallet, you can use it to reset your PIN by clicking the “Reset PIN” button.")
+    internal static let walletDisabled = L10n.tr("Localizable", "AccountCreation.WalletDisabled", fallback: "If you enter an incorrect wallet PIN too many times, your wallet will become disabled for a certain amount of time.\nThis is to prevent someone else from trying to guess your PIN by quickly making many guesses.\nIf your wallet is disabled, wait until the time shown and you will be able to enter your PIN again.\n\nIf you continue to enter the incorrect PIN, the amount of waiting time in between attempts will increase. Eventually, the app will reset and you can start a new wallet.\n\nIf you have the Recovery Phrase for your wallet, you can use it to reset your PIN by clicking the “Reset PIN” button.")
     /// Why is my wallet disabled title on popup
     internal static let walletDisabledTitle = L10n.tr("Localizable", "AccountCreation.WalletDisabledTitle", fallback: "Why is my wallet disabled?")
   }
@@ -180,11 +182,11 @@ internal enum L10n {
     /// Delete account explanation part one
     internal static let explanationOne = L10n.tr("Localizable", "AccountDelete.ExplanationOne", fallback: "-You will no longer be able to use your email to sign in into RockWallet Wallet")
     /// Delete account explanation part three
-    internal static let explanationThree = L10n.tr("Localizable", "AccountDelete.ExplanationThree", fallback: "-Your private keys are still yours, keep your security phrase in a safe place in case you need to restore your wallet.")
+    internal static let explanationThree = L10n.tr("Localizable", "AccountDelete.ExplanationThree", fallback: " -Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.")
     /// Delete account explanation part two
     internal static let explanationTwo = L10n.tr("Localizable", "AccountDelete.ExplanationTwo", fallback: "-You will no longer be able to user your KYC and registration status")
     /// Recover wallet text after deleting account
-    internal static let recoverWallet = L10n.tr("Localizable", "AccountDelete.RecoverWallet", fallback: "I understand that the only way to recover my wallet is by entering my recovery phrase")
+    internal static let recoverWallet = L10n.tr("Localizable", "AccountDelete.RecoverWallet", fallback: "I understand that the only way to recover my wallet is by entering my Recovery Phrase")
   }
   internal enum AccountHeader {
     /// Default wallet name
@@ -314,11 +316,11 @@ internal enum L10n {
         internal static let android = L10n.tr("Localizable", "Alert.keystore.invalidated.android", fallback: "Your RockWallet encrypted data was recently invalidated because your Android lock screen was disabled.")
         internal enum Uninstall {
           /// Warn user key store data has been invalidate because the user changed their security settings. The user must uninstall.
-          internal static let android = L10n.tr("Localizable", "Alert.keystore.invalidated.uninstall.android", fallback: "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped by uninstalling.\n\nDon’t worry, your funds are still secure! Reinstall the app and recover your wallet using your recovery phrase.")
+          internal static let android = L10n.tr("Localizable", "Alert.keystore.invalidated.uninstall.android", fallback: "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped by uninstalling.\n\nDon’t worry, your funds are still secure! Reinstall the app and recover your wallet using your Recovery Phrase.")
         }
         internal enum Wipe {
           /// Warn user key store data has been invalidate because the user changed their security settings. The user must wipe their app data.
-          internal static let android = L10n.tr("Localizable", "Alert.keystore.invalidated.wipe.android", fallback: "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped.\n\nDon’t worry, your funds are still secure! Recover your wallet using your recovery phrase.")
+          internal static let android = L10n.tr("Localizable", "Alert.keystore.invalidated.wipe.android", fallback: "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped.\n\nDon’t worry, your funds are still secure! Recover your wallet using your Recovery Phrase.")
         }
       }
       internal enum Title {
@@ -514,11 +516,11 @@ internal enum L10n {
     }
     /// ACH fee (fixed fee + % (TBD)
     internal static let achFeeText = L10n.tr("Localizable", "Buy.achFeeText", fallback: "ACH fee (fixed fee + % (TBD)")
-    /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is $1,000 USD. 
+    /// Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.
     /// 
-    /// It currently takes 7-10 days to process a purchase with ACH.
-    internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.")
+    /// It currently takes 7-10 days to process a purchase with ACH
+    internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.\n\nIt currently takes 7-10 days to process a purchase with ACH")
     }
     /// Currently, ACH payments will take 7-10 days to complete.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
@@ -704,8 +706,8 @@ internal enum L10n {
     internal static let enableTitle = L10n.tr("Localizable", "CloudBackup.enableTitle", fallback: "Enable Keychain")
     /// Enter pin to encrypt backup
     internal static let encryptBackupMessage = L10n.tr("Localizable", "CloudBackup.encryptBackupMessage", fallback: "Enter pin to encrypt backup")
-    /// Please note, iCloud backup is only as secure as your iCloud account. We still recommend writing down your recovery phrase in the following step and keeping it secure. The recovery phrase is the only way to recover your wallet if you can no longer access iCloud.
-    internal static let mainBody = L10n.tr("Localizable", "CloudBackup.mainBody", fallback: "Please note, iCloud backup is only as secure as your iCloud account. We still recommend writing down your recovery phrase in the following step and keeping it secure. The recovery phrase is the only way to recover your wallet if you can no longer access iCloud.")
+    /// Please note, iCloud backup is only as secure as your iCloud account. We still recommend writing down your Recovery Phrase in the following step and keeping it secure. The Recovery Phrase is the only way to recover your wallet if you can no longer access iCloud.
+    internal static let mainBody = L10n.tr("Localizable", "CloudBackup.mainBody", fallback: "Please note, iCloud backup is only as secure as your iCloud account. We still recommend writing down your Recovery Phrase in the following step and keeping it secure. The Recovery Phrase is the only way to recover your wallet if you can no longer access iCloud.")
     /// iCloud Recovery Backup
     internal static let mainTitle = L10n.tr("Localizable", "CloudBackup.mainTitle", fallback: "iCloud Recovery Backup")
     /// iCloud Keychain must be turned on in the iOS Settings app for this feature to work
@@ -720,8 +722,8 @@ internal enum L10n {
     internal static let recoverButton = L10n.tr("Localizable", "CloudBackup.recoverButton", fallback: "Restore with Recovery Phrase")
     /// Enter PIN to unlock iCloud backup
     internal static let recoverHeader = L10n.tr("Localizable", "CloudBackup.recoverHeader", fallback: "Enter PIN to unlock iCloud backup")
-    /// A previously backed up wallet has been detected. Using this backup is recommended. Are you sure you want to proceeed with restoring from a recovery phrase?
-    internal static let recoverWarning = L10n.tr("Localizable", "CloudBackup.recoverWarning", fallback: "A previously backed up wallet has been detected. Using this backup is recommended. Are you sure you want to proceeed with restoring from a recovery phrase?")
+    /// A previously backed up wallet has been detected. Using this backup is recommended. Are you sure you want to proceeed with restoring from a Recovery Phrase?
+    internal static let recoverWarning = L10n.tr("Localizable", "CloudBackup.recoverWarning", fallback: "A previously backed up wallet has been detected. Using this backup is recommended. Are you sure you want to proceeed with restoring from a Recovery Phrase?")
     /// Restore with iCloud Backup
     internal static let restoreButton = L10n.tr("Localizable", "CloudBackup.restoreButton", fallback: "Restore with iCloud Backup")
     /// Choose Backup
@@ -763,9 +765,9 @@ internal enum L10n {
   }
   internal enum ConfirmPaperPhrase {
     /// Confirm paper phrase error message
-    internal static let error = L10n.tr("Localizable", "ConfirmPaperPhrase.error", fallback: "The words entered do not match your recovery phrase. Please try again.")
+    internal static let error = L10n.tr("Localizable", "ConfirmPaperPhrase.error", fallback: "The words entered do not match your Recovery Phrase. Please try again.")
     /// Confirm paper phrase view label.
-    internal static let label = L10n.tr("Localizable", "ConfirmPaperPhrase.label", fallback: "To make sure everything was written down correctly, please enter the following words from your recovery phrase.")
+    internal static let label = L10n.tr("Localizable", "ConfirmPaperPhrase.label", fallback: "To make sure everything was written down correctly, please enter the following words from your Recovery Phrase.")
     /// Word label eg. Word #1, Word #2
     internal static func word(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ConfirmPaperPhrase.word", String(describing: p1), fallback: "Word #%1$@")
@@ -896,6 +898,8 @@ internal enum L10n {
     }
     /// Check your internet connection message
     internal static let checkInternet = L10n.tr("Localizable", "ErrorMessages.CheckInternet", fallback: "Please, check your internet connection and try again later.")
+    /// Something went wrong! Try again later.
+    internal static let `default` = L10n.tr("Localizable", "ErrorMessages.default", fallback: "Something went wrong! Try again later.")
     /// Email unavailable alert title
     internal static let emailUnavailableMessage = L10n.tr("Localizable", "ErrorMessages.emailUnavailableMessage", fallback: "This device isn't configured to send email with the iOS mail app.")
     /// Email unavailable alert title
@@ -1251,7 +1255,7 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "Modal.PaperKeySkip.Title", fallback: "Attention")
       internal enum Body {
         /// Paper Key Skip modal body (Android-version)
-        internal static let android = L10n.tr("Localizable", "Modal.PaperKeySkip.Body.Android", fallback: "Your recovery phrase is required to open your wallet if you change the security settings on your phone.\n\nAre you sure you want to set up your recovery phrase later?")
+        internal static let android = L10n.tr("Localizable", "Modal.PaperKeySkip.Body.Android", fallback: "Your Recovery Phrase is required to open your wallet if you change the security settings on your phone.\n\nAre you sure you want to set up your Recovery Phrase later?")
       }
       internal enum Button {
         /// Paper Key Skip modal Continue Set Up button
@@ -1260,6 +1264,12 @@ internal enum L10n {
         internal static let illDoItLater = L10n.tr("Localizable", "Modal.PaperKeySkip.Button.IllDoItLater", fallback: "I'll do it later")
       }
     }
+  }
+  internal enum NoInternet {
+    /// We couldn’t connect to the server. Please check your internet connection and try again.
+    internal static let body = L10n.tr("Localizable", "NoInternet.Body", fallback: "We couldn’t connect to the server. Please check your internet connection and try again.")
+    /// Check your connection
+    internal static let title = L10n.tr("Localizable", "NoInternet.Title", fallback: "Check your connection")
   }
   internal enum NodeSelector {
     /// Node selection mode is automatic
@@ -1338,7 +1348,7 @@ internal enum L10n {
   internal enum PaymentProtocol {
     internal enum Errors {
       /// Bad Payment request alert title
-      internal static let badPaymentRequest = L10n.tr("Localizable", "PaymentProtocol.Errors.badPaymentRequest", fallback: "Bad Payment Request")
+      internal static let badPaymentRequest = L10n.tr("Localizable", "PaymentProtocol.Errors.badPaymentRequest", fallback: "Your transaction request couldn’t be completed. Please try again.")
       /// Error opening payment protocol file message
       internal static let corruptedDocument = L10n.tr("Localizable", "PaymentProtocol.Errors.corruptedDocument", fallback: "Unsupported or corrupted document")
       /// Missing certificate payment protocol error message
@@ -1408,12 +1418,12 @@ internal enum L10n {
     }
     internal enum PaperKey {
       /// Warning about recovery phrase (formerly paper key).
-      internal static let body = L10n.tr("Localizable", "Prompts.PaperKey.body", fallback: "Set up your recovery phrase in case you ever lose or replace your phone. This is also required if you change your phone's security settings.")
+      internal static let body = L10n.tr("Localizable", "Prompts.PaperKey.body", fallback: "Set up your Recovery Phrase in case you ever lose or replace your phone. This is also required if you change your phone's security settings.")
       /// An action is required (You must do this action).
       internal static let title = L10n.tr("Localizable", "Prompts.PaperKey.title", fallback: "Action Required")
       internal enum Body {
         /// Warning about paper key (Android-version)
-        internal static let android = L10n.tr("Localizable", "Prompts.PaperKey.Body.Android", fallback: "Set up your recovery phrase in case you ever lose or replace your phone. Your key is also required if you change your phone's security settings.")
+        internal static let android = L10n.tr("Localizable", "Prompts.PaperKey.Body.Android", fallback: "Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone's security settings.")
       }
     }
     internal enum RateApp {
@@ -1551,7 +1561,7 @@ internal enum L10n {
     /// Done button text
     internal static let done = L10n.tr("Localizable", "RecoverWallet.done", fallback: "DONE")
     /// Enter recovery phrase label to delete the wallet
-    internal static let enterRecoveryPhrase = L10n.tr("Localizable", "RecoverWallet.EnterRecoveryPhrase", fallback: "Please enter your recovery phrase to delete this wallet from your device.")
+    internal static let enterRecoveryPhrase = L10n.tr("Localizable", "RecoverWallet.EnterRecoveryPhrase", fallback: "Please enter your Recovery Phrase to delete this wallet from your device.")
     /// Recover wallet header
     internal static let header = L10n.tr("Localizable", "RecoverWallet.header", fallback: "Recover Wallet")
     /// Reset PIN with paper key: header
@@ -1559,9 +1569,9 @@ internal enum L10n {
     /// Enter paper key instruction
     internal static let instruction = L10n.tr("Localizable", "RecoverWallet.instruction", fallback: "Enter Recovery Phrase")
     /// Recover wallet intro
-    internal static let intro = L10n.tr("Localizable", "RecoverWallet.intro", fallback: "Recover your RockWallet with your recovery phrase.")
+    internal static let intro = L10n.tr("Localizable", "RecoverWallet.intro", fallback: "Recover your RockWallet with your Recovery Phrase.")
     /// Invalid paper key message
-    internal static let invalid = L10n.tr("Localizable", "RecoverWallet.invalid", fallback: "The recovery phrase you entered is invalid. Please double-check each word and try again.")
+    internal static let invalid = L10n.tr("Localizable", "RecoverWallet.invalid", fallback: "The Recovery Phrase you entered is invalid. Please double-check each word and try again.")
     /// Previous button accessibility label
     internal static let leftArrow = L10n.tr("Localizable", "RecoverWallet.leftArrow", fallback: "Left Arrow")
     /// Next button label
@@ -1573,9 +1583,9 @@ internal enum L10n {
     /// Next button accessibility label
     internal static let rightArrow = L10n.tr("Localizable", "RecoverWallet.rightArrow", fallback: "Right Arrow")
     /// Recover wallet sub-header
-    internal static let subheader = L10n.tr("Localizable", "RecoverWallet.subheader", fallback: "Enter the recovery phrase for the wallet you want to recover.")
+    internal static let subheader = L10n.tr("Localizable", "RecoverWallet.subheader", fallback: "Enter the Recovery Phrase for the wallet you want to recover.")
     /// Reset PIN with paper key: sub-header
-    internal static let subheaderResetPin = L10n.tr("Localizable", "RecoverWallet.subheader_reset_pin", fallback: "To reset your PIN, enter the words from your recovery phrase into the boxes below.")
+    internal static let subheaderResetPin = L10n.tr("Localizable", "RecoverWallet.subheader_reset_pin", fallback: "To reset your PIN, enter the words from your Recovery Phrase into the boxes below.")
     /// What is recovery phrase title on popup
     internal static let whatIsRecoveryPhrase = L10n.tr("Localizable", "RecoverWallet.WhatIsRecoveryPhrase", fallback: "What is “Recovery Phrase”?")
   }
@@ -1583,15 +1593,15 @@ internal enum L10n {
     /// Instructs the user to enter words from the set of recovery key words.
     internal static let confirmRecoveryInputError = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryInputError", fallback: "The word you entered is incorrect. Please try again.")
     /// Instructs the user to enter words from the set of recovery phrase words.
-    internal static let confirmRecoveryKeySubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeySubtitle", fallback: "Almost done! Enter the following words from your recovery phrase.")
+    internal static let confirmRecoveryKeySubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeySubtitle", fallback: "Almost done! Enter the following words from your Recovery Phrase.")
     /// Title for the confirmation step of the recovery phrase flow.
     internal static let confirmRecoveryKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeyTitle", fallback: "Confirm Recovery Phrase")
     /// Title displayed when the user starts the process of entering a recovery phrase
     internal static let enterRecoveryKey = L10n.tr("Localizable", "RecoveryKeyFlow.enterRecoveryKey", fallback: "Enter Recovery Phrase")
     /// Subtitle displayed when the user starts the process of entering a recovery phrase
-    internal static let enterRecoveryKeySubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.enterRecoveryKeySubtitle", fallback: "Please enter your recovery phrase to unlink this wallet from your device.")
+    internal static let enterRecoveryKeySubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.enterRecoveryKeySubtitle", fallback: "Please enter the Recovery Phrase in order to delete your account and unlink the wallet.")
     /// Body text for an alert dialog asking the user whether to set up the recovery phrase later
-    internal static let exitRecoveryKeyPromptBody = L10n.tr("Localizable", "RecoveryKeyFlow.exitRecoveryKeyPromptBody", fallback: "Are you sure you want to set up your recovery phrase later?")
+    internal static let exitRecoveryKeyPromptBody = L10n.tr("Localizable", "RecoveryKeyFlow.exitRecoveryKeyPromptBody", fallback: "Are you sure you want to set up your Recovery Phrase later?")
     /// Title for an alert dialog asking the user whether to set up the recovery key later
     internal static let exitRecoveryKeyPromptTitle = L10n.tr("Localizable", "RecoveryKeyFlow.exitRecoveryKeyPromptTitle", fallback: "Set Up Later")
     /// Button text for the 'Generate Recovery Phrase' button
@@ -1599,7 +1609,7 @@ internal enum L10n {
     /// Subtext for the recovery key landing page.
     internal static let generateKeyExplanation = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyExplanation", fallback: "This is required to restore your wallet if you upgrade or lose your phone.")
     /// Default title for the recovery phrase landing page
-    internal static let generateKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyTitle", fallback: "Generate your private recovery phrase")
+    internal static let generateKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.generateKeyTitle", fallback: "Generate your private Recovery Phrase")
     /// Title for a button that takes the user to the wallet after setting up the recovery key.
     internal static let goToWalletButtonTitle = L10n.tr("Localizable", "RecoveryKeyFlow.goToWalletButtonTitle", fallback: "GO TO WALLET")
     /// Hint text for recovery key intro page, e.g., Step 2
@@ -1607,7 +1617,7 @@ internal enum L10n {
       return L10n.tr("Localizable", "RecoveryKeyFlow.howItWorksStep", String(describing: p1), fallback: "How it works - Step %1$@")
     }
     /// Error text displayed when the user enters an incorrect recovery phrase
-    internal static let invalidPhrase = L10n.tr("Localizable", "RecoveryKeyFlow.invalidPhrase", fallback: "Some of the words you entered do not match your recovery phrase. Please try again.")
+    internal static let invalidPhrase = L10n.tr("Localizable", "RecoveryKeyFlow.invalidPhrase", fallback: "Some of the words you entered do not match your Recovery Phrase. Please try again.")
     /// Title for recovery key intro page
     internal static let keepSecure = L10n.tr("Localizable", "RecoveryKeyFlow.keepSecure", fallback: "Write down your Recovery Phrase")
     /// Informs the user that the recovery is only required for recovering a wallet.
@@ -1625,13 +1635,13 @@ internal enum L10n {
     /// Reminds the user to write down the recovery key words.
     internal static let rememberToWriteDownReminder = L10n.tr("Localizable", "RecoveryKeyFlow.rememberToWriteDownReminder", fallback: "Remember to write these words down. Swipe back if you forgot.")
     /// Instruction displayed when the user is resetting the PIN, which requires the recovery phrase to be entered
-    internal static let resetPINInstruction = L10n.tr("Localizable", "RecoveryKeyFlow.resetPINInstruction", fallback: "Please enter your recovery phrase to reset your PIN.")
+    internal static let resetPINInstruction = L10n.tr("Localizable", "RecoveryKeyFlow.resetPINInstruction", fallback: "Please enter your Recovery Phrase to reset your PIN.")
     /// Assures the user that BRD will keep the user's funds secure.
     internal static let securityAssurance = L10n.tr("Localizable", "RecoveryKeyFlow.securityAssurance", fallback: "Remember that this is the only way to restore your wallet. RockWallet does not keep a copy.")
     /// Recommends that the user stores the recovery key in a secure location
     internal static let storeSecurelyRecommendation = L10n.tr("Localizable", "RecoveryKeyFlow.storeSecurelyRecommendation", fallback: "For security reasons, screenshots are not recommended, as anyone with your Recovery Phrase can access your funds.")
     /// Title for the success page after the recovery phrase has been set up
-    internal static let successHeading = L10n.tr("Localizable", "RecoveryKeyFlow.successHeading", fallback: "Congratulations! You completed your recovery phrase setup.")
+    internal static let successHeading = L10n.tr("Localizable", "RecoveryKeyFlow.successHeading", fallback: "Congratulations! You completed your Recovery Phrase setup.")
     /// Subtitle for the success page after the recovery key has been set up
     internal static let successSubheading = L10n.tr("Localizable", "RecoveryKeyFlow.successSubheading", fallback: "You're all set to deposit, swap, and buy crypto from your RockWallet wallet.")
     /// Title displayed to the user on the intro screen when unlinking a wallet
@@ -1647,7 +1657,7 @@ internal enum L10n {
     /// Title for recovery key intro page
     internal static let writeItDown = L10n.tr("Localizable", "RecoveryKeyFlow.writeItDown", fallback: "Generate your private Recovery Phrase")
     /// Title for the recovery phrase landing page if the key has already been generated.
-    internal static let writeKeyAgain = L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyAgain", fallback: "Write down your recovery phrase again")
+    internal static let writeKeyAgain = L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyAgain", fallback: "Write down your Recovery Phrase again")
     /// Subtitle for the write recovery key screen
     internal static let writeKeyScreenSubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyScreenSubtitle", fallback: "Write down the following words in order.")
     /// Title for the write recovery phrase screen
@@ -1795,8 +1805,8 @@ internal enum L10n {
     /// Insufficient funds error
     internal static let insufficientFunds = L10n.tr("Localizable", "Send.insufficientFunds", fallback: "Insufficient Funds")
     /// e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token.
-    internal static func insufficientGasMessage(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Send.insufficientGasMessage", String(describing: p1), String(describing: p2), fallback: "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?")
+    internal static func insufficientGasMessage(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Send.insufficientGasMessage", p1, fallback: "You %1%s in your wallet in order to send this digital asset. Please add more ETH to your wallet and try again.")
     }
     /// Your balance is insufficient to complete this action.
     internal static func insufficientGasTitle(_ p1: UnsafePointer<CChar>) -> String {
@@ -1843,9 +1853,9 @@ internal enum L10n {
     /// PayID label
     internal static let payIdToLabel = L10n.tr("Localizable", "Send.payId_toLabel", fallback: "PayString")
     /// Could not publish transaction alert title
-    internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Could not publish transaction.")
+    internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Your transaction request couldn’t be completed. Please try again.")
     /// Could not load remote request error message
-    internal static let remoteRequestError = L10n.tr("Localizable", "Send.remoteRequestError", fallback: "Could not load payment request")
+    internal static let remoteRequestError = L10n.tr("Localizable", "Send.remoteRequestError", fallback: "Your payment attempt couldn’t be completed. Please try again.")
     /// Scan button label
     internal static let scanLabel = L10n.tr("Localizable", "Send.scanLabel", fallback: "Scan")
     /// Title for error when send request times out and we are not sure weather it succesfull or not.
@@ -2049,7 +2059,7 @@ internal enum L10n {
     /// button label
     internal static let againButtonTitle = L10n.tr("Localizable", "StartPaperPhrase.againButtonTitle", fallback: "Write Down Recovery Phrase Again")
     /// Paper key explanation text.
-    internal static let body = L10n.tr("Localizable", "StartPaperPhrase.body", fallback: "Your recovery phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.")
+    internal static let body = L10n.tr("Localizable", "StartPaperPhrase.body", fallback: "Your Recovery Phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.")
     /// button label
     internal static let buttonTitle = L10n.tr("Localizable", "StartPaperPhrase.buttonTitle", fallback: "Write Down Recovery Phrase")
     /// Argument is date; date should be on a new line
@@ -2058,7 +2068,7 @@ internal enum L10n {
     }
     internal enum Body {
       /// Paper key explanation text (Android-version)
-      internal static let android = L10n.tr("Localizable", "StartPaperPhrase.Body.Android", fallback: "Your recovery phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nYour recovery phrase is also required if you change the security settings on your device.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.")
+      internal static let android = L10n.tr("Localizable", "StartPaperPhrase.Body.Android", fallback: "Your Recovery Phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nYour Recovery Phrase is also required if you change the security settings on your device.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.")
     }
   }
   internal enum StartViewController {
@@ -2603,7 +2613,7 @@ internal enum L10n {
     /// Wallet disabled header
     internal static let walletDisabled = L10n.tr("Localizable", "UnlockScreen.walletDisabled", fallback: "Wallet disabled")
     /// Wallet disabled description
-    internal static let walletDisabledDescription = L10n.tr("Localizable", "UnlockScreen.walletDisabledDescription", fallback: "You will need your recovery phrases to reset PIN.")
+    internal static let walletDisabledDescription = L10n.tr("Localizable", "UnlockScreen.walletDisabledDescription", fallback: "You will need your Recovery Phrases to reset PIN.")
     /// Wipe wallet prompt
     internal static let wipePrompt = L10n.tr("Localizable", "UnlockScreen.wipePrompt", fallback: "Are you sure you would like to wipe this wallet?")
     internal enum TouchIdInstructions {
@@ -2655,7 +2665,7 @@ internal enum L10n {
     /// Update PIN title
     internal static let setNewPinTitle = L10n.tr("Localizable", "UpdatePin.setNewPinTitle", fallback: "Set your PIN")
     /// Update PIN failure error message.
-    internal static let setPinError = L10n.tr("Localizable", "UpdatePin.setPinError", fallback: "Sorry, could not update PIN.")
+    internal static let setPinError = L10n.tr("Localizable", "UpdatePin.setPinError", fallback: "Something went wrong updating your PIN. Please try again.")
     /// Update PIN failure alert view title
     internal static let setPinErrorTitle = L10n.tr("Localizable", "UpdatePin.setPinErrorTitle", fallback: "Update PIN Error")
     /// Number of attempts left on pin entry screen
@@ -2825,7 +2835,7 @@ internal enum L10n {
     /// Failed wipe wallet alert title
     internal static let failedTitle = L10n.tr("Localizable", "WipeWallet.failedTitle", fallback: "Failed")
     /// Enter phrase to wipe wallet instruction. (Important to explain it is the CURRENT [this wallet's] paper key that needs to be entered).
-    internal static let instruction = L10n.tr("Localizable", "WipeWallet.instruction", fallback: "Please enter your recovery phrase to wipe this wallet from your device.")
+    internal static let instruction = L10n.tr("Localizable", "WipeWallet.instruction", fallback: "Please enter your Recovery Phrase to wipe this wallet from your device.")
     /// Instructions for unlinking the wallet
     internal static let startMessage = L10n.tr("Localizable", "WipeWallet.startMessage", fallback: "Starting or recovering another wallet allows you to access and manage a different RockWallet wallet on this device.")
     /// Start wipe wallet view warning

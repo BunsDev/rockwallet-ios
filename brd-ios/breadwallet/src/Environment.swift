@@ -97,11 +97,6 @@ struct E {
         #endif
     }
     
-    static let osVersion: String = {
-        let os = ProcessInfo().operatingSystemVersion
-        return String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
-    }()
-    
     static var apiUrl: String {
         guard let url = Bundle.main.object(forInfoDictionaryKey: "API_URL") as? String,
               !url.isEmpty else {

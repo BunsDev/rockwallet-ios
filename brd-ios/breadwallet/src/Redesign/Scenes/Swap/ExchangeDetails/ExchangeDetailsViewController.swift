@@ -116,6 +116,10 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: model)
+            
+            view.networkFeeInfoTapped = { [weak self] in
+                self?.interactor?.showInfoPopup(viewAction: .init())
+            }
         }
 
         return cell
@@ -124,6 +128,9 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     // MARK: - User Interaction
 
     // MARK: - ExchangeDetailsResponseDisplay
+    func displayInfoPopup(responseDisplay: ExchangeDetailsModels.InfoPopup.ResponseDisplay) {
+        coordinator?.showPopup(with: responseDisplay.model)
+    }
 
     // MARK: - Additional Helpers
 }

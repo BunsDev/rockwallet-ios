@@ -15,13 +15,6 @@ class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
         open(scene: Scenes.Profile)
     }
     
-    func showVerificationScreen(for profile: Profile?) {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification) { vc in
-            vc?.dataStore?.profile = profile
-            vc?.prepareData()
-        }
-    }
-    
     func showAvatarSelection() {
         showUnderConstruction("avatar selection")
     }

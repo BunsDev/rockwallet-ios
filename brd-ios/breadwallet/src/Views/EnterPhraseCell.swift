@@ -74,7 +74,7 @@ class EnterPhraseCell: UICollectionViewCell {
 
     // MARK: - Private
     let textField = UITextField()
-    private let nextField = UIButton.icon(image: #imageLiteral(resourceName: "RightArrow"), accessibilityLabel: L10n.RecoverWallet.rightArrow, position: .middle)
+    private let nextField = UIButton.icon(image: Asset.rightArrow.image, accessibilityLabel: L10n.RecoverWallet.rightArrow, position: .middle)
     private let previousField = UIButton.icon(image: Asset.leftArrow.image, accessibilityLabel: L10n.RecoverWallet.leftArrow, position: .middle)
     private let done = UIButton(type: .system)
     fileprivate let focusBar = UIView(color: LightColors.primary)
