@@ -190,7 +190,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 self?.dataStore?.allPaymentCards = data
                 
                 if self?.dataStore?.autoSelectDefaultPaymentMethod == true {
-                    self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first
+                    let paymentCards = self?.dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
+                    self?.dataStore?.paymentCard = paymentCards?.first
                 }
                 
                 self?.dataStore?.autoSelectDefaultPaymentMethod = true

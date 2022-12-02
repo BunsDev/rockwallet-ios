@@ -98,7 +98,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
         } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyAch {
-            cardModel = .init(title: .text(L10n.Buy.achPayments),
+            cardModel = .init(title: .text(L10n.Buy.transferFromBank),
+                              subtitle: nil,
                               logo: .image(Asset.bank.image),
                               cardNumber: .text(paymentCard.displayName),
                               userInteractionEnabled: false)
