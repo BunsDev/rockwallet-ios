@@ -198,7 +198,7 @@ class Currency: SharedCurrency, CurrencyWithIcon, ItemSelectable {
         }
         
         if (isBitcoin && currency.isBitcoinSV) || (isBitcoinSV && currency.isBitcoin) {
-            return
+            return true
         }
         
         // Allows sending erc20 tokens to an ETH receive uri, but not the other way around
