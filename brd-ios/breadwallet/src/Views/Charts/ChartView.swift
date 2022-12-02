@@ -168,7 +168,7 @@ class ChartView: UIView {
         endCircle.clipsToBounds = true
         endCircle.isHidden = true
         
-        line.backgroundColor = .clear
+        line.backgroundColor = circle.backgroundColor
         
         hideScrubber()
         
