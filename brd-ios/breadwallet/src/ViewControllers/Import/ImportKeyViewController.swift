@@ -302,7 +302,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
         }
     }
     
-    private func handleEstimateFeeError(_ error: WalletKit.Wallet.FeeEstimationError) {
+    private func handleEstimateFeeError(_ error: FeeEstimationError) {
         switch error {
         case .InsufficientFunds:
             showErrorMessage(L10n.Send.insufficientFunds)
