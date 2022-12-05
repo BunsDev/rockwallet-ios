@@ -59,7 +59,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let text = String(format: "1 %@ = %@ %@", from.code, ExchangeFormatter.crypto.string(for: quote.exchangeRate.doubleValue) ?? "", to.code)
+        let text = String(format: "1 %@ = %@ %@", from.code, RWFormatter().string(for: quote.exchangeRate.doubleValue) ?? "", to.code)
         
         let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd) ?? ""
         let maxLimit = UserManager.shared.profile?.swapAllowanceDaily
@@ -239,7 +239,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let rateText = String(format: "1 %@ = %@ %@", from.currency.code, ExchangeFormatter.crypto.string(for: rate) ?? "", to.currency.code)
+        let rateText = String(format: "1 %@ = %@ %@", from.currency.code, RWFormatter().string(for: rate) ?? "", to.currency.code)
         
         let fromText = String(format: "%@ %@ (%@ %@)", ExchangeFormatter.crypto.string(for: from.tokenValue.doubleValue) ?? "",
                               from.currency.code,

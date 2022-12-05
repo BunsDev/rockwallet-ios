@@ -237,12 +237,17 @@ class Currencies {
     
     var currencies: [CurrencyMetaData] = []
     
-    let defaultCurrencyCodes = [AssetCodes.bsv.value,
-                                AssetCodes.btc.value,
-                                AssetCodes.eth.value]
+    let prioritizedCurrencyCodes = [AssetCodes.bsv.value,
+                                    AssetCodes.btc.value,
+                                    AssetCodes.eth.value]
     
     var defaultCurrencyIds: [CurrencyId] {
-        return Currencies.shared.defaultCurrencyCodes.compactMap { getUID(from: $0) }
+        let allCurrencyCodes = Currencies.shared.currencies.compactMap({ $0.code.lowercased() })
+        var filteredCurrencyCodes = allCurrencyCodes.filter({ !Currencies.shared.prioritizedCurrencyCodes.contains($0) }).sorted()
+        filteredCurrencyCodes.insert(contentsOf: Currencies.shared.prioritizedCurrencyCodes, at: 0)
+        let currencyUIDs = filteredCurrencyCodes.compactMap { getUID(from: $0) }
+        
+        return currencyUIDs
     }
     
     func getUID(from code: String) -> CurrencyId? {
