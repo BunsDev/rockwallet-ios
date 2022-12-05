@@ -10,22 +10,35 @@
 
 import UIKit
 
-struct ExchangeFormatter {
-    static var crypto: NumberFormatter {
+class RWFormatter: NumberFormatter {
+    override func string(for obj: Any?) -> String? {
+        guard let obj = obj as? NSNumber else { return nil }
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 8
+        switch obj {
+        case _ where obj.decimalValue < 1:
+            formatter.usesSignificantDigits = true
+            formatter.minimumSignificantDigits = 2
+            formatter.maximumSignificantDigits = 4
+            return formatter.string(for: obj)
+            
+        default:
+            formatter.minimumFractionDigits = 2
+            formatter.maximumFractionDigits = 2
+            return formatter.string(for: obj)
+        }
+    }
+}
+
+struct ExchangeFormatter {
+    static var crypto: NumberFormatter {
+        let formatter = RWFormatter()
         return formatter
     }
     
     static var fiat: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.generatesDecimalNumbers = true
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
+        let formatter = RWFormatter()
         return formatter
     }
     
