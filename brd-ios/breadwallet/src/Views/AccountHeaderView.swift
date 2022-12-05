@@ -101,6 +101,8 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
         return true
     }
     
+    var isSearching = false
+    
     // MARK: Init
     
     init(currency: Currency) {
@@ -394,11 +396,13 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     }
     
     func stopHeightConstraint() {
-        headerHeight?.isActive = false
+        isSearching = true
+        headerHeight?.isActive = !isSearching
     }
     
     func resumeHeightConstraint() {
-        headerHeight?.isActive = true
+        isSearching = false
+        headerHeight?.isActive = !isSearching
     }
     
     private func updateHistoryPeriodPillPosition(button: UIButton) {

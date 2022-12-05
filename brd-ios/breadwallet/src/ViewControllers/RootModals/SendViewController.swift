@@ -542,7 +542,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         }
     }
     
-    /// Insufficient gas for ERC20 token transfer
     private func showInsufficientGasError() {
         if currency.isEthereum {
             showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientGas)
