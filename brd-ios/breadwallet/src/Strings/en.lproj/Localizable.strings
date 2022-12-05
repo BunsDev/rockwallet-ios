@@ -208,7 +208,7 @@
 "AccountDelete.ExplanationOne" = "-You will no longer be able to use your email to sign in into RockWallet Wallet";
 
 /* Delete account explanation part three */
-"AccountDelete.ExplanationThree" = " -Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.";
+"AccountDelete.ExplanationThree" = "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.";
 
 /* Delete account explanation part two */
 "AccountDelete.ExplanationTwo" = "-You will no longer be able to user your KYC and registration status";
@@ -592,6 +592,10 @@
 
 /* 3D Secure label on buy flow */
 "Buy.3DSecure" = "3D Secure";
+
+"Buy.Ach.WalletDisabled" = "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.";
+
+"Buy.Ach.WalletDisabled.Link" = "here";
 
 "Buy.achFee" = "ACH fee (%s)";
 
@@ -2010,8 +2014,11 @@
 /* Insufficient funds error */
 "Send.insufficientFunds" = "Insufficient Funds";
 
+/* Insufficient gas error */
+"Send.insufficientGas" = "Insufficient gas.";
+
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
-"Send.insufficientGasMessage" = "You %1%s in your wallet in order to send this digital asset. Please add more ETH to your wallet and try again.";
+"Send.insufficientGasMessage" = "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?";
 
 /* Your balance is insufficient to complete this action. */
 "Send.insufficientGasTitle" = "Insufficient %s Balance";

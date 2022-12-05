@@ -4457,7 +4457,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Modules/libbz2/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4490,7 +4490,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Modules/libbz2/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4565,7 +4565,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -4628,7 +4628,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -4674,7 +4674,7 @@
 					"$(SRCROOT)/Modules/breadwallet-core/**",
 				);
 				INFOPLIST_FILE = breadwallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4725,7 +4725,7 @@
 					"$(SRCROOT)/Modules/breadwallet-core/**",
 				);
 				INFOPLIST_FILE = breadwallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4924,7 +4924,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -4970,7 +4970,7 @@
 					"$(SRCROOT)/Modules/breadwallet-core/**",
 				);
 				INFOPLIST_FILE = breadwallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5057,7 +5057,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Modules/libbz2/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5096,7 +5096,7 @@
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = breadwalletWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5127,7 +5127,7 @@
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = breadwalletIntentHandler/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5169,7 +5169,7 @@
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = breadwalletIntentHandler/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5201,7 +5201,7 @@
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = breadwalletIntentHandler/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5237,7 +5237,7 @@
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = breadwalletWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5273,7 +5273,7 @@
 				DEVELOPMENT_TEAM = 9YQ85QS3PL;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = breadwalletWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5397,7 +5397,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/WalletKitSwift.git";
 			requirement = {
 				kind = revision;
-				revision = e4c3dcc76d7346c40a9af42cea38a6653b28acda;
+				revision = 51dc3989e794a07722297d29378eea0d6a5368b1;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {

@@ -88,6 +88,10 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
             make.height.equalTo(ViewSizes.medium.rawValue / 2)
         }
         mainStack.addArrangedSubview(subtitleLabel)
+        subtitleLabel.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue)
+        }
+                
         mainStack.addArrangedSubview(cardDetailsView)
         
         cardDetailsView.snp.makeConstraints { make in
@@ -126,10 +130,10 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.setup(with: viewModel)
         
         titleLabel.setup(with: viewModel?.title)
-        titleLabel.isHidden = viewModel?.subtitle == nil
+        titleLabel.isHidden = viewModel?.title == nil
         
         subtitleLabel.setup(with: viewModel?.subtitle)
-        subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil
+        subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
         
         cardDetailsView.isHidden = viewModel?.logo == nil
         

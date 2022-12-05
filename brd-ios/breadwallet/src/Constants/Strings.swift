@@ -182,7 +182,7 @@ internal enum L10n {
     /// Delete account explanation part one
     internal static let explanationOne = L10n.tr("Localizable", "AccountDelete.ExplanationOne", fallback: "-You will no longer be able to use your email to sign in into RockWallet Wallet")
     /// Delete account explanation part three
-    internal static let explanationThree = L10n.tr("Localizable", "AccountDelete.ExplanationThree", fallback: " -Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.")
+    internal static let explanationThree = L10n.tr("Localizable", "AccountDelete.ExplanationThree", fallback: "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.")
     /// Delete account explanation part two
     internal static let explanationTwo = L10n.tr("Localizable", "AccountDelete.ExplanationTwo", fallback: "-You will no longer be able to user your KYC and registration status")
     /// Recover wallet text after deleting account
@@ -648,6 +648,16 @@ internal enum L10n {
     internal static let yourOrder = L10n.tr("Localizable", "Buy.YourOrder", fallback: "Your order:")
     /// ZIP/Postal Code label in billing address view on buy flow
     internal static let zipPostalCode = L10n.tr("Localizable", "Buy.ZIPPostalCode", fallback: "ZIP/Postal Code")
+    internal enum Ach {
+      /// %s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.
+      internal static func walletDisabled(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "Buy.Ach.WalletDisabled", p1, p2, fallback: "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.")
+      }
+      internal enum WalletDisabled {
+        /// here
+        internal static let link = L10n.tr("Localizable", "Buy.Ach.WalletDisabled.Link", fallback: "here")
+      }
+    }
     internal enum BuyLimits {
       /// Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.
       internal static let android = L10n.tr("Localizable", "Buy.BuyLimits.android", fallback: "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.")
@@ -1804,9 +1814,11 @@ internal enum L10n {
     internal static let identityNotCertified = L10n.tr("Localizable", "Send.identityNotCertified", fallback: "Payee identity isn't certified.")
     /// Insufficient funds error
     internal static let insufficientFunds = L10n.tr("Localizable", "Send.insufficientFunds", fallback: "Insufficient Funds")
+    /// Insufficient gas error
+    internal static let insufficientGas = L10n.tr("Localizable", "Send.insufficientGas", fallback: "Insufficient gas.")
     /// e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token.
-    internal static func insufficientGasMessage(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.insufficientGasMessage", p1, fallback: "You %1%s in your wallet in order to send this digital asset. Please add more ETH to your wallet and try again.")
+    internal static func insufficientGasMessage(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Send.insufficientGasMessage", String(describing: p1), String(describing: p2), fallback: "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?")
     }
     /// Your balance is insufficient to complete this action.
     internal static func insufficientGasTitle(_ p1: UnsafePointer<CChar>) -> String {
