@@ -17,8 +17,9 @@ class RWFormatter: NumberFormatter {
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
         switch obj {
-        case _ where obj.decimalValue < 1:
+        case _ where abs(obj.decimalValue) < 1:
             formatter.usesSignificantDigits = true
+            formatter.minimumFractionDigits = 2
             formatter.minimumSignificantDigits = 2
             formatter.maximumSignificantDigits = 4
             return formatter.string(for: obj)
@@ -43,9 +44,7 @@ struct ExchangeFormatter {
     }
     
     static var current: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.generatesDecimalNumbers = true
+        let formatter = RWFormatter()
         return formatter
     }
     

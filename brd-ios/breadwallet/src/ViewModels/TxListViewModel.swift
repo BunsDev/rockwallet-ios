@@ -28,8 +28,11 @@ struct TxListViewModel: TxViewModel, Hashable {
 
             let text = Amount(amount: amount,
                               rate: showFiatAmounts ? rate : nil,
-                              negative: (tx.direction == .sent)).description
-            return text
+                              negative: (tx.direction == .sent))
+            
+            let value = ExchangeFormatter.crypto.string(for: showFiatAmounts ? text.fiatValue : text.tokenValue) ?? ""
+            return "\(value) \(text.currency.code)"
+            
         } else if let swap = swap {
             if swap.source.currency == C.usdCurrencyCode,
                swap.status == .pending {
