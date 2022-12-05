@@ -656,6 +656,8 @@ internal enum L10n {
       internal enum WalletDisabled {
         /// here
         internal static let link = L10n.tr("Localizable", "Buy.Ach.WalletDisabled.Link", fallback: "here")
+        /// Manage assets
+        internal static let manageAssets = L10n.tr("Localizable", "Buy.Ach.WalletDisabled.ManageAssets", fallback: "Manage assets")
       }
     }
     internal enum BuyLimits {

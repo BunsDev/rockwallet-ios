@@ -597,6 +597,8 @@
 
 "Buy.Ach.WalletDisabled.Link" = "here";
 
+"Buy.Ach.WalletDisabled.ManageAssets" = "Manage assets";
+
 "Buy.achFee" = "ACH fee (%s)";
 
 "Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
