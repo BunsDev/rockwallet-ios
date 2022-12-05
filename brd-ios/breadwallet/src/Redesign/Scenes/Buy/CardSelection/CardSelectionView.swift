@@ -112,7 +112,9 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
             self?.moreButtonTapped()
         }
         
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped(_:))))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped))
+        tap.cancelsTouchesInView = false
+        addGestureRecognizer(tap)
     }
     
     override func configure(with config: CardSelectionConfiguration?) {
@@ -152,7 +154,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         isUserInteractionEnabled = viewModel?.userInteractionEnabled == true || moreOption
     }
     
-    @objc private func cardSelectorTapped(_ sender: Any) {
+    @objc private func cardSelectorTapped() {
         didTapSelectCard?()
     }
     
