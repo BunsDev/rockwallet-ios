@@ -229,6 +229,12 @@ public struct Amount {
         format.isLenient = true
         format.generatesDecimalNumbers = true
         format.negativeFormat = "-\(format.positiveFormat!)"
+        if let rate = rate ?? currency.state?.currentRate {
+            format.currencySymbol = rate.code
+            format.maximumFractionDigits = rate.maxFractionalDigits
+        }
+        format.minimumFractionDigits = minimumFractionDigits ?? format.minimumFractionDigits
+        
         return format
     }
     
