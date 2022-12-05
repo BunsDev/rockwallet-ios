@@ -11,40 +11,64 @@
 import UIKit
 
 class RWFormatter: NumberFormatter {
-    override func string(for obj: Any?) -> String? {
-        guard let obj = obj as? NSNumber else { return nil }
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.generatesDecimalNumbers = true
-        switch obj {
-        case _ where abs(obj.decimalValue) < 1:
-            formatter.usesSignificantDigits = true
-            formatter.minimumFractionDigits = 2
-            formatter.minimumSignificantDigits = 2
-            formatter.maximumSignificantDigits = 4
-            return formatter.string(for: obj)
+    override func string(from: NSNumber) -> String {
+        generatesDecimalNumbers = true
+        switch from {
+        case _ where from.decimalValue < 1:
+            usesSignificantDigits = true
+            minimumSignificantDigits = 2
+            maximumSignificantDigits = 4
+            return super.string(from: from) ?? ""
             
         default:
-            formatter.minimumFractionDigits = 2
-            formatter.maximumFractionDigits = 2
-            return formatter.string(for: obj)
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+            return super.string(from: from) ?? ""
+        }
+    }
+    
+    override func string(for obj: Any?) -> String? {
+        guard let obj = obj as? NSNumber else { return nil }
+        generatesDecimalNumbers = true
+        switch obj {
+        case _ where abs(obj.decimalValue) < 1:
+            usesSignificantDigits = true
+            minimumFractionDigits = 2
+            minimumSignificantDigits = 2
+            maximumSignificantDigits = 4
+            return super.string(for: obj)
+            
+        default:
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+            return super.string(for: obj)
         }
     }
 }
 
 struct ExchangeFormatter {
     static var crypto: NumberFormatter {
-        let formatter = RWFormatter()
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.generatesDecimalNumbers = true
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 8
         return formatter
     }
     
     static var fiat: NumberFormatter {
-        let formatter = RWFormatter()
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.generatesDecimalNumbers = true
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
         return formatter
     }
     
     static var current: NumberFormatter {
-        let formatter = RWFormatter()
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.generatesDecimalNumbers = true
         return formatter
     }
     
