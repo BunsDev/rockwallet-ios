@@ -223,20 +223,18 @@ public struct Amount {
     }
     
     var localFormat: NumberFormatter {
-        let format = NumberFormatter()
+        let format = RWFormatter()
+        format.numberStyle = .currency
         format.locale = locale
         format.isLenient = true
-        format.numberStyle = .currency
         format.generatesDecimalNumbers = true
         format.negativeFormat = "-\(format.positiveFormat!)"
-        if let rate = rate {
-            format.currencySymbol = rate.code
-            format.maximumFractionDigits = rate.maxFractionalDigits
-        } else if let rate = currency.state?.currentRate {
+        if let rate = rate ?? currency.state?.currentRate {
             format.currencySymbol = rate.code
             format.maximumFractionDigits = rate.maxFractionalDigits
         }
         format.minimumFractionDigits = minimumFractionDigits ?? format.minimumFractionDigits
+        
         return format
     }
     
