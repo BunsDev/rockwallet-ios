@@ -2010,6 +2010,9 @@
 /* Insufficient funds error */
 "Send.insufficientFunds" = "Insufficient Funds";
 
+/* Insufficient gas error */
+"Send.insufficientGas" = "Insufficient funds for gas.";
+
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "You %1%s in your wallet in order to send this digital asset. Please add more ETH to your wallet and try again.";
 
