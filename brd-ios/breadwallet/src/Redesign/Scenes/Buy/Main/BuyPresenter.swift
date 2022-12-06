@@ -202,6 +202,23 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
     }
     
+    func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse) {
+        let infoMessage = NSMutableAttributedString(string: L10n.Buy.disabledUSDCMessage)
+        let linkRange = infoMessage.mutableString.range(of: L10n.WalletConnectionSettings.link)
+        
+        if linkRange.location != NSNotFound {
+            infoMessage.addAttribute(.underlineStyle, value: 1, range: linkRange)
+        }
+        
+        let model = InfoViewModel(description: .attributedText(infoMessage),
+                                  dismissType: .dismissAfter8s,
+                                  userInteraction: true)
+        let config = Presets.InfoView.verification
+        
+        viewController?.displayMessage(responseDisplay: .init(model: model, config: config))
+        viewController?.displayManageAssets(actionResponse: .init())
+    }
+    
     // MARK: - Additional Helpers
     
 }
