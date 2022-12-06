@@ -12,7 +12,7 @@ struct HomeScreenAssetViewModel {
     let currency: Currency
     
     var exchangeRate: String {
-        return currency.state?.currentRate?.localString(forCurrency: currency) ?? ""
+        return currency.state?.currentRate?.localString(forCurrency: currency, usesCustomFormat: true) ?? ""
     }
     
     var fiatBalance: String {

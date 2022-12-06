@@ -26,6 +26,8 @@ enum ExchangeEndpoints: String, URLType {
     
     case plaidLinkToken = "plaid-link-token"
     case plaidPublicToken = "plaid-public-token"
+    case plaidLogEvent = "plaid-log-event"
+    case plaidLogError = "plaid-log-link-error"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

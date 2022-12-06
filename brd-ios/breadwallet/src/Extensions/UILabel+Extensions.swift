@@ -1,5 +1,5 @@
 //
-//  UILabel+BRWAdditions.swift
+//  UILabel+Extensions.swift
 //  breadwallet
 //
 //  Created by Adrian Corscadden on 2016-10-26.

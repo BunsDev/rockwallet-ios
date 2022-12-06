@@ -1,5 +1,5 @@
 //
-//  UIButton+BRWAdditions.swift
+//  UIButton+Extensions.swift
 //  breadwallet
 //
 //  Created by Adrian Corscadden on 2016-10-24.
