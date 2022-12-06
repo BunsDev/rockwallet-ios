@@ -279,6 +279,8 @@
 		7E2E1A2B284E097900E56E69 /* KYCCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */; };
 		7E2E1A41284E267000E56E69 /* ProfileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2E1A40284E267000E56E69 /* ProfileWorker.swift */; };
 		7E383B4928AE1AFD00A5339F /* AssetSelectionDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E383B4828AE1AFD00A5339F /* AssetSelectionDisplayable.swift */; };
+		7E42ACCA293F3BA700E1FC26 /* PlaidEventWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42ACC9293F3BA700E1FC26 /* PlaidEventWorker.swift */; };
+		7E42ACCC293F485800E1FC26 /* PlaidErrorWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42ACCB293F485800E1FC26 /* PlaidErrorWorker.swift */; };
 		7E50C71F290BE0EE0036AA9F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB36D2835090E00EC787E /* Colors.swift */; };
 		7E50C720290BE0EE0036AA9F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB36D2835090E00EC787E /* Colors.swift */; };
 		7E50C721290BE0F80036AA9F /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB36B2835090E00EC787E /* ThemeManager.swift */; };
@@ -1054,6 +1056,8 @@
 		7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCCoordinator.swift; sourceTree = "<group>"; };
 		7E2E1A40284E267000E56E69 /* ProfileWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileWorker.swift; sourceTree = "<group>"; };
 		7E383B4828AE1AFD00A5339F /* AssetSelectionDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionDisplayable.swift; sourceTree = "<group>"; };
+		7E42ACC9293F3BA700E1FC26 /* PlaidEventWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidEventWorker.swift; sourceTree = "<group>"; };
+		7E42ACCB293F485800E1FC26 /* PlaidErrorWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidErrorWorker.swift; sourceTree = "<group>"; };
 		7E516D7828B4E83000BBB702 /* ExchangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeManager.swift; sourceTree = "<group>"; };
 		7E52B7A12872CD1E003D2249 /* SupportedCurrenciesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCurrenciesWorker.swift; sourceTree = "<group>"; };
 		7E5B305A28A67FC60065D2D8 /* SwapInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapInfoViewController.swift; sourceTree = "<group>"; };
@@ -2100,6 +2104,17 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		7E42ACC8293F3AAC00E1FC26 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */,
+				C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */,
+				7E42ACC9293F3BA700E1FC26 /* PlaidEventWorker.swift */,
+				7E42ACCB293F485800E1FC26 /* PlaidErrorWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		7E52B79D286EF4CE003D2249 /* Swap */ = {
 			isa = PBXGroup;
 			children = (
@@ -2125,8 +2140,6 @@
 				7EC0F8AB2887D8C40037145C /* SwapWorker.swift */,
 				C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */,
 				7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */,
-				C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */,
-				C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -2609,6 +2622,7 @@
 			isa = PBXGroup;
 			children = (
 				7EB8FD1A2897D212000FF75C /* BuyCoordinator.swift */,
+				7E42ACC8293F3AAC00E1FC26 /* Workers */,
 				7EB8FD192897D1F3000FF75C /* Main */,
 				7EC21A20289946B100FED711 /* CardSelection */,
 				7EC21A1328991A6500FED711 /* BillingAddress */,
@@ -3860,6 +3874,7 @@
 				7E5CB3852835090E00EC787E /* BackgroundConfiguration.swift in Sources */,
 				CE92F9F41DED59E80046B516 /* UIView+AnimationAdditions.swift in Sources */,
 				CEDB0B0522D4354C00331FFC /* LineLoadingView.swift in Sources */,
+				7E42ACCC293F485800E1FC26 /* PlaidErrorWorker.swift in Sources */,
 				7EF45F332844D26E00D1F7B0 /* VerificationView.swift in Sources */,
 				7E87B32D285346E00097671F /* UIImage+Compress.swift in Sources */,
 				CEEC70941E96A24F00EF788E /* DefaultCurrencyViewController.swift in Sources */,
@@ -4044,6 +4059,7 @@
 				7EF45F542845352400D1F7B0 /* KYCBasicModels.swift in Sources */,
 				7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */,
 				7ECCA99D28745E0400F99368 /* AssetView.swift in Sources */,
+				7E42ACCA293F3BA700E1FC26 /* PlaidEventWorker.swift in Sources */,
 				7C35E712200AC2080064808F /* TxViewModel.swift in Sources */,
 				7ED83AED284F384F00261565 /* KYCDocumentPickerInteractor.swift in Sources */,
 				71F829422321953F00B3C76E /* AlertPresenter.swift in Sources */,
