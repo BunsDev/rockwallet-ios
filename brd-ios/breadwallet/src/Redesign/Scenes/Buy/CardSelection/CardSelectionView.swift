@@ -111,8 +111,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.moreButtonCallback = { [weak self] in
             self?.moreButtonTapped()
         }
-        
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped(_:))))
     }
     
     override func configure(with config: CardSelectionConfiguration?) {
@@ -149,10 +147,16 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                                           moreOption: moreOption))
         
         spacerView.isHidden = arrowImageView.isHidden
-        isUserInteractionEnabled = viewModel?.userInteractionEnabled == true || moreOption
+        guard viewModel?.userInteractionEnabled == true else {
+            gestureRecognizers?.forEach {
+                removeGestureRecognizer($0) }
+            return
+        }
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped)))
     }
     
-    @objc private func cardSelectorTapped(_ sender: Any) {
+    @objc private func cardSelectorTapped() {
         didTapSelectCard?()
     }
     
