@@ -197,10 +197,15 @@ class Currency: SharedCurrency, CurrencyWithIcon, ItemSelectable {
             return true
         }
         
-        //Allows sending erc20 tokens to an Eth receive uri, but not the other way around
+        // Allow scanning BTC on BSV screen and vice-versa.
+        if (isBitcoin && currency.isBitcoinSV) || (isBitcoinSV && currency.isBitcoin) {
+            return true
+        }
+        
+        // Allows sending erc20 tokens to an ETH receive uri, but not the other way around.
         if self == Currencies.shared.eth
             && currency.isERC20Token
-            && request.amount == nil //We shouldn't send tokens to an Eth request amount uri
+            && request.amount == nil //  We shouldn't send tokens to an ETH request amount uri.
         {
             return true
         }

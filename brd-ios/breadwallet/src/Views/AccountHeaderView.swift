@@ -56,7 +56,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     
     private let chartView: ChartView
     private let priceChangeView = PriceChangeView(style: .percentAndAbsolute)
-    private let priceDateLabel = UILabel(font: .customBody(size: 14.0))
+    private let priceDateLabel = UILabel(font: Fonts.Body.two)
     private let balanceCell: BalanceCell
     private var graphButtons: [HistoryPeriodButton] = HistoryPeriod.allCases.map { HistoryPeriodButton(historyPeriod: $0) }
     
@@ -100,6 +100,8 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     static var shouldShowMarketData: Bool {
         return true
     }
+    
+    var isSearching = false
     
     // MARK: Init
     
@@ -394,11 +396,13 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     }
     
     func stopHeightConstraint() {
-        headerHeight?.isActive = false
+        isSearching = true
+        headerHeight?.isActive = !isSearching
     }
     
     func resumeHeightConstraint() {
-        headerHeight?.isActive = true
+        isSearching = false
+        headerHeight?.isActive = !isSearching
     }
     
     private func updateHistoryPeriodPillPosition(button: UIButton) {

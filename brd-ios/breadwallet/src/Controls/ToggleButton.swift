@@ -14,7 +14,7 @@ class ToggleButton: UIButton {
     
     init(normalTitle: String, normalColor: UIColor, selectedTitle: String, selectedColor: UIColor) {
         super.init(frame: .zero)
-        self.titleLabel?.font = UIFont.customBody(size: 14.0)
+        self.titleLabel?.font = Fonts.Body.two
         self.setTitle(normalTitle, for: .normal)
         self.setTitle(selectedTitle, for: .selected)
         self.setTitleColor(normalColor, for: .normal)

@@ -111,8 +111,7 @@ class RegistrationViewController: BaseTableViewController<RegistrationCoordinato
     }
     
     func displayNext(responseDisplay: RegistrationModels.Next.ResponseDisplay) {
-        guard let shouldShowProfile = dataStore?.shouldShowProfile else { return }
-        coordinator?.showRegistrationConfirmation(shouldShowProfile: shouldShowProfile)
+        coordinator?.showRegistrationConfirmation()
     }
 
     // MARK: - Additional Helpers

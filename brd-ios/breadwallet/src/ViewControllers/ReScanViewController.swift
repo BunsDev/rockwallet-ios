@@ -19,10 +19,10 @@ class ReScanViewController: UIViewController, Subscriber {
 
     private let system: CoreSystem
     private let wallet: Wallet
-    private let header = UILabel.wrapping(font: .customBold(size: 26.0), color: .white)
+    private let header = UILabel.wrapping(font: Fonts.Title.four, color: .white)
     private let body = UILabel.wrapping(font: .systemFont(ofSize: 15.0))
     private let button = BRDButton(title: L10n.ReScan.buttonTitle, type: .primary)
-    private let footer = UILabel.wrapping(font: .customBody(size: 16.0), color: .white)
+    private let footer = UILabel.wrapping(font: Fonts.Body.one, color: .white)
     private let faq: UIButton
 
     deinit {
@@ -109,9 +109,9 @@ class ReScanViewController: UIViewController, Subscriber {
 
     private var bodyText: NSAttributedString {
         let body = NSMutableAttributedString()
-        let headerAttributes = [ NSAttributedString.Key.font: UIFont.customBold(size: 16.0),
+        let headerAttributes = [ NSAttributedString.Key.font: Fonts.Title.six,
                                  NSAttributedString.Key.foregroundColor: UIColor.white ]
-        let bodyAttributes = [ NSAttributedString.Key.font: UIFont.customBody(size: 16.0),
+        let bodyAttributes = [ NSAttributedString.Key.font: Fonts.Body.one,
                                NSAttributedString.Key.foregroundColor: UIColor.white ]
 
         body.append(NSAttributedString(string: "\(L10n.ReScan.subheader2)\n", attributes: headerAttributes))

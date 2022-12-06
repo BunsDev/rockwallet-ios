@@ -73,7 +73,7 @@ class SyncingIndicator: UIView {
         addSubview(label)
         setupConstraints()
         
-        label.font = (style == .home) ? .customBold(size: 12.0) : .customBody(size: 14.0)
+        label.font = (style == .home) ? Fonts.Subtitle.three : Fonts.Body.two
         label.textColor = (style == .home) ? LightColors.Outline.one : LightColors.Text.two
         label.textAlignment = .right
         label.text = text

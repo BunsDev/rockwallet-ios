@@ -45,8 +45,8 @@ class TxGiftCell: TxDetailRowCell {
     
     override func setupStyle() {
         super.setupStyle()
-        share.titleLabel?.font = .customBody(size: 14.0)
-        reclaim.titleLabel?.font = .customBody(size: 14.0)
+        share.titleLabel?.font = Fonts.Body.two
+        reclaim.titleLabel?.font = Fonts.Body.two
         
         share.tap = showShare
         reclaim.tap = showReclaim

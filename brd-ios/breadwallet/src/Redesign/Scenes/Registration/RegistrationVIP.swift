@@ -32,7 +32,6 @@ protocol RegistrationDataStore: BaseDataStore, FetchDataStore {
     var email: String? { get set }
     var type: RegistrationModels.ViewType { get set }
     var subscribe: Bool? { get set }
-    var shouldShowProfile: Bool { get set }
 }
 
 protocol RegistrationDataPassing {
@@ -40,6 +39,6 @@ protocol RegistrationDataPassing {
 }
 
 protocol RegistrationRoutes: CoordinatableRoutes {
-    func showRegistrationConfirmation(shouldShowProfile: Bool)
+    func showRegistrationConfirmation()
     func showChangeEmail()
 }

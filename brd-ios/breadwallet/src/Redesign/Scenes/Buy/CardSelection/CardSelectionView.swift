@@ -88,6 +88,10 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
             make.height.equalTo(ViewSizes.medium.rawValue / 2)
         }
         mainStack.addArrangedSubview(subtitleLabel)
+        subtitleLabel.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue)
+        }
+                
         mainStack.addArrangedSubview(cardDetailsView)
         
         cardDetailsView.snp.makeConstraints { make in
@@ -107,8 +111,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.moreButtonCallback = { [weak self] in
             self?.moreButtonTapped()
         }
-        
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped(_:))))
     }
     
     override func configure(with config: CardSelectionConfiguration?) {
@@ -126,10 +128,10 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.setup(with: viewModel)
         
         titleLabel.setup(with: viewModel?.title)
-        titleLabel.isHidden = viewModel?.subtitle == nil
+        titleLabel.isHidden = viewModel?.title == nil
         
         subtitleLabel.setup(with: viewModel?.subtitle)
-        subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil
+        subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
         
         cardDetailsView.isHidden = viewModel?.logo == nil
         
@@ -145,10 +147,16 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                                           moreOption: moreOption))
         
         spacerView.isHidden = arrowImageView.isHidden
-        isUserInteractionEnabled = viewModel?.userInteractionEnabled == true || moreOption
+        guard viewModel?.userInteractionEnabled == true else {
+            gestureRecognizers?.forEach {
+                removeGestureRecognizer($0) }
+            return
+        }
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cardSelectorTapped)))
     }
     
-    @objc private func cardSelectorTapped(_ sender: Any) {
+    @objc private func cardSelectorTapped() {
         didTapSelectCard?()
     }
     

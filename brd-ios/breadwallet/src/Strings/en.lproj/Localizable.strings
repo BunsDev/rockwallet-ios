@@ -69,6 +69,8 @@
 /* Delisted token alert banner message */
 "Account.delistedToken" = "This token has been delisted. \n\nYou may still be able to send these tokens to another platform. For more details, visit our support page.";
 
+"Account.Email" = "Email";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ per %2$@";
 
@@ -130,7 +132,7 @@
 "Account.VerifiedAccountMessage" = "We’ll let you know when your account is verified.";
 
 /* Verify account text in popup */
-"Account.VerifyAccountText" = "If you verify your account, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card\n・24/7/365 live customer support";
+"Account.VerifyAccountText" = "If you verify your account, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
@@ -176,7 +178,7 @@
 "AccountCreation.notNow" = "Not Now";
 
 /* Re-send my code label */
-"AccountCreation.ResendCode" = "Re-send my code";
+"AccountCreation.ResendCode" = "Resend my code";
 
 /* Creating Account progress Label */
 "AccountCreation.timeout" = "The Request timed out. Please try again later.";
@@ -188,7 +190,7 @@
 "AccountCreation.VerifyEmail" = "Verify your email";
 
 /* Why the wallet is disabled text */
-"AccountCreation.WalletDisabled" = "If you enter an incorrect wallet PIN too many times, your wallet will become disabled for a certain amount of time.\nThis is to prevent someone else from trying to guess your PIN by quickly making many guesses.\nIf your wallet is disabled, wait until the time shown and you will be able to enter your PIN again.\n\nIf you continue to enter the incorrect PIN, the amount of waiting time in between attempts will increase. Eventually, the app will reset and you can start a new wallet.\n\nIf you have the recovery phrase for your wallet, you can use it to reset your PIN by clicking the “Reset PIN” button.";
+"AccountCreation.WalletDisabled" = "If you enter an incorrect wallet PIN too many times, your wallet will become disabled for a certain amount of time.\nThis is to prevent someone else from trying to guess your PIN by quickly making many guesses.\nIf your wallet is disabled, wait until the time shown and you will be able to enter your PIN again.\n\nIf you continue to enter the incorrect PIN, the amount of waiting time in between attempts will increase. Eventually, the app will reset and you can start a new wallet.\n\nIf you have the Recovery Phrase for your wallet, you can use it to reset your PIN by clicking the “Reset PIN” button.";
 
 /* Why is my wallet disabled title on popup */
 "AccountCreation.WalletDisabledTitle" = "Why is my wallet disabled?";
@@ -206,13 +208,13 @@
 "AccountDelete.ExplanationOne" = "-You will no longer be able to use your email to sign in into RockWallet Wallet";
 
 /* Delete account explanation part three */
-"AccountDelete.ExplanationThree" = "-Your private keys are still yours, keep your security phrase in a safe place in case you need to restore your wallet.";
+"AccountDelete.ExplanationThree" = "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.";
 
 /* Delete account explanation part two */
 "AccountDelete.ExplanationTwo" = "-You will no longer be able to user your KYC and registration status";
 
 /* Recover wallet text after deleting account */
-"AccountDelete.RecoverWallet" = "I understand that the only way to recover my wallet is by entering my recovery phrase";
+"AccountDelete.RecoverWallet" = "I understand that the only way to recover my wallet is by entering my Recovery Phrase";
 
 /* Default wallet name */
 "AccountHeader.defaultWalletName" = "My RockWallet";
@@ -349,10 +351,10 @@
 "Alert.keystore.invalidated.android" = "Your RockWallet encrypted data was recently invalidated because your Android lock screen was disabled.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must uninstall. */
-"Alert.keystore.invalidated.uninstall.android" = "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped by uninstalling.\n\nDon’t worry, your funds are still secure! Reinstall the app and recover your wallet using your recovery phrase.";
+"Alert.keystore.invalidated.uninstall.android" = "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped by uninstalling.\n\nDon’t worry, your funds are still secure! Reinstall the app and recover your wallet using your Recovery Phrase.";
 
 /* Warn user key store data has been invalidate because the user changed their security settings. The user must wipe their app data. */
-"Alert.keystore.invalidated.wipe.android" = "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped.\n\nDon’t worry, your funds are still secure! Recover your wallet using your recovery phrase.";
+"Alert.keystore.invalidated.wipe.android" = "We can't proceed because your screen lock settings have been changed (e.g. password was disabled, fingerprints were changed). For security purposes, Android has permanently locked your key store. Therefore, your RockWallet app data must be wiped.\n\nDon’t worry, your funds are still secure! Recover your wallet using your Recovery Phrase.";
 
 /* Keystore error title */
 "Alert.keystore.title.android" = "Android Key Store Error";
@@ -591,11 +593,17 @@
 /* 3D Secure label on buy flow */
 "Buy.3DSecure" = "3D Secure";
 
+"Buy.Ach.WalletDisabled" = "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.";
+
+"Buy.Ach.WalletDisabled.Link" = "here";
+
+"Buy.Ach.WalletDisabled.ManageAssets" = "Manage assets";
+
 "Buy.achFee" = "ACH fee (%s)";
 
 "Buy.achFeeText" = "ACH fee (fixed fee + % (TBD)";
 
-"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is $1,000 USD. \n\nIt currently takes 7-10 days to process a purchase with ACH.";
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.\n\nIt currently takes 7-10 days to process a purchase with ACH";
 
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
 
@@ -808,7 +816,7 @@
 
 "CloudBackup.encryptBackupMessage" = "Enter pin to encrypt backup";
 
-"CloudBackup.mainBody" = "Please note, iCloud backup is only as secure as your iCloud account. We still recommend writing down your recovery phrase in the following step and keeping it secure. The recovery phrase is the only way to recover your wallet if you can no longer access iCloud.";
+"CloudBackup.mainBody" = "Please note, iCloud backup is only as secure as your iCloud account. We still recommend writing down your Recovery Phrase in the following step and keeping it secure. The Recovery Phrase is the only way to recover your wallet if you can no longer access iCloud.";
 
 "CloudBackup.mainTitle" = "iCloud Recovery Backup";
 
@@ -822,7 +830,7 @@
 
 "CloudBackup.recoverHeader" = "Enter PIN to unlock iCloud backup";
 
-"CloudBackup.recoverWarning" = "A previously backed up wallet has been detected. Using this backup is recommended. Are you sure you want to proceeed with restoring from a recovery phrase?";
+"CloudBackup.recoverWarning" = "A previously backed up wallet has been detected. Using this backup is recommended. Are you sure you want to proceeed with restoring from a Recovery Phrase?";
 
 "CloudBackup.restoreButton" = "Restore with iCloud Backup";
 
@@ -887,10 +895,10 @@
 "ConfirmGift.processingTime" = "Validating this paper wallet on the network may take up to 60 minutes";
 
 /* Confirm paper phrase error message */
-"ConfirmPaperPhrase.error" = "The words entered do not match your recovery phrase. Please try again.";
+"ConfirmPaperPhrase.error" = "The words entered do not match your Recovery Phrase. Please try again.";
 
 /* Confirm paper phrase view label. */
-"ConfirmPaperPhrase.label" = "To make sure everything was written down correctly, please enter the following words from your recovery phrase.";
+"ConfirmPaperPhrase.label" = "To make sure everything was written down correctly, please enter the following words from your Recovery Phrase.";
 
 /* Word label eg. Word #1, Word #2 */
 "ConfirmPaperPhrase.word" = "Word #%1$@";
@@ -984,6 +992,8 @@
 
 /* Check your internet connection message */
 "ErrorMessages.CheckInternet" = "Please, check your internet connection and try again later.";
+
+"ErrorMessages.default" = "Something went wrong! Try again later.";
 
 /* Email unavailable alert title */
 "ErrorMessages.emailUnavailableMessage" = "This device isn't configured to send email with the iOS mail app.";
@@ -1368,7 +1378,7 @@
 "MenuViewController.recoverButton" = "Recover Wallet";
 
 /* Paper Key Skip modal body (Android-version) */
-"Modal.PaperKeySkip.Body.Android" = "Your recovery phrase is required to open your wallet if you change the security settings on your phone.\n\nAre you sure you want to set up your recovery phrase later?";
+"Modal.PaperKeySkip.Body.Android" = "Your Recovery Phrase is required to open your wallet if you change the security settings on your phone.\n\nAre you sure you want to set up your Recovery Phrase later?";
 
 /* Paper Key Skip modal Continue Set Up button */
 "Modal.PaperKeySkip.Button.ContinueSetUp" = "Continue Set Up";
@@ -1414,6 +1424,10 @@
 
 /* Node Selector view title */
 "NodeSelector.title" = "Bitcoin Nodes";
+
+"NoInternet.Body" = "We couldn’t connect to the server. Please check your internet connection and try again.";
+
+"NoInternet.Title" = "Check your connection";
 
 /* Onboarding screen 'I'll browse first' button */
 "Onboarding.browseFirst" = "I'll browse first";
@@ -1467,7 +1481,7 @@
 "PaymentConfirmation.TryAgain" = "Try again";
 
 /* Bad Payment request alert title */
-"PaymentProtocol.Errors.badPaymentRequest" = "Bad Payment Request";
+"PaymentProtocol.Errors.badPaymentRequest" = "Your transaction request couldn’t be completed. Please try again.";
 
 /* Error opening payment protocol file message */
 "PaymentProtocol.Errors.corruptedDocument" = "Unsupported or corrupted document";
@@ -1534,10 +1548,10 @@
 "Prompts.NoScreenLock.title.android" = "Screen lock disabled";
 
 /* Warning about recovery phrase (formerly paper key). */
-"Prompts.PaperKey.body" = "Set up your recovery phrase in case you ever lose or replace your phone. This is also required if you change your phone's security settings.";
+"Prompts.PaperKey.body" = "Set up your Recovery Phrase in case you ever lose or replace your phone. This is also required if you change your phone's security settings.";
 
 /* Warning about paper key (Android-version) */
-"Prompts.PaperKey.Body.Android" = "Set up your recovery phrase in case you ever lose or replace your phone. Your key is also required if you change your phone's security settings.";
+"Prompts.PaperKey.Body.Android" = "Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone's security settings.";
 
 /* An action is required (You must do this action). */
 "Prompts.PaperKey.title" = "Action Required";
@@ -1651,7 +1665,7 @@
 "RecoverWallet.done" = "DONE";
 
 /* Enter recovery phrase label to delete the wallet */
-"RecoverWallet.EnterRecoveryPhrase" = "Please enter your recovery phrase to delete this wallet from your device.";
+"RecoverWallet.EnterRecoveryPhrase" = "Please enter your Recovery Phrase to delete this wallet from your device.";
 
 /* Recover wallet header */
 "RecoverWallet.header" = "Recover Wallet";
@@ -1663,10 +1677,10 @@
 "RecoverWallet.instruction" = "Enter Recovery Phrase";
 
 /* Recover wallet intro */
-"RecoverWallet.intro" = "Recover your RockWallet with your recovery phrase.";
+"RecoverWallet.intro" = "Recover your RockWallet with your Recovery Phrase.";
 
 /* Invalid paper key message */
-"RecoverWallet.invalid" = "The recovery phrase you entered is invalid. Please double-check each word and try again.";
+"RecoverWallet.invalid" = "The Recovery Phrase you entered is invalid. Please double-check each word and try again.";
 
 /* Previous button accessibility label */
 "RecoverWallet.leftArrow" = "Left Arrow";
@@ -1684,10 +1698,10 @@
 "RecoverWallet.rightArrow" = "Right Arrow";
 
 /* Recover wallet sub-header */
-"RecoverWallet.subheader" = "Enter the recovery phrase for the wallet you want to recover.";
+"RecoverWallet.subheader" = "Enter the Recovery Phrase for the wallet you want to recover.";
 
 /* Reset PIN with paper key: sub-header */
-"RecoverWallet.subheader_reset_pin" = "To reset your PIN, enter the words from your recovery phrase into the boxes below.";
+"RecoverWallet.subheader_reset_pin" = "To reset your PIN, enter the words from your Recovery Phrase into the boxes below.";
 
 /* What is recovery phrase title on popup */
 "RecoverWallet.WhatIsRecoveryPhrase" = "What is “Recovery Phrase”?";
@@ -1696,7 +1710,7 @@
 "RecoveryKeyFlow.confirmRecoveryInputError" = "The word you entered is incorrect. Please try again.";
 
 /* Instructs the user to enter words from the set of recovery phrase words. */
-"RecoveryKeyFlow.confirmRecoveryKeySubtitle" = "Almost done! Enter the following words from your recovery phrase.";
+"RecoveryKeyFlow.confirmRecoveryKeySubtitle" = "Almost done! Enter the following words from your Recovery Phrase.";
 
 /* Title for the confirmation step of the recovery phrase flow. */
 "RecoveryKeyFlow.confirmRecoveryKeyTitle" = "Confirm Recovery Phrase";
@@ -1705,10 +1719,10 @@
 "RecoveryKeyFlow.enterRecoveryKey" = "Enter Recovery Phrase";
 
 /* Subtitle displayed when the user starts the process of entering a recovery phrase */
-"RecoveryKeyFlow.enterRecoveryKeySubtitle" = "Please enter your recovery phrase to unlink this wallet from your device.";
+"RecoveryKeyFlow.enterRecoveryKeySubtitle" = "Please enter the Recovery Phrase in order to delete your account and unlink the wallet.";
 
 /* Body text for an alert dialog asking the user whether to set up the recovery phrase later */
-"RecoveryKeyFlow.exitRecoveryKeyPromptBody" = "Are you sure you want to set up your recovery phrase later?";
+"RecoveryKeyFlow.exitRecoveryKeyPromptBody" = "Are you sure you want to set up your Recovery Phrase later?";
 
 /* Title for an alert dialog asking the user whether to set up the recovery key later */
 "RecoveryKeyFlow.exitRecoveryKeyPromptTitle" = "Set Up Later";
@@ -1720,7 +1734,7 @@
 "RecoveryKeyFlow.generateKeyExplanation" = "This is required to restore your wallet if you upgrade or lose your phone.";
 
 /* Default title for the recovery phrase landing page */
-"RecoveryKeyFlow.generateKeyTitle" = "Generate your private recovery phrase";
+"RecoveryKeyFlow.generateKeyTitle" = "Generate your private Recovery Phrase";
 
 /* Title for a button that takes the user to the wallet after setting up the recovery key. */
 "RecoveryKeyFlow.goToWalletButtonTitle" = "GO TO WALLET";
@@ -1729,7 +1743,7 @@
 "RecoveryKeyFlow.howItWorksStep" = "How it works - Step %1$@";
 
 /* Error text displayed when the user enters an incorrect recovery phrase */
-"RecoveryKeyFlow.invalidPhrase" = "Some of the words you entered do not match your recovery phrase. Please try again.";
+"RecoveryKeyFlow.invalidPhrase" = "Some of the words you entered do not match your Recovery Phrase. Please try again.";
 
 /* Title for recovery key intro page */
 "RecoveryKeyFlow.keepSecure" = "Write down your Recovery Phrase";
@@ -1756,7 +1770,7 @@
 "RecoveryKeyFlow.rememberToWriteDownReminder" = "Remember to write these words down. Swipe back if you forgot.";
 
 /* Instruction displayed when the user is resetting the PIN, which requires the recovery phrase to be entered */
-"RecoveryKeyFlow.resetPINInstruction" = "Please enter your recovery phrase to reset your PIN.";
+"RecoveryKeyFlow.resetPINInstruction" = "Please enter your Recovery Phrase to reset your PIN.";
 
 /* Assures the user that BRD will keep the user's funds secure. */
 "RecoveryKeyFlow.securityAssurance" = "Remember that this is the only way to restore your wallet. RockWallet does not keep a copy.";
@@ -1765,7 +1779,7 @@
 "RecoveryKeyFlow.storeSecurelyRecommendation" = "For security reasons, screenshots are not recommended, as anyone with your Recovery Phrase can access your funds.";
 
 /* Title for the success page after the recovery phrase has been set up */
-"RecoveryKeyFlow.successHeading" = "Congratulations! You completed your recovery phrase setup.";
+"RecoveryKeyFlow.successHeading" = "Congratulations! You completed your Recovery Phrase setup.";
 
 /* Subtitle for the success page after the recovery key has been set up */
 "RecoveryKeyFlow.successSubheading" = "You're all set to deposit, swap, and buy crypto from your RockWallet wallet.";
@@ -1789,7 +1803,7 @@
 "RecoveryKeyFlow.writeItDown" = "Generate your private Recovery Phrase";
 
 /* Title for the recovery phrase landing page if the key has already been generated. */
-"RecoveryKeyFlow.writeKeyAgain" = "Write down your recovery phrase again";
+"RecoveryKeyFlow.writeKeyAgain" = "Write down your Recovery Phrase again";
 
 /* Subtitle for the write recovery key screen */
 "RecoveryKeyFlow.writeKeyScreenSubtitle" = "Write down the following words in order.";
@@ -2002,6 +2016,9 @@
 /* Insufficient funds error */
 "Send.insufficientFunds" = "Insufficient Funds";
 
+/* Insufficient gas error */
+"Send.insufficientGas" = "Insufficient gas.";
+
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "You must have at least %1$@ in your wallet in order to transfer this type of token. Would you like to go to your %2$@ wallet now?";
 
@@ -2060,10 +2077,10 @@
 "Send.payId_toLabel" = "PayString";
 
 /* Could not publish transaction alert title */
-"Send.publishTransactionError" = "Could not publish transaction.";
+"Send.publishTransactionError" = "Your transaction request couldn’t be completed. Please try again.";
 
 /* Could not load remote request error message */
-"Send.remoteRequestError" = "Could not load payment request";
+"Send.remoteRequestError" = "Your payment attempt couldn’t be completed. Please try again.";
 
 /* Scan button label */
 "Send.scanLabel" = "Scan";
@@ -2295,10 +2312,10 @@
 "StartPaperPhrase.againButtonTitle" = "Write Down Recovery Phrase Again";
 
 /* Paper key explanation text. */
-"StartPaperPhrase.body" = "Your recovery phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
+"StartPaperPhrase.body" = "Your Recovery Phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
 
 /* Paper key explanation text (Android-version) */
-"StartPaperPhrase.Body.Android" = "Your recovery phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nYour recovery phrase is also required if you change the security settings on your device.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
+"StartPaperPhrase.Body.Android" = "Your Recovery Phrase is the only way to restore your RockWallet if your phone is lost, stolen, broken, or upgraded.\n\nYour Recovery Phrase is also required if you change the security settings on your device.\n\nWe will show you a list of words to write down on a piece of paper and keep safe.";
 
 /* button label */
 "StartPaperPhrase.buttonTitle" = "Write Down Recovery Phrase";
@@ -2860,7 +2877,7 @@
 "UnlockScreen.walletDisabled" = "Wallet disabled";
 
 /* Wallet disabled description */
-"UnlockScreen.walletDisabledDescription" = "You will need your recovery phrases to reset PIN.";
+"UnlockScreen.walletDisabledDescription" = "You will need your Recovery Phrases to reset PIN.";
 
 /* Wipe wallet prompt */
 "UnlockScreen.wipePrompt" = "Are you sure you would like to wipe this wallet?";
@@ -2917,7 +2934,7 @@
 "UpdatePin.setNewPinTitle" = "Set your PIN";
 
 /* Update PIN failure error message. */
-"UpdatePin.setPinError" = "Sorry, could not update PIN.";
+"UpdatePin.setPinError" = "Something went wrong updating your PIN. Please try again.";
 
 /* Update PIN failure alert view title */
 "UpdatePin.setPinErrorTitle" = "Update PIN Error";
@@ -3143,7 +3160,7 @@
 "WipeWallet.failedTitle" = "Failed";
 
 /* Enter phrase to wipe wallet instruction. (Important to explain it is the CURRENT [this wallet's] paper key that needs to be entered). */
-"WipeWallet.instruction" = "Please enter your recovery phrase to wipe this wallet from your device.";
+"WipeWallet.instruction" = "Please enter your Recovery Phrase to wipe this wallet from your device.";
 
 /* Instructions for unlinking the wallet */
 "WipeWallet.startMessage" = "Starting or recovering another wallet allows you to access and manage a different RockWallet wallet on this device.";

@@ -95,8 +95,16 @@ class AccountViewController: UIViewController, Subscriber {
         transactionsTableView?.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(headerView.isSearching, animated: true)
         
         shouldShowStatusBar = true
     }
@@ -116,7 +124,7 @@ class AccountViewController: UIViewController, Subscriber {
     
     private func setupNavigationBar() {
         let searchButton = UIButton(type: .system)
-        searchButton.setImage(#imageLiteral(resourceName: "search"), for: .normal)
+        searchButton.setImage(Asset.search.image, for: .normal)
         searchButton.widthAnchor.constraint(equalToConstant: 22.0).isActive = true
         searchButton.heightAnchor.constraint(equalToConstant: 22.0).isActive = true
         searchButton.tap = { [unowned self] in

@@ -14,7 +14,6 @@ class RegistrationConfirmationStore: NSObject, BaseDataStore, RegistrationConfir
     var itemId: String?
     var code: String?
     var callAssociate: Bool = false
-    var shouldShowProfile: Bool = false
     
     // MARK: - Aditional helpers
 }

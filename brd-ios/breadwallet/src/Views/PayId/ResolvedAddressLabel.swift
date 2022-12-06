@@ -14,7 +14,7 @@ class ResolvedAddressLabel: UIView {
     
     private let imageHeight: CGFloat = 22.0
     private let image = UIImageView()
-    private let addressLabel = UILabel(font: .customBody(size: 12.0), color: .lightText)
+    private let addressLabel = UILabel(font: Fonts.Body.three, color: .lightText)
     private var widthConstraint: NSLayoutConstraint?
     
     var type: ResolvableType? {

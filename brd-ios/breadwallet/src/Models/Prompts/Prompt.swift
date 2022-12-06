@@ -68,7 +68,7 @@ enum PromptType: Int {
     
     var alertIcon: UIImage? {
         switch self {
-        case .noInternet: return Asset.warning.image.tinted(with: LightColors.primary)
+        case .noInternet: return Asset.warning.image.tinted(with: LightColors.Error.one)
         default: return Asset.alert.image.tinted(with: LightColors.primary)
         }
     }
@@ -181,8 +181,11 @@ extension Prompt {
             return !Reachability.isReachable
             
         case .kyc:
-            let hasKYC = UserManager.shared.profile?.status.hasKYC
-            return hasKYC == false || hasKYC == nil
+            let profile = UserManager.shared.profile
+            let hasKYC = profile?.status.hasKYC
+            let isUnverified = profile?.roles.contains(.unverified) == true
+            
+            return hasKYC == false && isUnverified == false
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }
