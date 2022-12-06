@@ -127,6 +127,13 @@ class BaseCoordinator: NSObject,
         }
     }
     
+    func showSell() {
+        let coordinator = SellCoordinator(navigationController: UINavigationController())
+        coordinator.parentCoordinator = coordinator
+        childCoordinators.append(coordinator)
+        coordinator.start()
+    }
+    
     func showProfile() {
         upgradeAccountOrShowPopup { [weak self] _ in
             self?.openModally(coordinator: ProfileCoordinator.self, scene: Scenes.Profile)

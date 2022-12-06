@@ -361,6 +361,13 @@
 		7E8E97A0283F48EE008606B0 /* NavigationItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E979F283F48EE008606B0 /* NavigationItemView.swift */; };
 		7E8E97A2283F78B0008606B0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E97A1283F78B0008606B0 /* ProfileView.swift */; };
 		7E8E97A5283F9804008606B0 /* FEPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E97A4283F9803008606B0 /* FEPopupView.swift */; };
+		7E8F7E44293F6AE50058019B /* SellCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3D293F6AE50058019B /* SellCoordinator.swift */; };
+		7E8F7E45293F6AE50058019B /* SellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3E293F6AE50058019B /* SellStore.swift */; };
+		7E8F7E46293F6AE50058019B /* SellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3F293F6AE50058019B /* SellPresenter.swift */; };
+		7E8F7E47293F6AE50058019B /* SellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E40293F6AE50058019B /* SellModels.swift */; };
+		7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E41293F6AE50058019B /* SellVIP.swift */; };
+		7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E42293F6AE50058019B /* SellViewController.swift */; };
+		7E8F7E4A293F6AE50058019B /* SellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E43293F6AE50058019B /* SellInteractor.swift */; };
 		7E9B13EE285720D400BD9EF5 /* KYCSubmitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13ED285720D400BD9EF5 /* KYCSubmitWorker.swift */; };
 		7E9B13F02857213400BD9EF5 /* KYCLevelOneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13EF2857213400BD9EF5 /* KYCLevelOneWorker.swift */; };
 		7E9B13FA2857404600BD9EF5 /* DocumentReviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F32857404600BD9EF5 /* DocumentReviewStore.swift */; };
@@ -1127,6 +1134,13 @@
 		7E8E979F283F48EE008606B0 /* NavigationItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationItemView.swift; sourceTree = "<group>"; };
 		7E8E97A1283F78B0008606B0 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7E8E97A4283F9803008606B0 /* FEPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FEPopupView.swift; sourceTree = "<group>"; };
+		7E8F7E3D293F6AE50058019B /* SellCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellCoordinator.swift; sourceTree = "<group>"; };
+		7E8F7E3E293F6AE50058019B /* SellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellStore.swift; sourceTree = "<group>"; };
+		7E8F7E3F293F6AE50058019B /* SellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellPresenter.swift; sourceTree = "<group>"; };
+		7E8F7E40293F6AE50058019B /* SellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellModels.swift; sourceTree = "<group>"; };
+		7E8F7E41293F6AE50058019B /* SellVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellVIP.swift; sourceTree = "<group>"; };
+		7E8F7E42293F6AE50058019B /* SellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
+		7E8F7E43293F6AE50058019B /* SellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellInteractor.swift; sourceTree = "<group>"; };
 		7E9B13ED285720D400BD9EF5 /* KYCSubmitWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitWorker.swift; sourceTree = "<group>"; };
 		7E9B13EF2857213400BD9EF5 /* KYCLevelOneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCLevelOneWorker.swift; sourceTree = "<group>"; };
 		7E9B13F32857404600BD9EF5 /* DocumentReviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewStore.swift; sourceTree = "<group>"; };
@@ -2183,6 +2197,7 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7E8F7E3C293F6ACE0058019B /* Sell */,
 				7E5B305C28A67FDC0065D2D8 /* REUSABLE */,
 				7E52B79D286EF4CE003D2249 /* Swap */,
 				7EF2187D2862F07A006ABCC1 /* Buy */,
@@ -2473,6 +2488,28 @@
 				7E5CB37B2835090E00EC787E /* FEButton.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		7E8F7E3C293F6ACE0058019B /* Sell */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F7E3D293F6AE50058019B /* SellCoordinator.swift */,
+				7E8F7E4B293F6B190058019B /* Main */,
+			);
+			path = Sell;
+			sourceTree = "<group>";
+		};
+		7E8F7E4B293F6B190058019B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F7E3E293F6AE50058019B /* SellStore.swift */,
+				7E8F7E3F293F6AE50058019B /* SellPresenter.swift */,
+				7E8F7E40293F6AE50058019B /* SellModels.swift */,
+				7E8F7E41293F6AE50058019B /* SellVIP.swift */,
+				7E8F7E42293F6AE50058019B /* SellViewController.swift */,
+				7E8F7E43293F6AE50058019B /* SellInteractor.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		7E9B13F12857401B00BD9EF5 /* DocumentReview */ = {
@@ -3735,6 +3772,7 @@
 				7BDB4A092806F4A60031F015 /* HistoryFetcher.swift in Sources */,
 				7E0968B8284A29CE006B4FC2 /* TransparentView.swift in Sources */,
 				3A611A0F2325738C004B8E36 /* AnimatedBlockSetLogo.swift in Sources */,
+				7E8F7E45293F6AE50058019B /* SellStore.swift in Sources */,
 				7B67709029054A89006FB72A /* Circle.swift in Sources */,
 				71C44E92225F95B100EF4459 /* RecoveryKeyCompleteViewController.swift in Sources */,
 				7EB8FD262897D212000FF75C /* BuyViewController.swift in Sources */,
@@ -3774,6 +3812,7 @@
 				CEE1F5631DF13E5A00D733AD /* ModalHeaderView.swift in Sources */,
 				7E5CB39E2835090E00EC787E /* BaseTableViewController.swift in Sources */,
 				7ED427F028755CB200AA19A8 /* ExchangeDetailsPresenter.swift in Sources */,
+				7E8F7E4A293F6AE50058019B /* SellInteractor.swift in Sources */,
 				7B02D62A2859202B00C5C384 /* PhotoCaptureDelegate.swift in Sources */,
 				7EC21A1E28991A6500FED711 /* BillingAddressVIP.swift in Sources */,
 				7BDB49FF2806F3EC0031F015 /* CloudBackup.swift in Sources */,
@@ -3798,12 +3837,14 @@
 				CEA05CC31F21B53C00D850F0 /* FeeSelector.swift in Sources */,
 				7BDB4A012806F40D0031F015 /* ExchangeUpdater.swift in Sources */,
 				CE20C8F21DBAF71500C8397A /* ApplicationController.swift in Sources */,
+				7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */,
 				7B54E5A527F4A2B0002DD1E4 /* Generic.swift in Sources */,
 				C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */,
 				7B54E59B27F4A2B0002DD1E4 /* AlertHelper.swift in Sources */,
 				7E8AA729291A6CB5005BB378 /* Strings.swift in Sources */,
 				7BDB4A052806F4470031F015 /* Extensions.swift in Sources */,
 				CEA362681E00EE320061FC0E /* CameraGuideView.swift in Sources */,
+				7E8F7E47293F6AE50058019B /* SellModels.swift in Sources */,
 				CEDB0B0722D445DB00331FFC /* ChartView.swift in Sources */,
 				7E5CB3822835090E00EC787E /* DemoModels.swift in Sources */,
 				7E5CB37D2835090E00EC787E /* DemoCoordinator.swift in Sources */,
@@ -3934,6 +3975,7 @@
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,
 				7EBC6B092848ABC5000A301F /* RegistrationConfirmationVIP.swift in Sources */,
+				7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */,
 				7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */,
 				7E8E97A0283F48EE008606B0 /* NavigationItemView.swift in Sources */,
 				C416BE0628509C4E0020ACCD /* KYCLevelTwoPostValidation.swift in Sources */,
@@ -4142,6 +4184,7 @@
 				CE41327622CACA05002391E6 /* BalanceCell.swift in Sources */,
 				7E5CB3AA2835090E00EC787E /* WrapperAccessoryView.swift in Sources */,
 				C45E0BAC2845F4C40083F028 /* AccountVerificationInteractor.swift in Sources */,
+				7E8F7E46293F6AE50058019B /* SellPresenter.swift in Sources */,
 				7E5CB3942835090E00EC787E /* MessageModels.swift in Sources */,
 				7E8E9798283F4830008606B0 /* ProfileStore.swift in Sources */,
 				CE4DFB2E1E9C26DA0014009E /* ShareDataViewController.swift in Sources */,
@@ -4197,6 +4240,7 @@
 				CE9057181DFF0FA8006BA848 /* String+Additions.swift in Sources */,
 				7B67708E29053CDF006FB72A /* Shadow+Background+Extensions.swift in Sources */,
 				7BDB4A032806F4290031F015 /* CsvExporter.swift in Sources */,
+				7E8F7E44293F6AE50058019B /* SellCoordinator.swift in Sources */,
 				713CD8872240117A004657D4 /* RecoveryKeyFlowController.swift in Sources */,
 				CED341331EF5A5C00014912A /* InAppAlert.swift in Sources */,
 				CE47A8E01F7DA54000FF35BA /* UIScreen+Additions.swift in Sources */,
