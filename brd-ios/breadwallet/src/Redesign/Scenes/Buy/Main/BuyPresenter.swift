@@ -177,10 +177,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse) {
+        viewController?.displayAchData(actionResponse: .init())
+        
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Buy.achSuccess)),
                                                               config: Presets.InfoView.verification))
         
-        viewController?.displayAchData(actionResponse: .init())
     }
     
     func presentFailure(actionResponse: BuyModels.Failure.ActionResponse) {
