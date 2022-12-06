@@ -10,6 +10,42 @@
 
 import UIKit
 
+class RWFormatter: NumberFormatter {
+    override func string(from: NSNumber) -> String {
+        generatesDecimalNumbers = true
+        switch from {
+        case _ where from.decimalValue < 1:
+            usesSignificantDigits = true
+            minimumSignificantDigits = 2
+            maximumSignificantDigits = 4
+            return super.string(from: from) ?? ""
+            
+        default:
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+            return super.string(from: from) ?? ""
+        }
+    }
+    
+    override func string(for obj: Any?) -> String? {
+        guard let obj = obj as? NSNumber else { return nil }
+        generatesDecimalNumbers = true
+        switch obj {
+        case _ where abs(obj.decimalValue) < 1:
+            usesSignificantDigits = true
+            minimumFractionDigits = 2
+            minimumSignificantDigits = 2
+            maximumSignificantDigits = 4
+            return super.string(for: obj)
+            
+        default:
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+            return super.string(for: obj)
+        }
+    }
+}
+
 struct ExchangeFormatter {
     static var crypto: NumberFormatter {
         let formatter = NumberFormatter()

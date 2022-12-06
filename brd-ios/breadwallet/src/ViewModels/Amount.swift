@@ -240,6 +240,21 @@ public struct Amount {
         return format
     }
     
+    var customFormat: RWFormatter {
+        let format = RWFormatter()
+        format.numberStyle = .currency
+        format.locale = locale
+        format.isLenient = true
+        format.generatesDecimalNumbers = true
+        format.negativeFormat = "-\(format.positiveFormat!)"
+        if let rate = rate ?? currency.state?.currentRate {
+            format.currencySymbol = rate.code
+            format.maximumFractionDigits = rate.maxFractionalDigits
+        }
+        format.minimumFractionDigits = minimumFractionDigits ?? format.minimumFractionDigits
+        return format
+    }
+    
     // MARK: - Private
     
     private var commonUnitValue: Decimal? {

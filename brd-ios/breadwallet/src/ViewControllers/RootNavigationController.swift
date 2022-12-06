@@ -63,6 +63,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             tintColor = LightColors.Contrast.two
             
         case is ShareDataViewController,
+            is DeleteProfileInfoViewController,
             is BuyViewController,
             is SwapViewController,
             is AddCardViewController,
@@ -78,7 +79,8 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             is VerifyAccountViewController,
             is OrderPreviewViewController,
             is BaseInfoViewController,
-            is ItemSelectionViewController:
+            is ItemSelectionViewController,
+            is BillingAddressViewController:
             backgroundColor = LightColors.Background.two
             tintColor = LightColors.Text.three
             

@@ -42,7 +42,8 @@ class GiftViewController: UIViewController {
     private let name = BorderedTextInput(placeholder: "Recipient's Name", keyboardType: .default)
     private let bottomBorder = UIView(color: .white)
     private let createButton: UIButton = {
-        let button = UIButton.rounded(title: "Create")
+        let button = UIButton()
+        button.setTitle(L10n.CreateGift.create, for: .normal)
         button.tintColor = .white
         button.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         button.layer.cornerRadius = 4
@@ -53,7 +54,8 @@ class GiftViewController: UIViewController {
     private let toolbar = UIStackView()
     private var buttons: [(Double, UIButton)] = {
         return [25, 50, 100, 250, 500].map { amount in
-            let button = UIButton.rounded(title: "$ \(amount)")
+            let button = UIButton()
+            button.setTitle("$ \(amount)", for: .normal)
             button.tintColor = .white
             button.backgroundColor = UIColor.white.withAlphaComponent(0.1)
             button.layer.cornerRadius = 4

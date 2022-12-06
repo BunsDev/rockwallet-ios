@@ -34,7 +34,7 @@ class TxAddressCell: TxDetailRowCell {
     
     override func setupStyle() {
         super.setupStyle()
-        addressButton.titleLabel?.font = .customBody(size: 14.0)
+        addressButton.titleLabel?.font = Fonts.Body.two
         addressButton.titleLabel?.adjustsFontSizeToFitWidth = true
         addressButton.titleLabel?.minimumScaleFactor = 0.7
         addressButton.titleLabel?.lineBreakMode = .byTruncatingMiddle

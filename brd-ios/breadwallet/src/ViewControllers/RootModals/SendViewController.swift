@@ -11,6 +11,7 @@ import LocalAuthentication
 import WalletKit
 
 typealias PresentScan = ((@escaping ScanCompletion) -> Void)
+typealias FeeEstimationError = WalletKit.Wallet.FeeEstimationError
 
 // swiftlint:disable type_body_length
 class SendViewController: UIViewController, Subscriber, ModalPresentable {
@@ -23,16 +24,19 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     init(sender: Sender, initialRequest: PaymentRequest? = nil) {
         let currency = sender.wallet.currency
+        
         self.currency = currency
         self.sender = sender
         self.initialRequest = initialRequest
         self.balance = currency.state?.balance ?? Amount.zero(currency)
         self.maximum = self.balance
+        
         addressCell = AddressCell(currency: currency)
         amountView = AmountViewController(currency: currency, isPinPadExpandedAtLaunch: false)
         attributeCell = AttributeCell(currency: currency)
         
         super.init(nibName: nil, bundle: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -126,10 +130,12 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = LightColors.Background.one
         view.addSubview(addressCell)
         view.addSubview(memoCell)
         view.addSubview(sendButton)
+        
         sendButton.isEnabled = false
         
         addressCell.constrainTopCorners(height: SendCell.defaultHeight)
@@ -171,6 +177,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             sendButton.constraint(.height, constant: ViewSizes.Common.defaultCommon.rawValue),
             sendButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: E.isIPhoneX ? -Margins.custom(5) : -Margins.large.rawValue) ])
         addButtonActions()
+        
         Store.subscribe(self,
                         selector: { [weak self] oldState, newState in
             guard let self = self else { return false }
@@ -189,6 +196,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startTimer()
+        
         if let initialRequest = initialRequest {
             handleRequest(initialRequest)
         }
@@ -196,14 +204,14 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         stopTimer()
     }
     
     private func addAddressChangeListener() {
         addressCell.textDidChange = { [weak self] text in
-            guard let self = self else { return }
-            guard let text = text else { return }
-            guard self.currency.isValidAddress(text) else { return }
+            guard let self = self, let text = text, self.currency.isValidAddress(text) else { return }
+            
             self.updateFees()
         }
     }
@@ -214,29 +222,37 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         addressCell.paste.addTarget(self, action: #selector(SendViewController.pasteTapped), for: .touchUpInside)
         addressCell.scan.addTarget(self, action: #selector(SendViewController.scanTapped), for: .touchUpInside)
         sendButton.addTarget(self, action: #selector(sendTapped), for: .touchUpInside)
+        
         memoCell.didReturn = { textView in
             textView.resignFirstResponder()
         }
+        
         memoCell.didBeginEditing = { [weak self] in
             self?.amountView.closePinPad()
         }
+        
         addressCell.didBeginEditing = { [weak self] in
             self?.amountView.closePinPad()
         }
+        
         addressCell.didReceivePaymentRequest = { [weak self] request in
             self?.handleRequest(request)
         }
+        
         addressCell.didReceiveResolvedAddress = { [weak self] result, type in
             DispatchQueue.main.async {
                 self?.handleResolvableResponse(result, type: type, id: self?.addressCell.address ?? "", shouldShowError: true)
             }
         }
+        
         amountView.balanceTextForAmount = { [weak self] amount, rate in
             return self?.balanceTextForAmount(amount, rate: rate)
         }
+        
         amountView.didUpdateAmount = { [weak self] amount in
             self?.amount = amount
         }
+        
         amountView.didUpdateFee = { [weak self] fee in
             self?.feeLevel = fee
         }
@@ -255,8 +271,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         
         amountView.didTapMax = { [weak self] in
             guard var max = self?.maximum else {
-                //This is highly unlikely to be reached because the button should be disabled
-                //if a maximum doesn't exist
+                // This is highly unlikely to be reached because the button should be disabled if a maximum doesn't exist
                 self?.showErrorMessage(L10n.Send.Error.maxError)
                 return
             }
@@ -285,8 +300,8 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
                     
-                case .failure:
-                    self?.handleEstimateFeeError()
+                case .failure(let error):
+                    self?.handleEstimateFeeError(error: error)
                 }
                 
                 self?.amountView.updateBalanceLabel()
@@ -318,23 +333,12 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     
                     self?.amountView.forceUpdateAmount(amount: value)
                     
-                case .failure:
-                    self?.handleEstimateFeeError()
+                case .failure(let error):
+                    self?.handleEstimateFeeError(error: error)
                 }
                 
                 self?.amountView.updateBalanceLabel()
             }
-        }
-    }
-    
-    // TODO: WalletKit is not throwing the right error. Instead, we are always getting "WalletKit.Wallet.FeeEstimationError.ServiceError" error.
-    private func handleEstimateFeeError() {
-        sendButton.isEnabled = false
-        
-        if currency.isERC20Token {
-            _ = handleValidationResult(.insufficientGas)
-        } else {
-            _ = handleValidationResult(.insufficientFunds)
         }
     }
     
@@ -502,7 +506,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        //XRP destination Tag must fit into UInt32
+        // XRP destination Tag must fit into UInt32
         var attributeText: String?
         if let attribute = attributeCell?.attribute, currency.isXRP,
            !attribute.isEmpty {
@@ -518,6 +522,47 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                                                                feeBasis: feeBasis,
                                                                comment: memoCell.textView.text,
                                                                attribute: attributeText))
+    }
+    
+    private func handleEstimateFeeError(error: Error) {
+        guard let amount = amount, !amount.isZero else { return }
+        
+        sendButton.isEnabled = false
+        
+        if error as? FeeEstimationError == .InsufficientFunds {
+            _ = handleValidationResult(.insufficientFunds)
+        } else if error as? FeeEstimationError == .InsufficientGas {
+            if amount > balance {
+                _ = handleValidationResult(.insufficientFunds)
+            } else {
+                _ = handleValidationResult(.insufficientGas)
+            }
+        } else {
+            _ = handleValidationResult(.insufficientFunds)
+        }
+    }
+    
+    private func showInsufficientGasError() {
+        if currency.isEthereum {
+            showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientGas)
+        } else if currency.isERC20Token {
+            showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
+        } else if let feeAmount = currentFeeBasis?.fee {
+            let title = L10n.Send.insufficientGasTitle(feeAmount.currency.name)
+            let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
+            
+            let alertController = UIAlertController(title: title,
+                                                    message: message,
+                                                    preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: L10n.Button.yes, style: .default, handler: { [weak self] _ in
+                guard let self = self else { return }
+                Store.trigger(name: .showCurrency(self.sender.wallet.feeCurrency))
+            }))
+            
+            alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel))
+            
+            present(alertController, animated: true, completion: nil)
+        }
     }
     
     private func handleValidationResult(_ result: SenderValidationResult, protocolRequest: PaymentProtocolRequest? = nil) -> Bool {
@@ -683,12 +728,12 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         estimateFeeForRequest(paymentProtocolRequest) { self.handleProtoReqFeeEstimation(paymentProtocolRequest, result: $0) }
     }
     
-    func estimateFeeForRequest(_ protoReq: PaymentProtocolRequest, completion: @escaping (Result<TransferFeeBasis, WalletKit.Wallet.FeeEstimationError>) -> Void) {
+    func estimateFeeForRequest(_ protoReq: PaymentProtocolRequest, completion: @escaping (Result<TransferFeeBasis, FeeEstimationError>) -> Void) {
         let networkFee = protoReq.requiredNetworkFee ?? sender.wallet.feeForLevel(level: feeLevel)
         protoReq.estimateFee(fee: networkFee, completion: completion)
     }
     
-    private func handleProtoReqFeeEstimation(_ protoReq: PaymentProtocolRequest, result: Result<TransferFeeBasis, WalletKit.Wallet.FeeEstimationError>) {
+    private func handleProtoReqFeeEstimation(_ protoReq: PaymentProtocolRequest, result: Result<TransferFeeBasis, FeeEstimationError>) {
         switch result {
         case .success(let transferFeeBasis):
             DispatchQueue.main.async {
@@ -743,25 +788,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         }))
         alertController.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
-    }
-    
-    /// Insufficient gas for ERC20 token transfer
-    private func showInsufficientGasError() {
-        if currency.isERC20Token {
-            showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
-        } else {
-            guard let feeAmount = currentFeeBasis?.fee else { return }
-            
-            let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
-            
-            let alertController = UIAlertController(title: L10n.Send.insufficientGasTitle(feeAmount.currency.name), message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: L10n.Button.yes, style: .default, handler: { [weak self] _ in
-                guard let self = self else { return }
-                Store.trigger(name: .showCurrency(self.sender.wallet.feeCurrency))
-            }))
-            alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel, handler: nil))
-            present(alertController, animated: true, completion: nil)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {

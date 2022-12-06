@@ -1,5 +1,5 @@
 //
-//  UIButton+BRWAdditions.swift
+//  UIButton+Extensions.swift
 //  breadwallet
 //
 //  Created by Adrian Corscadden on 2016-10-24.
@@ -9,17 +9,6 @@
 import UIKit
 
 extension UIButton {
-    static func rounded(title: String) -> UIButton {
-        let button = UIButton(type: .system)
-        button.setTitle(title, for: .normal)
-        button.titleLabel?.font = Fonts.button
-        button.backgroundColor = LightColors.primary
-        button.setTitleColor(LightColors.Contrast.two, for: .normal)
-        button.layer.cornerRadius = 22
-        button.layer.masksToBounds = true
-        return button
-    }
-    
     static func outline(title: String) -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)

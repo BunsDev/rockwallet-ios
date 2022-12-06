@@ -55,8 +55,12 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             
             switch result {
             case .success:
-                let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
-                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
+                if viewAction.getCards == true {
+                    let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
+                    self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
+                } else {
+                    self.getExchangeRate(viewAction: .init())
+                }
                 
             case .failure(let error):
                 self.presenter?.presentError(actionResponse: .init(error: error))
@@ -186,7 +190,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 self?.dataStore?.allPaymentCards = data
                 
                 if self?.dataStore?.autoSelectDefaultPaymentMethod == true {
-                    self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first
+                    let paymentCards = self?.dataStore?.allPaymentCards?.filter { $0.type == .buyCard }
+                    self?.dataStore?.paymentCard = paymentCards?.first
                 }
                 
                 self?.dataStore?.autoSelectDefaultPaymentMethod = true

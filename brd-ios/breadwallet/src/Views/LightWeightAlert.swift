@@ -19,7 +19,7 @@ class LightWeightAlert: UIView {
     let effect = UIBlurEffect(style: .dark)
     let background = UIVisualEffectView()
     let container = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: UIBlurEffect(style: .dark)))
-    private let label = UILabel(font: .customBold(size: 16.0))
+    private let label = UILabel(font: Fonts.Title.six)
 
     private func setup() {
         addSubview(background)

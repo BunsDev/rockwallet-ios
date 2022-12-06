@@ -62,10 +62,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             return
         }
         
-        let text = String(format: "1 %@ = %@ %@", to.uppercased(), ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", from)
+        let text = String(format: "1 %@ = %@ %@", to.uppercased(), RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", from)
         let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
         let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        let limitText = actionResponse.method == .buyAch ? L10n.Buy.achLimits(minText, maxText) : L10n.Buy.buyLimits(minText, maxText)
+        let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit) ?? ""
+        let limitText = actionResponse.method == .buyAch ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
         
         exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                       timer: TimerViewModel(till: quote.timestamp,
@@ -97,7 +98,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
         } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyAch {
-            cardModel = .init(title: .text(L10n.Buy.achPayments),
+            cardModel = .init(title: .text(L10n.Buy.transferFromBank),
+                              subtitle: nil,
                               logo: .image(Asset.bank.image),
                               cardNumber: .text(paymentCard.displayName),
                               userInteractionEnabled: false)
@@ -177,6 +179,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse) {
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Buy.achSuccess)),
                                                               config: Presets.InfoView.verification))
+        
+        viewController?.displayAchData(actionResponse: .init())
     }
     
     func presentFailure(actionResponse: BuyModels.Failure.ActionResponse) {

@@ -534,7 +534,7 @@ class ModalPresenter: Subscriber {
                 self?.presentLoginScan()
             },
             // Security
-            MenuItem(title: L10n.MenuButton.security, icon: #imageLiteral(resourceName: "security"), subMenu: securityItems, rootNav: menuNav),
+            MenuItem(title: L10n.MenuButton.security, icon: Asset.security.image, subMenu: securityItems, rootNav: menuNav),
             // Preferences
             MenuItem(title: L10n.Settings.preferences, icon: MenuItem.Icon.preferences, subMenu: preferencesItems, rootNav: menuNav),
             // Manage Assets

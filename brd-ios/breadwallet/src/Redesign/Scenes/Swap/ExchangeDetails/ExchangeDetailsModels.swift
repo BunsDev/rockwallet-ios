@@ -32,4 +32,12 @@ enum ExchangeDetailsModels {
         }
         struct ActionResponse {}
     }
+    
+    struct InfoPopup {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {
+            var model: PopupViewModel
+        }
+    }
 }

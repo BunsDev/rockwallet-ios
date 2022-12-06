@@ -55,9 +55,14 @@ struct Rate: Equatable {
         return Locale(identifier: identifier)
     }
     
-    func localString(forCurrency currency: Currency) -> String {
+    func localString(forCurrency currency: Currency, usesCustomFormat: Bool = false) -> String {
         let placeholderAmount = Amount.zero(currency, rate: self)
-        guard let rateText = placeholderAmount.localFormat.string(from: NSNumber(value: rate)) else { return "" }
+        
+        guard !usesCustomFormat else {
+            return placeholderAmount.customFormat.string(for: rate) ?? ""
+        }
+        
+        guard let rateText = placeholderAmount.localFormat.string(for: rate) else { return "" }
         return rateText
     }
 

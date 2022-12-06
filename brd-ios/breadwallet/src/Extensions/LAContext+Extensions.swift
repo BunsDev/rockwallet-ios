@@ -16,7 +16,6 @@ enum BiometricsAuthResult {
 }
 
 extension LAContext {
-
     static var canUseBiometrics: Bool {
         return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
@@ -105,5 +104,4 @@ extension LAContext {
         case touch
         case face
     }
-
 }

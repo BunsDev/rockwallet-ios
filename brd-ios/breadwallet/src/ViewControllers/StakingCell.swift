@@ -15,11 +15,11 @@ class StakingCell: UIView, Subscriber {
     private let iconContainer = UIView(color: .clear)
     private let icon = UIImageView()
     private let currency: Currency
-    private let title = UILabel(font: .customBody(size: 14), color: LightColors.Text.one)
+    private let title = UILabel(font: Fonts.Body.two, color: LightColors.Text.one)
     private var indicatorView = UIImageView()
     private let topPadding = UIView(color: LightColors.Background.one)
     private let bottomPadding = UIView(color: LightColors.Background.one)
-    private let statusFlag = UILabel(font: .customBody(size: 11))
+    private let statusFlag = UILabel(font: Fonts.Body.three)
     private var wallet: Wallet?
     
     init(currency: Currency, wallet: Wallet?) {

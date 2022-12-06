@@ -568,9 +568,6 @@
 /* Priority fee */
 "FeeSelector.priority" = "Priorité";
 
-/* E.g. [This transaction is predicted to complete in] 10-30 minutes */
-"FeeSelector.priorityTime" = "10-30 minutes";
-
 /* Regular fee */
 "FeeSelector.regular" = "Régulier";
 
@@ -631,9 +628,6 @@
 /* empty private key error message */
 "Import.Error.empty" = "Cette clé privée est vide.";
 
-/* Failed to submit transaction error message */
-"Import.Error.failedSubmit" = "Failed to submit transaction.";
-
 /* High fees error message */
 "Import.Error.highFees" = "Les frais de transactions excederaient le sold disponible sur cette clé privée";
 
@@ -643,17 +637,11 @@
 /* Service error error message */
 "Import.Error.serviceError" = "Service Error";
 
-/* Service Unavailable error message */
-"Import.Error.serviceUnavailable" = "Service Unavailable";
-
 /* Import signing error message */
 "Import.Error.signing" = "Erreur lors de la signature de la transaction";
 
 /* Unable to sweep wallet error message */
 "Import.Error.sweepError" = "Unable to sweep wallet";
-
-/* Unsupported currency error message */
-"Import.Error.unsupportedCurrency" = "Unsupported Currency";
 
 /* [Redeem] the funds stored on this private key. */
 "Import.importButton" = "Importer";
@@ -1467,9 +1455,6 @@
 /* Send button label (for special case where the user specified send amount is too high and does not leave a balance to cover fees.) */
 "Send.sendMaximum" = "Envoyer le montant maximum?";
 
-/* Error message when send request times out and we are not sure weather it succesfull or not. */
-"Send.timeOutBody" = "Timed out waiting for network response. Please wait 30 minutes for confirmation before retrying.";
-
 /* Send screen title (as in "this is the screen for sending money") */
 "Send.title" = "Envoyer";
 
@@ -2063,12 +2048,6 @@
 /* Wallet disabled header */
 "UnlockScreen.walletDisabled" = "Wallet disabled";
 
-/* Wallet disabled description */
-"UnlockScreen.walletDisabledDescription" = "You will need your recovery phrases to reset PIN.";
-
-/* Wipe wallet prompt */
-"UnlockScreen.wipePrompt" = "Are you sure you would like to wipe this wallet?";
-
 /* Update PIN caption text */
 "UpdatePin.caption" = "Souvenez-vous de ce code PIN. Si vous l'oubliez, vous ne pourrez pas accéder à votre bitcoin.";
 
@@ -2095,9 +2074,6 @@
 
 /* Enter PIN header */
 "UpdatePin.securedWallet" = "Secured wallet";
-
-/* Update PIN title */
-"UpdatePin.setNewPinTitle" = "Set your new PIN";
 
 /* Update PIN failure error message. */
 "UpdatePin.setPinError" = "Désolés, nous n'avons pas pu mettre à jour le code PIN.";

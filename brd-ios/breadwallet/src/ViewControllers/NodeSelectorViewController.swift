@@ -10,11 +10,11 @@ import UIKit
 
 class NodeSelectorViewController: UIViewController {
 
-    private let titleLabel = UILabel(font: .customBold(size: 22.0), color: .white)
-    private let nodeLabel = UILabel(font: .customBody(size: 14.0), color: .white)
-    private let node = UILabel(font: .customBody(size: 14.0), color: .white)
-    private let statusLabel = UILabel(font: .customBody(size: 14.0), color: .white)
-    private let status = UILabel(font: .customBody(size: 14.0), color: .white)
+    private let titleLabel = UILabel(font: Fonts.Title.five, color: .white)
+    private let nodeLabel = UILabel(font: Fonts.Body.two, color: .white)
+    private let node = UILabel(font: Fonts.Body.two, color: .white)
+    private let statusLabel = UILabel(font: Fonts.Body.two, color: .white)
+    private let status = UILabel(font: Fonts.Body.two, color: .white)
     private let button: BRDButton
     private let wallet: Wallet
     private var okAction: UIAlertAction?

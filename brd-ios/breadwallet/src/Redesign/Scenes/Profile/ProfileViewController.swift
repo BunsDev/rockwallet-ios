@@ -15,12 +15,13 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                              ProfileResponseDisplays {
     typealias Models = ProfileModels
     
-    private var isPaymentsPressed = false
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         interactor?.getData(viewAction: .init())
     }
+    
+    override func prepareData() {}
     
     // MARK: - Overrides
     
@@ -89,7 +90,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                 }
                 
                 view.trailingButtonCallback = { [weak self] in
-                    self?.coordinator?.showVerificationScreen(for: self?.dataStore?.profile)
+                    self?.coordinator?.showAccountVerification()
                 }
             }
         }
@@ -120,7 +121,6 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         switch responseDisplay.item {
         case .paymentMethods:
             interactor?.getPaymentCards(viewAction: .init())
-            isPaymentsPressed = true
             
         case .preferences:
             coordinator?.showPreferences()
@@ -132,12 +132,9 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     func displayPaymentCards(responseDisplay: ProfileModels.PaymentCards.ResponseDisplay) {
-        guard isPaymentsPressed else { return }
-        
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards,
                                       selected: nil,
                                       fromBuy: false)
-        isPaymentsPressed = false
     }
     
     // MARK: - Additional Helpers

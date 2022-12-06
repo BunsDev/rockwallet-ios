@@ -131,7 +131,7 @@ extension UserDefaults {
         get {
             return defaults.string(forKey: userEmail)
         }
-        
+
         set { defaults.set(newValue, forKey: userEmail) }
     }
     

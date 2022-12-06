@@ -23,6 +23,7 @@ class UserManager: NSObject {
             
             switch result {
             case .success(let profile):
+                self?.error = nil
                 self?.profile = profile
                 
                 if let email = profile?.email {
@@ -31,6 +32,7 @@ class UserManager: NSObject {
                 
             case .failure(let error):
                 self?.error = error
+                self?.profile = nil
             }
             
             DispatchQueue.main.async {

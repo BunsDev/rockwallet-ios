@@ -420,15 +420,8 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapProfileFromPrompt = { [unowned self] profile in
             switch profile {
-            case .success(let profile):
-                if profile?.email == nil {
-                    coordinator?.showRegistration(shouldShowProfile: true)
-                } else if UserManager.shared.profile?.status.canBuy == false {
-                    coordinator?.showVerificationsModally()
-                }
-
-            case .failure:
-                coordinator?.showRegistration(shouldShowProfile: true)
+            case .success:
+                coordinator?.showAccountVerification()
                 
             default:
                 break
