@@ -59,7 +59,7 @@ struct Rate: Equatable {
         let placeholderAmount = Amount.zero(currency, rate: self)
         
         guard !usesCustomFormat else {
-            return placeholderAmount.customFormat.string(for: rate)
+            return placeholderAmount.customFormat.string(for: rate) ?? ""
         }
         
         guard let rateText = placeholderAmount.localFormat.string(for: rate) else { return "" }
