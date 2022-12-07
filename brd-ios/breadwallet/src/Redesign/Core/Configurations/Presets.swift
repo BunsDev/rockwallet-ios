@@ -355,6 +355,9 @@ extension Presets {
         static var horizontal = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, numberOfLines: 1),
                                                         value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right))
         
+        static var horizontalBold = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
+                                                            value: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.one, textAlignment: .right))
+        
         static var vertical = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, numberOfLines: 1),
                                                       value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right))
         
