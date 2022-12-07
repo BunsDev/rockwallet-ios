@@ -45,7 +45,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let sectionRows: [Models.Sections: [ViewModel]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
-            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
+            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant),
+                                          shouldShowFiatField: true)],
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
                 LabelViewModel.text("")
@@ -90,7 +91,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         cryptoModel = .init(amount: actionResponse.amount,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
-                            title: .text(L10n.Swap.iWant))
+                            title: .text(L10n.Swap.iWant),
+                            shouldShowFiatField: true)
         
         if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyCard {
             cardModel = .init(logo: paymentCard.displayImage,

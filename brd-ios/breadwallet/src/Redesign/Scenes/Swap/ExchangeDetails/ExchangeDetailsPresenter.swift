@@ -93,7 +93,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         case .swapTransaction:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
                                                       title: "\(L10n.TransactionDetails.addressToHeader) \(detail.destination.currency)",
-                                                      topRightText: "\(formattedCurrencyAmountDestination) / $\(formattedUsdAmountDestination) \(currencyCode)")
+                                                      topRightText: "\(formattedUsdAmountDestination) \(currencyCode)")
             
         case .buyTransaction, .buyAchTransaction:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
