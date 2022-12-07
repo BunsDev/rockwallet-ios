@@ -572,6 +572,8 @@ internal enum L10n {
     internal static let cvvHint = L10n.tr("Localizable", "Buy.CvvHint", fallback: "XXX")
     /// Buy details title
     internal static let details = L10n.tr("Localizable", "Buy.Details", fallback: "Purchase details")
+    /// USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.
+    internal static let disabledUSDCMessage = L10n.tr("Localizable", "Buy.disabledUSDCMessage", fallback: "USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.")
     /// There was an error while processing your payment title in buy failure screen
     internal static let errorProcessingPayment = L10n.tr("Localizable", "Buy.ErrorProcessingPayment", fallback: "There was an error while processing your payment")
     /// Expiration date
