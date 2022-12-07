@@ -11,12 +11,12 @@
 import UIKit
 
 struct SwapConfimationConfiguration: Configurable {
-    var from: TitleValueConfiguration = Presets.TitleValue.vertical.withTextAlign(textAlign: .left)
-    var to: TitleValueConfiguration = Presets.TitleValue.vertical.withTextAlign(textAlign: .left)
-    var rate: TitleValueConfiguration = Presets.TitleValue.horizontal
-    var sendingFee: TitleValueConfiguration = Presets.TitleValue.horizontal
-    var receivingFee: TitleValueConfiguration = Presets.TitleValue.horizontal
-    var totalCost: TitleValueConfiguration = Presets.TitleValue.verticalBold
+    var from: TitleValueConfiguration = Presets.TitleValue.common.withTextAlign(textAlign: .left)
+    var to: TitleValueConfiguration = Presets.TitleValue.common.withTextAlign(textAlign: .left)
+    var rate: TitleValueConfiguration = Presets.TitleValue.common
+    var sendingFee: TitleValueConfiguration = Presets.TitleValue.common
+    var receivingFee: TitleValueConfiguration = Presets.TitleValue.common
+    var totalCost: TitleValueConfiguration = Presets.TitleValue.bold
 }
 
 struct SwapConfirmationViewModel: ViewModel {

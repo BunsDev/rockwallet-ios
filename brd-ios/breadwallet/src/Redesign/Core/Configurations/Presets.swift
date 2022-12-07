@@ -352,20 +352,14 @@ extension Presets {
 
 extension Presets {
     struct TitleValue {
-        static var horizontal = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, numberOfLines: 1),
-                                                        value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right))
+        static var common = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, numberOfLines: 1),
+                                                    value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right))
         
-        static var horizontalBold = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
-                                                            value: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.one, textAlignment: .right))
+        static var bold = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
+                                                  value: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.one, textAlignment: .right))
         
-        static var vertical = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, numberOfLines: 1),
-                                                      value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right))
-        
-        static var verticalSmall = TitleValueConfiguration(title: .init(font: Fonts.Body.three, textColor: LightColors.Text.two, numberOfLines: 1),
-                                                           value: .init(font: Fonts.Subtitle.three, textColor: LightColors.Text.two, textAlignment: .right))
-        
-        static var verticalBold = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
-                                                          value: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.one, textAlignment: .right))
+        static var small = TitleValueConfiguration(title: .init(font: Fonts.Body.three, textColor: LightColors.Text.two, numberOfLines: 1),
+                                                   value: .init(font: Fonts.Subtitle.three, textColor: LightColors.Text.two, textAlignment: .right))
         
         static var alert = TitleValueConfiguration(title: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center, numberOfLines: 1),
                                                    value: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center))
