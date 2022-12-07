@@ -2141,9 +2141,7 @@ internal enum L10n {
     /// Rate label in swap screen
     internal static let rateValue = L10n.tr("Localizable", "Swap.RateValue", fallback: "Rate")
     /// Receiving network fee text label on Swap screen
-    internal static let receiveNetworkFee = L10n.tr("Localizable", "Swap.ReceiveNetworkFee", fallback: "Receiving network fee\n(included)")
-    /// Receiving fee label on Swap screen
-    internal static let receivingFee = L10n.tr("Localizable", "Swap.ReceivingFee", fallback: "Receiving fee\n")
+    internal static let receiveNetworkFee = L10n.tr("Localizable", "Swap.ReceiveNetworkFee", fallback: "Receiving network fee")
     /// Your swap request timed out. Please try again.
     internal static let requestTimedOut = L10n.tr("Localizable", "Swap.RequestTimedOut", fallback: "Your swap request timed out. Please try again.")
     /// Retry
@@ -2153,9 +2151,7 @@ internal enum L10n {
     /// Sending fee label on swap screen
     internal static let sendingFee = L10n.tr("Localizable", "Swap.SendingFee", fallback: "Sending fee\n")
     /// Sending network fee text label on Swap screen
-    internal static let sendNetworkFee = L10n.tr("Localizable", "Swap.SendNetworkFee", fallback: "Sending network fee\n(included)")
-    /// Send network fee not included label on swap
-    internal static let sendNetworkFeeNotIncluded = L10n.tr("Localizable", "Swap.sendNetworkFeeNotIncluded", fallback: "Sending network fee\n(not included)")
+    internal static let sendNetworkFee = L10n.tr("Localizable", "Swap.SendNetworkFee", fallback: "Sending network fee")
     /// Swap again button title in swap failure screen
     internal static let swapAgain = L10n.tr("Localizable", "Swap.SwapAgain", fallback: "Swap again")
     /// Swap min and max limit text
@@ -2188,8 +2184,8 @@ internal enum L10n {
     internal static func transactionTo(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Swap.transactionTo", String(describing: p1), fallback: "To %1$@")
     }
-    /// You receive
-    internal static let youReceive = L10n.tr("Localizable", "Swap.youReceive", fallback: "You receive")
+    /// You'll receive
+    internal static let youReceive = L10n.tr("Localizable", "Swap.youReceive", fallback: "You'll receive")
     /// You send
     internal static let youSend = L10n.tr("Localizable", "Swap.youSend", fallback: "You send")
     internal enum AmountPurchased {

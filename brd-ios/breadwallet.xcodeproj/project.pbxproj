@@ -5413,7 +5413,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/WalletKitSwift.git";
 			requirement = {
 				kind = revision;
-				revision = 51dc3989e794a07722297d29378eea0d6a5368b1;
+				revision = b6b9b44ef45ab519d6c822e9753b0096b42f47ea;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
