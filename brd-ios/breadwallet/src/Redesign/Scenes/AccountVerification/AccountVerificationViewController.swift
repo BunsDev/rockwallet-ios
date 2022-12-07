@@ -93,9 +93,7 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
         
         guard model?.isActive ?? false else { return }
         
-        if model?.isActive ?? false {
-            interactor?.startVerification(viewAction: .init(level: indexPath.row))
-        }
+        interactor?.startVerification(viewAction: .init(level: indexPath.row))
     }
 
     // MARK: - User Interaction
