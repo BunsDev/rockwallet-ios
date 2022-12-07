@@ -170,6 +170,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
                 self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
+                guard (Store.state.currencies.first(where: { $0.code == C.USDC }) == nil) else { return }
+                view.setup(with: SegmentControlViewModel(selectedIndex: .buyCard))
             }
         }
         
@@ -304,7 +306,11 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                  configuration: responseDisplay.config)
     }
     
-    func displayAchData(actionResponse: BuyModels.AchData.ActionResponse) {
+    func displayManageAssets(actionResponse: BuyModels.AchData.ResponseDisplay) {
+        coordinator?.showManageAssets(coreSystem: dataStore?.coreSystem)
+    }
+    
+    func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay) {
         interactor?.getPaymentCards(viewAction: .init())
     }
     
