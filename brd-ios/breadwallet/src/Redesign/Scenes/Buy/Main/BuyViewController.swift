@@ -170,6 +170,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
                 self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
+                guard (Store.state.currencies.first(where: { $0.code == C.USDC }) == nil) else { return }
+                view.setup(with: SegmentControlViewModel(selectedIndex: .buyCard))
             }
         }
         
@@ -309,9 +311,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         let notification: FEInfoView = (superview.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
         notification.linkCallback = { [weak self] in
-            self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem) { [weak self] in
-                self?.interactor?.selectPaymentMethod(viewAction: .init(method: .buyAch))
-            }
+            self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
         }
     }
     

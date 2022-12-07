@@ -17,8 +17,6 @@ enum DismissType {
     case tapToDismiss
     /// Non interactable
     case persistent
-    /// After 8 sec
-    case dismissAfter8s
 }
 
 struct InfoViewConfiguration: Configurable {
@@ -256,16 +254,10 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
             }
             
             addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
+            descriptionLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkTapped)))
             
         case .tapToDismiss:
             addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
-            
-        case .dismissAfter8s:
-            DispatchQueue.main.asyncAfter(deadline: .now() + 8) { [weak self] in
-                self?.viewTapped()
-            }
-            
-            descriptionLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkTapped)))
             
         default:
             break

@@ -211,7 +211,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
         
         let model = InfoViewModel(description: .attributedText(infoMessage),
-                                  dismissType: .dismissAfter8s,
+                                  dismissType: .auto,
                                   userInteraction: true)
         let config = Presets.InfoView.verification
         
