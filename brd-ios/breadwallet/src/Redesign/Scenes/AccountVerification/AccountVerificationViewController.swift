@@ -90,7 +90,10 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
         let model = sectionRows[section]?[indexPath.row] as? VerificationViewModel
-        if model?.isActive ?? true {
+        
+        guard model?.isActive ?? false else { return }
+        
+        if model?.isActive ?? false {
             interactor?.startVerification(viewAction: .init(level: indexPath.row))
         }
     }
@@ -102,7 +105,14 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
     }
 
     // MARK: - AccountVerificationResponseDisplay
+    
     func displayStartVerification(responseDisplay: AccountVerificationModels.Start.ResponseDisplay) {
+        guard !responseDisplay.isPending else {
+            interactor?.showPendingStatusError(viewAction: .init())
+            
+            return
+        }
+        
         switch responseDisplay.level {
         case .one:
             coordinator?.showKYCLevelOne()
@@ -115,6 +125,11 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
     func displayPersonalInfoPopup(responseDisplay: AccountVerificationModels.PersonalInfo.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
     }
-
+    
+    func displayPendingStatusError(responseDisplay: AccountVerificationModels.PendingMessage.ResponseDisplay) {
+        coordinator?.showMessage(model: responseDisplay.model,
+                                 configuration: responseDisplay.config)
+    }
+    
     // MARK: - Additional Helpers
 }
