@@ -307,12 +307,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayManageAssets(actionResponse: BuyModels.AchData.ResponseDisplay) {
-        guard let superview = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-        
-        let notification: FEInfoView = (superview.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
-        notification.linkCallback = { [weak self] in
-            self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
-        }
+        coordinator?.showManageAssets(coreSystem: dataStore?.coreSystem)
     }
     
     func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay) {
