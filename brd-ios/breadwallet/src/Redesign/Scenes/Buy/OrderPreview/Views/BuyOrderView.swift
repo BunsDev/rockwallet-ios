@@ -18,7 +18,7 @@ struct BuyOrderConfiguration: Configurable {
     var amount: TitleValueConfiguration = Presets.TitleValue.horizontal
     var cardFee: TitleValueConfiguration = Presets.TitleValue.horizontal
     var networkFee: TitleValueConfiguration = Presets.TitleValue.horizontal
-    var totalCost: TitleValueConfiguration = Presets.TitleValue.horizontalBold
+    var totalCost: TitleValueConfiguration = Presets.TitleValue.horizontal
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
