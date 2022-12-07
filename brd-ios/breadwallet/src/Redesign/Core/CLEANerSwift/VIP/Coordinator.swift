@@ -372,7 +372,7 @@ class BaseCoordinator: NSObject,
             break
         }
         
-        guard let superview = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
+        guard let superview = UIApplication.shared.activeWindow,
               let model = model,
               let configuration = configuration else { return }
         
@@ -404,7 +404,7 @@ class BaseCoordinator: NSObject,
     }
     
     func hideMessage() {
-        guard let superview = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
+        guard let superview = UIApplication.shared.activeWindow,
               let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
         
         UIView.animate(withDuration: Presets.Animation.duration) {
