@@ -514,8 +514,6 @@ internal enum L10n {
     internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
     }
-    /// ACH fee (fixed fee + % (TBD)
-    internal static let achFeeText = L10n.tr("Localizable", "Buy.achFeeText", fallback: "ACH fee (fixed fee + % (TBD)")
     /// Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.
     /// 
     /// It currently takes 7-10 days to process a purchase with ACH
