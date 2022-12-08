@@ -17,8 +17,7 @@ internal enum Animations {
     var animation: LottieAnimation? {
         let name: String
         switch self {
-        case .buyAndSell:
-            name = ""
+        case .buyAndSell: name = "arrowToX"
         }
         return LottieAnimation.named(name)
     }
