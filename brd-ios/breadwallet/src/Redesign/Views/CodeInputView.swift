@@ -165,7 +165,7 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         configure(background: background)
         
         if withAnimation {
-            Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
                 self?.updateLayout()
             }
         } else {

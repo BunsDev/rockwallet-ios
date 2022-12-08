@@ -182,7 +182,7 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
         
         popup.buttonCallbacks = [ { print("Donated 10$! Thanks!") } ]
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             popup.alpha = 1
         }
     }
@@ -192,7 +192,7 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
         
         toggleBlur(animated: true)
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             popup.alpha = 0
         } completion: { _ in
             popup.removeFromSuperview()

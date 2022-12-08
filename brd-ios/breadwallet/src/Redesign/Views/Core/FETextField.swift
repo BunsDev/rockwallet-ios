@@ -347,7 +347,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         configure(background: background)
         
         if withAnimation {
-            Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
                 self?.updateLayout()
             }
         } else {

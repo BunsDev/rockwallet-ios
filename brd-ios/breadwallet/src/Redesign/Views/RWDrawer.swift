@@ -37,6 +37,7 @@ struct DrawerViewModel: ViewModel {
 class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
     
     var callbacks: [(() -> Void)] = []
+    var isShown: Bool { return blurView.alpha == 1 }
     
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
@@ -81,6 +82,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
     
     override func setupSubviews() {
         super.setupSubviews()
+        isUserInteractionEnabled = false
         
         content.addSubview(blurView)
         blurView.snp.makeConstraints { make in
@@ -161,6 +163,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
     
     func show() {
         guard blurView.alpha == 0 else { return }
+        isUserInteractionEnabled = true
         
         drawer.snp.removeConstraints()
         drawer.snp.makeConstraints { make in
@@ -168,7 +171,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
             make.leading.trailing.bottom.equalToSuperview()
         }
         
-        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.long.rawValue) { [weak self] in
             self?.blurView.alpha = 1
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
@@ -178,14 +181,14 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
     
     func hide() {
         guard blurView.alpha == 1 else { return }
-        
+        isUserInteractionEnabled = false
         drawer.snp.removeConstraints()
         drawer.snp.makeConstraints { make in
             make.top.equalTo(content.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
-        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.long.rawValue) { [weak self] in
             self?.blurView.alpha = 0
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()

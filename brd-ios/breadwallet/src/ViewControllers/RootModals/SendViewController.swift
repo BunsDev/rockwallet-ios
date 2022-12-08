@@ -452,7 +452,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     }
     
     private func hideDestinationTag() {
-        UIView.animate(withDuration: Presets.Animation.duration, animations: {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue, animations: {
             self.attributeCellHeight?.constant = 0.0
             self.attributeCell?.alpha = 0.0
         }, completion: { _ in
