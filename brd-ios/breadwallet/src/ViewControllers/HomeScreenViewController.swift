@@ -80,6 +80,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didSelectCurrency: ((Currency) -> Void)?
     var didTapManageWallets: (() -> Void)?
     var didTapBuy: (() -> Void)?
+    var didTapSell: (() -> Void)?
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
@@ -267,7 +268,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         view.addSubview(animationView)
         animationView.snp.makeConstraints { make in
             make.centerX.equalTo(tabBar.snp.centerX)
-            make.centerY.equalTo(tabBar.snp.centerY).offset(-Margins.huge.rawValue)
+            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
         }
     }
     
@@ -283,7 +284,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     func setupDrawer() {
-        drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { print("third tapped") }
+        drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapSell?() }
         ]
         drawer.configure(with: DrawerConfiguration())
         drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84.0))

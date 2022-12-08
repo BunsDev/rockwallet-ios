@@ -81,7 +81,8 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             is OrderPreviewViewController,
             is BaseInfoViewController,
             is ItemSelectionViewController,
-            is BillingAddressViewController:
+            is BillingAddressViewController,
+            is SellViewController:
             backgroundColor = LightColors.Background.two
             tintColor = LightColors.Text.three
             

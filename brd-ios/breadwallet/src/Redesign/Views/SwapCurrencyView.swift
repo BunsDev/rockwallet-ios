@@ -308,12 +308,13 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         if !fiatAmountField.isFirstResponder {
             fiatAmountField.attributedText = viewModel.formattedFiatString
         }
+        fiatStack.isHidden = viewModel.formattedFiatString == nil
         
         if !cryptoAmountField.isFirstResponder {
             cryptoAmountField.attributedText = viewModel.formattedTokenString
         }
         
-        codeLabel.text = viewModel.amount?.currency.code
+        codeLabel.text = viewModel.amount?.currency.code ?? "USD"
         codeLabel.sizeToFit()
         
         currencyIconImageView.wrappedView.setup(with: .image(viewModel.amount?.currency.imageSquareBackground))

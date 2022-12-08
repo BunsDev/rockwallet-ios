@@ -9,5 +9,12 @@
 import UIKit
 
 enum SellModels {
-    
+    enum Sections: Sectionable {
+        case rateAndTimer
+        case accountLimits
+        case swapCard
+        
+        var header: AccessoryType? { return nil }
+        var footer: AccessoryType? { return nil }
+    }
 }
