@@ -12,6 +12,7 @@ enum SellModels {
     enum Sections: Sectionable {
         case rateAndTimer
         case accountLimits
+        case payoutMethod
         case swapCard
         
         var header: AccessoryType? { return nil }

@@ -100,9 +100,9 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         containerStackView.addArrangedSubview(dividerWithButtonView)
         containerStackView.addArrangedSubview(termSwapCurrencyView)
         
-        dividerWithButtonView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.medium.rawValue)
-        }
+//        dividerWithButtonView.snp.makeConstraints { make in
+//            make.height.equalTo(ViewSizes.medium.rawValue)
+//        }
         
         dividerWithButtonView.addSubview(lineView)
         lineView.snp.makeConstraints { make in
@@ -114,6 +114,8 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         dividerWithButtonView.addSubview(swapButton)
         swapButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
+            make.height.equalTo(ViewSizes.medium.rawValue)
+            make.top.equalToSuperview()
         }
         
         getAmounts()

@@ -42,6 +42,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         sections = [
             Models.Sections.rateAndTimer,
             Models.Sections.swapCard,
+            Models.Sections.payoutMethod,
             Models.Sections.accountLimits
         ]
         
@@ -52,9 +53,25 @@ class SellViewController: BaseTableViewController<SellCoordinator,
                                       showTimer: true)
             ],
             Models.Sections.swapCard: [
-                MainSwapViewModel(from: .init(amount: .zero(token), formattedTokenString: .init(string: "0.00"), title: .text("I have 10.12000473 USDC"), selectionDisabled: true),
-                             to: .init(formattedTokenString: .init(string: "0.00"), title: .text("I receive")),
+                MainSwapViewModel(from: .init(amount: .zero(token),
+                                              formattedTokenString: .init(string: "0.00"),
+                                              title: .text("I have 10.12000473 USDC"),
+                                              selectionDisabled: true),
+                                  
+                                  to: .init(currencyCode: C.usdCurrencyCode,
+                                            currencyImage: Asset.us.image,
+                                            formattedTokenString: .init(string: "0.00"),
+                                            title: .text("I receive"),
+                                            selectionDisabled: true),
+                                  
                                  hideSwapButton: true)
+            ],
+            Models.Sections.payoutMethod: [
+                CardSelectionViewModel(title: .text("Withdraw to"),
+                                  subtitle: nil,
+                                  logo: .image(Asset.bank.image),
+                                  cardNumber: .text("John Jeffery account - **241"),
+                                  userInteractionEnabled: false)
             ],
             Models.Sections.accountLimits: [
                 LabelViewModel.text(L10n.Scenes.Sell.disclaimer("50 USD", "100 USD", "1000 USD"))
@@ -68,6 +85,8 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         super.setupSubviews()
         
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
+        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
+            
         tableView.delaysContentTouches = false
         
     }
@@ -99,12 +118,15 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         case .swapCard:
             cell = self.tableView(tableView, swapMainCellForRowAt: indexPath)
             
+        case .payoutMethod:
+            cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
+            
         default:
             cell = UITableViewCell()
         }
         
         cell.setBackground(with: Presets.Background.transparent)
-        cell.setupCustomMargins(all: .large)
+        cell.setupCustomMargins(vertical: .zero, horizontal: .large)
         
         return cell
     }
@@ -130,6 +152,32 @@ class SellViewController: BaseTableViewController<SellCoordinator,
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
         }
         
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, paymentSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = sectionRows[section]?[indexPath.row] as? CardSelectionViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+            
+            //            view.didTapSelectCard = { [weak self] in
+            //                switch self?.dataStore?.paymentMethod {
+            //                case .buyAch:
+            //                    self?.interactor?.getLinkToken(viewAction: .init())
+            //                default:
+            //                    self?.interactor?.getPaymentCards(viewAction: .init(getCards: true))
+            //                }
+            //            }
+            
+            view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
+        }
         return cell
     }
     

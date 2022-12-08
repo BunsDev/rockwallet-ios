@@ -258,7 +258,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: 100)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: 84)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)
@@ -287,7 +287,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapSell?() }
         ]
         drawer.configure(with: DrawerConfiguration())
-        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84.0))
+        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84))
     }
     
     private func setupToolbar() {
