@@ -395,27 +395,31 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     // MARK: Actions
     
-    @objc private func showHome() {}
+    @objc private func showHome() {
+        drawer.hide()
+    }
+    
+    private func commotTapAction() {
+        drawer.hide()
+    }
     
     @objc private func buy() {
-        if drawer.isShown {
-            animationView.play(fromProgress: 1, toProgress: 0)
-            drawer.hide()
-        } else {
-            animationView.play()
-            drawer.show()
-        }
+        drawer.isShown ? animationView.play(fromProgress: 1, toProgress: 0) : animationView.play()
+        drawer.toggle()
     }
     
     @objc private func trade() {
+        commotTapAction()
         didTapTrade?()
     }
     
     @objc private func profile() {
+        commotTapAction()
         didTapProfile?()
     }
     
     @objc private func menu() {
+        commotTapAction()
         didTapMenu?()
     }
     
