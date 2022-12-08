@@ -127,6 +127,26 @@ class BaseCoordinator: NSObject,
         }
     }
     
+    func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+            upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
+                guard showPopup else { return }
+                
+                if UserManager.shared.profile?.canBuy == false {
+                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon)
+                    return
+                }
+                
+                self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.Sell) { vc in
+                    vc?.dataStore?.currency = currency
+                    vc?.dataStore?.coreSystem = coreSystem
+                    vc?.dataStore?.keyStore = keyStore
+                    vc?.prepareData()
+                }
+            }
+        }
+    }
+    
     func showProfile() {
         upgradeAccountOrShowPopup { [weak self] _ in
             self?.openModally(coordinator: ProfileCoordinator.self, scene: Scenes.Profile)

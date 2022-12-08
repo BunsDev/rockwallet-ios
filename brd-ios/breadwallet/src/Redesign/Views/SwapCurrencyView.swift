@@ -20,6 +20,8 @@ struct SwapCurrencyConfiguration: Configurable {
 
 struct SwapCurrencyViewModel: ViewModel {
     var amount: Amount?
+    var currencyCode: String?
+    var currencyImage: UIImage?
     var formattedFiatString: NSMutableAttributedString?
     var formattedTokenString: NSMutableAttributedString?
     var fee: Amount?
@@ -308,15 +310,19 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         if !fiatAmountField.isFirstResponder {
             fiatAmountField.attributedText = viewModel.formattedFiatString
         }
+        fiatStack.isHidden = viewModel.formattedFiatString == nil
         
         if !cryptoAmountField.isFirstResponder {
             cryptoAmountField.attributedText = viewModel.formattedTokenString
         }
         
-        codeLabel.text = viewModel.amount?.currency.code
+        codeLabel.text = viewModel.amount?.currency.code ?? viewModel.currencyCode
         codeLabel.sizeToFit()
-        
-        currencyIconImageView.wrappedView.setup(with: .image(viewModel.amount?.currency.imageSquareBackground))
+
+        currencyIconImageView.wrappedView.setup(with: .image(viewModel.amount?.currency.imageSquareBackground ?? viewModel.currencyImage))
+        if viewModel.amount == nil {
+            currencyIconImageView.wrappedView.contentMode = .scaleAspectFill
+        }
         
         if let tokenFee = viewModel.formattedTokenFeeString, let fiatFee = viewModel.formattedFiatFeeString {
             feeAmountLabel.text = "\(tokenFee) \n\(fiatFee)"

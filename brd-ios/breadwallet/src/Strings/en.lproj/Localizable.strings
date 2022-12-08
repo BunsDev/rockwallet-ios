@@ -3198,3 +3198,6 @@
 "Drawer.button.buy_with_card" = "FUND WITH ACH";
 "Drawer.button.buy_with_sell" = "SELL & WIDRAW";
 
+/* Sell & Widraw scene */
+"scenes.sell.title" = "Sell & Withdraw funds";
+"scenes.sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.";

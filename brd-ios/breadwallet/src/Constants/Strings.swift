@@ -2887,6 +2887,18 @@ internal enum L10n {
     /// Remember to write these words down. Swipe back if you forgot.
     internal static let warning2 = L10n.tr("Localizable", "WritePaperPhrase.warning2", fallback: "Remember to write these words down. Swipe back if you forgot.")
   }
+  internal enum Scenes {
+    internal enum Sell {
+      /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.
+      /// 
+      /// ACH Withdrawals will be processed within 3-5 business days.
+      internal static func disclaimer(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "scenes.sell.disclaimer", p1, p2, p3, fallback: "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.")
+      }
+      /// Sell & Widraw scene
+      internal static let title = L10n.tr("Localizable", "scenes.sell.title", fallback: "Sell & Withdraw funds")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

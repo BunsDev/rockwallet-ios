@@ -80,6 +80,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didSelectCurrency: ((Currency) -> Void)?
     var didTapManageWallets: (() -> Void)?
     var didTapBuy: (() -> Void)?
+    var didTapSell: (() -> Void)?
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
@@ -257,7 +258,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: 100)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: 84)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)
@@ -267,7 +268,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         view.addSubview(animationView)
         animationView.snp.makeConstraints { make in
             make.centerX.equalTo(tabBar.snp.centerX)
-            make.centerY.equalTo(tabBar.snp.centerY).offset(-Margins.huge.rawValue)
+            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
         }
     }
     
@@ -283,10 +284,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     func setupDrawer() {
-        drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { print("third tapped") }
+        drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapSell?() }
         ]
         drawer.configure(with: DrawerConfiguration())
-        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84.0))
+        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84))
     }
     
     private func setupToolbar() {
@@ -395,27 +396,31 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     // MARK: Actions
     
-    @objc private func showHome() {}
+    @objc private func showHome() {
+        drawer.hide()
+    }
+    
+    private func commotTapAction() {
+        drawer.hide()
+    }
     
     @objc private func buy() {
-        if drawer.isShown {
-            animationView.play(fromProgress: 1, toProgress: 0)
-            drawer.hide()
-        } else {
-            animationView.play()
-            drawer.show()
-        }
+        drawer.isShown ? animationView.play(fromProgress: 1, toProgress: 0) : animationView.play()
+        drawer.toggle()
     }
     
     @objc private func trade() {
+        commotTapAction()
         didTapTrade?()
     }
     
     @objc private func profile() {
+        commotTapAction()
         didTapProfile?()
     }
     
     @objc private func menu() {
+        commotTapAction()
         didTapMenu?()
     }
     
