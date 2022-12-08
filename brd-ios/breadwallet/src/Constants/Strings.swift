@@ -867,6 +867,18 @@ internal enum L10n {
     /// The wallet is disabled.
     internal static let title = L10n.tr("Localizable", "Disabled.title", fallback: "Wallet disabled")
   }
+  internal enum Drawer {
+    /// Drawer strings
+    internal static let title = L10n.tr("Localizable", "Drawer.title", fallback: "Buy / Sell")
+    internal enum Button {
+      /// BUY WITH CARD
+      internal static let buyWithAch = L10n.tr("Localizable", "Drawer.button.buy_with_ach", fallback: "BUY WITH CARD")
+      /// FUND WITH ACH
+      internal static let buyWithCard = L10n.tr("Localizable", "Drawer.button.buy_with_card", fallback: "FUND WITH ACH")
+      /// SELL & WIDRAW
+      internal static let buyWithSell = L10n.tr("Localizable", "Drawer.button.buy_with_sell", fallback: "SELL & WIDRAW")
+    }
+  }
   internal enum Eme {
     internal enum Permissions {
       /// Service capabilities description

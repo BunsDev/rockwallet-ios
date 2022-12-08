@@ -3191,3 +3191,10 @@
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
+/* Drawer strings */
+"Drawer.title" = "Buy / Sell";
+
+"Drawer.button.buy_with_ach" = "BUY WITH CARD";
+"Drawer.button.buy_with_card" = "FUND WITH ACH";
+"Drawer.button.buy_with_sell" = "SELL & WIDRAW";
+

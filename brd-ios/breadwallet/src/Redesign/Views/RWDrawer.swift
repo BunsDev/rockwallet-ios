@@ -24,17 +24,20 @@ struct DrawerConfiguration: Configurable {
 }
 
 struct DrawerViewModel: ViewModel {
-    var title: String? = "Buy / Sell"
+    var title: String? = L10n.Drawer.title
     var drawerImage: ImageViewModel? = .image(Asset.dragControl.image)
     var buttons: [ButtonViewModel] = [
-        .init(title: "BUY WITH CARD", image: Asset.card.name),
-        .init(title: "Fund with ach", image: Asset.bank.name),
-        .init(title: "SELL & withdraw", image: Asset.withdrawal.name)
+        .init(title: L10n.Drawer.Button.buyWithCard, image: Asset.card.name),
+        .init(title: L10n.Drawer.Button.buyWithAch, image: Asset.bank.name),
+        .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.name)
     ]
     var drawerBottomOffset = 0.0
 }
 
 class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
+    
+    var callbacks: [(() -> Void)] = []
+    
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
@@ -75,14 +78,6 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
         view.distribution = .fillEqually
         return view
     }()
-    
-    /*
-     // offset
-     // drawer img
-     // title
-     // buttons
-     // offset
-     */
     
     override func setupSubviews() {
         super.setupSubviews()
@@ -139,10 +134,14 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
             title.wrappedView.setup(with: .text(text))
         }
         
-        for (vm, conf) in zip(viewModel.buttons, config.buttons) {
+        for ((vm, conf), callback) in zip(zip(viewModel.buttons, config.buttons), callbacks) {
             let button = FEButton()
             button.configure(with: conf)
             button.setup(with: vm)
+            button.viewModel?.callback = { [weak self] in
+                self?.hide()
+                callback()
+            }
             buttonStack.addArrangedSubview(button)
             button.snp.makeConstraints { make in
                 make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)

@@ -69,8 +69,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private lazy var drawer: RWDrawer = {
         let view = RWDrawer()
-        view.configure(with: DrawerConfiguration())
-        view.setup(with: DrawerViewModel(drawerBottomOffset: 64.0))
         return view
     }()
     
@@ -262,7 +260,15 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         navigationItem.titleView = UIView()
         
         setupToolbar()
+        setupDrawer()
         updateTotalAssets()
+    }
+    
+    func setupDrawer() {
+        drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { print("third tapped") }
+        ]
+        drawer.configure(with: DrawerConfiguration())
+        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 64.0))
     }
     
     private func setupToolbar() {
@@ -370,7 +376,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     @objc private func buy() {
         drawer.toggle()
-//        didTapBuy?()
     }
     
     @objc private func trade() {
