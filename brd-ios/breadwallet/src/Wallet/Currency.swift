@@ -197,7 +197,7 @@ class Currency: SharedCurrency, CurrencyWithIcon, ItemSelectable {
             return true
         }
         
-        if (isBitcoin && currency.isBitcoinSV) || (isBitcoinSV && currency.isBitcoin) {
+        if ((isBitcoin && currency.isBitcoinSV) || (isBitcoinSV && currency.isBitcoin)) && request.scheme == nil {
             return true
         }
         
