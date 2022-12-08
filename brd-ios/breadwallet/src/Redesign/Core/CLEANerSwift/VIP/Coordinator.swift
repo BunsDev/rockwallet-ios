@@ -398,7 +398,7 @@ class BaseCoordinator: NSObject,
         notification.setup(with: model)
         notification.layoutIfNeeded()
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             notification.alpha = 1
         }
     }
@@ -407,7 +407,7 @@ class BaseCoordinator: NSObject,
         guard let superview = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
               let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             view.alpha = 0
         } completion: { _ in
             view.removeFromSuperview()
@@ -463,7 +463,7 @@ class BaseCoordinator: NSObject,
         view.layoutIfNeeded()
         view.alpha = 0
             
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             view.alpha = 1
         }
         

@@ -242,8 +242,9 @@ extension Presets {
 }
 
 extension Presets {
-    struct Animation {
-        static var duration = 0.25
+    enum Animation: Double {
+        case short = 0.25
+        case long = 0.8
     }
 }
 

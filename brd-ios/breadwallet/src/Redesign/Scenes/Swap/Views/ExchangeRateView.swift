@@ -105,7 +105,7 @@ class ExchangeRateView: FEView<ExchangeRateConfiguration, ExchangeRateViewModel>
         timerView.setup(with: viewModel.timer)
         timerView.alpha = viewModel.timer == nil || viewModel.showTimer ? 1 : 0
         
-        UIView.transition(with: content, duration: Presets.Animation.duration, options: .transitionCrossDissolve) {}
+        UIView.transition(with: content, duration: Presets.Animation.short.rawValue, options: .transitionCrossDissolve) {}
     }
     
     func invalidate() {

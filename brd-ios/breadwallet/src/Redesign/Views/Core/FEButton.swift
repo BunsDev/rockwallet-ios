@@ -165,7 +165,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         displayState = state
         
         if withAnimation {
-            Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
                 self?.updateLayout(background: background, shadow: shadow)
             }
         } else {

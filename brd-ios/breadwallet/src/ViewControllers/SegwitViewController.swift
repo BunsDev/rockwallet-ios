@@ -101,7 +101,7 @@ class SegwitViewController: UIViewController {
             make.height.equalTo(ViewSizes.extraExtraHuge.rawValue)
         }
         
-        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.enabledView.alpha = 1
         }
     }
@@ -116,7 +116,7 @@ class SegwitViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.segwitAlert.alpha = 1
         }
     }

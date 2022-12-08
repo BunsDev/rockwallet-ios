@@ -89,7 +89,7 @@ extension UIViewController {
             self?.hidePopup()
         }
         
-        UIView.animate(withDuration: Presets.Animation.duration,
+        UIView.animate(withDuration: Presets.Animation.short.rawValue,
                        delay: 0,
                        options: .transitionFlipFromBottom) {
             blurView.effect = UIBlurEffect(style: .regular)
@@ -102,7 +102,7 @@ extension UIViewController {
         else { return }
         let blur = view.subviews.first(where: { $0 is UIVisualEffectView })
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             popup.alpha = 0
             blur?.alpha = 0
         } completion: { _ in

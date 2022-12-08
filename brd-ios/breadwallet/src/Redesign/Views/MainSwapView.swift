@@ -186,7 +186,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
     
     @objc private func switchPlacesButtonTapped(_ sender: UIButton?) {
         if !baseSwapCurrencyView.isFeeAndAmountsStackViewHidden || !termSwapCurrencyView.isFeeAndAmountsStackViewHidden {
-            UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
                 self?.baseSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
                 self?.termSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
             } completion: { [weak self] _ in
@@ -201,7 +201,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
     
     func setToggleSwitchPlacesButtonState(_ value: Bool) {
         UIView.transition(with: swapButton,
-                          duration: Presets.Animation.duration) { [weak self] in
+                          duration: Presets.Animation.short.rawValue) { [weak self] in
             self?.swapButton.alpha = value ? 1.0 : 0.5
             self?.swapButton.isUserInteractionEnabled = value
         }
@@ -216,7 +216,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         
         let verticalDistance = (topFrame.bounds.minY - bottomFrame.bounds.maxY - topFrame.frame.height - 2) * 2
         
-        UIView.animate(withDuration: Presets.Animation.duration,
+        UIView.animate(withDuration: Presets.Animation.short.rawValue,
                        delay: 0.0,
                        options: .curveLinear) { [weak self] in
             topFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ?  -verticalDistance : verticalDistance)
@@ -229,8 +229,8 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
             self?.termSwapCurrencyView.resetTextFieldValues()
         }
         
-        UIView.animate(withDuration: Presets.Animation.duration,
-                       delay: Presets.Animation.duration) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue,
+                       delay: Presets.Animation.short.rawValue) { [weak self] in
             self?.baseSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
             self?.termSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
         } completion: { [weak self] _ in

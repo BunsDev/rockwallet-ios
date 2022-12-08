@@ -199,7 +199,7 @@ class VIPViewController<C: CoordinatableRoutes,
     func toggleBlur(animated: Bool) {
         guard let blurView = blurView else { return }
         guard blurView.superview == nil else {
-            UIView.animate(withDuration: animated ? Presets.Animation.duration: 0) {
+            UIView.animate(withDuration: animated ? Presets.Animation.short.rawValue: 0) {
                 blurView.alpha = 0
             } completion: { _ in
                 blurView.removeFromSuperview()
@@ -210,7 +210,7 @@ class VIPViewController<C: CoordinatableRoutes,
         blurView.alpha = 0
         blurView.frame = view.bounds
         view.addSubview(blurView)
-        UIView.animate(withDuration: animated ? Presets.Animation.duration: 0) {
+        UIView.animate(withDuration: animated ? Presets.Animation.short.rawValue: 0) {
             blurView.alpha = 1
         }
     }

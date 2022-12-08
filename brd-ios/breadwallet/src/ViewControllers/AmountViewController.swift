@@ -370,7 +370,7 @@ class AmountViewController: UIViewController {
     }
 
     @objc private func didTap() {
-        UIView.spring(Presets.Animation.duration, animations: {
+        UIView.spring(Presets.Animation.short.rawValue, animations: {
             self.togglePinPad()
             self.parent?.parent?.view.layoutIfNeeded()
         }, completion: { _ in })

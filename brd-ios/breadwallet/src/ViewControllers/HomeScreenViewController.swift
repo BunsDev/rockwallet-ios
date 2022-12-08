@@ -476,7 +476,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         let next = promptContainerStack.arrangedSubviews.dropFirst().first
         next?.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
         
-        UIView.animate(withDuration: Presets.Animation.duration, delay: 0, options: .curveLinear) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue, delay: 0, options: .curveLinear) {
             prompt.transform = .init(translationX: UIScreen.main.bounds.width, y: 0)
             prompt.isHidden = true
             
@@ -496,7 +496,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         promptContainerStack.insertArrangedSubview(prompt, at: 0)
         
-        UIView.animate(withDuration: Presets.Animation.duration, delay: 0, options: .curveLinear) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue, delay: 0, options: .curveLinear) { [weak self] in
             self?.promptContainerStack.arrangedSubviews.dropFirst().forEach({ $0.isHidden = true })
         } completion: { [weak self] _ in
             self?.promptContainerStack.layoutIfNeeded()

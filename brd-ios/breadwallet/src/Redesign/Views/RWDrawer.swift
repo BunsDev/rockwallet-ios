@@ -171,7 +171,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
             make.leading.trailing.bottom.equalToSuperview()
         }
         
-        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.long.rawValue) { [weak self] in
             self?.blurView.alpha = 1
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
@@ -188,7 +188,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
             make.leading.trailing.equalToSuperview()
         }
         
-        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.blurView.alpha = 0
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()

@@ -219,7 +219,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
             make.edges.equalToSuperview()
         }
         
-        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.importConfirmationAlert.alpha = 1
         }
     }

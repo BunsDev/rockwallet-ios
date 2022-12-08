@@ -118,7 +118,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         navigationBar.compactAppearance = scrollAppearance
         
         let tint = tintColor
-        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.navigationBar.tintColor = tint
             self?.navigationItem.titleView?.tintColor = tint
             self?.navigationItem.leftBarButtonItems?.forEach { $0.tintColor = tint }
