@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     private let walletAuthenticator: WalletAuthenticator
@@ -63,6 +64,11 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
         view.image = Asset.logoIcon.image
+        return view
+    }()
+    
+    private lazy var drawer: RWDrawer = {
+        let view = RWDrawer()
         return view
     }()
     
@@ -228,6 +234,12 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
         
+        view.addSubview(drawer)
+        drawer.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
         view.addSubview(tabBarContainerView)
         tabBarContainerView.addSubview(tabBar)
         
@@ -248,7 +260,15 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         navigationItem.titleView = UIView()
         
         setupToolbar()
+        setupDrawer()
         updateTotalAssets()
+    }
+    
+    func setupDrawer() {
+        drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { print("third tapped") }
+        ]
+        drawer.configure(with: DrawerConfiguration())
+        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 64.0))
     }
     
     private func setupToolbar() {
@@ -355,7 +375,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     @objc private func showHome() {}
     
     @objc private func buy() {
-        didTapBuy?()
+        drawer.toggle()
     }
     
     @objc private func trade() {

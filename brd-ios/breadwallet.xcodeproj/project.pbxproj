@@ -346,6 +346,7 @@
 		7E5CB3B42835090E00EC787E /* FEButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB37B2835090E00EC787E /* FEButton.swift */; };
 		7E6729282923A28100A2B612 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6729272923A28100A2B612 /* ComingSoonViewController.swift */; };
 		7E67680328479765007EC155 /* ResendConfirmationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67680228479765007EC155 /* ResendConfirmationWorker.swift */; };
+		7E7AFBEA29409FCC0063023F /* RWDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7AFBE929409FCC0063023F /* RWDrawer.swift */; };
 		7E852748286C551C0058F4C0 /* ServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E852747286C551C0058F4C0 /* ServerResponse.swift */; };
 		7E87B32A2853368E0097671F /* KYCDocumentUploadWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E87B3292853368E0097671F /* KYCDocumentUploadWorker.swift */; };
 		7E87B32D285346E00097671F /* UIImage+Compress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E87B32C285346E00097671F /* UIImage+Compress.swift */; };
@@ -1117,6 +1118,7 @@
 		7E5CB37B2835090E00EC787E /* FEButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FEButton.swift; sourceTree = "<group>"; };
 		7E6729272923A28100A2B612 /* ComingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComingSoonViewController.swift; path = ComingSoon/ComingSoonViewController.swift; sourceTree = "<group>"; };
 		7E67680228479765007EC155 /* ResendConfirmationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendConfirmationWorker.swift; sourceTree = "<group>"; };
+		7E7AFBE929409FCC0063023F /* RWDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWDrawer.swift; sourceTree = "<group>"; };
 		7E852747286C551C0058F4C0 /* ServerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerResponse.swift; sourceTree = "<group>"; };
 		7E87B3292853368E0097671F /* KYCDocumentUploadWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCDocumentUploadWorker.swift; sourceTree = "<group>"; };
 		7E87B32C285346E00097671F /* UIImage+Compress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Compress.swift"; sourceTree = "<group>"; };
@@ -2386,6 +2388,7 @@
 				7E5CB3702835090E00EC787E /* Wrappers */,
 				7E8E979E283F4851008606B0 /* Core */,
 				7E8E979F283F48EE008606B0 /* NavigationItemView.swift */,
+				7E7AFBE929409FCC0063023F /* RWDrawer.swift */,
 				7ECCA9982874342C00F99368 /* FETimerView.swift */,
 				7ECCA99C28745E0400F99368 /* AssetView.swift */,
 				7EF45F7A2846244F00D1F7B0 /* ItemView.swift */,
@@ -4098,6 +4101,7 @@
 				3AEA2CAB24D3219200DA4C3A /* SelectBackupView.swift in Sources */,
 				7E2E1A2B284E097900E56E69 /* KYCCoordinator.swift in Sources */,
 				7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */,
+				7E7AFBEA29409FCC0063023F /* RWDrawer.swift in Sources */,
 				CEB909FA1E5FF242001804DC /* RecoverWalletIntroViewController.swift in Sources */,
 				CE25BF911DF9ADE700BC67B6 /* UIImage+Utils.swift in Sources */,
 				7C7F18ED1FED9A3B0030230E /* TxStatusIndicator.swift in Sources */,

@@ -162,6 +162,9 @@ class ApplicationController: Subscriber {
     /// Prompts for login if account needs to be recreated from seed
     private func unlockExistingAccount() {
         guardProtected {
+//                self.coordinator?.open(scene: Scenes.Demo)
+//
+//                return ()
             guard let startFlowController = self.startFlowController, !self.keyStore.noWallet else { return assertionFailure() }
             Store.perform(action: PinLength.Set(self.keyStore.pinLength))
             startFlowController.startLogin { [unowned self] account in
@@ -340,7 +343,6 @@ class ApplicationController: Subscriber {
     private func setupRootViewController() {
         let navigationController = RootNavigationController()
         window.rootViewController = navigationController
-        
         startFlowController = StartFlowPresenter(keyMaster: keyStore,
                                                  rootViewController: navigationController,
                                                  shouldDisableBiometrics: shouldDisableBiometrics,
