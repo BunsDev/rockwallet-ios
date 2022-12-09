@@ -61,7 +61,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         }
     }
     
-    func exchangeRateCompletion(getFees: Bool) {
+    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction) {
         guard let baseCurrency = dataStore?.from?.currency.coinGeckoId,
               let termCurrency = dataStore?.to?.currency.coinGeckoId else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: dataStore?.fromCode, to: dataStore?.toCode)))
@@ -78,7 +78,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.dataStore?.fromRate = Decimal(data.first(where: { $0.id == baseCurrency })?.price ?? 0)
                 self?.dataStore?.toRate = Decimal(data.first(where: { $0.id == termCurrency })?.price ?? 0)
                 
-                guard getFees else {
+                guard viewAction.getFees else {
                     self?.setAmountSuccess()
                     
                     return

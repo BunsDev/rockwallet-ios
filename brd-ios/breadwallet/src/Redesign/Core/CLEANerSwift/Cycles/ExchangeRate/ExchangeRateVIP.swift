@@ -12,7 +12,7 @@ import UIKit
 
 protocol ExchangeRateViewActions {
     func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction)
-    func exchangeRateCompletion(getFees: Bool)
+    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
 }
 
 protocol ExchangeRateActionResponses {
@@ -45,7 +45,7 @@ extension Interactor where Self: ExchangeRateViewActions,
               let data = dataStore?.quoteRequestData
         else { return }
         
-        exchangeRateCompletion(getFees: viewAction.getFees)
+        getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees))
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let quote):
@@ -56,18 +56,22 @@ extension Interactor where Self: ExchangeRateViewActions,
                                                                            limits: self?.dataStore?.limits))
                 
             case .failure(let error):
+                // TODO: remove this.. currently just so limits is displayed on sell
+                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: nil,
+                                                                           from: fromCurrency,
+                                                                           to: toCurrency,
+                                                                           limits: self?.dataStore?.limits))
+                
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
-                
-                self?.presenter?.presentError(actionResponse: .init(error: error))
             }
         }
     }
     
-    func exchangeRateCompletion(getFees: Bool) {}
+    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction) {}
 }
 
 extension Presenter where Self: ExchangeRateActionResponses,
@@ -76,14 +80,14 @@ extension Presenter where Self: ExchangeRateActionResponses,
             guard let from = actionResponse.from,
                   let to = actionResponse.to,
                   let quote = actionResponse.quote else {
+                viewController?.displayExchangeRate(responseDisplay: .init(accountLimits: .text(actionResponse.limits)))
                 return
             }
 
             let text = String(format: "1 %@ = %@ %@", to.uppercased(), RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", from)
 
             let exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
-                                                              timer: TimerViewModel(till: quote.timestamp,
-                                                                                    repeats: false),
+                                                              timer: TimerViewModel(till: quote.timestamp, repeats: false),
                                                               showTimer: false)
 
             viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: exchangeRateViewModel,

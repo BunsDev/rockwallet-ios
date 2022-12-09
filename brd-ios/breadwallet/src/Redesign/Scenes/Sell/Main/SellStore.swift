@@ -26,7 +26,12 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var limits: String {
-        return L10n.Scenes.Sell.disclaimer("50 USD", "100 USD", "1000 USD")
+        // TODO: get from quote when updated
+        let minText = ExchangeFormatter.fiat.string(for: 100) ?? ""
+        let maxText = ExchangeFormatter.fiat.string(for: 200) ?? ""
+        let lifetime = ExchangeFormatter.fiat.string(for: 1000) ?? ""
+        
+        return L10n.Scenes.Sell.disclaimer(minText, maxText, lifetime)
     }
     // MARK: - Aditional helpers
 }

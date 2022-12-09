@@ -24,8 +24,13 @@ enum ExchangeRateModels {
         }
         
         struct ResponseDisplay {
-            var rateAndTimer: ExchangeRateViewModel
+            var rateAndTimer: ExchangeRateViewModel?
             var accountLimits: LabelViewModel?
+        }
+    }
+    enum CoingeckoRate {
+        struct ViewAction {
+            var getFees: Bool = false
         }
     }
 }

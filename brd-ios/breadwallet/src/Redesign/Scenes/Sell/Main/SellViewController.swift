@@ -9,9 +9,9 @@
 import UIKit
 
 class SellViewController: BaseTableViewController<SellCoordinator,
-                            SellInteractor,
-                            SellPresenter,
-                            SellStore>,
+                          SellInteractor,
+                          SellPresenter,
+                          SellStore>,
                           SellResponseDisplays {
     
     typealias Models = SellModels
@@ -38,8 +38,8 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     override func prepareData() {
         super.prepareData()
         
-        interactor?.getExchangeRate(viewAction: .init())
         guard let token = dataStore?.currency else { return }
+        interactor?.getExchangeRate(viewAction: .init())
         
         sections = [
             Models.Sections.rateAndTimer,
@@ -76,7 +76,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
                                   userInteractionEnabled: false)
             ],
             Models.Sections.accountLimits: [
-                LabelViewModel.text(L10n.Scenes.Sell.disclaimer("50 USD", "100 USD", "1000 USD"))
+                LabelViewModel.text("")
             ]
         ]
         
