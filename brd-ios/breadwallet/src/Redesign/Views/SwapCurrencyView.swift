@@ -356,7 +356,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         didTapSelectAsset?()
     }
     
-    private func setPlaceholder(for field: UITextField, isActive: Bool) {
+    private func setPlaceholder(for field: UITextField) {
+        let isActive = field.isFirstResponder && field.text?.isEmpty == true
         if let textColor = field.textColor,
            let lineViewColor = fiatLineView.backgroundColor,
            let font = field.font {
@@ -368,10 +369,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     }
     
     private func decidePlaceholder() {
-        [fiatAmountField, cryptoAmountField].forEach { field in
-            guard !field.isHidden else { return }
-            setPlaceholder(for: field, isActive: field.text?.isEmpty == true && field.isFirstResponder)
-        }
+        setPlaceholder(for: fiatAmountField)
+        setPlaceholder(for: cryptoAmountField)
     }
     
     func setAlphaToLabels(alpha value: Double) {

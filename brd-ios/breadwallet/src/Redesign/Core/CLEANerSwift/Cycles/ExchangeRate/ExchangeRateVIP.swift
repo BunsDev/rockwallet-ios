@@ -41,7 +41,7 @@ extension Interactor where Self: ExchangeRateViewActions,
     
     func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
         // TODO: remove this.. currently just so data is displayed on sell screen
-        guard dataStore?.quoteRequestData.type.value != "sell" else {
+        guard dataStore?.quoteRequestData.type.value != "SELL" else {
             presenter?.presentExchangeRate(actionResponse: .init(quote: dataStore?.quote,
                                                                  from: dataStore?.fromCode,
                                                                  to: dataStore?.toCode,

@@ -56,12 +56,12 @@ class SellViewController: BaseTableViewController<SellCoordinator,
             ],
             Models.Sections.swapCard: [
                 MainSwapViewModel(from: .init(amount: .zero(token),
-                                              formattedTokenString: .init(string: "0.00"),
+                                              formattedTokenString: .init(string: ""),
                                               title: .text("I have 10.12000473 USDC")),
                                   
                                   to: .init(currencyCode: C.usdCurrencyCode,
                                             currencyImage: Asset.us.image,
-                                            formattedTokenString: .init(string: "0.00"),
+                                            formattedTokenString: .init(string: ""),
                                             title: .text("I receive")),
                                  hideSwapButton: true)
             ],
