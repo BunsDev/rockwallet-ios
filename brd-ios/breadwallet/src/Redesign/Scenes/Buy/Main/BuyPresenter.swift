@@ -98,12 +98,21 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
         } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyAch {
-            cardModel = .init(title: .text(L10n.Buy.transferFromBank),
-                              subtitle: nil,
-                              logo: .image(Asset.bank.image),
-                              cardNumber: .text(paymentCard.displayName),
-                              userInteractionEnabled: false)
+            switch actionResponse.card?.status {
+            case .statusOk:
+                cardModel = .init(title: .text(L10n.Buy.transferFromBank),
+                                  subtitle: nil,
+                                  logo: .image(Asset.bank.image),
+                                  cardNumber: .text(paymentCard.displayName),
+                                  userInteractionEnabled: false)
+                
+            default:
+                cardModel = .init(title: .text(L10n.Buy.achPayments),
+                                  subtitle: .text(L10n.Buy.relinkBankAccount),
+                                  userInteractionEnabled: true)
+            }
             cryptoModel.selectionDisabled = true
+            
         } else if actionResponse.paymentMethod == .buyCard {
             cardModel = .init(userInteractionEnabled: true)
         } else {
