@@ -32,4 +32,5 @@ protocol SellDataPassing {
 }
 
 protocol SellRoutes: CoordinatableRoutes {
+    func showOrderPreview(crypto: Amount?, quote: Quote?)
 }

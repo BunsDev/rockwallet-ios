@@ -28,6 +28,10 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     }()
     
     // MARK: - Overrides
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        interactor?.getExchangeRate(viewAction: .init())
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -39,7 +43,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         super.prepareData()
         
         guard let token = dataStore?.currency else { return }
-        interactor?.getExchangeRate(viewAction: .init())
         
         sections = [
             Models.Sections.rateAndTimer,
@@ -147,14 +150,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
                 self?.interactor?.setAmount(viewAction: .init(from: amount))
             }
             
-            view.didChangeFromFiatAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(from: amount))
-            }
-            
-            view.didChangeToCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(to: amount))
-            }
-            
             view.didChangeToCryptoAmount = { [weak self] amount in
                 self?.interactor?.setAmount(viewAction: .init(to: amount))
             }
@@ -214,6 +209,11 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     }
     
     // MARK: - User Interaction
+    @objc override func buttonTapped() {
+        super.buttonTapped()
+        
+        coordinator?.showOrderPreview(crypto: dataStore?.fromAmount, quote: dataStore?.quote)
+    }
     
     // MARK: - SellResponseDisplay
     
