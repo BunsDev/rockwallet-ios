@@ -612,6 +612,8 @@ internal enum L10n {
     internal static let purchaseSuccessText = L10n.tr("Localizable", "Buy.PurchaseSuccessText", fallback: "This purchase will appear as ‘RockWallet’ on your bank statement.")
     /// Your assets are on the way message in purchase details screen
     internal static let purchaseSuccessTitle = L10n.tr("Localizable", "Buy.PurchaseSuccessTitle", fallback: "Your assets are on the way!")
+    /// Re-link bank account
+    internal static let relinkBankAccount = L10n.tr("Localizable", "Buy.relinkBankAccount", fallback: "Re-link bank account")
     /// Are you sure you want to remove this card title dialog
     internal static let removeCard = L10n.tr("Localizable", "Buy.RemoveCard", fallback: "Are you sure you want to remove card ending in")
     /// You will no longer be able to use it to buy assets description on removing card dialog

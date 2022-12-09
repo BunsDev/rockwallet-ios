@@ -72,7 +72,8 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                                                                                      expiryYear: sourceCard?.expiryYear ?? 0,
                                                                                      scheme: PaymentCard.Scheme(rawValue: sourceCard?.scheme ?? "") ?? .none,
                                                                                      last4: sourceCard?.last4 ?? "",
-                                                                                     accountName: sourceCard?.accountName ?? ""),
+                                                                                     accountName: sourceCard?.accountName ?? "",
+                                                                                     status: PaymentCard.Status(rawValue: sourceCard?.status ?? "") ?? .statusOk),
                                                       feeRate: source?.feeRate,
                                                       feeFixedRate: source?.feeFixedRate)
         let destinationData = SwapDetail.SourceDestination(currency: destination?.currency?.uppercased() ?? "",
@@ -87,7 +88,8 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                                                                                           expiryYear: destinationCard?.expiryYear ?? 0,
                                                                                           scheme: PaymentCard.Scheme(rawValue: destinationCard?.scheme ?? "") ?? .none,
                                                                                           last4: destinationCard?.last4 ?? "",
-                                                                                          accountName: sourceCard?.accountName ?? ""),
+                                                                                          accountName: sourceCard?.accountName ?? "",
+                                                                                          status: PaymentCard.Status(rawValue: sourceCard?.status ?? "") ?? .statusOk),
                                                            feeRate: source?.feeRate,
                                                            feeFixedRate: source?.feeFixedRate)
 
