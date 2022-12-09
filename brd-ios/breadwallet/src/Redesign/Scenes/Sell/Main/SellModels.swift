@@ -18,4 +18,20 @@ enum SellModels {
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
     }
+    
+    struct Amounts {
+        struct ViewAction {
+            var from: String?
+            var to: String?
+        }
+        
+        struct ActionResponse {
+            var from: Amount?
+        }
+        
+        struct ResponseDisplay {
+            var continueEnabled = false
+            var amounts: MainSwapViewModel
+        }
+    }
 }

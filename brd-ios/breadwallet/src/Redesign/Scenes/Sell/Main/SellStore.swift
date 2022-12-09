@@ -13,7 +13,14 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     // MARK: - SellDataStore
     
     // ExchangeRateDaatStore
-    var quote: Quote?
+    var quote: Quote? = .init(quoteId: 5,
+                              exchangeRate: 0.99,
+                              timestamp: Date().timeIntervalSince1970,
+                              minimumValue: 100,
+                              maximumValue: 200,
+                              minimumUsd: 100,
+                              maximumUsd: 200)
+    
     var fromCode: String { currency?.code ?? "" }
     var toCode: String { C.usdCurrencyCode }
     var quoteRequestData: QuoteRequestData {
@@ -26,12 +33,15 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var limits: String {
-        // TODO: get from quote when updated
-        let minText = ExchangeFormatter.fiat.string(for: 100) ?? ""
-        let maxText = ExchangeFormatter.fiat.string(for: 200) ?? ""
-        let lifetime = ExchangeFormatter.fiat.string(for: 1000) ?? ""
+        guard let quote = quote else { return "" }
+        let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
+        let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
+        let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit) ?? ""
         
-        return L10n.Scenes.Sell.disclaimer(minText, maxText, lifetime)
+        return L10n.Scenes.Sell.disclaimer(minText, maxText, lifetimeLimit)
     }
+    
+    var fromAmount: Amount?
+    var toAmount: Decimal? { return fromAmount?.fiatValue }
     // MARK: - Aditional helpers
 }
