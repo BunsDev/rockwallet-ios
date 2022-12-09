@@ -10,6 +10,14 @@
 
 import Foundation
 
+struct PlaidLinkTokenRequestData: RequestModelData {
+    let accountId: String?
+    
+    func getParameters() -> [String: Any] {
+        return [:]
+    }
+}
+
 struct PlaidLinkTokenResponseData: ModelResponse {
     var linkToken: String
 }
