@@ -10,6 +10,7 @@ import UIKit
 import WalletKit
 
 class BuyInteractor: NSObject, Interactor, BuyViewActions {
+    
     typealias Models = BuyModels
     
     var presenter: BuyPresenter?
@@ -127,38 +128,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                        card: dataStore?.paymentCard,
                                                        quote: dataStore?.quote,
                                                        paymentMethod: dataStore?.paymentMethod))
-    }
-    
-    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
-        guard let toCurrency = dataStore?.toAmount?.currency.code,
-                let method = dataStore?.paymentMethod
-        else { return }
-        
-        let data = QuoteRequestData(from: C.usdCurrencyCode.lowercased(),
-                                    to: toCurrency,
-                                    type: .buy(method))
-        QuoteWorker().execute(requestData: data) { [weak self] result in
-            switch result {
-            case .success(let quote):
-                self?.dataStore?.quote = quote
-                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
-                                                                           from: C.usdCurrencyCode,
-                                                                           to: toCurrency,
-                                                                           limits: self?.dataStore?.limits))
-                
-                let model = self?.dataStore?.values ?? .init()
-                self?.setAmount(viewAction: model)
-                
-            case .failure(let error):
-                guard let error = error as? NetworkingError,
-                      error == .accessDenied else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-                    return
-                }
-                
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
     }
     
     func setAssets(viewAction: BuyModels.Assets.ViewAction) {

@@ -12,6 +12,7 @@ import UIKit
 
 protocol ExchangeRateViewActions {
     func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction)
+    func exchangeRateCompletion(getFees: Bool)
 }
 
 protocol ExchangeRateActionResponses {
@@ -44,6 +45,7 @@ extension Interactor where Self: ExchangeRateViewActions,
               let data = dataStore?.quoteRequestData
         else { return }
         
+        exchangeRateCompletion(getFees: viewAction.getFees)
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let quote):
@@ -64,6 +66,8 @@ extension Interactor where Self: ExchangeRateViewActions,
             }
         }
     }
+    
+    func exchangeRateCompletion(getFees: Bool) {}
 }
 
 extension Presenter where Self: ExchangeRateActionResponses,
