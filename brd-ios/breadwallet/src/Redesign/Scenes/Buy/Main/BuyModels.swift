@@ -89,25 +89,6 @@ enum BuyModels {
         typealias ResponseDisplay = LabelViewModel
     }
     
-    struct Rate {
-        struct ViewAction {
-            var from: String?
-            var to: String?
-        }
-        
-        struct ActionResponse {
-            var method: PaymentCard.PaymentType
-            var quote: Quote?
-            var from: String?
-            var to: String?
-        }
-        
-        struct ResponseDisplay {
-            var rate: ExchangeRateViewModel
-            var limits: LabelViewModel?
-        }
-    }
-    
     struct OrderPreview {
         struct ViewAction {}
         

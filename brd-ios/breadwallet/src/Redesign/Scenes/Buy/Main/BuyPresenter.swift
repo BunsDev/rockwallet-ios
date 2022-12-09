@@ -55,28 +55,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentExchangeRate(actionResponse: BuyModels.Rate.ActionResponse) {
-        guard let from = actionResponse.from,
-              let to = actionResponse.to,
-              let quote = actionResponse.quote else {
-            return
-        }
-        
-        let text = String(format: "1 %@ = %@ %@", to.uppercased(), RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", from)
-        let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
-        let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit) ?? ""
-        let limitText = actionResponse.method == .buyAch ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
-        
-        exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
-                                                      timer: TimerViewModel(till: quote.timestamp,
-                                                                            repeats: false),
-                                                      showTimer: false)
-        
-        viewController?.displayExchangeRate(responseDisplay: .init(rate: exchangeRateViewModel,
-                                                                   limits: .text(limitText)))
-    }
-    
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse) {
         var cryptoModel: SwapCurrencyViewModel
         let cardModel: CardSelectionViewModel

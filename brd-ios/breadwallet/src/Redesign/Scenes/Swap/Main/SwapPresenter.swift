@@ -52,29 +52,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentExchangeRate(actionResponse: SwapModels.Rate.ActionResponse) {
-        guard let from = actionResponse.from,
-              let to = actionResponse.to,
-              let quote = actionResponse.quote else {
-            return
-        }
-        
-        let text = String(format: "1 %@ = %@ %@", from.code, RWFormatter().string(for: quote.exchangeRate.doubleValue) ?? "", to.code)
-        
-        let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd) ?? ""
-        let maxLimit = UserManager.shared.profile?.swapAllowanceDaily
-        let maxText = ExchangeFormatter.fiat.string(for: maxLimit) ?? ""
-        let limitText = String(format: L10n.Swap.swapLimits(minText, maxText))
-        
-        exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
-                                                      timer: TimerViewModel(till: quote.timestamp,
-                                                                            repeats: false),
-                                                      showTimer: true)
-        
-        viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: exchangeRateViewModel,
-                                                                   accountLimits: .text(limitText)))
-    }
-    
     func presentAmount(actionResponse: SwapModels.Amounts.ActionResponse) {
         let balance = actionResponse.baseBalance
         let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
