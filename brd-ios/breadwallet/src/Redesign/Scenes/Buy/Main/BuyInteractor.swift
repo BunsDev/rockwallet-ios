@@ -129,7 +129,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                        paymentMethod: dataStore?.paymentMethod))
     }
     
-    func getExchangeRate(viewAction: Models.Rate.ViewAction) {
+    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
         guard let toCurrency = dataStore?.toAmount?.currency.code,
                 let method = dataStore?.paymentMethod
         else { return }
@@ -141,11 +141,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             switch result {
             case .success(let quote):
                 self?.dataStore?.quote = quote
-                
-                self?.presenter?.presentExchangeRate(actionResponse: .init(method: method,
-                                                                           quote: quote,
+                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
                                                                            from: C.usdCurrencyCode,
-                                                                           to: toCurrency))
+                                                                           to: toCurrency,
+                                                                           limits: self?.dataStore?.limits))
                 
                 let model = self?.dataStore?.values ?? .init()
                 self?.setAmount(viewAction: model)

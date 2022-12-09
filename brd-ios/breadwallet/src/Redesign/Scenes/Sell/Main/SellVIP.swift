@@ -12,16 +12,16 @@ extension Scenes {
     static let Sell = SellViewController.self
 }
 
-protocol SellViewActions: BaseViewActions {
+protocol SellViewActions: BaseViewActions, ExchangeRateViewActions {
 }
 
-protocol SellActionResponses: BaseActionResponses {
+protocol SellActionResponses: BaseActionResponses, ExchangeRateActionResponses {
 }
 
-protocol SellResponseDisplays: AnyObject, BaseResponseDisplays {
+protocol SellResponseDisplays: AnyObject, BaseResponseDisplays, ExchangeRateResponseDisplays {
 }
 
-protocol SellDataStore: BaseDataStore {
+protocol SellDataStore: BaseDataStore, ExchangeDataStore {
 }
 
 protocol SellDataPassing {

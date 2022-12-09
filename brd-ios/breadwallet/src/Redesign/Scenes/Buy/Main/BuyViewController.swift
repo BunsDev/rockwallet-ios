@@ -176,15 +176,24 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return cell
     }
     
-    private func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
+    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             continueButton.viewModel?.enabled = false
+            continueButton.setup(with: continueButton.viewModel)
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
             return nil
         }
         
+        return cell
+    }
+    
+    func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
+        guard let section = sections.firstIndex(of: Models.Sections.accountLimits),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+            return nil
+        }
         return cell
     }
     
@@ -240,32 +249,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
-    
-    func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay) {
-        tableView.beginUpdates()
-        
-        if let cell = getRateAndTimerCell() {
-            cell.setup { view in
-                view.setup(with: responseDisplay.rate)
-                
-                view.completion = { [weak self] in
-                    self?.interactor?.getExchangeRate(viewAction: .init())
-                }
-            }
-        } else {
-            continueButton.viewModel?.enabled = false
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        }
-        
-        if let section = sections.firstIndex(of: Models.Sections.accountLimits),
-           let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
-            cell.setup { view in
-                view.setup(with: responseDisplay.limits)
-            }
-        }
-        
-        tableView.endUpdates()
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {

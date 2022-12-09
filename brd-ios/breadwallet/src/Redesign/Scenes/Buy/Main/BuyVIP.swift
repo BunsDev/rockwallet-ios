@@ -13,9 +13,8 @@ extension Scenes {
     static let Buy = BuyViewController.self
 }
 
-protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
+protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable, ExchangeRateViewActions {
     func setAmount(viewAction: BuyModels.Amounts.ViewAction)
-    func getExchangeRate(viewAction: BuyModels.Rate.ViewAction)
     func getPaymentCards(viewAction: BuyModels.PaymentCards.ViewAction)
     func setAssets(viewAction: BuyModels.Assets.ViewAction)
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
@@ -25,10 +24,9 @@ protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
 }
 
-protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
+protocol BuyActionResponses: BaseActionResponses, FetchActionResponses, ExchangeRateActionResponses {
     func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse)
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse)
-    func presentExchangeRate(actionResponse: BuyModels.Rate.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
     func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse)
@@ -36,10 +34,9 @@ protocol BuyActionResponses: BaseActionResponses, FetchActionResponses {
     func presentFailure(actionResponse: BuyModels.Failure.ActionResponse)
 }
 
-protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays {
     func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay)
     func displayAssets(responseDisplay: BuyModels.Assets.ResponseDisplay)
-    func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay)
@@ -47,7 +44,7 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayAchData(actionResponse: BuyModels.AchData.ActionResponse)
 }
 
-protocol BuyDataStore: BaseDataStore, FetchDataStore {
+protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var from: Decimal? { get set }
     var to: Decimal? { get set }
     var values: BuyModels.Amounts.ViewAction { get set }

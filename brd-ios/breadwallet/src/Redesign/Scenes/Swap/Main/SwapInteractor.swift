@@ -61,7 +61,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         }
     }
     
-    func getExchangeRate(viewAction: SwapModels.Rate.ViewAction) {
+    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
         guard let from = dataStore?.from?.currency,
               let to = dataStore?.to?.currency else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
@@ -77,8 +77,9 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             case .success(let quote):
                 self?.dataStore?.quote = quote
                 self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
-                                                                           from: from,
-                                                                           to: to))
+                                                                           from: from.code,
+                                                                           to: to.code,
+                                                                           limits: self?.dataStore?.limits))
                 
             case .failure:
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.quoteFail))
