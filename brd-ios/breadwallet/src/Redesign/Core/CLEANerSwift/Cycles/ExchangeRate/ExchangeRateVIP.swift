@@ -40,6 +40,15 @@ extension Interactor where Self: ExchangeRateViewActions,
                            Self.ActionResponses: ExchangeRateActionResponses {
     
     func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
+        // TODO: remove this.. currently just so data is displayed on sell screen
+        guard dataStore?.quoteRequestData.type.value != "sell" else {
+            presenter?.presentExchangeRate(actionResponse: .init(quote: dataStore?.quote,
+                                                                 from: dataStore?.fromCode,
+                                                                 to: dataStore?.toCode,
+                                                                 limits: dataStore?.limits))
+            return
+        }
+        
         guard let fromCurrency = dataStore?.fromCode,
               let toCurrency = dataStore?.toCode,
               let data = dataStore?.quoteRequestData
@@ -56,12 +65,6 @@ extension Interactor where Self: ExchangeRateViewActions,
                                                                            limits: self?.dataStore?.limits))
                 
             case .failure(let error):
-                // TODO: remove this.. currently just so limits is displayed on sell
-                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: nil,
-                                                                           from: fromCurrency,
-                                                                           to: toCurrency,
-                                                                           limits: self?.dataStore?.limits))
-                
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))

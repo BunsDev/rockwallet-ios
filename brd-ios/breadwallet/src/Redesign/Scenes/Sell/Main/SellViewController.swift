@@ -57,15 +57,12 @@ class SellViewController: BaseTableViewController<SellCoordinator,
             Models.Sections.swapCard: [
                 MainSwapViewModel(from: .init(amount: .zero(token),
                                               formattedTokenString: .init(string: "0.00"),
-                                              title: .text("I have 10.12000473 USDC"),
-                                              selectionDisabled: true),
+                                              title: .text("I have 10.12000473 USDC")),
                                   
                                   to: .init(currencyCode: C.usdCurrencyCode,
                                             currencyImage: Asset.us.image,
                                             formattedTokenString: .init(string: "0.00"),
-                                            title: .text("I receive"),
-                                            selectionDisabled: true),
-                                  
+                                            title: .text("I receive")),
                                  hideSwapButton: true)
             ],
             Models.Sections.payoutMethod: [
@@ -146,6 +143,22 @@ class SellViewController: BaseTableViewController<SellCoordinator,
                                        background: Presets.ExchangeView.background))
             view.setup(with: model)
             
+            view.didChangeFromCryptoAmount = { [weak self] amount in
+                self?.interactor?.setAmount(viewAction: .init(from: amount))
+            }
+            
+            view.didChangeFromFiatAmount = { [weak self] amount in
+                self?.interactor?.setAmount(viewAction: .init(from: amount))
+            }
+            
+            view.didChangeToCryptoAmount = { [weak self] amount in
+                self?.interactor?.setAmount(viewAction: .init(to: amount))
+            }
+            
+            view.didChangeToCryptoAmount = { [weak self] amount in
+                self?.interactor?.setAmount(viewAction: .init(to: amount))
+            }
+            
             view.contentSizeChanged = { [weak self] in
                 self?.tableView.beginUpdates()
                 self?.tableView.endUpdates()
@@ -186,9 +199,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.viewModel?.enabled = false
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-            
             return nil
         }
         
@@ -204,42 +214,10 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     }
     
     // MARK: - User Interaction
-
-    @objc override func buttonTapped() {
-        super.buttonTapped()
-        
-//        interactor?.showConfirmation(viewAction: .init())
-    }
     
-    // MARK: - SwapResponseDisplay
+    // MARK: - SellResponseDisplay
     
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hide()
-        }
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        guard let error = responseDisplay.error as? ExchangeErrors else {
-            coordinator?.hideMessage()
-            return
-        }
-        
-        switch error {
-        case .noQuote:
-            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()))
-            
-//        case .failed:
-//            coordinator?.showFailure()
-            
-        default:
-            coordinator?.showMessage(with: responseDisplay.error,
-                                     model: responseDisplay.model,
-                                     configuration: responseDisplay.config)
-        }
-    }
-    
-    func displayAmount(responseDisplay: SwapModels.Amounts.ResponseDisplay) {
+    func displayAmount(responseDisplay: Models.Amounts.ResponseDisplay) {
         // TODO: Extract to VIPBaseViewController
         LoadingView.hide()
         
@@ -251,66 +229,8 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         guard let section = sections.firstIndex(of: Models.Sections.swapCard),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
-        cell.setup { view in
-            view.setToggleSwitchPlacesButtonState(true)
-            
-            view.setup(with: responseDisplay.amounts)
-        }
+        cell.wrappedView.setup(with: responseDisplay.amounts)
         
         tableView.endUpdates()
     }
-    
-    func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {
-        view.endEditing(true)
-        
-//        coordinator?.showAssetSelector(title: responseDisplay.title,
-//                                       currencies: responseDisplay.to ?? responseDisplay.from,
-//                                       supportedCurrencies: dataStore?.supportedCurrencies,
-//                                       selected: { [weak self] model in
-//            guard let model = model as? AssetViewModel else { return }
-//
-//            guard responseDisplay.from?.isEmpty == false else {
-//                self?.interactor?.assetSelected(viewAction: .init(to: model.subtitle))
-//                return
-//            }
-//            self?.interactor?.assetSelected(viewAction: .init(from: model.subtitle))
-//        })
-    }
-    
-    func displayConfirmation(responseDisplay: SwapModels.ShowConfirmDialog.ResponseDisplay) {
-//        let _: WrapperPopupView<SwapConfirmationView>? = coordinator?.showPopup(with: responseDisplay.config,
-//                                                                                viewModel: responseDisplay.viewModel,
-//                                                                                confirmedCallback: { [weak self] in
-//            self?.coordinator?.showPinInput(keyStore: self?.dataStore?.keyStore) { success in
-//                if success {
-//                    LoadingView.show()
-//
-//                    self?.interactor?.confirm(viewAction: .init())
-//                } else {
-//                    self?.coordinator?.dismissFlow()
-//                }
-//            }
-//        })
-    }
-    
-    func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay) {
-        LoadingView.hide()
-//        coordinator?.showSwapInfo(from: responseDisplay.from, to: responseDisplay.to, exchangeId: responseDisplay.exchangeId)
-    }
-    
-    func displayError(responseDisplay: SwapModels.ErrorPopup.ResponseDisplay) {
-//        interactor?.showAssetInfoPopup(viewAction: .init())
-    }
-    
-    func displayAssetInfoPopup(responseDisplay: SwapModels.AssetInfoPopup.ResponseDisplay) {
-        coordinator?.showPopup(on: self,
-                               blurred: true,
-                               with: responseDisplay.popupViewModel,
-                               config: responseDisplay.popupConfig,
-                               closeButtonCallback: coordinator?.dismissFlow,
-                               callbacks: [ { [weak self] in
-            self?.coordinator?.dismissFlow()
-        }])
-    }
-    
 }

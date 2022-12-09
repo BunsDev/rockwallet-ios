@@ -369,6 +369,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     
     private func decidePlaceholder() {
         [fiatAmountField, cryptoAmountField].forEach { field in
+            guard !field.isHidden else { return }
             setPlaceholder(for: field, isActive: field.text?.isEmpty == true && field.isFirstResponder)
         }
     }

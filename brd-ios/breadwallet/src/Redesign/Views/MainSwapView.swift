@@ -100,10 +100,6 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         containerStackView.addArrangedSubview(dividerWithButtonView)
         containerStackView.addArrangedSubview(termSwapCurrencyView)
         
-//        dividerWithButtonView.snp.makeConstraints { make in
-//            make.height.equalTo(ViewSizes.medium.rawValue)
-//        }
-        
         dividerWithButtonView.addSubview(lineView)
         lineView.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.minimum.rawValue)
