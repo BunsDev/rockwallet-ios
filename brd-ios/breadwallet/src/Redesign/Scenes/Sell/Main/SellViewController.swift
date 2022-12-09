@@ -9,10 +9,11 @@
 import UIKit
 
 class SellViewController: BaseTableViewController<SellCoordinator,
-                            SellInteractor,
-                            SellPresenter,
-                            SellStore>,
-                            SellResponseDisplays {
+                          SellInteractor,
+                          SellPresenter,
+                          SellStore>,
+                          SellResponseDisplays {
+    
     typealias Models = SellModels
     
     override var sceneLeftAlignedTitle: String? {
@@ -38,6 +39,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         super.prepareData()
         
         guard let token = dataStore?.currency else { return }
+        interactor?.getExchangeRate(viewAction: .init())
         
         sections = [
             Models.Sections.rateAndTimer,
@@ -74,7 +76,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
                                   userInteractionEnabled: false)
             ],
             Models.Sections.accountLimits: [
-                LabelViewModel.text(L10n.Scenes.Sell.disclaimer("50 USD", "100 USD", "1000 USD"))
+                LabelViewModel.text("")
             ]
         ]
         
@@ -96,7 +98,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         
         continueButton.configure(with: Presets.Button.primary)
         continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                         enabled: false,
+                                         enabled: true,
                                          callback: { [weak self] in
             self?.buttonTapped()
         }))
@@ -181,7 +183,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         return cell
     }
     
-    private func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
+    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             continueButton.viewModel?.enabled = false
@@ -190,6 +192,14 @@ class SellViewController: BaseTableViewController<SellCoordinator,
             return nil
         }
         
+        return cell
+    }
+    
+    func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
+        guard let section = sections.firstIndex(of: Models.Sections.accountLimits),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+            return nil
+        }
         return cell
     }
     
@@ -245,29 +255,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
             view.setToggleSwitchPlacesButtonState(true)
             
             view.setup(with: responseDisplay.amounts)
-        }
-        
-        tableView.endUpdates()
-    }
-    
-    func displayExchangeRate(responseDisplay: SwapModels.Rate.ResponseDisplay) {
-        tableView.beginUpdates()
-        
-        if let cell = getRateAndTimerCell() {
-            cell.setup { view in
-                view.setup(with: responseDisplay.rateAndTimer)
-                
-                view.completion = { [weak self] in
-//                    self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
-                }
-            }
-        }
-        
-        if let section = sections.firstIndex(of: Models.Sections.accountLimits),
-           let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
-            cell.setup { view in
-                view.setup(with: responseDisplay.accountLimits)
-            }
         }
         
         tableView.endUpdates()

@@ -10,6 +10,16 @@ import UIKit
 import WalletKit
 
 class BuyStore: NSObject, BaseDataStore, BuyDataStore {
+    
+    // ExchangeRateDaatStore
+    var fromCode: String { return C.usdCurrencyCode }
+    var toCode: String { toAmount?.currency.code ?? "" }
+    var quoteRequestData: QuoteRequestData {
+        return .init(from: fromCode.lowercased(),
+                     to: toCode,
+                     type: .buy(paymentMethod))
+    }
+    
     // MARK: - BuyDataStore
     var itemId: String?
     
@@ -19,6 +29,14 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var paymentMethod: PaymentCard.PaymentType? = .buyCard
     var publicToken: String?
     var mask: String?
+    
+    var limits: String {
+        guard let quote = quote else { return "" }
+        let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
+        let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
+        let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit) ?? ""
+        return paymentMethod == .buyAch ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
+    }
     
     override init() {
         super.init()
