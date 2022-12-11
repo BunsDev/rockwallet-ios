@@ -70,7 +70,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction) {
-        let requestData = PlaidLinkTokenRequestData(accountId: dataStore?.paymentCard.id)
+        let requestData = PlaidLinkTokenRequestData(accountId: dataStore?.paymentCard?.id)
         PlaidLinkTokenWorker().execute(requestData: requestData) { [weak self] result in
             switch result {
             case .success(let response):
