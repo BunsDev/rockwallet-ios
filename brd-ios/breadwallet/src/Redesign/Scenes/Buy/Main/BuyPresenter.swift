@@ -216,8 +216,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                   dismissType: .tapToDismiss)
         let config = Presets.InfoView.verification
         
-        viewController?.displayMessage(responseDisplay: .init(model: model, config: config))
-        viewController?.displayManageAssets(actionResponse: .init())
+        viewController?.displayManageAssetsMessage(actionResponse: .init(model: model, config: config))
     }
     
     // MARK: - Additional Helpers
