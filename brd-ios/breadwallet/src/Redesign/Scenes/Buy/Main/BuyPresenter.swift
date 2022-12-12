@@ -24,8 +24,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .paymentMethod,
             .accountLimits
         ]
-        
-        if UserManager.shared.profile?.canUseAch == true {
+        let hasAch = UserManager.shared.profile?.canUseAch ?? false
+        if hasAch {
             sections.insert(.segment, at: 0)
         }
         
@@ -33,12 +33,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let paymentSegment = SegmentControlViewModel(selectedIndex: .buyCard)
         
         let paymentMethodViewModel: CardSelectionViewModel
-        switch paymentSegment.selectedIndex {
-        case .buyAch:
+        if paymentSegment.selectedIndex == .buyAch && hasAch {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)
-        default:
+        } else {
             paymentMethodViewModel = CardSelectionViewModel()
         }
         
