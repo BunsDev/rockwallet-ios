@@ -24,7 +24,7 @@ enum ExchangeEndpoints: String, URLType {
     case paymentInstrumentId = "payment-instrument?instrument_id=%@"
     case paymentStatus = "payment-status?reference=%@"
     
-    case plaidLinkToken = "plaid-link-token"
+    case plaidLinkToken = "plaid-link-token?account_id=%@"
     case plaidPublicToken = "plaid-public-token"
     case plaidLogEvent = "plaid-log-event"
     case plaidLogError = "plaid-log-link-error"

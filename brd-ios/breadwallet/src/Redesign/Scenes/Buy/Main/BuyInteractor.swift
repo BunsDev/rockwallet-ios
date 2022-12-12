@@ -70,7 +70,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction) {
-        PlaidLinkTokenWorker().execute { [weak self] result in
+        let requestData = PlaidLinkTokenRequestData(accountId: dataStore?.paymentCard?.id)
+        PlaidLinkTokenWorker().execute(requestData: requestData) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let linkToken = response?.linkToken else { return }
@@ -83,7 +84,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
-        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken, mask: dataStore?.mask)) { [weak self] result in
+        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken, mask: dataStore?.mask, accountId: dataStore?.paymentCard?.id)) { [weak self] result in
             switch result {
             case .success:
                 self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
