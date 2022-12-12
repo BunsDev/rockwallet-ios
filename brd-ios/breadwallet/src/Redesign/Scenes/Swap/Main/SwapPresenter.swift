@@ -64,7 +64,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         let fromFormattedFiatString = ExchangeFormatter.createAmountString(string: fromFiatValue ?? "")
         let fromFormattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
-        let toFormattedFiatString = ExchangeFormatter.createAmountString(string: toFiatValue ?? "")
         let toFormattedTokenString = ExchangeFormatter.createAmountString(string: toTokenValue ?? "")
         
         let toFee = actionResponse.toFee
@@ -79,7 +78,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                       formattedTokenString: fromFormattedTokenString,
                                                       title: .text(balanceText)),
                                           to: .init(amount: actionResponse.to,
-                                                    formattedFiatString: toFormattedFiatString,
                                                     formattedTokenString: toFormattedTokenString,
                                                     fee: actionResponse.toFee,
                                                     formattedTokenFeeString: formattedToTokenFeeString,
