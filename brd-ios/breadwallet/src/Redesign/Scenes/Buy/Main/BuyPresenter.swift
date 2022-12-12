@@ -213,8 +213,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
         
         let model = InfoViewModel(description: .attributedText(infoMessage),
-                                  dismissType: .auto,
-                                  userInteraction: true)
+                                  dismissType: .tapToDismiss)
         let config = Presets.InfoView.verification
         
         viewController?.displayMessage(responseDisplay: .init(model: model, config: config))

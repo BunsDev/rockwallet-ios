@@ -47,7 +47,6 @@ struct InfoViewModel: ViewModel {
     var tickbox: TickboxItemViewModel?
     
     var dismissType: DismissType = .auto
-    var userInteraction = false
 }
 
 class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
@@ -55,7 +54,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
     var trailingButtonCallback: (() -> Void)?
     var didFinish: (() -> Void)?
     var toggleTickboxCallback: ((Bool) -> Void)?
-    var linkCallback: (() -> Void)?
     
     // MARK: Lazy UI
     
@@ -252,8 +250,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
                 self?.viewTapped()
             }
             
-            viewModel.userInteraction ?
-            addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkTapped))) :
             addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
             
         case .tapToDismiss:
@@ -294,10 +290,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
     
     func tickboxTapped(value: Bool) {
         toggleTickboxCallback?(value)
-    }
-    
-    @objc private func linkTapped() {
-        linkCallback?()
     }
     
     private func toggleVisibility(isShown: Bool) {

@@ -307,7 +307,13 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayManageAssets(actionResponse: BuyModels.AchData.ResponseDisplay) {
-        coordinator?.showManageAssets(coreSystem: dataStore?.coreSystem)
+        guard let superview = UIApplication.shared.activeWindow else { return }
+        
+        let notification: FEInfoView = (superview.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
+        notification.didFinish = { [weak self] in
+            self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
+            self?.coordinator?.hideMessage()
+        }
     }
     
     func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay) {
