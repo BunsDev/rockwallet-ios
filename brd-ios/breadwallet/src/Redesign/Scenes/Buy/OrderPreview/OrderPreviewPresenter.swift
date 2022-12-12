@@ -56,7 +56,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                                                         networkFee: .init(title: .text(L10n.Swap.miningNetworkFee),
                                                                           value: .text(networkFeeText),
                                                                           infoImage: .image(infoImage)),
-                                                        totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)))
+                                                        totalCost: .init(title: .text(L10n.Swap.youReceive), value: .text(totalText)))
         
         let achNotificationModel = InfoViewModel(description: .text(L10n.Buy.achPaymentDurationWarning), dismissType: .persistent)
         let achTermsModel = InfoViewModel(description: .text(L10n.Buy.terms),

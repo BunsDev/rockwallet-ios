@@ -17,7 +17,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     typealias Models = SellModels
     
     override var sceneLeftAlignedTitle: String? {
-        return L10n.Scenes.Sell.title
+        return L10n.Sell.title
     }
     
     var didTriggerGetExchangeRate: (() -> Void)?
