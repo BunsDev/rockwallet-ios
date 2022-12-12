@@ -238,7 +238,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         titleLabel.isHidden = viewModel.title == nil
         
         descriptionLabel.setup(with: viewModel.description)
-        descriptionLabel.isUserInteractionEnabled = viewModel.userInteraction
         descriptionLabel.isHidden = viewModel.description == nil
         
         bottomButton.setup(with: viewModel.button)
@@ -253,8 +252,9 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
                 self?.viewTapped()
             }
             
+            viewModel.userInteraction ?
+            addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkTapped))) :
             addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
-            descriptionLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkTapped)))
             
         case .tapToDismiss:
             addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
