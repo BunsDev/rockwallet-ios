@@ -514,6 +514,8 @@ internal enum L10n {
     internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
     }
+    /// ACH fee (fixed fee + % (TBD)
+    internal static let achFeeText = L10n.tr("Localizable", "Buy.achFeeText", fallback: "ACH fee (fixed fee + % (TBD)")
     /// Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.
     /// 
     /// It currently takes 7-10 days to process a purchase with ACH
@@ -522,6 +524,8 @@ internal enum L10n {
     }
     /// Currently, ACH payments will take 7-10 days to complete.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
+    /// ACH payment method was relinked successfully
+    internal static let achPaymentMethodRelinked = L10n.tr("Localizable", "Buy.achPaymentMethodRelinked", fallback: "ACH payment method was relinked successfully")
     /// ACH Payments
     internal static let achPayments = L10n.tr("Localizable", "Buy.achPayments", fallback: "ACH Payments")
     /// ACH payment method was added successfully
@@ -544,8 +548,8 @@ internal enum L10n {
     internal static func buyLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is $%s USD and maximum is $%s USD/day.")
     }
-    /// Buy with card
-    internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "Buy with card")
+    /// BUY WITH CARDS
+    internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARDS")
     /// Card label on add card flow
     internal static let card = L10n.tr("Localizable", "Buy.Card", fallback: "Card")
     /// CVV label in add card flow
@@ -570,6 +574,8 @@ internal enum L10n {
     internal static let cvvHint = L10n.tr("Localizable", "Buy.CvvHint", fallback: "XXX")
     /// Buy details title
     internal static let details = L10n.tr("Localizable", "Buy.Details", fallback: "Purchase details")
+    /// USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.
+    internal static let disabledUSDCMessage = L10n.tr("Localizable", "Buy.disabledUSDCMessage", fallback: "USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.")
     /// There was an error while processing your payment title in buy failure screen
     internal static let errorProcessingPayment = L10n.tr("Localizable", "Buy.ErrorProcessingPayment", fallback: "There was an error while processing your payment")
     /// Expiration date
@@ -578,8 +584,8 @@ internal enum L10n {
     internal static let failureTransactionMessage = L10n.tr("Localizable", "Buy.FailureTransactionMessage", fallback: "Please contact your card issuer/bank or try again with a different payment method.")
     /// First Name label in billing address view on buy flow
     internal static let firstName = L10n.tr("Localizable", "Buy.FirstName", fallback: "First Name")
-    /// Fund with ACH
-    internal static let fundWithAch = L10n.tr("Localizable", "Buy.fundWithAch", fallback: "Fund with ACH")
+    /// FUND WITH ACH
+    internal static let fundWithAch = L10n.tr("Localizable", "Buy.fundWithAch", fallback: "FUND WITH ACH")
     /// Entered expiration date is not valid!
     internal static let invalidExpirationDate = L10n.tr("Localizable", "Buy.InvalidExpirationDate", fallback: "Entered expiration date is not valid!")
     /// I want
@@ -649,6 +655,8 @@ internal enum L10n {
     /// ZIP/Postal Code label in billing address view on buy flow
     internal static let zipPostalCode = L10n.tr("Localizable", "Buy.ZIPPostalCode", fallback: "ZIP/Postal Code")
     internal enum Ach {
+      /// Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.
+      internal static let accountUnlinked = L10n.tr("Localizable", "Buy.Ach.AccountUnlinked", fallback: "Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.")
       /// %s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.
       internal static func walletDisabled(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
         return L10n.tr("Localizable", "Buy.Ach.WalletDisabled", p1, p2, fallback: "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.")
@@ -870,13 +878,9 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "Disabled.title", fallback: "Wallet disabled")
   }
   internal enum Drawer {
-    /// Drawer strings
+    /// title of the drawer shown after buy/sell button tap on home screen
     internal static let title = L10n.tr("Localizable", "Drawer.title", fallback: "Buy / Sell")
     internal enum Button {
-      /// BUY WITH CARD
-      internal static let buyWithAch = L10n.tr("Localizable", "Drawer.button.buy_with_ach", fallback: "BUY WITH CARD")
-      /// FUND WITH ACH
-      internal static let buyWithCard = L10n.tr("Localizable", "Drawer.button.buy_with_card", fallback: "FUND WITH ACH")
       /// SELL & WIDRAW
       internal static let buyWithSell = L10n.tr("Localizable", "Drawer.button.buy_with_sell", fallback: "SELL & WIDRAW")
     }
@@ -1779,6 +1783,26 @@ internal enum L10n {
     /// Segwit button label that takes the user back to the home screen once SegWit is enabled.
     internal static let homeButton = L10n.tr("Localizable", "Segwit.HomeButton", fallback: "Proceed")
   }
+  internal enum Sell {
+    /// ACH Withdrawal
+    internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
+    /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.
+    /// 
+    /// ACH Withdrawals will be processed within 3-5 business days.withdrawal
+    internal static func disclaimer(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Sell.disclaimer", p1, p2, p3, fallback: "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal")
+    }
+    /// I receive
+    internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
+    /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.
+    /// 
+    /// ACH Withdrawals will be processed within 3-5 business days.
+    internal static func sellLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Sell.SellLimits", p1, p2, p3, fallback: "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.\n\nACH Withdrawals will be processed within 3-5 business days.")
+    }
+    /// Sell & Withdraw funds
+    internal static let title = L10n.tr("Localizable", "Sell.title", fallback: "Sell & Withdraw funds")
+  }
   internal enum Send {
     /// Send money amount label
     internal static let amountLabel = L10n.tr("Localizable", "Send.amountLabel", fallback: "Amount")
@@ -2153,9 +2177,7 @@ internal enum L10n {
     /// Rate label in swap screen
     internal static let rateValue = L10n.tr("Localizable", "Swap.RateValue", fallback: "Rate")
     /// Receiving network fee text label on Swap screen
-    internal static let receiveNetworkFee = L10n.tr("Localizable", "Swap.ReceiveNetworkFee", fallback: "Receiving network fee\n(included)")
-    /// Receiving fee label on Swap screen
-    internal static let receivingFee = L10n.tr("Localizable", "Swap.ReceivingFee", fallback: "Receiving fee\n")
+    internal static let receiveNetworkFee = L10n.tr("Localizable", "Swap.ReceiveNetworkFee", fallback: "Receiving network fee")
     /// Your swap request timed out. Please try again.
     internal static let requestTimedOut = L10n.tr("Localizable", "Swap.RequestTimedOut", fallback: "Your swap request timed out. Please try again.")
     /// Retry
@@ -2165,9 +2187,7 @@ internal enum L10n {
     /// Sending fee label on swap screen
     internal static let sendingFee = L10n.tr("Localizable", "Swap.SendingFee", fallback: "Sending fee\n")
     /// Sending network fee text label on Swap screen
-    internal static let sendNetworkFee = L10n.tr("Localizable", "Swap.SendNetworkFee", fallback: "Sending network fee\n(included)")
-    /// Send network fee not included label on swap
-    internal static let sendNetworkFeeNotIncluded = L10n.tr("Localizable", "Swap.sendNetworkFeeNotIncluded", fallback: "Sending network fee\n(not included)")
+    internal static let sendNetworkFee = L10n.tr("Localizable", "Swap.SendNetworkFee", fallback: "Sending network fee")
     /// Swap again button title in swap failure screen
     internal static let swapAgain = L10n.tr("Localizable", "Swap.SwapAgain", fallback: "Swap again")
     /// Swap min and max limit text
@@ -2200,8 +2220,8 @@ internal enum L10n {
     internal static func transactionTo(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Swap.transactionTo", String(describing: p1), fallback: "To %1$@")
     }
-    /// You receive
-    internal static let youReceive = L10n.tr("Localizable", "Swap.youReceive", fallback: "You receive")
+    /// You'll receive
+    internal static let youReceive = L10n.tr("Localizable", "Swap.youReceive", fallback: "You'll receive")
     /// You send
     internal static let youSend = L10n.tr("Localizable", "Swap.youSend", fallback: "You send")
     internal enum AmountPurchased {
@@ -2888,18 +2908,6 @@ internal enum L10n {
     internal static let warning = L10n.tr("Localizable", "WritePaperPhrase.warning", fallback: "For security purposes, do not screenshot or email these words.")
     /// Remember to write these words down. Swipe back if you forgot.
     internal static let warning2 = L10n.tr("Localizable", "WritePaperPhrase.warning2", fallback: "Remember to write these words down. Swipe back if you forgot.")
-  }
-  internal enum Scenes {
-    internal enum Sell {
-      /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.
-      /// 
-      /// ACH Withdrawals will be processed within 3-5 business days.
-      internal static func disclaimer(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "scenes.sell.disclaimer", p1, p2, p3, fallback: "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.")
-      }
-      /// Sell & Widraw scene
-      internal static let title = L10n.tr("Localizable", "scenes.sell.title", fallback: "Sell & Withdraw funds")
-    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
