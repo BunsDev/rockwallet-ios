@@ -64,8 +64,10 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var toAmount: Amount?
     
-    var paymentCard: PaymentCard?
-    var allPaymentCards: [PaymentCard]?
+    // MARK: - AchDataStore
+    var ach: PaymentCard?
+    var selected: PaymentCard?
+    var cards: [PaymentCard] = []
     
     var quote: Quote?
     
@@ -81,7 +83,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var isFormValid: Bool {
         guard let amount = toAmount,
               amount.tokenValue > 0,
-              paymentCard != nil,
+              selected != nil,
               feeAmount != nil
         else {
             return false

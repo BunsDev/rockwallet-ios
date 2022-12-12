@@ -13,9 +13,12 @@ extension Scenes {
     static let Buy = BuyViewController.self
 }
 
-protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable, ExchangeRateViewActions {
+protocol BuyViewActions: BaseViewActions,
+                         FetchViewActions,
+                         FeeFetchable,
+                         ExchangeRateViewActions,
+                         AchViewActions {
     func setAmount(viewAction: BuyModels.Amounts.ViewAction)
-    func getPaymentCards(viewAction: BuyModels.PaymentCards.ViewAction)
     func setAssets(viewAction: BuyModels.Assets.ViewAction)
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
@@ -24,7 +27,10 @@ protocol BuyViewActions: BaseViewActions, FetchViewActions, FeeFetchable, Exchan
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
 }
 
-protocol BuyActionResponses: BaseActionResponses, FetchActionResponses, ExchangeRateActionResponses {
+protocol BuyActionResponses: BaseActionResponses,
+                             FetchActionResponses,
+                             ExchangeRateActionResponses,
+                             AchActionResponses {
     func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse)
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
@@ -46,15 +52,13 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayManageAssets(actionResponse: BuyModels.AchData.ResponseDisplay)
 }
 
-protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
+protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
     var from: Decimal? { get set }
     var to: Decimal? { get set }
     var values: BuyModels.Amounts.ViewAction { get set }
     var toAmount: Amount? { get set }
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }
-    var paymentCard: PaymentCard? { get set }
-    var allPaymentCards: [PaymentCard]? { get set }
     var quote: Quote? { get set }
     
     var coreSystem: CoreSystem? { get set }
@@ -66,7 +70,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var mask: String? { get set }
 }
 
-protocol BuyDataPassing {
+protocol BuyDataPassing: AchDataStore {
     var dataStore: BuyDataStore? { get }
 }
 

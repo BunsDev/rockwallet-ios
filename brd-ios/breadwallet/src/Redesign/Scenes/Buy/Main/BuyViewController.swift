@@ -145,7 +145,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 case .buyAch:
                     self?.interactor?.getLinkToken(viewAction: .init())
                 default:
-                    self?.interactor?.getPaymentCards(viewAction: .init(getCards: true))
+                    self?.interactor?.getPaymentCards(viewAction: .init())
                 }
             }
             
@@ -258,7 +258,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                       keyStore: dataStore?.keyStore,
                                       to: dataStore?.toAmount,
                                       from: dataStore?.from,
-                                      card: dataStore?.paymentCard,
+                                      card: dataStore?.selected,
                                       quote: dataStore?.quote)
     }
     

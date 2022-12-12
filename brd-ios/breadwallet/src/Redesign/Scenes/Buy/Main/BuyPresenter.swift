@@ -11,8 +11,13 @@ import UIKit
 final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     typealias Models = BuyModels
     
+    func presentAch(actionResponse: AchPaymentModels.Get.ResponseDisplay) {
+        
+    }
+    
     weak var viewController: BuyViewController?
     
+    var paymentModel: CardSelectionViewModel?
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
     
     // MARK: - BuyActionResponses
@@ -24,7 +29,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .paymentMethod,
             .accountLimits
         ]
-        let hasAch = UserManager.shared.profile?.canUseAch ?? false
+        // TODO: this should be passed as a parameter. we don't want the presenter to need any additional data to assemble VMs
+        let hasAch = true //UserManager.shared.profile?.canUseAch ?? false
         if hasAch {
             sections.insert(.segment, at: 0)
         }
@@ -69,12 +75,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
-        if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyCard {
+        if let paymentCard = actionResponse.card, paymentCard.type == .buyCard {
             cardModel = .init(logo: paymentCard.displayImage,
                               cardNumber: .text(paymentCard.displayName),
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
-        } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyAch {
+            
+        } else if let paymentCard = actionResponse.card, paymentCard.type == .buyAch {
             switch actionResponse.card?.status {
             case .statusOk:
                 cardModel = .init(title: .text(L10n.Buy.transferFromBank),
@@ -90,8 +97,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             }
             cryptoModel.selectionDisabled = true
             
-        } else if actionResponse.paymentMethod == .buyCard {
+        } else if actionResponse.card?.type == .buyCard {
             cardModel = .init(userInteractionEnabled: true)
+            
         } else {
             cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                subtitle: .text(L10n.Buy.linkBankAccount),

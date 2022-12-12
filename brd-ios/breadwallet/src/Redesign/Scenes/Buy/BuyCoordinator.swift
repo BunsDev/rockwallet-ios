@@ -19,7 +19,7 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
     
     func reloadBuy(selectedCard: PaymentCard) {
         let buyVC = navigationController.children.first(where: { $0 is BuyViewController }) as? BuyViewController
-        buyVC?.dataStore?.paymentCard = selectedCard
+        buyVC?.dataStore?.selected = selectedCard
         buyVC?.dataStore?.autoSelectDefaultPaymentMethod = false
         buyVC?.interactor?.getData(viewAction: .init())
     }
