@@ -306,8 +306,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                  configuration: responseDisplay.config)
     }
     
-    func displayManageAssets(actionResponse: BuyModels.AchData.ResponseDisplay) {
-        coordinator?.showManageAssets(coreSystem: dataStore?.coreSystem)
+    func displayManageAssetsMessage(actionResponse: BuyModels.AchData.ResponseDisplay) {
+        coordinator?.showMessage(model: actionResponse.model,
+                                 configuration: actionResponse.config,
+                                 onTapCallback: { [weak self] in
+            self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
+        })
     }
     
     func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay) {
