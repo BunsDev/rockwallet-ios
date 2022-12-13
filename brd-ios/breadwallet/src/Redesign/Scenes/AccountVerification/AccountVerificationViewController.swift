@@ -3,12 +3,14 @@
 //
 
 import UIKit
+import Veriff
 
 class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
                                          AccountVerificationInteractor,
                                          AccountVerificationPresenter,
                                          AccountVerificationStore>,
-                                         AccountVerificationResponseDisplays {
+                                         AccountVerificationResponseDisplays,
+                                         VeriffSdkDelegate {
     typealias Models = AccountVerificationModels
 
     override var sceneLeftAlignedTitle: String? {
@@ -102,7 +104,23 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
     override func infoButtonTapped() {
         interactor?.showPersonalInfoPopup(viewAction: .init())
     }
-
+    
+    func sessionDidEndWithResult(_ result: Veriff.VeriffSdk.Result) {
+        switch result.status {
+        case .done:
+            // The user successfully submitted the session
+            break
+        case .canceled:
+            // The user canceled the verification process.
+            break
+        case .error(let error):
+            break
+//            switch error {
+//                // ...
+//            }
+        }
+    }
+    
     // MARK: - AccountVerificationResponseDisplay
     
     func displayStartVerification(responseDisplay: AccountVerificationModels.Start.ResponseDisplay) {
@@ -120,7 +138,11 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
             coordinator?.showKYCLevelTwo()
             
         case .veriff:
-            print("")
+            coordinator?.showKYCVeriff()
+            
+            let veriff = VeriffSdk.shared
+            veriff.delegate = self
+            veriff.startAuthentication(sessionUrl: "responseDisplay.sessionUrl", presentingFrom: self)
         }
     }
     

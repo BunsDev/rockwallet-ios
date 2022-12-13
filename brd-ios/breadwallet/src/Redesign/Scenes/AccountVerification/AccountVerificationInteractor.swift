@@ -18,7 +18,20 @@ class AccountVerificationInteractor: NSObject, Interactor, AccountVerificationVi
     }
 
     func startVerification(viewAction: AccountVerificationModels.Start.ViewAction) {
-        presenter?.presentStartVerification(actionResponse: .init(level: Models.KYCLevel(rawValue: viewAction.level) ?? .one))
+        if Models.KYCLevel(rawValue: viewAction.level) == .veriff {
+            VeriffSessionWorker().execute { [weak self] result in
+                switch result {
+                case .success(let data):
+                    self?.presenter?.presentStartVerification(actionResponse: .init(level: Models.KYCLevel(rawValue: viewAction.level) ?? .one,
+                                                                                    sessionUrl: data?.sessionId))
+
+                case .failure(let error):
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                }
+            }
+        } else {
+            presenter?.presentStartVerification(actionResponse: .init(level: Models.KYCLevel(rawValue: viewAction.level) ?? .one))
+        }
     }
     
     func showPersonalInfoPopup(viewAction: AccountVerificationModels.PersonalInfo.ViewAction) {

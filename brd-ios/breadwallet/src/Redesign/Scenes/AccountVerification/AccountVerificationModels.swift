@@ -28,11 +28,13 @@ enum AccountVerificationModels {
         
         struct ActionResponse {
             var level: KYCLevel
+            var sessionUrl: String?
         }
         
         struct ResponseDisplay {
             var level: KYCLevel
             var isPending: Bool
+            var sessionUrl: String
         }
     }
     

@@ -12,6 +12,12 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>RockWallet</string>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<array>
+		<string>A0000002471001</string>
+		<string>A0000002472001</string>
+		<string>00000000000000</string>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -162,6 +168,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Used to scan barcodes</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used for KYC authentication</string>
+	<key>NFCReaderUsageDescription</key>
+	<string>Used for KYC authentication</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Used for user authentication</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

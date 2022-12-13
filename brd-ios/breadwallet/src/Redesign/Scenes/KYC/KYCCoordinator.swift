@@ -103,6 +103,10 @@ class KYCCoordinator: BaseCoordinator,
         navigationController.pushViewController(controller, animated: true)
     }
     
+    func showKYCVeriff() {
+        
+    }
+    
     func showIdentitySelector() {
         let controller = KYCDocumentPickerViewController()
         controller.coordinator = self

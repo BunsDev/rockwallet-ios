@@ -68,7 +68,9 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
     }
     
     func presentStartVerification(actionResponse: AccountVerificationModels.Start.ActionResponse) {
-        viewController?.displayStartVerification(responseDisplay: .init(level: actionResponse.level, isPending: isPending))
+        viewController?.displayStartVerification(responseDisplay: .init(level: actionResponse.level,
+                                                                        isPending: isPending,
+                                                                        sessionUrl: actionResponse.sessionUrl ?? ""))
     }
     
     func presentPersonalInfoPopup(actionResponse: AccountVerificationModels.PersonalInfo.ActionResponse) {

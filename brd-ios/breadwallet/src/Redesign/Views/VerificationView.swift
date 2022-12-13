@@ -128,6 +128,7 @@ enum VerificationStatus: Equatable {
                                  headerTrailing: .init(image: Asset.info.name),
                                  status: VerificationStatus.levelTwo(.levelTwo),
                                  description: .text(L10n.Account.swapAndBuyLimit),
+                                 button: .init(title: L10n.Account.upgradeLimits.uppercased()),
                                  dismissType: .persistent)
         case .levelTwo(.expired), .levelTwo(.resubmit):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
@@ -323,11 +324,13 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
         arrowImageView.isHidden = viewModel.infoButton != nil
         statusView.wrappedView.setup(with: .text(viewModel.status.title))
         statusView.isHidden = viewModel.status == VerificationStatus.none
-        // if level 1 was done, but we present level 2, status is hidden
+        
+        // If level 1 was done, but we present level 2, status is hidden
         if viewModel.status == .levelOne,
            viewModel.kyc == .levelTwo {
             statusView.isHidden = true
         }
+        
         descriptionLabel.setup(with: viewModel.description)
         descriptionLabel.isHidden = viewModel.description == nil
         
@@ -342,17 +345,18 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
         buyBenefitsLabel.configure(background: backgroundConfiguration)
         
         let image: String
+        
         switch viewModel.status {
         case .none, .email:
-            image = "selected_gray"
+            image = Asset.selectedGray.name
             statusView.isHidden = true
             
         case .levelTwo(.declined),
                 .levelTwo(.resubmit):
-            image = "errorIcon"
+            image = Asset.errorIcon.name
             
         default:
-            image = "selected"
+            image = Asset.selected.name
         }
         
         statusImageView.wrappedView.setup(with: .init(.imageName(image)))
