@@ -51,12 +51,14 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var isKYCLevelTwo: Bool?
     
-    var limits: String {
-        guard let quote = quote else { return "" }
-        let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd) ?? ""
-        let maxLimit = UserManager.shared.profile?.swapAllowanceDaily
-        let maxText = ExchangeFormatter.fiat.string(for: maxLimit) ?? ""
-        return String(format: L10n.Swap.swapLimits(minText, maxText))
+    var limits: String? {
+        guard let quote = quote,
+              let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue),
+              let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue),
+              let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit)
+        else { return nil }
+        
+        return L10n.Sell.disclaimer(minText, maxText, lifetimeLimit)
     }
     
     // MARK: - Aditional helpers

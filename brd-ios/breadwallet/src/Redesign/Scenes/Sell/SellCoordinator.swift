@@ -11,11 +11,15 @@ import UIKit
 class SellCoordinator: BaseCoordinator, SellRoutes {
     
     // MARK: - SellRoutes
-    func showOrderPreview(crypto: Amount?, quote: Quote?) {
+    func showOrderPreview(crypto: Amount?,
+                          quote: Quote?,
+                          payment: PaymentCard?) {
         open(scene: Scenes.OrderPreview) { vc in
             vc.dataStore?.quote = quote
             vc.dataStore?.to = crypto
             vc.dataStore?.from = crypto?.fiatValue
+            vc.dataStore?.card = payment
+            vc.prepareData()
         }
     }
 
