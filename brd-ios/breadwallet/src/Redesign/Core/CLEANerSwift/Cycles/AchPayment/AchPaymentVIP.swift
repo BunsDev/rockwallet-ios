@@ -94,7 +94,7 @@ extension Interactor where Self: AchViewActions,
         let result = Plaid.create(linkConfiguration)
         switch result {
         case .failure(let error):
-            presenter?.presentFailure(actionResponse: .init())
+            presenter?.presentError(actionResponse: .init(error: error))
         case .success(let handler):
             presenter?.presentPlaidToken(actionResponse: .init(handler: handler))
         }
@@ -109,7 +109,7 @@ extension Interactor where Self: AchViewActions,
                 self?.getAch(viewAction: .init())
                 
             case .failure:
-                self?.presenter?.presentFailure(actionResponse: .init())
+                self?.presenter?.presentError(actionResponse: .init())
             }
         }
     }
