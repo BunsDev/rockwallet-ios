@@ -77,6 +77,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var autoSelectDefaultPaymentMethod = true
+    var canUseAch = UserManager.shared.profile?.canUseAch
     
     // MARK: - Aditional helpers
     
