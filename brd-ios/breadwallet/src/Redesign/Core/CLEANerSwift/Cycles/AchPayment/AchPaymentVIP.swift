@@ -18,7 +18,6 @@ protocol AchViewActions {
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
     //    // TODO: maybe reuse link?
     //    func relink(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
-    //    func selected(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
 }
 
 protocol AchActionResponses: AnyObject {
@@ -95,7 +94,7 @@ extension Interactor where Self: AchViewActions,
         let result = Plaid.create(linkConfiguration)
         switch result {
         case .failure(let error):
-            print("Unable to create Plaid handler due to: \(error)")
+            presenter?.presentFailure(actionResponse: .init())
         case .success(let handler):
             presenter?.presentPlaidToken(actionResponse: .init(handler: handler))
         }
@@ -110,8 +109,7 @@ extension Interactor where Self: AchViewActions,
                 self?.getAch(viewAction: .init())
                 
             case .failure:
-                return
-//                self?.presenter?.presentFailure(actionResponse: .init())
+                self?.presenter?.presentFailure(actionResponse: .init())
             }
         }
     }

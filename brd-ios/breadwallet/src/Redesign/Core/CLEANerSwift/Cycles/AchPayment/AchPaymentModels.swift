@@ -35,8 +35,4 @@ enum AchPaymentModels {
             var handler: Handler
         }
     }
-    
-//    enum Select {
-//        var card: PaymentCard?
-//    }
 }
