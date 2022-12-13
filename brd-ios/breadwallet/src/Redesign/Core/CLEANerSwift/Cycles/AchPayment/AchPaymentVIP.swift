@@ -103,7 +103,8 @@ extension Interactor where Self: AchViewActions,
     
     private func setPublicPlaidToken(_ token: String?, mask: String?) {
         PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: token,
-                                                                                  mask: mask)) { [weak self] result in
+                                                                                  mask: mask,
+                                                                                  accountId: nil)) { [weak self] result in
             switch result {
             case .success:
                 self?.getAch(viewAction: .init())

@@ -36,7 +36,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
                                                                      card: self?.dataStore?.selected,
                                                                      quote: self?.dataStore?.quote))
-
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
             }
@@ -127,6 +126,11 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 dataStore?.selected = dataStore?.cards.first
             }
             
+            let model = dataStore?.values ?? .init()
+            setAmount(viewAction: model)
+            getExchangeRate(viewAction: .init())
+            
+            return
         }
         getExchangeRate(viewAction: .init())
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,

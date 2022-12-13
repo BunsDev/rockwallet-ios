@@ -94,6 +94,12 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                 cardModel = .init(title: .text(L10n.Buy.achPayments),
                                   subtitle: .text(L10n.Buy.relinkBankAccount),
                                   userInteractionEnabled: true)
+                
+                let model = InfoViewModel(description: .text(L10n.Buy.Ach.accountUnlinked), dismissType: .auto)
+                let config = Presets.InfoView.error
+                
+                viewController?.displayMessage(responseDisplay: .init(model: model,
+                                                                      config: config))
             }
             cryptoModel.selectionDisabled = true
             
@@ -171,9 +177,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse) {
-        viewController?.displayAchData(actionResponse: .init())
+        let message = actionResponse.relinkAchPaymentMethod ? L10n.Buy.achPaymentMethodRelinked : L10n.Buy.achSuccess
         
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Buy.achSuccess)),
+        viewController?.displayAchData(actionResponse: .init())
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(message)),
                                                               config: Presets.InfoView.verification))
         
     }

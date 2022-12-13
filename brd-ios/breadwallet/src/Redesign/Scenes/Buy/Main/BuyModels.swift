@@ -120,7 +120,9 @@ enum BuyModels {
     struct PlaidPublicToken {
         struct ViewAction {}
         
-        struct ActionResponse {}
+        struct ActionResponse {
+            let relinkAchPaymentMethod: Bool
+        }
         
         struct ResponseDisplay {}
     }
