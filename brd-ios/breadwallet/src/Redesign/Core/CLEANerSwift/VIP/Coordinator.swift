@@ -109,7 +109,7 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showBuy(coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showBuy(type: PaymentCard.PaymentType = .buyCard, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
             upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
                 guard showPopup else { return }
@@ -120,8 +120,10 @@ class BaseCoordinator: NSObject,
                 }
                 
                 self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                    vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    vc?.prepareData()
                 }
             }
         }

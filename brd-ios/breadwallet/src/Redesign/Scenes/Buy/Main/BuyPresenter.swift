@@ -23,6 +23,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     // MARK: - BuyActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        guard let item = actionResponse.item as? Models.Item else { return }
+        
         var sections: [Models.Sections] = [
             .rateAndTimer,
             .from,
@@ -36,7 +38,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        let paymentSegment = SegmentControlViewModel(selectedIndex: .buyCard)
+        let paymentSegment = SegmentControlViewModel(selectedIndex: item.paymentCard?.type ?? .buyCard)
         
         let paymentMethodViewModel: CardSelectionViewModel
         if paymentSegment.selectedIndex == .buyAch && hasAch {
@@ -75,13 +77,16 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
-        if let paymentCard = actionResponse.card, paymentCard.type == .buyCard {
+        // TODO: refactor this :S
+        if let paymentCard = actionResponse.card,
+            paymentCard.type == .buyCard {
             cardModel = .init(logo: paymentCard.displayImage,
                               cardNumber: .text(paymentCard.displayName),
                               expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                               userInteractionEnabled: true)
             
-        } else if let paymentCard = actionResponse.card, paymentCard.type == .buyAch {
+        } else if let paymentCard = actionResponse.card,
+                  paymentCard.type == .buyAch {
             switch actionResponse.card?.status {
             case .statusOk:
                 cardModel = .init(title: .text(L10n.Buy.transferFromBank),
@@ -103,7 +108,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             }
             cryptoModel.selectionDisabled = true
             
-        } else if actionResponse.card?.type == .buyCard {
+        } else if actionResponse.type == .buyCard {
             cardModel = .init(userInteractionEnabled: true)
             
         } else {

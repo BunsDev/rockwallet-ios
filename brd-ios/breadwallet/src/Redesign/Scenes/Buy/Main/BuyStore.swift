@@ -26,7 +26,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var values: BuyModels.Amounts.ViewAction = .init()
-    var paymentMethod: PaymentCard.PaymentType? = .buyCard
+    var paymentMethod: PaymentCard.PaymentType?
     var publicToken: String?
     var mask: String?
     
