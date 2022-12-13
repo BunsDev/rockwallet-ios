@@ -80,16 +80,18 @@ extension Interactor where Self: AchViewActions,
             self?.setPublicPlaidToken(publicToken, mask: mask)
         }
         
-        linkConfiguration.onExit = { exit in
-            if let error = exit.error {
-                print("exit with \(error)\n\(exit.metadata)")
-            } else {
-                print("exit with \(exit.metadata)")
+        linkConfiguration.onExit = { [weak self] exit in
+            guard let data = self?.mapStructToDictionary(item: exit).description else {
+                return
             }
+            PlaidErrorWorker().execute(requestData: PlaidErrorRequestData(error: data))
         }
         
-        linkConfiguration.onEvent = { event in
-            print("Link Event: \(event)")
+        linkConfiguration.onEvent = { [weak self] event in
+            guard let data = self?.mapStructToDictionary(item: event).description else {
+                return
+            }
+            PlaidEventWorker().execute(requestData: PlaidEventRequestData(event: data))
         }
         
         let result = Plaid.create(linkConfiguration)
@@ -114,6 +116,19 @@ extension Interactor where Self: AchViewActions,
             }
         }
     }
+    
+    func mapStructToDictionary<T>(item: T) -> [String: Any] {
+        let dictionary = Dictionary(uniqueKeysWithValues:
+            Mirror(reflecting: item).children.lazy.map({ (label: String?, value: Any) in
+                if let label = label {
+                    return (label, value)
+                } else {
+                    return (Date().timeIntervalSince1970.description, value)
+                }
+            })
+        )
+        return dictionary.compactMapValues { $0 }
+    }
 }
 
 extension Presenter where Self: AchActionResponses,
@@ -132,6 +147,7 @@ extension Presenter where Self: AchActionResponses,
                                  logo: .image(Asset.bank.image),
                                  cardNumber: .text(item.displayName),
                                  userInteractionEnabled: false)
+            
         default:
             paymentModel = .init(title: .text(L10n.Buy.achPayments),
                                  subtitle: .text(L10n.Buy.relinkBankAccount),
