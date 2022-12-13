@@ -77,7 +77,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                               userInteractionEnabled: true)
         } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyAch {
             switch actionResponse.card?.status {
-            case .pendingExpiration:
+            case .statusOk:
                 cardModel = .init(title: .text(L10n.Buy.transferFromBank),
                                   subtitle: nil,
                                   logo: .image(Asset.bank.image),
