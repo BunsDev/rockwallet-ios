@@ -29,6 +29,11 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
                      type: .sell)
     }
     
+    // MARK: - AchDataStore
+    var ach: PaymentCard?
+    var selected: PaymentCard?
+    var cards: [PaymentCard] = []
+    
     var currency: Currency?
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?

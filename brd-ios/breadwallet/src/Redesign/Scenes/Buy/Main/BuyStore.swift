@@ -64,8 +64,10 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var toAmount: Amount?
     
-    var paymentCard: PaymentCard?
-    var allPaymentCards: [PaymentCard]?
+    // MARK: - AchDataStore
+    var ach: PaymentCard?
+    var selected: PaymentCard?
+    var cards: [PaymentCard] = []
     
     var quote: Quote?
     
@@ -81,7 +83,8 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var isFormValid: Bool {
         guard let amount = toAmount,
               amount.tokenValue > 0,
-              paymentCard != nil,
+              selected != nil,
+              feeAmount != nil,
               feeAmount != nil,
               !relinkAchPaymentMethod
         else {
@@ -92,7 +95,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var relinkAchPaymentMethod: Bool {
         guard paymentMethod == .buyAch,
-              paymentCard?.status != .statusOk
+              selected?.status != .statusOk
         else {
             return false
         }

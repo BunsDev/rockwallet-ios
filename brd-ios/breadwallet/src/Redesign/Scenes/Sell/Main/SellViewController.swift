@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LinkKit
 
 class SellViewController: BaseTableViewController<SellCoordinator,
                           SellInteractor,
@@ -16,6 +17,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     
     typealias Models = SellModels
     
+    var plaidHandler: Handler?
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title
     }
@@ -37,50 +39,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         super.viewWillDisappear(animated)
         
         getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
-    override func prepareData() {
-        super.prepareData()
-        
-        guard let token = dataStore?.currency else { return }
-        
-        sections = [
-            Models.Sections.rateAndTimer,
-            Models.Sections.swapCard,
-            Models.Sections.payoutMethod,
-            Models.Sections.accountLimits
-        ]
-        
-        sectionRows = [
-            Models.Sections.rateAndTimer: [
-                ExchangeRateViewModel(exchangeRate: "1USDC = 0.9 USD",
-                                      timer: .init(till: 56, repeats: false),
-                                      showTimer: true)
-            ],
-            Models.Sections.swapCard: [
-                MainSwapViewModel(from: .init(amount: .zero(token),
-                                              formattedTokenString: .init(string: ""),
-                                              title: .text("I have 10.12000473 USDC")),
-                                  
-                                  to: .init(currencyCode: C.usdCurrencyCode,
-                                            currencyImage: Asset.us.image,
-                                            formattedTokenString: .init(string: ""),
-                                            title: .text("I receive")),
-                                 hideSwapButton: true)
-            ],
-            Models.Sections.payoutMethod: [
-                CardSelectionViewModel(title: .text("Withdraw to"),
-                                  subtitle: nil,
-                                  logo: .image(Asset.bank.image),
-                                  cardNumber: .text("John Jeffery account - **241"),
-                                  userInteractionEnabled: false)
-            ],
-            Models.Sections.accountLimits: [
-                LabelViewModel.text("")
-            ]
-        ]
-        
-        tableView.reloadData()
     }
     
     override func setupSubviews() {
@@ -177,14 +135,9 @@ class SellViewController: BaseTableViewController<SellCoordinator,
             view.configure(with: .init())
             view.setup(with: model)
             
-            //            view.didTapSelectCard = { [weak self] in
-            //                switch self?.dataStore?.paymentMethod {
-            //                case .buyAch:
-            //                    self?.interactor?.getLinkToken(viewAction: .init())
-            //                default:
-            //                    self?.interactor?.getPaymentCards(viewAction: .init(getCards: true))
-            //                }
-            //            }
+            view.didTapSelectCard = { [weak self] in
+                    self?.interactor?.getPlaidToken(viewAction: .init())
+            }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
         }

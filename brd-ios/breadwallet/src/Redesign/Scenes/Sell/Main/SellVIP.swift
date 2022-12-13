@@ -12,19 +12,29 @@ extension Scenes {
     static let Sell = SellViewController.self
 }
 
-protocol SellViewActions: BaseViewActions, ExchangeRateViewActions {
+protocol SellViewActions: BaseViewActions,
+                          FetchViewActions,
+                          ExchangeRateViewActions,
+                          AchViewActions {
     func setAmount(viewAction: SellModels.Amounts.ViewAction)
 }
 
-protocol SellActionResponses: BaseActionResponses, ExchangeRateActionResponses {
+protocol SellActionResponses: BaseActionResponses,
+                              FetchActionResponses,
+                              ExchangeRateActionResponses,
+                              AchActionResponses {
     func presentAmount(actionResponse: SellModels.Amounts.ActionResponse)
 }
 
-protocol SellResponseDisplays: AnyObject, BaseResponseDisplays, ExchangeRateResponseDisplays {
+protocol SellResponseDisplays: AnyObject,
+                               BaseResponseDisplays,
+                               FetchResponseDisplays,
+                               ExchangeRateResponseDisplays,
+                               AchResponseDisplays {
     func displayAmount(responseDisplay: SellModels.Amounts.ResponseDisplay)
 }
 
-protocol SellDataStore: BaseDataStore, ExchangeDataStore {
+protocol SellDataStore: BaseDataStore, ExchangeDataStore, AchDataStore {
 }
 
 protocol SellDataPassing {

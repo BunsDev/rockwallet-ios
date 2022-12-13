@@ -19,7 +19,7 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
     
     func reloadBuy(selectedCard: PaymentCard) {
         let buyVC = navigationController.children.first(where: { $0 is BuyViewController }) as? BuyViewController
-        buyVC?.dataStore?.paymentCard = selectedCard
+        buyVC?.dataStore?.selected = selectedCard
         buyVC?.dataStore?.autoSelectDefaultPaymentMethod = false
         buyVC?.interactor?.getData(viewAction: .init())
     }
@@ -137,14 +137,9 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
     func showManageAssets(coreSystem: CoreSystem?) {
         guard let coreSystem = coreSystem, let assetCollection = coreSystem.assetCollection else { return }
         
-        guard let superview = UIApplication.shared.activeWindow else { return }
-        
-        let notification: FEInfoView = (superview.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
-        notification.linkCallback = { [weak self] in
-            let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: coreSystem)
-            let nc = RootNavigationController(rootViewController: vc)
-            self?.navigationController.present(nc, animated: true, completion: nil)
-        }
+        let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: coreSystem)
+        let nc = RootNavigationController(rootViewController: vc)
+        navigationController.present(nc, animated: true)
     }
     
     // MARK: - Aditional helpers
