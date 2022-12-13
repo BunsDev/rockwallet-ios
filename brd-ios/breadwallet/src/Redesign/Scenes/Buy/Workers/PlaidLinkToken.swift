@@ -14,7 +14,10 @@ struct PlaidLinkTokenRequestData: RequestModelData {
     let accountId: String?
     
     func getParameters() -> [String: Any] {
-        return [:]
+        let params = [
+            "account_id": accountId
+        ]
+        return params.compactMapValues { $0 }
     }
 }
 

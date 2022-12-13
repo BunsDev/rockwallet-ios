@@ -25,8 +25,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         else { return }
         
         getAch(viewAction: .init())
-        getExchangeRate(viewAction: .init())
-        
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
@@ -50,10 +48,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func didGetAch(viewAction: AchPaymentModels.Get.ViewAction) {
-        // TODO: this gets called after cards r fetched. Do we know what should be selected?
         dataStore?.selected = dataStore?.paymentMethod == .buyAch ? dataStore?.ach : dataStore?.cards.first
         setAssets(viewAction: .init(card: dataStore?.selected))
-        presenter?.presentData(actionResponse: .init(item: Models.Item(amount: dataStore?.toAmount, paymentCard: dataStore?.selected)))
     }
     
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {

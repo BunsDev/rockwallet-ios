@@ -32,7 +32,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .accountLimits
         ]
         // TODO: this should be passed as a parameter. we don't want the presenter to need any additional data to assemble VMs
-        let hasAch = true //UserManager.shared.profile?.canUseAch ?? false
+        let hasAch = UserManager.shared.profile?.canUseAch ?? false
         if hasAch {
             sections.insert(.segment, at: 0)
         }

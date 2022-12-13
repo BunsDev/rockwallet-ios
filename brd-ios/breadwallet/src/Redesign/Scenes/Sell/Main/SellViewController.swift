@@ -186,4 +186,16 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         
         tableView.endUpdates()
     }
+    
+    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
+        tableView.beginUpdates()
+        
+        guard let section = sections.firstIndex(of: Models.Sections.payoutMethod),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
+        
+        cell.wrappedView.setup(with: responseDisplay.viewModel)
+        
+        tableView.endUpdates()
+        
+    }
 }
