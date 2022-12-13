@@ -34,8 +34,10 @@ class PlaidLinkTokenWorkerMapper: ModelMapper<PlaidLinkTokenResponseData, PlaidL
 
 class PlaidLinkTokenWorker: BaseApiWorker<PlaidLinkTokenWorkerMapper> {
     override func getUrl() -> String {
-        guard let urlParams = (requestData as? PlaidLinkTokenRequestData)?.accountId else { return "" }
+        guard let urlParams = (requestData as? PlaidLinkTokenRequestData)?.accountId else {
+            return APIURLHandler.getUrl(ExchangeEndpoints.plaidLinkToken)
+        }
         
-        return APIURLHandler.getUrl(ExchangeEndpoints.plaidLinkToken, parameters: urlParams)
+        return APIURLHandler.getUrl(ExchangeEndpoints.plaidLinkTokenID, parameters: urlParams)
     }
 }

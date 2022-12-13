@@ -82,7 +82,17 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         guard let amount = toAmount,
               amount.tokenValue > 0,
               paymentCard != nil,
-              feeAmount != nil
+              feeAmount != nil,
+              !relinkAchPaymentMethod
+        else {
+            return false
+        }
+        return true
+    }
+    
+    var relinkAchPaymentMethod: Bool {
+        guard paymentMethod == .buyAch,
+              paymentCard?.status != .statusOk
         else {
             return false
         }

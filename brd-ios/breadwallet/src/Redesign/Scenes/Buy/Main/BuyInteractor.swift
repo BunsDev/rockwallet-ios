@@ -37,7 +37,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                         self.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency), paymentCard: self.dataStore?.paymentCard)))
                         self.presenter?.presentAssets(actionResponse: .init(amount: self.dataStore?.toAmount,
                                                                             card: self.dataStore?.paymentCard,
-                                                                            quote: self.dataStore?.quote))
+                                                                            quote: self.dataStore?.quote,
+                                                                            paymentMethod: self.dataStore?.paymentMethod))
                         
                     case .failure(let error):
                         self.presenter?.presentError(actionResponse: .init(error: error))
@@ -70,7 +71,9 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction) {
-        let requestData = PlaidLinkTokenRequestData(accountId: dataStore?.paymentCard?.id)
+        let accountId = dataStore?.paymentCard == nil ? nil : dataStore?.paymentCard?.id
+        let requestData = PlaidLinkTokenRequestData(accountId: accountId)
+        
         PlaidLinkTokenWorker().execute(requestData: requestData) { [weak self] result in
             switch result {
             case .success(let response):
@@ -84,10 +87,14 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
-        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken, mask: dataStore?.mask, accountId: dataStore?.paymentCard?.id)) { [weak self] result in
+        let accountId = dataStore?.paymentCard == nil ? nil : dataStore?.paymentCard?.id
+        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken,
+                                                                                  mask: dataStore?.mask,
+                                                                                  accountId: accountId)) { [weak self] result in
             switch result {
             case .success:
-                self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
+                let relinkAchPaymentMethod = self?.dataStore?.relinkAchPaymentMethod ?? false
+                self?.presenter?.presentPublicTokenSuccess(actionResponse: .init(relinkAchPaymentMethod: relinkAchPaymentMethod))
                 
             case .failure:
                 self?.presenter?.presentFailure(actionResponse: .init())
@@ -206,7 +213,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 dataStore?.paymentCard = paymentCards?.first
             }
             
+            let model = dataStore?.values ?? .init()
+            setAmount(viewAction: model)
             getExchangeRate(viewAction: .init())
+            
             return
         }
         
