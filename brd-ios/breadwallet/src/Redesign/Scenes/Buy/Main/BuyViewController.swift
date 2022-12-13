@@ -36,10 +36,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     override var sceneLeftAlignedTitle: String? {
-        guard UserManager.shared.profile?.canUseAch == true else {
-            return L10n.Button.buy
-        }
-        return nil
+        return UserManager.shared.profile?.canUseAch == true ? nil : L10n.Button.buy
     }
     
     override func setupSubviews() {
