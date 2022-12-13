@@ -10,7 +10,7 @@
 
 import UIKit
 
-class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
+class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
                                   OrderPreviewInteractor,
                                   OrderPreviewPresenter,
                                   OrderPreviewStore>,

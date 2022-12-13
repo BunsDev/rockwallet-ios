@@ -61,4 +61,16 @@ protocol OrderPreviewDataPassing {
 }
 
 protocol OrderPreviewRoutes: CoordinatableRoutes {
+    func showOrderPreview(coreSystem: CoreSystem?,
+                          keyStore: KeyStore?,
+                          to: Amount?,
+                          from: Decimal?,
+                          card: PaymentCard?,
+                          quote: Quote?)
+    func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?)
+    func showTermsAndConditions(url: URL)
+    func showTimeout()
+    func showThreeDSecure(url: URL)
+    func showSuccess(paymentReference: String, transactionType: Transaction.TransactionType)
+    func showFailure(failure: FailureReason)
 }
