@@ -346,6 +346,8 @@
 		7E5CB3B42835090E00EC787E /* FEButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB37B2835090E00EC787E /* FEButton.swift */; };
 		7E6729282923A28100A2B612 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6729272923A28100A2B612 /* ComingSoonViewController.swift */; };
 		7E67680328479765007EC155 /* ResendConfirmationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67680228479765007EC155 /* ResendConfirmationWorker.swift */; };
+		7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A78E294735C40012FB3F /* AchPaymentModels.swift */; };
+		7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */; };
 		7E75AD492943297E00E54DEF /* ExchangeRateModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD482943297E00E54DEF /* ExchangeRateModels.swift */; };
 		7E75AD4B2943298900E54DEF /* ExchangeRateVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD4A2943298900E54DEF /* ExchangeRateVIP.swift */; };
 		7E7AFBEA29409FCC0063023F /* RWDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7AFBE929409FCC0063023F /* RWDrawer.swift */; };
@@ -1129,6 +1131,8 @@
 		7E5CB37B2835090E00EC787E /* FEButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FEButton.swift; sourceTree = "<group>"; };
 		7E6729272923A28100A2B612 /* ComingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComingSoonViewController.swift; path = ComingSoon/ComingSoonViewController.swift; sourceTree = "<group>"; };
 		7E67680228479765007EC155 /* ResendConfirmationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendConfirmationWorker.swift; sourceTree = "<group>"; };
+		7E67A78E294735C40012FB3F /* AchPaymentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchPaymentModels.swift; sourceTree = "<group>"; };
+		7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchPaymentVIP.swift; sourceTree = "<group>"; };
 		7E75AD482943297E00E54DEF /* ExchangeRateModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateModels.swift; sourceTree = "<group>"; };
 		7E75AD4A2943298900E54DEF /* ExchangeRateVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateVIP.swift; sourceTree = "<group>"; };
 		7E7AFBE929409FCC0063023F /* RWDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWDrawer.swift; sourceTree = "<group>"; };
@@ -2320,6 +2324,7 @@
 		7E5CB34B2835090D00EC787E /* Cycles */ = {
 			isa = PBXGroup;
 			children = (
+				7E67A78B294734E40012FB3F /* AchPayment */,
 				7E75AD472943296500E54DEF /* ExchangeRate */,
 				7E5CB34C2835090D00EC787E /* Alerts */,
 				7E5CB34F2835090D00EC787E /* Fetch */,
@@ -2452,6 +2457,15 @@
 				7E6729272923A28100A2B612 /* ComingSoonViewController.swift */,
 			);
 			name = ComingSoon;
+			sourceTree = "<group>";
+		};
+		7E67A78B294734E40012FB3F /* AchPayment */ = {
+			isa = PBXGroup;
+			children = (
+				7E67A78E294735C40012FB3F /* AchPaymentModels.swift */,
+				7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */,
+			);
+			path = AchPayment;
 			sourceTree = "<group>";
 		};
 		7E75AD472943296500E54DEF /* ExchangeRate */ = {
@@ -3807,6 +3821,7 @@
 				7ECCA98F2873059300F99368 /* ExchangeEndpoints.swift in Sources */,
 				7E5CB38B2835090E00EC787E /* Shadable.swift in Sources */,
 				3A36328D225301D60043EBA4 /* PriceChangeView.swift in Sources */,
+				7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */,
 				7EAFC5F22941D6C700A7FF26 /* Animations.swift in Sources */,
 				7C5AC8A6203B93D3001B221E /* TxListCell.swift in Sources */,
 				7EBC6B0A2848ABC5000A301F /* RegistrationConfirmationViewController.swift in Sources */,
@@ -4026,6 +4041,7 @@
 				CE27F9591E2C8EA300F7F7F2 /* Amount.swift in Sources */,
 				CE1280F61EEA855C00D27649 /* Date+Additions.swift in Sources */,
 				CED82D4E1E575A5500507A9B /* main.swift in Sources */,
+				7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */,
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,
 				7EBC6B092848ABC5000A301F /* RegistrationConfirmationVIP.swift in Sources */,

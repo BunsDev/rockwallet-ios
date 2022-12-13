@@ -22,8 +22,6 @@ protocol BuyViewActions: BaseViewActions,
     func setAssets(viewAction: BuyModels.Assets.ViewAction)
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
-    func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction)
-    func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction)
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
 }
 
@@ -41,7 +39,7 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse)
 }
 
-protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays {
+protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays, AchResponseDisplays {
     func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay)
     func displayAssets(responseDisplay: BuyModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)

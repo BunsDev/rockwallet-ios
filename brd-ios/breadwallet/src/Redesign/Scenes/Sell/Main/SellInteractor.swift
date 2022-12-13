@@ -9,12 +9,20 @@
 import UIKit
 
 class SellInteractor: NSObject, Interactor, SellViewActions {
+    
     typealias Models = SellModels
 
     var presenter: SellPresenter?
     var dataStore: SellStore?
 
     // MARK: - SellViewActions
+    
+    func getData(viewAction: FetchModels.Get.ViewAction) {
+        if dataStore?.ach == nil {
+            getAch(viewAction: .init())
+        }
+        presenter?.presentData(actionResponse: .init(item: dataStore?.currency))
+    }
 
     func setAmount(viewAction: Models.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
@@ -32,6 +40,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         presenter?.presentAmount(actionResponse: .init(from: dataStore?.fromAmount))
+    }
+    
+    func didGetAch(viewAction: AchPaymentModels.Get.ViewAction) {
+        presenter?.presentData(actionResponse: .init(item: dataStore?.currency))
     }
     // MARK: - Aditional helpers
 }

@@ -49,8 +49,8 @@ extension Interactor where Self: ExchangeRateViewActions,
             return
         }
         
-        guard let fromCurrency = dataStore?.fromCode,
-              let toCurrency = dataStore?.toCode,
+        guard let fromCurrency = dataStore?.fromCode.uppercased(),
+              let toCurrency = dataStore?.toCode.uppercased(),
               let data = dataStore?.quoteRequestData
         else { return }
         
@@ -67,7 +67,7 @@ extension Interactor where Self: ExchangeRateViewActions,
             case .failure(let error):
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+                    self?.presenter?.presentError(actionResponse: .init(error: NetworkingError.accessDenied))
                     return
                 }
             }

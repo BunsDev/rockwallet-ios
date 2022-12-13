@@ -22,7 +22,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return view
     }()
     
-    var linkHandler: Handler?
+    var plaidHandler: Handler?
     var didTriggerGetData: (() -> Void)?
     
     private var supportedCurrencies: [SupportedCurrency]?
@@ -143,7 +143,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.didTapSelectCard = { [weak self] in
                 switch self?.dataStore?.paymentMethod {
                 case .buyAch:
-                    self?.interactor?.getLinkToken(viewAction: .init())
+                    self?.interactor?.getPlaidToken(viewAction: .init())
                 default:
                     self?.interactor?.getPaymentCards(viewAction: .init())
                 }
@@ -263,9 +263,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
-        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
-            self?.interactor?.setPublicToken(viewAction: .init())
-        })
+//        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
+//            self?.interactor?.setPublicToken(viewAction: .init())
+//        })
     }
     
     func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
@@ -298,39 +298,4 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     // MARK: - Additional Helpers
-    
-    // MARK: Start Plaid Link using a Link token
-    func createLinkTokenConfiguration(linkToken: String, completion: (() -> Void)? = nil) -> LinkTokenConfiguration {
-        var linkConfiguration = LinkTokenConfiguration(token: linkToken) { success in
-            self.dataStore?.publicToken = success.publicToken
-            self.dataStore?.mask = success.metadata.accounts.first?.mask
-            completion?()
-        }
-        
-        linkConfiguration.onExit = { exit in
-            if let error = exit.error {
-                print("exit with \(error)\n\(exit.metadata)")
-            } else {
-                print("exit with \(exit.metadata)")
-            }
-        }
-        
-        linkConfiguration.onEvent = { event in
-            print("Link Event: \(event)")
-        }
-        
-        return linkConfiguration
-    }
-    
-    func presentPlaidLinkUsingLinkToken(linkToken: String, completion: (() -> Void)? = nil) {
-        let linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken, completion: completion)
-        let result = Plaid.create(linkConfiguration)
-        switch result {
-        case .failure(let error):
-            print("Unable to create Plaid handler due to: \(error)")
-        case .success(let handler):
-            handler.open(presentUsing: .viewController(self))
-            linkHandler = handler
-        }
-    }
 }

@@ -42,6 +42,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             }
         }
     }
+    
     func getPaymentCards(viewAction: BuyModels.PaymentCards.ViewAction) {
         presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
     }
@@ -50,35 +51,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         // TODO: this gets called after cards r fetched. Do we know what should be selected?
         dataStore?.selected = dataStore?.cards.first
         setAssets(viewAction: .init(card: dataStore?.selected))
-    }
-    
-    func getLinkToken(viewAction: BuyModels.PlaidLinkToken.ViewAction) {
-        guard dataStore?.ach == nil else {
-            setAssets(viewAction: .init(card: dataStore?.ach))
-            return
-        }
-        PlaidLinkTokenWorker().execute { [weak self] result in
-            switch result {
-            case .success(let response):
-                guard let linkToken = response?.linkToken else { return }
-                self?.presenter?.presentLinkToken(actionResponse: .init(linkToken: linkToken))
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
-    }
-    
-    func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
-        PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken, mask: dataStore?.mask)) { [weak self] result in
-            switch result {
-            case .success:
-                self?.presenter?.presentPublicTokenSuccess(actionResponse: .init())
-                
-            case .failure:
-                self?.presenter?.presentFailure(actionResponse: .init())
-            }
-        }
     }
     
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {

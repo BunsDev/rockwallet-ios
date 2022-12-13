@@ -9,6 +9,7 @@
 import UIKit
 
 enum SellModels {
+    typealias Item = Currency
     enum Sections: Sectionable {
         case rateAndTimer
         case accountLimits
@@ -24,6 +25,19 @@ enum SellModels {
             var from: String?
             var to: String?
         }
+        
+        struct ActionResponse {
+            var from: Amount?
+        }
+        
+        struct ResponseDisplay {
+            var continueEnabled = false
+            var amounts: MainSwapViewModel
+        }
+    }
+    
+    struct PaymentMethod {
+        struct ViewAction {}
         
         struct ActionResponse {
             var from: Amount?
