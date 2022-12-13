@@ -64,6 +64,15 @@
       }
     },
     {
+      "identity" : "veriff-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Veriff/veriff-ios-spm/",
+      "state" : {
+        "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205",
+        "version" : "4.51.0"
+      }
+    },
+    {
       "identity" : "walletkitcore",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/WalletKitCore.git",

@@ -27,8 +27,7 @@ protocol AccountVerificationResponseDisplays: AnyObject, BaseResponseDisplays, F
 }
 
 protocol AccountVerificationDataStore: BaseDataStore, FetchDataStore {
-    var verificationStatus: VerificationStatus? { get set }
-    var profile: Profile? { get set }
+
 }
 
 protocol AccountVerificationDataPassing {

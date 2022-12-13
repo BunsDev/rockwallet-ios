@@ -165,6 +165,7 @@ struct VerificationConfiguration: Configurable {
 enum KYC {
     case levelOne
     case levelTwo
+    case veriff
 }
 
 struct VerificationViewModel: ViewModel {

@@ -14,7 +14,7 @@ class AccountVerificationInteractor: NSObject, Interactor, AccountVerificationVi
     // MARK: - AccountVerificationViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: dataStore?.profile))
+        presenter?.presentData(actionResponse: .init(item: UserManager.shared.profile))
     }
 
     func startVerification(viewAction: AccountVerificationModels.Start.ViewAction) {

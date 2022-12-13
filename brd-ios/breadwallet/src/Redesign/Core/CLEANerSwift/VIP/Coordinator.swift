@@ -8,7 +8,6 @@
 import UIKit
 
 protocol BaseControllable: UIViewController {
-
     associatedtype CoordinatorType: CoordinatableRoutes
     var coordinator: CoordinatorType? { get set }
 }
@@ -134,22 +133,11 @@ class BaseCoordinator: NSObject,
     }
     
     func showVerifications() {
-        open(scene: Scenes.AccountVerification) { vc in
-            vc.dataStore?.profile = UserManager.shared.profile
-            vc.prepareData()
-        }
-    }
-    
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
+        open(scene: Scenes.AccountVerification)
     }
     
     func showAccountVerification() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification) { vc in
-            vc?.dataStore?.profile = UserManager.shared.profile
-            vc?.prepareData()
-        }
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification)
     }
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {
@@ -222,7 +210,12 @@ class BaseCoordinator: NSObject,
         childCoordinators.removeAll(where: { $0 === child })
     }
     
-    // only call from coordinator subclasses
+    func dismissFlow() {
+        navigationController.dismiss(animated: true)
+        parentCoordinator?.childDidFinish(child: self)
+    }
+    
+    /// Only call from coordinator subclasses
     func open<T: BaseControllable>(scene: T.Type,
                                    presentationStyle: UIModalPresentationStyle = .fullScreen,
                                    configure: ((T) -> Void)? = nil) {
@@ -233,7 +226,7 @@ class BaseCoordinator: NSObject,
         navigationController.show(controller, sender: nil)
     }
 
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func set<C: BaseCoordinator,
              VC: BaseControllable>(coordinator: C.Type,
                                    scene: VC.Type,
@@ -250,7 +243,7 @@ class BaseCoordinator: NSObject,
         navigationController.setViewControllers([controller], animated: true)
     }
     
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func openModally<C: BaseCoordinator,
                      VC: BaseControllable>(coordinator: C.Type,
                                            scene: VC.Type,
@@ -273,7 +266,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    //TODO: refactor this once the "coming soon" screen is added
+    // TODO: refactor this once the "coming soon" screen is added
     func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?

@@ -82,6 +82,7 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
             
             view.configure(with: config)
         }
+        
         cell.setupCustomMargins(all: .extraSmall)
         
         return cell
@@ -117,6 +118,9 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
             
         case .two:
             coordinator?.showKYCLevelTwo()
+            
+        case .veriff:
+            print("")
         }
     }
     

@@ -21,7 +21,7 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
         let levelTwoStatus: VerificationStatus
         let description = item.failureReason ?? L10n.Account.idVerification
         
-        if item.status.value.contains("KYC2") {
+        if item.status.value.contains(Kyc2.levelTwo.rawValue) {
             levelOneStatus = .levelOne
             levelTwoStatus = item.status
         } else {
@@ -39,7 +39,7 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
             break
         }
         
-        let sections = [ Models.Section.verificationLevel ]
+        let sections = [Models.Section.verificationLevel]
         
         let sectionRows: [Models.Section: [Any]] = [
             .verificationLevel: [
@@ -55,7 +55,12 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
                                       description: .text(description),
                                       benefits: .text(L10n.AccountKYCLevelTwo.limits),
                                       buyBenefits: .text(L10n.AccountKYCLevelTwo.buyLimits),
-                                      isActive: isActive)
+                                      isActive: isActive),
+                VerificationViewModel(kyc: .veriff,
+                                      title: .text("Veriff"),
+                                      status: .none,
+                                      description: .text("Veriff - Biometric authentication"),
+                                      isActive: true)
             ]
         ]
         

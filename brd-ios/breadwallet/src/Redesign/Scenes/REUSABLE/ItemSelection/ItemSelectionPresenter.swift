@@ -14,6 +14,7 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
     weak var viewController: ItemSelectionViewController?
 
     // MARK: - ItemSelectionActionResponses
+    
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
               let items = item.items,
@@ -21,6 +22,7 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
         else { return }
         
         var sections = [Models.Sections.items]
+        
         if isAddingEnabled {
             sections.insert(Models.Sections.addItem, at: 0)
         }
