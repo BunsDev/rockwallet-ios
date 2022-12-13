@@ -37,7 +37,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                         self.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency), paymentCard: self.dataStore?.paymentCard)))
                         self.presenter?.presentAssets(actionResponse: .init(amount: self.dataStore?.toAmount,
                                                                             card: self.dataStore?.paymentCard,
-                                                                            quote: self.dataStore?.quote))
+                                                                            quote: self.dataStore?.quote,
+                                                                            paymentMethod: self.dataStore?.paymentMethod))
                         
                     case .failure(let error):
                         self.presenter?.presentError(actionResponse: .init(error: error))
