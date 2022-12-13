@@ -36,6 +36,7 @@ enum BuyModels {
         struct ActionResponse {
             var amount: Amount?
             var card: PaymentCard?
+            var type: PaymentCard.PaymentType?
             var quote: Quote?
             var handleErrors = false
         }

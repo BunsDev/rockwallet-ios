@@ -395,12 +395,13 @@ class ApplicationController: Subscriber {
             navigationController.pushViewController(accountViewController, animated: true)
         }
         
-        homeScreen.didTapBuy = { [weak self] in
+        homeScreen.didTapBuy = { [weak self] type in
             guard let self = self else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
-            self.coordinator?.showBuy(coreSystem: self.coreSystem,
+            self.coordinator?.showBuy(type: type,
+                                      coreSystem: self.coreSystem,
                                       keyStore: self.keyStore)
         }
         

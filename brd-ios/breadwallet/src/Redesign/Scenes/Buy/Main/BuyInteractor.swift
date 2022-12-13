@@ -20,11 +20,11 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard let currency = dataStore?.toAmount?.currency,
-                dataStore?.supportedCurrencies?.isEmpty != false else { return }
+              dataStore?.paymentMethod != nil,
+              dataStore?.supportedCurrencies?.isEmpty != false
+        else { return }
         
         getAch(viewAction: .init())
-        getExchangeRate(viewAction: .init())
-        
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
@@ -36,6 +36,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                                                      canUseACH: self?.dataStore?.canUseAch ?? false)))
                 self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
                                                                      card: self?.dataStore?.selected,
+                                                                     type: self?.dataStore?.paymentMethod,
                                                                      quote: self?.dataStore?.quote))
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
@@ -48,8 +49,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func didGetAch(viewAction: AchPaymentModels.Get.ViewAction) {
-        // TODO: this gets called after cards r fetched. Do we know what should be selected?
-        dataStore?.selected = dataStore?.cards.first
+        dataStore?.selected = dataStore?.paymentMethod == .buyAch ? dataStore?.ach : dataStore?.cards.first
         setAssets(viewAction: .init(card: dataStore?.selected))
     }
     
@@ -74,6 +74,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         } else {
             presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                            card: dataStore?.selected,
+                                                           type: dataStore?.paymentMethod,
                                                            quote: dataStore?.quote,
                                                            handleErrors: true))
             return
@@ -84,6 +85,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.selected,
+                                                       type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote))
     }
     
@@ -98,6 +100,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         getExchangeRate(viewAction: .init())
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.selected,
+                                                       type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote))
             
     }
@@ -135,7 +138,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         getExchangeRate(viewAction: .init())
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
-                                                             card: dataStore?.selected,
-                                                             quote: dataStore?.quote))
+                                                       card: dataStore?.selected,
+                                                       type: dataStore?.paymentMethod,
+                                                       quote: dataStore?.quote))
     }
 }

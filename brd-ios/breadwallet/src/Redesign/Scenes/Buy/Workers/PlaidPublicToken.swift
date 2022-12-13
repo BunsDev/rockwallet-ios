@@ -16,11 +16,12 @@ struct PlaidPublicTokenRequestData: RequestModelData {
     let accountId: String?
     
     func getParameters() -> [String: Any] {
-        return [
-            "public_token": publicToken ?? "",
-            "mask": mask ?? "",
-            "account_id": accountId ?? ""
+        let params = [
+            "public_token": publicToken,
+            "mask": mask,
+            "account_id": accountId
         ]
+        return params.compactMapValues { $0 }
     }
 }
 

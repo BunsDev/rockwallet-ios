@@ -29,6 +29,7 @@ protocol AchActionResponses: AnyObject {
 
 protocol AchResponseDisplays: AnyObject {
     var plaidHandler: Handler? { get set }
+    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay)
     func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay)
 }
 
@@ -57,9 +58,9 @@ extension Interactor where Self: AchViewActions,
     }
     
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction) {
-        guard dataStore?.ach == nil else { return }
+        guard dataStore?.ach == nil || dataStore?.ach?.status != .statusOk else { return }
         
-        PlaidLinkTokenWorker().execute { [weak self] result in
+        PlaidLinkTokenWorker().execute(requestData: PlaidLinkTokenRequestData(accountId: dataStore?.ach?.id)) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.getPublicPlaidToken(for: response?.linkToken)
@@ -103,7 +104,7 @@ extension Interactor where Self: AchViewActions,
     private func setPublicPlaidToken(_ token: String?, mask: String?) {
         PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: token,
                                                                                   mask: mask,
-                                                                                  accountId: nil)) { [weak self] result in
+                                                                                  accountId: dataStore?.ach?.id)) { [weak self] result in
             switch result {
             case .success:
                 self?.getAch(viewAction: .init())
@@ -148,4 +149,6 @@ extension Controller where Self: AchResponseDisplays {
         plaidHandler = responseDisplay.handler
         plaidHandler?.open(presentUsing: .viewController(self))
     }
+    
+    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {}
 }

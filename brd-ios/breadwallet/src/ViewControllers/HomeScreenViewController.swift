@@ -79,7 +79,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     var didSelectCurrency: ((Currency) -> Void)?
     var didTapManageWallets: (() -> Void)?
-    var didTapBuy: (() -> Void)?
+    var didTapBuy: ((PaymentCard.PaymentType) -> Void)?
     var didTapSell: (() -> Void)?
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
@@ -284,7 +284,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     func setupDrawer() {
-        drawer.callbacks = [ { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapBuy?() }, { [weak self] in self?.didTapSell?() }
+        drawer.callbacks = [ { [weak self] in self?.didTapBuy?(.buyCard) }, { [weak self] in self?.didTapBuy?(.buyAch) }, { [weak self] in self?.didTapSell?() }
         ]
         drawer.configure(with: DrawerConfiguration())
         drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84))

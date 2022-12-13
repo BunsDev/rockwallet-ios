@@ -28,9 +28,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
 
         let sectionRows = [
             Models.Sections.rateAndTimer: [
-                ExchangeRateViewModel(exchangeRate: "1USDC = 0.9 USD",
-                                      timer: .init(till: 56, repeats: false),
-                                      showTimer: true)
+                ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
             ],
             Models.Sections.swapCard: [
                 MainSwapViewModel(from: .init(amount: .zero(item),
