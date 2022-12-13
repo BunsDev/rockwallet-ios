@@ -49,4 +49,14 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var fromAmount: Amount?
     var toAmount: Decimal? { return fromAmount?.fiatValue }
     // MARK: - Aditional helpers
+    var isFormValid: Bool {
+        guard let amount = toAmount,
+              amount > 0,
+              selected != nil,
+              selected?.status == .statusOk
+        else {
+            return false
+        }
+        return true
+    }
 }

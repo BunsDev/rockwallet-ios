@@ -56,7 +56,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         
         continueButton.configure(with: Presets.Button.primary)
         continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                         enabled: true,
+                                         enabled: false,
                                          callback: { [weak self] in
             self?.buttonTapped()
         }))
@@ -174,9 +174,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         // TODO: Extract to VIPBaseViewController
         LoadingView.hide()
         
-        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
         tableView.beginUpdates()
         
         guard let section = sections.firstIndex(of: Models.Sections.swapCard),
@@ -185,6 +182,9 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         cell.wrappedView.setup(with: responseDisplay.amounts)
         
         tableView.endUpdates()
+        
+        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
@@ -196,6 +196,9 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         cell.wrappedView.setup(with: responseDisplay.viewModel)
         
         tableView.endUpdates()
+        
+        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
     }
 }
