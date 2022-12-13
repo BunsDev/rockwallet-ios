@@ -758,6 +758,10 @@
 /* State/Province label in billing address view on buy flow */
 "Buy.StateProvince" = "State/Province";
 
+"Buy.switchedToAch" = "Payment method switched to ACH payments!";
+
+"Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
+
 /* By placing this order you agree to our terms message when ordering */
 "Buy.Terms" = "By placing this order you agree to our";
 
@@ -1493,6 +1497,10 @@
 /* Try again button title in payment view */
 "PaymentConfirmation.TryAgain" = "Try again";
 
+"PaymentConfirmation.TryWithAch" = "Try with ACH payments";
+
+"PaymentConfirmation.TryWithDebit" = "Try with debit card";
+
 /* Bad Payment request alert title */
 "PaymentProtocol.Errors.badPaymentRequest" = "Your transaction request couldn’t be completed. Please try again.";
 
@@ -1956,15 +1964,25 @@
 /* Segwit button label that takes the user back to the home screen once SegWit is enabled. */
 "Segwit.HomeButton" = "Proceed";
 
+"Sell.achDurationWarning" = "ACH withdrawal will be processed within 3-5 business days.";
+
 "Sell.achWithdrawal" = "ACH Withdrawal";
+
+"Sell.Details" = "Sell and Withdraw details";
 
 "Sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
 
 "Sell.iReceive" = "I receive";
 
+"Sell.OrderPreview" = "Withdrawal preview";
+
 "Sell.SellLimits" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.\n\nACH Withdrawals will be processed within 3-5 business days.";
 
 "Sell.title" = "Sell & Withdraw funds";
+
+"Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
+
+"Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
 
 "Send_fio_toLabel" = "FIO";
 

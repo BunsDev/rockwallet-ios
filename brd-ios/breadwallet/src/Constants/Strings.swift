@@ -636,6 +636,10 @@ internal enum L10n {
     internal static let selectPaymentMethod = L10n.tr("Localizable", "Buy.SelectPaymentMethod", fallback: "Select a payment method")
     /// State/Province label in billing address view on buy flow
     internal static let stateProvince = L10n.tr("Localizable", "Buy.StateProvince", fallback: "State/Province")
+    /// Payment method switched to ACH payments!
+    internal static let switchedToAch = L10n.tr("Localizable", "Buy.switchedToAch", fallback: "Payment method switched to ACH payments!")
+    /// Payment method switched to Debit card!
+    internal static let switchedToDebitCard = L10n.tr("Localizable", "Buy.switchedToDebitCard", fallback: "Payment method switched to Debit card!")
     /// By placing this order you agree to our terms message when ordering
     internal static let terms = L10n.tr("Localizable", "Buy.Terms", fallback: "By placing this order you agree to our")
     /// Transaction error
@@ -1372,6 +1376,10 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "PaymentConfirmation.title", fallback: "Confirmation")
     /// Try again button title in payment view
     internal static let tryAgain = L10n.tr("Localizable", "PaymentConfirmation.TryAgain", fallback: "Try again")
+    /// Try with ACH payments
+    internal static let tryWithAch = L10n.tr("Localizable", "PaymentConfirmation.TryWithAch", fallback: "Try with ACH payments")
+    /// Try with debit card
+    internal static let tryWithDebit = L10n.tr("Localizable", "PaymentConfirmation.TryWithDebit", fallback: "Try with debit card")
   }
   internal enum PaymentProtocol {
     internal enum Errors {
@@ -1784,8 +1792,12 @@ internal enum L10n {
     internal static let homeButton = L10n.tr("Localizable", "Segwit.HomeButton", fallback: "Proceed")
   }
   internal enum Sell {
+    /// ACH withdrawal will be processed within 3-5 business days.
+    internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will be processed within 3-5 business days.")
     /// ACH Withdrawal
     internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
+    /// Sell and Withdraw details
+    internal static let details = L10n.tr("Localizable", "Sell.Details", fallback: "Sell and Withdraw details")
     /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.withdrawal
@@ -1794,6 +1806,8 @@ internal enum L10n {
     }
     /// I receive
     internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
+    /// Withdrawal preview
+    internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
     /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.
@@ -1802,6 +1816,10 @@ internal enum L10n {
     }
     /// Sell & Withdraw funds
     internal static let title = L10n.tr("Localizable", "Sell.title", fallback: "Sell & Withdraw funds")
+    /// Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.
+    internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.")
+    /// Your withdrawal is being processed
+    internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
   }
   internal enum Send {
     /// Send money amount label

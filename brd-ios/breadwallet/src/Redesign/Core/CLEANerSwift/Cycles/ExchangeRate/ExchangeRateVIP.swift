@@ -28,7 +28,7 @@ protocol ExchangeRateResponseDisplays {
 }
 
 protocol ExchangeDataStore: NSObject {
-    var limits: String { get }
+    var limits: String? { get }
     var fromCode: String { get }
     var toCode: String { get }
     var quoteRequestData: QuoteRequestData { get }

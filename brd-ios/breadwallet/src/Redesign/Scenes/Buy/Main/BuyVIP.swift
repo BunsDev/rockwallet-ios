@@ -73,11 +73,4 @@ protocol BuyDataPassing: AchDataStore {
 }
 
 protocol BuyRoutes: CoordinatableRoutes {
-    func showOrderPreview(coreSystem: CoreSystem?,
-                          keyStore: KeyStore?,
-                          to: Amount?,
-                          from: Decimal?,
-                          card: PaymentCard?,
-                          quote: Quote?)
-    func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?)
 }

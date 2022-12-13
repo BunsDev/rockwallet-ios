@@ -165,7 +165,12 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
-        coordinator?.showOrderPreview(crypto: dataStore?.fromAmount, quote: dataStore?.quote)
+        coordinator?.showOrderPreview(coreSystem: dataStore?.coreSystem,
+                                      keyStore: dataStore?.keyStore,
+                                      to: dataStore?.fromAmount,
+                                      from: dataStore?.toAmount,
+                                      card: dataStore?.ach,
+                                      quote: dataStore?.quote)
     }
     
     // MARK: - SellResponseDisplay
