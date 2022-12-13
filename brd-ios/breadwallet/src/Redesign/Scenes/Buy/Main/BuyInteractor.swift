@@ -32,7 +32,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
 
                 self?.dataStore?.supportedCurrencies = currencies
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency),
-                                                                                     paymentCard: self?.dataStore?.selected)))
+                                                                                     paymentCard: self?.dataStore?.selected,
+                                                                                     canUseACH: self?.dataStore?.canUseAch ?? false)))
                 self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
                                                                      card: self?.dataStore?.selected,
                                                                      type: self?.dataStore?.paymentMethod,

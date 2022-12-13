@@ -31,9 +31,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .paymentMethod,
             .accountLimits
         ]
-        // TODO: this should be passed as a parameter. we don't want the presenter to need any additional data to assemble VMs
-        let hasAch = UserManager.shared.profile?.canUseAch ?? false
-        if hasAch {
+        
+        if item.canUseACH {
             sections.insert(.segment, at: 0)
         }
         
@@ -41,7 +40,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let paymentSegment = SegmentControlViewModel(selectedIndex: item.paymentCard?.type ?? .buyCard)
         
         let paymentMethodViewModel: CardSelectionViewModel
-        if paymentSegment.selectedIndex == .buyAch && hasAch {
+        if paymentSegment.selectedIndex == .buyAch && item.canUseACH {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)
