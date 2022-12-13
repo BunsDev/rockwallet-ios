@@ -47,7 +47,7 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay)
     func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay)
     func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay)
-    func displayManageAssets(actionResponse: BuyModels.AchData.ResponseDisplay)
+    func displayManageAssetsMessage(actionResponse: BuyModels.AchData.ResponseDisplay)
 }
 
 protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {

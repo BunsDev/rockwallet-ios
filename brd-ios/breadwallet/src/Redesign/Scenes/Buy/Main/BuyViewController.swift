@@ -35,6 +35,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         getRateAndTimerCell()?.wrappedView.invalidate()
     }
     
+    override var sceneLeftAlignedTitle: String? {
+        return UserManager.shared.profile?.canUseAch == true ? nil : L10n.Button.buy
+    }
+    
     override func setupSubviews() {
         super.setupSubviews()
         
@@ -289,8 +293,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                  configuration: responseDisplay.config)
     }
     
-    func displayManageAssets(actionResponse: BuyModels.AchData.ResponseDisplay) {
-        coordinator?.showManageAssets(coreSystem: dataStore?.coreSystem)
+    func displayManageAssetsMessage(actionResponse: BuyModels.AchData.ResponseDisplay) {
+        coordinator?.showMessage(model: actionResponse.model,
+                                 configuration: actionResponse.config,
+                                 onTapCallback: { [weak self] in
+            self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
+        })
     }
     
     func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay) {

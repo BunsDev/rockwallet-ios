@@ -371,7 +371,10 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showMessage(with error: Error? = nil, model: InfoViewModel? = nil, configuration: InfoViewConfiguration? = nil) {
+    func showMessage(with error: Error? = nil,
+                     model: InfoViewModel? = nil,
+                     configuration: InfoViewConfiguration? = nil,
+                     onTapCallback: (() -> Void)? = nil) {
         hideOverlay()
         LoadingView.hide()
         
@@ -400,6 +403,7 @@ class BaseCoordinator: NSObject,
         
         notification.didFinish = { [weak self] in
             self?.hideMessage()
+            onTapCallback?()
         }
         
         if notification.superview == nil {

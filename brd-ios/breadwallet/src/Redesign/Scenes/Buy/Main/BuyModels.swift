@@ -150,6 +150,9 @@ enum BuyModels {
         
         struct ActionResponse {}
         
-        struct ResponseDisplay {}
+        struct ResponseDisplay {
+            var model: InfoViewModel?
+            var config: InfoViewConfiguration?
+        }
     }
 }
