@@ -40,15 +40,6 @@ extension Interactor where Self: ExchangeRateViewActions,
                            Self.ActionResponses: ExchangeRateActionResponses {
     
     func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
-        // TODO: remove this.. currently just so data is displayed on sell screen
-        guard dataStore?.quoteRequestData.type.value != "SELL" else {
-            presenter?.presentExchangeRate(actionResponse: .init(quote: dataStore?.quote,
-                                                                 from: dataStore?.fromCode,
-                                                                 to: dataStore?.toCode,
-                                                                 limits: dataStore?.limits))
-            return
-        }
-        
         guard let fromCurrency = dataStore?.fromCode.uppercased(),
               let toCurrency = dataStore?.toCode.uppercased(),
               let data = dataStore?.quoteRequestData
@@ -65,6 +56,10 @@ extension Interactor where Self: ExchangeRateViewActions,
                                                                            limits: self?.dataStore?.limits))
                 
             case .failure(let error):
+                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: self?.dataStore?.quote,
+                                                                           from: self?.dataStore?.fromCode,
+                                                                           to: self?.dataStore?.toCode,
+                                                                           limits: self?.dataStore?.limits))
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
                     self?.presenter?.presentError(actionResponse: .init(error: NetworkingError.accessDenied))
@@ -105,12 +100,10 @@ extension Controller where Self: ExchangeRateResponseDisplays,
         tableView.beginUpdates()
         
         if let cell = getRateAndTimerCell() {
-            cell.setup { view in
-                view.setup(with: responseDisplay.rateAndTimer)
-                
-                view.completion = { [weak self] in
-                    self?.interactor?.getExchangeRate(viewAction: .init())
-                }
+            cell.wrappedView.setup(with: responseDisplay.rateAndTimer)
+            cell.wrappedView.completion = { [weak self] in
+                // TODO: uncomment that prior to merging
+//                self?.interactor?.getExchangeRate(viewAc`tion: .init())
             }
         } else {
             var vm = continueButton.viewModel

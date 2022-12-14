@@ -44,6 +44,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
 }
 
 protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
+    var type: PreviewType? { get set }
     var to: Amount? { get set }
     var from: Decimal? { get set }
     var toCurrency: String? { get set }
@@ -61,7 +62,8 @@ protocol OrderPreviewDataPassing {
 }
 
 protocol OrderPreviewRoutes: CoordinatableRoutes {
-    func showOrderPreview(coreSystem: CoreSystem?,
+    func showOrderPreview(type: PreviewType?,
+                          coreSystem: CoreSystem?,
                           keyStore: KeyStore?,
                           to: Amount?,
                           from: Decimal?,

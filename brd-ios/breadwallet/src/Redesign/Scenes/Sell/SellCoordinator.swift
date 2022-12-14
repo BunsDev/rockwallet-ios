@@ -16,13 +16,15 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
                                         callback: callback)
     }
     
-    func showOrderPreview(coreSystem: CoreSystem?,
+    func showOrderPreview(type: PreviewType? = .buy,
+                          coreSystem: CoreSystem?,
                           keyStore: KeyStore?,
                           to: Amount?,
                           from: Decimal?,
                           card: PaymentCard?,
                           quote: Quote?) {
         open(scene: Scenes.OrderPreview) { vc in
+            vc.dataStore?.type = type
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
             vc.dataStore?.from = from

@@ -15,6 +15,7 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var itemId: String?
     
     // MARK: - OrderPreviewDataStore
+    var type: PreviewType?
     var to: Amount?
     var from: Decimal?
     var toCurrency: String?
