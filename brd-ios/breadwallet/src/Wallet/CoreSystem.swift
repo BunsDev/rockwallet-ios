@@ -126,7 +126,10 @@ class CoreSystem: Subscriber {
     
     func refreshWallet(completion: @escaping () -> Void) {
         guard let kvStore = Backend.kvStore,
-              let account = system?.account else { return assertionFailure() }
+              let account = system?.account else {
+            completion()
+            return
+        }
         
         Backend.apiClient.updateBundles { [weak self] _ in
             self?.getCurrencyMetaData(kvStore: kvStore,
