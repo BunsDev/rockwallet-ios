@@ -1808,18 +1808,26 @@ internal enum L10n {
     internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
     /// Withdrawal preview
     internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
+    /// Conversion rate
+    internal static let rate = L10n.tr("Localizable", "Sell.rate", fallback: "Conversion rate")
     /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.
     internal static func sellLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Sell.SellLimits", p1, p2, p3, fallback: "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.\n\nACH Withdrawals will be processed within 3-5 business days.")
     }
+    /// Subtotal
+    internal static let subtotal = L10n.tr("Localizable", "Sell.subtotal", fallback: "Subtotal")
     /// Sell & Withdraw funds
     internal static let title = L10n.tr("Localizable", "Sell.title", fallback: "Sell & Withdraw funds")
+    /// Withdraw to
+    internal static let widrawToBank = L10n.tr("Localizable", "Sell.widrawToBank", fallback: "Withdraw to")
     /// Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.
     internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.")
     /// Your withdrawal is being processed
     internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
+    /// You sell
+    internal static let yourOrder = L10n.tr("Localizable", "Sell.yourOrder", fallback: "You sell")
   }
   internal enum Send {
     /// Send money amount label

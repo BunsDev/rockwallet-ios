@@ -165,7 +165,8 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
-        coordinator?.showOrderPreview(coreSystem: dataStore?.coreSystem,
+        coordinator?.showOrderPreview(type: .sell,
+                                      coreSystem: dataStore?.coreSystem,
                                       keyStore: dataStore?.keyStore,
                                       to: dataStore?.fromAmount,
                                       from: dataStore?.toAmount,

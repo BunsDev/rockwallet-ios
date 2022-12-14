@@ -11,9 +11,28 @@
 import UIKit
 import WalletKit
 
+enum PreviewType {
+    case buy
+    case sell
+    
+    var title : String {
+        switch self {
+        case .buy: return L10n.Buy.orderPreview
+        case .sell: return L10n.Sell.orderPreview
+        }
+    }
+    
+    var disclaimer: String {
+        switch self {
+        case .buy: return L10n.Buy.achPaymentDurationWarning
+        case .sell: return L10n.Sell.achDurationWarning
+        }
+    }
+}
+
 enum OrderPreviewModels {
     
-    typealias Item = (to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?, isAchAccount: Bool?)
+    typealias Item = (type: PreviewType?, to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?, isAchAccount: Bool?)
     
     enum Sections: Sectionable {
         case achNotification

@@ -18,7 +18,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     typealias Models = OrderPreviewModels
     
     override var sceneTitle: String? {
-        return L10n.Buy.orderPreview
+        return dataStore?.type?.title
     }
 
     // MARK: - Overrides
