@@ -205,7 +205,13 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         LoadingView.hide()
         
         let transactionType: Transaction.TransactionType = dataStore?.isAchAccount ?? false ? .buyAchTransaction : .buyTransaction
-        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference, transactionType: transactionType)
+        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference,
+                                 transactionType: transactionType,
+                                 reason: responseDisplay.reason)
+    }
+    
+    func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay) {
+        coordinator?.showFailure(failure: responseDisplay.reason)
     }
     
     func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay) {
@@ -214,11 +220,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         LoadingView.hide()
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        let failure: FailureReason = dataStore?.isAchAccount ?? false ? .buyAch : .buyCard
-        coordinator?.showFailure(failure: failure)
+        // TODO: do we need to handle smth else here?
+        _ = isAccessDenied(responseDisplay: responseDisplay)
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {

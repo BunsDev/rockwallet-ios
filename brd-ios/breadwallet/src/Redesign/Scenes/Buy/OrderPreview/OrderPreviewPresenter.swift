@@ -132,7 +132,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     }
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
-        viewController?.displaySubmit(responseDisplay: .init(paymentReference: actionResponse.paymentReference))
+        guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
+            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewTye == .sell ? .sell : .buyAch) : .buyCard
+            viewController?.displayFailure(responseDisplay: .init(reason: reason))
+            return
+        }
+        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewTye == .sell ? .sell : .buyAch) : .buyCard
+        
+        viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse) {

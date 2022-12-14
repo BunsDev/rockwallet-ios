@@ -1820,6 +1820,8 @@ internal enum L10n {
     internal static let subtotal = L10n.tr("Localizable", "Sell.subtotal", fallback: "Subtotal")
     /// Sell & Withdraw funds
     internal static let title = L10n.tr("Localizable", "Sell.title", fallback: "Sell & Withdraw funds")
+    /// Please try again
+    internal static let tryAgain = L10n.tr("Localizable", "Sell.tryAgain", fallback: "Please try again")
     /// Withdraw to
     internal static let widrawToBank = L10n.tr("Localizable", "Sell.widrawToBank", fallback: "Withdraw to")
     /// Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.

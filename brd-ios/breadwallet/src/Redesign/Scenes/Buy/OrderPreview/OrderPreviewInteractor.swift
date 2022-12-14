@@ -32,14 +32,16 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
             case .success(let data):
                 self?.dataStore?.paymentstatus = data?.status
                 guard data?.status.isSuccesful == true || data?.status.achPending == true else {
-                    guard data?.status == .declined, let errorMessage = data?.responseCode?.errorMessage else {
-                        self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: L10n.Buy.paymentFailed)))
-                        return
-                    }
-                    self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: errorMessage)))
+                    self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
+                                                                         previewTye: self?.dataStore?.type,
+                                                                         isAch: self?.dataStore?.isAchAccount,
+                                                                         failed: true))
                     return
                 }
-                self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference ?? ""))
+                self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
+                                                                     previewTye: self?.dataStore?.type,
+                                                                     isAch: self?.dataStore?.isAchAccount,
+                                                                     failed: false))
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))

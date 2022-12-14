@@ -12,6 +12,7 @@ import UIKit
 import WalletKit
 
 enum PreviewType {
+    // split buy into ach_buy and card_buy
     case buy
     case sell
     
@@ -122,11 +123,21 @@ enum OrderPreviewModels {
         struct ViewAction {}
         
         struct ActionResponse {
-            var paymentReference: String
+            var paymentReference: String?
+            var previewTye: PreviewType?
+            var isAch: Bool?
+            var failed: Bool?
         }
         
         struct ResponseDisplay {
             var paymentReference: String
+            var reason: SuccessReason
+        }
+    }
+    
+    struct Failure {
+        struct ResponseDisplay {
+            var reason: FailureReason
         }
     }
     

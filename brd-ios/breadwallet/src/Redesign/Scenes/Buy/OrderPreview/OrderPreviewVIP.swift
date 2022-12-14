@@ -41,6 +41,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay)
     func displayCvvInfoPopup(responseDisplay: OrderPreviewModels.CvvInfoPopup.ResponseDisplay)
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay)
+    func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay)
 }
 
 protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
@@ -73,6 +74,6 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
     func showTermsAndConditions(url: URL)
     func showTimeout()
     func showThreeDSecure(url: URL)
-    func showSuccess(paymentReference: String, transactionType: Transaction.TransactionType)
+    func showSuccess(paymentReference: String, transactionType: Transaction.TransactionType, reason: SuccessReason)
     func showFailure(failure: FailureReason)
 }

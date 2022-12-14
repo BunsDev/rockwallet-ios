@@ -24,6 +24,7 @@ enum FailureReason: SimpleMessage {
     case buyAch
     case swap
     case plaidConnection
+    case sell
     
     var iconName: String {
         return "error"
@@ -34,7 +35,7 @@ enum FailureReason: SimpleMessage {
         case .buyCard, .buyAch:
             return L10n.Buy.errorProcessingPayment
             
-        case .swap:
+        case .swap, .sell:
             return L10n.Swap.errorProcessingTransaction
             
         case .plaidConnection:
@@ -55,6 +56,9 @@ enum FailureReason: SimpleMessage {
             
         case .buyAch:
             return L10n.Buy.bankAccountFailureText
+            
+        case .sell:
+            return L10n.Sell.tryAgain
         }
     }
     
@@ -66,21 +70,18 @@ enum FailureReason: SimpleMessage {
         case .swap:
             return L10n.Swap.retry
             
-        case .plaidConnection:
-            return L10n.PaymentConfirmation.tryAgain
-            
-        case .buyAch:
+        default:
             return L10n.PaymentConfirmation.tryAgain
         }
     }
     
     var secondButtonTitle: String? {
         switch self {
-        case .buyCard, .plaidConnection, .buyAch:
-            return L10n.UpdatePin.contactSupport
-            
         case .swap:
             return L10n.Swap.backToHome
+            
+        default:
+            return L10n.UpdatePin.contactSupport
         }
     }
 }
