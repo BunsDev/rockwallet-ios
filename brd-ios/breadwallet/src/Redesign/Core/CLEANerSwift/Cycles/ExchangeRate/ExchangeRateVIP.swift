@@ -102,8 +102,7 @@ extension Controller where Self: ExchangeRateResponseDisplays,
         if let cell = getRateAndTimerCell() {
             cell.wrappedView.setup(with: responseDisplay.rateAndTimer)
             cell.wrappedView.completion = { [weak self] in
-                // TODO: uncomment that prior to merging
-//                self?.interactor?.getExchangeRate(viewAc`tion: .init())
+                self?.interactor?.getExchangeRate(viewAction: .init())
             }
         } else {
             var vm = continueButton.viewModel

@@ -11,10 +11,6 @@ import UIKit
 final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     typealias Models = BuyModels
     
-    func presentAch(actionResponse: AchPaymentModels.Get.ResponseDisplay) {
-        
-    }
-    
     weak var viewController: BuyViewController?
     
     var paymentModel: CardSelectionViewModel?
@@ -32,15 +28,15 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .accountLimits
         ]
         
-        if item.canUseACH {
+        if item.achEnabled == true {
             sections.insert(.segment, at: 0)
         }
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        let paymentSegment = SegmentControlViewModel(selectedIndex: item.paymentCard?.type ?? .buyCard)
+        let paymentSegment = SegmentControlViewModel(selectedIndex: item.type)
         
         let paymentMethodViewModel: CardSelectionViewModel
-        if paymentSegment.selectedIndex == .buyAch && item.canUseACH {
+        if paymentSegment.selectedIndex == .buyAch && item.achEnabled == true {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)

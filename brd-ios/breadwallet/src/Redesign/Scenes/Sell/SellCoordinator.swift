@@ -47,9 +47,14 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
     }
     
     func showTimeout() {
-        open(scene: Scenes.Timeout) { vc in
-            vc.navigationItem.hidesBackButton = true
-        }
+        // TODO: to mock details, remove when BE rdy
+        showSuccess(paymentReference: "",
+                    transactionType: .sellTransaction,
+                    reason: SuccessReason.sell)
+        
+//        open(scene: Scenes.Timeout) { vc in
+//            vc.navigationItem.hidesBackButton = true
+//        }
     }
     
     func showThreeDSecure(url: URL) {

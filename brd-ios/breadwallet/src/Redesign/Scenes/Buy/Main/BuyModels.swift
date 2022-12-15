@@ -13,7 +13,8 @@ enum BuyModels {
     struct Item {
         var amount: Amount?
         var paymentCard: PaymentCard?
-        var canUseACH = false
+        var type: PaymentCard.PaymentType?
+        var achEnabled: Bool?
     }
     
     enum Sections: Sectionable {

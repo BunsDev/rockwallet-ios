@@ -2440,6 +2440,8 @@ internal enum L10n {
     internal static let pendingPurchaseWithAch = L10n.tr("Localizable", "Transaction.PendingPurchaseWithAch", fallback: "Pending purchase with ACH")
     /// Pending swap label in transaction view
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
+    /// Pending withdraw with ACH
+    internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdraw with ACH")
     /// Purchased label in transaction view
     internal static let purchased = L10n.tr("Localizable", "Transaction.Purchased", fallback: "Purchased")
     /// Purchased with ACH
