@@ -2677,6 +2677,8 @@
 /* Pending swap label in transaction view */
 "Transaction.PendingSwap" = "Pending swap";
 
+"Transaction.PendingWithdrawWithAch" = "Pending withdraw with ACH";
+
 /* Purchased label in transaction view */
 "Transaction.Purchased" = "Purchased";
 

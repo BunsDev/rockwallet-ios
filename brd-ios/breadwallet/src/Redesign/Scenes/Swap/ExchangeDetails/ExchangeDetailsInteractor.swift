@@ -17,7 +17,8 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
     // MARK: - ExchangeDetailsViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard let itemId = dataStore?.itemId else {
+        guard let itemId = dataStore?.itemId,
+              !itemId.isEmpty else {
             mockData()
             return
         }
@@ -37,7 +38,17 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
     }
     
     private func mockData() {
-        let card = PaymentCard(type: .buyAch, id: "121", fingerprint: "222", expiryMonth: 5, expiryYear: 2026, scheme: .none, last4: "121", image: nil, accountName: "roks account", status: .statusOk)
+        let card = PaymentCard(type: .buyAch,
+                               id: "121",
+                               fingerprint: "222",
+                               expiryMonth: 5,
+                               expiryYear: 2026,
+                               scheme: .none,
+                               last4: "121",
+                               image: nil,
+                               accountName: "roks account",
+                               status: .statusOk)
+        
         let source = SwapDetail.SourceDestination(currency: "USD", currencyAmount: 120, usdAmount: 120, usdFee: 5, paymentInstrument: card)
         let destination = SwapDetail.SourceDestination(currency: "USDC", currencyAmount: 118, usdAmount: 120, usdFee: 5, paymentInstrument: card)
         
