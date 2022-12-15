@@ -51,7 +51,7 @@ struct SwapDetail: Model, Hashable {
     var destination: SourceDestination
     var rate: Double
     var timestamp: Int
-    var type: Transaction.TransactionType
+    var type: TransactionType
 }
 
 class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail> {
@@ -100,7 +100,7 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                           destination: destinationData,
                           rate: response?.rate ?? 0,
                           timestamp: Int(response?.timestamp ?? 0),
-                          type: Transaction.TransactionType(rawValue: response?.type ?? "") ?? .defaultTransaction)
+                          type: TransactionType(rawValue: response?.type ?? "") ?? .defaultTransaction)
     }
 }
 

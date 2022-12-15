@@ -117,6 +117,11 @@ class ApplicationController: Subscriber {
     }
     
     private func decideFlow() {
+        // overdie point for direct VC opening (Dev helper)
+//        guardProtected {
+//            self.coordinator?.openModally(coordinator: COORDINATOR_NAME.self, scene: Scenes.SCENE_NAME) { vc in CONFIGURE }
+//
+//        return ()
         if keyStore.noWallet {
             enterOnboarding()
         } else {

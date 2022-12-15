@@ -1796,8 +1796,8 @@ internal enum L10n {
     internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will be processed within 3-5 business days.")
     /// ACH Withdrawal
     internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
-    /// Sell and Withdraw details
-    internal static let details = L10n.tr("Localizable", "Sell.Details", fallback: "Sell and Withdraw details")
+    /// Sell & Withdraw details
+    internal static let details = L10n.tr("Localizable", "Sell.details", fallback: "Sell & Withdraw details")
     /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.withdrawal
@@ -1830,6 +1830,8 @@ internal enum L10n {
     internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
     /// You sell
     internal static let yourOrder = L10n.tr("Localizable", "Sell.yourOrder", fallback: "You sell")
+    /// You’ll receive
+    internal static let youWillReceive = L10n.tr("Localizable", "Sell.YouWillReceive", fallback: "You’ll receive")
   }
   internal enum Send {
     /// Send money amount label

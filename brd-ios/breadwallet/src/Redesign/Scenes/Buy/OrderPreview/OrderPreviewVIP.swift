@@ -74,6 +74,6 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
     func showTermsAndConditions(url: URL)
     func showTimeout()
     func showThreeDSecure(url: URL)
-    func showSuccess(paymentReference: String, transactionType: Transaction.TransactionType, reason: SuccessReason)
+    func showSuccess(paymentReference: String, transactionType: TransactionType, reason: SuccessReason)
     func showFailure(failure: FailureReason)
 }
