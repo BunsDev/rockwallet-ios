@@ -13,6 +13,7 @@ import UIKit
 enum SuccessReason: SimpleMessage {
     case buyCard
     case buyAch
+    case sell
     
     var iconName: String {
         return "success"
@@ -25,6 +26,9 @@ enum SuccessReason: SimpleMessage {
             
         case .buyAch:
             return L10n.Buy.bankAccountSuccessTitle
+            
+        case .sell:
+            return L10n.Sell.withdrawalSuccessTitle
         }
     }
     
@@ -35,6 +39,9 @@ enum SuccessReason: SimpleMessage {
             
         case .buyAch:
             return L10n.Buy.bankAccountSuccessText
+            
+        case .sell:
+            return L10n.Sell.withdrawalSuccessText
         }
     }
     
@@ -47,6 +54,9 @@ enum SuccessReason: SimpleMessage {
     
     var secondButtonTitle: String? {
         switch self {
+        case .sell:
+            return L10n.Sell.details
+            
         default:
             return L10n.Buy.details
         }
