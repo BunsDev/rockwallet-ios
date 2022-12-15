@@ -362,12 +362,12 @@ class ModalPresenter: Subscriber {
             case .privateKey:
                 let alert = UIAlertController(title: L10n.Settings.importTitle, message: nil, preferredStyle: .actionSheet)
                 
-                let currencies: KeyValuePairs = [C.BSV: Currencies.shared.bsv?.wallet,
-                                                 C.BTC: Currencies.shared.btc?.wallet,
-                                                 C.BCH: Currencies.shared.bch?.wallet]
-                currencies.forEach { currencyDictionary in
-                    alert.addAction(UIAlertAction(title: currencyDictionary.key, style: .default, handler: { _ in
-                        if let wallet = currencyDictionary.value {
+                let wallets = [Currencies.shared.bsv?.wallet,
+                               Currencies.shared.btc?.wallet,
+                               Currencies.shared.bch?.wallet]
+                wallets.forEach { wallet in
+                    alert.addAction(UIAlertAction(title: wallet?.currency.code, style: .default, handler: { _ in
+                        if let wallet {
                             self.presentKeyImport(wallet: wallet, scanResult: scanResult)
                         }
                     }))
