@@ -1984,6 +1984,8 @@
 
 "Sell.title" = "Sell & Withdraw funds";
 
+"Sell.tryAgain" = "Please try again";
+
 "Sell.widrawToBank" = "Withdraw to";
 
 "Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";

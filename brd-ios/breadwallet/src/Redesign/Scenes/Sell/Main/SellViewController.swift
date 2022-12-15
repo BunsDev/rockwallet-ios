@@ -164,7 +164,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()
-        
         coordinator?.showOrderPreview(type: .sell,
                                       coreSystem: dataStore?.coreSystem,
                                       keyStore: dataStore?.keyStore,
