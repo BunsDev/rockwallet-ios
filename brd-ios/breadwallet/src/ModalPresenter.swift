@@ -361,17 +361,20 @@ class ModalPresenter: Subscriber {
                 
             case .privateKey:
                 let alert = UIAlertController(title: L10n.Settings.importTitle, message: nil, preferredStyle: .actionSheet)
-                alert.addAction(UIAlertAction(title: C.BTC, style: .default, handler: { _ in
-                    if let wallet = Currencies.shared.btc?.wallet {
-                        self.presentKeyImport(wallet: wallet, scanResult: scanResult)
-                    }
-                }))
-                alert.addAction(UIAlertAction(title: C.BCH, style: .default, handler: { _ in
-                    if let wallet = Currencies.shared.bch?.wallet {
-                        self.presentKeyImport(wallet: wallet, scanResult: scanResult)
-                    }
-                }))
+                
+                let currencies: KeyValuePairs = [C.BSV: Currencies.shared.bsv?.wallet,
+                                                 C.BTC: Currencies.shared.btc?.wallet,
+                                                 C.BCH: Currencies.shared.bch?.wallet]
+                currencies.forEach { currencyDictionary in
+                    alert.addAction(UIAlertAction(title: currencyDictionary.key, style: .default, handler: { _ in
+                        if let wallet = currencyDictionary.value {
+                            self.presentKeyImport(wallet: wallet, scanResult: scanResult)
+                        }
+                    }))
+                }
+                
                 alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
+                
                 top.present(alert, animated: true)
             case .deepLink(let url):
                 UIApplication.shared.open(url)
