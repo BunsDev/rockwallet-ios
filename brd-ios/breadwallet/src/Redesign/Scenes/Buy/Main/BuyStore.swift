@@ -94,4 +94,24 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         }
         return true
     }
+    
+    enum AvailablePaymentMethod {
+        case debitCard
+        case creditCard
+        case bankAccount
+     }
+    
+    var availablePayments: [AvailablePaymentMethod] = []
+    
+    var containsCreditCard: Bool {
+        return cards.first(where: { $0.cardType == .credit }) != nil
+    }
+    
+    var containsDebitCard: Bool {
+        return cards.first(where: { $0.cardType == .debit }) != nil
+    }
+    
+    var containsAch: Bool {
+        return ach != nil
+    }
 }

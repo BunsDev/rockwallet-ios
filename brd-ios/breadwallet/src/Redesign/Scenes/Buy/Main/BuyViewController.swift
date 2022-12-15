@@ -258,12 +258,14 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {
-        coordinator?.showOrderPreview(coreSystem: dataStore?.coreSystem,
+        coordinator?.showOrderPreview(type: .buy,
+                                      coreSystem: dataStore?.coreSystem,
                                       keyStore: dataStore?.keyStore,
                                       to: dataStore?.toAmount,
                                       from: dataStore?.from,
                                       card: dataStore?.selected,
-                                      quote: dataStore?.quote)
+                                      quote: dataStore?.quote,
+                                      availablePayments: responseDisplay.availablePayments)
     }
     
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
@@ -273,7 +275,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
-        coordinator?.showFailure(failure: .plaidConnection)
+        coordinator?.showFailure(failure: .plaidConnection, availablePayments: dataStore?.availablePayments)
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {

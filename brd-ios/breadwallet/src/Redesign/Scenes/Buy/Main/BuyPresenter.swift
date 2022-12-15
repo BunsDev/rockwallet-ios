@@ -169,7 +169,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse) {
-        viewController?.displayOrderPreview(responseDisplay: .init())
+        viewController?.displayOrderPreview(responseDisplay: .init(availablePayments: actionResponse.availablePayments))
     }
     
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse) {

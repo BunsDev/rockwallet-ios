@@ -106,7 +106,17 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction) {
-        presenter?.presentOrderPreview(actionResponse: .init())
+        if dataStore?.selected?.cardType == .credit,
+           dataStore?.containsDebitCard != nil {
+            dataStore?.availablePayments.append(.debitCard)
+        }
+        if dataStore?.selected?.cardType == .debit,
+           dataStore?.containsAch != nil,
+           dataStore?.toAmount?.currency.name == C.USDC {
+            dataStore?.availablePayments.append(.bankAccount)
+        }
+        
+        presenter?.presentOrderPreview(actionResponse: .init(availablePayments: dataStore?.availablePayments))
     }
     
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction) {

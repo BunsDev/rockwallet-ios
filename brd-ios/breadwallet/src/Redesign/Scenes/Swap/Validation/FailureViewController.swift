@@ -91,6 +91,7 @@ extension Scenes {
 }
 
 class FailureViewController: BaseInfoViewController {
+    var availablePayments: [BuyStore.AvailablePaymentMethod]?
     var failure: FailureReason? {
         didSet {
             prepareData()
@@ -101,7 +102,7 @@ class FailureViewController: BaseInfoViewController {
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: failure?.firstButtonTitle) { [weak self] in
+            .init(title: availablePayments?.contains(.debitCard) ?? false ? "Try with debit card" : failure?.firstButtonTitle) { [weak self] in
                 if self?.failure == .swap {
                     self?.coordinator?.showSwap()
                 } else {

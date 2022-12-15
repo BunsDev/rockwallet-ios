@@ -182,7 +182,6 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         
-        
         switch item.type {
         case .sell:
             model = .init(title: .text(L10n.Sell.yourOrder),

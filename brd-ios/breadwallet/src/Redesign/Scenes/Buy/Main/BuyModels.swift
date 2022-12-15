@@ -92,9 +92,13 @@ enum BuyModels {
     struct OrderPreview {
         struct ViewAction {}
         
-        struct ActionResponse {}
+        struct ActionResponse {
+            var availablePayments: [BuyStore.AvailablePaymentMethod]?
+        }
         
-        struct ResponseDisplay {}
+        struct ResponseDisplay {
+            var availablePayments: [BuyStore.AvailablePaymentMethod]?
+        }
     }
     
     struct AssetSelector {
