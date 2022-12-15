@@ -74,7 +74,7 @@ class SuccessViewController: BaseInfoViewController {
         }
     }
     
-    var transactionType: Transaction.TransactionType = .defaultTransaction
+    var transactionType: TransactionType = .defaultTransaction
     override var imageName: String? { return success?.iconName }
     override var titleText: String? { return success?.title }
     override var descriptionText: String? { return success?.description }

@@ -189,7 +189,7 @@ class BaseCoordinator: NSObject,
         // More hint: deleteAccountCallback inside ModalPresenter.
     }
     
-    func showExchangeDetails(with exchangeId: String?, type: Transaction.TransactionType) {
+    func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
         open(scene: ExchangeDetailsViewController.self) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId

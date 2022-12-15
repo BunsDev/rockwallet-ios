@@ -50,7 +50,10 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .swapTransaction:
             return handleSwapTransactions()
             
-        case .buyTransaction, .buyAchTransaction:
+        case .sellTransaction:
+            return handleSellTransactions()
+            
+        default:
             return handleBuyTransactions()
         }
     }
@@ -88,6 +91,20 @@ struct TxListViewModel: TxViewModel, Hashable {
             
         default:
             return isBuy ? L10n.Transaction.pendingPurchase : L10n.Transaction.pendingPurchaseWithAch
+        }
+    }
+    
+    private func handleSellTransactions() -> String {
+        // TODO: update texts
+        switch status {
+        case .invalid, .failed, .refunded:
+            return "Widrawal failed"
+    
+        case .complete, .manuallySettled, .confirmed:
+            return "Widrawed to bank account"
+            
+        default:
+            return "Pending withdraw with ACH"
         }
     }
     

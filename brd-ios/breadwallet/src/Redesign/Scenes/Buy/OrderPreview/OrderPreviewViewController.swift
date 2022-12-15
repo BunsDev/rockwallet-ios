@@ -204,7 +204,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay) {
         LoadingView.hide()
         
-        let transactionType: Transaction.TransactionType = dataStore?.isAchAccount ?? false ? .buyAchTransaction : .buyTransaction
+        let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAchTransaction : .buyTransaction
         coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference,
                                  transactionType: transactionType,
                                  reason: responseDisplay.reason)
