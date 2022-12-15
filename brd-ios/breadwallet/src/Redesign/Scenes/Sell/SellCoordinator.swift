@@ -63,7 +63,7 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
         navigationController.present(navController, animated: true)
     }
     
-    func showSuccess(paymentReference: String, transactionType: Transaction.TransactionType, reason: SuccessReason) {
+    func showSuccess(paymentReference: String, transactionType: TransactionType, reason: SuccessReason) {
         open(scene: Scenes.Success) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.transactionType = transactionType
