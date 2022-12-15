@@ -230,17 +230,15 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                               from.currency.code,
                               ExchangeFormatter.fiat.string(for: from.fiatValue.doubleValue) ?? "",
                               C.usdCurrencyCode)
-        let toText = String(format: "%@ %@ (%@ %@)",
+        let toText = String(format: "%@ %@",
                             ExchangeFormatter.crypto.string(for: to.tokenValue.doubleValue) ?? "",
-                            to.currency.code,
-                            ExchangeFormatter.fiat.string(for: to.fiatValue.doubleValue) ?? "",
-                            C.usdCurrencyCode)
+                            to.currency.code)
         
         let toFeeText = String(format: "-%@ %@",
                                ExchangeFormatter.crypto.string(for: actionResponse.toFee?.tokenValue.doubleValue) ?? "",
                                actionResponse.toFee?.currency.code ?? to.currency.code)
         
-        let totalCostText = String(format: "%@ %@", ExchangeFormatter.crypto.string(for: from.tokenValue.doubleValue) ?? "", from.currency.code)
+        let totalCostText = String(format: "%@ %@", ExchangeFormatter.crypto.string(for: to.tokenValue.doubleValue) ?? "", to.currency.code)
         
         let config: WrapperPopupConfiguration<SwapConfimationConfiguration> = .init(wrappedView: .init())
         
