@@ -29,6 +29,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     // MARK: - Overrides
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(updatePaymentMethod), name: NSNotification.Name(rawValue: "UpdatePaymentMethod"), object: nil)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -78,10 +82,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
-
+            
         case .from:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
-
+            
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
@@ -204,7 +208,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     // MARK: - User Interaction
-
+    
     @objc override func buttonTapped() {
         super.buttonTapped()
         
@@ -269,9 +273,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
-//        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
-//            self?.interactor?.setPublicToken(viewAction: .init())
-//        })
+        //        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
+        //            self?.interactor?.setPublicToken(viewAction: .init())
+        //        })
     }
     
     func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
@@ -308,4 +312,17 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     // MARK: - Additional Helpers
+    @objc func updatePaymentMethod() {
+        guard let availablePayments = dataStore?.availablePayments else { return }
+        
+        if availablePayments.contains(.bankAccount) == true {
+            dataStore?.paymentMethod = .buyAch
+            let view: FESegmentControl = (UIApplication.shared.activeWindow?.subviews.first(where: { $0 is FESegmentControl }) as? FESegmentControl) ?? FESegmentControl()
+            view.setup(with: SegmentControlViewModel(selectedIndex: .buyAch))
+        } else {
+            dataStore?.paymentMethod = .buyCard
+        }
+        
+        interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .buyCard))
+    }
 }

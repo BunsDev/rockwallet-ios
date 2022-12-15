@@ -64,9 +64,6 @@ enum FailureReason: SimpleMessage {
     
     var firstButtonTitle: String? {
         switch self {
-        case .buyCard:
-            return L10n.Buy.tryAnotherPayment
-            
         case .swap:
             return L10n.Swap.retry
             
@@ -91,6 +88,7 @@ extension Scenes {
 }
 
 class FailureViewController: BaseInfoViewController {
+    var buttonTitle: String?
     var availablePayments: [BuyStore.AvailablePaymentMethod]?
     var failure: FailureReason? {
         didSet {
@@ -101,8 +99,13 @@ class FailureViewController: BaseInfoViewController {
     override var titleText: String? { return failure?.title }
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
+        if availablePayments?.contains(.debitCard) == true {
+            buttonTitle = L10n.PaymentConfirmation.tryWithDebit
+        } else if availablePayments?.contains(.bankAccount) == true {
+            buttonTitle = L10n.PaymentConfirmation.tryWithAch
+        }
         return [
-            .init(title: availablePayments?.contains(.debitCard) ?? false ? "Try with debit card" : failure?.firstButtonTitle) { [weak self] in
+            .init(title: buttonTitle != nil ? buttonTitle : failure?.firstButtonTitle) { [weak self] in
                 if self?.failure == .swap {
                     self?.coordinator?.showSwap()
                 } else {
@@ -120,5 +123,9 @@ class FailureViewController: BaseInfoViewController {
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
                 Presets.Button.noBorders]
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdatePaymentMethod"), object: self)
     }
 }

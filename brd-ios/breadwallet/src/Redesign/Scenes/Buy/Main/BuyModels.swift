@@ -161,4 +161,16 @@ enum BuyModels {
             var config: InfoViewConfiguration?
         }
     }
+    
+    struct RetryPaymentMethod {
+        struct ViewAction {
+            let method: PaymentCard.PaymentType
+        }
+        
+        struct ActionResponse {
+            let method: PaymentCard.PaymentType
+        }
+        
+        struct ResponseDisplay {}
+    }
 }
