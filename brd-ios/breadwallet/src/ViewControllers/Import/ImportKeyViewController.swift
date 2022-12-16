@@ -27,7 +27,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
     init(wallet: Wallet, initialQRCode: QRCode? = nil) {
         self.wallet = wallet
         self.initialQRCode = initialQRCode
-        assert(wallet.currency.isBitcoin || wallet.currency.isBitcoinCash, "Importing only supports btc or bch")
+        assert(wallet.currency.isBitcoin || wallet.currency.isBitcoinCash, "Importing only supports BTC or BCH. ")
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -200,7 +200,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
     private func confirmImport(fromSweeper sweeper: WalletSweeper, fee: TransferFeeBasis) {
         let balanceAmount = Amount(cryptoAmount: sweeper.balance!, currency: wallet.currency)
         let feeAmount = Amount(cryptoAmount: fee.fee, currency: wallet.currency)
-        let message = L10n.Import.confirm(balanceAmount.fiatDescription, feeAmount.fiatDescription)
+        let message = String(format: L10n.Import.confirm("%@", "%@"), balanceAmount.fiatDescription, feeAmount.fiatDescription)
         
         importConfirmationAlert.setup(with: .init(trailing: .init(image: Asset.close.name),
                                                   confirm: .init(title: L10n.Button.continueAction),

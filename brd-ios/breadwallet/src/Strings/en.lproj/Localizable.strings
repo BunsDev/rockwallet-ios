@@ -593,6 +593,8 @@
 /* 3D Secure label on buy flow */
 "Buy.3DSecure" = "3D Secure";
 
+"Buy.Ach.AccountUnlinked" = "Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.";
+
 "Buy.Ach.WalletDisabled" = "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.";
 
 "Buy.Ach.WalletDisabled.Link" = "here";
@@ -606,6 +608,8 @@
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.\n\nIt currently takes 7-10 days to process a purchase with ACH";
 
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
+
+"Buy.achPaymentMethodRelinked" = "ACH payment method was relinked successfully";
 
 "Buy.achPayments" = "ACH Payments";
 
@@ -634,7 +638,7 @@
 
 "Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
 
-"Buy.buyWithCard" = "Buy with card";
+"Buy.buyWithCard" = "BUY WITH CARDS";
 
 /* Card label on add card flow */
 "Buy.Card" = "Card";
@@ -669,6 +673,8 @@
 /* Buy details title */
 "Buy.Details" = "Purchase details";
 
+"Buy.disabledUSDCMessage" = "USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.";
+
 /* There was an error while processing your payment title in buy failure screen */
 "Buy.ErrorProcessingPayment" = "There was an error while processing your payment";
 
@@ -680,7 +686,7 @@
 /* First Name label in billing address view on buy flow */
 "Buy.FirstName" = "First Name";
 
-"Buy.fundWithAch" = "Fund with ACH";
+"Buy.fundWithAch" = "FUND WITH ACH";
 
 "Buy.InvalidExpirationDate" = "Entered expiration date is not valid!";
 
@@ -724,6 +730,8 @@
 /* Your assets are on the way message in purchase details screen */
 "Buy.PurchaseSuccessTitle" = "Your assets are on the way!";
 
+"Buy.relinkBankAccount" = "Re-link bank account";
+
 /* Are you sure you want to remove this card title dialog */
 "Buy.RemoveCard" = "Are you sure you want to remove card ending in";
 
@@ -749,6 +757,10 @@
 
 /* State/Province label in billing address view on buy flow */
 "Buy.StateProvince" = "State/Province";
+
+"Buy.switchedToAch" = "Payment method switched to ACH payments!";
+
+"Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
 
 /* By placing this order you agree to our terms message when ordering */
 "Buy.Terms" = "By placing this order you agree to our";
@@ -956,6 +968,11 @@
 
 /* The wallet is disabled. */
 "Disabled.title" = "Wallet disabled";
+
+"Drawer.button.buy_with_sell" = "SELL & WIDRAW";
+
+/* title of the drawer shown after buy/sell button tap on home screen */
+"Drawer.title" = "Buy / Sell";
 
 /* Share address by e-mail subject */
 "Email.address_subject" = "%1$@ Address";
@@ -1480,6 +1497,10 @@
 /* Try again button title in payment view */
 "PaymentConfirmation.TryAgain" = "Try again";
 
+"PaymentConfirmation.TryWithAch" = "Try with ACH payments";
+
+"PaymentConfirmation.TryWithDebit" = "Try with debit card";
+
 /* Bad Payment request alert title */
 "PaymentProtocol.Errors.badPaymentRequest" = "Your transaction request couldn’t be completed. Please try again.";
 
@@ -1943,6 +1964,38 @@
 /* Segwit button label that takes the user back to the home screen once SegWit is enabled. */
 "Segwit.HomeButton" = "Proceed";
 
+"Sell.achDurationWarning" = "ACH withdrawal will be processed within 3-5 business days.";
+
+"Sell.achWithdrawal" = "ACH Withdrawal";
+
+"Sell.Details" = "Sell and Withdraw details";
+
+"Sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
+
+"Sell.iReceive" = "I receive";
+
+"Sell.OrderPreview" = "Withdrawal preview";
+
+"Sell.rate" = "Conversion rate";
+
+"Sell.SellLimits" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.\n\nACH Withdrawals will be processed within 3-5 business days.";
+
+"Sell.subtotal" = "Subtotal";
+
+"Sell.title" = "Sell & Withdraw funds";
+
+"Sell.tryAgain" = "Please try again";
+
+"Sell.widrawToBank" = "Withdraw to";
+
+"Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
+
+"Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
+
+"Sell.yourOrder" = "You sell";
+
+"Sell.YouWillReceive" = "You’ll receive";
+
 "Send_fio_toLabel" = "FIO";
 
 /* Send money amount label */
@@ -2397,10 +2450,7 @@
 "Swap.RateValue" = "Rate";
 
 /* Receiving network fee text label on Swap screen */
-"Swap.ReceiveNetworkFee" = "Receiving network fee\n(included)";
-
-/* Receiving fee label on Swap screen */
-"Swap.ReceivingFee" = "Receiving fee\n";
+"Swap.ReceiveNetworkFee" = "Receiving network fee";
 
 "Swap.RequestTimedOut" = "Your swap request timed out. Please try again.";
 
@@ -2413,10 +2463,7 @@
 "Swap.SendingFee" = "Sending fee\n";
 
 /* Sending network fee text label on Swap screen */
-"Swap.SendNetworkFee" = "Sending network fee\n(included)";
-
-/* Send network fee not included label on swap */
-"Swap.sendNetworkFeeNotIncluded" = "Sending network fee\n(not included)";
+"Swap.SendNetworkFee" = "Sending network fee";
 
 /* Swap again button title in swap failure screen */
 "Swap.SwapAgain" = "Swap again";
@@ -2446,7 +2493,7 @@
 
 "Swap.transactionTo" = "To %1$@";
 
-"Swap.youReceive" = "You receive";
+"Swap.youReceive" = "You'll receive";
 
 "Swap.youSend" = "You send";
 

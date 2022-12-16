@@ -58,7 +58,6 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let formattedUsdAmountString = ExchangeFormatter.fiat.string(for: detail.source.usdAmount) ?? ""
         let formattedCurrencyAmountString = ExchangeFormatter.crypto.string(for: detail.source.currencyAmount) ?? ""
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
-        let formattedUsdAmountDestination = ExchangeFormatter.fiat.string(for: detail.destination.usdAmount) ?? ""
         let formattedCurrencyAmountDestination = ExchangeFormatter.crypto.string(for: detail.destination.currencyAmount) ?? ""
         
         let timestamp = TimeInterval(detail.timestamp) / 1000
@@ -84,7 +83,8 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let transactionFromValue = String(describing: detail.source.transactionId ?? "")
         let transactionToValue = String(describing: detail.destination.transactionId ?? detail.status.rawValue.localizedCapitalized)
         let transactionToValueIsCopyable = detail.destination.transactionId != nil
-        let displayFeeTitle = detail.source.paymentInstrument.type == .buyCard ? L10n.Swap.cardFee : L10n.Buy.achFeeText
+        let displayFeeTitle = detail.source.paymentInstrument.type == .buyCard ? L10n.Swap.cardFee :
+        L10n.Buy.achFee("$\(String(format: "%.2f", detail.destination.feeFixedRate?.doubleValue ?? 0.0)) + \(detail.destination.feeRate ?? 0)%")
         
         var toCurrencyAssetViewModel = AssetViewModel()
         
@@ -92,7 +92,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         case .swapTransaction:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
                                                       title: "\(L10n.TransactionDetails.addressToHeader) \(detail.destination.currency)",
-                                                      topRightText: "\(formattedCurrencyAmountDestination) / $\(formattedUsdAmountDestination) \(currencyCode)")
+                                                      topRightText: "\(formattedCurrencyAmountDestination) \(detail.destination.currency)")
             
         case .buyTransaction, .buyAchTransaction:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
