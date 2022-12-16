@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import Veriff
 
 class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
                                          AccountVerificationInteractor,
@@ -10,7 +11,7 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
                                          AccountVerificationStore>,
                                          AccountVerificationResponseDisplays {
     typealias Models = AccountVerificationModels
-
+    
     override var sceneLeftAlignedTitle: String? {
         return L10n.Account.accountVerification
     }
@@ -35,7 +36,7 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
             
         case .verificationLevel:
             cell = self.tableView(tableView, verificationCellForRowAt: indexPath)
-
+            
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -95,13 +96,13 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
         
         interactor?.startVerification(viewAction: .init(level: indexPath.row))
     }
-
+    
     // MARK: - User Interaction
     
     override func infoButtonTapped() {
         interactor?.showPersonalInfoPopup(viewAction: .init())
     }
-
+    
     // MARK: - AccountVerificationResponseDisplay
     
     func displayStartVerification(responseDisplay: AccountVerificationModels.Start.ResponseDisplay) {
@@ -117,6 +118,10 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
             
         case .two:
             coordinator?.showKYCLevelTwo()
+            
+        case .veriff:
+            VeriffSdk.shared.startAuthentication(sessionUrl: responseDisplay.sessionUrl, presentingFrom: self)
+            
         }
     }
     
