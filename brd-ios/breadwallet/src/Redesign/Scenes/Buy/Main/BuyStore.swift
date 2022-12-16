@@ -102,12 +102,4 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
      }
     
     var availablePayments: [AvailablePaymentMethod] = []
-    
-    var containsDebitCard: Bool {
-        return cards.first(where: { $0.cardType == .debit }) != nil
-    }
-    
-    var containsAch: Bool {
-        return ach != nil
-    }
 }
