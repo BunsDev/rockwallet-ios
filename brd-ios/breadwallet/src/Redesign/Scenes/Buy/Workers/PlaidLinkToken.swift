@@ -14,7 +14,7 @@ struct PlaidLinkTokenResponseData: ModelResponse {
     var linkToken: String
 }
 
-struct PlaidLinkToken {
+struct PlaidLinkToken: Model {
     var linkToken: String
 }
 
