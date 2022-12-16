@@ -319,8 +319,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         
         if availablePayments.contains(.bankAccount) == true {
             dataStore?.paymentMethod = .buyAch
-            let view: FESegmentControl = (UIApplication.shared.activeWindow?.subviews.first(where: { $0 is FESegmentControl }) as? FESegmentControl) ?? FESegmentControl()
-            view.setup(with: SegmentControlViewModel(selectedIndex: .buyAch))
         } else {
             dataStore?.paymentMethod = .buyCard
         }
