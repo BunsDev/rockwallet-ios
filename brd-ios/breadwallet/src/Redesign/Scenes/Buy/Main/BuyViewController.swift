@@ -30,6 +30,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     // MARK: - Overrides
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updatePaymentMethod), name: NSNotification.Name(rawValue: "UpdatePaymentMethod"), object: nil)
     }
     

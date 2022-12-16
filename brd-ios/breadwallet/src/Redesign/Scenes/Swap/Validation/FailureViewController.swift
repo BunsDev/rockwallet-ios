@@ -109,6 +109,9 @@ class FailureViewController: BaseInfoViewController {
                 if self?.failure == .swap {
                     self?.coordinator?.showSwap()
                 } else {
+                    if self?.availablePayments?.contains(.debitCard) == true || self?.availablePayments?.contains(.bankAccount) == true {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdatePaymentMethod"), object: self)
+                    }
                     self?.coordinator?.showBuy()
                 }},
             .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
@@ -123,9 +126,5 @@ class FailureViewController: BaseInfoViewController {
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
                 Presets.Button.noBorders]
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdatePaymentMethod"), object: self)
     }
 }
