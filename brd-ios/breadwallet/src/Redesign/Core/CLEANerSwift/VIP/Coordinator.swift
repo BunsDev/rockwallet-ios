@@ -231,7 +231,7 @@ class BaseCoordinator: NSObject,
         navigationController.popToViewController(vc, animated: true)
     }
     
-    func showBuyWithDiffPayment(paymentMethod: PaymentCard.PaymentType?) {
+    func showBuyWithDifferentPayment(paymentMethod: PaymentCard.PaymentType?) {
         guard let vc = navigationController.viewControllers.first as? BuyViewController else {
             return
         }

@@ -89,7 +89,7 @@ extension Scenes {
 
 class FailureViewController: BaseInfoViewController {
     var buttonTitle: String?
-    var availablePayments: [PaymentCard.PaymentType?]?
+    var availablePayments: [PaymentCard.PaymentType]?
     var failure: FailureReason? {
         didSet {
             prepareData()
@@ -110,7 +110,7 @@ class FailureViewController: BaseInfoViewController {
                     self?.coordinator?.showSwap()
                 } else {
                     if containsDebit || containsBankAccount {
-                        self?.coordinator?.showBuyWithDiffPayment(paymentMethod: containsDebit ? .buyCard : .buyAch)
+                        self?.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .buyCard : .buyAch)
                     } else {
                         self?.coordinator?.showBuy()
                     }

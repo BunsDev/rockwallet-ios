@@ -91,5 +91,5 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         return true
     }
     
-    var availablePayments: [PaymentCard.PaymentType?] = []
+    var availablePayments: [PaymentCard.PaymentType] = []
 }

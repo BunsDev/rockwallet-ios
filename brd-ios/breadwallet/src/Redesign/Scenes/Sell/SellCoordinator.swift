@@ -23,7 +23,7 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
                           from: Decimal?,
                           card: PaymentCard?,
                           quote: Quote?,
-                          availablePayments: [PaymentCard.PaymentType?]?) {
+                          availablePayments: [PaymentCard.PaymentType]?) {
         open(scene: Scenes.OrderPreview) { vc in
             vc.dataStore?.type = type
             vc.dataStore?.coreSystem = coreSystem
@@ -79,7 +79,7 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
         }
     }
     
-    func showFailure(failure: FailureReason, availablePayments: [PaymentCard.PaymentType?]?) {
+    func showFailure(failure: FailureReason, availablePayments: [PaymentCard.PaymentType]?) {
         open(scene: Scenes.Failure) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.failure = failure
