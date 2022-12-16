@@ -49,7 +49,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
               let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit)
         else { return nil }
         
-        return L10n.Sell.disclaimer(minText, maxText, lifetimeLimit)
+        return paymentMethod == .buyAch ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
     }
     
     var feeAmount: Amount? {
