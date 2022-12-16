@@ -275,9 +275,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
-        //        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
-        //            self?.interactor?.setPublicToken(viewAction: .init())
-        //        })
+//        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
+//            self?.interactor?.setPublicToken(viewAction: .init())
+//        })
     }
     
     func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
