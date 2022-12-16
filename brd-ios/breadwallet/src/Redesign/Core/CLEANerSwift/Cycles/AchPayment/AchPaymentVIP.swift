@@ -58,7 +58,7 @@ extension Interactor where Self: AchViewActions,
     }
     
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction) {
-//        guard dataStore?.ach == nil || dataStore?.ach?.status != .statusOk else { return }
+        guard dataStore?.ach == nil || dataStore?.ach?.status != .statusOk else { return }
         
         PlaidLinkTokenWorker().execute(requestData: PlaidLinkTokenRequestData(accountId: dataStore?.ach?.id)) { [weak self] result in
             switch result {
@@ -142,11 +142,11 @@ extension Presenter where Self: AchActionResponses,
         }
         
         switch item.status {
-//        case .statusOk:
-//            paymentModel = .init(title: .text(L10n.Buy.transferFromBank),
-//                                 logo: .image(Asset.bank.image),
-//                                 cardNumber: .text(item.displayName),
-//                                 userInteractionEnabled: false)
+        case .statusOk:
+            paymentModel = .init(title: .text(L10n.Buy.transferFromBank),
+                                 logo: .image(Asset.bank.image),
+                                 cardNumber: .text(item.displayName),
+                                 userInteractionEnabled: false)
             
         default:
             paymentModel = .init(title: .text(L10n.Buy.achPayments),
