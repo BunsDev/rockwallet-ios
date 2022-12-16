@@ -8,7 +8,6 @@
 import UIKit
 
 protocol BaseControllable: UIViewController {
-
     associatedtype CoordinatorType: CoordinatableRoutes
     var coordinator: CoordinatorType? { get set }
 }
