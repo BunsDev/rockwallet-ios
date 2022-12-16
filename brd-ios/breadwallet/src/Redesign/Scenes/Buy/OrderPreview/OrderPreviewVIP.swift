@@ -70,11 +70,11 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
                           from: Decimal?,
                           card: PaymentCard?,
                           quote: Quote?,
-                          availablePayments: [BuyStore.AvailablePaymentMethod]?)
+                          availablePayments: [PaymentCard.PaymentType?]?)
     func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?)
     func showTermsAndConditions(url: URL)
     func showTimeout()
     func showThreeDSecure(url: URL)
     func showSuccess(paymentReference: String, transactionType: TransactionType, reason: SuccessReason)
-    func showFailure(failure: FailureReason, availablePayments: [BuyStore.AvailablePaymentMethod]?)
+    func showFailure(failure: FailureReason, availablePayments: [PaymentCard.PaymentType?]?)
 }

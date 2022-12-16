@@ -89,7 +89,7 @@ extension Scenes {
 
 class FailureViewController: BaseInfoViewController {
     var buttonTitle: String?
-    var availablePayments: [BuyStore.AvailablePaymentMethod]?
+    var availablePayments: [PaymentCard.PaymentType?]?
     var failure: FailureReason? {
         didSet {
             prepareData()
@@ -99,20 +99,21 @@ class FailureViewController: BaseInfoViewController {
     override var titleText: String? { return failure?.title }
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
-        if availablePayments?.contains(.debitCard) == true {
-            buttonTitle = L10n.PaymentConfirmation.tryWithDebit
-        } else if availablePayments?.contains(.bankAccount) == true {
-            buttonTitle = L10n.PaymentConfirmation.tryWithAch
+        let containsDebit = availablePayments?.contains(.buyCard) == true
+        let containsBankAccount = availablePayments?.contains(.buyAch) == true
+        if containsDebit || containsBankAccount {
+            buttonTitle = containsDebit ? L10n.PaymentConfirmation.tryWithDebit : L10n.PaymentConfirmation.tryWithAch
         }
         return [
             .init(title: buttonTitle != nil ? buttonTitle : failure?.firstButtonTitle) { [weak self] in
                 if self?.failure == .swap {
                     self?.coordinator?.showSwap()
                 } else {
-                    if self?.availablePayments?.contains(.debitCard) == true || self?.availablePayments?.contains(.bankAccount) == true {
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdatePaymentMethod"), object: self)
+                    if containsDebit || containsBankAccount {
+                        self?.coordinator?.showBuyWithDiffPayment(paymentMethod: containsDebit ? .buyCard : .buyAch)
+                    } else {
+                        self?.coordinator?.showBuy()
                     }
-                    self?.coordinator?.showBuy()
                 }},
             .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
                 if self?.failure == .buyCard {

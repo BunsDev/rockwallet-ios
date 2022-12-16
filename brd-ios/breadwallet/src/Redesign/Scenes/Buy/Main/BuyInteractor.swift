@@ -108,17 +108,17 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction) {
         dataStore?.availablePayments = []
-        var containsDebitCard = dataStore?.cards.first(where: { $0.cardType == .debit }) != nil
+        let containsDebitCard = dataStore?.cards.first(where: { $0.cardType == .debit }) != nil
         
         if dataStore?.selected?.cardType == .credit,
             containsDebitCard {
-            dataStore?.availablePayments.append(.debitCard)
+            dataStore?.availablePayments.append(.buyCard)
         }
         if dataStore?.selected?.cardType == .debit,
            dataStore?.paymentMethod == .buyCard,
            dataStore?.ach != nil,
            dataStore?.toAmount?.currency.code == C.USDC {
-            dataStore?.availablePayments.append(.bankAccount)
+            dataStore?.availablePayments.append(.buyAch)
         }
         
         presenter?.presentOrderPreview(actionResponse: .init(availablePayments: dataStore?.availablePayments))
@@ -164,7 +164,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             
         case .buyCard:
             if dataStore?.autoSelectDefaultPaymentMethod == true {
-                if dataStore?.availablePayments.contains(.debitCard) == true {
+                if dataStore?.availablePayments.contains(.buyCard) == true {
                     dataStore?.selected = dataStore?.cards.first(where: { $0.cardType == .debit })
                 } else {
                     dataStore?.selected = dataStore?.cards.first

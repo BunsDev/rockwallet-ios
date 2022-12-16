@@ -43,11 +43,13 @@ struct PaymentCard: ItemSelectable, Hashable {
         case statusOk = "OK"
         case requiredLogin = "LOGIN_REQUIRED"
         case pendingExpiration = "LOGIN_PENDING_EXPIRATION"
+        case none
     }
     
     enum CardType: String, CaseIterable {
         case credit = "CREDIT"
         case debit = "DEBIT"
+        case none
     }
     
     var type: PaymentType
@@ -92,8 +94,8 @@ class PaymentCardsMapper: ModelMapper<PaymentCardsResponseData, [PaymentCard]> {
                                scheme: PaymentCard.Scheme(rawValue: $0.scheme ?? "") ?? .none,
                                last4: $0.last4 ?? "",
                                accountName: $0.accountName ?? "",
-                               status: PaymentCard.Status(rawValue: $0.status ?? "") ?? .statusOk,
-                               cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .debit)
+                               status: PaymentCard.Status(rawValue: $0.status ?? "") ?? .none,
+                               cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .none)
         } ?? []
     }
 }

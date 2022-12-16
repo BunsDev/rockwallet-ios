@@ -38,7 +38,7 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var cvv: String?
     var paymentReference: String?
     var paymentstatus: AddCard.Status?
-    var availablePayments: [BuyStore.AvailablePaymentMethod]?
+    var availablePayments: [PaymentCard.PaymentType?]?
     
     // TODO: update it according to BE data
     var isAchAccount: Bool {

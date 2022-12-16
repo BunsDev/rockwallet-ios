@@ -29,12 +29,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     // MARK: - Overrides
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updatePaymentMethod), name: NSNotification.Name(rawValue: "UpdatePaymentMethod"), object: nil)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -317,12 +311,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     @objc func updatePaymentMethod() {
         guard let availablePayments = dataStore?.availablePayments else { return }
         
-        if availablePayments.contains(.bankAccount) == true {
-            dataStore?.paymentMethod = .buyAch
-        } else {
-            dataStore?.paymentMethod = .buyCard
-        }
-        
+        dataStore?.paymentMethod = availablePayments.contains(.buyAch) == true ? .buyAch : .buyCard
         interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .buyCard))
     }
 }
