@@ -83,7 +83,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         guard let amount = toAmount,
               amount.tokenValue > 0,
               selected != nil,
-              selected?.status == .statusOk,
               feeAmount != nil,
               feeAmount != nil
         else {
@@ -91,4 +90,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         }
         return true
     }
+    
+    var availablePayments: [PaymentCard.PaymentType] = []
 }
