@@ -26,7 +26,20 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var values: BuyModels.Amounts.ViewAction = .init()
-    var paymentMethod: PaymentCard.PaymentType?
+    var paymentMethod: PaymentCard.PaymentType? {
+        didSet {
+            let selectedCurrency: Currency
+            if paymentMethod == .buyAch {
+                guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else { return }
+                selectedCurrency = currency
+            } else {
+                guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first  else { return  }
+                selectedCurrency = currency
+            }
+            
+            toAmount = .zero(selectedCurrency)
+        }
+    }
     var publicToken: String?
     var mask: String?
     var limits: String? {
@@ -37,22 +50,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         else { return nil }
         
         return L10n.Sell.disclaimer(minText, maxText, lifetimeLimit)
-    }
-    
-    override init() {
-        super.init()
-        
-        let selectedCurrency: Currency
-        
-        if paymentMethod == .buyAch {
-            guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else { return }
-            selectedCurrency = currency
-        } else {
-            guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first  else { return  }
-            selectedCurrency = currency
-        }
-        
-        toAmount = .zero(selectedCurrency)
     }
     
     var feeAmount: Amount? {
