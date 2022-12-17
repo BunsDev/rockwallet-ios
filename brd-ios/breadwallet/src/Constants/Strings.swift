@@ -885,8 +885,8 @@ internal enum L10n {
     /// title of the drawer shown after buy/sell button tap on home screen
     internal static let title = L10n.tr("Localizable", "Drawer.title", fallback: "Buy / Sell")
     internal enum Button {
-      /// SELL & WIDRAW
-      internal static let buyWithSell = L10n.tr("Localizable", "Drawer.button.buy_with_sell", fallback: "SELL & WIDRAW")
+      /// SELL & WITHDRAW
+      internal static let buyWithSell = L10n.tr("Localizable", "Drawer.button.buy_with_sell", fallback: "SELL & WITHDRAW")
     }
   }
   internal enum Eme {

@@ -969,7 +969,7 @@
 /* The wallet is disabled. */
 "Disabled.title" = "Wallet disabled";
 
-"Drawer.button.buy_with_sell" = "SELL & WIDRAW";
+"Drawer.button.buy_with_sell" = "SELL & WITHDRAW";
 
 /* title of the drawer shown after buy/sell button tap on home screen */
 "Drawer.title" = "Buy / Sell";
