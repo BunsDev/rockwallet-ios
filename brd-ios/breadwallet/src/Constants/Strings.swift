@@ -514,13 +514,11 @@ internal enum L10n {
     internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
     }
-    /// ACH fee (fixed fee + % (TBD)
-    internal static let achFeeText = L10n.tr("Localizable", "Buy.achFeeText", fallback: "ACH fee (fixed fee + % (TBD)")
-    /// Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.
+    /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.
     /// 
     /// It currently takes 7-10 days to process a purchase with ACH
     internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s and maximum is %s per day. At the moment lifetime limit is %s.\n\nIt currently takes 7-10 days to process a purchase with ACH")
+      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.\n\nIt currently takes 7-10 days to process a purchase with ACH")
     }
     /// Currently, ACH payments will take 7-10 days to complete.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
@@ -546,7 +544,7 @@ internal enum L10n {
     internal static let billingAddress = L10n.tr("Localizable", "Buy.BillingAddress", fallback: "Billing address")
     /// Buy min and max limit text
     internal static func buyLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is $%s USD and maximum is $%s USD/day.")
+      return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is %s USD and maximum is %s USD/day")
     }
     /// BUY WITH CARDS
     internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARDS")
@@ -885,8 +883,8 @@ internal enum L10n {
     /// title of the drawer shown after buy/sell button tap on home screen
     internal static let title = L10n.tr("Localizable", "Drawer.title", fallback: "Buy / Sell")
     internal enum Button {
-      /// SELL & WIDRAW
-      internal static let buyWithSell = L10n.tr("Localizable", "Drawer.button.buy_with_sell", fallback: "SELL & WIDRAW")
+      /// SELL & WITHDRAW
+      internal static let buyWithSell = L10n.tr("Localizable", "Drawer.button.buy_with_sell", fallback: "SELL & WITHDRAW")
     }
   }
   internal enum Eme {
@@ -1796,8 +1794,8 @@ internal enum L10n {
     internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will be processed within 3-5 business days.")
     /// ACH Withdrawal
     internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
-    /// Sell and Withdraw details
-    internal static let details = L10n.tr("Localizable", "Sell.Details", fallback: "Sell and Withdraw details")
+    /// Sell & Withdraw details
+    internal static let details = L10n.tr("Localizable", "Sell.details", fallback: "Sell & Withdraw details")
     /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.withdrawal
@@ -1810,11 +1808,11 @@ internal enum L10n {
     internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
     /// Conversion rate
     internal static let rate = L10n.tr("Localizable", "Sell.rate", fallback: "Conversion rate")
-    /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.
+    /// Minimum withdrawal is %s USD and maximum is %s USD per day. At the moment your lifetime limit is %s USD.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.
     internal static func sellLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Sell.SellLimits", p1, p2, p3, fallback: "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.\n\nACH Withdrawals will be processed within 3-5 business days.")
+      return L10n.tr("Localizable", "Sell.SellLimits", p1, p2, p3, fallback: "Minimum withdrawal is %s USD and maximum is %s USD per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.")
     }
     /// Subtotal
     internal static let subtotal = L10n.tr("Localizable", "Sell.subtotal", fallback: "Subtotal")
@@ -2222,11 +2220,11 @@ internal enum L10n {
     internal static let swapAgain = L10n.tr("Localizable", "Swap.SwapAgain", fallback: "Swap again")
     /// Swap min and max limit text
     internal static func swapLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Swap.SwapLimits", p1, p2, fallback: "Currently, minimum for Swap is $%s USD and maximum is $%s USD/day.")
+      return L10n.tr("Localizable", "Swap.SwapLimits", p1, p2, fallback: "Currently, minimum for Swap is %s USD and maximum is %s USD/day.")
     }
-    /// Swapping %1$@/%2$@
+    /// Swapping %1$@ to %2$@
     internal static func swapping(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Swap.Swapping", String(describing: p1), String(describing: p2), fallback: "Swapping %1$@/%2$@")
+      return L10n.tr("Localizable", "Swap.Swapping", String(describing: p1), String(describing: p2), fallback: "Swapping %1$@ to %2$@")
     }
     /// Swap status message on swap flow
     internal static func swapStatus(_ p1: UnsafePointer<CChar>) -> String {
@@ -2440,6 +2438,8 @@ internal enum L10n {
     internal static let pendingPurchaseWithAch = L10n.tr("Localizable", "Transaction.PendingPurchaseWithAch", fallback: "Pending purchase with ACH")
     /// Pending swap label in transaction view
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
+    /// Pending withdraw with ACH
+    internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdraw with ACH")
     /// Purchased label in transaction view
     internal static let purchased = L10n.tr("Localizable", "Transaction.Purchased", fallback: "Purchased")
     /// Purchased with ACH
