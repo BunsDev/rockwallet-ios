@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import QuartzCore
 
 extension UIView {
     @objc convenience init(color: UIColor) {
@@ -22,5 +21,4 @@ extension UIView {
         UIGraphicsEndImageContext()
         return tempImage!
     }
-
 }
