@@ -43,7 +43,12 @@ class TxAddressCell: TxDetailRowCell {
         
         addressButton.tap = { [weak self] in
             guard let self = self else { return }
-            self.addressButton.tempDisable()
+            
+            self.addressButton.isEnabled = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                self.addressButton.isEnabled = true
+            })
+            
             Store.trigger(name: .lightWeightAlert(L10n.Receive.copied))
             UIPasteboard.general.string = self.addressButton.titleLabel?.text
         }

@@ -138,7 +138,7 @@ extension TxViewModel {
         guard let time = timestamp else { return L10n.Transaction.justNow }
         let date = Date(timeIntervalSince1970: time)
         
-        if date.hasEqualDay(Date()) {
+        if Calendar.current.compare(date, to: Date(), toGranularity: .day) == .orderedSame {
             return DateFormatter.justTime.string(from: date)
         } else {
             return DateFormatter.mediumDateFormatter.string(from: date)
