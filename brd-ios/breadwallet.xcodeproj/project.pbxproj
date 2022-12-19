@@ -426,7 +426,6 @@
 		7ED427F228755CB200AA19A8 /* ExchangeDetailsVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED427EB28755CB200AA19A8 /* ExchangeDetailsVIP.swift */; };
 		7ED427F328755CB200AA19A8 /* ExchangeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED427EC28755CB200AA19A8 /* ExchangeDetailsViewController.swift */; };
 		7ED427F428755CB200AA19A8 /* ExchangeDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED427ED28755CB200AA19A8 /* ExchangeDetailsInteractor.swift */; };
-		7ED427F628755FDF00AA19A8 /* SwapHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED427F528755FDF00AA19A8 /* SwapHeaderView.swift */; };
 		7ED83ACE284F373200261565 /* KYCLevelTwoEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83ACD284F373200261565 /* KYCLevelTwoEntryViewController.swift */; };
 		7ED83AE8284F384F00261565 /* KYCDocumentPickerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83AE1284F384F00261565 /* KYCDocumentPickerStore.swift */; };
 		7ED83AE9284F384F00261565 /* KYCDocumentPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83AE2284F384F00261565 /* KYCDocumentPickerPresenter.swift */; };
@@ -580,7 +579,6 @@
 		CE0CD1591DBFBCF5004023DA /* ModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CD1581DBFBCF5004023DA /* ModalPresenter.swift */; };
 		CE0ED79924098302000AA24F /* AddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0ED79824098302000AA24F /* AddressTests.swift */; };
 		CE124D001E69170900DFA146 /* SyncingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE124CFF1E69170900DFA146 /* SyncingView.swift */; };
-		CE1280F61EEA855C00D27649 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1280F51EEA855C00D27649 /* Date+Additions.swift */; };
 		CE1E5F261EF083A600BD0F72 /* ImportKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1E5F251EF083A600BD0F72 /* ImportKeyViewController.swift */; };
 		CE20C8F21DBAF71500C8397A /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20C8F11DBAF71500C8397A /* ApplicationController.swift */; };
 		CE20C8F61DBAF77D00C8397A /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20C8F51DBAF77D00C8397A /* UIViewController+Extensions.swift */; };
@@ -1203,7 +1201,6 @@
 		7ED427EB28755CB200AA19A8 /* ExchangeDetailsVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsVIP.swift; sourceTree = "<group>"; };
 		7ED427EC28755CB200AA19A8 /* ExchangeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsViewController.swift; sourceTree = "<group>"; };
 		7ED427ED28755CB200AA19A8 /* ExchangeDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsInteractor.swift; sourceTree = "<group>"; };
-		7ED427F528755FDF00AA19A8 /* SwapHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapHeaderView.swift; sourceTree = "<group>"; };
 		7ED83ACD284F373200261565 /* KYCLevelTwoEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCLevelTwoEntryViewController.swift; sourceTree = "<group>"; };
 		7ED83AE1284F384F00261565 /* KYCDocumentPickerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCDocumentPickerStore.swift; sourceTree = "<group>"; };
 		7ED83AE2284F384F00261565 /* KYCDocumentPickerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCDocumentPickerPresenter.swift; sourceTree = "<group>"; };
@@ -1328,7 +1325,6 @@
 		CE0ED79824098302000AA24F /* AddressTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressTests.swift; sourceTree = "<group>"; };
 		CE0FC0F91F72417500E7C626 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE124CFF1E69170900DFA146 /* SyncingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncingView.swift; path = src/Views/SyncingView.swift; sourceTree = "<group>"; };
-		CE1280F51EEA855C00D27649 /* Date+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Date+Additions.swift"; path = "src/Extensions/Date+Additions.swift"; sourceTree = "<group>"; };
 		CE1E5F251EF083A600BD0F72 /* ImportKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImportKeyViewController.swift; path = src/ViewControllers/Import/ImportKeyViewController.swift; sourceTree = "<group>"; };
 		CE20C8F11DBAF71500C8397A /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationController.swift; path = src/ApplicationController.swift; sourceTree = "<group>"; };
 		CE20C8F51DBAF77D00C8397A /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Extensions.swift"; path = "src/Extensions/UIViewController+Extensions.swift"; sourceTree = "<group>"; };
@@ -2402,7 +2398,6 @@
 				7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */,
 				7E0968B7284A29CE006B4FC2 /* TransparentView.swift */,
 				7EC0F8B928881C680037145C /* TitleValueView.swift */,
-				7ED427F528755FDF00AA19A8 /* SwapHeaderView.swift */,
 				7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */,
 			);
 			path = Views;
@@ -2966,7 +2961,6 @@
 				CEF3D2DC1E8CBA790070178E /* LAContext+Extensions.swift */,
 				CEEC70851E94397D00EF788E /* UserDefaults+Additions.swift */,
 				CEE628291EA98B6D001035AA /* DispatchQueue+Additions.swift */,
-				CE1280F51EEA855C00D27649 /* Date+Additions.swift */,
 				CEC4CF081F0C84AB00E5C82E /* UIViewController+Alerts.swift */,
 				CE47A8DF1F7DA54000FF35BA /* UIScreen+Additions.swift */,
 				7C377EC120F6C29E00E8CF1C /* UIAlertController+Additions.swift */,
@@ -3762,7 +3756,6 @@
 				7BBBF4DF287421CF00E4D36B /* SwapStore.swift in Sources */,
 				7BDB4A0B2806F5260031F015 /* RedeemGiftViewController.swift in Sources */,
 				CE6DCC251E6001E50044257B /* UIControl+Callback.swift in Sources */,
-				7ED427F628755FDF00AA19A8 /* SwapHeaderView.swift in Sources */,
 				7B02D6262859200400C5C384 /* KYCCameraPreviewView.swift in Sources */,
 				7ED83ACE284F373200261565 /* KYCLevelTwoEntryViewController.swift in Sources */,
 				CE0822641FCD1BD100EF371D /* HomeScreenViewController.swift in Sources */,
@@ -3952,7 +3945,6 @@
 				7EB8FD242897D212000FF75C /* BuyModels.swift in Sources */,
 				7ED83AEA284F384F00261565 /* KYCDocumentPickerModels.swift in Sources */,
 				CE27F9591E2C8EA300F7F7F2 /* Amount.swift in Sources */,
-				CE1280F61EEA855C00D27649 /* Date+Additions.swift in Sources */,
 				CED82D4E1E575A5500507A9B /* main.swift in Sources */,
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,
