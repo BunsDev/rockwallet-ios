@@ -73,45 +73,47 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             title: .text(L10n.Swap.iWant))
         
         // TODO: refactor this :S
-        if let paymentCard = actionResponse.card,
-            paymentCard.type == .buyCard {
-            cardModel = .init(logo: paymentCard.displayImage,
-                              cardNumber: .text(paymentCard.displayName),
-                              expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
-                              userInteractionEnabled: true)
-            
-        } else if let paymentCard = actionResponse.card,
-                  paymentCard.type == .buyAch {
-            switch actionResponse.card?.status {
-            case .statusOk:
-                cardModel = .init(title: .text(L10n.Buy.transferFromBank),
-                                  subtitle: nil,
-                                  logo: .image(Asset.bank.image),
-                                  cardNumber: .text(paymentCard.displayName),
-                                  userInteractionEnabled: false)
-                
-            default:
-                cardModel = .init(title: .text(L10n.Buy.achPayments),
-                                  subtitle: .text(L10n.Buy.relinkBankAccount),
-                                  userInteractionEnabled: true)
-                
-                let model = InfoViewModel(description: .text(L10n.Buy.Ach.accountUnlinked), dismissType: .auto)
-                let config = Presets.InfoView.error
-                
-                viewController?.displayMessage(responseDisplay: .init(model: model,
-                                                                      config: config))
+        switch actionResponse.type {
+        case .buyAch:
+            if let paymentCard = actionResponse.card {
+                switch actionResponse.card?.status {
+                case .statusOk:
+                    cardModel = .init(title: .text(L10n.Buy.transferFromBank),
+                                      subtitle: nil,
+                                      logo: .image(Asset.bank.image),
+                                      cardNumber: .text(paymentCard.displayName),
+                                      userInteractionEnabled: false)
+                    
+                default:
+                    cardModel = .init(title: .text(L10n.Buy.achPayments),
+                                      subtitle: .text(L10n.Buy.relinkBankAccount),
+                                      userInteractionEnabled: true)
+                    
+                    let model = InfoViewModel(description: .text(L10n.Buy.Ach.accountUnlinked),
+                                              dismissType: .auto)
+                    let config = Presets.InfoView.error
+                    
+                    viewController?.displayMessage(responseDisplay: .init(model: model,
+                                                                          config: config))
+                }
+            } else {
+                cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
+                                                   subtitle: .text(L10n.Buy.linkBankAccount),
+                                                   userInteractionEnabled: true)
             }
             cryptoModel.selectionDisabled = true
             
-        } else if actionResponse.type == .buyCard {
-            cardModel = .init(userInteractionEnabled: true)
-            
-        } else {
-            cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
-                                               subtitle: .text(L10n.Buy.linkBankAccount),
-                                               userInteractionEnabled: true)
-            cryptoModel.selectionDisabled = true
+        default:
+            if let paymentCard = actionResponse.card {
+                cardModel = .init(logo: paymentCard.displayImage,
+                                  cardNumber: .text(paymentCard.displayName),
+                                  expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
+                                  userInteractionEnabled: true)
+            } else {
+                cardModel = .init(userInteractionEnabled: true)
+            }
         }
+        
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
