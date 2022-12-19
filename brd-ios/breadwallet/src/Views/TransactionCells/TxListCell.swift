@@ -13,7 +13,11 @@ class TxListCell: UITableViewCell, Identifiable {
 
     // MARK: - Views
 
-    private let iconImageView = UIImageView()
+    private  let iconImageView: UIImageView = {
+        let view = UIImageView()
+        view.layer.masksToBounds = true
+        return view
+    }()
     private let titleLabel = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.three)
     private let descriptionLabel = UILabel(font: Fonts.Body.two, color: LightColors.Text.two)
     private  let amount: UILabel = {
@@ -24,11 +28,6 @@ class TxListCell: UITableViewCell, Identifiable {
     
     private let separator = UIView(color: LightColors.Outline.one)
     
-    // MARK: Vars
-    
-    private var viewModel: TxListViewModel!
-    private var currency: Currency!
-    
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,22 +37,19 @@ class TxListCell: UITableViewCell, Identifiable {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         iconImageView.layer.cornerRadius = iconImageView.frame.height * CornerRadius.fullRadius.rawValue
-        iconImageView.layer.masksToBounds = true
     }
     
     func setTransaction(_ viewModel: TxListViewModel, currency: Currency, showFiatAmounts: Bool, rate: Rate) {
-        self.viewModel = viewModel
-        self.currency = currency
-        
         let status = viewModel.tx?.status ?? viewModel.swap?.status ?? .pending
-        
         iconImageView.image = viewModel.icon?.tinted(with: status.tintColor)
         iconImageView.backgroundColor = status.backgroundColor
         
         amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
         titleLabel.text = viewModel.shortTimestamp
-        descriptionLabel.text = viewModel.shortDescription
+        descriptionLabel.text = viewModel.shortDescription(for: currency)
+        
         layoutSubviews()
     }
     
@@ -94,7 +90,7 @@ class TxListCell: UITableViewCell, Identifiable {
             amount.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: Margins.large.rawValue),
             amount.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Margins.medium.rawValue),
             amount.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Margins.large.rawValue)])
-        separator.constrainBottomCorners(height: 0.5)
+        separator.constrainBottomCorners(height: ViewSizes.minimum.rawValue)
     }
     
     private func setupStyle() {
