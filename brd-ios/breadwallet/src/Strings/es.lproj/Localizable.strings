@@ -601,8 +601,6 @@
 
 "Buy.achFee" = "Tarifa ACH (%s)";
 
-"Buy.achFeeText" = "Tasa ACH (tasa fija + % (por determinar)";
-
 "Buy.achLimits" = "Actualmente, el mínimo diario para comprar con ACH es %s y el máximo es %s. Actualmente, el límite total es %s.\n\nActualmente, el periodo de proceso de compra con ACH es de 7 a 10 días";
 
 "Buy.achPaymentDurationWarning" = "Actualmente, los pagos ACH tardarán de 7 a 10 días en completarse.";
