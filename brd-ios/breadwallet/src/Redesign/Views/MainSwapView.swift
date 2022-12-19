@@ -214,7 +214,8 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         let topFrame = isNormal ? baseSwapCurrencyView.selectorStackView : termSwapCurrencyView.selectorStackView
         let bottomFrame = isNormal ? termSwapCurrencyView.selectorStackView : baseSwapCurrencyView.selectorStackView
         
-        let verticalDistance = (topFrame.bounds.minY - bottomFrame.bounds.maxY - topFrame.frame.height - 2) * 2
+        let convertedFrame = termSwapCurrencyView.selectorStackView.convert(baseSwapCurrencyView.selectorStackView.bounds, from: baseSwapCurrencyView.selectorStackView)
+        let verticalDistance = convertedFrame.minY - termSwapCurrencyView.selectorStackView.bounds.maxY + baseSwapCurrencyView.selectorStackView.frame.height
         
         UIView.animate(withDuration: Presets.Animation.duration,
                        delay: 0.0,
