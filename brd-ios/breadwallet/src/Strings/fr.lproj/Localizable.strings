@@ -601,8 +601,6 @@
 
 "Buy.achFee" = "Frais ACH de (%s)";
 
-"Buy.achFeeText" = "Frais ACH (frais fixes + % (à déterminer))";
-
 "Buy.achLimits" = "Actuellement, le minimum d'achat avec ACH est de %s et le maximum est de %s par jour. Actuellement, la limite à vie est de %s.\n\nActuellement, le traitement d'un achat réalisé avec ACH prend entre 7 et 10 jours";
 
 "Buy.achPaymentDurationWarning" = "Actuellement, les paiements ACH prennent entre 7 et 10 jours.";
