@@ -54,7 +54,12 @@ class RegistrationViewController: BaseTableViewController<RegistrationCoordinato
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                view.configure(with: Presets.TextField.email)
+                var emailConfig = Presets.TextField.primary
+                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
+                emailConfig.autocorrectionType = .no
+                emailConfig.keyboardType = .emailAddress
+                
+                view.configure(with: emailConfig)
             }
             
         case .tickbox:
