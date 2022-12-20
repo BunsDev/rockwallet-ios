@@ -21,44 +21,55 @@ extension UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func showToastMessage(message: String) {
-        let messageView = UIView()
-        messageView.setupCustomMargins(all: .large)
-        messageView.backgroundColor = LightColors.Error.one
-        messageView.layer.cornerRadius = CornerRadius.common.rawValue
+    // MARK: - Toast Message
+    
+    func showToastMessage(model: InfoViewModel? = nil,
+                          configuration: InfoViewConfiguration? = nil,
+                          onTapCallback: (() -> Void)? = nil) {
+        guard let superview = UIApplication.shared.activeWindow else { return }
         
-        let textLabel = UILabel()
-        textLabel.textColor = LightColors.Background.one
-        textLabel.font = Fonts.Body.two
-        textLabel.text = message
-        textLabel.numberOfLines = 0
-        textLabel.textAlignment = .left
-        textLabel.clipsToBounds = true
+        let notification: FEInfoView = (superview.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
         
-        view.addSubview(messageView)
-        messageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Margins.large.rawValue)
-            make.leading.equalToSuperview().offset(Margins.large.rawValue)
-            make.trailing.equalToSuperview().offset(-Margins.large.rawValue)
-            make.height.equalTo(72)
+        notification.didFinish = { [weak self] in
+            self?.hideToastMessage()
+            onTapCallback?()
         }
-        messageView.layoutIfNeeded()
-        messageView.alpha = 1
         
-        messageView.addSubview(textLabel)
-        textLabel.snp.makeConstraints { make in
-            make.edges.equalTo(messageView.snp.margins)
-        }
+        if notification.superview == nil {
+            notification.setupCustomMargins(all: .extraLarge)
+            notification.configure(with: configuration)
+            superview.addSubview(notification)
+            notification.alpha = 0
             
-        UIView.animate(withDuration: 6.0) {
-            messageView.alpha = 0
-        } completion: { _ in
-            messageView.removeFromSuperview()
+            notification.snp.makeConstraints { make in
+                make.top.equalTo(superview.safeAreaLayoutGuide.snp.top)
+                make.leading.equalToSuperview().offset(Margins.medium.rawValue)
+                make.centerX.equalToSuperview()
+            }
+        }
+        
+        notification.setup(with: model)
+        notification.layoutIfNeeded()
+        
+        UIView.animate(withDuration: Presets.Animation.duration) {
+            notification.alpha = 1
         }
     }
     
-    func showInfoPopup(with model: PopupViewModel, callbacks: [(() -> Void)] = []) {
+    func hideToastMessage() {
+        guard let superview = UIApplication.shared.activeWindow,
+              let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
         
+        UIView.animate(withDuration: Presets.Animation.duration) {
+            view.alpha = 0
+        } completion: { _ in
+            view.removeFromSuperview()
+        }
+    }
+    
+    // MARK: - Info Popup
+    
+    func showInfoPopup(with model: PopupViewModel, callbacks: [(() -> Void)] = []) {
         let blurView = UIVisualEffectView()
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
