@@ -362,7 +362,8 @@ class ModalPresenter: Subscriber {
             case .privateKey:
                 let alert = UIAlertController(title: L10n.Settings.importTitle, message: nil, preferredStyle: .actionSheet)
                 
-                let wallets = [Currencies.shared.btc?.wallet,
+                let wallets = [Currencies.shared.bsv?.wallet,
+                               Currencies.shared.btc?.wallet,
                                Currencies.shared.bch?.wallet]
                 wallets.forEach { wallet in
                     alert.addAction(UIAlertAction(title: wallet?.currency.code, style: .default, handler: { _ in
@@ -468,6 +469,26 @@ class ModalPresenter: Subscriber {
         var bchMenu = MenuItem(title: L10n.Settings.currencyPageTitle(Currencies.shared.bch?.name ?? ""), subMenu: bchItems, rootNav: menuNav)
         bchMenu.shouldShow = { return !bchItems.isEmpty }
         
+        // MARK: Bitcoin SV Menu
+        var bsvItems: [MenuItem] = []
+        if let bsv = Currencies.shared.bsv, let bsvWallet = bsv.wallet {
+            if system.connectionMode(for: bsv) == .p2p_only {
+                // Rescan
+                bsvItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
+                    guard let self = self else { return }
+                    menuNav.pushViewController(ReScanViewController(system: self.system, wallet: bsvWallet), animated: true)
+                }))
+            }
+            bsvItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
+                menuNav.dismiss(animated: true, completion: { [unowned self] in
+                    self.presentKeyImport(wallet: bsvWallet)
+                })
+            }))
+            
+        }
+        var bsvMenu = MenuItem(title: L10n.Settings.currencyPageTitle(Currencies.shared.bsv?.name ?? ""), subMenu: bsvItems, rootNav: menuNav)
+        bsvMenu.shouldShow = { return !bsvItems.isEmpty }
+        
         // MARK: Ethereum Menu
         var ethItems: [MenuItem] = []
         if let eth = Currencies.shared.eth, let ethWallet = eth.wallet {
@@ -494,6 +515,7 @@ class ModalPresenter: Subscriber {
                 menuNav.pushViewController(DefaultCurrencyViewController(), animated: true)
             }),
             
+            bsvMenu,
             btcMenu,
             bchMenu,
             ethMenu,

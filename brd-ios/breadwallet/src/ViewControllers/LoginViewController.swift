@@ -383,7 +383,9 @@ class LoginViewController: UIViewController, Subscriber {
         
         let attempts = keyMaster.pinAttemptsRemaining == 7 ? L10n.UpdatePin.twoAttempts : L10n.UpdatePin.oneAttempt
         let message = "\(L10n.UpdatePin.incorrectPin) \(attempts)"
-        showToastMessage(message: message)
+        
+        let model: InfoViewModel = .init(description: .text(message), dismissType: .auto)
+        showToastMessage(model: model, configuration: Presets.InfoView.error)
     }
 
     private var shouldUseBiometrics: Bool {

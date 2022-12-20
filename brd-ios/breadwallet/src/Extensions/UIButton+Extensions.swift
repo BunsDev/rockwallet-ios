@@ -51,11 +51,4 @@ extension UIButton {
         
         return button
     }
-    
-    func tempDisable() {
-        isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
-            self?.isEnabled = true
-        })
-    }
 }
