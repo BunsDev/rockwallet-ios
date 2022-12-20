@@ -152,20 +152,18 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
             background = config?.disabledConfiguration
 
         case .error, .filled:
-            return
+            background = nil
         }
         
         displayState = state
         
-        if withAnimation {
-            Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
-                self?.updateLayout(background: background, shadow: shadow)
-            }
-        } else {
-            UIView.performWithoutAnimation { [weak self] in
-                self?.updateLayout(background: background, shadow: shadow)
-            }
+        UIView.setAnimationsEnabled(withAnimation)
+        
+        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+            self?.updateLayout(background: background, shadow: shadow)
         }
+        
+        UIView.setAnimationsEnabled(true)
     }
     
     private func updateLayout(background: BackgroundConfiguration?, shadow: ShadowConfiguration?) {

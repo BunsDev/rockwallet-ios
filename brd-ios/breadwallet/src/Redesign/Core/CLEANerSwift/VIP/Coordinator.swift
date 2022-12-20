@@ -8,13 +8,11 @@
 import UIKit
 
 protocol BaseControllable: UIViewController {
-
     associatedtype CoordinatorType: CoordinatableRoutes
     var coordinator: CoordinatorType? { get set }
 }
 
 protocol Coordinatable: CoordinatableRoutes {
-    // TODO: should eventually die
     var modalPresenter: ModalPresenter? { get set }
     var childCoordinators: [Coordinatable] { get set }
     var navigationController: UINavigationController { get set }
@@ -351,10 +349,10 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showMessage(with error: Error? = nil,
-                     model: InfoViewModel? = nil,
-                     configuration: InfoViewConfiguration? = nil,
-                     onTapCallback: (() -> Void)? = nil) {
+    func showToastMessage(with error: Error? = nil,
+                          model: InfoViewModel? = nil,
+                          configuration: InfoViewConfiguration? = nil,
+                          onTapCallback: (() -> Void)? = nil) {
         hideOverlay()
         LoadingView.hide()
         
@@ -375,47 +373,12 @@ class BaseCoordinator: NSObject,
             break
         }
         
-        guard let superview = UIApplication.shared.activeWindow,
-              let model = model,
+        guard let model = model,
               let configuration = configuration else { return }
         
-        let notification: FEInfoView = (superview.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
-        
-        notification.didFinish = { [weak self] in
-            self?.hideMessage()
-            onTapCallback?()
-        }
-        
-        if notification.superview == nil {
-            notification.setupCustomMargins(all: .extraLarge)
-            notification.configure(with: configuration)
-            superview.addSubview(notification)
-            notification.alpha = 0
-            
-            notification.snp.makeConstraints { make in
-                make.top.equalTo(superview.safeAreaLayoutGuide.snp.top)
-                make.leading.equalToSuperview().offset(Margins.medium.rawValue)
-                make.centerX.equalToSuperview()
-            }
-        }
-        
-        notification.setup(with: model)
-        notification.layoutIfNeeded()
-        
-        UIView.animate(withDuration: Presets.Animation.duration) {
-            notification.alpha = 1
-        }
-    }
-    
-    func hideMessage() {
-        guard let superview = UIApplication.shared.activeWindow,
-              let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
-        
-        UIView.animate(withDuration: Presets.Animation.duration) {
-            view.alpha = 0
-        } completion: { _ in
-            view.removeFromSuperview()
-        }
+        navigationController.showToastMessage(model: model,
+                                              configuration: configuration,
+                                              onTapCallback: onTapCallback)
     }
     
     func showUnderConstruction(_ feat: String) {

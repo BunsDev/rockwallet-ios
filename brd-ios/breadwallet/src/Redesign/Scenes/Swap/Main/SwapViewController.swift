@@ -175,7 +175,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
         guard let error = responseDisplay.error as? ExchangeErrors else {
-            coordinator?.hideMessage()
+            hideToastMessage()
             return
         }
         
@@ -187,9 +187,9 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
             coordinator?.showFailure()
             
         default:
-            coordinator?.showMessage(with: responseDisplay.error,
-                                     model: responseDisplay.model,
-                                     configuration: responseDisplay.config)
+            coordinator?.showToastMessage(with: responseDisplay.error,
+                                          model: responseDisplay.model,
+                                          configuration: responseDisplay.config)
         }
     }
     
