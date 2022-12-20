@@ -55,7 +55,7 @@ enum SuccessReason: SimpleMessage {
     var secondButtonTitle: String? {
         switch self {
         case .sell:
-            return L10n.Sell.details
+            return L10n.Sell.withdrawDetails
             
         default:
             return L10n.Buy.details

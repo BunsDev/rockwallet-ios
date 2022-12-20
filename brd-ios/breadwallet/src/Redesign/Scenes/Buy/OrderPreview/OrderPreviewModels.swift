@@ -124,7 +124,7 @@ enum OrderPreviewModels {
         
         struct ActionResponse {
             var paymentReference: String?
-            var previewTye: PreviewType?
+            var previewType: PreviewType?
             var isAch: Bool?
             var failed: Bool?
         }
