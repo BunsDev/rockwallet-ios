@@ -130,8 +130,8 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func displayPendingStatusError(responseDisplay: AccountVerificationModels.PendingMessage.ResponseDisplay) {
-        coordinator?.showMessage(model: responseDisplay.model,
-                                 configuration: responseDisplay.config)
+        coordinator?.showToastMessage(model: responseDisplay.model,
+                                      configuration: responseDisplay.config)
     }
     
     // MARK: - Additional Helpers
