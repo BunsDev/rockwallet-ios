@@ -328,6 +328,11 @@ class UpdatePinViewController: UIViewController, Subscriber {
             if pin == newPin {
                 didSetNewPin()
             } else {
+                if pin != newPin {
+                    let model: InfoViewModel = .init(description: .text(L10n.UpdatePin.pinDoesntMatch), dismissType: .auto)
+                    showToastMessage(model: model, configuration: Presets.InfoView.error)
+                }
+                
                 clearAfterFailure()
                 pushNewStep(.new)
             }

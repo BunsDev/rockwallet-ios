@@ -2965,6 +2965,8 @@
 /* Number of attempts left on pin entry screen */
 "UpdatePin.OneAttempt" = "1 more failed attempt.";
 
+"UpdatePin.pinDoesntMatch" = "Your PIN doesn’t match, please try again.";
+
 /* Re-Enter new PIN instruction */
 "UpdatePin.reEnterNew" = "Re-Enter your new PIN.";
 

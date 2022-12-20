@@ -2730,6 +2730,8 @@ internal enum L10n {
     internal static let incorrectPin = L10n.tr("Localizable", "UpdatePin.IncorrectPin", fallback: "Incorrect PIN. The wallet will get disabled for 6 minutes after")
     /// Number of attempts left on pin entry screen
     internal static let oneAttempt = L10n.tr("Localizable", "UpdatePin.OneAttempt", fallback: "1 more failed attempt.")
+    /// Your PIN doesn’t match, please try again.
+    internal static let pinDoesntMatch = L10n.tr("Localizable", "UpdatePin.pinDoesntMatch", fallback: "Your PIN doesn’t match, please try again.")
     /// Re-Enter new PIN instruction
     internal static let reEnterNew = L10n.tr("Localizable", "UpdatePin.reEnterNew", fallback: "Re-Enter your new PIN.")
     /// Attempts remaining on pin entry screen
