@@ -96,9 +96,12 @@ class BankCardInputDetailsView: FEView<BankCardInputDetailsViewConfiguration, Ba
     override func configure(with config: BankCardInputDetailsViewConfiguration?) {
         super.configure(with: config)
         
-        numberTextField.configure(with: Presets.TextField.number)
-        expirationTextField.configure(with: Presets.TextField.number)
-        cvvTextField.configure(with: Presets.TextField.number.setSecure(true))
+        var config = Presets.TextField.primary
+        config.keyboardType = .numberPad
+        
+        numberTextField.configure(with: config)
+        expirationTextField.configure(with: config)
+        cvvTextField.configure(with: config.setSecure(true))
     }
     
     override func setup(with viewModel: BankCardInputDetailsViewModel?) {
