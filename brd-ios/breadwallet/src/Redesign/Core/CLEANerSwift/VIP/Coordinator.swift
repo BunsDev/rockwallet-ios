@@ -373,6 +373,9 @@ class BaseCoordinator: NSObject,
             break
         }
         
+        guard let model = model,
+              let configuration = configuration else { return }
+        
         navigationController.showToastMessage(model: model,
                                               configuration: configuration,
                                               onTapCallback: onTapCallback)
