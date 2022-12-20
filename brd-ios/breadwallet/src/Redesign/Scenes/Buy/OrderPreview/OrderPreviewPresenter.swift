@@ -25,7 +25,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let wrappedViewModel = prepareOrderPreviewViewModel(for: item)
         
-        let achNotificationModel = InfoViewModel(description: .text(L10n.Buy.achPaymentDurationWarning), dismissType: .persistent)
+        let achNotificationModel = InfoViewModel(description: .text(item.type?.disclaimer), dismissType: .persistent)
         let achTermsModel = InfoViewModel(description: .text(L10n.Buy.terms),
                                           button: .init(title: L10n.About.terms, isUnderlined: true),
                                           tickbox: .init(title: .text(L10n.Buy.understandAndAgree)),
@@ -133,11 +133,11 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
         guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
-            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewTye == .sell ? .sell : .buyAch) : .buyCard
+            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             return
         }
-        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewTye == .sell ? .sell : .buyAch) : .buyCard
+        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }

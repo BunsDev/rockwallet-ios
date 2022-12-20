@@ -1990,7 +1990,9 @@
 
 "Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
 
-"Sell.yourOrder" = "You sell";
+"Sell.WithdrawDetails" = "Sell and withdraw details";
+
+"Sell.yourOrder" = "You sell:";
 
 "Sell.YouWillReceive" = "You’ll receive";
 
@@ -2469,7 +2471,7 @@
 /* Swap min and max limit text */
 "Swap.SwapLimits" = "Currently, minimum for Swap is %s USD and maximum is %s USD/day.";
 
-"Swap.Swapping" = "Swapping %1$@/%2$@";
+"Swap.Swapping" = "Swapping %1$@ to %2$@";
 
 /* Swap status message on swap flow */
 "Swap.SwapStatus" = "Your %s is estimated to arrive in 30 minutes. You can continue to use your wallet. We'll let you know when your swap has finished.";
@@ -2964,6 +2966,8 @@
 
 /* Number of attempts left on pin entry screen */
 "UpdatePin.OneAttempt" = "1 more failed attempt.";
+
+"UpdatePin.pinDoesntMatch" = "Your PIN doesn’t match, please try again.";
 
 /* Re-Enter new PIN instruction */
 "UpdatePin.reEnterNew" = "Re-Enter your new PIN.";

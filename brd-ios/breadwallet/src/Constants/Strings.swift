@@ -1826,8 +1826,10 @@ internal enum L10n {
     internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.")
     /// Your withdrawal is being processed
     internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
-    /// You sell
-    internal static let yourOrder = L10n.tr("Localizable", "Sell.yourOrder", fallback: "You sell")
+    /// Sell and withdraw details
+    internal static let withdrawDetails = L10n.tr("Localizable", "Sell.WithdrawDetails", fallback: "Sell and withdraw details")
+    /// You sell:
+    internal static let yourOrder = L10n.tr("Localizable", "Sell.yourOrder", fallback: "You sell:")
     /// You’ll receive
     internal static let youWillReceive = L10n.tr("Localizable", "Sell.YouWillReceive", fallback: "You’ll receive")
   }
@@ -2222,9 +2224,9 @@ internal enum L10n {
     internal static func swapLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Swap.SwapLimits", p1, p2, fallback: "Currently, minimum for Swap is %s USD and maximum is %s USD/day.")
     }
-    /// Swapping %1$@/%2$@
+    /// Swapping %1$@ to %2$@
     internal static func swapping(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Swap.Swapping", String(describing: p1), String(describing: p2), fallback: "Swapping %1$@/%2$@")
+      return L10n.tr("Localizable", "Swap.Swapping", String(describing: p1), String(describing: p2), fallback: "Swapping %1$@ to %2$@")
     }
     /// Swap status message on swap flow
     internal static func swapStatus(_ p1: UnsafePointer<CChar>) -> String {
@@ -2730,6 +2732,8 @@ internal enum L10n {
     internal static let incorrectPin = L10n.tr("Localizable", "UpdatePin.IncorrectPin", fallback: "Incorrect PIN. The wallet will get disabled for 6 minutes after")
     /// Number of attempts left on pin entry screen
     internal static let oneAttempt = L10n.tr("Localizable", "UpdatePin.OneAttempt", fallback: "1 more failed attempt.")
+    /// Your PIN doesn’t match, please try again.
+    internal static let pinDoesntMatch = L10n.tr("Localizable", "UpdatePin.pinDoesntMatch", fallback: "Your PIN doesn’t match, please try again.")
     /// Re-Enter new PIN instruction
     internal static let reEnterNew = L10n.tr("Localizable", "UpdatePin.reEnterNew", fallback: "Re-Enter your new PIN.")
     /// Attempts remaining on pin entry screen

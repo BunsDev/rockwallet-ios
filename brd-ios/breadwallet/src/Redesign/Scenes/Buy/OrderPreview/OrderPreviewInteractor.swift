@@ -33,13 +33,13 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.dataStore?.paymentstatus = data?.status
                 guard data?.status.isSuccesful == true || data?.status.achPending == true else {
                     self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
-                                                                         previewTye: self?.dataStore?.type,
+                                                                         previewType: self?.dataStore?.type,
                                                                          isAch: self?.dataStore?.isAchAccount,
                                                                          failed: true))
                     return
                 }
                 self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
-                                                                     previewTye: self?.dataStore?.type,
+                                                                     previewType: self?.dataStore?.type,
                                                                      isAch: self?.dataStore?.isAchAccount,
                                                                      failed: false))
                 
