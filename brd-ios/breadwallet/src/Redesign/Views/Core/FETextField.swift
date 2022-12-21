@@ -107,7 +107,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         view.alignment = .fill
         view.distribution = .fill
         view.spacing = Margins.small.rawValue
-        
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -179,9 +179,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textFieldStack.addArrangedSubview(textField)
         
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
         textField.delegate = self
-        let tapped = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        
+        let tapped = UITapGestureRecognizer(target: self, action: #selector(startEditing))
         addGestureRecognizer(tapped)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(trailingViewTapped))
@@ -189,18 +189,11 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         trailingView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    @objc func tapped() {
-        let state: DisplayState = textField.isFirstResponder ? .disabled : .selected
-        animateTo(state: state, withAnimation: true)
-        textField.becomeFirstResponder()
-    }
-    
     override func configure(with config: TextFieldConfiguration?) {
-        guard var config = config else { return }
+        guard let config = config else { return }
+        
         super.configure(with: config)
         
-        titleLabel.configure(with: config.titleConfiguration)
-        hintLabel.configure(with: config.hintConfiguration)
         textField.autocapitalizationType = config.autocapitalizationType
         textField.autocorrectionType = config.autocorrectionType
         textField.keyboardType = config.keyboardType
@@ -210,7 +203,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             textField.font = textConfig.font
             textField.textColor = textConfig.textColor
             textField.textAlignment = textConfig.textAlignment
-            textField.tintColor = config.backgroundConfiguration?.tintColor
         }
         
         leadingView.configure(with: config.leadingImageConfiguration)
@@ -219,26 +211,13 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         shadowView = mainStack
         backgroundView = textFieldContent
         
-        switch displayState {
-        case .normal, .filled:
-            config.background = config.backgroundConfiguration
-            
-        case .highlighted, .selected:
-            config.background = config.selectedBackgroundConfiguration
-            
-        case .disabled:
-            config.background = config.disabledBackgroundConfiguration
-            
-        case .error:
-            config.background = config.errorBackgroundConfiguration
-        }
-        
         configure(background: config.background)
         configure(shadow: config.shadow)
     }
     
     override func setup(with viewModel: TextFieldModel?) {
         guard let viewModel = viewModel else { return }
+        
         super.setup(with: viewModel)
         
         titleLabel.setup(with: .text(viewModel.title))
@@ -269,9 +248,11 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         titleStack.isHidden = leadingView.isHidden && trailingView.isHidden && titleLabel.isHidden
         
-        animateTo(state: (viewModel.value ?? "").isEmpty ? .normal : .filled, withAnimation: false)
-        
-        layoutSubviews()
+        animateTo(state: textField.text?.isEmpty == true ? .normal : .filled, withAnimation: false)
+    }
+    
+    @objc private func startEditing() {
+        textField.becomeFirstResponder()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -279,7 +260,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        animateTo(state: .normal)
+        animateTo(state: textField.text?.isEmpty == true ? .normal : .filled)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -302,20 +283,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         switch state {
         case .normal:
             background = config?.backgroundConfiguration
+            titleConfig = config?.titleConfiguration
             
-            if textField.isFirstResponder == false && textField.text?.isEmpty == false {
-                titleConfig = config?.selectedTitleConfiguration
-            } else {
-                titleConfig = config?.titleConfiguration
-            }
-            
-        case .filled:
-            background = config?.backgroundConfiguration
-            titleConfig = config?.selectedTitleConfiguration
-            
-            hideTextField = false
-            
-        case .highlighted, .selected:
+        case .highlighted, .selected, .filled:
             background = config?.selectedBackgroundConfiguration
             titleConfig = config?.selectedTitleConfiguration
             
@@ -331,10 +301,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             hint = viewModel?.error
         }
         
-        titleStack.isHidden = hideTitleForState == state || titleStackCurrentState
-        textField.isHidden = hideTextField
-        hintLabel.isHidden = hint == nil
-        
         if let text = hint,
            !text.isEmpty {
             hintLabel.setup(with: .text(text))
@@ -346,19 +312,17 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         hintLabel.configure(with: .init(textColor: background?.tintColor))
         configure(background: background)
         
-        if withAnimation {
-            Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
-                self?.updateLayout()
-            }
-        } else {
-            UIView.performWithoutAnimation { [weak self] in
-                self?.updateLayout()
-            }
+        UIView.setAnimationsEnabled(withAnimation)
+        
+        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
+            self?.titleStack.isHidden = self?.hideTitleForState == state || titleStackCurrentState
+            self?.textField.isHidden = hideTextField
+            self?.hintLabel.isHidden = hint == nil
+            
+            self?.layoutIfNeeded()
+            self?.contentSizeChanged?()
         }
-    }
-    
-    private func updateLayout() {
-        layoutIfNeeded()
-        contentSizeChanged?()
+        
+        UIView.setAnimationsEnabled(true)
     }
 }

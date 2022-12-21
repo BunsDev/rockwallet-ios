@@ -1161,7 +1161,7 @@ internal enum L10n {
     /// Unlocking Private key activity view message.
     internal static let unlockingActivity = L10n.tr("Localizable", "Import.unlockingActivity", fallback: "Unlocking Key")
     /// Import wallet intro warning message
-    internal static let warning = L10n.tr("Localizable", "Import.warning", fallback: "Sweeping a wallett does not include transaction history or other details.")
+    internal static let warning = L10n.tr("Localizable", "Import.warning", fallback: "Sweeping a wallet does not include transaction history or other details.")
     /// Wrong password alert message
     internal static let wrongPassword = L10n.tr("Localizable", "Import.wrongPassword", fallback: "Wrong password, please try again.")
     internal enum Error {

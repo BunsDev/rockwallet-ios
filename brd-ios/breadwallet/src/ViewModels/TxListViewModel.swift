@@ -17,7 +17,6 @@ struct TxListViewModel: TxViewModel, Hashable {
     var swap: SwapDetail?
 
     func amount(showFiatAmounts: Bool, rate: Rate) -> String {
-        // TODO: handle swap amount
         if let tx = tx {
             var amount = tx.amount
 
@@ -42,13 +41,13 @@ struct TxListViewModel: TxViewModel, Hashable {
         }
     }
     
-    var shortDescription: String {
+    func shortDescription(for currency: Currency) -> String {
         switch transactionType {
         case .defaultTransaction:
             return handleDefaultTransactions()
             
         case .swapTransaction:
-            return handleSwapTransactions()
+            return handleSwapTransactions(for: currency)
             
         case .sellTransaction:
             return handleSellTransactions()
@@ -108,10 +107,10 @@ struct TxListViewModel: TxViewModel, Hashable {
         }
     }
     
-    private func handleSwapTransactions() -> String {
+    private func handleSwapTransactions(for currency: Currency) -> String {
         let sourceCurrency = swapSourceCurrency?.code.uppercased() ?? ""
         let destinationCurrency = swapDestinationCurrency?.code.uppercased() ?? ""
-        let isOnSource = currency?.code.uppercased() == destinationCurrency
+        let isOnSource = currency.code.uppercased() == destinationCurrency
         let swapString = isOnSource ? "from \(sourceCurrency)" : "to \(destinationCurrency)"
         
         switch status {

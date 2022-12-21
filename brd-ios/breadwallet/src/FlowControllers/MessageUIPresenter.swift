@@ -122,15 +122,7 @@ class MessageUIPresenter: NSObject {
         alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: nil))
         presenter?.present(alert, animated: true, completion: nil)
     }
-
-    private func showMessageUnavailableAlert() {
-        let alert = UIAlertController(title: L10n.ErrorMessages.messagingUnavailableTitle,
-                                      message: L10n.ErrorMessages.messagingUnavailableMessage,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: nil))
-        presenter?.present(alert, animated: true, completion: nil)
-    }
-
+    
     private func showErrorMessage(_ message: String) {
         let alert = UIAlertController(title: L10n.Alert.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: nil))

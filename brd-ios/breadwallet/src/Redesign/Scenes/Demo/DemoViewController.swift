@@ -118,8 +118,8 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
             view.configure(with: Presets.Order.small)
             view.setup(with: model)
             view.didCopyValue = { [weak self] code in
-                self?.coordinator?.showMessage(model: InfoViewModel(description: .text(code), dismissType: .auto),
-                                               configuration: Presets.InfoView.error)
+                self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(code), dismissType: .auto),
+                                                    configuration: Presets.InfoView.error)
             }
         }
         

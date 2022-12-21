@@ -11,8 +11,6 @@
 import UIKit
 
 struct DateConfiguration: Configurable {
-    var normal: BackgroundConfiguration = Presets.Background.Primary.normal
-    var selected: BackgroundConfiguration = Presets.Background.Primary.selectedPickerTextField
 }
 
 struct DateViewModel: ViewModel {
@@ -119,19 +117,18 @@ class DateView: FEView<DateConfiguration, DateViewModel>, StateDisplayable {
     }
     
     func animateTo(state: DisplayState, withAnimation: Bool = true) {
-        guard let config = config else { return }
-        
         let background: BackgroundConfiguration?
         
         switch state {
-        case .selected:
-            background = config.selected
+        case .normal:
+            background = Presets.TextField.primary.backgroundConfiguration
             
         default:
-            background = config.normal
+            background = Presets.TextField.primary.selectedBackgroundConfiguration
         }
         
         displayState = state
+        
         monthTextfield.configure(background: background)
         dayTextField.configure(background: background)
         yearTextField.configure(background: background)

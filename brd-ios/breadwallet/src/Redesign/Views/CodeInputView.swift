@@ -160,24 +160,19 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
             background = config.normal
         }
         
-        errorLabel.isHidden = state != .error
         displayState = state
         configure(background: background)
         
-        if withAnimation {
-            Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
-                self?.updateLayout()
-            }
-        } else {
-            UIView.performWithoutAnimation { [weak self] in
-                self?.updateLayout()
-            }
+        UIView.setAnimationsEnabled(withAnimation)
+        
+        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
+            self?.errorLabel.isHidden = state != .error
+            
+            self?.layoutIfNeeded()
+            self?.contentSizeChanged?()
         }
-    }
-    
-    private func updateLayout() {
-        layoutIfNeeded()
-        contentSizeChanged?()
+        
+        UIView.setAnimationsEnabled(true)
     }
     
     func showErrorMessage() {

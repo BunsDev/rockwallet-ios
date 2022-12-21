@@ -347,11 +347,14 @@ class AmountViewController: UIViewController {
     func updateBalanceLabel() {
         if let (balance, fee, isUserInteractionEnabled) = balanceTextForAmount?(amount, selectedRate) {
             guard balance != nil else { return }
+            
             UIView.performWithoutAnimation {
                 self.balanceLabel.setAttributedTitle(balance ?? NSAttributedString(string: " "), for: .normal)
                 self.balanceLabel.layoutIfNeeded()
             }
+            
             feeLabel.attributedText = fee
+            
             if amount != nil || isSendViewSendingMax {
                 balanceLabel.isHidden = false
                 feeLabel.isHidden = false
@@ -365,6 +368,7 @@ class AmountViewController: UIViewController {
                     infoButton.isHidden = cursor.isHidden
                 }
             }
+            
             balanceLabel.isUserInteractionEnabled = isUserInteractionEnabled
         }
     }
