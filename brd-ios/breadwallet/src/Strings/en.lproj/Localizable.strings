@@ -1280,7 +1280,7 @@
 "Import.unlockingActivity" = "Unlocking Key";
 
 /* Import wallet intro warning message */
-"Import.warning" = "Sweeping a wallett does not include transaction history or other details.";
+"Import.warning" = "Sweeping a wallet does not include transaction history or other details.";
 
 /* Wrong password alert message */
 "Import.wrongPassword" = "Wrong password, please try again.";
@@ -1990,7 +1990,9 @@
 
 "Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
 
-"Sell.yourOrder" = "You sell";
+"Sell.WithdrawDetails" = "Sell and withdraw details";
+
+"Sell.yourOrder" = "You sell:";
 
 "Sell.YouWillReceive" = "You’ll receive";
 
