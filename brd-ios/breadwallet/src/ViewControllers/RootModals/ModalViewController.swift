@@ -38,6 +38,8 @@ class ModalViewController: UIViewController, Subscriber {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         addSubviews()
         addConstraints()
         setInitialData()
@@ -85,7 +87,6 @@ class ModalViewController: UIViewController, Subscriber {
             minHeight,
             midHeight,
             maxHeight ])
-
     }
 
     private func setInitialData() {
