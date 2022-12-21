@@ -195,6 +195,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         startTimer()
         
         if let initialRequest = initialRequest {
@@ -210,7 +211,9 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     private func addAddressChangeListener() {
         addressCell.textDidChange = { [weak self] text in
-            guard let self = self, let text = text, self.currency.isValidAddress(text) else { return }
+            guard let self = self,
+                  let text = text,
+                  self.currency.isValidAddress(text) else { return }
             
             self.updateFees()
         }
@@ -813,7 +816,7 @@ extension SendViewController {
         UIView.animate(withDuration: info.animationDuration, delay: 0, options: info.animationOptions, animations: {
             guard let parentView = self.parentView else { return }
             parentView.frame.origin.y = info.deltaY
-        }, completion: nil)
+        })
     }
 }
 
