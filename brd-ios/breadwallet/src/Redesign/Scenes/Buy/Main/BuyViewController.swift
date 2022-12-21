@@ -29,6 +29,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     // MARK: - Overrides
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        interactor?.getPaymentCards(viewAction: .init())
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -226,7 +232,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         view.endEditing(true)
         
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            self?.interactor?.setAssets(viewAction: .init(card: selectedCard))
+            guard let selectedCard = selectedCard else { return }
+            self?.coordinator?.reloadBuy(selectedCard: selectedCard)
         })
     }
     
