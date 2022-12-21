@@ -25,10 +25,6 @@ struct Presets {
                                                           tintColor: LightColors.Contrast.two,
                                                           border: Presets.Border.disabledButtonFullRadius)
             
-            static var selectedPickerTextField = BackgroundConfiguration(backgroundColor: LightColors.Background.one,
-                                                                   tintColor: LightColors.Contrast.two,
-                                                                   border: Border.pickerTextField)
-            
             static var error = BackgroundConfiguration(backgroundColor: LightColors.primary,
                                                        tintColor: .red,
                                                        border: Presets.Border.error)
@@ -79,8 +75,6 @@ struct Presets {
         static var normalTextField = BorderConfiguration(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall)
         static var selectedTextField = BorderConfiguration(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall)
         static var disabledTextField = BorderConfiguration(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall)
-        
-        static var pickerTextField = BorderConfiguration(tintColor: LightColors.primary, borderWidth: 1, cornerRadius: .small)
     }
     
     struct Shadow {
@@ -145,32 +139,6 @@ extension Presets {
                                                 selectedBackgroundConfiguration: Presets.Background.TextField.selected,
                                                 disabledBackgroundConfiguration: Presets.Background.TextField.disabled,
                                                 errorBackgroundConfiguration: Presets.Background.TextField.error)
-        
-        static var email = TextFieldConfiguration(leadingImageConfiguration: .init(backgroundColor: .clear, tintColor: LightColors.Text.two),
-                                                  titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                  selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
-                                                  textConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                  placeholderConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                  hintConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
-                                                  backgroundConfiguration: Presets.Background.TextField.normal,
-                                                  selectedBackgroundConfiguration: Presets.Background.TextField.selected,
-                                                  disabledBackgroundConfiguration: Presets.Background.TextField.disabled,
-                                                  errorBackgroundConfiguration: Presets.Background.TextField.error,
-                                                  autocapitalizationType: UITextAutocapitalizationType.none,
-                                                  autocorrectionType: .no,
-                                                  keyboardType: .emailAddress)
-        
-        static var number = TextFieldConfiguration(leadingImageConfiguration: .init(backgroundColor: .clear, tintColor: LightColors.Text.two),
-                                                   titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                   selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
-                                                   textConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                   placeholderConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                   hintConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
-                                                   backgroundConfiguration: Presets.Background.TextField.normal,
-                                                   selectedBackgroundConfiguration: Presets.Background.TextField.selected,
-                                                   disabledBackgroundConfiguration: Presets.Background.TextField.disabled,
-                                                   errorBackgroundConfiguration: Presets.Background.TextField.error,
-                                                   keyboardType: .numberPad)
     }
 }
 

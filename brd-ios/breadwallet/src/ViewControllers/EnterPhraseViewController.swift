@@ -272,7 +272,9 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func showErrorMessage() {
-        showToastMessage(message: L10n.RecoverWallet.invalid)
+        let model: InfoViewModel = .init(description: .text(L10n.RecoverWallet.invalid), dismissType: .auto)
+        showToastMessage(model: model, configuration: Presets.InfoView.error)
+        
         contactSupportButton.isHidden = false
     }
 

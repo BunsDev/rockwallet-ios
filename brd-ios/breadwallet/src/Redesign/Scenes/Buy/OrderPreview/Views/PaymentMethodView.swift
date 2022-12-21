@@ -116,7 +116,10 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         cvvTitle.configure(with: config?.cvvTitle)
         cardDetailsView.configure(with: .init())
         cvvTitle.configure(with: config?.cvvTitle)
-        cvvTextField.configure(with: Presets.TextField.number.setSecure(true))
+        
+        var cvvConfig = Presets.TextField.primary
+        cvvConfig.keyboardType = .numberPad
+        cvvTextField.configure(with: cvvConfig.setSecure(true))
         
         configure(background: config?.background)
         configure(shadow: config?.shadow)

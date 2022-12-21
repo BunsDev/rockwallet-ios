@@ -381,7 +381,7 @@ class ApplicationController: Subscriber {
                         case .failure(let error):
                             guard let error = error as? NetworkingError, error != .dataUnavailable else { return }
                             
-                            self?.coordinator?.showMessage(with: error)
+                            self?.coordinator?.showToastMessage(with: error)
                         }
                     }
                 }

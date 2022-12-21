@@ -290,15 +290,15 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         }
         
-        coordinator?.showMessage(with: responseDisplay.error,
-                                 model: responseDisplay.model,
-                                 configuration: responseDisplay.config)
+        coordinator?.showToastMessage(with: responseDisplay.error,
+                                      model: responseDisplay.model,
+                                      configuration: responseDisplay.config)
     }
     
     func displayManageAssetsMessage(actionResponse: BuyModels.AchData.ResponseDisplay) {
-        coordinator?.showMessage(model: actionResponse.model,
-                                 configuration: actionResponse.config,
-                                 onTapCallback: { [weak self] in
+        coordinator?.showToastMessage(model: actionResponse.model,
+                                      configuration: actionResponse.config,
+                                      onTapCallback: { [weak self] in
             self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
         })
     }

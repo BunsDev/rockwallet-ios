@@ -376,100 +376,10 @@ extension DateFormatter {
     }()
 }
 
-// MARK: -
-
-extension UIImage {
-    
-    /// Represents a scaling mode
-    enum ScalingMode {
-        case aspectFill
-        case aspectFit
-        
-        /// Calculates the aspect ratio between two sizes
-        ///
-        /// - parameters:
-        ///     - size:      the first size used to calculate the ratio
-        ///     - otherSize: the second size used to calculate the ratio
-        ///
-        /// - return: the aspect ratio between the two sizes
-        func aspectRatio(between size: CGSize, and otherSize: CGSize) -> CGFloat {
-            let aspectWidth  = size.width/otherSize.width
-            let aspectHeight = size.height/otherSize.height
-            
-            switch self {
-            case .aspectFill:
-                return max(aspectWidth, aspectHeight)
-            case .aspectFit:
-                return min(aspectWidth, aspectHeight)
-            }
-        }
-    }
-    
-    /// Scales an image to fit within a bounds with a size governed by the passed size. Also keeps the aspect ratio.
-    ///
-    /// - parameters:
-    ///     - newSize:     the size of the bounds the image must fit within.
-    ///     - scalingMode: the desired scaling mode
-    ///
-    /// - returns: a new scaled image.
-    func scaled(to newSize: CGSize, scalingMode: UIImage.ScalingMode = .aspectFill) -> UIImage {
-        
-        let aspectRatio = scalingMode.aspectRatio(between: newSize, and: size)
-        
-        /* Build the rectangle representing the area to be drawn */
-        var scaledImageRect = CGRect.zero
-        
-        scaledImageRect.size.width  = size.width * aspectRatio
-        scaledImageRect.size.height = size.height * aspectRatio
-        scaledImageRect.origin.x    = (newSize.width - size.width * aspectRatio) / 2.0
-        scaledImageRect.origin.y    = (newSize.height - size.height * aspectRatio) / 2.0
-        
-        /* Draw and retrieve the scaled image */
-        UIGraphicsBeginImageContext(newSize)
-        
-        draw(in: scaledImageRect)
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return scaledImage!
-    }
-}
-
-// MARK: - 
-
-extension Dictionary where Key: ExpressibleByStringLiteral, Value: Any {
-    var flattened: [Key: String] {
-        var ret = [Key: String]()
-        for (k, v) in self {
-            if let v = v as? [String], !v.isEmpty {
-                ret[k] = v[0]
-            }
-        }
-        return ret
-    }
-    
-    var jsonString: String {
-        guard let json = try? JSONSerialization.data(withJSONObject: self, options: []) else {
-            return "null"
-        }
-        guard let jstring = String(data: json, encoding: .utf8) else {
-            return "null"
-        }
-        return jstring
-    }
-}
-
 extension Array {
     func chunked(by chunkSize: Int) -> [[Element]] {
         return stride(from: 0, to: count, by: chunkSize).map {
             Array(self[$0..<Swift.min($0 + chunkSize, count)])
         }
-    }
-}
-
-extension Result where Success == Void {
-    static var success: Result {
-        return .success(())
     }
 }

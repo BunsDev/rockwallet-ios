@@ -50,7 +50,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         return view
     }()
     
-    private lazy var swapButton: FEButton = {
+    private lazy var switchPlacesButton: FEButton = {
         let view = FEButton()
         view.setImage(Asset.swap.image, for: .normal)
         view.addTarget(self, action: #selector(switchPlacesButtonTapped), for: .touchUpInside)
@@ -107,8 +107,8 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
             make.center.equalToSuperview()
         }
         
-        dividerWithButtonView.addSubview(swapButton)
-        swapButton.snp.makeConstraints { make in
+        dividerWithButtonView.addSubview(switchPlacesButton)
+        switchPlacesButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.height.equalTo(ViewSizes.medium.rawValue)
             make.top.equalToSuperview()
@@ -165,8 +165,9 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         baseSwapCurrencyView.didFinish = didFinish
         termSwapCurrencyView.didChangeContent = contentSizeChanged
         termSwapCurrencyView.didFinish = didFinish
+        switchPlacesButton.isHidden = viewModel.hideSwapButton
         
-        swapButton.isHidden = viewModel.hideSwapButton
+        setToggleSwitchPlacesButtonState(viewModel.from?.formattedFiatString != nil)
         
         contentSizeChanged?()
     }
@@ -201,28 +202,29 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
     }
     
     func setToggleSwitchPlacesButtonState(_ value: Bool) {
-        UIView.transition(with: swapButton,
+        UIView.transition(with: switchPlacesButton,
                           duration: Presets.Animation.short.rawValue) { [weak self] in
-            self?.swapButton.alpha = value ? 1.0 : 0.5
-            self?.swapButton.isUserInteractionEnabled = value
+            self?.switchPlacesButton.alpha = value ? 1.0 : 0.5
+            self?.switchPlacesButton.isUserInteractionEnabled = value
         }
     }
     
     func animateSwitchPlaces() {
         setToggleSwitchPlacesButtonState(false)
         
-        let isNormal = swapButton.transform == .identity
+        let isNormal = switchPlacesButton.transform == .identity
         let topFrame = isNormal ? baseSwapCurrencyView.selectorStackView : termSwapCurrencyView.selectorStackView
         let bottomFrame = isNormal ? termSwapCurrencyView.selectorStackView : baseSwapCurrencyView.selectorStackView
         
-        let verticalDistance = (topFrame.bounds.minY - bottomFrame.bounds.maxY - topFrame.frame.height - 2) * 2
+        let convertedFrame = termSwapCurrencyView.selectorStackView.convert(baseSwapCurrencyView.selectorStackView.bounds, from: baseSwapCurrencyView.selectorStackView)
+        let verticalDistance = convertedFrame.minY - termSwapCurrencyView.selectorStackView.bounds.maxY + baseSwapCurrencyView.selectorStackView.frame.height
         
         UIView.animate(withDuration: Presets.Animation.short.rawValue,
                        delay: 0.0,
                        options: .curveLinear) { [weak self] in
             topFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ?  -verticalDistance : verticalDistance)
             bottomFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ? verticalDistance : -verticalDistance)
-            self?.swapButton.transform = isNormal ? CGAffineTransform(rotationAngle: .pi) : .identity
+            self?.switchPlacesButton.transform = isNormal ? CGAffineTransform(rotationAngle: .pi) : .identity
             
             self?.baseSwapCurrencyView.setAlphaToLabels(alpha: 0.2)
             self?.termSwapCurrencyView.setAlphaToLabels(alpha: 0.2)

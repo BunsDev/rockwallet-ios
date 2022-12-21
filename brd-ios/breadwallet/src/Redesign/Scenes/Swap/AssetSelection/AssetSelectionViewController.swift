@@ -46,8 +46,8 @@ class AssetSelectionViewController: ItemSelectionViewController {
         guard let model = sectionRows[section]?[indexPath.row] as? AssetViewModel else { return }
         
         if model.isDisabled {
-            coordinator?.showMessage(model: InfoViewModel(description: .text(L10n.Swap.enableAssetFirst), dismissType: .auto),
-                                     configuration: Presets.InfoView.warning)
+            coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.Swap.enableAssetFirst), dismissType: .auto),
+                                          configuration: Presets.InfoView.warning)
         } else {
             itemSelected?(model)
             
