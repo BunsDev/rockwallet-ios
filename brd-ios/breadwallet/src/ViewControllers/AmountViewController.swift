@@ -29,6 +29,7 @@ class AmountViewController: UIViewController {
                                            maxDigits: Int(currency.defaultUnit.decimals),
                                            shouldShowBiometrics: false)
         self.canEditFee = currency.isBitcoin || currency.isEthereumCompatible
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -54,12 +55,6 @@ class AmountViewController: UIViewController {
         self.amount = amount
         fullRefresh()
     }
-
-    func expandPinPad() {
-        if pinPadHeight?.constant == 0.0 {
-            togglePinPad()
-        }
-    }
     
     var isEditable: Bool = true {
         didSet {
@@ -72,7 +67,6 @@ class AmountViewController: UIViewController {
     var minimumFractionDigits = 0
     let balanceLabel = UIButton(type: .system)
     private var hasTrailingDecimal = false
-    private var pinPadHeight: NSLayoutConstraint?
     private let placeholder = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.two)
     private let amountLabel = UILabel(font: Fonts.Body.one, color: LightColors.Text.two)
     private let pinPad: PinPadViewController
@@ -84,6 +78,7 @@ class AmountViewController: UIViewController {
     private let tapView = UIView()
     private let feeSelector: FeeSelector
     private var currentBalanceText: (NSAttributedString?, NSAttributedString?)
+    private var pinPadHeight: CGFloat = ViewSizes.minimum.rawValue
     
     //Controlled by SendViewController
     var isSendViewSendingMax = false
@@ -117,11 +112,13 @@ class AmountViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         addSubviews()
         addConstraints()
         setInitialData()
     }
-
+    
     private func addSubviews() {
         view.addSubview(amountLabel)
         view.addSubview(placeholder)
@@ -182,15 +179,18 @@ class AmountViewController: UIViewController {
         feeLabel.constrain([
             feeLabel.leadingAnchor.constraint(equalTo: balanceLabel.leadingAnchor),
             feeLabel.topAnchor.constraint(equalTo: balanceLabel.firstBaselineAnchor, constant: 2.0)])
-        pinPadHeight = pinPad.view.heightAnchor.constraint(equalToConstant: 0.0)
+
         addChildViewController(pinPad, layout: {
-            pinPad.view.constrain([
-                pinPad.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                pinPad.view.topAnchor.constraint(equalTo: border.bottomAnchor),
-                pinPad.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                pinPad.view.bottomAnchor.constraint(equalTo: bottomBorder.topAnchor),
-                pinPadHeight ])
+            pinPad.view.snp.makeConstraints { make in
+                self.pinPadHeight = ViewSizes.minimum.rawValue
+                
+                make.leading.trailing.equalToSuperview()
+                make.top.equalTo(border.snp.bottom)
+                make.bottom.equalTo(bottomBorder.snp.top)
+                make.height.equalTo(self.pinPadHeight)
+            }
         })
+        
         bottomBorder.constrain([
             bottomBorder.topAnchor.constraint(greaterThanOrEqualTo: balanceLabel.bottomAnchor, constant: Margins.extraSmall.rawValue),
             bottomBorder.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -263,6 +263,8 @@ class AmountViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         // This fullRefresh() call is needed to set the initial view and make sure
         // everything is laid out correctly. A full refresh sets most of the
         // initial values and makes sure the appropriate views are shown/hidden
@@ -379,20 +381,33 @@ class AmountViewController: UIViewController {
             self.parent?.parent?.view.layoutIfNeeded()
         }, completion: { _ in })
     }
-
+    
     func closePinPad() {
-        pinPadHeight?.constant = 0.0
+        pinPad.view.snp.updateConstraints { make in
+            self.pinPadHeight = ViewSizes.minimum.rawValue
+            
+            make.height.equalTo(self.pinPadHeight)
+        }
+        
         cursor.isHidden = true
-        bottomBorder.isHidden = true
+        
         updateBalanceAndFeeLabels()
         updateBalanceLabel()
     }
 
+    
     private func togglePinPad() {
-        let isCollapsed: Bool = pinPadHeight?.constant == 0.0
-        pinPadHeight?.constant = isCollapsed ? pinPad.height : 0.0
+        let isCollapsed = pinPadHeight == ViewSizes.minimum.rawValue
+        
+        pinPad.view.snp.updateConstraints { make in
+            self.pinPadHeight = isCollapsed ? self.pinPad.height : ViewSizes.minimum.rawValue
+            
+            make.height.equalTo(self.pinPadHeight)
+        }
+        
         cursor.isHidden = isCollapsed ? false : true
         bottomBorder.isHidden = isCollapsed ? false : true
+        
         updateBalanceAndFeeLabels()
         updateBalanceLabel()
         didChangeFirstResponder?(isCollapsed)
