@@ -390,6 +390,7 @@ class AmountViewController: UIViewController {
         }
         
         cursor.isHidden = true
+        bottomBorder.isHidden = true
         
         updateBalanceAndFeeLabels()
         updateBalanceLabel()
