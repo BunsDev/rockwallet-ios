@@ -76,7 +76,7 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
         navigationController.present(navController, animated: true)
     }
     
-    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, fromBuy: Bool = true, completion: (() -> Void)?) {
+    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, fromBuy: Bool = true, completion: (() -> Void)? = nil) {
         guard !cards.isEmpty else {
             openModally(coordinator: ItemSelectionCoordinator.self,
                         scene: Scenes.AddCard)

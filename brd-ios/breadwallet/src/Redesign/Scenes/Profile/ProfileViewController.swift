@@ -134,8 +134,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     func displayPaymentCards(responseDisplay: ProfileModels.PaymentCards.ResponseDisplay) {
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards,
                                       selected: nil,
-                                      fromBuy: false,
-                                      completion: nil)
+                                      fromBuy: false)
     }
     
     // MARK: - Additional Helpers
