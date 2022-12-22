@@ -20,7 +20,7 @@ class CardSelectionViewController: ItemSelectionViewController {
     var paymentCardDeleted: (() -> Void)?
     
     override func dismissModal() {
-        coordinator?.dismissFlowBuy(completion: {
+        coordinator?.dismissCardsSelectionFlow(completion: {
             self.paymentCardDeleted?()
         })
     }

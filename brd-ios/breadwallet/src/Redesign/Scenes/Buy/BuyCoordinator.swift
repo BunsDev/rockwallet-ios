@@ -146,7 +146,7 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
         navigationController.present(nc, animated: true)
     }
     
-    func dismissFlowBuy(completion: (() -> Void)?) {
+    func dismissCardsSelectionFlow(completion: (() -> Void)?) {
         navigationController.dismiss(animated: true, completion: completion)
         parentCoordinator?.childDidFinish(child: self)
     }
