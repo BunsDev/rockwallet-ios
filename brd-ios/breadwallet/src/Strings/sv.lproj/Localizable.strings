@@ -2037,9 +2037,6 @@
 "Send.DestinationTag" = "Destination tag is too long.";
 
 /* Optional Destination Tag label */
-"Send.destinationTag" = "";
-
-/* Optional Destination Tag label */
 "Send.destinationTag_optional" = "Destinationstagg (valfritt)";
 
 /* Required Destination Tag label */

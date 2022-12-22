@@ -1018,6 +1018,8 @@ internal enum L10n {
   internal enum ExportConfirmation {
     /// Cancel
     internal static let cancel = L10n.tr("Localizable", "ExportConfirmation.cancel", fallback: "Cancel")
+    /// 
+    internal static let `continue` = L10n.tr("Localizable", "ExportConfirmation.continue", fallback: "")
     /// Continue
     internal static let continueAction = L10n.tr("Localizable", "ExportConfirmation.continueAction", fallback: "Continue")
     /// This will generate a CSV file including all completed transactions from all enabled wallets.
@@ -1780,6 +1782,8 @@ internal enum L10n {
     internal static let confirmationConfirmationBody = L10n.tr("Localizable", "Segwit.ConfirmationConfirmationBody", fallback: "Thank you for helping move bitcoin forward!")
     /// Segwit enabled confirmation title
     internal static let confirmationConfirmationTitle = L10n.tr("Localizable", "Segwit.ConfirmationConfirmationTitle", fallback: "You have enabled SegWit!")
+    /// Segwit enabled confirmation description
+    internal static let confirmationInstructionsDescription = L10n.tr("Localizable", "Segwit.ConfirmationInstructionsDescription", fallback: "")
     /// Segwit instructions
     internal static let confirmationInstructionsInstructions = L10n.tr("Localizable", "Segwit.ConfirmationInstructionsInstructions", fallback: "SegWit support is still a beta feature.\n\nOnce SegWit is enabled, it will not be possible\nto disable it. You will be able to find the legacy address under Settings. \n\nSome third-party services, including crypto trading, may be unavailable to users who have enabled SegWit. In case of emergency, you will be able to generate a legacy address from Preferences > BTC Settings. \n\nSegWit will automatically be enabled for all\nusers in a future update.")
     /// Segwit extra confirmation title.
