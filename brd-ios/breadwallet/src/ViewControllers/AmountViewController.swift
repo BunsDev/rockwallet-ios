@@ -395,7 +395,6 @@ class AmountViewController: UIViewController {
         updateBalanceAndFeeLabels()
         updateBalanceLabel()
     }
-
     
     private func togglePinPad() {
         let isCollapsed = pinPadHeight == ViewSizes.minimum.rawValue
