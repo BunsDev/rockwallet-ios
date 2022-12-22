@@ -593,6 +593,8 @@
 /* 3D Secure label on buy flow */
 "Buy.3DSecure" = "3D Secure";
 
+"Buy.Ach.AccountUnlinked" = "Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.";
+
 "Buy.Ach.WalletDisabled" = "%s doit d'abord être activé dans votre portefeuille. Veuillez activer %s, ou en sélectionnant \"Gérer les actifs\" sur l'écran d'accueil.";
 
 "Buy.Ach.WalletDisabled.Link" = "ici";
@@ -604,6 +606,8 @@
 "Buy.achLimits" = "Actuellement, le minimum d'achat avec ACH est de %s et le maximum est de %s par jour. Actuellement, la limite à vie est de %s.\n\nActuellement, le traitement d'un achat réalisé avec ACH prend entre 7 et 10 jours";
 
 "Buy.achPaymentDurationWarning" = "Actuellement, les paiements ACH prennent entre 7 et 10 jours.";
+
+"Buy.achPaymentMethodRelinked" = "ACH payment method was relinked successfully";
 
 "Buy.achPayments" = "Paiements avec ACH";
 
@@ -667,6 +671,8 @@
 /* Buy details title */
 "Buy.Details" = "Informations d'achat";
 
+"Buy.disabledUSDCMessage" = "USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.";
+
 /* There was an error while processing your payment title in buy failure screen */
 "Buy.ErrorProcessingPayment" = "Une erreur s'est produite lors du traitement de votre paiement";
 
@@ -722,6 +728,8 @@
 /* Your assets are on the way message in purchase details screen */
 "Buy.PurchaseSuccessTitle" = "Vos actifs arrivent !";
 
+"Buy.relinkBankAccount" = "Re-link bank account";
+
 /* Are you sure you want to remove this card title dialog */
 "Buy.RemoveCard" = "Voulez-vous vraiment supprimer la carte se terminant par";
 
@@ -747,6 +755,10 @@
 
 /* State/Province label in billing address view on buy flow */
 "Buy.StateProvince" = "État/province";
+
+"Buy.switchedToAch" = "Payment method switched to ACH payments!";
+
+"Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
 
 /* By placing this order you agree to our terms message when ordering */
 "Buy.Terms" = "En effectuant cette commande, vous acceptez nos";
@@ -955,6 +967,11 @@
 /* The wallet is disabled. */
 "Disabled.title" = "Portefeuille désactivé";
 
+"Drawer.button.buy_with_sell" = "SELL & WITHDRAW";
+
+/* title of the drawer shown after buy/sell button tap on home screen */
+"Drawer.title" = "Buy / Sell";
+
 /* Share address by e-mail subject */
 "Email.address_subject" = "%1$s Adresse";
 
@@ -1061,6 +1078,8 @@
 "ErrorMessages.UnknownError" = "Erreur inconnue.";
 
 "ExportConfirmation.cancel" = "Annuler";
+
+"ExportConfirmation.continue" = "";
 
 "ExportConfirmation.continueAction" = "Continuez";
 
@@ -1477,6 +1496,10 @@
 
 /* Try again button title in payment view */
 "PaymentConfirmation.TryAgain" = "Réessayer";
+
+"PaymentConfirmation.TryWithAch" = "Try with ACH payments";
+
+"PaymentConfirmation.TryWithDebit" = "Try with debit card";
 
 /* Bad Payment request alert title */
 "PaymentProtocol.Errors.badPaymentRequest" = "Mauvaise demande de paiement";
@@ -1929,6 +1952,9 @@
 /* Segwit enabled confirmation title */
 "Segwit.ConfirmationConfirmationTitle" = "Vous avez activé SegWit !";
 
+/* Segwit enabled confirmation description */
+"Segwit.ConfirmationInstructionsDescription" = "";
+
 /* Segwit instructions */
 "Segwit.ConfirmationInstructionsInstructions" = "La prise en charge de SegWit est toujours une fonctionnalité bêta.\nUne fois que SegWit est activé, il ne sera plus possible de le désactiver. Vous trouverez l'adresse du patrimoine sous Paramètres. \nCertains services tiers, y compris l'échange de cryptomonnaies, peuvent ne pas être disponibles pour les utilisateurs qui ont activé SegWit. En cas d'urgence, vous pourrez créer une adresse de patrimoine depuis Préférences > BTC > Paramètres . \nSegWit sera automatiquement activé pour tous les utilisateurs lors d'une future mise à jour.";
 
@@ -1940,6 +1966,40 @@
 
 /* Segwit button label that takes the user back to the home screen once SegWit is enabled. */
 "Segwit.HomeButton" = "Vers la Lune";
+
+"Sell.achDurationWarning" = "ACH withdrawal will be processed within 3-5 business days.";
+
+"Sell.achWithdrawal" = "ACH Withdrawal";
+
+"Sell.details" = "Sell & Withdraw details";
+
+"Sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
+
+"Sell.iReceive" = "I receive";
+
+"Sell.OrderPreview" = "Withdrawal preview";
+
+"Sell.rate" = "Conversion rate";
+
+"Sell.SellLimits" = "Minimum withdrawal is %s USD and maximum is %s USD per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
+
+"Sell.subtotal" = "Subtotal";
+
+"Sell.title" = "Sell & Withdraw funds";
+
+"Sell.tryAgain" = "Please try again";
+
+"Sell.widrawToBank" = "Withdraw to";
+
+"Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
+
+"Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
+
+"Sell.WithdrawDetails" = "Sell and withdraw details";
+
+"Sell.yourOrder" = "You sell:";
+
+"Sell.YouWillReceive" = "You’ll receive";
 
 "Send_fio_toLabel" = "FIO";
 
@@ -2622,6 +2682,8 @@
 /* Pending swap label in transaction view */
 "Transaction.PendingSwap" = "Échange en cours…";
 
+"Transaction.PendingWithdrawWithAch" = "Pending withdraw with ACH";
+
 /* Purchased label in transaction view */
 "Transaction.Purchased" = "Achat effectué";
 
@@ -2909,6 +2971,8 @@
 
 /* Number of attempts left on pin entry screen */
 "UpdatePin.OneAttempt" = "l'échec d'une transaction supplémentaire.";
+
+"UpdatePin.pinDoesntMatch" = "Your PIN doesn’t match, please try again.";
 
 /* Re-Enter new PIN instruction */
 "UpdatePin.reEnterNew" = "Entrez votre nouveau PIN à nouveau.";

@@ -94,25 +94,30 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             title: .text(L10n.Swap.iWant),
                             shouldShowFiatField: true)
         
-        if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyCard {
-            cardModel = .init(logo: paymentCard.displayImage,
-                              cardNumber: .text(paymentCard.displayName),
-                              expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
-                              userInteractionEnabled: true)
-        } else if let paymentCard = actionResponse.card, actionResponse.paymentMethod == .buyAch {
-            cardModel = .init(title: .text(L10n.Buy.transferFromBank),
-                              subtitle: nil,
-                              logo: .image(Asset.bank.image),
-                              cardNumber: .text(paymentCard.displayName),
-                              userInteractionEnabled: false)
+        switch actionResponse.paymentMethod {
+        case .buyAch:
+            if let paymentCard = actionResponse.card {
+                cardModel = .init(title: .text(L10n.Buy.transferFromBank),
+                                  subtitle: nil,
+                                  logo: .image(Asset.bank.image),
+                                  cardNumber: .text(paymentCard.displayName),
+                                  userInteractionEnabled: false)
+            } else {
+                cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
+                                                   subtitle: .text(L10n.Buy.linkBankAccount),
+                                                   userInteractionEnabled: true)
+            }
             cryptoModel.selectionDisabled = true
-        } else if actionResponse.paymentMethod == .buyCard {
-            cardModel = .init(userInteractionEnabled: true)
-        } else {
-            cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
-                                               subtitle: .text(L10n.Buy.linkBankAccount),
-                                               userInteractionEnabled: true)
-            cryptoModel.selectionDisabled = true
+            
+        default:
+            if let paymentCard = actionResponse.card {
+                cardModel = .init(logo: paymentCard.displayImage,
+                                  cardNumber: .text(paymentCard.displayName),
+                                  expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
+                                  userInteractionEnabled: true)
+            } else {
+                cardModel = .init(userInteractionEnabled: true)
+            }
         }
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
