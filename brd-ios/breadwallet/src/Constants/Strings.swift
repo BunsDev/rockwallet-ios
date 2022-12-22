@@ -180,7 +180,7 @@ internal enum L10n {
     /// Delete account explanation title
     internal static let deleteWhatMean = L10n.tr("Localizable", "AccountDelete.DeleteWhatMean", fallback: "What does this mean?")
     /// Delete account explanation part one
-    internal static let explanationOne = L10n.tr("Localizable", "AccountDelete.ExplanationOne", fallback: "-You will no longer be able to use your email to sign in into RockWallet Wallet")
+    internal static let explanationOne = L10n.tr("Localizable", "AccountDelete.ExplanationOne", fallback: "-You will no longer be able to use your email to sign in into RockWallet")
     /// Delete account explanation part three
     internal static let explanationThree = L10n.tr("Localizable", "AccountDelete.ExplanationThree", fallback: "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.")
     /// Delete account explanation part two
@@ -1145,13 +1145,13 @@ internal enum L10n {
     /// Caption for graphics
     internal static let leftCaption = L10n.tr("Localizable", "Import.leftCaption", fallback: "Wallet to be imported")
     /// Import wallet intro screen message
-    internal static let message = L10n.tr("Localizable", "Import.message", fallback: "Sweeping a wallet transfers all the money from your other wallet into your RockWallet wallet using a single transaction.")
+    internal static let message = L10n.tr("Localizable", "Import.message", fallback: "Sweeping a wallet transfers all the money from your other wallet into your RockWallet using a single transaction.")
     /// Enter password alert view title
     internal static let password = L10n.tr("Localizable", "Import.password", fallback: "This private key is password protected.")
     /// password textfield placeholder
     internal static let passwordPlaceholder = L10n.tr("Localizable", "Import.passwordPlaceholder", fallback: "password")
     /// Caption for graphics
-    internal static let rightCaption = L10n.tr("Localizable", "Import.rightCaption", fallback: "Your RockWallet Wallet")
+    internal static let rightCaption = L10n.tr("Localizable", "Import.rightCaption", fallback: "Your RockWallet")
     /// Scan Private key button label
     internal static let scan = L10n.tr("Localizable", "Import.scan", fallback: "SCAN PRIVATE KEY")
     /// Import wallet success alert title
@@ -1679,7 +1679,7 @@ internal enum L10n {
     /// Title for the success page after the recovery phrase has been set up
     internal static let successHeading = L10n.tr("Localizable", "RecoveryKeyFlow.successHeading", fallback: "Congratulations! You completed your Recovery Phrase setup.")
     /// Subtitle for the success page after the recovery key has been set up
-    internal static let successSubheading = L10n.tr("Localizable", "RecoveryKeyFlow.successSubheading", fallback: "You're all set to deposit, swap, and buy crypto from your RockWallet wallet.")
+    internal static let successSubheading = L10n.tr("Localizable", "RecoveryKeyFlow.successSubheading", fallback: "You're all set to deposit, swap, and buy crypto from your RockWallet.")
     /// Title displayed to the user on the intro screen when unlinking a wallet
     internal static let unlinkWallet = L10n.tr("Localizable", "RecoveryKeyFlow.unlinkWallet", fallback: "Unlink your wallet from this device.")
     /// Subtitle displayed to the user on the intro screen when unlinking a wallet.
@@ -2755,7 +2755,7 @@ internal enum L10n {
     /// Number of attempts left on pin entry screen
     internal static let twoAttempts = L10n.tr("Localizable", "UpdatePin.TwoAttempts", fallback: "2 more failed attempts.")
     /// Update pin popup explanation when pressing "?" button
-    internal static let updatePinPopup = L10n.tr("Localizable", "UpdatePin.UpdatePinPopup", fallback: "The RockWallet Wallet app requires you to set a PIN to secure your wallet, separate from your device passcode.  \n\nYou will be required to enter the PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\n            \nDo not forget your wallet PIN! It can only be reset by using your Recovery Phrase. If you forget your PIN and lose your Recovery Phrase, your wallet will be lost.")
+    internal static let updatePinPopup = L10n.tr("Localizable", "UpdatePin.UpdatePinPopup", fallback: "The RockWallet app requires you to set a PIN to secure your wallet, separate from your device passcode.  \n\nYou will be required to enter the PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\n            \nDo not forget your wallet PIN! It can only be reset by using your Recovery Phrase. If you forget your PIN and lose your Recovery Phrase, your wallet will be lost.")
     /// Update PIN title
     internal static let updateTitle = L10n.tr("Localizable", "UpdatePin.updateTitle", fallback: "Update PIN")
     /// Why do I need a PIN title explanation popup
@@ -2921,7 +2921,7 @@ internal enum L10n {
     /// Enter phrase to wipe wallet instruction. (Important to explain it is the CURRENT [this wallet's] paper key that needs to be entered).
     internal static let instruction = L10n.tr("Localizable", "WipeWallet.instruction", fallback: "Please enter your Recovery Phrase to wipe this wallet from your device.")
     /// Instructions for unlinking the wallet
-    internal static let startMessage = L10n.tr("Localizable", "WipeWallet.startMessage", fallback: "Starting or recovering another wallet allows you to access and manage a different RockWallet wallet on this device.")
+    internal static let startMessage = L10n.tr("Localizable", "WipeWallet.startMessage", fallback: "Starting or recovering another wallet allows you to access and manage a different RockWallet on this device.")
     /// Start wipe wallet view warning
     internal static let startWarning = L10n.tr("Localizable", "WipeWallet.startWarning", fallback: "Your current wallet will be removed from this device. If you wish to restore it in the future, you will need to enter your Recovery Phrase.")
     /// Unlink this wallet from this device.
