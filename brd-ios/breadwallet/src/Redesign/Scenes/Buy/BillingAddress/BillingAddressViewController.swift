@@ -209,7 +209,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
             guard let selectedCard = selectedCard else { return }
             self?.coordinator?.reloadBuy(selectedCard: selectedCard)
-        })
+        }, completion: nil)
     }
     
     func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay) {

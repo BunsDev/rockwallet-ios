@@ -76,7 +76,7 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
         navigationController.present(navController, animated: true)
     }
     
-    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, fromBuy: Bool = true) {
+    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, fromBuy: Bool = true, completion: (() -> Void)?) {
         guard !cards.isEmpty else {
             openModally(coordinator: ItemSelectionCoordinator.self,
                         scene: Scenes.AddCard)
@@ -95,6 +95,10 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
             vc?.itemSelected = { item in
                 selected?(item as? PaymentCard)
                 self.popToRoot()
+            }
+            
+            vc?.paymentCardDeleted = {
+                completion?()
             }
         }
     }
@@ -140,6 +144,11 @@ class BuyCoordinator: BaseCoordinator, BuyRoutes, BillingAddressRoutes, OrderPre
         let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: coreSystem)
         let nc = RootNavigationController(rootViewController: vc)
         navigationController.present(nc, animated: true)
+    }
+    
+    func dismissFlowBuy(completion: (() -> Void)?) {
+        navigationController.dismiss(animated: true, completion: completion)
+        parentCoordinator?.childDidFinish(child: self)
     }
     
     // MARK: - Aditional helpers
