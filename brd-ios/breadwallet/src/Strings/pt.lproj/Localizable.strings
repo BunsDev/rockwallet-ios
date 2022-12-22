@@ -205,7 +205,7 @@
 "AccountDelete.DeleteWhatMean" = "What does this mean?";
 
 /* Delete account explanation part one */
-"AccountDelete.ExplanationOne" = "-You will no longer be able to use your email to sign in into RockWallet Wallet";
+"AccountDelete.ExplanationOne" = "-You will no longer be able to use your email to sign in into RockWallet";
 
 /* Delete account explanation part three */
 "AccountDelete.ExplanationThree" = "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.";
@@ -2999,7 +2999,7 @@
 "UpdatePin.TwoAttempts" = "2 more failed attempts.";
 
 /* Update pin popup explanation when pressing "?" button */
-"UpdatePin.UpdatePinPopup" = "The RockWallet Wallet app requires you to set a PIN to secure your wallet, separate from your device passcode.  \n\nYou will be required to enter the PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\n            \nDo not forget your wallet PIN! It can only be reset by using your Recovery Phrase. If you forget your PIN and lose your Recovery Phrase, your wallet will be lost.";
+"UpdatePin.UpdatePinPopup" = "The RockWallet app requires you to set a PIN to secure your wallet, separate from your device passcode.  \n\nYou will be required to enter the PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\n            \nDo not forget your wallet PIN! It can only be reset by using your Recovery Phrase. If you forget your PIN and lose your Recovery Phrase, your wallet will be lost.";
 
 /* Update PIN title */
 "UpdatePin.updateTitle" = "Atualizar PIN";
