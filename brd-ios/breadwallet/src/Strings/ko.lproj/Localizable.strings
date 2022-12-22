@@ -31,20 +31,136 @@
 /* Support center accessibiliy label */
 "AccessibilityLabels.faq" = "고객지원 센터";
 
+/* Account limits title in profile view */
+"Account.AccountLimits" = "Account limits";
+
+/* Account Verification screen title */
+"Account.AccountVerification" = "Account Verification";
+
 /* Account balance */
 "Account.balance" = "잔액";
+
+/* Before confirm photo label in create account screen */
+"Account.BeforeConfirm" = "Before you confirm, please:";
+
+/* Change your email title on registration flow */
+"Account.ChangeEmail" = "Change your email";
+
+/* Country title label in select countries view */
+"Account.Country" = "Country";
+
+/* Create a RockWallet account by entering your email address label in registration flow */
+"Account.CreateAccount" = "Create a RockWallet account by entering your email address.";
+
+/* Current limit per day label in profile screen */
+"Account.CurrentLimit" = "Current limit: $1,000/day";
+
+/* Issues for processing your data label on profile screen */
+"Account.DataIssues" = "Oops! We had some issues processing your data";
+
+/* Date of birth label in create account */
+"Account.DateOfBirth" = "Date of birth";
+
+"Account.Declined" = "Declined";
+
+/* Delete account option in menu */
+"Account.DeleteAccount" = "Delete account";
 
 /* Delisted token alert banner message */
 "Account.delistedToken" = "이 토큰은 목록에서 삭제되었습니다. \n\n여전히 이러한 토큰을 다른 플랫폼으로 보낼 수 있습니다. 자세한 내용은 지원 페이지를 참조하십시오.";
 
+"Account.Email" = "Email";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%2$s 당 %1$s";
+
+/* Get full access for the RockWallet wallet label on profile screen */
+"Account.FullAccess" = "Get full access to your RockWallet!";
+
+/* ID Verification title on account screen */
+"Account.IDVerification" = "ID Verification";
 
 /* Loading Wallet Message */
 "Account.loadingMessage" = "지갑 로딩";
 
+/* Verify your account to get full access to the wallet message */
+"Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
+
+"Account.Pending" = "Pending";
+
+/* Account Personal Information title */
+"Account.PersonalInformation" = "Personal Information";
+
+/* Promotion and offers label when registering account */
+"Account.Promotion" = "I'm ok with receiving future promotion, offers and communications";
+
+/* Proof of Identity title in add document for kyc2 */
+"Account.ProofOfIdentity" = "Proof of Identity";
+
+"Account.Resubmit" = "Resubmit";
+
+/* Retake photo button on create account */
+"Account.RetakePhoto" = "Retake photo";
+
+"Account.SelectCountry" = "Select country";
+
+"Account.SelectState" = "Select state";
+
+/* State title label in select state view */
+"Account.State" = "State";
+
+/* Submit your photo for document id title */
+"Account.SubmitPhoto" = "Submit your photo";
+
+/* Swap and buy limit per day description label */
+"Account.SwapAndBuyLimit" = "Swap limit: $10,000 USD/day\nBuy limit: $500 USD/day";
+
+/* Upgrade your limits label in profile screen */
+"Account.UpgradeLimits" = "Upgrade your limits";
+
+"Account.UpgradeVerificationIdentity" = "You need to upgrade your verification status before you can buy assets.";
+
+/* You need to be at least 18 years old to complete Level 1 verification label in verify account */
+"Account.Verification" = "You need to be at least 18 years old to complete Level 1 verification";
+
+/* Why is the verification declined label in profile screen */
+"Account.VerificationDeclined" = "Why is my verification declined?";
+
+"Account.Verified" = "Verified";
+
+/* Verified account message on profile screen */
+"Account.VerifiedAccountMessage" = "We’ll let you know when your account is verified.";
+
+/* Verify account text in popup */
+"Account.VerifyAccountText" = "If you verify your account, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card";
+
+/* Enter and verify your email address for your account label in registration flow */
+"Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
+
+"Account.VerifyIdentity" = "We need to verify your identity before you can %s assets.";
+
+"Account.VerifyIdentityPlain" = "We need to verify your identity before you can buy or swap assets.";
+
+/* Verify personal information text explanation */
+"Account.VerifyPersonalInformation" = "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.";
+
+/* Welcome title on registration screen */
+"Account.Welcome" = "Welcome!";
+
+/* Why verify my account title */
+"Account.WhyVerify" = "Why should I verify my account?";
+
+/* Write your name as it appears on your ID label in create account */
+"Account.WriteYourName" = "Write your name as it appears on your ID";
+
 /* Confirm Account Creation mesage body */
 "AccountCreation.body" = "지갑에 HBAR을 저장하려는 경우에만 Hedera 계정을 만드십시오.";
+
+/* Change my email label */
+"AccountCreation.ChangeEmail" = "Change my email";
+
+/* Verification code sent message */
+"AccountCreation.CodeSent" = "Verification code sent.";
 
 /* Create Account button label */
 "AccountCreation.create" = "계정 만들기";
@@ -52,11 +168,17 @@
 /* Creating Account progress Label */
 "AccountCreation.creating" = "계정 만들기";
 
+/* Enter the code message in create account flow */
+"AccountCreation.EnterCode" = "Please enter the code we’ve sent to";
+
 /* Creating Account progress Label */
 "AccountCreation.error" = "계정 생성 중 오류가 발생했습니다. 나중에 다시 시도하세요.";
 
 /* Not Now button label. */
 "AccountCreation.notNow" = "지금은 아님";
+
+/* Re-send my code label */
+"AccountCreation.ResendCode" = "Resend my code";
 
 /* Creating Account progress Label */
 "AccountCreation.timeout" = "요청 시간이 초과되었습니다. 나중에 다시 시도하세요.";
@@ -64,14 +186,163 @@
 /* Confirm Account Creation Title */
 "AccountCreation.title" = "계정 생성 확인";
 
+/* Verify your email label */
+"AccountCreation.VerifyEmail" = "Verify your email";
+
+/* Why the wallet is disabled text */
+"AccountCreation.WalletDisabled" = "If you enter an incorrect wallet PIN too many times, your wallet will become disabled for a certain amount of time.\nThis is to prevent someone else from trying to guess your PIN by quickly making many guesses.\nIf your wallet is disabled, wait until the time shown and you will be able to enter your PIN again.\n\nIf you continue to enter the incorrect PIN, the amount of waiting time in between attempts will increase. Eventually, the app will reset and you can start a new wallet.\n\nIf you have the Recovery Phrase for your wallet, you can use it to reset your PIN by clicking the “Reset PIN” button.";
+
+/* Why is my wallet disabled title on popup */
+"AccountCreation.WalletDisabledTitle" = "Why is my wallet disabled?";
+
+/* Popup text when the account is deleted */
+"AccountDelete.AccountDeletedPopup" = "Your account has been deleted.\nWe are sorry to see you go.";
+
+/* Delete account title */
+"AccountDelete.DeleteAccountTitle" = "You are about to delete your RockWallet account.";
+
+/* Delete account explanation title */
+"AccountDelete.DeleteWhatMean" = "What does this mean?";
+
+/* Delete account explanation part one */
+"AccountDelete.ExplanationOne" = "-You will no longer be able to use your email to sign in into RockWallet Wallet";
+
+/* Delete account explanation part three */
+"AccountDelete.ExplanationThree" = "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.";
+
+/* Delete account explanation part two */
+"AccountDelete.ExplanationTwo" = "-You will no longer be able to user your KYC and registration status";
+
+/* Recover wallet text after deleting account */
+"AccountDelete.RecoverWallet" = "I understand that the only way to recover my wallet is by entering my Recovery Phrase";
+
 /* Default wallet name */
 "AccountHeader.defaultWalletName" = "나의 BRD";
+
+/* Level one title on account screen */
+"AccountKYCLevelOne.LevelOne" = "Level 1";
+
+/* Account limi message on KYC1 */
+"AccountKYCLevelOne.Limit" = "Account limit: $1,000/day ($10,000 lifetime)";
+
+/* Back page of the document text instructions for KYC2 */
+"AccountKYCLevelTwo.BackPageInstructions" = "Make sure you have captured the entire back page of the document";
+
+/* Before start label */
+"AccountKYCLevelTwo.BeforeStart" = "Before you start, please:";
+
+/* Buy limits on KYC2 account */
+"AccountKYCLevelTwo.BuyLimits" = "Buy limits: $500 USD/day, no lifetime limit";
+
+/* Capture back page of the document text */
+"AccountKYCLevelTwo.CaptureBackPage" = "Make sure to capture the entire back page of the document.";
+
+"AccountKYCLevelTwo.CaptureEntireDocument" = "Make sure to capture the entire document.";
+
+/* Capture front page text label */
+"AccountKYCLevelTwo.CaptureFrontPage" = "Make sure to capture the entire front page of the document.";
+
+/* Checking for errors label on KYC2 */
+"AccountKYCLevelTwo.CheckingErrors" = "Checking for errors";
+
+"AccountKYCLevelTwo.CompleteLevelOneFirst" = "Please complete Level 1 verification first.";
+
+/* Confirm ID label in KYC2 flow */
+"AccountKYCLevelTwo.ConfirmID" = "We need to confirm your ID";
+
+/* Document confirmation label for KYC2 */
+"AccountKYCLevelTwo.DocumentConfirmation" = "Make sure document details are clearly visible and within the frame";
+
+/* Documents review label in KYC2 */
+"AccountKYCLevelTwo.DocumentsReview" = "We are reviewing your documents and will let you know when your account has been verified.";
+
+"AccountKYCLevelTwo.DrivingLicence" = "Driver’s license";
+
+/* Face capture instructions text on documents for KYC2 */
+"AccountKYCLevelTwo.FaceCaptureInstructions" = "Make sure you have captured your entire face in the frame.";
+
+/* Face is in the frame text for document on KYC2 */
+"AccountKYCLevelTwo.FaceVisible" = "Make sure your face is in the frame and clearly visible";
+
+/* Face is clearly visible confirmation text for documents on KYC2 */
+"AccountKYCLevelTwo.FaceVisibleConfirmation" = "Make sure your face is clearly visible.";
+
+/* Front page of the document instructions text for KYC2 */
+"AccountKYCLevelTwo.FrontPageInstructions" = "Make sure you have captured the entire front page of the document";
+
+/* KYC Level Two status */
+"AccountKYCLevelTwo.InProgress" = "Your ID verification is in progress";
+
+/* Document instructions label for KYC2 */
+"AccountKYCLevelTwo.Instructions" = "Make sure you have captured the entire document";
+
+/* Level two title in Account screen */
+"AccountKYCLevelTwo.LevelTwo" = "Level 2";
+
+/* Swap limits on KYC2 account */
+"AccountKYCLevelTwo.Limits" = "Swap limits: $10,000 USD/day, no lifetime limit";
+
+/* Make sure before photo label in KYC2 */
+"AccountKYCLevelTwo.MakeSure" = "Make sure you are in a well-lit room";
+
+"AccountKYCLevelTwo.NationalIdCard" = "National ID card";
+
+"AccountKYCLevelTwo.Passport" = "Passport";
+
+/* Prepare documents label in KYC2 */
+"AccountKYCLevelTwo.PrepareDocument" = "Have a valid government-issued identity document (passport, national ID card or driver’s license) ready";
+
+"AccountKYCLevelTwo.ResidencePermit" = "Residence permit";
+
+/* Select documents  options text label in KYC2 */
+"AccountKYCLevelTwo.SelectOptions" = "Select one of the following options:";
+
+/* Sending your data label for verification on KYC2 */
+"AccountKYCLevelTwo.SendingData" = "Sending your data for verification";
+
+"AccountKYCLevelTwo.TakeIdBackPhotoContent" = "Make sure your ID is clear and readable and fits fully in the frame";
+
+"AccountKYCLevelTwo.TakeIdBackPhotoTitle" = "Please take a photo of your ID’s back page";
+
+"AccountKYCLevelTwo.TakeIdFrontPhotoContent" = "Make sure your ID is clear and readable and fits fully in the frame";
+
+"AccountKYCLevelTwo.TakeIdFrontPhotoTitle" = "Please take a photo of your ID’s front page";
+
+"AccountKYCLevelTwo.TakePhotoPassportContent" = "Make sure your passport is clear and readable and fits fully in the frame.";
+
+"AccountKYCLevelTwo.TakePhotoPassportTitle" = "Please take a photo of your passport.";
+
+/* Take photos label in KYC2 */
+"AccountKYCLevelTwo.TakePhotos" = "Be prepared to take a selfie and photos of your ID";
+
+"AccountKYCLevelTwo.TakeSelfieContent" = "Make sure your face is in the frame and it’s clearly visible.";
+
+"AccountKYCLevelTwo.TakeSelfieTitle" = "Please take a selfie";
+
+"AccountKYCLevelTwo.updateLevelOne" = "If your personal information has changed, please first update Level 1 KYC and then continue with\nLevel 2 KYC.";
+
+/* Uploading your photos label in KYC2 flow */
+"AccountKYCLevelTwo.UploadingPhoto" = "Uploading your photos";
+
+"AccountKYCLevelTwo.VerificationPending" = "Unavailable while KYC verification is pending.";
+
+/* Verifying label on KYC2 */
+"AccountKYCLevelTwo.Verifying" = "Verifying you";
+
+/* Account backed up with iCloud Keychain message in alert view, */
+"Alert.AccountBackedUpiCloud" = "Account backed up with iCloud Keychain";
+
+/* Account succesfully restored from Cloud backup message in alert view */
+"Alert.AccountRestorediCloud" = "Account succesfully restored from Cloud backup";
 
 /* Third party keyboard warning */
 "Alert.customKeyboard.android" = "입력 한 내용을 기록하고 복구 문구를 훔칠 수있는 타사 키보드를 사용중인 것 같습니다. 추가 보호를 위해 기본 Android 키보드로 전환하십시오.";
 
 /* Error alert title */
 "Alert.error" = "오류";
+
+/* Hedera Account succesfully created header alert view */
+"Alert.HederaAccount" = "Hedera Account succesfully created.";
 
 /* Keystore error */
 "Alert.keystore.generic.android" = "귀하의 안드로이드 OS 키스토어에 문제가 있습니다, support@rockwallet.com로 연락해 주세요";
@@ -91,11 +362,15 @@
 /* No internet alert message */
 "Alert.noInternet" = "인터넷이 연결되지 않았습니다. 연결을 확인하시고 다시 시도해 주세요.";
 
+"Alert.PermissionCamera" = "KYCCamera doesn't have permission to use the camera, please change privacy settings";
+
 /* General error message */
 "Alert.somethingWentWrong" = "뭔가 잘못됐습니다. 다시 시도해 주세요.";
 
 /* Request timed out error message */
 "Alert.timedOut" = "요청이 시간 초과 되었습니다. 인터넷 연결을 확인하고 다시 시도하세요.";
+
+"Alert.UnableCapture" = "Unable to capture media";
 
 /* Warning alert title */
 "Alert.warning" = "경고";
@@ -115,6 +390,8 @@
 /* Alert Header label (the PIN was set) */
 "Alerts.pinSet" = "PIN 준비";
 
+"Alerts.pinUpdated" = "PIN successfully updated";
+
 /* Send failure alert header label (the send failed to happen) */
 "Alerts.sendFailure" = "보내기 실패함";
 
@@ -126,6 +403,17 @@
 
 /* Fingerprint was recognized by the scanner */
 "Alerts.touchIdSucceeded.android" = "지문 인식됨";
+
+"Alerts.walletRestored" = "Recovery Phrase correct";
+
+/* Error label on XRP send amount screen */
+"Amount.MinXRPAmount" = "The minimum required ammount is 10 XRP.";
+
+/* Ripple balance title */
+"Amount.RippleBalance" = "XRP Balance";
+
+/* Ripple balance popup text */
+"Amount.RippleBalanceText" = "Ripple requires each wallet to have a minimum balance of 10 XRP, so the balance displayed here is always 10 XRP less than your actual balance.";
 
 /* Tell the user where they can enable permissions to access device storage. */
 "Android.allowFileSystemAccess" = "단말의 \"설정\" > \"앱\" > \"BRD\" > \"권한\"에서 저장소 접근을 허용해 주세요.";
@@ -147,6 +435,9 @@
 
 /* API Token error message */
 "ApiClient.tokenError" = "API 토큰을 가져올 수 없습니다";
+
+/* ATM Cash Locatios View Title */
+"ATMMapView.title" = "ATM Cash Locations Map";
 
 /* Send BCH view body. */
 "BCH.body" = "아래의 목적지 BCH 주소를 입력하세요. 분기 시점(%1$s)에 귀하의 월렛에 있는 모든 BCH를 보냅니다.";
@@ -205,6 +496,9 @@
 /* Cancel button label */
 "Button.cancel" = "취소";
 
+/* Close button */
+"Button.close" = "Close";
+
 /* Confirm button title */
 "Button.confirm" = "확인";
 
@@ -220,11 +514,20 @@
 /* Done button title */
 "Button.done" = "완료";
 
+/* Finish button title */
+"Button.Finish" = "Finish";
+
+/* Go to dashboard button */
+"Button.GoToDashboard" = "Go to dashboard";
+
 /* Button to return to the "home" screen (the home screen is the top menu). */
 "Button.Home" = "홈";
 
 /* Ignore button label */
 "Button.ignore" = "무시";
+
+/* Map button */
+"Button.map" = "Map";
 
 /* Maybe Later button label */
 "Button.maybeLater" = "다음 기회에";
@@ -244,8 +547,16 @@
 /* Open Settings button */
 "Button.openSettings" = "설정 열기";
 
+/* Profile button title on tab bar */
+"Button.Profile" = "Profile";
+
 /* receive button */
 "Button.receive" = "받기";
+
+"Button.remove" = "Remove";
+
+/* Search button */
+"Button.search" = "Search";
 
 /* Button label to open Security Settings. */
 "Button.securitySettings.android" = "보안 센터";
@@ -271,14 +582,229 @@
 /* Button label to uninstall the app. */
 "Button.uninstall.android" = "앱 제거";
 
+"Button.Verify" = "Verify";
+
 /* Button label to wipe the user's application data. */
 "Button.wipe.android" = "지우기";
 
 /* Yes button */
 "Button.yes" = "예";
 
+/* 3D Secure label on buy flow */
+"Buy.3DSecure" = "3D Secure";
+
+"Buy.Ach.AccountUnlinked" = "Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.";
+
+"Buy.Ach.WalletDisabled" = "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.";
+
+"Buy.Ach.WalletDisabled.Link" = "here";
+
+"Buy.Ach.WalletDisabled.ManageAssets" = "Manage assets";
+
+"Buy.achFee" = "ACH fee (%s)";
+
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.\n\nIt currently takes 7-10 days to process a purchase with ACH";
+
+"Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
+
+"Buy.achPaymentMethodRelinked" = "ACH payment method was relinked successfully";
+
+"Buy.achPayments" = "ACH Payments";
+
+"Buy.achSuccess" = "ACH payment method was added successfully";
+
+/* Add card title for buy cryptos */
+"Buy.AddCard" = "Add card";
+
+/* Add a debit or credit card label on add card flow */
+"Buy.AddDebitCreditCard" = "Add a debit or credit card";
+
+/* Address label in billing address view on buy flow */
+"Buy.Address" = "Address";
+
+"Buy.bankAccountFailureText" = "Please try again or select a different payment method.";
+
+"Buy.bankAccountSuccessText" = "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";
+
+"Buy.bankAccountSuccessTitle" = "Your purchase is being processed";
+
+/* Billing address label on buy flow */
+"Buy.BillingAddress" = "Billing address";
+
+/* Buy min and max limit text */
+"Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD/day";
+
+"Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
+
+"Buy.buyWithCard" = "BUY WITH CARDS";
+
+/* Card label on add card flow */
+"Buy.Card" = "Card";
+
+/* CVV label in add card flow */
+"Buy.CardCVV" = "CVV";
+
+/* Card fee message label in order preview screen */
+"Buy.CardFee" = "This fee is charged to cover costs associated with payment processing.";
+
+/* Card number label in add card flow */
+"Buy.CardNumber" = "Card number";
+
+"Buy.CardNumberHint" = "XXXX XXXX XXXX XXXX";
+
+/* Card removal failed error message on delete card flow */
+"Buy.CardRemovalFailed" = "Card removal failed. Please try again.";
+
+/* Card removed message on delete card flow */
+"Buy.CardRemoved" = "Card removed";
+
+/* City label in billing address view on buy flow */
+"Buy.City" = "City";
+
+/* Please confirm your CVV label in payment view */
+"Buy.ConfirmCVV" = "Please confirm your CVV";
+
+"Buy.Country" = "Country";
+
+"Buy.CvvHint" = "XXX";
+
+/* Buy details title */
+"Buy.Details" = "Purchase details";
+
+"Buy.disabledUSDCMessage" = "USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.";
+
+/* There was an error while processing your payment title in buy failure screen */
+"Buy.ErrorProcessingPayment" = "There was an error while processing your payment";
+
+"Buy.ExpirationDate" = "Expiration date";
+
+/* Failure transaction message on buy */
+"Buy.FailureTransactionMessage" = "Please contact your card issuer/bank or try again with a different payment method.";
+
+/* First Name label in billing address view on buy flow */
+"Buy.FirstName" = "First Name";
+
+"Buy.fundWithAch" = "FUND WITH ACH";
+
+"Buy.InvalidExpirationDate" = "Entered expiration date is not valid!";
+
+"Buy.iWant" = "I want";
+
+/* Last Name label in billing address view on buy flow */
+"Buy.LastName" = "Last Name";
+
+"Buy.linkBankAccount" = "Link bank account";
+
+/* Month and year label in add card flow */
+"Buy.MonthYear" = "MM/YY";
+
+/* Network fee message in order preview screen */
+"Buy.NetworkFeeMessage" = "Network fee prices vary depending on the blockchain in which you are receiving your assets. This is an external fee to cover mining and transaction costs.";
+
+/* Network fees label in order preview screen */
+"Buy.NetworkFees" = "Network fees";
+
+/* Order preview title */
+"Buy.OrderPreview" = "Order preview";
+
+/* Payment failed error message on order preview screen */
+"Buy.PaymentFailed" = "Payment failed";
+
+/* Payment method label in buy select card screen */
+"Buy.PaymentMethod" = "Payment method";
+
+/* Pay with label in buy flow */
+"Buy.PayWith" = "Pay with";
+
+"Buy.plaidErrorDescription" = "Please check with your bank or try again later.";
+
+"Buy.plaidErrorTitle" = "There was an error connecting your account via Plaid";
+
+"Buy.ProcessingPayment" = "Processing payment";
+
+/* Purchase success text in purchase details screen */
+"Buy.PurchaseSuccessText" = "This purchase will appear as ‘RockWallet’ on your bank statement.";
+
+/* Your assets are on the way message in purchase details screen */
+"Buy.PurchaseSuccessTitle" = "Your assets are on the way!";
+
+"Buy.relinkBankAccount" = "Re-link bank account";
+
+/* Are you sure you want to remove this card title dialog */
+"Buy.RemoveCard" = "Are you sure you want to remove card ending in";
+
+"Buy.RemoveCard.android" = "Are you sure you want to remove card ending in %s?";
+
+/* You will no longer be able to use it to buy assets description on removing card dialog */
+"Buy.RemoveCardOption" = "You will no longer be able to use it to buy assets.";
+
+/* Remove payment method action sheet option on profile screen */
+"Buy.RemovePaymentMethod" = "Remove payment method";
+
+/* Security code (CVV) label in add card flow */
+"Buy.SecurityCode" = "Security code (CVV)";
+
+/* Explanation of security code in popup */
+"Buy.SecurityCodePopup" = "Please enter the 3 digit CVV number as it appears on the back of your card";
+
+/* Select payment method title in buy flow */
+"Buy.SelectPayment" = "Select payment method";
+
+/* Select a payment method button title in buy flow */
+"Buy.SelectPaymentMethod" = "Select a payment method";
+
+/* State/Province label in billing address view on buy flow */
+"Buy.StateProvince" = "State/Province";
+
+"Buy.switchedToAch" = "Payment method switched to ACH payments!";
+
+"Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
+
+/* By placing this order you agree to our terms message when ordering */
+"Buy.Terms" = "By placing this order you agree to our";
+
+"Buy.Terms.android" = "By placing this order you agree to our %s";
+
+"Buy.TransactionError" = "Transaction error";
+
+"Buy.transferFromBank" = "Transfer from bank account";
+
+/* Try a different payment method button title in failure buy screen */
+"Buy.TryAnotherPayment" = "Try a different payment method";
+
+"Buy.txHashHeader" = "%s Transaction ID";
+
+"Buy.understandAndAgree" = "I understand and agree";
+
+/* Your order label in buy flow */
+"Buy.YourOrder" = "Your order:";
+
+/* ZIP/Postal Code label in billing address view on buy flow */
+"Buy.ZIPPostalCode" = "ZIP/Postal Code";
+
 /* Camera plugin instruction */
 "CameraPlugin.centerInstruction" = "박스안에 귀하의 ID를 중앙에 두세요";
+
+/* Cash Token Action Instructions */
+"CashToken.actionInstructions" = "Please send bitcoin to this address to withdraw at the ATM. Scan QR code or copy and paste to send bitcoin. Note that it may take a few minutes for the transfer to be confirmed.";
+
+/* Cash Token Location */
+"CashToken.amountBTC" = "Amount (BTC)";
+
+/* Cash Token Amount */
+"CashToken.amountUSD" = "Amount (USD)";
+
+/* Cash Token Label */
+"CashToken.awaitingFunds" = "Awaiting Funds";
+
+/* Cash Token Label */
+"CashToken.label" = "Withdrawl Status";
+
+/* Cash Token Location */
+"CashToken.location" = "Location";
+
+/* Cash Token Please Verify */
+"CashToken.pleaseVerify" = "Please Verify";
 
 "CloudBackup.backupDeleted" = "백업이 지워짐";
 
@@ -314,6 +840,8 @@
 
 "CloudBackup.recoverHeader" = "iCloud 백업을 잠금 해제하려면 PIN을 입력하세요.";
 
+"CloudBackup.recoverWarning" = "A previously backed up wallet has been detected. Using this backup is recommended. Are you sure you want to proceeed with restoring from a Recovery Phrase?";
+
 "CloudBackup.restoreButton" = "iCloud 백업에서 복원";
 
 "CloudBackup.selectTitle" = "백업 선택";
@@ -329,6 +857,14 @@
 "CloudBackup.understandText" = "iCloud 키 체인이 활성화되지 않으면이 기능이 작동하지 않음을 이해합니다.";
 
 "CloudBackup.warningBody" = "잘못된 PIN 시도를 %1$@ 더 시도하면 iCloud 백업이 삭제됩니다.";
+
+"ComingSoon.body" = "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
+
+"ComingSoon.buttons.backHome" = "BACK TO HOME";
+
+"ComingSoon.buttons.contactSupport" = "Contact support";
+
+"ComingSoon.title" = "Coming soon!";
 
 /* Amount to Send: ($1.00) */
 "Confirmation.amountLabel" = "보낼 금액:";
@@ -361,6 +897,9 @@
 /* Total Cost: ($5.00) */
 "Confirmation.totalLabel" = "총 금액:";
 
+/* Validator address label on  confirmation screen */
+"Confirmation.ValidatorAddress" = "Validator Address";
+
 "ConfirmGift.paperWalletAmount" = "종이 지갑 금액";
 
 "ConfirmGift.processingTime" = "네트워크에서이 종이 지갑을 확인하는 데 최대 60 분이 걸릴 수 있습니다.";
@@ -373,6 +912,8 @@
 
 /* Word label eg. Word #1, Word #2 */
 "ConfirmPaperPhrase.word" = "단어 #%1$s";
+
+"ConfirmRecoveryPhrase.Title" = "Confirm Recovery Phrase";
 
 "CreateGift.amountLabel" = "금액 선택 ($ USD)";
 
@@ -421,8 +962,15 @@
 /* Exchange rate label */
 "DefaultCurrency.rateLabel" = "환율";
 
+"Disabled.disabledUntil" = "Disabled until";
+
 /* The wallet is disabled. */
 "Disabled.title" = "월렛이 비활성화됨";
+
+"Drawer.button.buy_with_sell" = "SELL & WITHDRAW";
+
+/* title of the drawer shown after buy/sell button tap on home screen */
+"Drawer.title" = "Buy / Sell";
 
 /* Share address by e-mail subject */
 "Email.address_subject" = "%1$s 주소";
@@ -436,11 +984,48 @@
 /* Service capabilities description */
 "EME.permissions.paymentRequest" = "%1$s 계정 정보를 요청합니다";
 
+"ErrorMessages.accessDenied" = "You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.";
+
+"ErrorMessages.Ach.AccountClosed" = "Unfortunately, the linked bank account is closed. Please try adding a different bank account or a different payment method.";
+
+"ErrorMessages.Ach.AccountFrozen" = "Unfortunately, there was an error while processing your transaction. Please try again later or contact your bank for additional assistance.";
+
+"ErrorMessages.Ach.ErrorWhileProcessing" = "Unfortunately, there was an error while processing your transaction. Please try again later or select a different payment method.";
+
+"ErrorMessages.Ach.InsufficientFunds" = "Unfortunately the transaction could not be completed due to insufficient funds in your bank account. Please try again later";
+
+/* The currency amount is to high for exchange. Accepts 2 parameters:, - maxiumum amount, - currency code */
+"ErrorMessages.AmountTooHigh" = "The amount is higher than your daily limit of %s %s. Please enter a lower amount.";
+
+/* The currency amount is to low for exchange. Accepts 2 parameters:, - minimum amount, - currency code */
+"ErrorMessages.amountTooLow" = "The amount is lower than the minimum of %s %s. Please enter a higher amount.";
+
+"ErrorMessages.authorizationFailed" = "Card authorization failed. Please contact your credit card issuer/bank or try another card.";
+
+/* Accepts 3 parameters:, - currency code, - current balance, - (same) currency code */
+"ErrorMessages.balanceTooLow" = "You need %s %s in your wallet to cover network fees. Please add more %s to your wallet.";
+
+/* Check your internet connection message */
+"ErrorMessages.CheckInternet" = "Please, check your internet connection and try again later.";
+
+"ErrorMessages.default" = "Something went wrong! Try again later.";
+
 /* Email unavailable alert title */
 "ErrorMessages.emailUnavailableMessage" = "이 장치는 iOS 메일 앱으로 이메일을 전송하도록 설정되지 않았습니다.";
 
 /* Email unavailable alert title */
 "ErrorMessages.emailUnavailableTitle" = "이메일 사용불가";
+
+/* Not enough ETH for transaction fee */
+"ErrorMessages.ethBalanceLowAddEth" = "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
+
+"ErrorMessages.exchangeFailed" = "Swap failed. Reason: %s.";
+
+"ErrorMessages.ExchangeQuoteFailed" = "We are currently having issues making a swap between this pair of coins. Please try again later.";
+
+"ErrorMessages.ExchangesUnavailable" = "We are having temporary network issues. Please try again later.";
+
+"ErrorMessages.Kyc.Underage" = "You must be at least 18 years old to complete Level 1 and 2 verification.";
 
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "현재 이용 중인 안드로이드 버전의 버그로 인해 BRD가 인증될 수 없습니다. [Please tap here for more information.]";
@@ -451,12 +1036,52 @@
 /* Messaging unavailable alert title */
 "ErrorMessages.messagingUnavailableTitle" = "메시지 사용불가";
 
+"ErrorMessages.networkFee" = "This swap doesn't cover the included network fee. Please add more funds to your wallet or change the amount you're swapping.";
+
+/* Temporary network issues error message */
+"ErrorMessages.NetworkIssues" = "We are having temporary network issues. Please try again later.";
+
+/* No selected currencies error message */
+"ErrorMessages.NoCurrencies" = "No selected currencies.";
+
+"ErrorMessages.noFees" = "Failed to fetch network fees. Please try again later.";
+
+/* Accepts 2 parameters:, - first currency code, - second currency code */
+"ErrorMessages.noQuoteForPair" = "No quote for currency pair %s-%s.";
+
+"ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %s USD. Please upgrade your account or enter a lower amount.";
+
+"ErrorMessages.overExchangeLimit" = "Over exchange limit.";
+
+"ErrorMessages.overLifetimeLimit" = "The amount is higher than your lifetime limit of %s USD. Please upgrade your account or enter a lower amount.";
+
+"ErrorMessages.overLifetimeLimitLevel2" = "The amount is higher than your daily limit of %s USD. Please enter a lower amount.";
+
+"ErrorMessages.pendingExchange" = "A maximum of one swap can be active for a currency at a time.";
+
+"ErrorMessages.pinConfirmationFailed" = "PIN Authentication failed.";
+
+"ErrorMessages.selectAssets" = "In order to succesfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.";
+
+/* Something went wrong message */
+"ErrorMessages.SomethingWentWrong" = "Oops! Something went wrong, please try again later.";
+
+/* Two parameters:, - maximum amount, - currency code */
+"ErrorMessages.swapAmountTooHigh" = "The amount is higher than the swap maximum of %s %s.";
+
+"ErrorMessages.temporaryNetworkIssues" = "We are having temporary issues connecting to our network. Please try again later.";
+
 /* Fingerprint was not recognized by the scanner, please try scanning again */
 "ErrorMessages.touchIdFailed.android" = "지문 인식되지 않음. 다시 시도해 주세요.";
+
+/* Unknown error text message */
+"ErrorMessages.UnknownError" = "Unknown error.";
 
 "ExportConfirmation.cancel" = "취소";
 
 "ExportConfirmation.continue" = "계속하다";
+
+"ExportConfirmation.continueAction" = "Continue";
 
 "ExportConfirmation.message" = "이렇게하면 활성화 된 모든 지갑에서 완료된 모든 트랜잭션이 포함 된 CSV 파일이 생성됩니다.";
 
@@ -557,6 +1182,9 @@
 /* Switch label to enable fingerprint authentication to unlock BRD app */
 "FingerprintSettings.unlockApp" = "지문을 사용하여 BRD 잠금 해제";
 
+/* Activity button on the home screen toolbar */
+"HomeScreen.activity" = "Activity";
+
 /* This is the section that allows administration of the user's wallet */
 "HomeScreen.admin" = "관리";
 
@@ -571,6 +1199,9 @@
 
 /* This section lists the users wallets */
 "HomeScreen.portfolio" = "지갑";
+
+/* Pull to refresh control on Home Screen */
+"HomeScreen.PullToRefresh" = "Pull to refresh";
 
 /* Label for the total balance of all the user's assets (style is all lower case if your language permits) */
 "HomeScreen.totalAssets" = "총 자산";
@@ -590,14 +1221,29 @@
 /* empty private key error message */
 "Import.Error.empty" = "이 개인 열쇠는 비어 있습니다.";
 
+/* Failed to submit transaction error message */
+"Import.Error.failedSubmit" = "Failed to submit transaction.";
+
 /* High fees error message */
 "Import.Error.highFees" = "이 개인 열쇠에서 사용할 수 있는 자금보다 거래 수수료가 더 많이 듭니다.";
 
 /* Not a valid private key error message */
 "Import.Error.notValid" = "유효하지 않은 개인 열쇠입니다";
 
+/* Service error error message */
+"Import.Error.serviceError" = "Service Error";
+
+/* Service Unavailable error message */
+"Import.Error.serviceUnavailable" = "Service Unavailable";
+
 /* Import signing error message */
 "Import.Error.signing" = "서명 거래 오류";
+
+/* Unable to sweep wallet error message */
+"Import.Error.sweepError" = "Unable to sweep wallet";
+
+/* Unsupported currency error message */
+"Import.Error.unsupportedCurrency" = "Unsupported Currency";
 
 /* [Redeem] the funds stored on this private key. */
 "Import.importButton" = "교환";
@@ -640,6 +1286,9 @@
 
 /* Wrong password alert message */
 "Import.wrongPassword" = "잘못된 비밀번호. 다시 시도해 주세요.";
+
+/* Input view invalid code */
+"InputView.InvalidCode" = "Invalid code";
 
 /* Close app button */
 "JailbreakWarnings.close" = "닫기";
@@ -710,7 +1359,16 @@
 "MenuButton.addWallet" = "지갑 추가";
 
 /* Menu button title */
+"MenuButton.atmCashRedemption" = "ATM Cash Redemption";
+
+/* Feedback menu button title */
+"MenuButton.feedback" = "Feedback";
+
+/* Menu button title */
 "MenuButton.lock" = "지갑 잠그기";
+
+/* (Click here to) manage (your list of) wallets */
+"MenuButton.manageAssets" = "Manage Assets";
 
 /* (Click here to) manage (your list of) wallets */
 "MenuButton.manageWallets" = "지갑 관리";
@@ -784,6 +1442,10 @@
 /* Node Selector view title */
 "NodeSelector.title" = "비트코인 노드";
 
+"NoInternet.Body" = "We couldn’t connect to the server. Please check your internet connection and try again.";
+
+"NoInternet.Title" = "Check your connection";
+
 /* Onboarding screen 'I'll browse first' button */
 "Onboarding.browseFirst" = "먼저 둘러볼게요";
 
@@ -823,8 +1485,21 @@
 /* Eg. Send 1.0Eth to purchase CCC */
 "PaymentConfirmation.amountText" = "%2$s 구매를 위해 %1$s 전송";
 
+/* Payment expired message */
+"PaymentConfirmation.PaymentExpired" = "The payment has expired due to inactivity. Please try again with the same card, or use a different card.";
+
+/* Payment verification timeout message */
+"PaymentConfirmation.PaymentTimeout" = "Payment verification timeout";
+
 /* Payment confirmation view title */
 "PaymentConfirmation.title" = "확인";
+
+/* Try again button title in payment view */
+"PaymentConfirmation.TryAgain" = "Try again";
+
+"PaymentConfirmation.TryWithAch" = "Try with ACH payments";
+
+"PaymentConfirmation.TryWithDebit" = "Try with debit card";
 
 /* Bad Payment request alert title */
 "PaymentProtocol.Errors.badPaymentRequest" = "틀린 결제 요청";
@@ -854,6 +1529,26 @@
 "PaymentProtocol.Errors.untrustedCertificate" = "신용할 수 없는 증명서";
 
 "Platform.transaction_cancelled" = "거래 취소";
+
+"Prompts.ConnectionIssues.title" = "Connection issues";
+
+/* Body text for a prompt that asks the user to subscribe to email updates to find out product updates. */
+"Prompts.Email.body" = "Be the first to receive important support and product updates";
+
+/* Placeholder text for an email address text field. */
+"Prompts.Email.placeholder" = "enter your email";
+
+/* Body text that is shown when the user successfully subscribes to email updates. */
+"Prompts.Email.successBody" = "You have successfully subscribed to receive updates";
+
+/* Text that is displayed as a footnote when the user successfully subscribes to email updates. */
+"Prompts.Email.successFootnote" = "We appreciate your continued support";
+
+/* Title that is shown when the user successfully subscribes to email updates. */
+"Prompts.Email.successTitle" = "Thank you!";
+
+/* Title for a prompt that asks the user to subscribe to email updates to find out product updates. */
+"Prompts.Email.title" = "Get in the loop";
 
 /* Body text for a prompt that asks the user to subscribe to email updates to find out product updates., Placeholder text for an email address text field., Body text that is shown when the user successfully subscribes to email updates., Text that is displayed as a footnote when the user successfully subscribes to email updates., Title that is shown when the user successfully subscribes to email updates., Title for a prompt that asks the user to subscribe to email updates to find out product updates., Enable face ID prompt body */
 "Prompts.FaceId.body" = "페이스 ID를 사용하시려면 계속하기를 탭하세요";
@@ -885,6 +1580,8 @@
 "Prompts.RateApp.dontShow" = "다시 묻지마";
 
 "Prompts.RateApp.enjoyingBrd" = "BRD를 즐기십니까?";
+
+"Prompts.RateApp.enjoyingRockWallet" = "Enjoying RockWallet?";
 
 "Prompts.RateApp.googlePlayReview" = "귀하의 검토는 BRD 커뮤니티의 성장을 돕습니다.";
 
@@ -988,6 +1685,9 @@
 /* Done button text */
 "RecoverWallet.done" = "완료";
 
+/* Enter recovery phrase label to delete the wallet */
+"RecoverWallet.EnterRecoveryPhrase" = "Please enter your Recovery Phrase to delete this wallet from your device.";
+
 /* Recover wallet header */
 "RecoverWallet.header" = "지갑 복구하기";
 
@@ -1009,6 +1709,9 @@
 /* Next button label */
 "RecoverWallet.next" = "다음";
 
+/* What Is recovery phrase text popup */
+"RecoverWallet.RecoveryPhrasePopup" = "A Recovery Phrase consists of 12 randomly generated words. The app creates the Recovery Phrase for you automatically when you start a new wallet. The Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction, or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The key is also required when upgrading your current phone to a new one.";
+
 /* Reset PIN with paper key: more information button. */
 "RecoverWallet.reset_pin_more_info" = "자세한 내용을 보려면 여기를 탭하세요.";
 
@@ -1020,6 +1723,9 @@
 
 /* Reset PIN with paper key: sub-header */
 "RecoverWallet.subheader_reset_pin" = "PIN을 재설정하려면 아래 상자에 복구 문구의 단어를 입력하세요.";
+
+/* What is recovery phrase title on popup */
+"RecoverWallet.WhatIsRecoveryPhrase" = "What is “Recovery Phrase”?";
 
 /* Instructs the user to enter words from the set of recovery key words. */
 "RecoveryKeyFlow.confirmRecoveryInputError" = "입력한 단어가 올바르지 않습니다. 다시 시도해 주세요.";
@@ -1129,6 +1835,18 @@
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%2$@ 중 %1$@";
 
+"RecoveryKeyOnboarding.description1" = "This is required to restore your wallet if you upgrade or lose your phone.";
+
+"RecoveryKeyOnboarding.description2" = "For security reasons, screenshots are not recommended, as anyone with your Recovery Phrase can access your funds.";
+
+"RecoveryKeyOnboarding.description3" = "Remember that this is the only way to restore your wallet. RockWallet does not keep a copy.";
+
+"RecoveryKeyOnboarding.title1" = "Generate your private Recovery Phrase";
+
+"RecoveryKeyOnboarding.title2" = "Write down your Recovery Phrase";
+
+"RecoveryKeyOnboarding.titlePage1" = "Generate your private Recovery Phrase";
+
 /* No amount entered error message. */
 "RequestAnAmount.noAmount" = "먼저 금액을 입력해 주세요.";
 
@@ -1228,6 +1946,9 @@
 /* Security center fingerprint authentication button */
 "SecurityCenter.touchIdTitle.android" = "지문 본인확인";
 
+/* Segwit enabled confirmation body */
+"Segwit.ConfirmationConfirmationBody" = "Thank you for helping move bitcoin forward!";
+
 /* Segwit enabled confirmation title */
 "Segwit.ConfirmationConfirmationTitle" = "SegWit을 활성화했습니다!";
 
@@ -1245,6 +1966,40 @@
 
 /* Segwit button label that takes the user back to the home screen once SegWit is enabled. */
 "Segwit.HomeButton" = "투 더 문";
+
+"Sell.achDurationWarning" = "ACH withdrawal will be processed within 3-5 business days.";
+
+"Sell.achWithdrawal" = "ACH Withdrawal";
+
+"Sell.details" = "Sell & Withdraw details";
+
+"Sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
+
+"Sell.iReceive" = "I receive";
+
+"Sell.OrderPreview" = "Withdrawal preview";
+
+"Sell.rate" = "Conversion rate";
+
+"Sell.SellLimits" = "Minimum withdrawal is %s USD and maximum is %s USD per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
+
+"Sell.subtotal" = "Subtotal";
+
+"Sell.title" = "Sell & Withdraw funds";
+
+"Sell.tryAgain" = "Please try again";
+
+"Sell.widrawToBank" = "Withdraw to";
+
+"Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
+
+"Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
+
+"Sell.WithdrawDetails" = "Sell and withdraw details";
+
+"Sell.yourOrder" = "You sell:";
+
+"Sell.YouWillReceive" = "You’ll receive";
 
 "Send_fio_toLabel" = "FIO";
 
@@ -1278,16 +2033,28 @@
 /* Description for sending money label */
 "Send.descriptionLabel" = "메모";
 
+/* Destination tag is too long error message in send view */
+"Send.DestinationTag" = "Destination tag is too long.";
+
 /* Optional Destination Tag label */
-"Send.destinationTag" = "대상 태그 (선택 사항)";
+"Send.destinationTag_optional" = "Destination Tag";
 
 /* Required Destination Tag label */
 "Send.destinationTag_required" = "대상 태그 (필수)";
 
 "Send.destinationTag_required_error" = "대상 주소에 유효한 대상 태그가 필요합니다.";
 
+/* Destination Tag text explanation popup in send view */
+"Send.DestinationTagText" = "Some receiving addresses (exchanges usually) require additional identifying information provided with a Destination Tag.\n\nIf the recipient's address is accompanied by a destination tag, make sure to include it.\nAlso, we strongly suggest you send a small amount of cryptocurrency as a test before attempting to send a significant amount.";
+
 /* Emtpy pasteboard error message */
 "Send.emptyPasteboard" = "클립보드가 비어 있습니다";
+
+/* Sending error message */
+"Send.Error.authenticationError" = "Authentication Error";
+
+/* Error calculating maximum. */
+"Send.Error.maxError" = "Could not calculate maximum";
 
 /* "(you) can't send (to your)self" */
 "Send.ethSendSelf" = "자신에게는 보낼 수 없습니다.";
@@ -1307,8 +2074,14 @@
 /* Insufficient funds error */
 "Send.insufficientFunds" = "자금 부족";
 
+/* Insufficient gas error */
+"Send.insufficientGas" = "Insufficient gas.";
+
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "이 종류의 토큰을 전송하려면 지갑에 최소 %1$s가 있어야 합니다. 지금 이더리움 지갑으로 가시겠습니까?";
+
+/* Your balance is insufficient to complete this action. */
+"Send.insufficientGasTitle" = "Insufficient %s Balance";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
 "Send.invalidAddressMessage" = "해당 수취인 주소는 %1$s에서 유효하지 않은 주소입니다.";
@@ -1340,6 +2113,9 @@
 /* Emtpy amount alert message */
 "Send.noAmount" = "송금액을 입력하세요";
 
+/* No fee estimate error on send view */
+"Send.NoFeeEstimate" = "No fee estimate";
+
 /* No Fees error */
 "Send.noFeesError" = "네트워크 수수료 조건을 다운로드 중입니다. 다시 시도하십시오.";
 
@@ -1367,6 +2143,9 @@
 /* Scan button label */
 "Send.scanLabel" = "스캔";
 
+/* Title for error when send request times out and we are not sure weather it succesfull or not. */
+"Send.sendError" = "Send Error";
+
 /* Sending Max: $4.00 for iOS, the balance can't have a parameter */
 "Send.sendingMax" = "최대 보내기 :";
 
@@ -1375,6 +2154,9 @@
 
 /* Send button label (for special case where the user specified send amount is too high and does not leave a balance to cover fees.) */
 "Send.sendMaximum" = "최고 한도 금액을 보내겠습니까?";
+
+/* Error message when send request times out and we are not sure weather it succesfull or not. */
+"Send.timeOutBody" = "Timed out waiting for network response. Please wait 60 seconds for confirmation before retrying.";
 
 /* Send screen title (as in "this is the screen for sending money") */
 "Send.title" = "보내기";
@@ -1390,6 +2172,9 @@
 
 /* Adress already used alert title */
 "Send.UsedAddress.title" = "이미 사용중인 주소입니다";
+
+/* What is a destination tag title in popup in send view */
+"Send.WhatIsDestinationTag" = "What is a destination tag?";
 
 /* Section header for "other settings". */
 "Settings.other" = "기타";
@@ -1418,6 +2203,11 @@
 /* Section title for a collection of different settings screens, one for each currency */
 "Settings.currencySettings" = "통화 설정";
 
+/* Debug crash */
+"Settings.DebugCrash" = "Debug crash";
+
+"Settings.DeveloperOptions" = "Developer Options";
+
 /* Join Early access label */
 "Settings.earlyAccess" = "초기 버전을 사용해 보세요";
 
@@ -1438,6 +2228,9 @@
 
 /* Manage settings section header */
 "Settings.manage" = "관리";
+
+/* No log files found error message */
+"Settings.noLogsFound" = "No Log files found. Please try again later.";
 
 /* Notifications label */
 "Settings.notifications" = "알림";
@@ -1483,6 +2276,8 @@
 
 /* Wallet Settings section header */
 "Settings.wallet" = "지갑";
+
+"Settings.WebDebugUrl" = "Web Platform Debug URL";
 
 /* Unlink/delete your wallet from the current device. */
 "Settings.wipe" = "이 기기에서 연결 해제";
@@ -1603,6 +2398,112 @@
 
 "SupportForm.pleaseDescribe" = "당신의 경험을 설명하십시오";
 
+/* Add item label in swap flow */
+"Swap.AddItem" = "Add item!";
+
+/* Amount purchased label in detail swap screen */
+"Swap.AmountPurchased" = "Amount purchased";
+
+"Swap.AmountPurchased.android" = "Amount purchased:";
+
+/* Back to Home button */
+"Swap.BackToHome" = "Back to Home";
+
+/* Balance text on swap */
+"Swap.Balance" = "I have %s %s";
+
+/* Card fee label in swap details screen */
+"Swap.CardFee" = "Card fee";
+
+"Swap.CardFee.android" = "Card fee:";
+
+/* Title on check your assets popup */
+"Swap.CheckAssets" = "Check your assets!";
+
+/* Text body in check your assets popup */
+"Swap.CheckAssetsBody" = "In order to successfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.";
+
+/* Swap details title */
+"Swap.Details" = "Swap details";
+
+"Swap.enableAssetFirst" = "Asset needs to be enabled first. You can do that by selecting ‘Manage assets’ on the home screen.";
+
+/* There was an error while processing your transaction title in failure swap screen */
+"Swap.ErrorProcessingTransaction" = "There was an error while processing your transaction";
+
+/* Error swap message on Failure screen */
+"Swap.FailureSwapMessage" = "Please try swapping again or come back later.";
+
+/* Popup button got it */
+"Swap.GotItButton" = "Got it!";
+
+/* Swap and Buy I want label from currency */
+"Swap.iWant" = "I want";
+
+/* Mining network fee label in swap details screen */
+"Swap.MiningNetworkFee" = "Mining network fee";
+
+"Swap.MiningNetworkFee.android" = "Mining network fee:";
+
+/* Not a valid pair */
+"Swap.NotValidPair" = "Not a valid pair";
+
+/* Paid with label in swap details screen */
+"Swap.PaidWith" = "Paid with";
+
+/* Rate label in swap screen */
+"Swap.RateValue" = "Rate";
+
+/* Receiving network fee text label on Swap screen */
+"Swap.ReceiveNetworkFee" = "Receiving network fee";
+
+"Swap.RequestTimedOut" = "Your swap request timed out. Please try again.";
+
+"Swap.retry" = "Retry";
+
+/* Select assets title in swap flow */
+"Swap.SelectAssets" = "Select assets";
+
+/* Sending fee label on swap screen */
+"Swap.SendingFee" = "Sending fee\n";
+
+/* Sending network fee text label on Swap screen */
+"Swap.SendNetworkFee" = "Sending network fee";
+
+/* Swap again button title in swap failure screen */
+"Swap.SwapAgain" = "Swap again";
+
+/* Swap min and max limit text */
+"Swap.SwapLimits" = "Currently, minimum for Swap is %s USD and maximum is %s USD/day.";
+
+"Swap.Swapping" = "Swapping %1$@ to %2$@";
+
+/* Swap status message on swap flow */
+"Swap.SwapStatus" = "Your %s is estimated to arrive in 30 minutes. You can continue to use your wallet. We'll let you know when your swap has finished.";
+
+"Swap.temporarilyUnavailable" = "Swap is temporarily unavailable";
+
+/* Timestamp label in swap details screen */
+"Swap.Timestamp" = "Timestamp";
+
+/* Total label in swap details screen */
+"Swap.Total" = "Total:";
+
+"Swap.transactionFrom" = "From %1$@";
+
+/* Transaction ID label in swap details screen */
+"Swap.TransactionID" = "RockWallet Transaction ID";
+
+"Swap.transactionInEthereumNetwork" = "It seems that your transaction takes place in the Ethereum network, please keep in mind that network fees will be charged in ETH";
+
+"Swap.transactionTo" = "To %1$@";
+
+"Swap.youReceive" = "You'll receive";
+
+"Swap.youSend" = "You send";
+
+"Symbols.lock" = "\u{1F512}";
+
 /* Syncing view done syncing state header text */
 "SyncingView.activity" = "활동";
 
@@ -1635,6 +2536,27 @@
 
 /* 6 s (6 seconds) */
 "TimeSince.seconds" = "%1$s 초";
+
+"Title.AutoEnterPin" = "Auto-enter PIN";
+
+"Title.ConnectionSettingsOverride" = "Connection Settings Override";
+
+"Title.FastSync" = "Fast Sync";
+
+"Title.LockWallet" = "Lock Wallet";
+
+"Title.RockwalletFeedback" = "RockWallet - Feedback";
+
+"Title.Save" = "Save";
+
+/* Search assets */
+"Title.searchAssets" = "Search assets";
+
+"Title.SendLogs" = "Send Logs";
+
+"Title.SuppressPaperKeyPrompt" = "Suppress paper key prompt";
+
+"Title.UnlinkWalletNoPrompt" = "Unlink Wallet (no prompt)";
 
 /* Add [this item to the list] */
 "TokenList.add" = "추가";
@@ -1735,6 +2657,9 @@
 /* Transaction failed status text */
 "Transaction.failed" = "실패했습니다";
 
+/* Failed swap label in transaction view */
+"Transaction.FailedSwap" = "Failed swap";
+
 /* (b600 fee) */
 "Transaction.fee" = "(%1$s 수수료)";
 
@@ -1744,11 +2669,35 @@
 /* Timestamp label for event that just happened */
 "Transaction.justNow" = "지금 바로";
 
+"Transaction.ManuallySettled" = "Manually settled";
+
 /* Transaction is pending status text */
 "Transaction.pending" = "보류 중";
 
+/* Pending purchase label in transaction view */
+"Transaction.PendingPurchase" = "Pending purchase";
+
+"Transaction.PendingPurchaseWithAch" = "Pending purchase with ACH";
+
+/* Pending swap label in transaction view */
+"Transaction.PendingSwap" = "Pending swap";
+
+"Transaction.PendingWithdrawWithAch" = "Pending withdraw with ACH";
+
+/* Purchased label in transaction view */
+"Transaction.Purchased" = "Purchased";
+
+"Transaction.PurchasedWithAch" = "Purchased with ACH";
+
+/* Purchase failed label in transaction view */
+"Transaction.PurchaseFailed" = "Purchase failed";
+
+"Transaction.PurchaseFailedWithAch" = "Purchase with ACH failed";
+
 /* Receive status text: 'In progress: 20%' */
 "Transaction.receivedStatus" = "진행 중: %1$s";
+
+"Transaction.refunded" = "Refunded";
 
 /* Send status text: 'In progress: 20%' */
 "Transaction.sendingStatus" = "진행 중: %1$s";
@@ -1763,6 +2712,21 @@
 
 /* eg. Starting balance: $50.00 */
 "Transaction.starting" = "기초 잔액: %1$s";
+
+"Transaction.swapFromFailed" = "Swap from %s failed";
+
+/* Swapped transaction label */
+"Transaction.Swapped" = "Swapped";
+
+"Transaction.swappedFrom" = "Swapped from %s";
+
+"Transaction.swappedTo" = "Swapped to %s";
+
+"Transaction.swappingFrom" = "Swapping from %s";
+
+"Transaction.swappingTo" = "Swapping to %s";
+
+"Transaction.swapToFailed" = "Swap to %s failed";
 
 /* e.g. "[The money you paid was a] Fee for token transfer: BRD" (BRD is the token that was transfered) */
 "Transaction.tokenTransfer" = "토큰 송금 수수료: %1$s";
@@ -1931,6 +2895,8 @@
 /* (this transaction was) Sent to this address: */
 "TransactionDirection.to" = "이 주소로 보냄";
 
+"UDomains.invalid" = "Invalid address.";
+
 /* Disabled until date */
 "UnlockScreen.disabled" = "다음 기간까지 비활성화됨: %1$s";
 
@@ -1961,8 +2927,20 @@
 /* Device authentication title */
 "UnlockScreen.touchIdTitle.android" = "본인확인 필요";
 
+/* Wallet disabled header */
+"UnlockScreen.walletDisabled" = "Wallet disabled";
+
+/* Wallet disabled description */
+"UnlockScreen.walletDisabledDescription" = "You will need your Recovery Phrases to reset PIN.";
+
+/* Wipe wallet prompt */
+"UnlockScreen.wipePrompt" = "Are you sure you would like to wipe this wallet?";
+
 /* Update PIN caption text */
 "UpdatePin.caption" = "이 PIN 코드를 기억하세요. PIN 코드를 잊어버리면 자신의 비트코인을 사용할 수 없게 됩니다.";
+
+/* Contact Support button on update pin view */
+"UpdatePin.ContactSupport" = "Contact Support";
 
 /* PIN creation info. */
 "UpdatePin.createInstruction" = "귀하의 PIN 코드는 BRD의 잠금을 해제하고 돈을 송금하는 데 사용됩니다.";
@@ -1973,14 +2951,43 @@
 /* Update PIN title */
 "UpdatePin.createTitleConfirm" = "PIN 코드를 다시 입력";
 
+/* Disabled until text on disabled wallet view */
+"UpdatePin.DisabledUntil" = "Disabled until:";
+
 /* Enter current PIN instruction */
 "UpdatePin.enterCurrent" = "현재의 PIN 코드를 입력하세요.";
 
 /* Enter new PIN instruction */
 "UpdatePin.enterNew" = "새 PIN 코드를 입력하세요.";
 
+/* Enter your PIN label to finish the transaction */
+"UpdatePin.EnterPin" = "Please enter your PIN to confirm the transaction";
+
+/* Enter PIN instruction */
+"UpdatePin.enterYourPin" = "Enter your PIN";
+
+/* Incorrect PIN popup message */
+"UpdatePin.IncorrectPin" = "Incorrect PIN. The wallet will get disabled for 6 minutes after";
+
+/* Number of attempts left on pin entry screen */
+"UpdatePin.OneAttempt" = "1 more failed attempt.";
+
+"UpdatePin.pinDoesntMatch" = "Your PIN doesn’t match, please try again.";
+
 /* Re-Enter new PIN instruction */
 "UpdatePin.reEnterNew" = "새 PIN 코드를 다시 입력하세요.";
+
+/* Attempts remaining on pin entry screen */
+"UpdatePin.RemainingAttempts" = "Attempts remaining:";
+
+/* Your PIN was reset successfully message */
+"UpdatePin.ResetPinSuccess" = "Your PIN was reset successfully!";
+
+/* Enter PIN header */
+"UpdatePin.securedWallet" = "Secured wallet";
+
+/* Update PIN title */
+"UpdatePin.setNewPinTitle" = "Set your PIN";
 
 /* Update PIN failure error message. */
 "UpdatePin.setPinError" = "죄송합니다, PIN 코드를 업데이트하지 못했습니다.";
@@ -1988,8 +2995,17 @@
 /* Update PIN failure alert view title */
 "UpdatePin.setPinErrorTitle" = "PIN 코드 업데이트 오류";
 
+/* Number of attempts left on pin entry screen */
+"UpdatePin.TwoAttempts" = "2 more failed attempts.";
+
+/* Update pin popup explanation when pressing "?" button */
+"UpdatePin.UpdatePinPopup" = "The RockWallet Wallet app requires you to set a PIN to secure your wallet, separate from your device passcode.  \n\nYou will be required to enter the PIN to view your balance or send money, which keeps your wallet private even if you let someone use your phone or if your phone is stolen by someone who knows your device passcode.\n            \nDo not forget your wallet PIN! It can only be reset by using your Recovery Phrase. If you forget your PIN and lose your Recovery Phrase, your wallet will be lost.";
+
 /* Update PIN title */
 "UpdatePin.updateTitle" = "PIN 코드 업데이트";
+
+/* Why do I need a PIN title explanation popup */
+"UpdatePin.WhyPIN" = "Why do I need a PIN?";
 
 /* Authorize to copy wallet addresses alert message */
 "URLHandling.addressaddressListAlertMessage" = "월렛 주소를 클립 보드에 복사할까요?";
@@ -2003,6 +3019,23 @@
 /* Copy wallet addresses alert button label */
 "URLHandling.copy" = "복사";
 
+/* Verification Code Action Instructions */
+"VerificationCode.actionInstructions" = "Check your phone for the confirmation token we sent you. It may take a couple of minutes.";
+
+/* Verification Code Label */
+"VerificationCode.actionLabel" = "Enter token";
+
+/* Verification Code Confirm Button */
+"VerificationCode.buttonConfirm" = "Confirm";
+
+/* Verification Code Label */
+"VerificationCode.label" = "We Texted You a Confirmation Code";
+
+/* Verification Code Title */
+"VerificationCode.title" = "Confirmation Code";
+
+"VerifyAccount.Button" = "Verify your account";
+
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "PIN을 입력하여 이 거래를 승인하십시오.";
 
@@ -2014,6 +3047,15 @@
 
 /* Authorize transaction with touch id message */
 "VerifyPin.touchIdMessage" = "이 거래 승인";
+
+/* Find assets button on add wallets screen */
+"Wallet.FindAssets" = "Trouble finding assets?";
+
+/* Limited assets title in add wallets popup */
+"Wallet.LimitedAssets" = "Limited assets";
+
+/* Limited assets message in add wallets popup */
+"Wallet.LimitedAssetsMessage" = "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.";
 
 "Wallet.one_day" = "1d";
 
@@ -2202,4 +3244,8 @@
 
 /* 1 of 3 */
 "WritePaperPhrase.step" = "%2$d의 %1$d";
+
+"WritePaperPhrase.warning" = "For security purposes, do not screenshot or email these words.";
+
+"WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
