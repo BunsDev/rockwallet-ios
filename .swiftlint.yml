@@ -9,18 +9,18 @@ disabled_rules:
   - todo
   - comment_spacing
   - inclusive_language
+  - shorthand_operator
 
 opt_in_rules:
   - empty_count
   - empty_string
-  - multiline_parameters
 
 excluded:
   - Modules
   - breadwalletTests
   - breadwalletUITests
   - breadwallet/src/Constants/Strings.swift
-  - breadwallet/*.pb.swift # ProtoBuf generated files
+  - breadwallet/src/Constants/Assets.swift
 
 line_length:
     warning: 170

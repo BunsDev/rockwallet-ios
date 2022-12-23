@@ -69,6 +69,8 @@ class VerticalButtonsView: FEView<VerticalButtonsConfiguration, VerticalButtonsV
     // MARK: Helpers
     
     func getButton(_ from: FEButton) -> FEButton? {
-        return (stack.arrangedSubviews as? [FEButton])?.first(where: { $0.viewModel?.title == from.viewModel?.title && $0.viewModel?.image == from.viewModel?.image }) as? FEButton
+        return (stack.arrangedSubviews as? [FEButton])?.first(where: {
+            $0.viewModel?.title == from.viewModel?.title && $0.viewModel?.image == from.viewModel?.image
+        }) as? FEButton
     }
 }

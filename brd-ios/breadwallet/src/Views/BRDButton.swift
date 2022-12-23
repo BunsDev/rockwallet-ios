@@ -206,7 +206,10 @@ class BRDButton: UIControl {
 
     private func setupLabelOnly() {
         container.addSubview(label)
-        label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.small.rawValue, left: Margins.large.rawValue, bottom: -Margins.small.rawValue, right: -Margins.large.rawValue))
+        label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.small.rawValue,
+                                                       left: Margins.large.rawValue,
+                                                       bottom: -Margins.small.rawValue,
+                                                       right: -Margins.large.rawValue))
     }
     
     func setType(type: ButtonType) {

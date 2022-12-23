@@ -15,8 +15,8 @@ class ItemSelectionCoordinator: BuyCoordinator, ItemSelectionRoutes {
     }
     
     func showPaymentsActionSheet(okButtonTitle: String,
-                           cancelButtonTitle: String,
-                           handler: @escaping () -> Void) {
+                                 cancelButtonTitle: String,
+                                 handler: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: okButtonTitle, style: .destructive, handler: { _ in
             handler()

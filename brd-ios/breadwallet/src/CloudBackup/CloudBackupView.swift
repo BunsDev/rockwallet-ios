@@ -212,7 +212,9 @@ struct CloudBackupIcon: View {
     }
     
     var body: some View {
-        LinearGradient(gradient: Gradient(colors: [Color(LightColors.primary), Color(LightColors.primary.withAlphaComponent(0.5))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+        LinearGradient(gradient: Gradient(colors: [Color(LightColors.primary), Color(LightColors.primary.withAlphaComponent(0.5))]),
+                       startPoint: .topLeading,
+                       endPoint: .bottomTrailing)
             .mask(Image(systemName: style.rawValue)
                 .resizable()
                 .scaledToFit()

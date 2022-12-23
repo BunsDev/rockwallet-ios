@@ -10,8 +10,8 @@ import UIKit
 import LocalAuthentication
 
 class ConfirmationViewController: UIViewController, ContentBoxPresenter {
-    init(amount: Amount, fee: Amount, displayFeeLevel: FeeLevel, address: String, currency: Currency,
-         resolvedAddress: ResolvedAddress? = nil, shouldShowMaskView: Bool, isStake: Bool = false) {
+    init(amount: Amount, fee: Amount, displayFeeLevel: FeeLevel, address: String, currency: Currency, resolvedAddress: ResolvedAddress? = nil,
+         shouldShowMaskView: Bool, isStake: Bool = false) {
         self.amount = amount
         self.feeAmount = fee
         self.displayFeeLevel = displayFeeLevel

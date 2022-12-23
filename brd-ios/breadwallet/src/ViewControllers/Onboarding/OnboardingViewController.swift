@@ -22,8 +22,6 @@ struct OnboardingPage {
     var subheading: String
 }
 
-// swiftlint:disable type_body_length
-
 /**
 *  Takes the user through a sequence of onboarding screens (product walkthrough)
 *  and allows the user to either create a new wallet or restore an existing wallet.
