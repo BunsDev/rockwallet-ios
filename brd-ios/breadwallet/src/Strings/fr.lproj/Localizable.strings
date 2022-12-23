@@ -74,7 +74,7 @@
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ par %2$@";
 
-/* Get full access for the RockWallet wallet label on profile screen */
+/* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Accédez à l'intégralité de votre portefeuille RockWallet !";
 
 /* ID Verification title on account screen */
@@ -2999,7 +2999,7 @@
 "UpdatePin.TwoAttempts" = "Deux tentatives restantes.";
 
 /* Update pin popup explanation when pressing "?" button */
-"UpdatePin.UpdatePinPopup" = "L'application RockWallet Wallet vous demande de définir un code PIN pour sécuriser votre portefeuille. Il doit être différent du mot de passe de votre appareil.  \n\nVous devrez saisir le code PIN pour consulter votre solde ou envoyer de l'argent, afin de préserver la confidentialité de votre portefeuille, même si vous laissez quelqu'un utiliser votre téléphone ou si celui-ci est volé par une personne connaissant le code d'accès de votre appareil.\n            \nN'oubliez pas le code PIN de votre portefeuille ! Vous pouvez le réinitialiser uniquement à l'aide de votre phrase de récupération. Si vous oubliez votre code PIN et votre phrase de récupération, vous perdrez votre portefeuille.";
+"UpdatePin.UpdatePinPopup" = "L'application RockWallet vous demande de définir un code PIN pour sécuriser votre portefeuille. Il doit être différent du mot de passe de votre appareil.  \n\nVous devrez saisir le code PIN pour consulter votre solde ou envoyer de l'argent, afin de préserver la confidentialité de votre portefeuille, même si vous laissez quelqu'un utiliser votre téléphone ou si celui-ci est volé par une personne connaissant le code d'accès de votre appareil.\n            \nN'oubliez pas le code PIN de votre portefeuille ! Vous pouvez le réinitialiser uniquement à l'aide de votre phrase de récupération. Si vous oubliez votre code PIN et votre phrase de récupération, vous perdrez votre portefeuille.";
 
 /* Update PIN title */
 "UpdatePin.updateTitle" = "Mettre à jour le code PIN";
