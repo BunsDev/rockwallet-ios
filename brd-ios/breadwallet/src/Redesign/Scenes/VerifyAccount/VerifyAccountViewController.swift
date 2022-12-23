@@ -13,10 +13,10 @@ class VerifyAccountViewController: BaseInfoViewController {
     override var imageName: String? {
         switch flow {
         case .swap:
-            return "il_setup"
+            return Asset.ilSetup.name
             
         case .buy:
-            return "verification"
+            return Asset.verification.name
             
         default:
             return ""
