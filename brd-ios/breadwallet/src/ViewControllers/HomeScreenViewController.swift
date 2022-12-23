@@ -204,7 +204,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         subHeaderView.constrain([
             subHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            subHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -(navigationController?.navigationBar.frame.height ?? 0) + Margins.extraHuge.rawValue),
+            subHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                               constant: -(navigationController?.navigationBar.frame.height ?? 0) + Margins.extraHuge.rawValue),
             subHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             subHeaderView.heightAnchor.constraint(equalToConstant: ViewSizes.Common.hugeCommon.rawValue) ])
         

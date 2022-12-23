@@ -25,7 +25,10 @@ class PhraseView: UIView {
 
     private func setupSubviews() {
         addSubview(label)
-        label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.small.rawValue, left: Margins.large.rawValue, bottom: -Margins.small.rawValue, right: -Margins.large.rawValue))
+        label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.small.rawValue,
+                                                       left: Margins.large.rawValue,
+                                                       bottom: -Margins.small.rawValue,
+                                                       right: -Margins.large.rawValue))
         label.textColor = .black
         label.text = phrase
         label.font = Fonts.Subtitle.one

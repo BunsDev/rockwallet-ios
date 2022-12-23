@@ -150,7 +150,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
             }
         }
 
-        buttonStack.isHidden = viewModel.buttons.count == 0
+        buttonStack.isHidden = viewModel.buttons.isEmpty
         
         stack.snp.updateConstraints { make in
             make.bottom.equalToSuperview().inset(viewModel.drawerBottomOffset)
