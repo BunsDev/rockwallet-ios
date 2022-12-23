@@ -27,7 +27,10 @@ class LightWeightAlert: UIView {
         background.contentView.addSubview(container)
         container.contentView.addSubview(label)
         container.constrain(toSuperviewEdges: nil)
-        label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.large.rawValue, left: Margins.large.rawValue, bottom: -Margins.large.rawValue, right: -Margins.large.rawValue))
+        label.constrain(toSuperviewEdges: UIEdgeInsets(top: Margins.large.rawValue,
+                                                       left: Margins.large.rawValue,
+                                                       bottom: -Margins.large.rawValue,
+                                                       right: -Margins.large.rawValue))
         layer.cornerRadius = 4.0
         layer.masksToBounds = true
     }

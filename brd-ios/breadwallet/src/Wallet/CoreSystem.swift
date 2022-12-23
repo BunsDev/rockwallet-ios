@@ -9,8 +9,9 @@
 import WalletKit
 import UIKit
 
-class CoreSystem: Subscriber {
-    
+// swiftlint:disable type_body_length
+
+class CoreSystem: Subscriber {    
     private var system: System?
     private let queue = DispatchQueue(label: (Bundle.main.bundleIdentifier ?? "") + ".CoreSystem", qos: .utility)
     private let listenerQueue = DispatchQueue(label: (Bundle.main.bundleIdentifier ?? "") + ".CoreSystem.listener", qos: .utility)
