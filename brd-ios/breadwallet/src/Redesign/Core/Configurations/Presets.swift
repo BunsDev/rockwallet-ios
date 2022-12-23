@@ -101,7 +101,8 @@ extension Presets {
                                                  selectedConfiguration: Presets.Background.Primary.selected,
                                                  disabledConfiguration: Presets.Background.Primary.disabled)
         
-        static var secondary = ButtonConfiguration(normalConfiguration: Presets.Background.Secondary.normal.withBorder(border: Presets.Border.normalButtonFullRadius),
+        static var secondary = ButtonConfiguration(normalConfiguration: Presets.Background.Secondary.normal
+            .withBorder(border: Presets.Border.normalButtonFullRadius),
                                                    selectedConfiguration: Presets.Background.Secondary.selected.withBorder(border: Presets.Border.selectedButtonFullRadius),
                                                    disabledConfiguration: Presets.Background.Secondary.disabled.withBorder(border: Presets.Border.disabledButtonFullRadius))
         
@@ -303,7 +304,10 @@ extension Presets {
         static var enabled = AssetConfiguration(topConfiguration: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.three),
                                                 bottomConfiguration: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two),
                                                 topRightConfiguration: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.three, textAlignment: .right),
-                                                bottomRightConfiguration: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right), imageSize: .large)
+                                                bottomRightConfiguration: .init(font: Fonts.Subtitle.two,
+                                                                                textColor: LightColors.Text.two,
+                                                                                textAlignment: .right),
+                                                imageSize: .large)
         
         static var disabled = AssetConfiguration(topConfiguration: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one.withAlphaComponent(0.5)),
                                                  bottomConfiguration: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two.withAlphaComponent(0.5)),

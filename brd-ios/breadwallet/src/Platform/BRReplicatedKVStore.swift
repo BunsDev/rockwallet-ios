@@ -350,12 +350,12 @@ open class BRReplicatedKVStore: NSObject {
         )
     }
     
-    /// Get the remote version for the key for the most recent local version of the key, if stored.
+    // Get the remote version for the key for the most recent local version of the key, if stored.
     // If local key doesn't exist, return 0
-//    func remoteVersion(key: String) throws -> UInt64 {
-
-////        return 0
-//    }
+    //func remoteVersion(key: String) throws -> UInt64 {
+    //    return 0
+    //}
+    
     func remoteVersion(_ key: String) throws -> Int { // this would be UInt64.. but it makes the compiler crash
         try checkKey(key)
         var ret: UInt64 = 0
