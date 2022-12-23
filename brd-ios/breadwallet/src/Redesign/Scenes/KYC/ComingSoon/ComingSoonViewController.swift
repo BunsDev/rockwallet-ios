@@ -16,7 +16,7 @@ extension Scenes {
 
 class ComingSoonViewController: BaseInfoViewController {
     
-    override var imageName: String? { return "time" }
+    override var imageName: String? { return Asset.time.name }
     override var titleText: String? { return L10n.ComingSoon.title }
     override var descriptionText: String? { return L10n.ComingSoon.body }
     
