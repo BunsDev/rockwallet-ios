@@ -235,7 +235,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         view.endEditing(true)
         
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
+            guard let selectedCard = selectedCard else { return }
             self?.interactor?.setAssets(viewAction: .init(card: selectedCard))
+        }, completion: { [weak self] in
+            self?.interactor?.getPaymentCards(viewAction: .init())
         })
     }
     

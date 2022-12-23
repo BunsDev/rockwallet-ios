@@ -20,10 +20,14 @@ phrase:
       params:
         file_format: strings
         include_unverified_translations: true
+        fallback_locale_id: en-US
+        include_empty_translations: true
         encoding: UTF-8
     - file: ./brd-ios/breadwalletWidget/<locale_code>.lproj/BreadwalletWidget.strings
       project_id: "fd548746242c61f1dbc394156c78b468"
       params:
         file_format: strings
         include_unverified_translations: true
+        fallback_locale_id: en-US
+        include_empty_translations: true
         encoding: UTF-8
