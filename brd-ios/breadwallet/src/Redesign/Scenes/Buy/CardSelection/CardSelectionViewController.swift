@@ -17,6 +17,13 @@ extension Scenes {
 class CardSelectionViewController: ItemSelectionViewController {
     override var sceneTitle: String? { return L10n.Buy.paymentMethod }
     override var isSearchEnabled: Bool { return false }
+    var paymentCardDeleted: (() -> Void)?
+    
+    override func dismissModal() {
+        coordinator?.dismissCardsSelectionFlow(completion: {
+            self.paymentCardDeleted?()
+        })
+    }
     
     override func setupSubviews() {
         super.setupSubviews()
