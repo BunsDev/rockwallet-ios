@@ -74,7 +74,7 @@
 /* $10000 per BTC */
 "Account.exchangeRate" = "%2$s 당 %1$s";
 
-/* Get full access for the RockWallet wallet label on profile screen */
+/* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Get full access to your RockWallet!";
 
 /* ID Verification title on account screen */

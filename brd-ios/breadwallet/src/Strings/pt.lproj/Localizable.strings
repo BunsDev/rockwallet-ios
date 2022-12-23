@@ -74,7 +74,7 @@
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ por %2$@";
 
-/* Get full access for the RockWallet wallet label on profile screen */
+/* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Get full access to your RockWallet!";
 
 /* ID Verification title on account screen */
@@ -3222,7 +3222,7 @@
 "WipeWallet.startMessage" = "Elimine a ligação à sua carteira, a fim de a remover deste dispositivo. Assim que a ligação à carteira tiver sido eliminada, pode iniciar uma nova carteira ou recuperar outra carteira neste dispositivo.";
 
 /* Start wipe wallet view warning */
-"WipeWallet.startWarning" = "Não poderá mais aceder à sua RockWallet wallet a partir deste dispositivo. O saldo permanecerá na frase.";
+"WipeWallet.startWarning" = "Não poderá mais aceder à sua RockWallet a partir deste dispositivo. O saldo permanecerá na frase.";
 
 /* Unlink this wallet from this device. */
 "WipeWallet.title" = "Eliminar a ligação à carteira";
