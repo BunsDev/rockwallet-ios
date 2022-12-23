@@ -154,7 +154,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         guard let toAmount = item.to,
               let quote = item.quote,
               let isAchAccount = item.isAchAccount else {
-            return .init(amount: .init(title: .text(""), value: .text("")), cardFee: .init(title: .text(""), value: .text("")), networkFee: .init(title: .text(""), value: .text("")), totalCost: .init(title: .text(""), value: .text("")))
+            return .init(amount: .init(title: .text(""), value: .text("")), cardFee: .init(title: .text(""), value: .text("")),
+                         networkFee: .init(title: .text(""), value: .text("")), totalCost: .init(title: .text(""), value: .text("")))
         }
         
         let to = toAmount.fiatValue
