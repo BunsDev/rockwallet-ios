@@ -113,7 +113,8 @@ class ReceiveViewController: UIViewController, Subscriber {
             border.constraint(.centerX, toView: view),
             border.constraint(.height, constant: 1.0) ])
         requestTop = request.constraint(toBottom: border, constant: Margins.huge.rawValue)
-        requestBottom = request.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: E.isIPhoneX ? -Margins.custom(5) : -Margins.large.rawValue)
+        requestBottom = request.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                        constant: E.isIPhoneX ? -Margins.custom(5) : -Margins.large.rawValue)
         request.constrain([
             requestTop,
             request.constraint(.leading, toView: view, constant: Margins.large.rawValue),
