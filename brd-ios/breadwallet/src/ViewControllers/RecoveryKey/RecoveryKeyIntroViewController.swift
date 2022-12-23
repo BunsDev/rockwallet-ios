@@ -114,17 +114,17 @@ class RecoveryKeyIntroViewController: BaseRecoveryKeyViewController {
         case .generateKey:
             return RecoveryKeyIntroPage(title: L10n.RecoveryKeyFlow.generateKeyTitle,
                                         subTitle: L10n.RecoveryKeyFlow.generateKeyExplanation,
-                                        imageName: "il_shield",
+                                        imageName: Asset.ilShield.name,
                                         continueButtonText: L10n.Onboarding.next)
         case .writeKey:
             return RecoveryKeyIntroPage(title: L10n.RecoveryKeyFlow.writeKeyAgain,
                                         subTitle: UserDefaults.writePaperPhraseDateString,
-                                        imageName: "il_setup",
+                                        imageName: Asset.ilSetup.name,
                                         continueButtonText: L10n.Onboarding.next)
         case .unlinkWallet:
             return RecoveryKeyIntroPage(title: L10n.RecoveryKeyFlow.unlinkWallet,
                                         subTitle: L10n.RecoveryKeyFlow.unlinkWalletSubtext,
-                                        imageName: "il_security",
+                                        imageName: Asset.ilSecurity.name,
                                         continueButtonText: L10n.Swap.gotItButton)
         }
     }
