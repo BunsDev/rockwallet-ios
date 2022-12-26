@@ -93,7 +93,9 @@ class BaseCoordinator: NSObject,
                 guard showPopup else { return }
                 
                 if UserManager.shared.profile?.canSwap == false {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon)
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .buyCard
+                    }
                     return
                 }
 
@@ -113,6 +115,14 @@ class BaseCoordinator: NSObject,
                 guard showPopup else { return }
                 
                 if UserManager.shared.profile?.canBuy == false {
+                    var reason: Reason? = type == .buyCard ? .buyCard : .buyAch
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = reason
+                    }
+                    return
+                }
+                
+                if UserManager.shared.profile?.canUseAch == false, type == .buyAch {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon)
                     return
                 }
