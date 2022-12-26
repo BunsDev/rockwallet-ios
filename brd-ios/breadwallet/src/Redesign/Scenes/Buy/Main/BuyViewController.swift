@@ -125,8 +125,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                     self?.interactor?.navigateAssetSelector(viewAction: .init())
                 }
             }
-            
-            view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
         }
         
         return cell
@@ -152,8 +150,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                     self?.interactor?.getPaymentCards(viewAction: .init())
                 }
             }
-            
-            view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
         }
         
         return cell
