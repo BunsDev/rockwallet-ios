@@ -343,15 +343,15 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
         let image: String
         switch viewModel.status {
         case .none, .email:
-            image = "selected_gray"
+            image = Asset.selectedGray.name
             statusView.isHidden = true
             
         case .levelTwo(.declined),
                 .levelTwo(.resubmit):
-            image = "errorIcon"
+            image = Asset.errorIcon.name
             
         default:
-            image = "selected"
+            image = Asset.selected.name
         }
         
         statusImageView.wrappedView.setup(with: .init(.imageName(image)))
