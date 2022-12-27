@@ -402,11 +402,18 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func commotTapAction() {
-        drawer.hide()
+        guard drawer.isShown else { return }
+        
+        animationView.play(fromProgress: 1, toProgress: 0)
+        drawer.toggle()
     }
     
     @objc private func buy() {
-        drawer.isShown ? animationView.play(fromProgress: 1, toProgress: 0) : animationView.play()
+        if drawer.isShown {
+            animationView.play(fromProgress: 1, toProgress: 0)
+        } else {
+            animationView.play()
+        }
         drawer.toggle()
     }
     
