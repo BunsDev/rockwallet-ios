@@ -197,6 +197,10 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
     }
     
     func toggle() {
-        blurView.alpha == 0 ? show() : hide()
+        guard blurView.alpha == 0 else {
+            return hide()
+        }
+        
+        show()
     }
 }

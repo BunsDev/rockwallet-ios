@@ -389,6 +389,7 @@
 		7EA2BC93295AE7B10063AC0E /* AchPaymentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A78E294735C40012FB3F /* AchPaymentModels.swift */; };
 		7EA2BC94295AE7E30063AC0E /* SellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3E293F6AE50058019B /* SellStore.swift */; };
 		7EA2BC95295AE7F90063AC0E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F12941D6C700A7FF26 /* Animations.swift */; };
+		7EA2BC96295AEAD00063AC0E /* arrowToX.json in Resources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */; };
 		7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */; };
 		7EB838462849D49A00C7CC05 /* ScrollableButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */; };
 		7EB838482849DD8200C7CC05 /* FELink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838472849DD8200C7CC05 /* FELink.swift */; };
@@ -3608,6 +3609,7 @@
 				75A2A79E1DA5934300A983D8 /* LaunchScreen.storyboard in Resources */,
 				7EF36C062829893700BB43A7 /* theme.plist in Resources */,
 				7BDB49F32806EB4C0031F015 /* AssetBundles.plist in Resources */,
+				7EA2BC96295AEAD00063AC0E /* arrowToX.json in Resources */,
 				222319B21F279B3C00008F20 /* POSTBouncer.html in Resources */,
 				7B519A932835B506007AC80A /* currencies.json in Resources */,
 				7BB3B7E429558EA2006FF250 /* SofiaPro-Bold.otf in Resources */,
