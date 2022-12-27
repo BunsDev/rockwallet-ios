@@ -94,7 +94,7 @@ class BaseCoordinator: NSObject,
                 
                 if UserManager.shared.profile?.canSwap == false {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .buyCard
+                        vc?.reason = .swapAndBuyCard
                     }
                     return
                 }
@@ -114,16 +114,17 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.canBuy == false {
-                    var reason: Reason? = type == .buyCard ? .buyCard : .buyAch
+                if UserManager.shared.profile?.canBuy == false, type == .buyCard {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = reason
+                        vc?.reason = .swapAndBuyCard
                     }
                     return
                 }
                 
                 if UserManager.shared.profile?.canUseAch == false, type == .buyAch {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon)
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .buyAch
+                    }
                     return
                 }
                 
@@ -142,8 +143,10 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.canBuy == false {
-                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon)
+                if UserManager.shared.profile?.canUseAch == false {
+                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .sell
+                    }
                     return
                 }
                 

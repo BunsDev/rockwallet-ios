@@ -11,7 +11,7 @@
 import UIKit
 
 enum Reason: SimpleMessage {
-    case buyCard
+    case swapAndBuyCard
     case buyAch
     case sell
     
@@ -21,7 +21,7 @@ enum Reason: SimpleMessage {
     
     var title: String {
         switch self {
-        case .buyCard:
+        case .swapAndBuyCard:
             return L10n.ComingSoon.title
             
         case .buyAch, .sell:
@@ -31,7 +31,7 @@ enum Reason: SimpleMessage {
     
     var description: String {
         switch self {
-        case .buyCard:
+        case .swapAndBuyCard:
             return L10n.ComingSoon.body
             
         case .buyAch:
@@ -44,7 +44,7 @@ enum Reason: SimpleMessage {
     
     var firstButtonTitle: String? {
         switch self {
-        case .buyCard, .sell:
+        case .swapAndBuyCard, .sell:
             return L10n.Swap.backToHome
             
         case .buyAch:
@@ -54,7 +54,7 @@ enum Reason: SimpleMessage {
     
     var secondButtonTitle: String? {
         switch self {
-        case .buyCard:
+        case .swapAndBuyCard:
             return L10n.UpdatePin.contactSupport
             
         case .buyAch:
@@ -83,14 +83,14 @@ class ComingSoonViewController: BaseInfoViewController {
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: reason?.firstButtonTitle, callback: { [weak self] in
-                if self?.reason == .buyCard || self?.reason == .sell {
+                if self?.reason == .swapAndBuyCard || self?.reason == .sell {
                     self?.coordinator?.dismissFlow()
                 } else if self?.reason == .buyAch {
                     self?.coordinator?.showBuy()
                 }
             }),
             .init(title: reason?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
-                if self?.reason == .buyCard {
+                if self?.reason == .swapAndBuyCard {
                     self?.coordinator?.showSupport()
                 } else if self?.reason == .buyAch {
                     self?.coordinator?.dismissFlow()
