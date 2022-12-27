@@ -16,7 +16,7 @@ enum Reason: SimpleMessage {
     case sell
     
     var iconName: String {
-        return "time"
+        return Asset.time.name
     }
     
     var title: String {
@@ -25,7 +25,7 @@ enum Reason: SimpleMessage {
             return L10n.ComingSoon.title
             
         case .buyAch, .sell:
-            return "Sorry! This feature is unavailable"
+            return L10n.Buy.Ach.notAvailableTitle
         }
     }
     
@@ -35,10 +35,10 @@ enum Reason: SimpleMessage {
             return L10n.ComingSoon.body
             
         case .buyAch:
-            return "Fund with ACH isn’t available in your region. We'll notify you when this feature is released. You can still buy digital assets with a debit/credit card."
+            return L10n.Buy.Ach.notAvailableBody
             
         case .sell:
-            return "Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets."
+            return L10n.Sell.notAvailableBody
         }
     }
     
@@ -48,7 +48,7 @@ enum Reason: SimpleMessage {
             return L10n.Swap.backToHome
             
         case .buyAch:
-            return "Buy with card"
+            return L10n.Buy.buyWithCardButton
         }
     }
     
