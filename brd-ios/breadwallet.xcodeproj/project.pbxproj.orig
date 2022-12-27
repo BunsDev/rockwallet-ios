@@ -349,6 +349,7 @@
 		7E5CB3B42835090E00EC787E /* FEButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB37B2835090E00EC787E /* FEButton.swift */; };
 		7E6729282923A28100A2B612 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6729272923A28100A2B612 /* ComingSoonViewController.swift */; };
 		7E67680328479765007EC155 /* ResendConfirmationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67680228479765007EC155 /* ResendConfirmationWorker.swift */; };
+		7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A78E294735C40012FB3F /* AchPaymentModels.swift */; };
 		7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */; };
 		7E75AD492943297E00E54DEF /* ExchangeRateModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD482943297E00E54DEF /* ExchangeRateModels.swift */; };
 		7E75AD4B2943298900E54DEF /* ExchangeRateVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD4A2943298900E54DEF /* ExchangeRateVIP.swift */; };
@@ -371,6 +372,7 @@
 		7E8E97A2283F78B0008606B0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E97A1283F78B0008606B0 /* ProfileView.swift */; };
 		7E8E97A5283F9804008606B0 /* FEPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E97A4283F9803008606B0 /* FEPopupView.swift */; };
 		7E8F7E44293F6AE50058019B /* SellCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3D293F6AE50058019B /* SellCoordinator.swift */; };
+		7E8F7E45293F6AE50058019B /* SellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3E293F6AE50058019B /* SellStore.swift */; };
 		7E8F7E46293F6AE50058019B /* SellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3F293F6AE50058019B /* SellPresenter.swift */; };
 		7E8F7E47293F6AE50058019B /* SellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E40293F6AE50058019B /* SellModels.swift */; };
 		7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E41293F6AE50058019B /* SellVIP.swift */; };
@@ -386,9 +388,8 @@
 		7E9B13FE2857404600BD9EF5 /* DocumentReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F72857404600BD9EF5 /* DocumentReviewViewController.swift */; };
 		7E9B13FF2857404600BD9EF5 /* DocumentReviewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F82857404600BD9EF5 /* DocumentReviewInteractor.swift */; };
 		7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */; };
-		7EA2BC93295AE7B10063AC0E /* AchPaymentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A78E294735C40012FB3F /* AchPaymentModels.swift */; };
-		7EA2BC94295AE7E30063AC0E /* SellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E3E293F6AE50058019B /* SellStore.swift */; };
-		7EA2BC95295AE7F90063AC0E /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F12941D6C700A7FF26 /* Animations.swift */; };
+		7EAFC5F22941D6C700A7FF26 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F12941D6C700A7FF26 /* Animations.swift */; };
+		7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */; };
 		7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */; };
 		7EB838462849D49A00C7CC05 /* ScrollableButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */; };
 		7EB838482849DD8200C7CC05 /* FELink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838472849DD8200C7CC05 /* FELink.swift */; };
@@ -3610,7 +3611,13 @@
 				7BDB49F32806EB4C0031F015 /* AssetBundles.plist in Resources */,
 				222319B21F279B3C00008F20 /* POSTBouncer.html in Resources */,
 				7B519A932835B506007AC80A /* currencies.json in Resources */,
+<<<<<<< HEAD
+				7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */,
 				7BB3B7E429558EA2006FF250 /* SofiaPro-Bold.otf in Resources */,
+				C47BD50A282E427300FAA903 /* Roboto-Regular.otf in Resources */,
+=======
+				7BB3B7E429558EA2006FF250 /* SofiaPro-Bold.otf in Resources */,
+>>>>>>> main
 				CE473D7C1F042F1E00C0ACFD /* coinflip.aiff in Resources */,
 				CE5E6C9A1EB9135000A476DB /* Icon.xcassets in Resources */,
 				71014F7C2327E49400DA1373 /* fiat_currencies.json in Resources */,
@@ -3798,6 +3805,11 @@
 				7ECCA98F2873059300F99368 /* ExchangeEndpoints.swift in Sources */,
 				7E5CB38B2835090E00EC787E /* Shadable.swift in Sources */,
 				3A36328D225301D60043EBA4 /* PriceChangeView.swift in Sources */,
+<<<<<<< HEAD
+				7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */,
+				7EAFC5F22941D6C700A7FF26 /* Animations.swift in Sources */,
+=======
+>>>>>>> main
 				7BB3B7DC29558D97006FF250 /* Float+Extensions.swift in Sources */,
 				7C5AC8A6203B93D3001B221E /* TxListCell.swift in Sources */,
 				7EBC6B0A2848ABC5000A301F /* RegistrationConfirmationViewController.swift in Sources */,
@@ -3815,6 +3827,11 @@
 				7BDB4A092806F4A60031F015 /* HistoryFetcher.swift in Sources */,
 				7E0968B8284A29CE006B4FC2 /* TransparentView.swift in Sources */,
 				3A611A0F2325738C004B8E36 /* AnimatedBlockSetLogo.swift in Sources */,
+<<<<<<< HEAD
+				7E8F7E45293F6AE50058019B /* SellStore.swift in Sources */,
+				7B67709029054A89006FB72A /* Circle.swift in Sources */,
+=======
+>>>>>>> main
 				71C44E92225F95B100EF4459 /* RecoveryKeyCompleteViewController.swift in Sources */,
 				7EB8FD262897D212000FF75C /* BuyViewController.swift in Sources */,
 				7BBBF4DF287421CF00E4D36B /* SwapStore.swift in Sources */,
@@ -3920,7 +3937,6 @@
 				CE124D001E69170900DFA146 /* SyncingView.swift in Sources */,
 				7EB8FD272897D212000FF75C /* BuyInteractor.swift in Sources */,
 				CE20C90E1DBE52B000C8397A /* UIView+Extensions.swift in Sources */,
-				7EA2BC95295AE7F90063AC0E /* Animations.swift in Sources */,
 				7B992F2529279598008C2174 /* Assets.swift in Sources */,
 				7C424A6E20FD34F20064557E /* NotificationHandler.swift in Sources */,
 				7B54E5B727F4A2B1002DD1E4 /* RoundedView.swift in Sources */,
@@ -4096,7 +4112,6 @@
 				7ED427F128755CB200AA19A8 /* ExchangeDetailsModels.swift in Sources */,
 				C491ABFD28A6395D00E79954 /* OrderPreviewInteractor.swift in Sources */,
 				7EB8FD232897D212000FF75C /* BuyPresenter.swift in Sources */,
-				7EA2BC93295AE7B10063AC0E /* AchPaymentModels.swift in Sources */,
 				7EF45F91284777AC00D1F7B0 /* RegistrationConfirmationWorker.swift in Sources */,
 				CEEE92F11EBA7CBA00B7AC9C /* RequestAmountViewController.swift in Sources */,
 				7B94343B2886DAF000638703 /* DeleteProfileInfoCoordinator.swift in Sources */,
@@ -4276,7 +4291,6 @@
 				CE6DCC271E6108D50044257B /* EnterPhraseCell.swift in Sources */,
 				7B2E5054289A5F02008CACD8 /* AddCardInteractor.swift in Sources */,
 				CE760EDD1E561DF900EFAC2B /* UpdatePinViewController.swift in Sources */,
-				7EA2BC94295AE7E30063AC0E /* SellStore.swift in Sources */,
 				22A9A9481DF61945000F0016 /* BRBitID.swift in Sources */,
 				CE0BC980215ACBE100E68B2B /* TokenImageNoBackground.swift in Sources */,
 				7C0F3DC42124A81100531E54 /* Backend.swift in Sources */,
