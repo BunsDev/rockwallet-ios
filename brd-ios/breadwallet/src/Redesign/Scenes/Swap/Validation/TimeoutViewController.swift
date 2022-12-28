@@ -15,7 +15,7 @@ extension Scenes {
 }
 
 class TimeoutViewController: BaseInfoViewController {
-    override var imageName: String? { return "timeoutStatusIcon" }
+    override var imageName: String? { return Asset.timeoutStatusIcon.name }
     override var titleText: String? { return L10n.PaymentConfirmation.paymentTimeout }
     override var descriptionText: String? { return L10n.PaymentConfirmation.paymentExpired }
     override var buttonViewModels: [ButtonViewModel] {
