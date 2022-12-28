@@ -114,8 +114,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         guard timer?.isValid != true else { return }
         
         // start the timer
-//        timer = Timer.scheduledTimer(timeInterval: 15,
-        timer = Timer.scheduledTimer(timeInterval: 120,
+        timer = Timer.scheduledTimer(timeInterval: 15,
                                      target: self,
                                      selector: #selector(updateFees),
                                      userInfo: nil,
@@ -282,7 +281,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             self?.isSendingMax = true
             
             if max.currency.network.name == Currencies.shared.eth?.name {
-                let adjustTokenVal = max.tokenValue * 0.05
+                let adjustTokenVal = max.tokenValue * 0.15
                 let adjustAmount = Amount(tokenString: "\(adjustTokenVal)", currency: max.currency)
                 max = max - adjustAmount
                 self?.amountView.forceUpdateAmount(amount: max)
@@ -317,8 +316,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         guard let amount = amount else { return }
         guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
-        print("updateFeesMax Amount: \(amount.description)")
-        
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -331,8 +328,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                         return
                     }
                     let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
-                    
-                    print("updateFeesMax fee: \(fee.description)")
                     
                     var value = amount
                     if amount.currency == fee.currency {
