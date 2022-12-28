@@ -38,20 +38,20 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                                      card: self?.dataStore?.selected,
                                                                      type: self?.dataStore?.paymentMethod,
                                                                      quote: self?.dataStore?.quote))
-                self?.getAch(viewAction: .init())
+                self?.getPayments(viewAction: .init())
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
             }
         }
     }
     
-    func getPaymentCards(viewAction: BuyModels.PaymentCards.ViewAction) {
-        presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
-    }
-    
-    func didGetAch(viewAction: AchPaymentModels.Get.ViewAction) {
-        dataStore?.selected = dataStore?.paymentMethod == .buyAch ? dataStore?.ach : dataStore?.cards.first
-        setAssets(viewAction: .init(card: dataStore?.selected))
+    func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
+        if viewAction.openCards == true {
+            presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
+        } else {
+            dataStore?.selected = dataStore?.paymentMethod == .buyAch ? dataStore?.ach : dataStore?.cards.first
+            setAssets(viewAction: .init(card: dataStore?.selected))
+        }
     }
     
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
