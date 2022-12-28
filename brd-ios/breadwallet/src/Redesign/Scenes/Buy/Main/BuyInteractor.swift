@@ -46,7 +46,21 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func getPaymentCards(viewAction: BuyModels.PaymentCards.ViewAction) {
-        presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
+        fetchCards { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success:
+                if viewAction.getCards == true {
+                    self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self.dataStore?.cards ?? []))
+                } else {
+                    self.didGetAch(viewAction: .init())
+                }
+                
+            case .failure(let error):
+                self.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
+            }
+        }
     }
     
     func didGetAch(viewAction: AchPaymentModels.Get.ViewAction) {
@@ -178,5 +192,24 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                        card: dataStore?.selected,
                                                        type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote))
+    }
+    
+    private func fetchCards(completion: ((Result<[PaymentCard]?, Error>) -> Void)?) {
+        PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
+            switch result {
+            case .success(let data):
+                
+                if self?.dataStore?.autoSelectDefaultPaymentMethod == true {
+                    self?.dataStore?.ach = data?.first(where: { $0.type == .buyAch })
+                    self?.dataStore?.cards = data?.filter {$0.type == .buyCard } ?? []
+                }
+                self?.dataStore?.autoSelectDefaultPaymentMethod = true
+                
+            default:
+                break
+            }
+            
+            completion?(result)
+        }
     }
 }

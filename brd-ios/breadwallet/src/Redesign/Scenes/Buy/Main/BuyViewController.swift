@@ -147,7 +147,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 case .buyAch:
                     self?.interactor?.getPlaidToken(viewAction: .init())
                 default:
-                    self?.interactor?.getPaymentCards(viewAction: .init())
+                    self?.interactor?.getPaymentCards(viewAction: .init(getCards: true))
                 }
             }
         }

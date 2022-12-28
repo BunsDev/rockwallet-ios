@@ -27,7 +27,7 @@ enum FailureReason: SimpleMessage {
     case sell
     
     var iconName: String {
-        return "error"
+        return Asset.error.name
     }
     
     var title: String {
