@@ -285,10 +285,24 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     func setupDrawer() {
-        drawer.callbacks = [ { [weak self] in self?.didTapBuy?(.buyCard) }, { [weak self] in self?.didTapBuy?(.buyAch) }, { [weak self] in self?.didTapSell?() }
-        ]
+        drawer.callbacks = [ { [weak self] in
+            self?.didTapDrawerButton(.buyCard)
+        }, { [weak self] in
+            self?.didTapDrawerButton(.buyAch)
+        }, { [weak self]
+            in self?.didTapDrawerButton()
+        }]
         drawer.configure(with: DrawerConfiguration())
         drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84))
+    }
+    
+    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+        if let type = type {
+            didTapBuy?(type)
+        } else {
+            didTapSell?()
+        }
+        animationView.play(fromProgress: 1, toProgress: 0)
     }
     
     private func setupToolbar() {

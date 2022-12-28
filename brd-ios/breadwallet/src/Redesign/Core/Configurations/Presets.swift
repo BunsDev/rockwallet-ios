@@ -103,8 +103,10 @@ extension Presets {
         
         static var secondary = ButtonConfiguration(normalConfiguration: Presets.Background.Secondary.normal
             .withBorder(border: Presets.Border.normalButtonFullRadius),
-                                                   selectedConfiguration: Presets.Background.Secondary.selected.withBorder(border: Presets.Border.selectedButtonFullRadius),
-                                                   disabledConfiguration: Presets.Background.Secondary.disabled.withBorder(border: Presets.Border.disabledButtonFullRadius))
+                                                   selectedConfiguration: Presets.Background.Secondary.selected
+            .withBorder(border: Presets.Border.selectedButtonFullRadius),
+                                                   disabledConfiguration: Presets.Background.Secondary.disabled
+            .withBorder(border: Presets.Border.disabledButtonFullRadius))
         
         static var noBorders = ButtonConfiguration(normalConfiguration: BackgroundConfiguration(tintColor: LightColors.secondary),
                                                    selectedConfiguration: Presets.Background.Secondary.selected,

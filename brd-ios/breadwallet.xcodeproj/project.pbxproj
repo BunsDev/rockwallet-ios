@@ -458,6 +458,7 @@
 		7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */; };
 		7ED83AFD284F418E00261565 /* KYCDocumentWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83AFC284F418E00261565 /* KYCDocumentWorker.swift */; };
 		7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDB82528C8684900C287CB /* Amount+Init.swift */; };
+		7EE62495295C141D00FC19CC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE62494295C141D00FC19CC /* main.swift */; };
 		7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE76FC12857648F00724548 /* NewDeviceWorker.swift */; };
 		7EEBAE8A28E7099400686CA3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEBAE8928E7099400686CA3 /* SnapKit */; };
 		7EF2188028630E2F006ABCC1 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2187F28630E2F006ABCC1 /* UserManager.swift */; };
@@ -690,7 +691,6 @@
 		CECCE5B01E04AD7600D99448 /* DescriptionSendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5AF1E04AD7600D99448 /* DescriptionSendCell.swift */; };
 		CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5B11E04B00D00D99448 /* SendCell.swift */; };
 		CED341331EF5A5C00014912A /* InAppAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED341321EF5A5C00014912A /* InAppAlert.swift */; };
-		CED82D4E1E575A5500507A9B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED82D4D1E575A5500507A9B /* main.swift */; };
 		CEDB09331FEAA21C001AF56A /* TxDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB09321FEAA21C001AF56A /* TxDetailViewModel.swift */; };
 		CEDB0B0522D4354C00331FFC /* LineLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB0B0422D4354C00331FFC /* LineLoadingView.swift */; };
 		CEDB0B0722D445DB00331FFC /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB0B0622D445DB00331FFC /* ChartView.swift */; };
@@ -1248,6 +1248,7 @@
 		7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckListInteractor.swift; sourceTree = "<group>"; };
 		7ED83AFC284F418E00261565 /* KYCDocumentWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCDocumentWorker.swift; sourceTree = "<group>"; };
 		7EDDB82528C8684900C287CB /* Amount+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amount+Init.swift"; sourceTree = "<group>"; };
+		7EE62494295C141D00FC19CC /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = src/main.swift; sourceTree = "<group>"; };
 		7EE76FC12857648F00724548 /* NewDeviceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceWorker.swift; sourceTree = "<group>"; };
 		7EF2187F28630E2F006ABCC1 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		7EF2998827E3B8C400A2238A /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiClient.swift; path = CoinGecko/ApiClient.swift; sourceTree = "<group>"; };
@@ -1459,7 +1460,6 @@
 		CECCE5AF1E04AD7600D99448 /* DescriptionSendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DescriptionSendCell.swift; path = src/Views/SendViewCells/DescriptionSendCell.swift; sourceTree = "<group>"; };
 		CECCE5B11E04B00D00D99448 /* SendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SendCell.swift; path = src/Views/SendViewCells/SendCell.swift; sourceTree = "<group>"; };
 		CED341321EF5A5C00014912A /* InAppAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppAlert.swift; path = src/Views/InAppAlert.swift; sourceTree = "<group>"; };
-		CED82D4D1E575A5500507A9B /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = src/main.swift; sourceTree = "<group>"; };
 		CEDB09321FEAA21C001AF56A /* TxDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxDetailViewModel.swift; sourceTree = "<group>"; };
 		CEDB0B0422D4354C00331FFC /* LineLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LineLoadingView.swift; path = src/Views/Charts/LineLoadingView.swift; sourceTree = "<group>"; };
 		CEDB0B0622D445DB00331FFC /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartView.swift; path = src/Views/Charts/ChartView.swift; sourceTree = "<group>"; };
@@ -1795,6 +1795,7 @@
 		75A2A7921DA5934300A983D8 /* breadwallet */ = {
 			isa = PBXGroup;
 			children = (
+				7EE62494295C141D00FC19CC /* main.swift */,
 				7E5CB32E2835090D00EC787E /* Redesign */,
 				7EF2998727E3B8AA00A2238A /* CoinGecko */,
 				3A4972C32602E0D10002C3EC /* Cosmos */,
@@ -1802,7 +1803,6 @@
 				CE20C8F11DBAF71500C8397A /* ApplicationController.swift */,
 				7C0F3DC32124A81100531E54 /* Backend.swift */,
 				754AE0BB1DFE8A46007FD001 /* SecureAllocator.swift */,
-				CED82D4D1E575A5500507A9B /* main.swift */,
 				7C424A6D20FD34F20064557E /* NotificationHandler.swift */,
 				7C0A3ACD210A0E1D006C2783 /* NotificationAuthorizer.swift */,
 				CEC6F8441E886723000795B8 /* PaymentRequest.swift */,
@@ -3928,6 +3928,7 @@
 				7B54E5B727F4A2B1002DD1E4 /* RoundedView.swift in Sources */,
 				7E5CB3862835090E00EC787E /* ShadowConfiguration.swift in Sources */,
 				7C35E719200AF3940064808F /* TxListViewModel.swift in Sources */,
+				7EE62495295C141D00FC19CC /* main.swift in Sources */,
 				7E2E1A41284E267000E56E69 /* ProfileWorker.swift in Sources */,
 				CE6314831E08E5BB00D4AFE0 /* UIView+InitAdditions.swift in Sources */,
 				CEC6AA401DEFC87300EE5AFD /* SendViewController.swift in Sources */,
@@ -4016,7 +4017,6 @@
 				7EB8FD242897D212000FF75C /* BuyModels.swift in Sources */,
 				7ED83AEA284F384F00261565 /* KYCDocumentPickerModels.swift in Sources */,
 				CE27F9591E2C8EA300F7F7F2 /* Amount.swift in Sources */,
-				CED82D4E1E575A5500507A9B /* main.swift in Sources */,
 				7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */,
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,

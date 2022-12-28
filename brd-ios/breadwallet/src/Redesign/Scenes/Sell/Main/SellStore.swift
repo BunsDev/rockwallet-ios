@@ -52,7 +52,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     // MARK: - Aditional helpers
     var isFormValid: Bool {
-        // TODO: do not merge
+        // TODO: remove after BE is ready
         return true
         guard let amount = toAmount,
               amount > 0,
