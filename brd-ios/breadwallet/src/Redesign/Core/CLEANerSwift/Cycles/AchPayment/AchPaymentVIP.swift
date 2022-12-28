@@ -1,4 +1,4 @@
-// 
+//
 //  AchPaymentVIP.swift
 //  breadwallet
 //
