@@ -21,8 +21,8 @@ enum ImageViewModel: ViewModel {
 class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
     
     override var contentMode: UIView.ContentMode {
-        set { imageView.contentMode = newValue }
         get { return imageView.contentMode }
+        set { imageView.contentMode = newValue }
     }
     
     // MARK: Lazy UI
