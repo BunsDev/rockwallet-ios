@@ -23,7 +23,6 @@
 
 /* Begin PBXBuildFile section */
 		1B1AFFA01FB7EF7C00E61908 /* BiometricsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */; };
-		222319B21F279B3C00008F20 /* POSTBouncer.html in Resources */ = {isa = PBXBuildFile; fileRef = 222319B11F279B3C00008F20 /* POSTBouncer.html */; };
 		222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */; };
 		223DB2191DF691260076A151 /* BRSocketHelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 223DB2171DF691260076A151 /* BRSocketHelpers.c */; };
 		223DB21B1DF69F0F0076A151 /* libbz2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A9A9961DF63426000F0016 /* libbz2.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -809,7 +808,6 @@
 
 /* Begin PBXFileReference section */
 		1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BiometricsSettingsViewController.swift; path = src/ViewControllers/BiometricsSettingsViewController.swift; sourceTree = "<group>"; };
-		222319B11F279B3C00008F20 /* POSTBouncer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = POSTBouncer.html; path = src/Platform/POSTBouncer.html; sourceTree = "<group>"; };
 		222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+KV.swift"; path = "src/Platform/BRAPIClient+KV.swift"; sourceTree = "<group>"; };
 		223DB2171DF691260076A151 /* BRSocketHelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BRSocketHelpers.c; path = src/Platform/BRSocketHelpers.c; sourceTree = "<group>"; };
 		223DB2181DF691260076A151 /* BRSocketHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BRSocketHelpers.h; path = src/Platform/BRSocketHelpers.h; sourceTree = "<group>"; };
@@ -1570,7 +1568,6 @@
 				7CB593E022F8C8FE005A230A /* AuthenticationClient.swift */,
 				223DB2171DF691260076A151 /* BRSocketHelpers.c */,
 				223DB2181DF691260076A151 /* BRSocketHelpers.h */,
-				222319B11F279B3C00008F20 /* POSTBouncer.html */,
 				754AE0BD1DFE8E5A007FD001 /* module.modulemap */,
 				CE4CA7BB1EE3649100373F11 /* BRActivityView.swift */,
 				22A9A9321DF61945000F0016 /* BRAPIClient.swift */,
@@ -3610,7 +3607,6 @@
 				7EF36C062829893700BB43A7 /* theme.plist in Resources */,
 				7BDB49F32806EB4C0031F015 /* AssetBundles.plist in Resources */,
 				7EA2BC96295AEAD00063AC0E /* arrowToX.json in Resources */,
-				222319B21F279B3C00008F20 /* POSTBouncer.html in Resources */,
 				7B519A932835B506007AC80A /* currencies.json in Resources */,
 				7BB3B7E429558EA2006FF250 /* SofiaPro-Bold.otf in Resources */,
 				CE473D7C1F042F1E00C0ACFD /* coinflip.aiff in Resources */,
