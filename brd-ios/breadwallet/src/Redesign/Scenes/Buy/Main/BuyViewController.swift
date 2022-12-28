@@ -267,16 +267,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                       availablePayments: responseDisplay.availablePayments)
     }
     
-    func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay) {
-//        presentPlaidLinkUsingLinkToken(linkToken: responseDisplay.linkToken, completion: { [weak self] in
-//            self?.interactor?.setPublicToken(viewAction: .init())
-//        })
-    }
-    
-    func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay) {
-        coordinator?.showFailure(failure: .plaidConnection, availablePayments: dataStore?.availablePayments)
-    }
-    
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
             LoadingView.hide()
