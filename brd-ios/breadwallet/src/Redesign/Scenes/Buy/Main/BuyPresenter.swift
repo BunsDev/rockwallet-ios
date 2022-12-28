@@ -174,23 +174,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayNavigateAssetSelector(responseDisplay: .init(title: L10n.Swap.iWant))
     }
     
-    func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse) {
-        viewController?.displayLinkToken(responseDisplay: .init(linkToken: actionResponse.linkToken))
-    }
-    
-    func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse) {
-        let message = actionResponse.relinkAchPaymentMethod ? L10n.Buy.achPaymentMethodRelinked : L10n.Buy.achSuccess
-        
-        viewController?.displayAchData(actionResponse: .init())
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(message)),
-                                                              config: Presets.InfoView.verification))
-        
-    }
-    
-    func presentFailure(actionResponse: BuyModels.Failure.ActionResponse) {
-        viewController?.displayFailure(responseDisplay: .init())
-    }
-    
     func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
         guard !isAccessDenied(error: actionResponse.error) else { return }
         

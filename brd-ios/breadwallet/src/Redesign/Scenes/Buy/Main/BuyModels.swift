@@ -112,35 +112,13 @@ enum BuyModels {
         }
     }
     
-    struct PlaidLinkToken {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var linkToken: String
-        }
-        
-        struct ResponseDisplay {
-            var linkToken: String
-        }
-    }
-    
-    struct PlaidPublicToken {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            let relinkAchPaymentMethod: Bool
-        }
-        
-        struct ResponseDisplay {}
-    }
-    
-    struct Failure {
-        struct ViewAction {}
-        
-        struct ActionResponse {}
-        
-        struct ResponseDisplay {}
-    }
+//    struct Failure {
+//        struct ViewAction {}
+//        
+//        struct ActionResponse {}
+//        
+//        struct ResponseDisplay {}
+//    }
     
     struct PaymentMethod {
         struct ViewAction {

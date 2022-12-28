@@ -97,8 +97,6 @@ extension Controller where Self: ExchangeRateResponseDisplays,
                            Self.ViewActions: ExchangeRateViewActions {
     
     func displayExchangeRate(responseDisplay: ExchangeRateModels.ExchangeRate.ResponseDisplay) {
-        tableView.beginUpdates()
-        
         if let cell = getRateAndTimerCell() {
             cell.wrappedView.setup(with: responseDisplay.rateAndTimer)
             cell.wrappedView.completion = { [weak self] in
@@ -114,7 +112,5 @@ extension Controller where Self: ExchangeRateResponseDisplays,
         if let cell = getAccountLimitsCell() {
             cell.wrappedView.setup(with: responseDisplay.accountLimits)
         }
-        
-        tableView.endUpdates()
     }
 }

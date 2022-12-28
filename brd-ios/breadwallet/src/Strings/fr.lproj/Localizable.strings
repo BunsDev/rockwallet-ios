@@ -753,9 +753,6 @@
 /* Explanation of security code in popup */
 "Buy.SecurityCodePopup" = "Veuillez indiquer les trois chiffres de votre cryptogramme visuel tels que figurant à l'arrière de votre carte";
 
-/* Select payment method title in buy flow */
-"Buy.SelectPayment" = "Sélectionnez un mode de paiement";
-
 /* Select a payment method button title in buy flow */
 "Buy.SelectPaymentMethod" = "Sélectionner un mode de paiement";
 
