@@ -22,7 +22,7 @@ struct CardSelectionConfiguration: Configurable {
 
 struct CardSelectionViewModel: ViewModel {
     var title: LabelViewModel? = .text(L10n.Buy.payWith)
-    var subtitle: LabelViewModel? = .text(L10n.Buy.selectPayment)
+    var subtitle: LabelViewModel? = .text(L10n.Buy.selectPaymentMethod)
     var logo: ImageViewModel?
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
