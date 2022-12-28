@@ -283,14 +283,12 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             if max.currency.network.name == Currencies.shared.eth?.name {
                 let adjustTokenVal = max.tokenValue * 0.05
                 let adjustAmount = Amount(tokenString: "\(adjustTokenVal)", currency: max.currency)
-                print("max before: \(max.description)")
                 max = max - adjustAmount
-                print("max after: \(max.description)")
             }
             
-//            self?.amountView.forceUpdateAmount(amount: max)
+            self?.amountView.forceUpdateAmount(amount: max)
             
-            self?.updateFeesMax(amount: max)
+            self?.updateFeesMax()
         }
     }
     
@@ -316,8 +314,8 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         }
     }
     
-    private func updateFeesMax(amount: Amount) {
-//        guard let amount = amount else { return }
+    @objc private func updateFeesMax() {
+        guard let amount = amount else { return }
         guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
         print("updateFeesMax Amount: \(amount.description)")
