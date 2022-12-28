@@ -595,6 +595,10 @@
 
 "Buy.Ach.AccountUnlinked" = "Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.";
 
+"Buy.Ach.NotAvailableBody" = "Fund with ACH isn’t available in your region. We'll notify you when this feature is released. You can still buy digital assets with a debit/credit card.";
+
+"Buy.Ach.NotAvailableTitle" = "Sorry! This feature is unavailable";
+
 "Buy.Ach.WalletDisabled" = "%s debe habilitarse primero en tu monedero. Habilítalo %s o seleccionando \"Administrar activos\" en la pantalla de inicio.";
 
 "Buy.Ach.WalletDisabled.Link" = "aquí";
@@ -637,6 +641,8 @@
 "Buy.BuyLimits.android" = "Actualmente, el mínimo para comprar es de 30,00 USD/día y el máximo es de 500,00 USD/día.";
 
 "Buy.buyWithCard" = "Comprar con tarjeta";
+
+"Buy.BuyWithCardButton" = "Buy with card";
 
 /* Card label on add card flow */
 "Buy.Card" = "Tarjeta";
@@ -746,9 +752,6 @@
 
 /* Explanation of security code in popup */
 "Buy.SecurityCodePopup" = "Introduce el número CVV de 3 dígitos que aparece en el dorso de tu tarjeta";
-
-/* Select payment method title in buy flow */
-"Buy.SelectPayment" = "Seleccionar método de pago";
 
 /* Select a payment method button title in buy flow */
 "Buy.SelectPaymentMethod" = "Selecciona un método de pago";
@@ -1976,6 +1979,8 @@
 "Sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
 
 "Sell.iReceive" = "I receive";
+
+"Sell.NotAvailableBody" = "Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.";
 
 "Sell.OrderPreview" = "Withdrawal preview";
 
