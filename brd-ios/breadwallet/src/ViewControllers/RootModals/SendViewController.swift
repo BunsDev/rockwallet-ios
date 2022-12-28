@@ -114,7 +114,8 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         guard timer?.isValid != true else { return }
         
         // start the timer
-        timer = Timer.scheduledTimer(timeInterval: 15,
+//        timer = Timer.scheduledTimer(timeInterval: 15,
+        timer = Timer.scheduledTimer(timeInterval: 120,
                                      target: self,
                                      selector: #selector(updateFees),
                                      userInfo: nil,
@@ -284,11 +285,11 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                 let adjustTokenVal = max.tokenValue * 0.05
                 let adjustAmount = Amount(tokenString: "\(adjustTokenVal)", currency: max.currency)
                 max = max - adjustAmount
+                self?.amountView.forceUpdateAmount(amount: max)
+            } else {
+                self?.amountView.forceUpdateAmount(amount: max)
+                self?.updateFeesMax()
             }
-            
-            self?.amountView.forceUpdateAmount(amount: max)
-            
-            self?.updateFeesMax()
         }
     }
     
@@ -296,22 +297,12 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         guard let amount = amount else { return }
         guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
-//        print("updateFees Amount: \(amount.description)")
-        
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let fee):
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
-                    
-//                    guard let feeBasis = self?.currentFeeBasis,
-//                          let feeCurrency = self?.sender.wallet.feeCurrency else {
-//                        return
-//                    }
-//                    let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
-//                    
-//                    print("updateFees fee: \(fee.description)")
                     
                 case .failure(let error):
                     self?.handleEstimateFeeError(error: error)
@@ -326,7 +317,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         guard let amount = amount else { return }
         guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
-//        print("updateFeesMax Amount: \(amount.description)")
+        print("updateFeesMax Amount: \(amount.description)")
         
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
@@ -344,11 +335,13 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     print("updateFeesMax fee: \(fee.description)")
                     
                     var value = amount
-                    if amount.currency == fee.currency && amount.currency.network.name != Currencies.shared.eth?.name {
+                    if amount.currency == fee.currency {
                         value = amount > fee ? amount - fee : amount
                     }
 
-                    self?.amountView.forceUpdateAmount(amount: value)
+                    if value != amount {
+                        self?.amountView.forceUpdateAmount(amount: value)
+                    }
                     
                 case .failure(let error):
                     self?.handleEstimateFeeError(error: error)
