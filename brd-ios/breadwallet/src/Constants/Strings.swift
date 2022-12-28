@@ -548,6 +548,8 @@ internal enum L10n {
     }
     /// BUY WITH CARDS
     internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARDS")
+    /// Buy with card
+    internal static let buyWithCardButton = L10n.tr("Localizable", "Buy.BuyWithCardButton", fallback: "Buy with card")
     /// Card label on add card flow
     internal static let card = L10n.tr("Localizable", "Buy.Card", fallback: "Card")
     /// CVV label in add card flow
@@ -628,8 +630,6 @@ internal enum L10n {
     internal static let securityCode = L10n.tr("Localizable", "Buy.SecurityCode", fallback: "Security code (CVV)")
     /// Explanation of security code in popup
     internal static let securityCodePopup = L10n.tr("Localizable", "Buy.SecurityCodePopup", fallback: "Please enter the 3 digit CVV number as it appears on the back of your card")
-    /// Select payment method title in buy flow
-    internal static let selectPayment = L10n.tr("Localizable", "Buy.SelectPayment", fallback: "Select payment method")
     /// Select a payment method button title in buy flow
     internal static let selectPaymentMethod = L10n.tr("Localizable", "Buy.SelectPaymentMethod", fallback: "Select a payment method")
     /// State/Province label in billing address view on buy flow
@@ -659,6 +659,10 @@ internal enum L10n {
     internal enum Ach {
       /// Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.
       internal static let accountUnlinked = L10n.tr("Localizable", "Buy.Ach.AccountUnlinked", fallback: "Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.")
+      /// Fund with ACH isn’t available in your region. We'll notify you when this feature is released. You can still buy digital assets with a debit/credit card.
+      internal static let notAvailableBody = L10n.tr("Localizable", "Buy.Ach.NotAvailableBody", fallback: "Fund with ACH isn’t available in your region. We'll notify you when this feature is released. You can still buy digital assets with a debit/credit card.")
+      /// Sorry! This feature is unavailable
+      internal static let notAvailableTitle = L10n.tr("Localizable", "Buy.Ach.NotAvailableTitle", fallback: "Sorry! This feature is unavailable")
       /// %s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.
       internal static func walletDisabled(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
         return L10n.tr("Localizable", "Buy.Ach.WalletDisabled", p1, p2, fallback: "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.")
@@ -1808,6 +1812,8 @@ internal enum L10n {
     }
     /// I receive
     internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
+    /// Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.
+    internal static let notAvailableBody = L10n.tr("Localizable", "Sell.NotAvailableBody", fallback: "Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.")
     /// Withdrawal preview
     internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
     /// Conversion rate
