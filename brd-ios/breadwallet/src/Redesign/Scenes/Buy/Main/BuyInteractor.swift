@@ -82,6 +82,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func setPublicToken(viewAction: BuyModels.PlaidPublicToken.ViewAction) {
+        
         PlaidPublicTokenWorker().execute(requestData: PlaidPublicTokenRequestData(publicToken: dataStore?.publicToken, mask: dataStore?.mask)) { [weak self] result in
             switch result {
             case .success:
