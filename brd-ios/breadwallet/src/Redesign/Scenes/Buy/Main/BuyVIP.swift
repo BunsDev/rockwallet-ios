@@ -34,9 +34,6 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
-    func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse)
-    func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse)
-    func presentFailure(actionResponse: BuyModels.Failure.ActionResponse)
     func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
 }
@@ -46,8 +43,6 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayAssets(responseDisplay: BuyModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
-    func displayLinkToken(responseDisplay: BuyModels.PlaidLinkToken.ResponseDisplay)
-    func displayFailure(responseDisplay: BuyModels.Failure.ResponseDisplay)
     func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay)
     func displayManageAssetsMessage(actionResponse: BuyModels.AchData.ResponseDisplay)
 }

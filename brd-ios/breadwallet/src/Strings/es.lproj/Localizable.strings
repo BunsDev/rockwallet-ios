@@ -753,9 +753,6 @@
 /* Explanation of security code in popup */
 "Buy.SecurityCodePopup" = "Introduce el número CVV de 3 dígitos que aparece en el dorso de tu tarjeta";
 
-/* Select payment method title in buy flow */
-"Buy.SelectPayment" = "Seleccionar método de pago";
-
 /* Select a payment method button title in buy flow */
 "Buy.SelectPaymentMethod" = "Selecciona un método de pago";
 
