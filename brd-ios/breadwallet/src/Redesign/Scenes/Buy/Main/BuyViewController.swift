@@ -147,7 +147,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 case .buyAch:
                     self?.interactor?.getPlaidToken(viewAction: .init())
                 default:
-                    self?.interactor?.getAch(viewAction: .init(openCards: true))
+                    self?.interactor?.getPayments(viewAction: .init(openCards: true))
                 }
             }
         }
@@ -234,7 +234,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             guard let selectedCard = selectedCard else { return }
             self?.interactor?.setAssets(viewAction: .init(card: selectedCard))
         }, completion: { [weak self] in
-            self?.interactor?.getAch(viewAction: .init())
+            self?.interactor?.getPayments(viewAction: .init())
         })
     }
     
@@ -303,7 +303,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay) {
-        interactor?.getAch(viewAction: .init())
+        interactor?.getPayments(viewAction: .init())
     }
     
     // MARK: - Additional Helpers

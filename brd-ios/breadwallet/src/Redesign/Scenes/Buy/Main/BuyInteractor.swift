@@ -38,14 +38,14 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                                      card: self?.dataStore?.selected,
                                                                      type: self?.dataStore?.paymentMethod,
                                                                      quote: self?.dataStore?.quote))
-                self?.getAch(viewAction: .init())
+                self?.getPayments(viewAction: .init())
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
             }
         }
     }
     
-    func didGetAch(viewAction: AchPaymentModels.Get.ViewAction) {
+    func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
         if viewAction.openCards == true {
             presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
         } else {
