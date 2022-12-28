@@ -13,7 +13,9 @@ import LinkKit
 
 enum AchPaymentModels {
     enum Get {
-        struct ViewAction {}
+        struct ViewAction {
+            var openCards: Bool?
+        }
         
         struct ActionResponse {
             var item: PaymentCard?
