@@ -24,7 +24,7 @@ enum TransparentViewModel: ViewModel {
     var imageName: String? {
         switch self {
         case .success:
-            return "check"
+            return Asset.check.name
             
         default:
             return nil
