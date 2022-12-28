@@ -557,24 +557,7 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.MenuButton.scan, icon: MenuItem.Icon.scan) { [weak self] in
                 self?.presentLoginScan()
             },
-            // Security
-            MenuItem(title: L10n.MenuButton.security, icon: Asset.security.image, subMenu: securityItems, rootNav: menuNav),
-            // Preferences
-            MenuItem(title: L10n.Settings.preferences, icon: MenuItem.Icon.preferences, subMenu: preferencesItems, rootNav: menuNav),
-            // Manage Assets
-            MenuItem(title: L10n.MenuButton.manageAssets, icon: MenuItem.Icon.wallet) { [weak self] in
-                guard let self = self, let assetCollection = self.system.assetCollection else { return }
-                let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: self.system)
-                menuNav.pushViewController(vc, animated: true)
-            },
-            // Support
-            MenuItem(title: L10n.MenuButton.support, icon: MenuItem.Icon.support) { [weak self] in
-                self?.presentFaq()
-            },
-            // About
-            MenuItem(title: L10n.Settings.about, icon: MenuItem.Icon.about) {
-                menuNav.pushViewController(AboutViewController(), animated: true)
-            }, // Feedback
+            // Feedback
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }
                 
@@ -587,7 +570,28 @@ class ModalPresenter: Subscriber {
                     }
                 } else {}
             },
-            // Export Transfer History
+            // Manage Assets
+            MenuItem(title: L10n.MenuButton.manageAssets, icon: MenuItem.Icon.wallet) { [weak self] in
+                guard let self = self, let assetCollection = self.system.assetCollection else { return }
+                let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: self.system)
+                menuNav.pushViewController(vc, animated: true)
+            },
+           
+            // Preferences
+            MenuItem(title: L10n.Settings.preferences, icon: MenuItem.Icon.preferences, subMenu: preferencesItems, rootNav: menuNav),
+            
+            // Security Settings
+            MenuItem(title: L10n.MenuButton.security, icon: Asset.lockClosed.image, subMenu: securityItems, rootNav: menuNav),
+            
+            // Support
+            MenuItem(title: L10n.MenuButton.support, icon: MenuItem.Icon.support) { [weak self] in
+                self?.presentFaq()
+            },
+            // About
+            MenuItem(title: L10n.Settings.about, icon: MenuItem.Icon.about) {
+                menuNav.pushViewController(AboutViewController(), animated: true)
+            },
+            // Export transaction history
             MenuItem(title: L10n.Settings.exportTransfers, icon: MenuItem.Icon.export) { [weak self] in
                 self?.presentExportTransfers()
             }
