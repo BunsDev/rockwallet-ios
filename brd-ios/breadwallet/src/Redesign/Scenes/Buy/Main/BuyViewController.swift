@@ -248,8 +248,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay) {
-        tableView.beginUpdates()
-        
         if let cell = getRateAndTimerCell() {
             cell.setup { view in
                 view.setup(with: responseDisplay.rate)
@@ -269,8 +267,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 view.setup(with: responseDisplay.limits)
             }
         }
-        
-        tableView.endUpdates()
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {
