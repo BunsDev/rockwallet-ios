@@ -630,8 +630,6 @@ internal enum L10n {
     internal static let securityCode = L10n.tr("Localizable", "Buy.SecurityCode", fallback: "Security code (CVV)")
     /// Explanation of security code in popup
     internal static let securityCodePopup = L10n.tr("Localizable", "Buy.SecurityCodePopup", fallback: "Please enter the 3 digit CVV number as it appears on the back of your card")
-    /// Select payment method title in buy flow
-    internal static let selectPayment = L10n.tr("Localizable", "Buy.SelectPayment", fallback: "Select payment method")
     /// Select a payment method button title in buy flow
     internal static let selectPaymentMethod = L10n.tr("Localizable", "Buy.SelectPaymentMethod", fallback: "Select a payment method")
     /// State/Province label in billing address view on buy flow
