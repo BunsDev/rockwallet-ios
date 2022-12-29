@@ -15,7 +15,7 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
                               BaseInfoResponseDisplays {
     typealias Models = BaseInfoModels
     
-    var imageName: String? { return "statusIcon" }
+    var imageName: String? { return Asset.timeoutStatusIcon.name }
     var titleText: String? { return "OVERRIDE IN SUBCLASS" }
     var descriptionText: String? { return "THIS AS WELL" }
     
