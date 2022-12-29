@@ -49,7 +49,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                           shouldShowFiatField: true)],
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
-                LabelViewModel.text("")
+                // dont ask
+                LabelViewModel.text("n\n\n\n\n")
             ]
         ]
         
@@ -68,7 +69,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
         let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit) ?? ""
         let limitText = actionResponse.method == .buyAch ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
-        
         exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                       timer: TimerViewModel(till: quote.timestamp,
                                                                             repeats: false),
