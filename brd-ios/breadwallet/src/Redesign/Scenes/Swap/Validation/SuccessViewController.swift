@@ -16,7 +16,7 @@ enum SuccessReason: SimpleMessage {
     case sell
     
     var iconName: String {
-        return "success"
+        return Asset.success.name
     }
     
     var title: String {

@@ -12,9 +12,9 @@ import Foundation
 import LinkKit
 
 protocol AchViewActions {
-    func getAch(viewAction: AchPaymentModels.Get.ViewAction)
+    func getPayments(viewAction: AchPaymentModels.Get.ViewAction)
     // implement if needed in adaptor class
-    func didGetAch(viewAction: AchPaymentModels.Get.ViewAction)
+    func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction)
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
     //    // TODO: maybe reuse link?
     //    func relink(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
@@ -42,7 +42,7 @@ protocol AchDataStore {
 extension Interactor where Self: AchViewActions,
                            Self.DataStore: AchDataStore,
                            Self.ActionResponses: AchActionResponses {
-    func getAch(viewAction: AchPaymentModels.Get.ViewAction) {
+    func getPayments(viewAction: AchPaymentModels.Get.ViewAction) {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
@@ -53,7 +53,7 @@ extension Interactor where Self: AchViewActions,
                 break
             }
             self?.presenter?.presentAch(actionResponse: .init(item: self?.dataStore?.ach))
-            self?.didGetAch(viewAction: viewAction)
+            self?.didGetPayments(viewAction: viewAction)
         }
     }
     
@@ -109,7 +109,7 @@ extension Interactor where Self: AchViewActions,
                                                                                   accountId: dataStore?.ach?.id)) { [weak self] result in
             switch result {
             case .success:
-                self?.getAch(viewAction: .init())
+                self?.getPayments(viewAction: .init())
                 
             case .failure:
                 self?.presenter?.presentError(actionResponse: .init())
