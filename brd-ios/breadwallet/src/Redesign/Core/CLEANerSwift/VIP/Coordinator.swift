@@ -124,6 +124,8 @@ class BaseCoordinator: NSObject,
                 if UserManager.shared.profile?.canUseAch == false, type == .buyAch {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
                     }
                     return
                 }

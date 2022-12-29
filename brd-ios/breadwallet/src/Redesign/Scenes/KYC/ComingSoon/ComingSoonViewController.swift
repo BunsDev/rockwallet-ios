@@ -86,7 +86,7 @@ class ComingSoonViewController: BaseInfoViewController {
                 if self?.reason == .swapAndBuyCard || self?.reason == .sell {
                     self?.coordinator?.dismissFlow()
                 } else if self?.reason == .buyAch {
-                    self?.coordinator?.showBuy()
+                    self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem, keyStore: self?.dataStore?.keyStore)
                 }
             }),
             .init(title: reason?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
