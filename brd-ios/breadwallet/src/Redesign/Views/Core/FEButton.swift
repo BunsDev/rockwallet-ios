@@ -34,6 +34,7 @@ struct ButtonConfiguration: Configurable {
 struct ButtonViewModel: ViewModel {
     var title: String?
     var isUnderlined = false
+    // update to UIImage
     var image: String?
     var enabled = true
     var callback: (() -> Void)?
@@ -109,8 +110,8 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         guard let viewModel = viewModel else { return }
 
         self.viewModel = viewModel
-        
-        if let title = viewModel.isUnderlined ? viewModel.title : viewModel.title?.uppercased() {
+        let title = viewModel.isUnderlined ? viewModel.title : viewModel.title?.uppercased()
+        if let title = title {
             if viewModel.isUnderlined {
                 let attributeString = NSMutableAttributedString(
                     string: title,
@@ -124,8 +125,14 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
             }
         }
         
-        if let image = viewModel.image {
-            setBackgroundImage(.init(named: image), for: .normal)
+        if let image = UIImage(named: viewModel.image ?? "") {
+            if title == nil {
+                setBackgroundImage(image, for: .normal)
+            } else {
+                imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+                titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+                setImage(image, for: .normal)
+            }
         }
         
         isEnabled = viewModel.enabled
@@ -159,7 +166,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         
         UIView.setAnimationsEnabled(withAnimation)
         
-        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.updateLayout(background: background, shadow: shadow)
         }
         
@@ -189,6 +196,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         tintColor = background.tintColor
         titleLabel?.textColor = background.tintColor
         titleLabel?.font = Fonts.button
+        imageView?.tintColor = background.tintColor
         
         setBackground(with: background)
         

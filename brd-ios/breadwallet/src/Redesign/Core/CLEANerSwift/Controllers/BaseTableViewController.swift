@@ -80,7 +80,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         sectionRows = responseDisplay.sectionRows
         
         // TODO: DiffableDataSource
-        UIView.transition(with: tableView, duration: Presets.Animation.duration, options: .transitionCrossDissolve) { [weak self] in
+        UIView.transition(with: tableView, duration: Presets.Animation.short.rawValue, options: .transitionCrossDissolve) { [weak self] in
             self?.tableView.reloadData()
         }
         

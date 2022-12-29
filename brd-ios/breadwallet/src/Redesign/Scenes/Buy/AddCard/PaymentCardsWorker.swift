@@ -20,6 +20,8 @@ struct PaymentCardsResponseData: ModelResponse {
         var scheme: String?
         var last4: String?
         var accountName: String?
+        var status: String?
+        var cardType: String?
     }
     
     var paymentInstruments: [PaymentInstrument]
@@ -37,6 +39,19 @@ struct PaymentCard: ItemSelectable, Hashable {
         case buyAch = "bank_account"
     }
     
+    enum Status: String, CaseIterable {
+        case statusOk = "OK"
+        case requiredLogin = "LOGIN_REQUIRED"
+        case pendingExpiration = "LOGIN_PENDING_EXPIRATION"
+        case none
+    }
+    
+    enum CardType: String, CaseIterable {
+        case credit = "CREDIT"
+        case debit = "DEBIT"
+        case none
+    }
+    
     var type: PaymentType
     var id: String
     var fingerprint: String
@@ -46,6 +61,8 @@ struct PaymentCard: ItemSelectable, Hashable {
     var last4: String
     var image: UIImage?
     var accountName: String
+    var status: Status
+    var cardType: CardType
     
     var displayName: String? {
         switch type {
@@ -76,7 +93,9 @@ class PaymentCardsMapper: ModelMapper<PaymentCardsResponseData, [PaymentCard]> {
                                expiryYear: $0.expiryYear ?? 0,
                                scheme: PaymentCard.Scheme(rawValue: $0.scheme ?? "") ?? .none,
                                last4: $0.last4 ?? "",
-                               accountName: $0.accountName ?? "")
+                               accountName: $0.accountName ?? "",
+                               status: PaymentCard.Status(rawValue: $0.status ?? "") ?? .none,
+                               cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .none)
         } ?? []
     }
 }

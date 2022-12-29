@@ -145,15 +145,20 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         return cell
     }
     
-    private func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
+    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.viewModel?.enabled = false
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-            
             return nil
         }
         
+        return cell
+    }
+    
+    func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
+        guard let section = sections.firstIndex(of: Models.Sections.accountLimits),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+            return nil
+        }
         return cell
     }
     
@@ -207,29 +212,6 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         cell.setup { view in
             view.setup(with: responseDisplay.amounts)
-        }
-        
-        tableView.endUpdates()
-    }
-    
-    func displayExchangeRate(responseDisplay: SwapModels.Rate.ResponseDisplay) {
-        tableView.beginUpdates()
-        
-        if let cell = getRateAndTimerCell() {
-            cell.setup { view in
-                view.setup(with: responseDisplay.rateAndTimer)
-                
-                view.completion = { [weak self] in
-                    self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
-                }
-            }
-        }
-        
-        if let section = sections.firstIndex(of: Models.Sections.accountLimits),
-           let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
-            cell.setup { view in
-                view.setup(with: responseDisplay.accountLimits)
-            }
         }
         
         tableView.endUpdates()
