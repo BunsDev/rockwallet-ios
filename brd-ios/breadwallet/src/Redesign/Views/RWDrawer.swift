@@ -27,9 +27,9 @@ struct DrawerViewModel: ViewModel {
     var title: String? = L10n.Drawer.title
     var drawerImage: ImageViewModel? = .image(Asset.dragControl.image)
     var buttons: [ButtonViewModel] = [
-        .init(title: L10n.Buy.buyWithCard, image: Asset.card.name),
-        .init(title: L10n.Buy.fundWithAch, image: Asset.bank.name),
-        .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.name)
+        .init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+        .init(title: L10n.Buy.fundWithAch, image: Asset.bank.image),
+        .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)
     ]
     var drawerBottomOffset = 0.0
 }
