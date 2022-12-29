@@ -346,7 +346,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     // is refactored in sprint 4
     func presentPlaidLinkUsingLinkToken(linkToken: String, completion: (() -> Void)? = nil) {
-        var linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken, completion: completion)
+        let linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken, completion: completion)
         
         let result = Plaid.create(linkConfiguration)
         switch result {
