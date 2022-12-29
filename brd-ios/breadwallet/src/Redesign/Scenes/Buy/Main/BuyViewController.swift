@@ -303,4 +303,17 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         dataStore?.paymentMethod = availablePayments.contains(.buyAch) == true ? .buyAch : .buyCard
         interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .buyCard))
     }
+    
+    private func mapStructToDictionary<T>(item: T) -> [String: Any] {
+        let dictionary = Dictionary(uniqueKeysWithValues:
+            Mirror(reflecting: item).children.lazy.map({ (label: String?, value: Any) in
+                if let label = label {
+                    return (label, value)
+                } else {
+                    return (Date().timeIntervalSince1970.description, value)
+                }
+            })
+        )
+        return dictionary.compactMapValues { $0 }
+    }
 }
