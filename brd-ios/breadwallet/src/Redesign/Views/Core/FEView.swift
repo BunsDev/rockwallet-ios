@@ -61,8 +61,6 @@ class FEView<C: Configurable, M: ViewModel>: UIView,
         super.layoutSubviews()
         
         configure(with: config)
-        configure(background: background)
-        configure(shadow: shadow)
     }
     
     func setupSubviews() {
@@ -89,10 +87,7 @@ class FEView<C: Configurable, M: ViewModel>: UIView,
         self.config = config
     }
     
-    func prepareForReuse() {
-        config = nil
-        viewModel = nil
-    }
+    func prepareForReuse() {}
     
     func configure(shadow: ShadowConfiguration?) {
         guard let shadow = shadow else { return }

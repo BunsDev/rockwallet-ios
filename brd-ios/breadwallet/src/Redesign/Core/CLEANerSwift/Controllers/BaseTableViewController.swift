@@ -308,8 +308,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
                 self?.textFieldDidUpdate(for: indexPath, with: text, on: section)
             }
             view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }
         

@@ -50,13 +50,14 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
-                LabelViewModel.text("")
+                // dont ask
+                LabelViewModel.text("n\n\n\n\n")
             ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
-    
+
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse) {
         var cryptoModel: SwapCurrencyViewModel
         let cardModel: CardSelectionViewModel
