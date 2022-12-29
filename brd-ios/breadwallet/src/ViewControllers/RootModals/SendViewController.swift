@@ -281,14 +281,14 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             self?.isSendingMax = true
             
             if max.currency.network.name == Currencies.shared.eth?.name {
-                let adjustTokenVal = max.tokenValue * 0.05
+                let adjustTokenVal = max.tokenValue * 0.15 // Reduce amount for ETH estimate fee API call
                 let adjustAmount = Amount(tokenString: "\(adjustTokenVal)", currency: max.currency)
                 max = max - adjustAmount
+                self?.amountView.forceUpdateAmount(amount: max)
+            } else {
+                self?.amountView.forceUpdateAmount(amount: max)
+                self?.updateFeesMax()
             }
-            
-            self?.amountView.forceUpdateAmount(amount: max)
-            
-            self?.updateFeesMax()
         }
     }
     
@@ -333,8 +333,10 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     if amount.currency == fee.currency {
                         value = amount > fee ? amount - fee : amount
                     }
-                    
-                    self?.amountView.forceUpdateAmount(amount: value)
+
+                    if value != amount {
+                        self?.amountView.forceUpdateAmount(amount: value)
+                    }
                     
                 case .failure(let error):
                     self?.handleEstimateFeeError(error: error)
