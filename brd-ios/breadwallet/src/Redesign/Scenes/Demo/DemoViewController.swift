@@ -173,8 +173,8 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
                                 buttons: [
                                     .init(title: "Donate"),
                                     .init(title: "Donate",
-                                          image: Asset.close.name),
-                                    .init(image: Asset.close.name)
+                                          image: Asset.close.image),
+                                    .init(image: Asset.close.image)
                                 ]))
         popup.closeCallback = { [weak self] in
             self?.hideInfo()

@@ -33,7 +33,7 @@ class SegwitViewController: UIViewController {
                                     cancel: Presets.Button.secondary,
                                     wrappedView: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center)))
         
-        alert.setup(with: .init(trailing: .init(image: Asset.close.name),
+        alert.setup(with: .init(trailing: .init(image: Asset.close.image),
                                 confirm: .init(title: L10n.Button.continueAction),
                                 cancel: .init(title: L10n.Button.cancel),
                                 wrappedView: .text(L10n.Segwit.confirmChoiceLayout),
