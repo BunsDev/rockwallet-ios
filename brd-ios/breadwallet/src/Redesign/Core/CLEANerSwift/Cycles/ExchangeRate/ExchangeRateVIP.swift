@@ -33,6 +33,7 @@ protocol ExchangeDataStore: NSObject {
     var toCode: String { get }
     var quoteRequestData: QuoteRequestData { get }
     var quote: Quote? { get set }
+    var showTimer: Bool { get set }
 }
 
 extension Interactor where Self: ExchangeRateViewActions,
@@ -45,6 +46,14 @@ extension Interactor where Self: ExchangeRateViewActions,
               let data = dataStore?.quoteRequestData
         else { return }
         
+        // clear previous rate (in case the request fails, we don't want old values displayed)
+        dataStore?.quote = nil
+        presenter?.presentExchangeRate(actionResponse: .init(quote: dataStore?.quote,
+                                                             from: dataStore?.fromCode,
+                                                             to: dataStore?.toCode,
+                                                             limits: dataStore?.limits,
+                                                             showTimer: dataStore?.showTimer))
+        
         getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees))
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
@@ -53,16 +62,13 @@ extension Interactor where Self: ExchangeRateViewActions,
                 self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
                                                                            from: fromCurrency,
                                                                            to: toCurrency,
-                                                                           limits: self?.dataStore?.limits))
+                                                                           limits: self?.dataStore?.limits,
+                                                                           showTimer: self?.dataStore?.showTimer))
                 
             case .failure(let error):
-                self?.presenter?.presentExchangeRate(actionResponse: .init(quote: self?.dataStore?.quote,
-                                                                           from: self?.dataStore?.fromCode,
-                                                                           to: self?.dataStore?.toCode,
-                                                                           limits: self?.dataStore?.limits))
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
-                    self?.presenter?.presentError(actionResponse: .init(error: NetworkingError.accessDenied))
+                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.quoteFail))
                     return
                 }
             }
@@ -75,19 +81,20 @@ extension Interactor where Self: ExchangeRateViewActions,
 extension Presenter where Self: ExchangeRateActionResponses,
                           Self.ResponseDisplays: ExchangeRateResponseDisplays {
     func presentExchangeRate(actionResponse: ExchangeRateModels.ExchangeRate.ActionResponse) {
-            guard let from = actionResponse.from,
-                  let to = actionResponse.to,
-                  let quote = actionResponse.quote else {
-                viewController?.displayExchangeRate(responseDisplay: .init(accountLimits: .text(actionResponse.limits)))
-                return
-            }
+        var exchangeRateViewModel: ExchangeRateViewModel
+            if let from = actionResponse.from,
+               let to = actionResponse.to,
+               let quote = actionResponse.quote,
+               let showTimer = actionResponse.showTimer {
+                let text = String(format: "1 %@ = %@ %@", to.uppercased(), RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", from)
 
-            let text = String(format: "1 %@ = %@ %@", to.uppercased(), RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", from)
-
-            let exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
+                exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                               timer: TimerViewModel(till: quote.timestamp, repeats: false),
-                                                              showTimer: false)
-
+                                                              showTimer: showTimer)
+            } else {
+                exchangeRateViewModel = ExchangeRateViewModel(timer: nil, showTimer: false)
+            }
+    
             viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: exchangeRateViewModel,
                                                                        accountLimits: .text(actionResponse.limits)))
     }

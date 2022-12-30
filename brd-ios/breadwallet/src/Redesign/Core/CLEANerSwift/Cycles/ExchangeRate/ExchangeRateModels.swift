@@ -21,6 +21,7 @@ enum ExchangeRateModels {
             var from: String?
             var to: String?
             var limits: String?
+            var showTimer: Bool?
         }
         
         struct ResponseDisplay {
