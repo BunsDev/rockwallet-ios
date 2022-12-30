@@ -311,6 +311,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         tabBarButtons.forEach { title, image, _ in
             let button = UITabBarItem(title: title, image: image, selectedImage: image)
             button.setTitleTextAttributes([NSAttributedString.Key.font: Fonts.button], for: .normal)
+            var insets = button.imageInsets
+            insets.bottom = Margins.extraSmall.rawValue
+            insets.top = -Margins.extraSmall.rawValue
+            button.imageInsets = insets
             buttons.append(button)
         }
         
