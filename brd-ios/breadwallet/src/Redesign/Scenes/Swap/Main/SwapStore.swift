@@ -16,6 +16,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     // ExchangeRateDaatStore
     var fromCode: String { from?.currency.code ?? "" }
     var toCode: String { to?.currency.code ?? "" }
+    var showTimer: Bool = true
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
                      to: toCode)

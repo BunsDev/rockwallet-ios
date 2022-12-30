@@ -14,6 +14,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     // ExchangeRateDaatStore
     var fromCode: String { return C.usdCurrencyCode }
     var toCode: String { toAmount?.currency.code ?? "" }
+    var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode.lowercased(),
                      to: toCode,

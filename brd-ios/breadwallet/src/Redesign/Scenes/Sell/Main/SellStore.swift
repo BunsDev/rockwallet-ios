@@ -23,6 +23,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var fromCode: String { currency?.code ?? "" }
     var toCode: String { C.usdCurrencyCode }
+    var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
                      to: toCode,
@@ -54,13 +55,13 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var isFormValid: Bool {
         // TODO: remove after BE is ready
         return true
-        guard let amount = toAmount,
-              amount > 0,
-              selected != nil,
-              selected?.status == .statusOk
-        else {
-            return false
-        }
-        return true
+//        guard let amount = toAmount,
+//              amount > 0,
+//              selected != nil,
+//              selected?.status == .statusOk
+//        else {
+//            return false
+//        }
+//        return true
     }
 }

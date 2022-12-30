@@ -57,7 +57,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
-
+    
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse) {
         var cryptoModel: SwapCurrencyViewModel
         let cardModel: CardSelectionViewModel

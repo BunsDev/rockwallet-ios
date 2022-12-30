@@ -126,6 +126,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 }
             }
         }
+        cell.setupCustomMargins(vertical: .large, horizontal: .large)
         
         return cell
     }
@@ -249,8 +250,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             return
         }
         
+        tableView.beginUpdates()
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
+        tableView.endUpdates()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
