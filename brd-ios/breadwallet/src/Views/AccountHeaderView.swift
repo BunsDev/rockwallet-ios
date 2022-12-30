@@ -260,7 +260,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
                             return oldState[self.currency]?.currentRate != newState[self.currency]?.currentRate },
                         callback: { [weak self] in
                             guard let self = self, let rate = $0[self.currency]?.currentRate, !self.isScrubbing else { return }
-                            self.exchangeRateLabel.text = rate.localString(forCurrency: self.currency)
+            self.exchangeRateLabel.text = rate.localString(forCurrency: self.currency, usesCustomFormat: true)
         })
         setGraphViewScrubbingCallbacks()
         chartView.shouldHideChart = { [weak self] in
