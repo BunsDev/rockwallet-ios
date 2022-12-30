@@ -270,7 +270,7 @@ class ChartView: UIView {
                     min = vals.min() ?? 0
                 }
                 
-                self.values[period] = vals.map { ($0 + $0 * 0.2) - min }.map { Int($0) } //add 20% baseline and cast to Ints
+                self.values[period] = vals.map { 1.2 * $0 - min }.map { Int($0) } //add 20% baseline and cast to Ints
                 if period == self.historyPeriod {
                     self.endCircle.isHidden = true
                     self.setCoordinates()
