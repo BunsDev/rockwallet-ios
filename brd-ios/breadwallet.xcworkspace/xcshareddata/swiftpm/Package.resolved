@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/checkout/frames-ios.git",
       "state" : {
-        "revision" : "659b4c58b0987fc68d197e21dcb0ec90e55a4fc0",
-        "version" : "3.5.3"
+        "revision" : "431a2bcc1792bfdc30906d8277e28b802285122d",
+        "version" : "4.0.3"
       }
     },
     {

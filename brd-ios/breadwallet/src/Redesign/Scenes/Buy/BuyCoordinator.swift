@@ -24,9 +24,12 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
         buyVC?.interactor?.getData(viewAction: .init())
     }
     
-    func showBillingAddress(checkoutToken: CkoCardTokenResponse?) {
+    func showBillingAddress(_ store: AddCardStore) {
         open(scene: Scenes.BillingAddress) { vc in
-            vc.interactor?.dataStore?.checkoutToken = checkoutToken
+            vc.dataStore?.cardNumber = store.cardNumber
+            vc.dataStore?.cvv = store.cardCVV
+            vc.dataStore?.expYear = store.cardExpDateYear
+            vc.dataStore?.expMonth = store.cardExpDateMonth
             vc.prepareData()
             LoadingView.hide()
         }
