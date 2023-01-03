@@ -94,7 +94,7 @@ internal enum L10n {
     /// Account Personal Information title
     internal static let personalInformation = L10n.tr("Localizable", "Account.PersonalInformation", fallback: "Personal Information")
     /// Promotion and offers label when registering account
-    internal static let promotion = L10n.tr("Localizable", "Account.Promotion", fallback: "I'm ok with receiving future promotion, offers and communications")
+    internal static let promotion = L10n.tr("Localizable", "Account.Promotion", fallback: "I'm ok with receiving future promotion, offers, and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
     /// Resubmit
@@ -514,11 +514,11 @@ internal enum L10n {
     internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
     }
-    /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.
+    /// Currently, minimum is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.
     /// 
     /// It currently takes 7-10 days to process a purchase with ACH
     internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.\n\nIt currently takes 7-10 days to process a purchase with ACH")
+      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.\n\nIt currently takes 7-10 days to process a purchase with ACH")
     }
     /// Currently, ACH payments will take 7-10 days to complete.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
@@ -931,7 +931,7 @@ internal enum L10n {
       return L10n.tr("Localizable", "ErrorMessages.balanceTooLow", p1, p2, p3, fallback: "You need %s %s in your wallet to cover network fees. Please add more %s to your wallet.")
     }
     /// Check your internet connection message
-    internal static let checkInternet = L10n.tr("Localizable", "ErrorMessages.CheckInternet", fallback: "Please, check your internet connection and try again later.")
+    internal static let checkInternet = L10n.tr("Localizable", "ErrorMessages.CheckInternet", fallback: "Please check your internet connection and try again later.")
     /// Something went wrong! Try again later.
     internal static let `default` = L10n.tr("Localizable", "ErrorMessages.default", fallback: "Something went wrong! Try again later.")
     /// Email unavailable alert title
@@ -2768,6 +2768,14 @@ internal enum L10n {
     internal static let updateTitle = L10n.tr("Localizable", "UpdatePin.updateTitle", fallback: "Update PIN")
     /// Why do I need a PIN title explanation popup
     internal static let whyPIN = L10n.tr("Localizable", "UpdatePin.WhyPIN", fallback: "Why do I need a PIN?")
+    internal enum Alert {
+      /// A PIN is a 6-digit number to validate your
+      /// identity every time you access your 
+      /// Rockwallet. Be sure to create a number that you can remember easily.
+      internal static let body = L10n.tr("Localizable", "UpdatePin.Alert.body", fallback: "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.")
+      /// What is a PIN?
+      internal static let title = L10n.tr("Localizable", "UpdatePin.Alert.title", fallback: "What is a PIN?")
+    }
   }
   internal enum VerificationCode {
     /// Verification Code Action Instructions
