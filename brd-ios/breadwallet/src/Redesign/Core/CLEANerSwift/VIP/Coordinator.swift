@@ -109,19 +109,19 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showBuy(type: PaymentCard.PaymentType = .buyCard, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
             upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.canBuy == false, type == .buyCard {
+                if UserManager.shared.profile?.canBuy == false, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
                     return
                 }
                 
-                if UserManager.shared.profile?.canUseAch == false, type == .buyAch {
+                if UserManager.shared.profile?.canUseAch == false, type == .ach {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem

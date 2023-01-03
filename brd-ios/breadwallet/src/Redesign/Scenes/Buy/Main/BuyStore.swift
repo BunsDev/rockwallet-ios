@@ -30,7 +30,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var paymentMethod: PaymentCard.PaymentType? {
         didSet {
             let selectedCurrency: Currency
-            if paymentMethod == .buyAch {
+            if paymentMethod == .ach {
                 guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else { return }
                 selectedCurrency = currency
             } else {
@@ -50,7 +50,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
               let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit)
         else { return nil }
         
-        return paymentMethod == .buyAch ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
+        return paymentMethod == .ach ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
     }
     
     var feeAmount: Amount? {

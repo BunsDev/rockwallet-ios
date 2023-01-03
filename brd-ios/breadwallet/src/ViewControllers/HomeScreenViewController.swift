@@ -286,9 +286,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     func setupDrawer() {
         drawer.callbacks = [ { [weak self] in
-            self?.didTapDrawerButton(.buyCard)
+            self?.didTapDrawerButton(.card)
         }, { [weak self] in
-            self?.didTapDrawerButton(.buyAch)
+            self?.didTapDrawerButton(.ach)
         }, { [weak self]
             in self?.didTapDrawerButton()
         }]

@@ -49,7 +49,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         if viewAction.openCards == true {
             presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
         } else {
-            dataStore?.selected = dataStore?.paymentMethod == .buyAch ? dataStore?.ach : dataStore?.cards.first
+            dataStore?.selected = dataStore?.paymentMethod == .ach ? dataStore?.ach : dataStore?.cards.first
             setAssets(viewAction: .init(card: dataStore?.selected))
         }
     }
@@ -112,13 +112,13 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         
         if dataStore?.selected?.cardType == .credit,
             containsDebitCard {
-            dataStore?.availablePayments.append(.buyCard)
+            dataStore?.availablePayments.append(.card)
         }
         if dataStore?.selected?.cardType == .debit,
-           dataStore?.paymentMethod == .buyCard,
+           dataStore?.paymentMethod == .card,
            dataStore?.ach != nil,
            dataStore?.toAmount?.currency.code == C.USDC {
-            dataStore?.availablePayments.append(.buyAch)
+            dataStore?.availablePayments.append(.ach)
         }
         
         presenter?.presentOrderPreview(actionResponse: .init(availablePayments: dataStore?.availablePayments))
@@ -132,7 +132,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
-        case .buyAch:
+        case .ach:
             guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else {
                 presenter?.presentUSDCMessage(actionResponse: .init())
                 return
@@ -140,7 +140,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             dataStore?.toAmount = .zero(currency)
             dataStore?.selected = dataStore?.ach
             
-        case .buyCard:
+        case .card:
             if dataStore?.autoSelectDefaultPaymentMethod == true {
                 dataStore?.selected = dataStore?.cards.first
             }
@@ -157,14 +157,14 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         
         switch viewAction.method {
-        case .buyAch:
+        case .ach:
             dataStore?.selected = dataStore?.ach
             
             presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
             
-        case .buyCard:
+        case .card:
             if dataStore?.autoSelectDefaultPaymentMethod == true {
-                if dataStore?.availablePayments.contains(.buyCard) == true {
+                if dataStore?.availablePayments.contains(.card) == true {
                     dataStore?.selected = dataStore?.cards.first(where: { $0.cardType == .debit })
                 } else {
                     dataStore?.selected = dataStore?.cards.first

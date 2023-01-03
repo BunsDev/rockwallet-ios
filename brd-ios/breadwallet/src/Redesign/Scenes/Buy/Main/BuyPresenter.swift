@@ -36,7 +36,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let paymentSegment = SegmentControlViewModel(selectedIndex: item.type)
         
         let paymentMethodViewModel: CardSelectionViewModel
-        if paymentSegment.selectedIndex == .buyAch && item.achEnabled == true {
+        if paymentSegment.selectedIndex == .ach && item.achEnabled == true {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)
@@ -75,7 +75,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         // TODO: refactor this :S
         switch actionResponse.type {
-        case .buyAch:
+        case .ach:
             if let paymentCard = actionResponse.card {
                 switch actionResponse.card?.status {
                 case .statusOk:
@@ -205,7 +205,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse) {
-        let message = actionResponse.method == .buyCard ? L10n.Buy.switchedToDebitCard : L10n.Buy.switchedToAch
+        let message = actionResponse.method == .card ? L10n.Buy.switchedToDebitCard : L10n.Buy.switchedToAch
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(message)),
                                                               config: Presets.InfoView.verification))
     }

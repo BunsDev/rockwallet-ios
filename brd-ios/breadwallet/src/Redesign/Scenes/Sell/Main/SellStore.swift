@@ -10,6 +10,7 @@ import UIKit
 
 class SellStore: NSObject, BaseDataStore, SellDataStore {
     
+    
     // MARK: - SellDataStore
     
     // ExchangeRateDaatStore
@@ -34,6 +35,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var ach: PaymentCard?
     var selected: PaymentCard?
     var cards: [PaymentCard] = []
+    var paymentMethod: PaymentCard.PaymentType? = .ach
     
     var currency: Currency?
     var coreSystem: CoreSystem?

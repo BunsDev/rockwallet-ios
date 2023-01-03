@@ -123,27 +123,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, paymentSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? CardSelectionViewModel
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-            
-            view.didTapSelectCard = { [weak self] in
-                    self?.interactor?.getPlaidToken(viewAction: .init())
-            }
-            
-            view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
-        }
-        return cell
-    }
-    
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
