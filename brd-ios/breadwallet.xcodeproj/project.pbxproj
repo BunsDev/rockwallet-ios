@@ -5472,7 +5472,7 @@
 			repositoryURL = "https://github.com/checkout/frames-ios.git";
 			requirement = {
 				kind = exactVersion;
-				version = 3.5.3;
+				version = 4.0.3;
 			};
 		};
 		7B2C9AFA27D9270B00D5135C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
