@@ -32,6 +32,7 @@ enum ExchangeErrors: FEError {
     case pendingSwap
     case selectAssets
     case authorizationFailed
+    case highFees
     
     var errorType: ServerResponse.ErrorType? {
         switch self {
@@ -121,6 +122,8 @@ enum ExchangeErrors: FEError {
         case .authorizationFailed:
             return L10n.ErrorMessages.authorizationFailed
             
+        case .highFees:
+            return L10n.ErrorMessages.highWidrawalFee
         }
     }
 }
