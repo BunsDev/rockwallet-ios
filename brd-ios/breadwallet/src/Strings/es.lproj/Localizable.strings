@@ -2943,6 +2943,10 @@
 /* Wipe wallet prompt */
 "UnlockScreen.wipePrompt" = "Are you sure you would like to wipe this wallet?";
 
+"UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
+
+"UpdatePin.Alert.title" = "What is a PIN?";
+
 /* Update PIN caption text */
 "UpdatePin.caption" = "Recuerda este PIN. Si lo olvidas, no podrás acceder a tu bitcoin.";
 
