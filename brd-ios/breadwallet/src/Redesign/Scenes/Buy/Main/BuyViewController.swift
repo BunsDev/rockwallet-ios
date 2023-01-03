@@ -248,8 +248,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayExchangeRate(responseDisplay: BuyModels.Rate.ResponseDisplay) {
-        tableView.beginUpdates()
-        
         if let cell = getRateAndTimerCell() {
             cell.setup { view in
                 view.setup(with: responseDisplay.rate)
@@ -269,8 +267,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 view.setup(with: responseDisplay.limits)
             }
         }
-        
-        tableView.endUpdates()
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {
@@ -331,23 +327,27 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             completion?()
         }
         
-        linkConfiguration.onExit = { exit in
-            if let error = exit.error {
-                print("exit with \(error)\n\(exit.metadata)")
-            } else {
-                print("exit with \(exit.metadata)")
+        linkConfiguration.onExit = { [weak self] exit in
+            guard let data = self?.mapStructToDictionary(item: exit).description else {
+                return
             }
+            PlaidErrorWorker().execute(requestData: PlaidErrorRequestData(error: data))
         }
         
-        linkConfiguration.onEvent = { event in
-            print("Link Event: \(event)")
+        linkConfiguration.onEvent = { [weak self] event in
+            guard let data = self?.mapStructToDictionary(item: event).description else {
+                return
+            }
+            PlaidEventWorker().execute(requestData: PlaidEventRequestData(event: data))
         }
         
         return linkConfiguration
     }
     
+    // is refactored in sprint 4
     func presentPlaidLinkUsingLinkToken(linkToken: String, completion: (() -> Void)? = nil) {
         let linkConfiguration = createLinkTokenConfiguration(linkToken: linkToken, completion: completion)
+        
         let result = Plaid.create(linkConfiguration)
         switch result {
         case .failure(let error):
@@ -356,5 +356,18 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             handler.open(presentUsing: .viewController(self))
             linkHandler = handler
         }
+    }
+    
+    private func mapStructToDictionary<T>(item: T) -> [String: Any] {
+        let dictionary = Dictionary(uniqueKeysWithValues:
+            Mirror(reflecting: item).children.lazy.map({ (label: String?, value: Any) in
+                if let label = label {
+                    return (label, value)
+                } else {
+                    return (Date().timeIntervalSince1970.description, value)
+                }
+            })
+        )
+        return dictionary.compactMapValues { $0 }
     }
 }
