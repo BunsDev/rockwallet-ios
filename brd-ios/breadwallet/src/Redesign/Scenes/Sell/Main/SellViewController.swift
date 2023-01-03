@@ -24,11 +24,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     
     var didTriggerGetExchangeRate: (() -> Void)?
     
-    lazy var continueButton: FEButton = {
-        let view = FEButton()
-        return view
-    }()
-    
     // MARK: - Overrides
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -50,22 +45,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         tableView.delaysContentTouches = false
         
     }
-    
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                         enabled: false,
-                                         callback: { [weak self] in
-            self?.buttonTapped()
-        }))
-        
-        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
-    }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Sections {

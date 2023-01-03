@@ -17,11 +17,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     typealias Models = BuyModels
     
-    lazy var continueButton: FEButton = {
-        let view = FEButton()
-        return view
-    }()
-    
     var plaidHandler: Handler?
     var didTriggerGetData: (() -> Void)?
     
@@ -50,21 +45,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         didTriggerGetData = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
-    }
-    
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.continueAction,
-                                         enabled: false,
-                                         callback: { [weak self] in
-            self?.buttonTapped()
-        }))
-        
-        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

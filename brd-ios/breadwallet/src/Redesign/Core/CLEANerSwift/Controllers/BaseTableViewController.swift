@@ -25,6 +25,11 @@ class BaseTableViewController<C: CoordinatableRoutes,
         let view = UIView()
         return view
     }()
+    
+    lazy var continueButton: FEButton = {
+        let view = FEButton()
+        return view
+    }()
 
     override func setupCloseButton(closeAction: Selector) {
         guard navigationItem.leftBarButtonItem?.image != closeImage,
@@ -461,6 +466,28 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         return cell
+    }
+    
+    override func setupVerticalButtons() {
+        super.setupVerticalButtons()
+        switch self {
+        case is SwapViewController,
+            is BuyViewController,
+            is SellViewController:
+            continueButton.configure(with: Presets.Button.primary)
+            continueButton.setup(with: .init(title: L10n.Button.confirm,
+                                             enabled: false,
+                                             callback: { [weak self] in
+                self?.buttonTapped()
+            }))
+            
+            guard let config = continueButton.config, let model = continueButton.viewModel else { return }
+            verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
+            verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
+            
+        default:
+            return
+        }
     }
     
     // MARK: UserInteractions

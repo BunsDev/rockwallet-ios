@@ -10,6 +10,11 @@
 
 import UIKit
 
+protocol ExchangeButtonsProtocol {
+    
+    func setupVerticalButtons()
+}
+
 class SwapViewController: BaseTableViewController<SwapCoordinator,
                           SwapInteractor,
                           SwapPresenter,
@@ -23,12 +28,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     }
     
     var didTriggerGetExchangeRate: (() -> Void)?
-    
-    lazy var continueButton: FEButton = {
-        let view = FEButton()
-        return view
-    }()
-    
+
     // MARK: - Overrides
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -46,21 +46,6 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         didTriggerGetExchangeRate = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
         }
-    }
-    
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                         enabled: false,
-                                         callback: { [weak self] in
-            self?.buttonTapped()
-        }))
-        
-        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
