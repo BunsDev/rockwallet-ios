@@ -438,6 +438,31 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
     }
     
+    func tableView(_ tableView: UITableView, paymentSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = sectionRows[section]?[indexPath.row] as? CardSelectionViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+            
+            view.didTapSelectCard = { [weak self] in
+                switch (self?.dataStore as? AchDataStore)?.paymentMethod {
+                case .ach:
+                    (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
+                default:
+                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true))
+                }
+            }
+        }
+        
+        return cell
+    }
+    
     // MARK: UserInteractions
     func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         // Override in subclass

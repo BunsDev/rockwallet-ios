@@ -121,37 +121,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             }
             
             view.didTapSelectAsset = { [weak self] in
-                if self?.dataStore?.paymentMethod == .buyCard {
+                if self?.dataStore?.paymentMethod == .card {
                     self?.interactor?.navigateAssetSelector(viewAction: .init())
                 }
             }
         }
         cell.setupCustomMargins(vertical: .large, horizontal: .large)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, paymentSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? CardSelectionViewModel
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-            
-            view.didTapSelectCard = { [weak self] in
-                switch self?.dataStore?.paymentMethod {
-                case .buyAch:
-                    self?.interactor?.getPlaidToken(viewAction: .init())
-                default:
-                    self?.interactor?.getPayments(viewAction: .init(openCards: true))
-                }
-            }
-        }
         
         return cell
     }
@@ -172,7 +147,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 self?.view.endEditing(true)
                 self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
                 guard (Store.state.currencies.first(where: { $0.code == C.USDC }) == nil) else { return }
-                view.setup(with: SegmentControlViewModel(selectedIndex: .buyCard))
+                view.setup(with: SegmentControlViewModel(selectedIndex: .card))
             }
         }
         
@@ -212,7 +187,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
         switch dataStore?.paymentMethod {
-        case .buyAch:
+        case .ach:
             if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDC }) {
                 supportedCurrencies = [usdCurrency]
             }
@@ -303,8 +278,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     @objc func updatePaymentMethod() {
         guard let availablePayments = dataStore?.availablePayments else { return }
         
-        dataStore?.paymentMethod = availablePayments.contains(.buyAch) == true ? .buyAch : .buyCard
-        interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .buyCard))
+        dataStore?.paymentMethod = availablePayments.contains(.ach) == true ? .ach : .card
+        interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .card))
     }
     
     private func mapStructToDictionary<T>(item: T) -> [String: Any] {

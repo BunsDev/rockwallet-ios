@@ -38,7 +38,7 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
     }
     
     private func mockData() {
-        let card = PaymentCard(type: .buyAch,
+        let card = PaymentCard(type: .ach,
                                id: "121",
                                fingerprint: "222",
                                expiryMonth: 5,

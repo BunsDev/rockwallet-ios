@@ -37,6 +37,7 @@ protocol AchDataStore {
     var selected: PaymentCard? { get set }
     var ach: PaymentCard? { get set }
     var cards: [PaymentCard] { get set }
+    var paymentMethod: PaymentCard.PaymentType? { get }
 }
 
 extension Interactor where Self: AchViewActions,
@@ -46,8 +47,8 @@ extension Interactor where Self: AchViewActions,
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.dataStore?.ach = data?.first(where: { $0.type == .buyAch })
-                self?.dataStore?.cards = data?.filter {$0.type == .buyCard } ?? []
+                self?.dataStore?.ach = data?.first(where: { $0.type == .ach })
+                self?.dataStore?.cards = data?.filter {$0.type == .card } ?? []
                 
             default:
                 break

@@ -185,7 +185,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                  currencyCode)
         let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: detail.destination.usdFee) ?? "",
                                     currencyCode)
-        let displayFeeTitle = detail.source.paymentInstrument.type == .buyCard ? L10n.Swap.cardFee :
+        let displayFeeTitle = detail.source.paymentInstrument.type == .card ? L10n.Swap.cardFee :
         L10n.Buy.achFee("$\(String(format: "%.2f", detail.destination.feeFixedRate?.doubleValue ?? 0.0)) + \(detail.destination.feeRate ?? 0)%")
         
         let method = PaymentMethodViewModel(methodTitle: .text(L10n.Buy.paymentMethod),

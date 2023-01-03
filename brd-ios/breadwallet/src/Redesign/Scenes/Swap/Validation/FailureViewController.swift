@@ -99,8 +99,8 @@ class FailureViewController: BaseInfoViewController {
     override var titleText: String? { return failure?.title }
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
-        let containsDebit = availablePayments?.contains(.buyCard) == true
-        let containsBankAccount = availablePayments?.contains(.buyAch) == true
+        let containsDebit = availablePayments?.contains(.card) == true
+        let containsBankAccount = availablePayments?.contains(.ach) == true
         if containsDebit || containsBankAccount {
             buttonTitle = containsDebit ? L10n.PaymentConfirmation.tryWithDebit : L10n.PaymentConfirmation.tryWithAch
         }
@@ -110,7 +110,7 @@ class FailureViewController: BaseInfoViewController {
                     self?.coordinator?.showSwap()
                 } else {
                     if containsDebit || containsBankAccount {
-                        self?.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .buyCard : .buyAch)
+                        self?.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .card : .ach)
                     } else {
                         self?.coordinator?.showBuy()
                     }
