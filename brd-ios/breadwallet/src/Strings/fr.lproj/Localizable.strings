@@ -80,6 +80,8 @@
 /* ID Verification title on account screen */
 "Account.IDVerification" = "Identifiant de vérification";
 
+"Account.LetsGetVerified" = "Let’s get you verified";
+
 /* Loading Wallet Message */
 "Account.loadingMessage" = "Chargement du portefeuille";
 
@@ -120,6 +122,10 @@
 
 "Account.UpgradeVerificationIdentity" = "Vous devez mettre à jour votre statut de vérification avant de pouvoir acheter des actifs.";
 
+"Account.VeriffPrivacyPolicy" = "Veriff’s Privacy Policy";
+
+"Account.VeriffTerms" = "Your session audio and video may be recorded.\nRead more from %s";
+
 /* You need to be at least 18 years old to complete Level 1 verification label in verify account */
 "Account.Verification" = "Vous devez avoir au moins 18 ans pour effectuer la vérification de niveau 1.";
 
@@ -138,6 +144,8 @@
 "Account.VerifyEmail" = "Indiquez et faites vérifier votre nouvelle adresse e-mail pour votre compte RockWallet.";
 
 "Account.VerifyIdentity" = "Nous devons vérifier votre identité avant que vous puissiez %s des actifs.";
+
+"Account.VerifyIdentityByVeriff" = "RockWallet would like to confirm your identity, a process is powered by Veriff.";
 
 "Account.VerifyIdentityPlain" = "Nous devons vérifier votre identité avant que vous ne puissiez acheter ou échanger des actifs.";
 
@@ -387,6 +395,8 @@
 /* Alert Subheader label (playfully positive) */
 "Alerts.paperKeySetSubheader" = "Impressionnant !";
 
+"Alerts.phraseConfirmed" = "Success!";
+
 /* Alert Header label (the PIN was set) */
 "Alerts.pinSet" = "Ensemble PIN";
 
@@ -525,6 +535,8 @@
 
 /* Ignore button label */
 "Button.ignore" = "Rejeter";
+
+"Button.letsGo" = "Let’s go!";
 
 /* Map button */
 "Button.map" = "Carte";

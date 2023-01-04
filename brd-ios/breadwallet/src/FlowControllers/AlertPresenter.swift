@@ -84,7 +84,8 @@ class AlertPresenter: Subscriber {
                         .sweepSuccess(let callback),
                         .cloudBackupRestoreSuccess(let callback),
                         .walletRestored(let callback),
-                        .walletUnlinked(callback: let callback):
+                        .walletUnlinked(callback: let callback),
+                        .recoveryPhraseConfirmed(callback: let callback):
                     callback()
                     
                 default:

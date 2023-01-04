@@ -111,15 +111,12 @@ class RecoveryKeyFlowController {
             case .abort:
                 dismissFlow()
             case .confirmKey:
-                
-                let fromOnboarding = (context == .onboarding)
-                let goToWallet = (context == .onboarding) ? dismissFlow : nil
-                
                 pushNext(ConfirmRecoveryKeyViewController(words: words,
                                                           keyMaster: keyMaster,
                                                           eventContext: eventContext,
                                                           confirmed: {
-                                                            pushNext(RecoveryKeyCompleteViewController(fromOnboarding: fromOnboarding, proceedToWallet: goToWallet))
+                    let goToWallet = (context == .onboarding) ? dismissFlow : nil
+                    Store.perform(action: Alert.Show(.recoveryPhraseConfirmed(callback: { goToWallet?() })))
                 }))
             default:
                 break
