@@ -80,6 +80,8 @@
 /* ID Verification title on account screen */
 "Account.IDVerification" = "ID Verification";
 
+"Account.LetsGetVerified" = "Let’s get you verified";
+
 /* Loading Wallet Message */
 "Account.loadingMessage" = "Laddar plånbok";
 
@@ -92,7 +94,7 @@
 "Account.PersonalInformation" = "Personal Information";
 
 /* Promotion and offers label when registering account */
-"Account.Promotion" = "I'm ok with receiving future promotion, offers and communications";
+"Account.Promotion" = "I'm ok with receiving future promotion, offers, and communications";
 
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
@@ -120,6 +122,10 @@
 
 "Account.UpgradeVerificationIdentity" = "You need to upgrade your verification status before you can buy assets.";
 
+"Account.VeriffPrivacyPolicy" = "Veriff’s Privacy Policy";
+
+"Account.VeriffTerms" = "Your session audio and video may be recorded.\nRead more from %s";
+
 /* You need to be at least 18 years old to complete Level 1 verification label in verify account */
 "Account.Verification" = "You need to be at least 18 years old to complete Level 1 verification";
 
@@ -138,6 +144,8 @@
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
 
 "Account.VerifyIdentity" = "We need to verify your identity before you can %s assets.";
+
+"Account.VerifyIdentityByVeriff" = "RockWallet would like to confirm your identity, a process is powered by Veriff.";
 
 "Account.VerifyIdentityPlain" = "We need to verify your identity before you can buy or swap assets.";
 
@@ -387,6 +395,8 @@
 /* Alert Subheader label (playfully positive) */
 "Alerts.paperKeySetSubheader" = "Härligt!";
 
+"Alerts.phraseConfirmed" = "Success!";
+
 /* Alert Header label (the PIN was set) */
 "Alerts.pinSet" = "PIN-kod är inställd";
 
@@ -526,6 +536,8 @@
 /* Ignore button label */
 "Button.ignore" = "Ignorera";
 
+"Button.letsGo" = "Let’s go!";
+
 /* Map button */
 "Button.map" = "Map";
 
@@ -607,7 +619,7 @@
 
 "Buy.achFee" = "ACH fee (%s)";
 
-"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.\n\nIt currently takes 7-10 days to process a purchase with ACH";
+"Buy.achLimits" = "Currently, minimum is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.\n\nIt currently takes 7-10 days to process a purchase with ACH";
 
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
 
@@ -1009,7 +1021,7 @@
 "ErrorMessages.balanceTooLow" = "You need %s %s in your wallet to cover network fees. Please add more %s to your wallet.";
 
 /* Check your internet connection message */
-"ErrorMessages.CheckInternet" = "Please, check your internet connection and try again later.";
+"ErrorMessages.CheckInternet" = "Please check your internet connection and try again later.";
 
 "ErrorMessages.default" = "Something went wrong! Try again later.";
 
@@ -2942,6 +2954,10 @@
 
 /* Wipe wallet prompt */
 "UnlockScreen.wipePrompt" = "Are you sure you would like to wipe this wallet?";
+
+"UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
+
+"UpdatePin.Alert.title" = "What is a PIN?";
 
 /* Update PIN caption text */
 "UpdatePin.caption" = "Kom ihåg PIN-koden. Om du glömmer den, kommer du inte åt dina bitcoin.";

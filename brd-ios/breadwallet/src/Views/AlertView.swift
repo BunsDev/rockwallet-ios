@@ -20,6 +20,7 @@ enum AlertType {
     case cloudBackupSuccess
     case walletRestored(callback: () -> Void)
     case walletUnlinked(callback: () -> Void)
+    case recoveryPhraseConfirmed(callback: () -> Void)
     case none
 
     var header: String {
@@ -44,6 +45,8 @@ enum AlertType {
             return ""
         case .none:
             return "none"
+        case .recoveryPhraseConfirmed:
+            return L10n.Alerts.phraseConfirmed
         }
     }
 
