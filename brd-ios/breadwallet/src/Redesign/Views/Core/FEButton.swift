@@ -135,15 +135,15 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         }
         
         if let image = viewModel.image {
-            if title == nil {
-                setBackgroundImage(image, for: .normal)
-            } else {
-                var config = configuration ?? UIButton.Configuration.filled()
-                config.image = image
-                config.imagePlacement = .leading
-                configuration = config
-            }
-        }
+             var config = configuration ?? UIButton.Configuration.filled()
+             config.image = image
+             if title == nil {
+                 config.imagePlacement = .all
+             } else {
+                 config.imagePlacement = .leading
+             }
+             configuration = config
+         }
         
         isEnabled = viewModel.enabled
         
