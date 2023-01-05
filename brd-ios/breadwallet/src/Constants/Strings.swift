@@ -1705,6 +1705,8 @@ internal enum L10n {
     internal static let successHeading = L10n.tr("Localizable", "RecoveryKeyFlow.successHeading", fallback: "Congratulations! You completed your Recovery Phrase setup.")
     /// Subtitle for the success page after the recovery key has been set up
     internal static let successSubheading = L10n.tr("Localizable", "RecoveryKeyFlow.successSubheading", fallback: "You're all set to deposit, swap, and buy crypto from your RockWallet.")
+    /// Secure your wallet with your Recovery Phrase
+    internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.Title", fallback: "Secure your wallet with your Recovery Phrase")
     /// Title displayed to the user on the intro screen when unlinking a wallet
     internal static let unlinkWallet = L10n.tr("Localizable", "RecoveryKeyFlow.unlinkWallet", fallback: "Unlink your wallet from this device.")
     /// Subtitle displayed to the user on the intro screen when unlinking a wallet.
@@ -1726,6 +1728,36 @@ internal enum L10n {
     /// Title for the step number when the user pages through the recovery words
     internal static func writeKeyStepTitle(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyStepTitle", String(describing: p1), String(describing: p2), fallback: "%1$@ of %2$@")
+    }
+    internal enum HelpPopup {
+      /// Your Recovery Phrase consists of 12 randomly generated words that the wallet creates for you automatically when you start a new wallet.
+      /// 
+      /// The Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The Recovery Phrase is also required when upgrading your current phone to a new one.
+      internal static let content = L10n.tr("Localizable", "RecoveryKeyFlow.HelpPopup.content", fallback: "Your Recovery Phrase consists of 12 randomly generated words that the wallet creates for you automatically when you start a new wallet.\n\nThe Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The Recovery Phrase is also required when upgrading your current phone to a new one.")
+      /// What is “Recovery Phrase”?
+      internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.HelpPopup.title", fallback: "What is “Recovery Phrase”?")
+    }
+    internal enum KeepPhrasePrivate {
+      /// Remember that anyone with your Recovery Phrase can access your Assets.
+      internal static let subtitle = L10n.tr("Localizable", "RecoveryKeyFlow.KeepPhrasePrivate.subtitle", fallback: "Remember that anyone with your Recovery Phrase can access your Assets.")
+      /// Keep it private
+      internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.KeepPhrasePrivate.title", fallback: "Keep it private")
+    }
+    internal enum StorePhraseSecurely {
+      /// This is the only way you’ll be able to recover your funds. RockWallet does not keep a copy.
+      internal static let subtitle = L10n.tr("Localizable", "RecoveryKeyFlow.StorePhraseSecurely.subtitle", fallback: "This is the only way you’ll be able to recover your funds. RockWallet does not keep a copy.")
+      /// Store it securely
+      internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.StorePhraseSecurely.title", fallback: "Store it securely")
+    }
+    internal enum WritePhrase {
+      /// Save your 12 word security phrase generated  in the next step.
+      internal static let subtitle = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.subtitle", fallback: "Save your 12 word security phrase generated  in the next step.")
+      /// Write it down
+      internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.title", fallback: "Write it down")
+    }
+    internal enum Tickbox {
+      /// I understand the importance of the Recovery Phrase.
+      internal static let value = L10n.tr("Localizable", "RecoveryKeyFlow.tickbox.value", fallback: "I understand the importance of the Recovery Phrase.")
     }
   }
   internal enum RecoveryKeyOnboarding {

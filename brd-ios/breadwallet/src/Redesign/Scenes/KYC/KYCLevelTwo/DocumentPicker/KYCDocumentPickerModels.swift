@@ -12,7 +12,7 @@ import UIKit
 enum KYCDocumentPickerModels {
     typealias Item = [Document]
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case title
         case documents
         

@@ -56,7 +56,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         termsText.append(interactableText)
         
-        var sections: [Models.Sections] = [
+        var sections: [Models.Section] = [
             .orderInfoCard,
             .payment,
             .termsAndConditions,
@@ -67,7 +67,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             sections.insert(.achNotification, at: 0)
         }
         
-        let sectionRows: [Models.Sections: [Any]] = [
+        let sectionRows: [Models.Section: [Any]] = [
             .achNotification: [
                 achNotificationModel
             ],

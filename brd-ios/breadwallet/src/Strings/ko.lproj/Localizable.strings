@@ -1783,11 +1783,19 @@
 /* Title for a button that takes the user to the wallet after setting up the recovery key. */
 "RecoveryKeyFlow.goToWalletButtonTitle" = "지갑으로 이동";
 
+"RecoveryKeyFlow.HelpPopup.content" = "Your Recovery Phrase consists of 12 randomly generated words that the wallet creates for you automatically when you start a new wallet.\n\nThe Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The Recovery Phrase is also required when upgrading your current phone to a new one.";
+
+"RecoveryKeyFlow.HelpPopup.title" = "What is “Recovery Phrase”?";
+
 /* Hint text for recovery key intro page, e.g., Step 2 */
 "RecoveryKeyFlow.howItWorksStep" = "작동 원리 - %1$@ 단계";
 
 /* Error text displayed when the user enters an incorrect recovery phrase */
 "RecoveryKeyFlow.invalidPhrase" = "입력 한 단어 중 일부가 복구 문구와 일치하지 않습니다. 다시 시도하십시오.";
+
+"RecoveryKeyFlow.KeepPhrasePrivate.subtitle" = "Remember that anyone with your Recovery Phrase can access your Assets.";
+
+"RecoveryKeyFlow.KeepPhrasePrivate.title" = "Keep it private";
 
 /* Title for recovery key intro page */
 "RecoveryKeyFlow.keepSecure" = "안전하게 보관하세요.";
@@ -1819,6 +1827,10 @@
 /* Assures the user that BRD will keep the user's funds secure. */
 "RecoveryKeyFlow.securityAssurance" = "비즈니스 최고의 보안과 개인정보 보호정책으로 자금이 보호받는다는 사실을 인지하며 구매하고 거래하세요.";
 
+"RecoveryKeyFlow.StorePhraseSecurely.subtitle" = "This is the only way you’ll be able to recover your funds. RockWallet does not keep a copy.";
+
+"RecoveryKeyFlow.StorePhraseSecurely.title" = "Store it securely";
+
 /* Recommends that the user stores the recovery key in a secure location */
 "RecoveryKeyFlow.storeSecurelyRecommendation" = "안전한 장소에 키를 보관하세요. 지갑을 복구할 유일한 방법입니다. BRD는 복사본을 보관하지 않습니다.";
 
@@ -1827,6 +1839,10 @@
 
 /* Subtitle for the success page after the recovery key has been set up */
 "RecoveryKeyFlow.successSubheading" = "BRD 지갑에서 암호화화폐를 예금하고 거래하고 구매할 준비가 끝났습니다.";
+
+"RecoveryKeyFlow.tickbox.value" = "I understand the importance of the Recovery Phrase.";
+
+"RecoveryKeyFlow.Title" = "Secure your wallet with your Recovery Phrase";
 
 /* Title displayed to the user on the intro screen when unlinking a wallet */
 "RecoveryKeyFlow.unlinkWallet" = "이 기기에서 지갑 연결을 해제합니다.";
@@ -1857,6 +1873,10 @@
 
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%2$@ 중 %1$@";
+
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word security phrase generated  in the next step.";
+
+"RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
 "RecoveryKeyOnboarding.description1" = "This is required to restore your wallet if you upgrade or lose your phone.";
 

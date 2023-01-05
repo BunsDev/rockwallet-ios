@@ -1783,11 +1783,19 @@
 /* Title for a button that takes the user to the wallet after setting up the recovery key. */
 "RecoveryKeyFlow.goToWalletButtonTitle" = "Gå til Tegnebog";
 
+"RecoveryKeyFlow.HelpPopup.content" = "Your Recovery Phrase consists of 12 randomly generated words that the wallet creates for you automatically when you start a new wallet.\n\nThe Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The Recovery Phrase is also required when upgrading your current phone to a new one.";
+
+"RecoveryKeyFlow.HelpPopup.title" = "What is “Recovery Phrase”?";
+
 /* Hint text for recovery key intro page, e.g., Step 2 */
 "RecoveryKeyFlow.howItWorksStep" = "Sådan fungerer det - Trin %1$@";
 
 /* Error text displayed when the user enters an incorrect recovery phrase */
 "RecoveryKeyFlow.invalidPhrase" = "Nogle af de ord, du indtastede, stemmer ikke overens med din gendannelsesfrase. Prøv igen.";
+
+"RecoveryKeyFlow.KeepPhrasePrivate.subtitle" = "Remember that anyone with your Recovery Phrase can access your Assets.";
+
+"RecoveryKeyFlow.KeepPhrasePrivate.title" = "Keep it private";
 
 /* Title for recovery key intro page */
 "RecoveryKeyFlow.keepSecure" = "Hold den sikker";
@@ -1819,6 +1827,10 @@
 /* Assures the user that BRD will keep the user's funds secure. */
 "RecoveryKeyFlow.securityAssurance" = "Køb og handel vel vidende, at dine midler er beskyttet af den bedste sikkerhed og privatlivspolitik i branchen.";
 
+"RecoveryKeyFlow.StorePhraseSecurely.subtitle" = "This is the only way you’ll be able to recover your funds. RockWallet does not keep a copy.";
+
+"RecoveryKeyFlow.StorePhraseSecurely.title" = "Store it securely";
+
 /* Recommends that the user stores the recovery key in a secure location */
 "RecoveryKeyFlow.storeSecurelyRecommendation" = "Gem din nøgle på et sikkert sted. Dette er den eneste måde at genoprette din tegnebog på. RockWallet beholder ikke en kopi.";
 
@@ -1827,6 +1839,10 @@
 
 /* Subtitle for the success page after the recovery key has been set up */
 "RecoveryKeyFlow.successSubheading" = "Du er klar til at indbetale, handle og købe krypto fra din RockWallet-tegnebog.";
+
+"RecoveryKeyFlow.tickbox.value" = "I understand the importance of the Recovery Phrase.";
+
+"RecoveryKeyFlow.Title" = "Secure your wallet with your Recovery Phrase";
 
 /* Title displayed to the user on the intro screen when unlinking a wallet */
 "RecoveryKeyFlow.unlinkWallet" = "Fjern forbindelsen til din tegnebog fra denne enhed.";
@@ -1857,6 +1873,10 @@
 
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%1$@ af %2$@";
+
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word security phrase generated  in the next step.";
+
+"RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
 "RecoveryKeyOnboarding.description1" = "This is required to restore your wallet if you upgrade or lose your phone.";
 

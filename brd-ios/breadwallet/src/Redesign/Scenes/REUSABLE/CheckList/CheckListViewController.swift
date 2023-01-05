@@ -35,13 +35,13 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
     
     override func prepareData() {
         sections = [
-            Models.Sections.title,
-            Models.Sections.checkmarks
+            Models.Section.title,
+            Models.Section.checkmarks
         ]
         
         sectionRows = [
-            Models.Sections.title: [checklistTitle],
-            Models.Sections.checkmarks: checkmarks
+            Models.Section.title: [checklistTitle],
+            Models.Section.checkmarks: checkmarks
         ]
         
         super.prepareData()
@@ -49,7 +49,7 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .title:
             cell =  self.tableView(tableView, labelCellForRowAt: indexPath)
             (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.six, textColor: LightColors.Text.three))

@@ -27,7 +27,7 @@ class KYCDocumentPickerViewController: BaseTableViewController<KYCCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .title:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             cell.setupCustomMargins(vertical: .large, horizontal: .large)
@@ -63,7 +63,7 @@ class KYCDocumentPickerViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .documents:
             interactor?.selectDocument(viewAction: .init(index: indexPath.row))
             

@@ -18,15 +18,14 @@ final class DocumentReviewPresenter: NSObject, Presenter, DocumentReviewActionRe
         guard let item = actionResponse.item as? Models.Item,
         let image = item.image else { return }
         
-        let sections: [Models.Sections] =  [
+        let sections: [Models.Section] =  [
             .title,
             .checkmarks,
             .image,
             .buttons
         ]
         
-        // HMM
-        let sectionRows: [Models.Sections: [Any]] = [
+        let sectionRows: [Models.Section: [Any]] = [
             .title: [LabelViewModel.text(L10n.Account.beforeConfirm)],
             .checkmarks: item.checklist ?? [],
             .image: [ImageViewModel.photo(image)],

@@ -82,5 +82,5 @@ enum ViewSizes: CGFloat {
     /// 100
     case extraExtraHuge = 100.0
     /// Illustration
-    case illustration = 180.0
+    case illustration = 116.0
 }
