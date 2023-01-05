@@ -73,8 +73,18 @@ class NewDeviceWorker: BaseApiWorker<NewDeviceMapper> {
         
         // Update sardine conig
         var options = UpdateOptions()
-        options.sessionKey = sessionKey
-        options.userIdHash = email
+        var hasChanges = false
+        if email != options.userIdHash {
+            options.userIdHash = email
+            hasChanges = true
+        }
+        
+        if sessionKey != options.sessionKey {
+            options.sessionKey = sessionKey
+            hasChanges = true
+        }
+        
+        guard hasChanges else { return }
         MobileIntelligence.updateOptions(options: options)
     }
     
