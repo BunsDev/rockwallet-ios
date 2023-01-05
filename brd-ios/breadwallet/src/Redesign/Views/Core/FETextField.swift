@@ -56,8 +56,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     var displayState: DisplayState = .normal
     
     var contentSizeChanged: (() -> Void)?
-    var valueChanged: ((String?) -> Void)?
+    var valueChanged: ((UITextField) -> Void)?
     var didTapTrailingView: (() -> Void)?
+    var didPasteText: ((String) -> Void)?
     
     override var isUserInteractionEnabled: Bool {
         get {
@@ -138,6 +139,8 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         return view
     }()
     
+    var delegate: UITextFieldDelegate?
+    
     override func setupSubviews() {
         super.setupSubviews()
         
@@ -179,7 +182,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textFieldStack.addArrangedSubview(textField)
         
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        textField.delegate = self
+        textField.delegate = delegate ?? self
         
         let tapped = UITapGestureRecognizer(target: self, action: #selector(startEditing))
         addGestureRecognizer(tapped)
@@ -264,7 +267,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        valueChanged?(textField.text)
+        valueChanged?(textField)
         contentSizeChanged?()
     }
     
@@ -324,5 +327,16 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         }
         
         UIView.setAnimationsEnabled(true)
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard E.isDebug || E.isTestFlight else { return true }
+        if string.count > 1,
+           string.count == UIPasteboard.general.string?.count,
+           let didPasteText = didPasteText {
+            didPasteText(string)
+            return false
+        }
+        return true
     }
 }

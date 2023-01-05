@@ -100,7 +100,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didTypeCVV = { [weak self] cvv in
-                self?.interactor?.updateCvv(viewAction: .init(cvv: cvv))
+                self?.interactor?.updateCvv(viewAction: .init(cvv: cvv.text))
             }
             
             view.didTapCvvInfo = { [weak self] in

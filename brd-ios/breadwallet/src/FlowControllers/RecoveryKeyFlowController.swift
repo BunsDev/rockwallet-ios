@@ -109,7 +109,11 @@ class RecoveryKeyFlowController {
         let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { (action, words) in
             switch action {
             case .abort:
-                dismissFlow()
+                self.promptToSetUpRecoveryKeyLater(from: viewController) { userWantsToSetUpLater in
+                    guard userWantsToSetUpLater else { return }
+                    dismissFlow()
+                }
+                
             case .confirmKey:
                 pushNext(ConfirmRecoveryKeyViewController(words: words,
                                                           keyMaster: keyMaster,
@@ -118,6 +122,7 @@ class RecoveryKeyFlowController {
                     let goToWallet = (context == .onboarding) ? dismissFlow : nil
                     Store.perform(action: Alert.Show(.recoveryPhraseConfirmed(callback: { goToWallet?() })))
                 }))
+                
             default:
                 break
             }
@@ -134,25 +139,14 @@ class RecoveryKeyFlowController {
                                         navigationController: recoveryKeyNavController,
                                         keyMaster: keyMaster,
                                         pinResponse: { (responsePin) in
-                                            
-                                            guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
-                                            
-                                            pushNext(WriteRecoveryKeyViewController(keyMaster: keyMaster,
-                                                                                    pin: responsePin,
-                                                                                    mode: recoveryKeyMode,
-                                                                                    eventContext: eventContext,
-                                                                                    dismissAction: dismissAction,
-                                                                                    exitCallback: { (action) in
-                                                                                        let words = phrase.components(separatedBy: " ")
-                                                                                        handleWriteKeyResult(action, words)
-                                            }))
+                    guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
+                    pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, handleWriteKeyResult)))
                 })
 
             case .writeKey:
                 break
                 
             case .abort:
-                
                 // The onboarding flow has its own dismiss action.
                 if let dismissAction = dismissAction {
                     dismissAction()

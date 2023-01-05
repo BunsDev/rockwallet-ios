@@ -117,12 +117,12 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         secondaryTextField.setup(with: viewModel?.secondary)
         
         primaryTextField.valueChanged = { [weak self] in
-            self?.first = $0
+            self?.first = $0.text
             self?.stateChanged()
         }
         
         secondaryTextField.valueChanged = { [weak self] in
-            self?.second = $0
+            self?.second = $0.text
             self?.stateChanged()
         }
         

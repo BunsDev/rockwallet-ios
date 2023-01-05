@@ -116,12 +116,12 @@ class BankCardInputDetailsView: FEView<BankCardInputDetailsViewConfiguration, Ba
         cvvTextField.setup(with: viewModel?.cvv)
         
         numberTextField.valueChanged = { [weak self] in
-            self?.number = $0
+            self?.number = $0.text
             self?.stateChanged()
         }
         
         cvvTextField.valueChanged = { [weak self] in
-            self?.cvv = $0
+            self?.cvv = $0.text
             self?.stateChanged()
         }
         
