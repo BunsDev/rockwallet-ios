@@ -64,9 +64,16 @@ class UpdatePinViewController: UIViewController, Subscriber {
     
     private var shouldShowFAQButton: Bool {
         if type == .recoverBackup { return false }
-        // Don't show the FAQ button during onboarding because we don't have the wallet/authentication
-        // initialized yet, and therefore can't open platform content.
-        return eventContext != .onboarding
+        switch type {
+        case .recoverBackup, .creationWithPhrase:
+            return false
+            
+        case .creationNoPhrase:
+            return true
+            
+        default:
+            return eventContext != .onboarding
+        }
     }
     
     private var step: Step = .verify {
@@ -244,11 +251,9 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
     
     func faqButtonPressed() {
-        let text = L10n.UpdatePin.updatePinPopup
-        
-        let model = PopupViewModel(title: .text(L10n.UpdatePin.whyPIN),
-                                   body: text)
-        
+        let model = PopupViewModel(title: .text(L10n.UpdatePin.Alert.title),
+                                            body: L10n.UpdatePin.Alert.body,
+                                            closeButton: .init(image: Asset.close.image))
         showInfoPopup(with: model)
     }
 
