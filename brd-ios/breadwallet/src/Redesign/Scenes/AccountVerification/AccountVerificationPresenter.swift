@@ -21,7 +21,7 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
         let levelTwoStatus: VerificationStatus
         let description = item.failureReason ?? L10n.Account.idVerification
         
-        if item.status.value.contains("KYC2") {
+        if item.status.value.contains(Kyc2.levelTwo.rawValue) {
             levelOneStatus = .levelOne
             levelTwoStatus = item.status
         } else {

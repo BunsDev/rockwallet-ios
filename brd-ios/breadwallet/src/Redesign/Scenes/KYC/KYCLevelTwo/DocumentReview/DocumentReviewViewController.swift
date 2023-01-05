@@ -26,7 +26,7 @@ class DocumentReviewViewController: BaseTableViewController<KYCCoordinator,
     // MARK: - Overrides
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .title:
             cell =  self.tableView(tableView, labelCellForRowAt: indexPath)
             (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.six, textColor: LightColors.Text.three))

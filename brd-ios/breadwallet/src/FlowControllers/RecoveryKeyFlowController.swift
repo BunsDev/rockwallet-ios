@@ -61,11 +61,9 @@ class RecoveryKeyFlowController {
                                      canExit: Bool = true) {
         
         let isGeneratingKey = UserDefaults.walletRequiresBackup
-        let recoveryKeyMode: EnterRecoveryKeyMode = isGeneratingKey ? .generateKey : .writeKey
         let eventContext = (context == .none) ? (isGeneratingKey ? .generateKey : .writeKey) : context
         
         let recoveryKeyNavController = RecoveryKeyFlowController.makeNavigationController()
-        
         var baseNavigationController: RootNavigationController?
         var modalPresentingViewController: UIViewController?
         
@@ -76,11 +74,6 @@ class RecoveryKeyFlowController {
             modalPresentingViewController = viewController
         } else if let nc = viewController as? RootNavigationController {
             baseNavigationController = nc
-        }
-        
-        var exitButtonType: RecoveryKeyIntroExitButtonType = .none
-        if canExit {
-            exitButtonType = modalPresentation ? .closeButton : .backButton
         }
         
         // dismisses the entire recovery key flow
@@ -128,11 +121,9 @@ class RecoveryKeyFlowController {
             }
         }
         
-        // the landing page for setting up the recovery key.
-        let introVC = RecoveryKeyIntroViewController(mode: recoveryKeyMode,
-                                                     eventContext: eventContext,
-                                                     exitButtonType: exitButtonType,
-                                                     exitCallback: { (exitAction) in
+        // The landing page for setting up the recovery key.
+        let introVC = RecoveryKeyIntroViewController()
+        introVC.exitCallback = { exitAction in
             switch exitAction {
             case .generateKey:
                 self.ensurePinAvailable(pin: pin,
@@ -143,21 +134,10 @@ class RecoveryKeyFlowController {
                     pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, handleWriteKeyResult)))
                 })
 
-            case .writeKey:
-                break
-                
-            case .abort:
-                // The onboarding flow has its own dismiss action.
-                if let dismissAction = dismissAction {
-                    dismissAction()
-                } else {
-                    modalPresentingViewController?.dismiss(animated: true, completion: nil)
-                }
-                
             default:
                 break
             }
-        })
+        }
         
         if modalPresentation {
             recoveryKeyNavController.viewControllers = [introVC]
@@ -178,16 +158,14 @@ class RecoveryKeyFlowController {
             navController.pushViewController(enterPhraseVC, animated: true)
         }
         
-        let introVC = RecoveryKeyIntroViewController(mode: .unlinkWallet,
-                                                     eventContext: .none,
-                                                     exitButtonType: .closeButton,
-                                                     exitCallback: { (action) in
-                                                        if action == .unlinkWallet {
-                                                            enterPhrase()
-                                                        } else if action == .abort {
-                                                            navController.dismiss(animated: true, completion: nil)
-                                                        }
-        })
+        let introVC = RecoveryKeyIntroViewController()
+        introVC.exitCallback = { action in
+            if action == .unlinkWallet {
+                enterPhrase()
+            } else if action == .abort {
+                navController.dismiss(animated: true, completion: nil)
+            }
+        }
 
         navController.viewControllers = [introVC]
         viewController.present(navController, animated: true, completion: nil)

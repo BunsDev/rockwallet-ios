@@ -14,6 +14,8 @@ struct TitleValueConfiguration: Configurable {
     var title: LabelConfiguration
     var value: LabelConfiguration
     var infoButtonConfiguration: BackgroundConfiguration?
+    var shadow: ShadowConfiguration?
+    var background: BackgroundConfiguration?
     
     func withTextAlign(textAlign: NSTextAlignment) -> TitleValueConfiguration {
         var copy = self
@@ -64,9 +66,11 @@ class TitleValueView: FEView<TitleValueConfiguration, TitleValueViewModel> {
     override func setupSubviews() {
         super.setupSubviews()
         
+        content.setupCustomMargins(vertical: .zero, horizontal: .zero)
+        
         content.addSubview(mainStack)
         mainStack.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(content.snp.margins)
         }
         
         mainStack.addArrangedSubview(titleLabel)
@@ -88,6 +92,12 @@ class TitleValueView: FEView<TitleValueConfiguration, TitleValueViewModel> {
         titleLabel.configure(with: config.title)
         infoButton.configure(with: config.infoButtonConfiguration)
         valueLabel.configure(with: config.value)
+        
+        shadowView = self
+        backgroundView = self
+        
+        configure(background: config.background)
+        configure(shadow: config.shadow)
     }
     
     override func setup(with viewModel: TitleValueViewModel?) {
