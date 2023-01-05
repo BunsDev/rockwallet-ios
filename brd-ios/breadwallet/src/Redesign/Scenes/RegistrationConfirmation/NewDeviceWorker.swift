@@ -10,6 +10,7 @@
 
 import UIKit
 import WalletKit
+import MobileIntelligence
 
 struct NewDeviceResponseData: ModelResponse {
     var status: String?
@@ -61,6 +62,20 @@ class NewDeviceWorker: BaseApiWorker<NewDeviceMapper> {
             "Date": dateString,
             "Signature": signature
         ]
+    }
+    
+    override func apiCallDidFinish(response: HTTPResponse) {
+        super.apiCallDidFinish(response: response)
+        guard let result = result,
+              let email = result.email,
+              let sessionKey = result.sessionKey
+        else { return }
+        
+        // Update sardine conig
+        var options = UpdateOptions()
+        options.sessionKey = sessionKey
+        options.userIdHash = email
+        MobileIntelligence.updateOptions(options: options)
     }
     
     override func getUrl() -> String {

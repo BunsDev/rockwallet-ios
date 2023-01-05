@@ -10,7 +10,6 @@ import UIKit
 
 class SellStore: NSObject, BaseDataStore, SellDataStore {
     
-    
     // MARK: - SellDataStore
     
     // ExchangeRateDaatStore
