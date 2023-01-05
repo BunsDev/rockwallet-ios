@@ -97,7 +97,6 @@
 		71249918222046EB00BEA491 /* PromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71249917222046EB00BEA491 /* PromptTests.swift */; };
 		7138BABB223062F50059091E /* NotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7138BABA223062F40059091E /* NotificationTests.swift */; };
 		713CD8872240117A004657D4 /* RecoveryKeyFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713CD8862240117A004657D4 /* RecoveryKeyFlowController.swift */; };
-		713CD88A2240198A004657D4 /* RecoveryKeyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */; };
 		7141BB5B2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */; };
 		7141BB5D2249543600F7ECF2 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141BB5C2249543600F7ECF2 /* InfoView.swift */; };
 		716F824321F91D9A0064E6F4 /* AppRatingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */; };
@@ -130,6 +129,13 @@
 		7B0E34CA28ABA73900D15180 /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */; };
 		7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */; };
 		7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */; };
+		7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */; };
+		7B2BF28629659D850037E731 /* RecoveryKeyIntroVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */; };
+		7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */; };
+		7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */; };
+		7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */; };
+		7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */; };
+		7B2BF28C2966B0900037E731 /* FETitleSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28B2966B0900037E731 /* FETitleSubtitleView.swift */; };
 		7B2C9AFC27D9270B00D5135C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2C9AFB27D9270B00D5135C /* IQKeyboardManagerSwift */; };
 		7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5047289800BB008CACD8 /* FieldValidator.swift */; };
 		7B2E5052289A5F02008CACD8 /* AddCardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E504C289A5F02008CACD8 /* AddCardStore.swift */; };
@@ -889,7 +895,6 @@
 		71249917222046EB00BEA491 /* PromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptTests.swift; sourceTree = "<group>"; };
 		7138BABA223062F40059091E /* NotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTests.swift; sourceTree = "<group>"; };
 		713CD8862240117A004657D4 /* RecoveryKeyFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecoveryKeyFlowController.swift; path = src/FlowControllers/RecoveryKeyFlowController.swift; sourceTree = "<group>"; };
-		713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecoveryKeyIntroViewController.swift; path = src/ViewControllers/RecoveryKey/RecoveryKeyIntroViewController.swift; sourceTree = "<group>"; };
 		7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WriteRecoveryKeyViewController.swift; path = src/ViewControllers/RecoveryKey/WriteRecoveryKeyViewController.swift; sourceTree = "<group>"; };
 		7141BB5C2249543600F7ECF2 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfoView.swift; path = src/Views/InfoView.swift; sourceTree = "<group>"; };
 		716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingManagerTests.swift; sourceTree = "<group>"; };
@@ -933,6 +938,13 @@
 		7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsWorker.swift; sourceTree = "<group>"; };
 		7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCurrencyHelper.swift; sourceTree = "<group>"; };
+		7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroInteractor.swift; sourceTree = "<group>"; };
+		7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroVIP.swift; sourceTree = "<group>"; };
+		7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroPresenter.swift; sourceTree = "<group>"; };
+		7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroStore.swift; sourceTree = "<group>"; };
+		7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroViewController.swift; sourceTree = "<group>"; };
+		7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroModels.swift; sourceTree = "<group>"; };
+		7B2BF28B2966B0900037E731 /* FETitleSubtitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FETitleSubtitleView.swift; sourceTree = "<group>"; };
 		7B2E5047289800BB008CACD8 /* FieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidator.swift; sourceTree = "<group>"; };
 		7B2E504C289A5F02008CACD8 /* AddCardStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardStore.swift; sourceTree = "<group>"; };
 		7B2E504D289A5F02008CACD8 /* AddCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
@@ -1749,7 +1761,7 @@
 		713CD88822401946004657D4 /* RecoverKey */ = {
 			isa = PBXGroup;
 			children = (
-				713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */,
+				7B2BF27E29659CD00037E731 /* RecoveryKeyIntro */,
 				7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */,
 				71C44E8F225D135E00EF4459 /* ConfirmRecoveryKeyViewController.swift */,
 				71C44E91225F95B100EF4459 /* RecoveryKeyCompleteViewController.swift */,
@@ -1937,6 +1949,19 @@
 				7B02D62B28592FE700C5C384 /* KYCCameraShutter.swift */,
 			);
 			path = CameraHelper;
+			sourceTree = "<group>";
+		};
+		7B2BF27E29659CD00037E731 /* RecoveryKeyIntro */ = {
+			isa = PBXGroup;
+			children = (
+				7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */,
+				7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */,
+				7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */,
+				7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */,
+				7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */,
+				7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */,
+			);
+			name = RecoveryKeyIntro;
 			sourceTree = "<group>";
 		};
 		7B2E504B289A5EC0008CACD8 /* AddCard */ = {
@@ -2189,8 +2214,8 @@
 		7E5B305D28A67FE70065D2D8 /* BaseInfo */ = {
 			isa = PBXGroup;
 			children = (
-				C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */,
 				C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */,
+				C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */,
 				C46C28F9287EBF4F0035C843 /* BaseInfoModels.swift */,
 				C46C28FA287EBF4F0035C843 /* BaseInfoVIP.swift */,
 				C46C28FB287EBF4F0035C843 /* BaseInfoViewController.swift */,
@@ -2529,6 +2554,7 @@
 			children = (
 				7E5CB3752835090E00EC787E /* FEView.swift */,
 				7E5CB3762835090E00EC787E /* FELabel.swift */,
+				7B2BF28B2966B0900037E731 /* FETitleSubtitleView.swift */,
 				7E5CB3772835090E00EC787E /* FEInfoView.swift */,
 				7E5CB3792835090E00EC787E /* FETextField.swift */,
 				7E5CB37A2835090E00EC787E /* FEImageView.swift */,
@@ -3790,6 +3816,7 @@
 				7EBC6B062848ABC5000A301F /* RegistrationConfirmationStore.swift in Sources */,
 				7E9B13F02857213400BD9EF5 /* KYCLevelOneWorker.swift in Sources */,
 				7B8CF81E28A3D0C600D54D14 /* CardDetailsFormatter.swift in Sources */,
+				7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */,
 				7B8CF82028A64B9300D54D14 /* ExchangeFormatter.swift in Sources */,
 				7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */,
 				7E87B32A2853368E0097671F /* KYCDocumentUploadWorker.swift in Sources */,
@@ -3804,6 +3831,7 @@
 				7EF2999127E3B8D200A2238A /* MarketChart.swift in Sources */,
 				CEA9178620C07FBB00F29B31 /* SyncingHeaderView.swift in Sources */,
 				7BDB49F92806F1090031F015 /* PlatformAuthResult.swift in Sources */,
+				7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */,
 				CEC6AA3B1DEE4EB000EE5AFD /* CGRect+Additions.swift in Sources */,
 				4F3AB12A25D58AB400B378DC /* SelectBakerViewController.swift in Sources */,
 				7E8D288B28C0CDFC00FF0CBC /* FeeFetchable.swift in Sources */,
@@ -3955,6 +3983,7 @@
 				CE4C1CC81ED88B600063E184 /* URLController.swift in Sources */,
 				CE20C9171DBE6F2A00C8397A /* UIButton+Extensions.swift in Sources */,
 				3A611A0C2322139D004B8E36 /* Dot.swift in Sources */,
+				7B2BF28629659D850037E731 /* RecoveryKeyIntroVIP.swift in Sources */,
 				7B54E5B427F4A2B1002DD1E4 /* Roundable.swift in Sources */,
 				7E5CB3852835090E00EC787E /* BackgroundConfiguration.swift in Sources */,
 				CE92F9F41DED59E80046B516 /* UIView+AnimationAdditions.swift in Sources */,
@@ -4035,12 +4064,14 @@
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,
 				7EBC6B092848ABC5000A301F /* RegistrationConfirmationVIP.swift in Sources */,
 				7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */,
+				7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */,
 				7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */,
 				7E8E97A0283F48EE008606B0 /* NavigationItemView.swift in Sources */,
 				C416BE0628509C4E0020ACCD /* KYCLevelTwoPostValidation.swift in Sources */,
 				22A9A9461DF61945000F0016 /* BRAPIClient.swift in Sources */,
 				7E5CB3A82835090E00EC787E /* Colors.swift in Sources */,
 				75A2A7941DA5934300A983D8 /* AppDelegate.swift in Sources */,
+				7B2BF28C2966B0900037E731 /* FETitleSubtitleView.swift in Sources */,
 				C491ABFB28A6395D00E79954 /* OrderPreviewVIP.swift in Sources */,
 				CEEC70901E95D5C100EF788E /* PushNotificationsViewController.swift in Sources */,
 				7E5B306228A681760065D2D8 /* FailureViewController.swift in Sources */,
@@ -4064,6 +4095,7 @@
 				CE4CA7BC1EE3649100373F11 /* BRActivityView.swift in Sources */,
 				E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */,
 				7EC0F8AC2887D8C40037145C /* SwapWorker.swift in Sources */,
+				7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */,
 				7B02D6282859201500C5C384 /* KYCCameraViewController.swift in Sources */,
 				7E383B4928AE1AFD00A5339F /* AssetSelectionDisplayable.swift in Sources */,
 				7BBBF4DC287421CF00E4D36B /* SwapModels.swift in Sources */,
@@ -4187,6 +4219,7 @@
 				7E5CB3992835090E00EC787E /* Interactor.swift in Sources */,
 				7B54E5A927F4A2B0002DD1E4 /* BaseApiWorker.swift in Sources */,
 				7E9B13FC2857404600BD9EF5 /* DocumentReviewModels.swift in Sources */,
+				7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */,
 				C45E0BA62845F4C40083F028 /* AccountVerificationCoordinator.swift in Sources */,
 				7C787AE221ED89510017EA7E /* KeyStore.swift in Sources */,
 				CEAA9E911DC0FDFE0066731D /* UIViewPropertyAnimator+Extensions.swift in Sources */,
@@ -4310,7 +4343,6 @@
 				C4D5E803284951DD000BEE6F /* VerifyAccountViewController.swift in Sources */,
 				7BBBF4DD287421CF00E4D36B /* SwapViewController.swift in Sources */,
 				C45E0BAB2845F4C40083F028 /* AccountVerificationViewController.swift in Sources */,
-				713CD88A2240198A004657D4 /* RecoveryKeyIntroViewController.swift in Sources */,
 				7ED83AE8284F384F00261565 /* KYCDocumentPickerStore.swift in Sources */,
 				C46C28FF287EBF4F0035C843 /* BaseInfoPresenter.swift in Sources */,
 				CE6D0F971DE8B73A00BD4BCF /* ModalTransitionDelegate.swift in Sources */,

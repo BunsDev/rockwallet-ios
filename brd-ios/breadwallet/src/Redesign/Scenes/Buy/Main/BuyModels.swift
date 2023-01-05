@@ -17,7 +17,7 @@ enum BuyModels {
         var achEnabled: Bool?
     }
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case segment
         case rateAndTimer
         case accountLimits

@@ -41,6 +41,17 @@ extension UIButton {
         return button
     }
     
+    static func buildHelpBarButton(tapped: (() -> Void)? = nil) -> UIButton {
+        let button = UIButton.icon(image: Asset.help.image, accessibilityLabel: L10n.AccessibilityLabels.faq, position: .right)
+        button.tintColor = LightColors.Text.three
+        
+        button.tap = {
+            tapped?()
+        }
+        
+        return button
+    }
+    
     static func icon(image: UIImage?, accessibilityLabel: String, position: NavBarButtonPosition) -> UIButton {
         guard let image = image else { return UIButton() }
         

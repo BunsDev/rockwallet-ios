@@ -18,12 +18,12 @@ final class KYCDocumentPickerPresenter: NSObject, Presenter, KYCDocumentPickerAc
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let documents = actionResponse.item as? Models.Item else { return }
         
-        let sections: [Models.Sections] = [
+        let sections: [Models.Section] = [
             .title,
             .documents
         ]
         
-        let sectionRows: [Models.Sections: [Any]] = [
+        let sectionRows: [Models.Section: [Any]] = [
             .title: [LabelViewModel.text(L10n.AccountKYCLevelTwo.selectOptions)],
             .documents: documents.compactMap { return NavigationViewModel(image: .imageName($0.imageName), label: .text($0.title)) }
         ]

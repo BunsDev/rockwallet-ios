@@ -32,7 +32,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .achNotification:
             cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
             
@@ -225,7 +225,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Sections.submit),
+        guard let section = sections.firstIndex(of: Models.Section.submit),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         cell.wrappedView.isEnabled = responseDisplay.continueEnabled

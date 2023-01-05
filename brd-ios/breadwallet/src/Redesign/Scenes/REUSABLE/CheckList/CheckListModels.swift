@@ -10,7 +10,7 @@ import UIKit
 
 enum CheckListModels {
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case title
         case checkmarks
         

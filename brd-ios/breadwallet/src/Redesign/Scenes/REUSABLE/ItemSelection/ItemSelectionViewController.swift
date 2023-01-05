@@ -63,7 +63,7 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .addItem:
             cell = self.tableView(tableView, addItemCellForRowAt: indexPath)
             
@@ -109,8 +109,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = sections[indexPath.section] as? Models.Sections,
-              section == Models.Sections.items else {
+        guard let section = sections[indexPath.section] as? Models.Section,
+              section == Models.Section.items else {
             coordinator?.open(scene: Scenes.AddCard)
             return
         }

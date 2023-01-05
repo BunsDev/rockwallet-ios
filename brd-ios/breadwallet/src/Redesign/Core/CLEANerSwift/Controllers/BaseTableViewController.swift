@@ -16,7 +16,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
                               DS: BaseDataStore & NSObject>: VIPTableViewController<C, I, P, DS>,
                                                              FetchResponseDisplays {
     override var isModalDismissableEnabled: Bool { return true }
-    override var dismissText: String { return "close" }
+    override var dismissText: String { return L10n.Button.close }
     override var closeImage: UIImage? { return Asset.close.image}
 
     // MARK: - Cleaner Swift Setup
@@ -72,6 +72,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<FESegmentControl>.self)
         tableView.register(WrapperTableViewCell<ExchangeRateView>.self)
         tableView.register(WrapperTableViewCell<DateView>.self)
+        tableView.register(WrapperTableViewCell<FETitleSubtitleView>.self)
     }
 
     override func prepareData() {
@@ -211,7 +212,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
         return cell
     }
     
-    // TODO: add dequeue methos for other standard cells
     func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
@@ -238,6 +238,22 @@ class BaseTableViewController<C: CoordinatableRoutes,
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Title.six, textColor: LightColors.Text.three))
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleSubtitleCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? FETitleSubtitleViewViewModel,
+              let cell: WrapperTableViewCell<FETitleSubtitleView> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
             view.setup(with: model)
         }
         
