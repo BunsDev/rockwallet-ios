@@ -151,6 +151,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         addChild(enterPhrase)
         container.addSubview(enterPhrase.view)
         enterPhrase.didMove(toParent: self)
+        view.backgroundColor = .green
     }
     
     override func viewDidLayoutSubviews() {
@@ -159,6 +160,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         enterPhrase.configure(background: .init(backgroundColor: LightColors.Background.one,
                                                 tintColor: LightColors.primary,
                                                 border: .init(borderWidth: 0, cornerRadius: .medium)))
+        
         enterPhrase.configure(shadow: Presets.Shadow.normal)
     }
 
