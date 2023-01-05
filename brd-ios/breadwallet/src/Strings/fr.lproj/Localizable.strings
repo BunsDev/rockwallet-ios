@@ -46,8 +46,12 @@
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Modifier votre adresse e-mail";
 
+"Account.City" = "City*";
+
 /* Country title label in select countries view */
 "Account.Country" = "Pays";
+
+"Account.CountryRegion" = "Country/Region*";
 
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Créer un compte RockWallet en indiquant votre adresse e-mail.";
@@ -93,11 +97,15 @@
 /* Account Personal Information title */
 "Account.PersonalInformation" = "Informations personnelles";
 
+"Account.PostalCode" = "Postal Code*";
+
 /* Promotion and offers label when registering account */
 "Account.Promotion" = "J'accepte de recevoir des promotions, des offres et des communications futures.";
 
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Document d'identité";
+
+"Account.ResidentialAddress" = "Residential address";
 
 "Account.Resubmit" = "Envoyer à nouveau";
 
@@ -927,8 +935,6 @@
 
 /* Word label eg. Word #1, Word #2 */
 "ConfirmPaperPhrase.word" = "Mot no.%1$@";
-
-"ConfirmRecoveryPhrase.Title" = "Confirmer la phrase de récupération";
 
 "CreateGift.amountLabel" = "Choisissez le montant ($ USD)";
 

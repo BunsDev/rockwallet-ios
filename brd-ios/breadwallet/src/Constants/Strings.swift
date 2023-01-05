@@ -59,8 +59,12 @@ internal enum L10n {
     internal static let beforeConfirm = L10n.tr("Localizable", "Account.BeforeConfirm", fallback: "Before you confirm, please:")
     /// Change your email title on registration flow
     internal static let changeEmail = L10n.tr("Localizable", "Account.ChangeEmail", fallback: "Change your email")
+    /// City*
+    internal static let city = L10n.tr("Localizable", "Account.City", fallback: "City*")
     /// Country title label in select countries view
     internal static let country = L10n.tr("Localizable", "Account.Country", fallback: "Country")
+    /// Country/Region*
+    internal static let countryRegion = L10n.tr("Localizable", "Account.CountryRegion", fallback: "Country/Region*")
     /// Create a RockWallet account by entering your email address label in registration flow
     internal static let createAccount = L10n.tr("Localizable", "Account.CreateAccount", fallback: "Create a RockWallet account by entering your email address.")
     /// Current limit per day label in profile screen
@@ -95,10 +99,14 @@ internal enum L10n {
     internal static let pending = L10n.tr("Localizable", "Account.Pending", fallback: "Pending")
     /// Account Personal Information title
     internal static let personalInformation = L10n.tr("Localizable", "Account.PersonalInformation", fallback: "Personal Information")
+    /// Postal Code*
+    internal static let postalCode = L10n.tr("Localizable", "Account.PostalCode", fallback: "Postal Code*")
     /// Promotion and offers label when registering account
     internal static let promotion = L10n.tr("Localizable", "Account.Promotion", fallback: "I'm ok with receiving future promotion, offers, and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
+    /// Residential address
+    internal static let residentialAddress = L10n.tr("Localizable", "Account.ResidentialAddress", fallback: "Residential address")
     /// Resubmit
     internal static let resubmit = L10n.tr("Localizable", "Account.Resubmit", fallback: "Resubmit")
     /// Retake photo button on create account
@@ -810,13 +818,9 @@ internal enum L10n {
     /// Confirm paper phrase view label.
     internal static let label = L10n.tr("Localizable", "ConfirmPaperPhrase.label", fallback: "To make sure everything was written down correctly, please enter the following words from your Recovery Phrase.")
     /// Word label eg. Word #1, Word #2
-    internal static func word(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "ConfirmPaperPhrase.word", String(describing: p1), fallback: "Word #%1$@")
+    internal static func word(_ p1: Int) -> String {
+      return L10n.tr("Localizable", "ConfirmPaperPhrase.word", p1, fallback: "Word %02i")
     }
-  }
-  internal enum ConfirmRecoveryPhrase {
-    /// Confirm Recovery Phrase
-    internal static let title = L10n.tr("Localizable", "ConfirmRecoveryPhrase.Title", fallback: "Confirm Recovery Phrase")
   }
   internal enum Confirmation {
     /// Amount to Send: ($1.00)
@@ -1650,9 +1654,9 @@ internal enum L10n {
     /// Instructs the user to enter words from the set of recovery key words.
     internal static let confirmRecoveryInputError = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryInputError", fallback: "The word you entered is incorrect. Please try again.")
     /// Instructs the user to enter words from the set of recovery phrase words.
-    internal static let confirmRecoveryKeySubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeySubtitle", fallback: "Almost done! Enter the following words from your Recovery Phrase.")
+    internal static let confirmRecoveryKeySubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeySubtitle", fallback: "Enter the following words from your Recovery Phrase")
     /// Title for the confirmation step of the recovery phrase flow.
-    internal static let confirmRecoveryKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeyTitle", fallback: "Confirm Recovery Phrase")
+    internal static let confirmRecoveryKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeyTitle", fallback: "Confirm your Recovery Phrase")
     /// Title displayed when the user starts the process of entering a recovery phrase
     internal static let enterRecoveryKey = L10n.tr("Localizable", "RecoveryKeyFlow.enterRecoveryKey", fallback: "Enter Recovery Phrase")
     /// Subtitle displayed when the user starts the process of entering a recovery phrase
