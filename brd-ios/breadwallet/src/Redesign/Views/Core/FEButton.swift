@@ -97,16 +97,6 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         
         self.config = config
         
-        // TODO: this might need 2 be adjusted
-        var newConfig = configuration ?? UIButton.Configuration.filled()
-        newConfig.imagePlacement = .leading
-        newConfig.titlePadding = 5
-        newConfig.imagePadding = 5
-        newConfig.contentInsets = config.buttonContentEdgeInsets
-        newConfig.baseBackgroundColor = config.normalConfiguration?.backgroundColor
-        newConfig.cornerStyle = .capsule
-        configuration = newConfig
-        
         setTitleColor(config.normalConfiguration?.tintColor, for: .normal)
         setTitleColor(config.disabledConfiguration?.tintColor, for: .disabled)
         setTitleColor(config.selectedConfiguration?.tintColor, for: .selected)
