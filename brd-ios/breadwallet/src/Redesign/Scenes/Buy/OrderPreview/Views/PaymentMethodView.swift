@@ -64,7 +64,7 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         return view
     }()
     
-    var didTypeCVV: ((String?) -> Void)? {
+    var didTypeCVV: ((UITextField) -> Void)? {
         get {
             cvvTextField.valueChanged
         }

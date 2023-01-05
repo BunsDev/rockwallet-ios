@@ -12,8 +12,9 @@ import UIKit
 
 extension CALayer {
     func setShadow(with config: ShadowConfiguration) {
-        shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
-        shadowRadius = config.shadowRadius.rawValue
+        let radius = cornerRadius == 0 ? config.shadowRadius.rawValue : cornerRadius
+        shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        shadowRadius = radius
         shadowOpacity = config.opacity.rawValue
         shadowOffset = config.offset
         shadowColor = config.color.cgColor
@@ -25,7 +26,7 @@ extension CALayer {
 
 extension UIView {
     func setBackground(with config: BackgroundConfiguration) {
-        backgroundColor = config.backgroundColor
+        layer.backgroundColor = config.backgroundColor.cgColor
         
         guard let border = config.border else { return }
         let radius = border.cornerRadius == .fullRadius ? bounds.height / 2 : border.cornerRadius.rawValue

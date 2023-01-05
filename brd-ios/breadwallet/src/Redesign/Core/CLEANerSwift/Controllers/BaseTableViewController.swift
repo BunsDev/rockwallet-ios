@@ -309,8 +309,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
         cell.setup { view in
             view.configure(with: Presets.TextField.primary)
             view.setup(with: model)
-            view.valueChanged = { [weak self] text in
-                self?.textFieldDidUpdate(for: indexPath, with: text, on: section)
+            view.valueChanged = { [weak self] field in
+                self?.textFieldDidUpdate(for: indexPath, with: field.text, on: section)
             }
             view.contentSizeChanged = {
                 tableView.beginUpdates()
