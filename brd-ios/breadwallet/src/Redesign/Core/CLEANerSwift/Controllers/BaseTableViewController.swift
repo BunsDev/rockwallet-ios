@@ -72,7 +72,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<FESegmentControl>.self)
         tableView.register(WrapperTableViewCell<ExchangeRateView>.self)
         tableView.register(WrapperTableViewCell<DateView>.self)
-        tableView.register(WrapperTableViewCell<FETitleSubtitleView>.self)
+        tableView.register(WrapperTableViewCell<TitleValueView>.self)
     }
 
     override func prepareData() {
@@ -244,18 +244,30 @@ class BaseTableViewController<C: CoordinatableRoutes,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleSubtitleCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, titleValueCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? FETitleSubtitleViewViewModel,
-              let cell: WrapperTableViewCell<FETitleSubtitleView> = tableView.dequeueReusableCell(for: indexPath)
+        guard let model = sectionRows[section]?[indexPath.row] as? TitleValueViewModel,
+              let cell: WrapperTableViewCell<TitleValueView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
-            view.configure(with: .init())
+            view.setupCustomMargins(vertical: .large, horizontal: .huge)
+            view.axis = .vertical
+            
+            view.configure(with: .init(title: .init(font: Fonts.Subtitle.two,
+                                                    textColor: LightColors.Text.three),
+                                       value: .init(font: Fonts.Body.two,
+                                                    textColor: LightColors.Text.two),
+                                       shadow: Presets.Shadow.light,
+                                       background: .init(backgroundColor: LightColors.Background.one,
+                                                         border: .init(borderWidth: 0,
+                                                                       cornerRadius: .medium))))
             view.setup(with: model)
         }
+        
+        cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .large)
         
         return cell
     }

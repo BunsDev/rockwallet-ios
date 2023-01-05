@@ -89,7 +89,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
             })
             
         case .writePhrase, .keepPhrasePrivate, .storePhraseSecurely:
-            cell = self.tableView(tableView, titleSubtitleCellForRowAt: indexPath)
+            cell = self.tableView(tableView, titleValueCellForRowAt: indexPath)
             cell.setupCustomMargins(vertical: .zero, horizontal: .large)
             
         case .tickbox:

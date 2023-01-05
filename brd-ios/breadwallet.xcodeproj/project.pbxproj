@@ -135,7 +135,6 @@
 		7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */; };
 		7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */; };
 		7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */; };
-		7B2BF28C2966B0900037E731 /* FETitleSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28B2966B0900037E731 /* FETitleSubtitleView.swift */; };
 		7B2C9AFC27D9270B00D5135C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2C9AFB27D9270B00D5135C /* IQKeyboardManagerSwift */; };
 		7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5047289800BB008CACD8 /* FieldValidator.swift */; };
 		7B2E5052289A5F02008CACD8 /* AddCardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E504C289A5F02008CACD8 /* AddCardStore.swift */; };
@@ -944,7 +943,6 @@
 		7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroStore.swift; sourceTree = "<group>"; };
 		7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroViewController.swift; sourceTree = "<group>"; };
 		7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroModels.swift; sourceTree = "<group>"; };
-		7B2BF28B2966B0900037E731 /* FETitleSubtitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FETitleSubtitleView.swift; sourceTree = "<group>"; };
 		7B2E5047289800BB008CACD8 /* FieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidator.swift; sourceTree = "<group>"; };
 		7B2E504C289A5F02008CACD8 /* AddCardStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardStore.swift; sourceTree = "<group>"; };
 		7B2E504D289A5F02008CACD8 /* AddCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
@@ -2554,7 +2552,6 @@
 			children = (
 				7E5CB3752835090E00EC787E /* FEView.swift */,
 				7E5CB3762835090E00EC787E /* FELabel.swift */,
-				7B2BF28B2966B0900037E731 /* FETitleSubtitleView.swift */,
 				7E5CB3772835090E00EC787E /* FEInfoView.swift */,
 				7E5CB3792835090E00EC787E /* FETextField.swift */,
 				7E5CB37A2835090E00EC787E /* FEImageView.swift */,
@@ -4071,7 +4068,6 @@
 				22A9A9461DF61945000F0016 /* BRAPIClient.swift in Sources */,
 				7E5CB3A82835090E00EC787E /* Colors.swift in Sources */,
 				75A2A7941DA5934300A983D8 /* AppDelegate.swift in Sources */,
-				7B2BF28C2966B0900037E731 /* FETitleSubtitleView.swift in Sources */,
 				C491ABFB28A6395D00E79954 /* OrderPreviewVIP.swift in Sources */,
 				CEEC70901E95D5C100EF788E /* PushNotificationsViewController.swift in Sources */,
 				7E5B306228A681760065D2D8 /* FailureViewController.swift in Sources */,

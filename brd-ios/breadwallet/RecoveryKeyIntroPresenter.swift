@@ -31,12 +31,12 @@ final class RecoveryKeyIntroPresenter: NSObject, Presenter, RecoveryKeyIntroActi
         let sectionRows: [Models.Section: [Any]] = [
             .title: [LabelViewModel.text(L10n.RecoveryKeyFlow.title)],
             .image: [ImageViewModel.photo(Asset.recoveryPhrase1st.image)],
-            .writePhrase: [FETitleSubtitleViewViewModel(title: .text(L10n.RecoveryKeyFlow.WritePhrase.title),
-                                                        subtitle: .text(L10n.RecoveryKeyFlow.WritePhrase.subtitle))],
-            .keepPhrasePrivate: [FETitleSubtitleViewViewModel(title: .text(L10n.RecoveryKeyFlow.KeepPhrasePrivate.title),
-                                                              subtitle: .text(L10n.RecoveryKeyFlow.KeepPhrasePrivate.subtitle))],
-            .storePhraseSecurely: [FETitleSubtitleViewViewModel(title: .text(L10n.RecoveryKeyFlow.StorePhraseSecurely.title),
-                                                                subtitle: .text(L10n.RecoveryKeyFlow.StorePhraseSecurely.subtitle))],
+            .writePhrase: [TitleValueViewModel(title: .text(L10n.RecoveryKeyFlow.WritePhrase.title),
+                                               value: .text(L10n.RecoveryKeyFlow.WritePhrase.subtitle))],
+            .keepPhrasePrivate: [TitleValueViewModel(title: .text(L10n.RecoveryKeyFlow.KeepPhrasePrivate.title),
+                                                     value: .text(L10n.RecoveryKeyFlow.KeepPhrasePrivate.subtitle))],
+            .storePhraseSecurely: [TitleValueViewModel(title: .text(L10n.RecoveryKeyFlow.StorePhraseSecurely.title),
+                                                       value: .text(L10n.RecoveryKeyFlow.StorePhraseSecurely.subtitle))],
             .tickbox: [TickboxItemViewModel(title: .text(L10n.RecoveryKeyFlow.Tickbox.value))]
         ]
         
