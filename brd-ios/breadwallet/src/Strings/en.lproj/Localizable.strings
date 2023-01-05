@@ -46,8 +46,12 @@
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Change your email";
 
+"Account.City" = "City*";
+
 /* Country title label in select countries view */
 "Account.Country" = "Country";
+
+"Account.CountryRegion" = "Country/Region*";
 
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Create a RockWallet account by entering your email address.";
@@ -93,11 +97,15 @@
 /* Account Personal Information title */
 "Account.PersonalInformation" = "Personal Information";
 
+"Account.PostalCode" = "Postal Code*";
+
 /* Promotion and offers label when registering account */
 "Account.Promotion" = "I'm ok with receiving future promotion, offers, and communications";
 
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
+
+"Account.ResidentialAddress" = "Residential address";
 
 "Account.Resubmit" = "Resubmit";
 
@@ -926,9 +934,7 @@
 "ConfirmPaperPhrase.label" = "To make sure everything was written down correctly, please enter the following words from your Recovery Phrase.";
 
 /* Word label eg. Word #1, Word #2 */
-"ConfirmPaperPhrase.word" = "Word #%1$@";
-
-"ConfirmRecoveryPhrase.Title" = "Confirm Recovery Phrase";
+"ConfirmPaperPhrase.word" = "Word %02i";
 
 "CreateGift.amountLabel" = "Choose amount ($USD)";
 
@@ -1748,10 +1754,10 @@
 "RecoveryKeyFlow.confirmRecoveryInputError" = "The word you entered is incorrect. Please try again.";
 
 /* Instructs the user to enter words from the set of recovery phrase words. */
-"RecoveryKeyFlow.confirmRecoveryKeySubtitle" = "Almost done! Enter the following words from your Recovery Phrase.";
+"RecoveryKeyFlow.confirmRecoveryKeySubtitle" = "Enter the following words from your Recovery Phrase";
 
 /* Title for the confirmation step of the recovery phrase flow. */
-"RecoveryKeyFlow.confirmRecoveryKeyTitle" = "Confirm Recovery Phrase";
+"RecoveryKeyFlow.confirmRecoveryKeyTitle" = "Confirm your Recovery Phrase";
 
 /* Title displayed when the user starts the process of entering a recovery phrase */
 "RecoveryKeyFlow.enterRecoveryKey" = "Enter Recovery Phrase";
