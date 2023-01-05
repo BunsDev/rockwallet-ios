@@ -57,12 +57,8 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
         navigationController?.navigationBar.backgroundColor = LightColors.Background.one
         
         let helpButton = UIButton.buildHelpBarButton(tapped: {
-            let model = PopupViewModel(title: .text("What is “Recovery Phrase”?"),
-                                       body: """
-Your Recovery Phrase consists of 12 randomly generated words that the wallet creates for you automatically when you start a new wallet.
-
-The Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The Recovery Phrase is also required when upgrading your current phone to a new one.
-""")
+            let model = PopupViewModel(title: .text(L10n.RecoveryKeyFlow.HelpPopup.title),
+                                       body: L10n.RecoveryKeyFlow.HelpPopup.content)
             
             self.showInfoPopup(with: model)
         })

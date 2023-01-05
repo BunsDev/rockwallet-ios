@@ -13,9 +13,9 @@ import UIKit
 final class RecoveryKeyIntroPresenter: NSObject, Presenter, RecoveryKeyIntroActionResponses {
     
     typealias Models = RecoveryKeyIntroModels
-
+    
     weak var viewController: RecoveryKeyIntroViewController?
-
+    
     // MARK: - ProfileActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
@@ -29,15 +29,15 @@ final class RecoveryKeyIntroPresenter: NSObject, Presenter, RecoveryKeyIntroActi
         ]
         
         let sectionRows: [Models.Section: [Any]] = [
-            .title: [LabelViewModel.text("Secure your wallet with your Recovery Phrase")],
+            .title: [LabelViewModel.text(L10n.RecoveryKeyFlow.title)],
             .image: [ImageViewModel.photo(Asset.recoveryPhrase1st.image)],
-            .writePhrase: [FETitleSubtitleViewViewModel(title: .text("Write it down"),
-                                                            subtitle: .text("Save your 12 word security phrase generated  in the next step."))],
-            .keepPhrasePrivate: [FETitleSubtitleViewViewModel(title: .text("Keep it private"),
-                                                              subtitle: .text("Remember that anyone with your Recovery Phrase can access your Assets."))],
-            .storePhraseSecurely: [FETitleSubtitleViewViewModel(title: .text("Store it securely"),
-                                                                subtitle: .text("This is the only way you’ll be able to recover your funds. RockWallet does not keep a copy."))],
-            .tickbox: [TickboxItemViewModel(title: .text("I understand the importance of the Recovery Phrase."))]
+            .writePhrase: [FETitleSubtitleViewViewModel(title: .text(L10n.RecoveryKeyFlow.WritePhrase.title),
+                                                        subtitle: .text(L10n.RecoveryKeyFlow.WritePhrase.subtitle))],
+            .keepPhrasePrivate: [FETitleSubtitleViewViewModel(title: .text(L10n.RecoveryKeyFlow.KeepPhrasePrivate.title),
+                                                              subtitle: .text(L10n.RecoveryKeyFlow.KeepPhrasePrivate.subtitle))],
+            .storePhraseSecurely: [FETitleSubtitleViewViewModel(title: .text(L10n.RecoveryKeyFlow.StorePhraseSecurely.title),
+                                                                subtitle: .text(L10n.RecoveryKeyFlow.StorePhraseSecurely.subtitle))],
+            .tickbox: [TickboxItemViewModel(title: .text(L10n.RecoveryKeyFlow.Tickbox.value))]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))

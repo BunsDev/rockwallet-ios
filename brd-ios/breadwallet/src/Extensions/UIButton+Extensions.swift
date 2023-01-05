@@ -29,6 +29,7 @@ extension UIButton {
         return button
     }
     
+    // TODO: Unify buildFaqButton and buildHelpBarButton. Find and cleanup all FAQ bar button items.
     static func buildFaqButton(articleId: String, currency: Currency? = nil, position: NavBarButtonPosition, tapped: (() -> Void)? = nil) -> UIButton {
         let button = UIButton.icon(image: Asset.help.image, accessibilityLabel: L10n.AccessibilityLabels.faq, position: position)
         button.tintColor = LightColors.Text.three
