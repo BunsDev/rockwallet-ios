@@ -414,6 +414,8 @@
 		7EBC6B0A2848ABC5000A301F /* RegistrationConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B032848ABC5000A301F /* RegistrationConfirmationViewController.swift */; };
 		7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B042848ABC5000A301F /* RegistrationConfirmationInteractor.swift */; };
 		7EBC6B0D2848B81A000A301F /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B0C2848B81A000A301F /* CodeInputView.swift */; };
+		7EBEA4CB2966BD86006C9602 /* MobileIntelligence.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EBEA4C92966BD62006C9602 /* MobileIntelligence.xcframework */; };
+		7EBEA4CC2966BD86006C9602 /* MobileIntelligence.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7EBEA4C92966BD62006C9602 /* MobileIntelligence.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EC0F8AA2886D9B90037145C /* ExchangeErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */; };
 		7EC0F8AC2887D8C40037145C /* SwapWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8AB2887D8C40037145C /* SwapWorker.swift */; };
 		7EC0F8B62888049F0037145C /* WrapperPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8B52888049F0037145C /* WrapperPopupView.swift */; };
@@ -767,6 +769,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7EBEA4CC2966BD86006C9602 /* MobileIntelligence.xcframework in Embed Frameworks */,
 				754AE0B71DFCA870007FD001 /* libbz2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -1203,6 +1206,7 @@
 		7EBC6B032848ABC5000A301F /* RegistrationConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationViewController.swift; sourceTree = "<group>"; };
 		7EBC6B042848ABC5000A301F /* RegistrationConfirmationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationInteractor.swift; sourceTree = "<group>"; };
 		7EBC6B0C2848B81A000A301F /* CodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeInputView.swift; sourceTree = "<group>"; };
+		7EBEA4C92966BD62006C9602 /* MobileIntelligence.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = MobileIntelligence.xcframework; sourceTree = "<group>"; };
 		7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeErrors.swift; sourceTree = "<group>"; };
 		7EC0F8AB2887D8C40037145C /* SwapWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapWorker.swift; sourceTree = "<group>"; };
 		7EC0F8B52888049F0037145C /* WrapperPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapperPopupView.swift; sourceTree = "<group>"; };
@@ -1508,6 +1512,7 @@
 				3ABD8D1B24E1CF1500EC4C91 /* SwiftUI.framework in Frameworks */,
 				7CBC6B2E21751ECA00899AFB /* iAd.framework in Frameworks */,
 				22A9A9661DF61FEE000F0016 /* WebKit.framework in Frameworks */,
+				7EBEA4CB2966BD86006C9602 /* MobileIntelligence.xcframework in Frameworks */,
 				7EEBAE8A28E7099400686CA3 /* SnapKit in Frameworks */,
 				7E5CB32D2834E63400EC787E /* SnapKit in Frameworks */,
 				7E8F7E4E293F84510058019B /* Lottie in Frameworks */,
@@ -1905,6 +1910,7 @@
 		75B6F52F1DA71DCC0031A93F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				7EBEA4C82966BD62006C9602 /* sardine */,
 				22A9A9971DF63426000F0016 /* libbz2 */,
 				75FEFD1F1DAEE7A400203D3A /* sqlite3 */,
 			);
@@ -2613,6 +2619,15 @@
 				7EF45F90284777AC00D1F7B0 /* RegistrationConfirmationWorker.swift */,
 			);
 			path = RegistrationConfirmation;
+			sourceTree = "<group>";
+		};
+		7EBEA4C82966BD62006C9602 /* sardine */ = {
+			isa = PBXGroup;
+			children = (
+				7EBEA4C92966BD62006C9602 /* MobileIntelligence.xcframework */,
+			);
+			name = sardine;
+			path = Modules/sardine;
 			sourceTree = "<group>";
 		};
 		7EC21A1328991A6500FED711 /* BillingAddress */ = {
