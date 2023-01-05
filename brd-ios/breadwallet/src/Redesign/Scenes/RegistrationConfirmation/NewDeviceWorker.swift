@@ -67,24 +67,13 @@ class NewDeviceWorker: BaseApiWorker<NewDeviceMapper> {
     override func apiCallDidFinish(response: HTTPResponse) {
         super.apiCallDidFinish(response: response)
         guard let result = result,
-              let email = result.email,
               let sessionKey = result.sessionKey
         else { return }
         
-        // Update sardine conig
         var options = UpdateOptions()
-        var hasChanges = false
-        if email != options.userIdHash {
-            options.userIdHash = email
-            hasChanges = true
-        }
+        guard sessionKey != options.sessionKey else { return }
         
-        if sessionKey != options.sessionKey {
-            options.sessionKey = sessionKey
-            hasChanges = true
-        }
-        
-        guard hasChanges else { return }
+        options.sessionKey = sessionKey
         MobileIntelligence.updateOptions(options: options)
     }
     
