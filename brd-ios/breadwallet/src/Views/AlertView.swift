@@ -12,6 +12,7 @@ enum AlertType {
     case pinSet(callback: () -> Void)
     case pinUpdated(callback: () -> Void)
     case paperKeySet(callback: () -> Void)
+    case generalSuccess
     case sendSuccess
     case addressesCopied
     case sweepSuccess(callback: () -> Void)
@@ -35,9 +36,7 @@ enum AlertType {
             return L10n.Alerts.sendSuccess
         case .addressesCopied:
             return L10n.Alerts.copiedAddressesHeader
-        case .sweepSuccess:
-            return L10n.Import.success
-        case .accountCreation, .cloudBackupRestoreSuccess, .cloudBackupSuccess:
+        case .accountCreation, .cloudBackupRestoreSuccess, .cloudBackupSuccess, .sweepSuccess:
             return L10n.Import.success
         case .walletRestored:
             return L10n.Alerts.walletRestored
@@ -45,7 +44,7 @@ enum AlertType {
             return ""
         case .none:
             return "none"
-        case .recoveryPhraseConfirmed:
+        case .recoveryPhraseConfirmed, .generalSuccess:
             return L10n.Alerts.phraseConfirmed
         }
     }
