@@ -45,7 +45,7 @@ struct Presets {
             static var normal = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.primary,
                                                         border: .init(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall))
             static var selected = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.Text.one,
-                                                          border: .init(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall))
+                                                          border: .init(tintColor: LightColors.primary, borderWidth: 1, cornerRadius: .extraSmall))
             static var disabled = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.Disabled.two,
                                                           border: .init(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall))
             static var error = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.Error.one,
