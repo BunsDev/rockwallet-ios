@@ -466,6 +466,7 @@
 		7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDB82528C8684900C287CB /* Amount+Init.swift */; };
 		7EE62495295C141D00FC19CC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE62494295C141D00FC19CC /* main.swift */; };
 		7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE76FC12857648F00724548 /* NewDeviceWorker.swift */; };
+		7EE91A4F2967EB2A00331B1F /* KYCIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */; };
 		7EEBAE8A28E7099400686CA3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEBAE8928E7099400686CA3 /* SnapKit */; };
 		7EF2188028630E2F006ABCC1 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2187F28630E2F006ABCC1 /* UserManager.swift */; };
 		7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2998827E3B8C400A2238A /* ApiClient.swift */; };
@@ -1262,6 +1263,7 @@
 		7EDDB82528C8684900C287CB /* Amount+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amount+Init.swift"; sourceTree = "<group>"; };
 		7EE62494295C141D00FC19CC /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = src/main.swift; sourceTree = "<group>"; };
 		7EE76FC12857648F00724548 /* NewDeviceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceWorker.swift; sourceTree = "<group>"; };
+		7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCIntroViewController.swift; sourceTree = "<group>"; };
 		7EF2187F28630E2F006ABCC1 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		7EF2998827E3B8C400A2238A /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiClient.swift; path = CoinGecko/ApiClient.swift; sourceTree = "<group>"; };
 		7EF2998927E3B8C400A2238A /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resources.swift; path = CoinGecko/Resources.swift; sourceTree = "<group>"; };
@@ -2733,6 +2735,14 @@
 			path = DocumentPicker;
 			sourceTree = "<group>";
 		};
+		7EE91A342967EAEC00331B1F /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
 		7EF2187D2862F07A006ABCC1 /* Buy */ = {
 			isa = PBXGroup;
 			children = (
@@ -2793,6 +2803,7 @@
 		7EF45F7C2847671F00D1F7B0 /* KYC */ = {
 			isa = PBXGroup;
 			children = (
+				7EE91A342967EAEC00331B1F /* Intro */,
 				7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */,
 				7E6729262923A22900A2B612 /* ComingSoon */,
 				7EF45F472845352400D1F7B0 /* KYCLevelOne */,
@@ -4222,6 +4233,7 @@
 				7B9434312886A7FA00638703 /* DeleteProfileInfoInteractor.swift in Sources */,
 				7B54E5A027F4A2B0002DD1E4 /* NetworkingError.swift in Sources */,
 				7ED83AF6284F40EB00261565 /* ChecklistItemView.swift in Sources */,
+				7EE91A4F2967EB2A00331B1F /* KYCIntroViewController.swift in Sources */,
 				7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */,
 				7EF45F8D284768C100D1F7B0 /* ItemSelectionCoordinator.swift in Sources */,
 				7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */,

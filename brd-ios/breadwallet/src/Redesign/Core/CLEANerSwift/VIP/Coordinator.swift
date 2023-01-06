@@ -211,14 +211,18 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showSupport() {
-        guard let url = URL(string: C.supportLink) else { return }
+    func showInWebView(string: String, title: String) {
+        guard let url = URL(string: string) else { return }
         let webViewController = SimpleWebViewController(url: url)
-        webViewController.setup(with: .init(title: L10n.MenuButton.support))
+        webViewController.setup(with: .init(title: title))
         let navController = RootNavigationController(rootViewController: webViewController)
         webViewController.setAsNonDismissableModal()
         
         navigationController.present(navController, animated: true)
+    }
+    
+    func showSupport() {
+        showInWebView(string: C.supportLink, title: L10n.MenuButton.support)
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed

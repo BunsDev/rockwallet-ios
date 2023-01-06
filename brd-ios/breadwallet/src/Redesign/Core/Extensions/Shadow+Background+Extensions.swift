@@ -9,15 +9,14 @@
 //
 
 import UIKit
-
 extension CALayer {
     func setShadow(with config: ShadowConfiguration) {
-        let radius = cornerRadius == 0 ? config.shadowRadius.rawValue : cornerRadius
+        let radius = cornerRadius == 0 ? (config.shadowRadius == .fullRadius ? bounds.height / 2 : config.shadowRadius.rawValue) : cornerRadius
         shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
         shadowRadius = radius
         shadowOpacity = config.opacity.rawValue
         shadowOffset = config.offset
-        shadowColor = config.color.cgColor
+        shadowColor = UIColor.black.cgColor
         masksToBounds = false
         shouldRasterize = true
         rasterizationScale = UIScreen.main.scale

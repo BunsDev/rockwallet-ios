@@ -115,6 +115,8 @@ internal enum L10n {
     internal static let selectCountry = L10n.tr("Localizable", "Account.SelectCountry", fallback: "Select country")
     /// Select state
     internal static let selectState = L10n.tr("Localizable", "Account.SelectState", fallback: "Select state")
+    /// Social Security Number*
+    internal static let socialSecurityNumber = L10n.tr("Localizable", "Account.SocialSecurityNumber", fallback: "Social Security Number*")
     /// State title label in select state view
     internal static let state = L10n.tr("Localizable", "Account.State", fallback: "State")
     /// Submit your photo for document id title
@@ -265,7 +267,7 @@ internal enum L10n {
     /// Passport
     internal static let passport = L10n.tr("Localizable", "AccountKYCLevelTwo.Passport", fallback: "Passport")
     /// Prepare documents label in KYC2
-    internal static let prepareDocument = L10n.tr("Localizable", "AccountKYCLevelTwo.PrepareDocument", fallback: "Have a valid government-issued identity document (passport, national ID card or driver’s license) ready")
+    internal static let prepareDocument = L10n.tr("Localizable", "AccountKYCLevelTwo.PrepareDocument", fallback: "Prepare a valid government-issued ID it can be either a driver’s license, passport, or ID card.")
     /// Residence permit
     internal static let residencePermit = L10n.tr("Localizable", "AccountKYCLevelTwo.ResidencePermit", fallback: "Residence permit")
     /// Select documents  options text label in KYC2
