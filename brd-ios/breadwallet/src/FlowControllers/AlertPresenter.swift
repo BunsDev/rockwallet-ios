@@ -13,7 +13,6 @@ import UIKit
 class AlertPresenter: Subscriber {
     private let window: UIWindow
     private let alertHeight: CGFloat = 260.0
-    private var notReachableAlert: InAppAlert?
     
     private var topViewController: UIViewController? {
         var viewController = window.rootViewController
