@@ -82,7 +82,9 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             is BaseInfoViewController,
             is ItemSelectionViewController,
             is BillingAddressViewController,
-            is SellViewController:
+            is SellViewController,
+            is KYCIntroViewController,
+            is KYCAddressViewController:
             backgroundColor = LightColors.Background.two
             tintColor = LightColors.Text.three
             

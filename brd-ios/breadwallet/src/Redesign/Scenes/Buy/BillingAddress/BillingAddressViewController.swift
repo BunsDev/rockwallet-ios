@@ -178,17 +178,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
 
     // MARK: - BillingAddressResponseDisplay
-    
-    func displayCountry(responseDisplay: BillingAddressModels.SelectCountry.ResponseDisplay) {
-        guard isPickCountryPressed else { return }
-        
-        coordinator?.showCountrySelector(countries: responseDisplay.countries) { [weak self] model in
-            self?.interactor?.pickCountry(viewAction: .init(code: model?.code, countryFullName: model?.name))
-        }
-        
-        isPickCountryPressed = false
-    }
-    
     func displayValidate(responseDisplay: BillingAddressModels.Validate.ResponseDisplay) {
         guard let section = sections.firstIndex(of: Models.Section.confirm),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }

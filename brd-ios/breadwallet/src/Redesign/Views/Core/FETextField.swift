@@ -57,8 +57,14 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     
     var contentSizeChanged: (() -> Void)?
     var valueChanged: ((UITextField) -> Void)?
+    var finishedEditing: ((UITextField) -> Void)?
     var didTapTrailingView: (() -> Void)?
     var didPasteText: ((String) -> Void)?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isUserInteractionEnabled = true
+    }
     
     override var isUserInteractionEnabled: Bool {
         get {
@@ -264,6 +270,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         animateTo(state: textField.text?.isEmpty == true ? .normal : .filled)
+        finishedEditing?(textField)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {

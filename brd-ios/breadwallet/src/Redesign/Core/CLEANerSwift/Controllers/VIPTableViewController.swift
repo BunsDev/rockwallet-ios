@@ -129,10 +129,15 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.clipsToBounds = false
         tableView.layer.masksToBounds = false
-        leftAlignedTitleLabel.snp.updateConstraints { make in
-            make.bottom.equalTo(tableView.snp.top).inset(-small)
-            make.leading.equalToSuperview().inset(-large)
-        }
+//        leftAlignedTitleLabel.snp.updateConstraints { make in
+//            make.bottom.equalTo(tableView.snp.top).inset(-small)
+//            make.leading.equalToSuperview().inset(-large)
+//        }
+        
+//            make.top.equalTo(view.snp.topMargin)
+//            make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
+//            make.width.lessThanOrEqualTo(tableView.snp.width).inset(Margins.large.rawValue) // TODO: Trailing does not work. Why?
+//            make.leading.equalToSuperview().inset(Margins.large.rawValue)
         
         tableView.verticalScrollIndicatorInsets.right = -huge
         tableView.beginUpdates()
