@@ -117,6 +117,17 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         interactor?.formUpdated(viewAction: .init(section: section, value: text))
     }
     
+    func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
+        guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel,
+              model.enabled != responseDisplay.isValid
+        else { return }
+        
+        model.enabled = responseDisplay.isValid
+        sectionRows[Models.Section.confirm] = [model]
+        let index = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }) ?? 0
+        tableView.reloadRows(at: [IndexPath(row: 0, section: index)], with: .none)
+    }
+    
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()

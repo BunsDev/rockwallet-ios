@@ -17,9 +17,11 @@ protocol KYCAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
 }
 
 protocol KYCAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
+    func presentForm(actionResponse: KYCAddressModels.FormUpdated.ActionResponse)
 }
 
 protocol KYCAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
+    func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay)
 }
 
 protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
