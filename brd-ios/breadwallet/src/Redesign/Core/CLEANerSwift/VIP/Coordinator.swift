@@ -401,6 +401,14 @@ class BaseCoordinator: NSObject,
         }
     }
     
+    func showBottomSheetAlert(type: AlertType, completion: (() -> Void)? = nil) {
+        guard let activeWindow = UIApplication.shared.activeWindow else { return }
+        
+        AlertPresenter(window: activeWindow).presentAlert(type, completion: {
+            completion?()
+        })
+    }
+    
     func showToastMessage(with error: Error? = nil,
                           model: InfoViewModel? = nil,
                           configuration: InfoViewConfiguration? = nil,
