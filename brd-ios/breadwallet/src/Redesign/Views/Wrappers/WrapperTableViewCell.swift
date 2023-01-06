@@ -64,7 +64,8 @@ class WrapperTableViewCell<T: UIView>: UITableViewCell, Wrappable, Reusable, Ide
         selectionStyle = .none
 
         contentView.addSubview(wrappedView)
-        contentView.backgroundColor = LightColors.Background.two
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         wrappedView.snp.makeConstraints { make in
             make.edges.equalTo(contentView.snp.margins)
         }

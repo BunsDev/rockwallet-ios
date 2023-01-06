@@ -22,6 +22,8 @@ class KYCIntroViewController: CheckListViewController {
         .init(title: .text(L10n.AccountKYCLevelTwo.takePhotos))
     ]}
     
+    override var buttonTitle: String { return L10n.Button.letsGo.uppercased() }
+    
     override var headerViewModel: LabelViewModel? {
         return .text(L10n.Account.verifyIdentityByVeriff)
     }
@@ -45,8 +47,6 @@ class KYCIntroViewController: CheckListViewController {
     }
     
     override func buttonTapped() {
-        UserManager.shared.refresh { [weak self] _ in
-            (self?.coordinator as? KYCCoordinator)?.dismissFlow()
-        }
+        (coordinator as? KYCCoordinator)?.showKYCLevelOne()
     }
 }

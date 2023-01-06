@@ -1,0 +1,31 @@
+//
+//  KYCAddressModels.swift
+//  breadwallet
+//
+//  Created by Rok on 06/01/2023.
+//
+//
+
+import UIKit
+
+enum KYCAddressModels {
+    typealias Item = KYCAddressStore
+    
+    enum Section: Sectionable {
+        case address
+        case cityAndZipPostal
+        case stateProvince
+        case country
+        case confirm
+        
+        var header: AccessoryType? { nil }
+        var footer: AccessoryType? { nil }
+    }
+    
+    struct FormUpdated {
+        struct ViewAction {
+            var section: AnyHashable
+            var value: Any?
+        }
+    }
+}

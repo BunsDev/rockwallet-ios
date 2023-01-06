@@ -14,7 +14,8 @@ import UIKit
 class KYCCoordinator: BaseCoordinator,
                       KYCBasicRoutes,
                       KYCDocumentPickerRoutes,
-                      DocumentReviewRoutes {
+                      DocumentReviewRoutes,
+                      CountriesAndStatesRoutes {
     var role: CustomerRole?
     var flow: ExchangeFlow?
     
@@ -31,6 +32,15 @@ class KYCCoordinator: BaseCoordinator,
                 vc.role = self?.role
                 vc.flow = self?.flow
             }
+        }
+    }
+    
+    func showAddressForm(dataStore: KYCBasicDataStore?) {
+        open(scene: Scenes.KYCAddress) { vc in
+            vc.dataStore?.name = dataStore?.firstName
+            vc.dataStore?.lastName = dataStore?.lastName
+            vc.dataStore?.birthdates = dataStore?.birthDateString
+            vc.prepareData()
         }
     }
     

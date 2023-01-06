@@ -181,10 +181,7 @@ class BaseCoordinator: NSObject,
     }
     
     func showAccountVerification() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification) { vc in
-            vc?.dataStore?.profile = UserManager.shared.profile
-            vc?.prepareData()
-        }
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCIntro)
     }
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {

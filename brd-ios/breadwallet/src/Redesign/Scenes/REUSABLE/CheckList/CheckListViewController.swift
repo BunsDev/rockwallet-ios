@@ -21,6 +21,7 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
     }
     
     override var sceneLeftAlignedTitle: String? { return "Checklist base VC" }
+    var buttonTitle: String { return L10n.Button.confirm }
     
     var checklistTitle: LabelViewModel { return .text("OVERRIDE IN SUBCLASS") }
     var headerViewModel: LabelViewModel? { return nil }
@@ -90,7 +91,7 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
         super.setupVerticalButtons()
         
         verticalButtons.wrappedView.configure(with: .init(buttons: [Presets.Button.primary]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [.init(title: L10n.Button.confirm,
+        verticalButtons.wrappedView.setup(with: .init(buttons: [.init(title: buttonTitle,
                                                                       callback: { [weak self] in
             self?.buttonTapped()
         })

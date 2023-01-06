@@ -14,8 +14,6 @@ enum KYCBasicModels {
  
     enum Section: Sectionable {
         case name
-        case country
-        case state
         case birthdate
         case confirm
         
@@ -27,35 +25,6 @@ enum KYCBasicModels {
         struct ViewAction {
             var first: String?
             var last: String?
-        }
-    }
-    
-    struct SelectCountry {
-        struct ViewAction {
-            var code: String?
-            var countryFullName: String?
-        }
-        
-        struct ActionResponse {
-            var countries: [Country]?
-        }
-        
-        struct ResponseDisplay {
-            var countries: [Country]
-        }
-    }
-    
-    struct SelectState {
-        struct ViewAction {
-            var state: USState?
-        }
-        
-        struct ActionResponse {
-            var states: [USState]?
-        }
-        
-        struct ResponseDisplay {
-            var states: [USState]
         }
     }
     

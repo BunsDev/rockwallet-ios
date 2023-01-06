@@ -340,6 +340,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
             view.valueChanged = { [weak self] field in
                 self?.textFieldDidUpdate(for: indexPath, with: field.text, on: section)
             }
+            view.finishedEditing = { [weak self] field in
+                self?.textFieldDidFinish(for: indexPath, with: field.text)
+            }
             view.contentSizeChanged = {
                 tableView.beginUpdates()
                 tableView.endUpdates()

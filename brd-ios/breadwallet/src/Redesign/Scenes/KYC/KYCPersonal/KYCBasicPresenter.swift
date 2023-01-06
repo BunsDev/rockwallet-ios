@@ -18,9 +18,10 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
     // MARK: - Additional Helpers
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
-        var sections: [Models.Section] = [
+        let sections: [Models.Section] = [
             .name,
-            .country
+            .birthdate,
+            .confirm
         ]
         
         let dateViewModel: DateViewModel
@@ -46,42 +47,17 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
                                           year: .init(title: "YYYY"))
         }
         
-        var sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [Any]] = [
             .name: [
                 DoubleHorizontalTextboxViewModel(primaryTitle: .text(L10n.Account.writeYourName),
                                                  primary: .init(title: L10n.Buy.firstName, value: item.firstName),
                                                  secondary: .init(title: L10n.Buy.lastName, value: item.lastName))
             ],
-            .country: [
-                TextFieldModel(title: L10n.Account.country,
-                               value: item.countryFullName,
-                               trailing: .image(Asset.chevronDown.image))
-            ]
+            .birthdate: [ dateViewModel ],
+            .confirm: [ ButtonViewModel(title: L10n.Button.confirm) ]
         ]
-        if item.country == C.countryUS {
-            sections.append(.state)
-            sectionRows[.state] = [
-                TextFieldModel(title: L10n.Account.state,
-                               value: item.stateName,
-                               trailing: .image(Asset.chevronDown.image))
-            ]
-        }
-        sections.append(contentsOf: [.birthdate, .confirm])
-        
-        sectionRows[.birthdate] = [ dateViewModel ]
-        sectionRows[.confirm] = [ ButtonViewModel(title: L10n.Button.confirm) ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
-    }
-    
-    func presentCountry(actionResponse: KYCBasicModels.SelectCountry.ActionResponse) {
-        guard let countries = actionResponse.countries else { return }
-        viewController?.displayCountry(responseDisplay: .init(countries: countries))
-    }
-    
-    func presentState(actionResponse: KYCBasicModels.SelectState.ActionResponse) {
-        guard let states = actionResponse.states else { return }
-        viewController?.displayState(responseDisplay: .init(states: states))
     }
     
     func presentValidate(actionResponse: KYCBasicModels.Validate.ActionResponse) {
