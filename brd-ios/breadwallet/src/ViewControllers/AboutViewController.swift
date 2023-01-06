@@ -105,7 +105,7 @@ class AboutViewController: UIViewController {
         }
     }
 
-    func presentURL(string: String, title: String) {
+    private func presentURL(string: String, title: String) {
         guard let url = URL(string: string) else { return }
         let webViewController = SimpleWebViewController(url: url)
         webViewController.setup(with: .init(title: title))

@@ -159,7 +159,6 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         enterPhrase.configure(background: .init(backgroundColor: LightColors.Background.one,
                                                 tintColor: LightColors.primary,
                                                 border: .init(borderWidth: 0, cornerRadius: .medium)))
-        
         enterPhrase.configure(shadow: Presets.Shadow.normal)
     }
 
