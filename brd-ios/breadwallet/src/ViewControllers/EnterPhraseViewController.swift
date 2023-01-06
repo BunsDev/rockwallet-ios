@@ -151,7 +151,6 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         addChild(enterPhrase)
         container.addSubview(enterPhrase.view)
         enterPhrase.didMove(toParent: self)
-        view.backgroundColor = .green
     }
     
     override func viewDidLayoutSubviews() {

@@ -36,7 +36,7 @@ class ChecklistItemView: FEView<ChecklistItemConfiguration, ChecklistItemViewMod
         
         content.addSubview(checkmarkImageView)
         checkmarkImageView.snp.makeConstraints { make in
-            make.top.equalTo(content.snp.top).inset(Margins.extraSmall.rawValue)
+            make.centerY.equalToSuperview()
             make.leading.equalTo(content.snp.leading)
             make.height.equalTo(ViewSizes.extraSmall.rawValue)
             make.width.equalTo(ViewSizes.extraSmall.rawValue)
@@ -46,7 +46,7 @@ class ChecklistItemView: FEView<ChecklistItemConfiguration, ChecklistItemViewMod
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(checkmarkImageView.snp.trailing).offset(Margins.medium.rawValue)
             make.trailing.equalTo(content.snp.trailing)
-            make.top.equalTo(checkmarkImageView.snp.top)
+            make.centerY.equalToSuperview()
             make.bottom.equalTo(content.snp.bottom)
         }
     }

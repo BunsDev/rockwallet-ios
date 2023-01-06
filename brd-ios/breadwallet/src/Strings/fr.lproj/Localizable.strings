@@ -116,6 +116,8 @@
 
 "Account.SelectState" = "Sélectionner un État";
 
+"Account.SocialSecurityNumber" = "Social Security Number*";
+
 /* State title label in select state view */
 "Account.State" = "État";
 

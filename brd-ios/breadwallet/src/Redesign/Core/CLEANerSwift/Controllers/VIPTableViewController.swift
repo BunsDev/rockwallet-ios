@@ -57,23 +57,24 @@ class VIPTableViewController<C: CoordinatableRoutes,
         return contentShadowView
     }()
     
-    var topInsetValue: CGFloat = 0
+    var topInsetValue: CGFloat {
+        return sceneLeftAlignedTitle == nil ? 0 : ViewSizes.Common.defaultCommon.rawValue
+    }
     
     // MARK: Lifecycle
     override func setupSubviews() {
         super.setupSubviews()
-        
-        topInsetValue = sceneLeftAlignedTitle == nil ? 0 : Margins.extraHuge.rawValue + 28
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        tableView.addSubview(leftAlignedTitleLabel)
+        tableView.contentInset.top = topInsetValue
+        view.addSubview(leftAlignedTitleLabel)
         leftAlignedTitleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(tableView.snp.top)
-            make.height.greaterThanOrEqualTo(topInsetValue)
+            make.top.equalTo(view.snp.topMargin)
+            make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
             make.width.lessThanOrEqualTo(tableView.snp.width).inset(Margins.large.rawValue) // TODO: Trailing does not work. Why?
             make.leading.equalToSuperview().inset(Margins.large.rawValue)
         }
@@ -84,8 +85,6 @@ class VIPTableViewController<C: CoordinatableRoutes,
             make.leading.equalTo(leftAlignedTitleLabel.snp.trailing).inset(-Margins.medium.rawValue)
             make.trailing.equalToSuperview().inset(Margins.large.rawValue)
         }
-        
-        tableView.contentInset.top = topInsetValue
         
         view.addSubview(verticalButtons)
         verticalButtons.snp.makeConstraints { make in
