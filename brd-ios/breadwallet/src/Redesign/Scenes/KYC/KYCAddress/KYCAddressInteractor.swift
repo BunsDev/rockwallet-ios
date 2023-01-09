@@ -35,7 +35,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         default:
             return
         }
-        presenter?.presentData(actionResponse: .init(item: dataStore))
+        presenter?.presentForm(actionResponse: .init(isValid: dataStore?.isValid))
     }
 
     // MARK: - Aditional helpers

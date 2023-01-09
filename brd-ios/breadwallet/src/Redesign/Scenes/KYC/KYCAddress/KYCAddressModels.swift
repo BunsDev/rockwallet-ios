@@ -27,5 +27,13 @@ enum KYCAddressModels {
             var section: AnyHashable
             var value: Any?
         }
+        
+        struct ActionResponse {
+            var isValid: Bool?
+        }
+        
+        struct ResponseDisplay {
+            var isValid: Bool
+        }
     }
 }

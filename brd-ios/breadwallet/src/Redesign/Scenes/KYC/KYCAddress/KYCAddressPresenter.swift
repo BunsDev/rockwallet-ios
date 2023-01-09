@@ -51,6 +51,10 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
+    
+    func presentForm(actionResponse: KYCAddressModels.FormUpdated.ActionResponse) {
+        viewController?.displayForm(responseDisplay: .init(isValid: actionResponse.isValid ?? false))
+    }
 
     // MARK: - Additional Helpers
 
