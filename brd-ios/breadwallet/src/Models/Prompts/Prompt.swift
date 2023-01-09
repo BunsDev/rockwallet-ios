@@ -32,6 +32,7 @@ enum PromptType: Int {
         case .paperKey: return L10n.Prompts.PaperKey.title
         case .upgradePin: return L10n.Prompts.UpgradePin.title
         case .noPasscode: return L10n.Prompts.NoPasscode.title
+        case .kyc: return L10n.VerifyAccount.button
         default: return ""
         }
     }
@@ -55,6 +56,7 @@ enum PromptType: Int {
         case .paperKey: return L10n.Prompts.PaperKey.body
         case .upgradePin: return L10n.Prompts.UpgradePin.body
         case .noPasscode: return L10n.Prompts.NoPasscode.body
+        case .kyc: return "One more step and you’ll be able to Swap, Buy and Sell seamlessly."
         default: return ""
         }
     }
@@ -79,6 +81,7 @@ enum PromptType: Int {
         case .biometrics: return .promptBiometrics
         case .paperKey: return .promptPaperKey
         case .upgradePin: return .promptUpgradePin
+        case .kyc: return .promptKyc
         default: return nil
         }
     }
