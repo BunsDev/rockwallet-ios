@@ -78,11 +78,17 @@
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ par %2$@";
 
+"Account.FinalizingDecision" = "Finalizing the decision";
+
 /* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Accédez à l'intégralité de votre portefeuille RockWallet !";
 
 /* ID Verification title on account screen */
 "Account.IDVerification" = "Identifiant de vérification";
+
+"Account.IdVerificationApproved" = "Your ID verification was successfully approved!";
+
+"Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
 "Account.LetsGetVerified" = "Let’s get you verified";
 
@@ -96,6 +102,8 @@
 
 /* Account Personal Information title */
 "Account.PersonalInformation" = "Informations personnelles";
+
+"Account.PleaseTryAgain" = "Please try again.";
 
 "Account.PostalCode" = "Postal Code*";
 
@@ -117,6 +125,8 @@
 "Account.SelectState" = "Sélectionner un État";
 
 "Account.SocialSecurityNumber" = "Social Security Number*";
+
+"Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
 
 /* State title label in select state view */
 "Account.State" = "État";
@@ -161,6 +171,8 @@
 
 /* Verify personal information text explanation */
 "Account.VerifyPersonalInformation" = "Nous devons vérifier vos informations personnelles pour des raisons de conformité. Ces informations ne seront pas partagées avec des sources externes, sauf obligation légale.";
+
+"Account.WaitFewMinutes" = "This may take a few minutes.";
 
 /* Welcome title on registration screen */
 "Account.Welcome" = "Bienvenue !";
@@ -249,6 +261,8 @@
 /* Before start label */
 "AccountKYCLevelTwo.BeforeStart" = "Avant de vous lancer, veuillez :";
 
+"AccountKYCLevelTwo.BiometricsVerified" = "Biometrics verified";
+
 /* Buy limits on KYC2 account */
 "AccountKYCLevelTwo.BuyLimits" = "Limite d'achat : 500 USD/jour, aucune limite à vie";
 
@@ -271,6 +285,8 @@
 /* Document confirmation label for KYC2 */
 "AccountKYCLevelTwo.DocumentConfirmation" = "Assurez-vous que les informations du document soient clairement visibles et dans le cadre.";
 
+"AccountKYCLevelTwo.DocumentInspected" = "Document inspected";
+
 /* Documents review label in KYC2 */
 "AccountKYCLevelTwo.DocumentsReview" = "Nous examinons vos documents et nous vous informerons lorsque votre compte aura été vérifié.";
 
@@ -287,6 +303,8 @@
 
 /* Front page of the document instructions text for KYC2 */
 "AccountKYCLevelTwo.FrontPageInstructions" = "Assurez-vous d'avoir capturé tout le recto du document.";
+
+"AccountKYCLevelTwo.ImageQualityChecked" = "Image quality checked";
 
 /* KYC Level Two status */
 "AccountKYCLevelTwo.InProgress" = "La vérification de votre identité est en cours…";
@@ -317,6 +335,14 @@
 
 /* Sending your data label for verification on KYC2 */
 "AccountKYCLevelTwo.SendingData" = "Envoi de vos données pour vérification…";
+
+"AccountKYCLevelTwo.TakeDocumentBackContent" = "Turn your ID card around and take a photo of the other side.";
+
+"AccountKYCLevelTwo.TakeDocumentBackTitle" = "Turn your ID card around";
+
+"AccountKYCLevelTwo.TakeDocumentFrontContent" = "Make sure your photo is clear and readable. We support ID cards, passports and driver’s license";
+
+"AccountKYCLevelTwo.TakeDocumentFrontTitle" = "Take a photo of your document’s photo page";
 
 "AccountKYCLevelTwo.TakeIdBackPhotoContent" = "Assurez-vous que votre carte d'identité soit claire et lisible et qu'elle tienne entièrement dans le cadre.";
 
@@ -513,6 +539,8 @@
 /* As in "(tap here to) buy (bitcoin)" */
 "Button.buy" = "Acheter";
 
+"Button.BuyDigitalAssets" = "Buy digital assets";
+
 /* Cancel button label */
 "Button.cancel" = "Annuler";
 
@@ -536,6 +564,8 @@
 
 /* Finish button title */
 "Button.Finish" = "Terminer";
+
+"Button.FundWalletWithAch" = "Fund your wallet with ACH";
 
 /* Go to dashboard button */
 "Button.GoToDashboard" = "Accéder au tableau de bord";
@@ -575,6 +605,8 @@
 /* receive button */
 "Button.receive" = "Recevoir";
 
+"Button.ReceiveDigitalAssets" = "Receive digital assets";
+
 "Button.remove" = "Supprimer";
 
 /* Search button */
@@ -600,6 +632,8 @@
 
 /* Settings button label */
 "Button.submit" = "Envoyer";
+
+"Button.TryLater" = "Try later";
 
 /* Button label to uninstall the app. */
 "Button.uninstall.android" = "Désinstallez";
@@ -1595,9 +1629,6 @@
 
 /* Warning about recovery phrase (formerly paper key). */
 "Prompts.PaperKey.body" = "Votre paperkey doit être sauvegardé au cas où vous perdiez ou changiez votre téléphone.";
-
-/* Warning about paper key (Android-version) */
-"Prompts.PaperKey.Body.Android" = "Paramétrez votre clé papier au cas où vous perdriez ou remplaceriez votre téléphone. Votre clé sera également requise si vous modifiez les paramètres de sécurité de votre téléphone.";
 
 /* An action is required (You must do this action). */
 "Prompts.PaperKey.title" = "Une action est requise";

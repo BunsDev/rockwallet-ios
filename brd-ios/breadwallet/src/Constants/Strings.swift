@@ -85,10 +85,16 @@ internal enum L10n {
     internal static func exchangeRate(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "Account.exchangeRate", String(describing: p1), String(describing: p2), fallback: "%1$@ per %2$@")
     }
+    /// Finalizing the decision
+    internal static let finalizingDecision = L10n.tr("Localizable", "Account.FinalizingDecision", fallback: "Finalizing the decision")
     /// Get full access for the RockWallet label on profile screen
     internal static let fullAccess = L10n.tr("Localizable", "Account.FullAccess", fallback: "Get full access to your RockWallet!")
     /// ID Verification title on account screen
     internal static let idVerification = L10n.tr("Localizable", "Account.IDVerification", fallback: "ID Verification")
+    /// Your ID verification was successfully approved!
+    internal static let idVerificationApproved = L10n.tr("Localizable", "Account.IdVerificationApproved", fallback: "Your ID verification was successfully approved!")
+    /// We’re sorry, your ID verification was rejected.
+    internal static let idVerificationRejected = L10n.tr("Localizable", "Account.IdVerificationRejected", fallback: "We’re sorry, your ID verification was rejected.")
     /// Let’s get you verified
     internal static let letsGetVerified = L10n.tr("Localizable", "Account.LetsGetVerified", fallback: "Let’s get you verified")
     /// Loading Wallet Message
@@ -99,6 +105,8 @@ internal enum L10n {
     internal static let pending = L10n.tr("Localizable", "Account.Pending", fallback: "Pending")
     /// Account Personal Information title
     internal static let personalInformation = L10n.tr("Localizable", "Account.PersonalInformation", fallback: "Personal Information")
+    /// Please try again.
+    internal static let pleaseTryAgain = L10n.tr("Localizable", "Account.PleaseTryAgain", fallback: "Please try again.")
     /// Postal Code*
     internal static let postalCode = L10n.tr("Localizable", "Account.PostalCode", fallback: "Postal Code*")
     /// Promotion and offers label when registering account
@@ -117,6 +125,8 @@ internal enum L10n {
     internal static let selectState = L10n.tr("Localizable", "Account.SelectState", fallback: "Select state")
     /// Social Security Number*
     internal static let socialSecurityNumber = L10n.tr("Localizable", "Account.SocialSecurityNumber", fallback: "Social Security Number*")
+    /// Now let’s start with using your RockWallet.
+    internal static let startUsingWallet = L10n.tr("Localizable", "Account.StartUsingWallet", fallback: "Now let’s start with using your RockWallet.")
     /// State title label in select state view
     internal static let state = L10n.tr("Localizable", "Account.State", fallback: "State")
     /// Submit your photo for document id title
@@ -156,6 +166,8 @@ internal enum L10n {
     internal static let verifyIdentityPlain = L10n.tr("Localizable", "Account.VerifyIdentityPlain", fallback: "We need to verify your identity before you can buy or swap assets.")
     /// Verify personal information text explanation
     internal static let verifyPersonalInformation = L10n.tr("Localizable", "Account.VerifyPersonalInformation", fallback: "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.")
+    /// This may take a few minutes.
+    internal static let waitFewMinutes = L10n.tr("Localizable", "Account.WaitFewMinutes", fallback: "This may take a few minutes.")
     /// Welcome title on registration screen
     internal static let welcome = L10n.tr("Localizable", "Account.Welcome", fallback: "Welcome!")
     /// Why verify my account title
@@ -224,6 +236,8 @@ internal enum L10n {
     internal static let backPageInstructions = L10n.tr("Localizable", "AccountKYCLevelTwo.BackPageInstructions", fallback: "Make sure you have captured the entire back page of the document")
     /// Before start label
     internal static let beforeStart = L10n.tr("Localizable", "AccountKYCLevelTwo.BeforeStart", fallback: "Before you start, please:")
+    /// Biometrics verified
+    internal static let biometricsVerified = L10n.tr("Localizable", "AccountKYCLevelTwo.BiometricsVerified", fallback: "Biometrics verified")
     /// Buy limits on KYC2 account
     internal static let buyLimits = L10n.tr("Localizable", "AccountKYCLevelTwo.BuyLimits", fallback: "Buy limits: $500 USD/day, no lifetime limit")
     /// Capture back page of the document text
@@ -240,6 +254,8 @@ internal enum L10n {
     internal static let confirmID = L10n.tr("Localizable", "AccountKYCLevelTwo.ConfirmID", fallback: "We need to confirm your ID")
     /// Document confirmation label for KYC2
     internal static let documentConfirmation = L10n.tr("Localizable", "AccountKYCLevelTwo.DocumentConfirmation", fallback: "Make sure document details are clearly visible and within the frame")
+    /// Document inspected
+    internal static let documentInspected = L10n.tr("Localizable", "AccountKYCLevelTwo.DocumentInspected", fallback: "Document inspected")
     /// Documents review label in KYC2
     internal static let documentsReview = L10n.tr("Localizable", "AccountKYCLevelTwo.DocumentsReview", fallback: "We are reviewing your documents and will let you know when your account has been verified.")
     /// Driver’s license
@@ -252,6 +268,8 @@ internal enum L10n {
     internal static let faceVisibleConfirmation = L10n.tr("Localizable", "AccountKYCLevelTwo.FaceVisibleConfirmation", fallback: "Make sure your face is clearly visible.")
     /// Front page of the document instructions text for KYC2
     internal static let frontPageInstructions = L10n.tr("Localizable", "AccountKYCLevelTwo.FrontPageInstructions", fallback: "Make sure you have captured the entire front page of the document")
+    /// Image quality checked
+    internal static let imageQualityChecked = L10n.tr("Localizable", "AccountKYCLevelTwo.ImageQualityChecked", fallback: "Image quality checked")
     /// KYC Level Two status
     internal static let inProgress = L10n.tr("Localizable", "AccountKYCLevelTwo.InProgress", fallback: "Your ID verification is in progress")
     /// Document instructions label for KYC2
@@ -274,6 +292,14 @@ internal enum L10n {
     internal static let selectOptions = L10n.tr("Localizable", "AccountKYCLevelTwo.SelectOptions", fallback: "Select one of the following options:")
     /// Sending your data label for verification on KYC2
     internal static let sendingData = L10n.tr("Localizable", "AccountKYCLevelTwo.SendingData", fallback: "Sending your data for verification")
+    /// Turn your ID card around and take a photo of the other side.
+    internal static let takeDocumentBackContent = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeDocumentBackContent", fallback: "Turn your ID card around and take a photo of the other side.")
+    /// Turn your ID card around
+    internal static let takeDocumentBackTitle = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeDocumentBackTitle", fallback: "Turn your ID card around")
+    /// Make sure your photo is clear and readable. We support ID cards, passports and driver’s license
+    internal static let takeDocumentFrontContent = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeDocumentFrontContent", fallback: "Make sure your photo is clear and readable. We support ID cards, passports and driver’s license")
+    /// Take a photo of your document’s photo page
+    internal static let takeDocumentFrontTitle = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeDocumentFrontTitle", fallback: "Take a photo of your document’s photo page")
     /// Make sure your ID is clear and readable and fits fully in the frame
     internal static let takeIdBackPhotoContent = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeIdBackPhotoContent", fallback: "Make sure your ID is clear and readable and fits fully in the frame")
     /// Please take a photo of your ID’s back page
@@ -288,15 +314,15 @@ internal enum L10n {
     internal static let takePhotoPassportTitle = L10n.tr("Localizable", "AccountKYCLevelTwo.TakePhotoPassportTitle", fallback: "Please take a photo of your passport.")
     /// Take photos label in KYC2
     internal static let takePhotos = L10n.tr("Localizable", "AccountKYCLevelTwo.TakePhotos", fallback: "Be prepared to take a selfie and photos of your ID")
-    /// Make sure your face is in the frame and it’s clearly visible.
-    internal static let takeSelfieContent = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeSelfieContent", fallback: "Make sure your face is in the frame and it’s clearly visible.")
-    /// Please take a selfie
-    internal static let takeSelfieTitle = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeSelfieTitle", fallback: "Please take a selfie")
+    /// Please make sure that your face is in the frame and clearly visible.
+    internal static let takeSelfieContent = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeSelfieContent", fallback: "Please make sure that your face is in the frame and clearly visible.")
+    /// Selfie time!
+    internal static let takeSelfieTitle = L10n.tr("Localizable", "AccountKYCLevelTwo.TakeSelfieTitle", fallback: "Selfie time!")
     /// If your personal information has changed, please first update Level 1 KYC and then continue with
     /// Level 2 KYC.
     internal static let updateLevelOne = L10n.tr("Localizable", "AccountKYCLevelTwo.updateLevelOne", fallback: "If your personal information has changed, please first update Level 1 KYC and then continue with\nLevel 2 KYC.")
     /// Uploading your photos label in KYC2 flow
-    internal static let uploadingPhoto = L10n.tr("Localizable", "AccountKYCLevelTwo.UploadingPhoto", fallback: "Uploading your photos")
+    internal static let uploadingPhoto = L10n.tr("Localizable", "AccountKYCLevelTwo.UploadingPhoto", fallback: "Photos processed")
     /// Unavailable while KYC verification is pending.
     internal static let verificationPending = L10n.tr("Localizable", "AccountKYCLevelTwo.VerificationPending", fallback: "Unavailable while KYC verification is pending.")
     /// Verifying label on KYC2
@@ -455,6 +481,8 @@ internal enum L10n {
   internal enum Button {
     /// As in "(tap here to) buy (bitcoin)"
     internal static let buy = L10n.tr("Localizable", "Button.buy", fallback: "Buy")
+    /// Buy digital assets
+    internal static let buyDigitalAssets = L10n.tr("Localizable", "Button.BuyDigitalAssets", fallback: "Buy digital assets")
     /// Cancel button label
     internal static let cancel = L10n.tr("Localizable", "Button.cancel", fallback: "Cancel")
     /// Close button
@@ -469,6 +497,8 @@ internal enum L10n {
     internal static let done = L10n.tr("Localizable", "Button.done", fallback: "DONE")
     /// Finish button title
     internal static let finish = L10n.tr("Localizable", "Button.Finish", fallback: "Finish")
+    /// Fund your wallet with ACH
+    internal static let fundWalletWithAch = L10n.tr("Localizable", "Button.FundWalletWithAch", fallback: "Fund your wallet with ACH")
     /// Go to dashboard button
     internal static let goToDashboard = L10n.tr("Localizable", "Button.GoToDashboard", fallback: "Go to dashboard")
     /// Button to return to the "home" screen (the home screen is the top menu).
@@ -495,6 +525,8 @@ internal enum L10n {
     internal static let profile = L10n.tr("Localizable", "Button.Profile", fallback: "Profile")
     /// receive button
     internal static let receive = L10n.tr("Localizable", "Button.receive", fallback: "Receive")
+    /// Receive digital assets
+    internal static let receiveDigitalAssets = L10n.tr("Localizable", "Button.ReceiveDigitalAssets", fallback: "Receive digital assets")
     /// Remove
     internal static let remove = L10n.tr("Localizable", "Button.remove", fallback: "Remove")
     /// Search button
@@ -511,6 +543,8 @@ internal enum L10n {
     internal static let skip = L10n.tr("Localizable", "Button.skip", fallback: "Skip")
     /// Settings button label
     internal static let submit = L10n.tr("Localizable", "Button.submit", fallback: "Submit")
+    /// Try later
+    internal static let tryLater = L10n.tr("Localizable", "Button.TryLater", fallback: "Try later")
     /// Verify
     internal static let verify = L10n.tr("Localizable", "Button.Verify", fallback: "Verify")
     /// Yes button
@@ -571,8 +605,8 @@ internal enum L10n {
     internal static func buyLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is %s USD and maximum is %s USD/day")
     }
-    /// BUY WITH CARDS
-    internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARDS")
+    /// BUY WITH CARD
+    internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARD")
     /// Buy with card
     internal static let buyWithCardButton = L10n.tr("Localizable", "Buy.BuyWithCardButton", fallback: "Buy with card")
     /// Card label on add card flow
@@ -1484,10 +1518,6 @@ internal enum L10n {
       internal static let body = L10n.tr("Localizable", "Prompts.PaperKey.body", fallback: "Set up your Recovery Phrase in case you ever lose or replace your phone. This is also required if you change your phone's security settings.")
       /// An action is required (You must do this action).
       internal static let title = L10n.tr("Localizable", "Prompts.PaperKey.title", fallback: "Action Required")
-      internal enum Body {
-        /// Warning about paper key (Android-version)
-        internal static let android = L10n.tr("Localizable", "Prompts.PaperKey.Body.Android", fallback: "Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone's security settings.")
-      }
     }
     internal enum RateApp {
       /// Don't ask again
