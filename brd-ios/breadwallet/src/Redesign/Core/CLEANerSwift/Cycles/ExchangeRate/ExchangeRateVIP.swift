@@ -117,7 +117,9 @@ extension Controller where Self: ExchangeRateResponseDisplays,
         }
         
         if let cell = getAccountLimitsCell() {
+            tableView.beginUpdates()
             cell.wrappedView.setup(with: responseDisplay.accountLimits)
+            tableView.endUpdates()
         }
     }
 }
