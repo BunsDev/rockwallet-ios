@@ -56,7 +56,7 @@ enum PromptType: Int {
         case .paperKey: return L10n.Prompts.PaperKey.body
         case .upgradePin: return L10n.Prompts.UpgradePin.body
         case .noPasscode: return L10n.Prompts.NoPasscode.body
-        case .kyc: return "One more step and you’ll be able to Swap, Buy and Sell seamlessly."
+        case .kyc: return L10n.Prompts.VerifyAccount.body
         default: return ""
         }
     }
