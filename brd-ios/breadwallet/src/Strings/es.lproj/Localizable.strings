@@ -53,6 +53,9 @@
 
 "Account.CountryRegion" = "Country/Region*";
 
+/* Create a RockWallet account by entering your email address label in registration flow */
+"Account.CreateAccount" = "Crea una cuenta de RockWallet introduciendo tu dirección de email.";
+
 "Account.CreateAccountButton" = "Create account";
 
 /* Current limit per day label in profile screen */

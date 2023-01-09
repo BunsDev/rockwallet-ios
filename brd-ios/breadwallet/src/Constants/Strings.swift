@@ -65,6 +65,8 @@ internal enum L10n {
     internal static let country = L10n.tr("Localizable", "Account.Country", fallback: "Country")
     /// Country/Region*
     internal static let countryRegion = L10n.tr("Localizable", "Account.CountryRegion", fallback: "Country/Region*")
+    /// Create a RockWallet account by entering your email address label in registration flow
+    internal static let createAccount = L10n.tr("Localizable", "Account.CreateAccount", fallback: "Create a RockWallet account by entering your email address.")
     /// Create account
     internal static let createAccountButton = L10n.tr("Localizable", "Account.CreateAccountButton", fallback: "Create account")
     /// Current limit per day label in profile screen
