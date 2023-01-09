@@ -10,7 +10,7 @@
 
 import UIKit
 
-// TODO: refactor to use apples button configurations
+// TODO: Refactor to use Apple's button configurations
 struct ButtonConfiguration: Configurable {
     var normalConfiguration: BackgroundConfiguration?
     var selectedConfiguration: BackgroundConfiguration?
@@ -34,8 +34,8 @@ struct ButtonConfiguration: Configurable {
 
 struct ButtonViewModel: ViewModel {
     var title: String?
+    var attributedTitle: NSAttributedString?
     var isUnderlined = false
-    // update to UIImage
     var image: UIImage?
     var enabled = true
     var callback: (() -> Void)?
@@ -112,22 +112,34 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
 
         self.viewModel = viewModel
         
-        if let title = viewModel.isUnderlined ? viewModel.title : viewModel.title?.uppercased() {
-            if viewModel.isUnderlined {
-                let attributeString = NSMutableAttributedString(
-                    string: title,
-                    attributes: [
-                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
-                    ]
-                )
-                setAttributedTitle(attributeString, for: .normal)
-            } else {
-                setTitle(title, for: .normal)
-            }
+        var defaultAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: LightColors.Contrast.two,
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.button]
+        let attributedString: NSAttributedString
+        
+        if viewModel.isUnderlined {
+            defaultAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
         }
         
+        if let attributedTitle = viewModel.attributedTitle {
+            attributedString = attributedTitle
+        } else if let title = viewModel.title?.uppercased() {
+            let attributeTitle = NSMutableAttributedString(string: title)
+            attributeTitle.addAttributes(defaultAttributes, range: NSRange(location: 0, length: title.count))
+            
+            attributedString = attributeTitle
+        } else if let attributedTitle = viewModel.attributedTitle {
+            defaultAttributes.removeAll()
+            attributedString = attributedTitle
+        } else {
+            attributedString = NSAttributedString(string: "")
+        }
+        
+        setAttributedTitle(attributedString, for: .normal)
+        
         if let image = viewModel.image {
-            if viewModel.title == nil {
+            if viewModel.title == nil || viewModel.attributedTitle == nil {
                 setBackgroundImage(image, for: .normal)
             } else {
                 imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
