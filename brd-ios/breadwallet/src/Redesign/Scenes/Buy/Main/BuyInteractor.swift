@@ -54,6 +54,11 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
     }
     
+    func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
+        let isRelinking = dataStore?.selected?.status != .statusOk
+        presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
+    }
+    
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.toAmount?.currency else {

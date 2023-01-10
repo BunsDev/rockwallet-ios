@@ -175,6 +175,14 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayNavigateAssetSelector(responseDisplay: .init(title: L10n.Swap.iWant))
     }
     
+    func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse) {
+        guard let isRelinking = actionResponse.isRelinking else { return }
+        
+        let description = isRelinking ? L10n.Buy.achPaymentMethodRelinked : L10n.Buy.achSuccess
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(description)),
+                                                              config: Presets.InfoView.verification))
+    }
+    
     func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
         guard !isAccessDenied(error: actionResponse.error) else { return }
         

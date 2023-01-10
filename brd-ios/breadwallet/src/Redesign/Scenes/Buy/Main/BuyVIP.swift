@@ -36,6 +36,7 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
     func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
+    func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse)
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays, AchResponseDisplays {

@@ -225,13 +225,13 @@ class RecoveryKeyFlowController {
         let navController = RecoveryKeyFlowController.makeNavigationController()
         
         // fixes an edge case, where the bottom sheet gets presented multiple times
-        var isPResented = false
+        var isPresented = false
         let enterPhraseVC = EnterPhraseViewController(keyMaster: keyMaster, reason: .validateForResettingPin({ phrase in
-            guard isPResented else { return }
-            isPResented = true
+            guard isPresented else { return }
+            isPresented = true
                 Store.perform(action: Alert.Show(.walletRestored(callback: {
                     callback(phrase, navController)
-                    isPResented = false
+                    isPresented = false
             })))
         }))
 
