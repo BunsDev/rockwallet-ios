@@ -1688,6 +1688,8 @@
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Aggiorna il PIN";
 
+"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap, Buy and Sell seamlessly.";
+
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "Attiva le notifiche push e sii il primo a conoscere le nuove funzionalità e le offerte speciali.";
 

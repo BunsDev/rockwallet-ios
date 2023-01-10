@@ -1579,6 +1579,10 @@ internal enum L10n {
       /// Upgrade PIN prompt title.
       internal static let title = L10n.tr("Localizable", "Prompts.UpgradePin.title", fallback: "Upgrade PIN")
     }
+    internal enum VerifyAccount {
+      /// One more step and you’ll be able to Swap, Buy and Sell seamlessly.
+      internal static let body = L10n.tr("Localizable", "Prompts.VerifyAccount.body", fallback: "One more step and you’ll be able to Swap, Buy and Sell seamlessly.")
+    }
   }
   internal enum PushNotifications {
     /// Body text for the push notifications prompt.

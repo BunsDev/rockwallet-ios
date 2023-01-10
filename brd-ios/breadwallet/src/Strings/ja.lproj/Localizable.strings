@@ -1688,6 +1688,8 @@
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "PINコードを更新する";
 
+"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap, Buy and Sell seamlessly.";
+
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "プッシュ通知をオンにして、新機能や特別オファーについての情報を誰よりも早くに入手しよう。";
 
