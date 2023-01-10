@@ -284,14 +284,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                 if max.currency.isEthereum { // Only adjust maximum for ETH
                     let tokenValue = Decimal(string: max.tokenUnformattedString(in: max.currency.defaultUnit))
                     let adjustTokenValue = (tokenValue ?? Decimal.zero) * 0.85 // Reduce amount for ETH estimate fee API call
-                    if adjustTokenValue != Decimal.zero {
-                        max = Amount(tokenString: String(describing: adjustTokenValue), currency: max.currency)
-                    } else { // Subtract a fixed amount if the tokenUnformattedString fails
-                        let adjustAmount = Amount(tokenString: "0.00225", currency: max.currency)
-                        if max > adjustAmount {
-                            max = max - adjustAmount
-                        }
-                    }
+                    max = Amount(tokenString: String(describing: adjustTokenValue).cleanupFormatting(forFiat: false), currency: max.currency)
                 }
                 self?.amountView.forceUpdateAmount(amount: max)
             } else {
