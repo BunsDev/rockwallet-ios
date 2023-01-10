@@ -56,6 +56,8 @@
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Créer un compte RockWallet en indiquant votre adresse e-mail.";
 
+"Account.CreateAccountButton" = "Create account";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Limite actuelle : 1 000 USD/jour";
 
@@ -75,10 +77,16 @@
 
 "Account.Email" = "E-mail";
 
+"Account.EnterEmail" = "Enter your e-mail";
+
+"Account.EnterPassword" = "Create your password";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ par %2$@";
 
 "Account.FinalizingDecision" = "Finalizing the decision";
+
+"Account.ForgotPassword" = "Forgot password?";
 
 /* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Accédez à l'intégralité de votre portefeuille RockWallet !";
@@ -97,6 +105,8 @@
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Faites vérifier votre compte pour accéder à l'intégralité de votre portefeuille RockWallet !";
+
+"Account.NewToRockwallet" = "New to RockWallet?";
 
 "Account.Pending" = "En cours…";
 
@@ -1074,7 +1084,7 @@
 "ErrorMessages.emailUnavailableTitle" = "E-mail non disponible";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
+"ErrorMessages.ethBalanceLowAddEth" = "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
 
 "ErrorMessages.exchangeFailed" = "Échec de l'échange. Motif : %s.";
 

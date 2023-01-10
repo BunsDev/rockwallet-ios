@@ -234,6 +234,12 @@
 		7BDB4A112806FA190031F015 /* brd-tokens.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0F2806FA190031F015 /* brd-tokens.tar */; };
 		7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */; };
 		7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */; };
+		7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */; };
+		7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */; };
+		7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */; };
+		7BF5D4ED296BFC8D00942ADB /* SignInStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E7296BFC8C00942ADB /* SignInStore.swift */; };
+		7BF5D4EE296BFC8D00942ADB /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E8296BFC8D00942ADB /* SignInViewController.swift */; };
+		7BF5D4EF296BFC8D00942ADB /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E9296BFC8D00942ADB /* SignInPresenter.swift */; };
 		7C0A3ACE210A0E1D006C2783 /* NotificationAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0A3ACD210A0E1D006C2783 /* NotificationAuthorizer.swift */; };
 		7C0F3DC42124A81100531E54 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0F3DC32124A81100531E54 /* Backend.swift */; };
 		7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1931CC2327371A0061DE20 /* CoreDatabase.swift */; };
@@ -1047,6 +1053,12 @@
 		7BDB4A0F2806FA190031F015 /* brd-tokens.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; name = "brd-tokens.tar"; path = "Resources/brd-tokens.tar"; sourceTree = "<group>"; };
 		7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardInputDetailsView.swift; sourceTree = "<group>"; };
 		7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalButtonsView.swift; sourceTree = "<group>"; };
+		7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVIP.swift; sourceTree = "<group>"; };
+		7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInInteractor.swift; sourceTree = "<group>"; };
+		7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInModels.swift; sourceTree = "<group>"; };
+		7BF5D4E7296BFC8C00942ADB /* SignInStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInStore.swift; sourceTree = "<group>"; };
+		7BF5D4E8296BFC8D00942ADB /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		7BF5D4E9296BFC8D00942ADB /* SignInPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		7BFE916229544549009E575F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/BreadwalletWidget.intentdefinition; sourceTree = "<group>"; };
 		7BFE916329544570009E575F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
 		7C0A3ACD210A0E1D006C2783 /* NotificationAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationAuthorizer.swift; path = src/NotificationAuthorizer.swift; sourceTree = "<group>"; };
@@ -1968,12 +1980,6 @@
 		7B2BF27E29659CD00037E731 /* RecoveryKeyIntro */ = {
 			isa = PBXGroup;
 			children = (
-				7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */,
-				7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */,
-				7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */,
-				7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */,
-				7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */,
-				7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */,
 			);
 			name = RecoveryKeyIntro;
 			sourceTree = "<group>";
@@ -2069,15 +2075,7 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
-		7B9434252886A12000638703 /* DeleteProfile */ = {
-			isa = PBXGroup;
-			children = (
-				7B9434292886A7CA00638703 /* DeleteProfileInfo */,
-			);
-			path = DeleteProfile;
-			sourceTree = "<group>";
-		};
-		7B9434292886A7CA00638703 /* DeleteProfileInfo */ = {
+		7B9434292886A7CA00638703 /* DeleteProfile */ = {
 			isa = PBXGroup;
 			children = (
 				7B94342F2886A7FA00638703 /* DeleteProfileInfoPresenter.swift */,
@@ -2089,7 +2087,7 @@
 				7B94343A2886DAF000638703 /* DeleteProfileInfoCoordinator.swift */,
 				7B94343C2887F98E00638703 /* DeleteProfileWorker.swift */,
 			);
-			path = DeleteProfileInfo;
+			path = DeleteProfile;
 			sourceTree = "<group>";
 		};
 		7BBBF4D22874210600E4D36B /* Main */ = {
@@ -2113,6 +2111,32 @@
 				7EC0F8B7288813EE0037145C /* SwapConfirmationView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7BF5D4E2296BF6AD00942ADB /* RecoveryKeyIntro */ = {
+			isa = PBXGroup;
+			children = (
+				7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */,
+				7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */,
+				7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */,
+				7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */,
+				7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */,
+				7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */,
+			);
+			path = RecoveryKeyIntro;
+			sourceTree = "<group>";
+		};
+		7BF5D4E3296BF6CE00942ADB /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				7BF5D4E9296BFC8D00942ADB /* SignInPresenter.swift */,
+				7BF5D4E7296BFC8C00942ADB /* SignInStore.swift */,
+				7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */,
+				7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */,
+				7BF5D4E8296BFC8D00942ADB /* SignInViewController.swift */,
+				7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */,
+			);
+			path = SignIn;
 			sourceTree = "<group>";
 		};
 		7C377EBC20F64C1200E8CF1C /* Resources */ = {
@@ -2266,12 +2290,14 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7BF5D4E3296BF6CE00942ADB /* SignIn */,
+				7BF5D4E2296BF6AD00942ADB /* RecoveryKeyIntro */,
 				7E8F7E3C293F6ACE0058019B /* Sell */,
 				7E5B305C28A67FDC0065D2D8 /* REUSABLE */,
 				7E52B79D286EF4CE003D2249 /* Swap */,
 				7EF2187D2862F07A006ABCC1 /* Buy */,
 				7EF45F7C2847671F00D1F7B0 /* KYC */,
-				7B9434252886A12000638703 /* DeleteProfile */,
+				7B9434292886A7CA00638703 /* DeleteProfile */,
 				7E2E1A2C284E099300E56E69 /* Registration */,
 				7EBC6AFD2848ABAB000A301F /* RegistrationConfirmation */,
 				C4C0CA542845F2F400B6ED79 /* AccountVerification */,
@@ -3861,6 +3887,7 @@
 				7EBC6B062848ABC5000A301F /* RegistrationConfirmationStore.swift in Sources */,
 				7E9B13F02857213400BD9EF5 /* KYCLevelOneWorker.swift in Sources */,
 				7B8CF81E28A3D0C600D54D14 /* CardDetailsFormatter.swift in Sources */,
+				7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */,
 				7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */,
 				7B8CF82028A64B9300D54D14 /* ExchangeFormatter.swift in Sources */,
 				7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */,
@@ -4013,11 +4040,13 @@
 				7B992F2529279598008C2174 /* Assets.swift in Sources */,
 				7C424A6E20FD34F20064557E /* NotificationHandler.swift in Sources */,
 				7B54E5B727F4A2B1002DD1E4 /* RoundedView.swift in Sources */,
+				7BF5D4EF296BFC8D00942ADB /* SignInPresenter.swift in Sources */,
 				7E5CB3862835090E00EC787E /* ShadowConfiguration.swift in Sources */,
 				7C35E719200AF3940064808F /* TxListViewModel.swift in Sources */,
 				7EE62495295C141D00FC19CC /* main.swift in Sources */,
 				7E2E1A41284E267000E56E69 /* ProfileWorker.swift in Sources */,
 				CE6314831E08E5BB00D4AFE0 /* UIView+InitAdditions.swift in Sources */,
+				7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */,
 				CEC6AA401DEFC87300EE5AFD /* SendViewController.swift in Sources */,
 				7C72D13622662BB40091B185 /* Wallet.swift in Sources */,
 				CEC6F8451E886723000795B8 /* PaymentRequest.swift in Sources */,
@@ -4146,6 +4175,7 @@
 				7B02D6282859201500C5C384 /* KYCCameraViewController.swift in Sources */,
 				7E383B4928AE1AFD00A5339F /* AssetSelectionDisplayable.swift in Sources */,
 				7BBBF4DC287421CF00E4D36B /* SwapModels.swift in Sources */,
+				7BF5D4ED296BFC8D00942ADB /* SignInStore.swift in Sources */,
 				7ECCA9912873079100F99368 /* QuoteWorker.swift in Sources */,
 				7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */,
 				3A69885E24591F890084953D /* PayId.swift in Sources */,
@@ -4341,6 +4371,7 @@
 				7B94343D2887F98E00638703 /* DeleteProfileWorker.swift in Sources */,
 				CE25BF931DFDA7A600BC67B6 /* MessageUIPresenter.swift in Sources */,
 				7E8E979C283F4830008606B0 /* ProfileViewController.swift in Sources */,
+				7BF5D4EE296BFC8D00942ADB /* SignInViewController.swift in Sources */,
 				3A6785FB257019220065F835 /* RedeemTransitioningDelegate.swift in Sources */,
 				CE20C90C1DBC59E600C8397A /* StartFlowPresenter.swift in Sources */,
 				7B54E5A227F4A2B0002DD1E4 /* Decodable+Extensions.swift in Sources */,
@@ -4373,6 +4404,7 @@
 				3A3D63DC22F10B4F000DE920 /* AddWalletsViewController.swift in Sources */,
 				7B54E5BB27F4A2B1002DD1E4 /* LoadingView.swift in Sources */,
 				7E8E979A283F4830008606B0 /* ProfileModels.swift in Sources */,
+				7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */,
 				CE6DCC271E6108D50044257B /* EnterPhraseCell.swift in Sources */,
 				7B2E5054289A5F02008CACD8 /* AddCardInteractor.swift in Sources */,
 				CE760EDD1E561DF900EFAC2B /* UpdatePinViewController.swift in Sources */,

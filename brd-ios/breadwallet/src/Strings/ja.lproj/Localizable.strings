@@ -56,6 +56,8 @@
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Create a RockWallet account by entering your email address.";
 
+"Account.CreateAccountButton" = "Create account";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Current limit: $1,000/day";
 
@@ -75,10 +77,16 @@
 
 "Account.Email" = "Email";
 
+"Account.EnterEmail" = "Enter your e-mail";
+
+"Account.EnterPassword" = "Create your password";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%2$sあたり%1$s";
 
 "Account.FinalizingDecision" = "Finalizing the decision";
+
+"Account.ForgotPassword" = "Forgot password?";
 
 /* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Get full access to your RockWallet!";
@@ -86,13 +94,10 @@
 /* ID Verification title on account screen */
 "Account.IDVerification" = "ID Verification";
 
-<<<<<<< HEAD
-=======
 "Account.IdVerificationApproved" = "Your ID verification was successfully approved!";
 
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
->>>>>>> main
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -101,16 +106,15 @@
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
 
+"Account.NewToRockwallet" = "New to RockWallet?";
+
 "Account.Pending" = "Pending";
 
 /* Account Personal Information title */
 "Account.PersonalInformation" = "Personal Information";
 
-<<<<<<< HEAD
-=======
 "Account.PleaseTryAgain" = "Please try again.";
 
->>>>>>> main
 "Account.PostalCode" = "Postal Code*";
 
 /* Promotion and offers label when registering account */
@@ -132,11 +136,8 @@
 
 "Account.SocialSecurityNumber" = "Social Security Number*";
 
-<<<<<<< HEAD
-=======
 "Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
 
->>>>>>> main
 /* State title label in select state view */
 "Account.State" = "State";
 
