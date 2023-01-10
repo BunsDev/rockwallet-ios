@@ -72,11 +72,6 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
         verticalButtons.layoutIfNeeded()
     }
     
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -130,7 +125,7 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
             view.configure(with: .init(buttons: [Presets.Button.noBorders], isRightAligned: true))
             
             view.callbacks = [
-                
+                // TODO: Add necessary logic.
             ]
         }
         
@@ -141,7 +136,7 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
     
     @objc override func buttonTapped() {
         super.buttonTapped()
-        
+        // TODO: Add necessary logic.
     }
     
     // MARK: - SignInResponseDisplay
