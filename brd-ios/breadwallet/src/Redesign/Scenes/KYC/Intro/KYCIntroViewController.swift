@@ -43,7 +43,7 @@ class KYCIntroViewController: CheckListViewController {
     }
     
     override func footerTapped() {
-        coordinator?.showInWebView(string: C.veriffPrivacyPolicy, title: L10n.Account.veriffPrivacyPolicy)
+        coordinator?.showInWebView(urlString: C.veriffPrivacyPolicy, title: L10n.Account.veriffPrivacyPolicy)
     }
     
     override func buttonTapped() {

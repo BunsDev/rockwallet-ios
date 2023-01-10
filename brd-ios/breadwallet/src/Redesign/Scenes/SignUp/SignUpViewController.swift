@@ -1,8 +1,8 @@
 //
-//  SignInViewController.swift
+//  SignUpViewController.swift
 //  breadwallet
 //
-//  Created by Kenan Mamedoff on 09/01/2022.
+//  Created by Kenan Mamedoff on 10/01/2022.
 //  Copyright © 2023 RockWallet, LLC. All rights reserved.
 //
 //  See the LICENSE file at the project root for license information.
@@ -10,15 +10,15 @@
 
 import UIKit
 
-class SignInViewController: BaseTableViewController<BaseCoordinator,
-                            SignInInteractor,
-                            SignInPresenter,
-                            SignInStore>,
-                            SignInResponseDisplays {
-    typealias Models = SignInModels
+class SignUpViewController: BaseTableViewController<BaseCoordinator,
+                            SignUpInteractor,
+                            SignUpPresenter,
+                            SignUpStore>,
+                            SignUpResponseDisplays {
+    typealias Models = SignUpModels
     
     override var sceneLeftAlignedTitle: String? {
-        return "Sign in"
+        return "Create your account"
     }
     
     lazy var createAccountButton: FEButton = {
@@ -48,8 +48,8 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
             NSAttributedString.Key.font: Fonts.Subtitle.two]
         
-        let partOne = NSMutableAttributedString(string: L10n.Account.newToRockwallet + " ", attributes: partOneAttributes)
-        let partTwo = NSMutableAttributedString(string: L10n.Account.createAccountButton, attributes: partTwoAttributes)
+        let partOne = NSMutableAttributedString(string: L10n.Account.alreadyCreated + " ", attributes: partOneAttributes)
+        let partTwo = NSMutableAttributedString(string: L10n.Account.signIn, attributes: partTwoAttributes)
         let createAccountButtonTitle = NSMutableAttributedString()
         createAccountButtonTitle.append(partOne)
         createAccountButtonTitle.append(partTwo)
@@ -101,8 +101,52 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
                 view.configure(with: emailConfig)
             }
             
-        case .forgotPassword:
-            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+        case .confirmPassword:
+            cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
+            
+            let castedCell = cell as? WrapperTableViewCell<FETextField>
+            castedCell?.setup { view in
+                var emailConfig = Presets.TextField.primary
+                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
+                emailConfig.autocorrectionType = .no
+                emailConfig.isSecureTextEntry = true
+                
+                view.configure(with: emailConfig)
+            }
+            
+        case .notice:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        case .termsTickbox:
+            cell = self.tableView(tableView, tickboxCellForRowAt: indexPath)
+            
+            let castedCell = cell as? WrapperTableViewCell<TickboxItemView>
+            castedCell?.setup { view in
+                view.didTapUrl = { [weak self] url in
+                    guard let url = url?.absoluteString else { return }
+                    self?.coordinator?.showInWebView(urlString: url, title: L10n.About.terms)
+                }
+                
+                view.didToggleTickbox = { [weak self] value in
+                    self?.interactor?.toggleTermsTickbox(viewAction: .init(value: value))
+                }
+            }
+            
+        case .promotionsTickbox:
+            cell = self.tableView(tableView, tickboxCellForRowAt: indexPath)
+            
+            let castedCell = cell as? WrapperTableViewCell<TickboxItemView>
+            castedCell?.setup { view in
+                view.didTapUrl = { [weak self] url in
+                    guard let url = url?.absoluteString else { return }
+                    self?.coordinator?.showInWebView(urlString: url, title: L10n.About.terms)
+                }
+                
+                view.didToggleTickbox = { [weak self] value in
+                    self?.interactor?.togglePromotionsTickbox(viewAction: .init(value: value))
+                }
+            }
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -144,6 +188,9 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
         case .password:
             interactor?.validate(viewAction: .init(password: text))
             
+        case .confirmPassword:
+            interactor?.validate(viewAction: .init(passwordAgain: text))
+            
         default:
             break
         }
@@ -154,11 +201,36 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
         // TODO: Add necessary logic.
     }
     
-    // MARK: - SignInResponseDisplay
+    // MARK: - SignUpResponseDisplay
     
-    func displayValidate(responseDisplay: SignInModels.Validate.ResponseDisplay) {
-        continueButton.viewModel?.enabled = responseDisplay.isValid
+    func displayValidate(responseDisplay: SignUpModels.Validate.ResponseDisplay) {
+        let isValid = responseDisplay.isEmailValid && responseDisplay.isPasswordValid && responseDisplay.isTermsTickboxValid
+        continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+        
+        guard let noticeSection = sections.firstIndex(of: Models.Section.notice),
+              let noticeCell = tableView.cellForRow(at: .init(row: 0, section: noticeSection)) as? WrapperTableViewCell<FELabel> else {
+            return
+        }
+        
+        noticeCell.setup { view in
+            let textColor = responseDisplay.isPasswordValid ? LightColors.Text.two : LightColors.Error.one
+            view.configure(with: .init(font: Fonts.Body.three, textColor: textColor))
+        }
+        
+        let emailCell = getFieldCell(for: .email) as? WrapperTableViewCell<FETextField>
+        let passwordCell = getFieldCell(for: .password)
+        let confirmPasswordCell = getFieldCell(for: .confirmPassword)
+    }
+    
+    // TODO: Fix and FETextFied error state
+    private func getFieldCell(for section: Models.Section) -> UITableViewCell? {
+        guard let section = sections.firstIndex(of: section),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
+            return nil
+        }
+        
+        return cell
     }
     
     // MARK: - Additional Helpers

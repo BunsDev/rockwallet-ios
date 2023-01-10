@@ -23,5 +23,20 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         presenter?.presentData(actionResponse: .init(item: Models.Item(email: "", password: "")))
     }
     
+    func validate(viewAction: SignInModels.Validate.ViewAction) {
+        if let email = viewAction.email {
+            dataStore?.email = email
+        }
+        
+        if let password = viewAction.password {
+            dataStore?.password = password
+        }
+        
+        let isValid = FieldValidator.validate(fields: [dataStore?.email,
+                                                       dataStore?.password])
+        
+        presenter?.presentValidate(actionResponse: .init(isValid: isValid))
+    }
+    
     // MARK: - Aditional helpers
 }

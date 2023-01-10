@@ -37,6 +37,8 @@
 /* Account Verification screen title */
 "Account.AccountVerification" = "Account Verification";
 
+"Account.AlreadyCreated" = "Already have an account?";
+
 /* Account balance */
 "Account.balance" = "Your balance";
 
@@ -47,6 +49,8 @@
 "Account.ChangeEmail" = "Change your email";
 
 "Account.City" = "City*";
+
+"Account.ConfirmPassword" = "Confirm your password";
 
 /* Country title label in select countries view */
 "Account.Country" = "Country";
@@ -84,6 +88,8 @@
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ per %2$@";
 
+"Account.explanationSSN" = "We are required to verify the identity of all our users to comply with regulations.\n\nThat is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.";
+
 "Account.FinalizingDecision" = "Finalizing the decision";
 
 "Account.ForgotPassword" = "Forgot password?";
@@ -98,6 +104,8 @@
 
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
+"Account.infoLinkSSN" = "Why do we need your SSN?";
+
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -107,6 +115,8 @@
 "Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "Pending";
 
@@ -119,6 +129,8 @@
 
 /* Promotion and offers label when registering account */
 "Account.Promotion" = "I'm ok with receiving future promotion, offers, and communications";
+
+"Account.PromotionsTickbox" = "I’m ok with receiving future promotion, offers and communications";
 
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
@@ -134,7 +146,11 @@
 
 "Account.SelectState" = "Select state";
 
-"Account.SocialSecurityNumber" = "Social Security Number*";
+"Account.SignIn" = "Sign in";
+
+"Account.SocialSecurityNumber" = "Social Security Number";
+
+"Account.SocialSecurityNumberRequired" = "Social security number*";
 
 "Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
 
@@ -146,6 +162,8 @@
 
 /* Swap and buy limit per day description label */
 "Account.SwapAndBuyLimit" = "Swap limit: $10,000 USD/day\nBuy limit: $500 USD/day";
+
+"Account.TermsTickbox" = "I agree to RockWallet’s";
 
 /* Upgrade your limits label in profile screen */
 "Account.UpgradeLimits" = "Upgrade your limits";
