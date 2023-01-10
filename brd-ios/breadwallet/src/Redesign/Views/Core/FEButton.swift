@@ -137,7 +137,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         setAttributedTitle(attributedString, for: .normal)
         
         if let image = viewModel.image {
-            if viewModel.title == nil || viewModel.attributedTitle == nil {
+            if viewModel.title == nil && viewModel.attributedTitle == nil {
                 setBackgroundImage(image, for: .normal)
             } else {
                 imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
