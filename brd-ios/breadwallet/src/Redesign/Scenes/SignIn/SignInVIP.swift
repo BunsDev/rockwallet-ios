@@ -15,15 +15,20 @@ extension Scenes {
 }
 
 protocol SignInViewActions: BaseViewActions, FetchViewActions {
+    func validate(viewAction: SignInModels.Validate.ViewAction)
 }
 
 protocol SignInActionResponses: BaseActionResponses, FetchActionResponses {
+    func presentValidate(actionResponse: SignInModels.Validate.ActionResponse)
 }
 
 protocol SignInResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+    func displayValidate(responseDisplay: SignInModels.Validate.ResponseDisplay)
 }
 
 protocol SignInDataStore: BaseDataStore, FetchDataStore {
+    var email: String? { get set }
+    var password: String? { get set }
 }
 
 protocol SignInDataPassing {

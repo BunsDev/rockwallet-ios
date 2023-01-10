@@ -21,4 +21,19 @@ enum SignInModels {
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
     }
+    
+    struct Validate {
+        struct ViewAction {
+            var email: String?
+            var password: String?
+        }
+        
+        struct ActionResponse {
+            var isValid: Bool
+        }
+        
+        struct ResponseDisplay {
+            var isValid: Bool
+        }
+    }
 }
