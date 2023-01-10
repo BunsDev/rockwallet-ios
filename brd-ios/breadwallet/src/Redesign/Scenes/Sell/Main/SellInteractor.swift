@@ -45,5 +45,9 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
         presenter?.presentData(actionResponse: .init(item: dataStore?.currency))
     }
+    
+    func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
+        presenter?.presentData(actionResponse: .init(item: dataStore?.currency))
+    }
     // MARK: - Aditional helpers
 }

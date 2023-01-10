@@ -152,4 +152,14 @@ enum BuyModels {
         
         struct ResponseDisplay {}
     }
+    
+    struct AchSuccess {
+        struct ViewAction {}
+        
+        struct ActionResponse {
+            var isRelinking: Bool?
+        }
+        
+        struct ResponseDisplay {}
+    }
 }
