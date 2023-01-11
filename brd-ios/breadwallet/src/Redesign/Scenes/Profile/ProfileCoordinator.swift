@@ -77,7 +77,6 @@ extension BaseCoordinator {
         }
     }
     
-    // MARK: - Additional Helpers
     @objc func hidePopup() {
         guard let view = navigationController.view,
               let popup = view.subviews.first(where: { $0 is FEPopupView }) else { return }
@@ -91,4 +90,7 @@ extension BaseCoordinator {
             blur?.removeFromSuperview()
         }
     }
+    
+    // MARK: - Additional Helpers
+    
 }
