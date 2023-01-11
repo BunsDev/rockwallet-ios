@@ -186,7 +186,7 @@
 "Account.VerifiedAccountMessage" = "We’ll let you know when your account is verified.";
 
 /* Verify account text in popup */
-"Account.VerifyAccountText" = "If you verify your account, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card";
+"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
@@ -206,7 +206,7 @@
 "Account.Welcome" = "Welcome!";
 
 /* Why verify my account title */
-"Account.WhyVerify" = "Why should I verify my account?";
+"Account.WhyVerify" = "Why should I verify my identity? ";
 
 /* Write your name as it appears on your ID label in create account */
 "Account.WriteYourName" = "Write your name as it appears on your ID";
