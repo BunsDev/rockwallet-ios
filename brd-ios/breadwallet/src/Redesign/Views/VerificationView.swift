@@ -102,11 +102,11 @@ enum VerificationStatus: Equatable {
     var viewModel: InfoViewModel? {
         switch self {
         case .none, .email:
-            return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.Account.accountLimits),
+            return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.VerifyAccount.verifyYourIdentity),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.none,
-                                 description: .text(L10n.Account.fullAccess),
-                                 button: .init(title: L10n.VerifyAccount.button.uppercased()),
+                                 description: .text(L10n.VerifyAccount.verifyIdentityDescription),
+                                 button: .init(title: L10n.VerifyAccount.verifyMyIdentity, isUnderlined: true),
                                  dismissType: .persistent)
             
         case .emailPending, .levelTwo(.submitted):

@@ -2909,6 +2909,12 @@ internal enum L10n {
   internal enum VerifyAccount {
     /// Verify your account
     internal static let button = L10n.tr("Localizable", "VerifyAccount.Button", fallback: "Verify your account")
+    /// Verify your identity before you can start buying, swapping and selling.
+    internal static let verifyIdentityDescription = L10n.tr("Localizable", "VerifyAccount.VerifyIdentityDescription", fallback: "Verify your identity before you can start buying, swapping and selling.")
+    /// Verify my identity
+    internal static let verifyMyIdentity = L10n.tr("Localizable", "VerifyAccount.VerifyMyIdentity ", fallback: "Verify my identity")
+    /// Verify your identity
+    internal static let verifyYourIdentity = L10n.tr("Localizable", "VerifyAccount.VerifyYourIdentity", fallback: "Verify your identity")
   }
   internal enum VerifyPin {
     /// Verify PIN for transaction view body
