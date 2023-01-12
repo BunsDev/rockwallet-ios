@@ -37,6 +37,18 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         }
         presenter?.presentForm(actionResponse: .init(isValid: dataStore?.isValid))
     }
+    
+    func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction) {
+        VeriffSessionWorker().execute { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.presenter?.presentExternalKYC(actionResponses: .init(address: data?.sessionUrl))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
 
     // MARK: - Aditional helpers
 }

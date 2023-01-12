@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Veriff
 
 class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
                                 KYCAddressInteractor,
@@ -128,11 +129,13 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         tableView.reloadRows(at: [IndexPath(row: 0, section: index)], with: .none)
     }
     
+    func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay) {
+        coordinator?.showExternalKYC(url: responseDisplay.address)
+    }
+    
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()
-        
-        // TODO: submit
-        coordinator?.dismissFlow()
+        interactor?.startExternalKYC(viewAction: .init())
     }
 }
