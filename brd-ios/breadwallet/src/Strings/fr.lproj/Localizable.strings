@@ -139,6 +139,10 @@
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Document d'identité";
 
+"Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
+
+"Account.ResetPasswordTitle" = "Reset your password";
+
 "Account.ResidentialAddress" = "Residential address";
 
 "Account.Resubmit" = "Envoyer à nouveau";
@@ -458,6 +462,8 @@
 
 /* Addresses Copied Alert sub header */
 "Alerts.copiedAddressesSubheader" = "Toutes les adresses du portefeuille ont été copiées avec succès.";
+
+"Alerts.emailSent" = "Email sent!";
 
 /* Alert Header Label (the paper key was set) */
 "Alerts.paperKeySet" = "Ensemble des clés papier";
