@@ -63,8 +63,6 @@ internal enum L10n {
     internal static let changeEmail = L10n.tr("Localizable", "Account.ChangeEmail", fallback: "Change your email")
     /// City*
     internal static let city = L10n.tr("Localizable", "Account.City", fallback: "City*")
-    /// Confirm your password
-    internal static let confirmPassword = L10n.tr("Localizable", "Account.ConfirmPassword", fallback: "Confirm your password")
     /// Country title label in select countries view
     internal static let country = L10n.tr("Localizable", "Account.Country", fallback: "Country")
     /// Country/Region*
@@ -95,14 +93,8 @@ internal enum L10n {
     internal static func exchangeRate(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "Account.exchangeRate", String(describing: p1), String(describing: p2), fallback: "%1$@ per %2$@")
     }
-    /// We are required to verify the identity of all our users to comply with regulations.
-    /// 
-    /// That is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.
-    internal static let explanationSSN = L10n.tr("Localizable", "Account.explanationSSN", fallback: "We are required to verify the identity of all our users to comply with regulations.\n\nThat is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.")
     /// Finalizing the decision
     internal static let finalizingDecision = L10n.tr("Localizable", "Account.FinalizingDecision", fallback: "Finalizing the decision")
-    /// Forgot password?
-    internal static let forgotPassword = L10n.tr("Localizable", "Account.ForgotPassword", fallback: "Forgot password?")
     /// Get full access for the RockWallet label on profile screen
     internal static let fullAccess = L10n.tr("Localizable", "Account.FullAccess", fallback: "Get full access to your RockWallet!")
     /// ID Verification title on account screen
@@ -111,8 +103,6 @@ internal enum L10n {
     internal static let idVerificationApproved = L10n.tr("Localizable", "Account.IdVerificationApproved", fallback: "Your ID verification was successfully approved!")
     /// We’re sorry, your ID verification was rejected.
     internal static let idVerificationRejected = L10n.tr("Localizable", "Account.IdVerificationRejected", fallback: "We’re sorry, your ID verification was rejected.")
-    /// Why do we need your SSN?
-    internal static let infoLinkSSN = L10n.tr("Localizable", "Account.infoLinkSSN", fallback: "Why do we need your SSN?")
     /// Let’s get you verified
     internal static let letsGetVerified = L10n.tr("Localizable", "Account.LetsGetVerified", fallback: "Let’s get you verified")
     /// Loading Wallet Message
@@ -133,8 +123,6 @@ internal enum L10n {
     internal static let postalCode = L10n.tr("Localizable", "Account.PostalCode", fallback: "Postal Code*")
     /// Promotion and offers label when registering account
     internal static let promotion = L10n.tr("Localizable", "Account.Promotion", fallback: "I'm ok with receiving future promotion, offers, and communications")
-    /// I’m ok with receiving future promotion, offers and communications
-    internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
     /// Residential address
@@ -147,12 +135,8 @@ internal enum L10n {
     internal static let selectCountry = L10n.tr("Localizable", "Account.SelectCountry", fallback: "Select country")
     /// Select state
     internal static let selectState = L10n.tr("Localizable", "Account.SelectState", fallback: "Select state")
-    /// Sign in
-    internal static let signIn = L10n.tr("Localizable", "Account.SignIn", fallback: "Sign in")
-    /// Social Security Number
-    internal static let socialSecurityNumber = L10n.tr("Localizable", "Account.SocialSecurityNumber", fallback: "Social Security Number")
-    /// Social security number*
-    internal static let socialSecurityNumberRequired = L10n.tr("Localizable", "Account.SocialSecurityNumberRequired", fallback: "Social security number*")
+    /// Social Security Number*
+    internal static let socialSecurityNumber = L10n.tr("Localizable", "Account.SocialSecurityNumber", fallback: "Social Security Number*")
     /// Now let’s start with using your RockWallet.
     internal static let startUsingWallet = L10n.tr("Localizable", "Account.StartUsingWallet", fallback: "Now let’s start with using your RockWallet.")
     /// State title label in select state view
