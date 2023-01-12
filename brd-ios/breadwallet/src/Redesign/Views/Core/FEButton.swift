@@ -113,7 +113,6 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         self.viewModel = viewModel
         
         var defaultAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: LightColors.Contrast.two,
             NSAttributedString.Key.backgroundColor: UIColor.clear,
             NSAttributedString.Key.font: Fonts.button]
         let attributedString: NSAttributedString
