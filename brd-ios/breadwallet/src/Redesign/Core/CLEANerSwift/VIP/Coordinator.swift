@@ -173,7 +173,7 @@ class BaseCoordinator: NSObject,
     }
     
     func showAccountVerification() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification)
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCIntro)
     }
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {
