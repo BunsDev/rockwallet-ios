@@ -143,6 +143,12 @@
 		7B2E5055289A5F02008CACD8 /* AddCardVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E504F289A5F02008CACD8 /* AddCardVIP.swift */; };
 		7B2E5056289A5F02008CACD8 /* AddCardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5050289A5F02008CACD8 /* AddCardPresenter.swift */; };
 		7B2E5057289A5F02008CACD8 /* AddCardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5051289A5F02008CACD8 /* AddCardModels.swift */; };
+		7B394789297000ED007D405E /* ForgotPasswordVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394783297000EC007D405E /* ForgotPasswordVIP.swift */; };
+		7B39478A297000ED007D405E /* ForgotPasswordInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394784297000EC007D405E /* ForgotPasswordInteractor.swift */; };
+		7B39478B297000ED007D405E /* ForgotPasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394785297000EC007D405E /* ForgotPasswordPresenter.swift */; };
+		7B39478C297000ED007D405E /* ForgotPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394786297000EC007D405E /* ForgotPasswordStore.swift */; };
+		7B39478D297000ED007D405E /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394787297000EC007D405E /* ForgotPasswordViewController.swift */; };
+		7B39478E297000ED007D405E /* ForgotPasswordModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394788297000ED007D405E /* ForgotPasswordModels.swift */; };
 		7B519A932835B506007AC80A /* currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B519A922835B505007AC80A /* currencies.json */; };
 		7B54E59B27F4A2B0002DD1E4 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57127F4A2B0002DD1E4 /* AlertHelper.swift */; };
 		7B54E59D27F4A2B0002DD1E4 /* Shadowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57327F4A2B0002DD1E4 /* Shadowable.swift */; };
@@ -163,6 +169,12 @@
 		7B54E5B427F4A2B1002DD1E4 /* Roundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E58D27F4A2B0002DD1E4 /* Roundable.swift */; };
 		7B54E5B727F4A2B1002DD1E4 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E59127F4A2B0002DD1E4 /* RoundedView.swift */; };
 		7B54E5BB27F4A2B1002DD1E4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E59527F4A2B0002DD1E4 /* LoadingView.swift */; };
+		7B60826229700B9E00C4736B /* SetPasswordModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825C29700B9D00C4736B /* SetPasswordModels.swift */; };
+		7B60826329700B9E00C4736B /* SetPasswordInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825D29700B9E00C4736B /* SetPasswordInteractor.swift */; };
+		7B60826429700B9E00C4736B /* SetPasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825E29700B9E00C4736B /* SetPasswordPresenter.swift */; };
+		7B60826529700B9E00C4736B /* SetPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825F29700B9E00C4736B /* SetPasswordStore.swift */; };
+		7B60826629700B9E00C4736B /* SetPasswordVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60826029700B9E00C4736B /* SetPasswordVIP.swift */; };
+		7B60826729700B9E00C4736B /* SetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60826129700B9E00C4736B /* SetPasswordViewController.swift */; };
 		7B62ACF928B381BE00CE81E7 /* TimeoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62ACF828B381BE00CE81E7 /* TimeoutViewController.swift */; };
 		7B62ACFB28B3BDA000CE81E7 /* String+Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62ACFA28B3BDA000CE81E7 /* String+Chunk.swift */; };
 		7B67708E29053CDF006FB72A /* Shadow+Background+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B67708D29053CDF006FB72A /* Shadow+Background+Extensions.swift */; };
@@ -972,6 +984,12 @@
 		7B2E504F289A5F02008CACD8 /* AddCardVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardVIP.swift; sourceTree = "<group>"; };
 		7B2E5050289A5F02008CACD8 /* AddCardPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardPresenter.swift; sourceTree = "<group>"; };
 		7B2E5051289A5F02008CACD8 /* AddCardModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardModels.swift; sourceTree = "<group>"; };
+		7B394783297000EC007D405E /* ForgotPasswordVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVIP.swift; sourceTree = "<group>"; };
+		7B394784297000EC007D405E /* ForgotPasswordInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordInteractor.swift; sourceTree = "<group>"; };
+		7B394785297000EC007D405E /* ForgotPasswordPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordPresenter.swift; sourceTree = "<group>"; };
+		7B394786297000EC007D405E /* ForgotPasswordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordStore.swift; sourceTree = "<group>"; };
+		7B394787297000EC007D405E /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		7B394788297000ED007D405E /* ForgotPasswordModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordModels.swift; sourceTree = "<group>"; };
 		7B41447829507788006B8481 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
 		7B4144792950778A006B8481 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
 		7B41447A2950778C006B8481 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
@@ -1002,6 +1020,12 @@
 		7B54E58D27F4A2B0002DD1E4 /* Roundable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Roundable.swift; sourceTree = "<group>"; };
 		7B54E59127F4A2B0002DD1E4 /* RoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		7B54E59527F4A2B0002DD1E4 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		7B60825C29700B9D00C4736B /* SetPasswordModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordModels.swift; sourceTree = "<group>"; };
+		7B60825D29700B9E00C4736B /* SetPasswordInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordInteractor.swift; sourceTree = "<group>"; };
+		7B60825E29700B9E00C4736B /* SetPasswordPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordPresenter.swift; sourceTree = "<group>"; };
+		7B60825F29700B9E00C4736B /* SetPasswordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordStore.swift; sourceTree = "<group>"; };
+		7B60826029700B9E00C4736B /* SetPasswordVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordVIP.swift; sourceTree = "<group>"; };
+		7B60826129700B9E00C4736B /* SetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordViewController.swift; sourceTree = "<group>"; };
 		7B62ACF828B381BE00CE81E7 /* TimeoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutViewController.swift; sourceTree = "<group>"; };
 		7B62ACFA28B3BDA000CE81E7 /* String+Chunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Chunk.swift"; sourceTree = "<group>"; };
 		7B662C0C28F545D3007D663C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2017,6 +2041,19 @@
 			path = AddCard;
 			sourceTree = "<group>";
 		};
+		7B3947822970007A007D405E /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				7B394785297000EC007D405E /* ForgotPasswordPresenter.swift */,
+				7B394786297000EC007D405E /* ForgotPasswordStore.swift */,
+				7B394788297000ED007D405E /* ForgotPasswordModels.swift */,
+				7B394783297000EC007D405E /* ForgotPasswordVIP.swift */,
+				7B394787297000EC007D405E /* ForgotPasswordViewController.swift */,
+				7B394784297000EC007D405E /* ForgotPasswordInteractor.swift */,
+			);
+			path = ForgotPassword;
+			sourceTree = "<group>";
+		};
 		7B54E56F27F4A2B0002DD1E4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2079,6 +2116,19 @@
 				7B08D2252860574F00D65ED9 /* SimpleBackBarButtonItem.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7B60825B29700B1600C4736B /* SetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				7B60825E29700B9E00C4736B /* SetPasswordPresenter.swift */,
+				7B60825F29700B9E00C4736B /* SetPasswordStore.swift */,
+				7B60825C29700B9D00C4736B /* SetPasswordModels.swift */,
+				7B60826029700B9E00C4736B /* SetPasswordVIP.swift */,
+				7B60826129700B9E00C4736B /* SetPasswordViewController.swift */,
+				7B60825D29700B9E00C4736B /* SetPasswordInteractor.swift */,
+			);
+			path = SetPassword;
 			sourceTree = "<group>";
 		};
 		7B8EC63428089729008C6DE5 /* Assets */ = {
@@ -2319,6 +2369,8 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7B60825B29700B1600C4736B /* SetPassword */,
+				7B3947822970007A007D405E /* ForgotPassword */,
 				7BF5D4F0296D4F9C00942ADB /* SignUp */,
 				7BF5D4E3296BF6CE00942ADB /* SignIn */,
 				7BF5D4E2296BF6AD00942ADB /* RecoveryKeyIntro */,
@@ -3938,11 +3990,13 @@
 				7BDB49F92806F1090031F015 /* PlatformAuthResult.swift in Sources */,
 				7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */,
 				CEC6AA3B1DEE4EB000EE5AFD /* CGRect+Additions.swift in Sources */,
+				7B60826629700B9E00C4736B /* SetPasswordVIP.swift in Sources */,
 				4F3AB12A25D58AB400B378DC /* SelectBakerViewController.swift in Sources */,
 				7E8D288B28C0CDFC00FF0CBC /* FeeFetchable.swift in Sources */,
 				7EE91A5A2968310100331B1F /* KYCAddressStore.swift in Sources */,
 				E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */,
 				7ECCA98F2873059300F99368 /* ExchangeEndpoints.swift in Sources */,
+				7B39478D297000ED007D405E /* ForgotPasswordViewController.swift in Sources */,
 				7E5CB38B2835090E00EC787E /* Shadable.swift in Sources */,
 				3A36328D225301D60043EBA4 /* PriceChangeView.swift in Sources */,
 				7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */,
@@ -3955,9 +4009,11 @@
 				CE45C1FB1E74F89C002C3847 /* WalletInfo.swift in Sources */,
 				CE90571A1DFF18B2006BA848 /* ScanViewController.swift in Sources */,
 				7CBC6B302177D72600899AFB /* DelistedTokenView.swift in Sources */,
+				7B60826229700B9E00C4736B /* SetPasswordModels.swift in Sources */,
 				7E5CB3A62835090E00EC787E /* ThemeManager.swift in Sources */,
 				7C6ACCB61FEB345E0028ABFA /* TxStatusCell.swift in Sources */,
 				CE5393B022D7CC98000303B3 /* HistoryPeriod.swift in Sources */,
+				7B39478E297000ED007D405E /* ForgotPasswordModels.swift in Sources */,
 				7EB8FD212897D212000FF75C /* BuyCoordinator.swift in Sources */,
 				7EF45F8C284768C100D1F7B0 /* ItemSelectionModels.swift in Sources */,
 				CE20C8F61DBAF77D00C8397A /* UIViewController+Extensions.swift in Sources */,
@@ -4014,6 +4070,7 @@
 				71C44E942264BE2C00EF4459 /* BaseRecoveryKeyViewController.swift in Sources */,
 				7E5CB38E2835090E00EC787E /* UIColor+init.swift in Sources */,
 				CEAA9EA81DC3342E0066731D /* PinView.swift in Sources */,
+				7B39478A297000ED007D405E /* ForgotPasswordInteractor.swift in Sources */,
 				C46C2902287EBF4F0035C843 /* BaseInfoViewController.swift in Sources */,
 				CE5E6C961EB8CCF500A476DB /* SimpleWebViewController.swift in Sources */,
 				7E5CB3A42835090E00EC787E /* StateDisplayable.swift in Sources */,
@@ -4058,6 +4115,7 @@
 				7B54E5A427F4A2B0002DD1E4 /* RequestModels.swift in Sources */,
 				C45E0BA92845F4C40083F028 /* AccountVerificationModels.swift in Sources */,
 				7EC21A1A28991A6500FED711 /* BillingAddressModels.swift in Sources */,
+				7B60826429700B9E00C4736B /* SetPasswordPresenter.swift in Sources */,
 				CECCE5B01E04AD7600D99448 /* DescriptionSendCell.swift in Sources */,
 				7E5CB38F2835090E00EC787E /* NSLayoutConstraint+priority.swift in Sources */,
 				C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */,
@@ -4153,6 +4211,7 @@
 				3A6FD42D24E456B800068ECE /* KeyStoreUtils.swift in Sources */,
 				7EF45F4F2845352400D1F7B0 /* KYCBasicInteractor.swift in Sources */,
 				7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */,
+				7B60826729700B9E00C4736B /* SetPasswordViewController.swift in Sources */,
 				7E52B7A22872CD1E003D2249 /* SupportedCurrenciesWorker.swift in Sources */,
 				7E5CB3982835090E00EC787E /* Controller.swift in Sources */,
 				7EC21A1C28991A6500FED711 /* BillingAddressInteractor.swift in Sources */,
@@ -4183,6 +4242,7 @@
 				C416BE0628509C4E0020ACCD /* KYCLevelTwoPostValidation.swift in Sources */,
 				22A9A9461DF61945000F0016 /* BRAPIClient.swift in Sources */,
 				7E5CB3A82835090E00EC787E /* Colors.swift in Sources */,
+				7B60826329700B9E00C4736B /* SetPasswordInteractor.swift in Sources */,
 				75A2A7941DA5934300A983D8 /* AppDelegate.swift in Sources */,
 				C491ABFB28A6395D00E79954 /* OrderPreviewVIP.swift in Sources */,
 				CEEC70901E95D5C100EF788E /* PushNotificationsViewController.swift in Sources */,
@@ -4287,6 +4347,7 @@
 				3AFAD94825698A74005853E8 /* Gift.swift in Sources */,
 				CE4DFB2C1E9BE5880014009E /* ReScanViewController.swift in Sources */,
 				7ECCA9642875A77300617067 /* OrderView.swift in Sources */,
+				7B39478C297000ED007D405E /* ForgotPasswordStore.swift in Sources */,
 				7BB3B7D929558D5F006FF250 /* GradientView.swift in Sources */,
 				7E5CB3A22835090E00EC787E /* Marginable.swift in Sources */,
 				7C9724661FF07B9A004248C4 /* StatusPip.swift in Sources */,
@@ -4309,6 +4370,7 @@
 				7E5CB3912835090E00EC787E /* AlertVIP.swift in Sources */,
 				3AFAD937256826F3005853E8 /* BorderedTextInput.swift in Sources */,
 				CE6D0F991DE8B75900BD4BCF /* DismissModalAnimator.swift in Sources */,
+				7B60826529700B9E00C4736B /* SetPasswordStore.swift in Sources */,
 				CE4C1CC61ED65D830063E184 /* DrawableCircle.swift in Sources */,
 				7E5CB3A12835090E00EC787E /* ViewProtocol.swift in Sources */,
 				7CBD57912107FAFA0042C388 /* PairedWalletIndex.swift in Sources */,
@@ -4357,6 +4419,7 @@
 				7CE940E61FEB8A5F005A2B53 /* TxDetailRowCell.swift in Sources */,
 				3AFAD94F25699112005853E8 /* TxGiftCell.swift in Sources */,
 				7B2E5056289A5F02008CACD8 /* AddCardPresenter.swift in Sources */,
+				7B39478B297000ED007D405E /* ForgotPasswordPresenter.swift in Sources */,
 				CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */,
 				CEBF32F21DDCE10D00348FC6 /* AccountHeaderView.swift in Sources */,
 				CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */,
@@ -4413,6 +4476,7 @@
 				7BF5D4EE296BFC8D00942ADB /* SignInViewController.swift in Sources */,
 				3A6785FB257019220065F835 /* RedeemTransitioningDelegate.swift in Sources */,
 				CE20C90C1DBC59E600C8397A /* StartFlowPresenter.swift in Sources */,
+				7B394789297000ED007D405E /* ForgotPasswordVIP.swift in Sources */,
 				7B54E5A227F4A2B0002DD1E4 /* Decodable+Extensions.swift in Sources */,
 				7E5CB3832835090E00EC787E /* Presets.swift in Sources */,
 				7B54E5A327F4A2B0002DD1E4 /* HttpRequest.swift in Sources */,

@@ -141,6 +141,10 @@ internal enum L10n {
     internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
+    /// Enter your email below to reset your password.
+    internal static let resetPasswordMessage = L10n.tr("Localizable", "Account.ResetPasswordMessage", fallback: "Enter your email below to reset your password.")
+    /// Reset your password
+    internal static let resetPasswordTitle = L10n.tr("Localizable", "Account.ResetPasswordTitle", fallback: "Reset your password")
     /// Residential address
     internal static let residentialAddress = L10n.tr("Localizable", "Account.ResidentialAddress", fallback: "Residential address")
     /// Resubmit
@@ -417,6 +421,8 @@ internal enum L10n {
     internal static let copiedAddressesHeader = L10n.tr("Localizable", "Alerts.copiedAddressesHeader", fallback: "Addresses Copied")
     /// Addresses Copied Alert sub header
     internal static let copiedAddressesSubheader = L10n.tr("Localizable", "Alerts.copiedAddressesSubheader", fallback: "All wallet addresses successfully copied.")
+    /// Email sent!
+    internal static let emailSent = L10n.tr("Localizable", "Alerts.emailSent", fallback: "Email sent!")
     /// Alert Header Label (the paper key was set)
     internal static let paperKeySet = L10n.tr("Localizable", "Alerts.paperKeySet", fallback: "Recovery Key Set")
     /// Alert Subheader label (playfully positive)

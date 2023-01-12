@@ -116,8 +116,7 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
             
         case .notice:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
-            tableView.beginUpdates()
-            tableView.endUpdates()
+            
         case .termsTickbox:
             cell = self.tableView(tableView, tickboxCellForRowAt: indexPath)
             
