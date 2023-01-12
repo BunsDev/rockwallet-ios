@@ -159,9 +159,7 @@ extension Presets {
                                                                               disabledConfiguration: .init(tintColor: LightColors.Disabled.two)),
                                                         title: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.three),
                                                         description: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                        button: Presets.Button.primary.withBorder(normal: Presets.Border.normal,
-                                                                                                  selected: Presets.Border.normal,
-                                                                                                  disabled: Presets.Border.normal),
+                                                        button: Presets.Button.noBorders,
                                                         background: .init(backgroundColor: LightColors.Background.three,
                                                                           border: Presets.Border.commonPlain),
                                                         shadow: Presets.Shadow.zero)

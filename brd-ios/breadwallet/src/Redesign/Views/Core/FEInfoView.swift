@@ -326,6 +326,7 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         
         swapLimitsLabel.setup(with: viewModel.swapLimits)
         swapLimitsLabel.isHidden = viewModel.swapLimits == nil
+        spacerView.isHidden = viewModel.swapLimits == nil
         
         swapLimitsView.setup(with: viewModel.swapLimitsValue)
         swapLimitsView.isHidden = viewModel.swapLimitsValue == nil
