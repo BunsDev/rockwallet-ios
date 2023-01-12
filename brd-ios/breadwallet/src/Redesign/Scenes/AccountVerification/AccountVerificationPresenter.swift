@@ -1,4 +1,4 @@
-// 
+//
 //  Copyright © 2022 RockWallet, LLC. All rights reserved.
 //
 
@@ -39,7 +39,7 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
             break
         }
         
-        let sections = [ Models.Section.verificationLevel ]
+        let sections = [Models.Section.verificationLevel]
         
         let sectionRows: [Models.Section: [Any]] = [
             .verificationLevel: [
@@ -55,7 +55,12 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
                                       description: .text(description),
                                       benefits: .text(L10n.AccountKYCLevelTwo.limits),
                                       buyBenefits: .text(L10n.AccountKYCLevelTwo.buyLimits),
-                                      isActive: isActive)
+                                      isActive: isActive),
+                VerificationViewModel(kyc: .veriff,
+                                      title: .text("Veriff"),
+                                      status: .none,
+                                      description: .text("Veriff - Biometric authentication"),
+                                      isActive: true)
             ]
         ]
         
@@ -63,7 +68,9 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
     }
     
     func presentStartVerification(actionResponse: AccountVerificationModels.Start.ActionResponse) {
-        viewController?.displayStartVerification(responseDisplay: .init(level: actionResponse.level, isPending: isPending))
+        viewController?.displayStartVerification(responseDisplay: .init(level: actionResponse.level,
+                                                                        isPending: isPending,
+                                                                        sessionUrl: actionResponse.sessionUrl ?? ""))
     }
     
     func presentPersonalInfoPopup(actionResponse: AccountVerificationModels.PersonalInfo.ActionResponse) {

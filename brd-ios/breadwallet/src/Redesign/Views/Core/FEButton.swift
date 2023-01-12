@@ -157,6 +157,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         let background: BackgroundConfiguration?
         let shadow = config?.shadowConfiguration
         
+        isUserInteractionEnabled = true
         switch state {
         case .normal:
             background = config?.normalConfiguration
@@ -166,6 +167,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
 
         case .disabled:
             background = config?.disabledConfiguration
+            isUserInteractionEnabled = false
 
         case .error, .filled:
             background = nil

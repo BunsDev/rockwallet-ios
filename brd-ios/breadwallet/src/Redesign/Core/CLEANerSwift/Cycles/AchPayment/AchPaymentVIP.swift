@@ -16,6 +16,7 @@ protocol AchViewActions {
     // implement if needed in adaptor class
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction)
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
+    func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction)
     //    // TODO: maybe reuse link?
     //    func relink(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
 }
@@ -111,6 +112,7 @@ extension Interactor where Self: AchViewActions,
             switch result {
             case .success:
                 self?.getPayments(viewAction: .init())
+                self?.achSuccessMessage(viewAction: .init())
                 
             case .failure:
                 self?.presenter?.presentError(actionResponse: .init())
