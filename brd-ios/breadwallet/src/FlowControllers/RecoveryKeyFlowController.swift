@@ -193,9 +193,14 @@ class RecoveryKeyFlowController {
     
         let navController = RecoveryKeyFlowController.makeNavigationController()
         
-        let enterPhraseVC = EnterPhraseViewController(keyMaster: keyMaster, reason: .validateForResettingPin({ (phrase) in
-            Store.perform(action: Alert.Show(.walletRestored(callback: {
-                callback(phrase, navController)
+        // fixes an edge case, where the bottom sheet gets presented multiple times
+        var isPresented = false
+        let enterPhraseVC = EnterPhraseViewController(keyMaster: keyMaster, reason: .validateForResettingPin({ phrase in
+            guard isPresented else { return }
+            isPresented = true
+                Store.perform(action: Alert.Show(.walletRestored(callback: {
+                    callback(phrase, navController)
+                    isPresented = false
             })))
         }))
 

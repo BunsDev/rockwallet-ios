@@ -51,7 +51,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
                 // dont ask
-                LabelViewModel.text("n\n\n\n\n")
+                LabelViewModel.text("\n\n\n\n")
             ]
         ]
         
@@ -173,6 +173,14 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse) {
         viewController?.displayNavigateAssetSelector(responseDisplay: .init(title: L10n.Swap.iWant))
+    }
+    
+    func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse) {
+        guard let isRelinking = actionResponse.isRelinking else { return }
+        
+        let description = isRelinking ? L10n.Buy.achPaymentMethodRelinked : L10n.Buy.achSuccess
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(description)),
+                                                              config: Presets.InfoView.verification))
     }
     
     func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
