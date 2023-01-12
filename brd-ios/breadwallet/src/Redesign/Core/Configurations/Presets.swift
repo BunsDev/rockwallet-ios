@@ -157,7 +157,7 @@ extension Presets {
                                                         headerTrailing: .init(normalConfiguration: .init(tintColor: LightColors.Text.three),
                                                                               selectedConfiguration: .init(tintColor: LightColors.Text.two),
                                                                               disabledConfiguration: .init(tintColor: LightColors.Disabled.two)),
-                                                        title: .init(font: Fonts.Subtitle.three, textColor: LightColors.Text.one),
+                                                        title: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.three),
                                                         description: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                         button: Presets.Button.primary.withBorder(normal: Presets.Border.normal,
                                                                                                   selected: Presets.Border.normal,
