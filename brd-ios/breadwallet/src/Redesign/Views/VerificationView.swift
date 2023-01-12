@@ -127,12 +127,12 @@ enum VerificationStatus: Equatable {
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.levelTwo(.levelTwo),
-                                 swapLimits: .text("Swap limits"),
-                                 buyLimits: .text("Buy limits"),
-                                 swapLimitsValue: .init(title: .text("Daily"), value: .text("$100,00 USD")),
-                                 buyDailyLimitsView: .init(title: .text("Daily"), value: .text("$10.000,00 USD")),
-                                 buyWeeklyLimitsView: .init(title: .text("Weekly"), value: .text("$10.000,00 USD")),
-                                 buyMonthlyLimitsView: .init(title: .text("Monthly"), value: .text("$10.000,00 USD")),
+                                 swapLimits: .text(L10n.Swap.swapLimit),
+                                 buyLimits: .text(L10n.Buy.buyLimit),
+                                 swapLimitsValue: .init(title: .text(L10n.Account.daily), value: .text("$100,00 USD")),
+                                 buyDailyLimitsView: .init(title: .text(L10n.Account.daily), value: .text("$10.000,00 USD")),
+                                 buyWeeklyLimitsView: .init(title: .text(L10n.Account.weekly), value: .text("$10.000,00 USD")),
+                                 buyMonthlyLimitsView: .init(title: .text(L10n.Account.monthly), value: .text("$10.000,00 USD")),
                                  dismissType: .persistent)
         case .levelTwo(.expired), .levelTwo(.resubmit):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),

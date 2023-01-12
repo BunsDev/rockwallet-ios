@@ -65,6 +65,8 @@
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Current limit: $1,000/day";
 
+"Account.Daily" = "Daily";
+
 /* Issues for processing your data label on profile screen */
 "Account.DataIssues" = "Oops! We had some issues processing your data";
 
@@ -113,6 +115,8 @@
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
+
+"Account.Monthly" = "Monthly";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
 
@@ -201,6 +205,8 @@
 "Account.VerifyPersonalInformation" = "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.";
 
 "Account.WaitFewMinutes" = "This may take a few minutes.";
+
+"Account.Weekly" = "Weekly";
 
 /* Welcome title on registration screen */
 "Account.Welcome" = "Welcome!";
@@ -718,6 +724,8 @@
 
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Billing address";
+
+"Buy.BuyLimit" = "Buy limits";
 
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD/day";
@@ -2580,6 +2588,8 @@
 
 /* Swap again button title in swap failure screen */
 "Swap.SwapAgain" = "Swap again";
+
+"Swap.SwapLimit" = "Swap limits";
 
 /* Swap min and max limit text */
 "Swap.SwapLimits" = "Currently, minimum for Swap is %s USD and maximum is %s USD/day.";

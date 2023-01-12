@@ -75,6 +75,8 @@ internal enum L10n {
     internal static let createAccountButton = L10n.tr("Localizable", "Account.CreateAccountButton", fallback: "Create account")
     /// Current limit per day label in profile screen
     internal static let currentLimit = L10n.tr("Localizable", "Account.CurrentLimit", fallback: "Current limit: $1,000/day")
+    /// Daily
+    internal static let daily = L10n.tr("Localizable", "Account.Daily", fallback: "Daily")
     /// Issues for processing your data label on profile screen
     internal static let dataIssues = L10n.tr("Localizable", "Account.DataIssues", fallback: "Oops! We had some issues processing your data")
     /// Date of birth label in create account
@@ -119,6 +121,8 @@ internal enum L10n {
     internal static let loadingMessage = L10n.tr("Localizable", "Account.loadingMessage", fallback: "Loading Wallet")
     /// Verify your account to get full access to the wallet message
     internal static let messageVerifyAccount = L10n.tr("Localizable", "Account.MessageVerifyAccount", fallback: "Verify your account to get full access to your RockWallet!")
+    /// Monthly
+    internal static let monthly = L10n.tr("Localizable", "Account.Monthly", fallback: "Monthly")
     /// New to RockWallet?
     internal static let newToRockwallet = L10n.tr("Localizable", "Account.NewToRockwallet", fallback: "New to RockWallet?")
     /// Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.
@@ -198,6 +202,8 @@ internal enum L10n {
     internal static let verifyPersonalInformation = L10n.tr("Localizable", "Account.VerifyPersonalInformation", fallback: "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.")
     /// This may take a few minutes.
     internal static let waitFewMinutes = L10n.tr("Localizable", "Account.WaitFewMinutes", fallback: "This may take a few minutes.")
+    /// Weekly
+    internal static let weekly = L10n.tr("Localizable", "Account.Weekly", fallback: "Weekly")
     /// Welcome title on registration screen
     internal static let welcome = L10n.tr("Localizable", "Account.Welcome", fallback: "Welcome!")
     /// Why verify my account title
@@ -631,6 +637,8 @@ internal enum L10n {
     internal static let bankAccountSuccessTitle = L10n.tr("Localizable", "Buy.bankAccountSuccessTitle", fallback: "Your purchase is being processed")
     /// Billing address label on buy flow
     internal static let billingAddress = L10n.tr("Localizable", "Buy.BillingAddress", fallback: "Billing address")
+    /// Buy limits
+    internal static let buyLimit = L10n.tr("Localizable", "Buy.BuyLimit", fallback: "Buy limits")
     /// Buy min and max limit text
     internal static func buyLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is %s USD and maximum is %s USD/day")
@@ -2349,6 +2357,8 @@ internal enum L10n {
     internal static let sendNetworkFee = L10n.tr("Localizable", "Swap.SendNetworkFee", fallback: "Sending network fee")
     /// Swap again button title in swap failure screen
     internal static let swapAgain = L10n.tr("Localizable", "Swap.SwapAgain", fallback: "Swap again")
+    /// Swap limits
+    internal static let swapLimit = L10n.tr("Localizable", "Swap.SwapLimit", fallback: "Swap limits")
     /// Swap min and max limit text
     internal static func swapLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Swap.SwapLimits", p1, p2, fallback: "Currently, minimum for Swap is %s USD and maximum is %s USD/day.")
