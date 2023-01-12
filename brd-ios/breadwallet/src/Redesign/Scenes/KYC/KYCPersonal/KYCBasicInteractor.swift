@@ -62,9 +62,9 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
     }
     
     func submit(viewAction: KYCBasicModels.Submit.ViewAction) {
-        guard let firstName = dataStore?.firstName,
-              let lastName = dataStore?.lastName,
-              let birthDateText = dataStore?.birthDateString,
+        guard let _ = dataStore?.firstName,
+              let _ = dataStore?.lastName,
+              let _ = dataStore?.birthDateString,
               let birthDate = dataStore?.birthdate
         else { return }
         

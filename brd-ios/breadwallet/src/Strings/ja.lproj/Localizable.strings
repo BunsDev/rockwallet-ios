@@ -139,6 +139,10 @@
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
 
+"Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
+
+"Account.ResetPasswordTitle" = "Reset your password";
+
 "Account.ResidentialAddress" = "Residential address";
 
 "Account.Resubmit" = "Resubmit";
@@ -458,6 +462,8 @@
 
 /* Addresses Copied Alert sub header */
 "Alerts.copiedAddressesSubheader" = "すべてのウォレットアドレスが正常にコピーされました。";
+
+"Alerts.emailSent" = "Email sent!";
 
 /* Alert Header Label (the paper key was set) */
 "Alerts.paperKeySet" = "リカバリフレーズセット";
