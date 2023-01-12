@@ -122,8 +122,8 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
             defaultAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
         }
         
-        if let title = viewModel.title?.uppercased() {
-            let attributeTitle = NSMutableAttributedString(string: title)
+        if let title = viewModel.title {
+            let attributeTitle = NSMutableAttributedString(string: viewModel.isUnderlined ? title : title.uppercased())
             attributeTitle.addAttributes(defaultAttributes, range: NSRange(location: 0, length: title.count))
             
             attributedString = attributeTitle

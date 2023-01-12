@@ -127,7 +127,12 @@ enum VerificationStatus: Equatable {
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.levelTwo(.levelTwo),
-                                 description: .text(L10n.Account.swapAndBuyLimit),
+                                 swapLimits: .text("Swap limits"),
+                                 buyLimits: .text("Buy limits"),
+                                 swapLimitsValue: .init(title: .text("Daily"), value: .text("$100,00 USD")),
+                                 buyDailyLimitsView: .init(title: .text("Daily"), value: .text("$10.000,00 USD")),
+                                 buyWeeklyLimitsView: .init(title: .text("Weekly"), value: .text("$10.000,00 USD")),
+                                 buyMonthlyLimitsView: .init(title: .text("Monthly"), value: .text("$10.000,00 USD")),
                                  dismissType: .persistent)
         case .levelTwo(.expired), .levelTwo(.resubmit):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
