@@ -3148,6 +3148,12 @@
 
 "VerifyAccount.Button" = "Verify your account";
 
+"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
+
+"VerifyAccount.VerifyMyIdentity " = "Verify my identity";
+
+"VerifyAccount.VerifyYourIdentity" = "Verify your identity";
+
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "PIN을 입력하여 이 거래를 승인하십시오.";
 
