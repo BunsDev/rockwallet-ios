@@ -42,8 +42,7 @@ struct AuthenticationClient {
         guard var req = createRequest(.post, resource: "/users/token"),
             let signingData = clientToken.data(using: .utf8),
             apiKey.hasSecret else {
-                assertionFailure()
-                return completion(.failure(.requestError(nil)))
+            return completion(.failure(.requestError(nil)))
         }
         req.authorize(withToken: clientToken)
         guard let signature = CoreSigner.basicDER.sign(data32: signingData.sha256, using: apiKey),
