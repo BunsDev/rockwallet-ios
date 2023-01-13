@@ -335,7 +335,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                         value = maximum > feeUpdated ? maximum - feeUpdated : maximum
                     }
 
-                    if value != amount && depth != 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
+                    if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
                         self?.amountView.forceUpdateAmount(amount: value)
                         self?.updateFeesMax(depth: depth + 1)
                     }
