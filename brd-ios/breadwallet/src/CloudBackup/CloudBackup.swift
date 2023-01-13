@@ -82,10 +82,11 @@ enum CloudBackupCrypto {
     
     static func keyData(forPin pin: String, salt: Data) -> Data {
         guard let keyData = CloudBackupCrypto.pbkdf2(hash: CCPBKDFAlgorithm(kCCPRFHmacAlgSHA512),
-                             password: pin,
-                             saltData: salt,
-                             keyByteCount: 32, //256-bit
-                             rounds: 100000) else { fatalError() }
+                                                     password: pin,
+                                                     saltData: salt,
+                                                     keyByteCount: 32, //256-bit
+                                                     rounds: 100000)
+        else { return .init() }
         return keyData
     }
     

@@ -414,6 +414,7 @@
 		7EBC6B0A2848ABC5000A301F /* RegistrationConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B032848ABC5000A301F /* RegistrationConfirmationViewController.swift */; };
 		7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B042848ABC5000A301F /* RegistrationConfirmationInteractor.swift */; };
 		7EBC6B0D2848B81A000A301F /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B0C2848B81A000A301F /* CodeInputView.swift */; };
+		7EBCAB3C29716720002A4E78 /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCAB3B29716720002A4E78 /* BaseSendViewController.swift */; };
 		7EC0F8AA2886D9B90037145C /* ExchangeErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */; };
 		7EC0F8AC2887D8C40037145C /* SwapWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8AB2887D8C40037145C /* SwapWorker.swift */; };
 		7EC0F8B62888049F0037145C /* WrapperPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8B52888049F0037145C /* WrapperPopupView.swift */; };
@@ -1203,6 +1204,7 @@
 		7EBC6B032848ABC5000A301F /* RegistrationConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationViewController.swift; sourceTree = "<group>"; };
 		7EBC6B042848ABC5000A301F /* RegistrationConfirmationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationInteractor.swift; sourceTree = "<group>"; };
 		7EBC6B0C2848B81A000A301F /* CodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeInputView.swift; sourceTree = "<group>"; };
+		7EBCAB3B29716720002A4E78 /* BaseSendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSendViewController.swift; sourceTree = "<group>"; };
 		7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeErrors.swift; sourceTree = "<group>"; };
 		7EC0F8AB2887D8C40037145C /* SwapWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapWorker.swift; sourceTree = "<group>"; };
 		7EC0F8B52888049F0037145C /* WrapperPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapperPopupView.swift; sourceTree = "<group>"; };
@@ -3275,6 +3277,7 @@
 			children = (
 				CEC6AA431DEFCDE900EE5AFD /* ModalViewController.swift */,
 				CEC6AA3F1DEFC87300EE5AFD /* SendViewController.swift */,
+				7EBCAB3B29716720002A4E78 /* BaseSendViewController.swift */,
 				CEC6AA411DEFC88F00EE5AFD /* ReceiveViewController.swift */,
 				CEC6AA4C1DF0741100EE5AFD /* ModalDisplayable.swift */,
 			);
@@ -3905,6 +3908,7 @@
 				7EF45F87284768C100D1F7B0 /* ItemSelectionVIP.swift in Sources */,
 				CECCE5AB1E038C9900D99448 /* GenericPinPadCell.swift in Sources */,
 				7EB838462849D49A00C7CC05 /* ScrollableButtonsView.swift in Sources */,
+				7EBCAB3C29716720002A4E78 /* BaseSendViewController.swift in Sources */,
 				7B54E5A427F4A2B0002DD1E4 /* RequestModels.swift in Sources */,
 				C45E0BA92845F4C40083F028 /* AccountVerificationModels.swift in Sources */,
 				7EC21A1A28991A6500FED711 /* BillingAddressModels.swift in Sources */,

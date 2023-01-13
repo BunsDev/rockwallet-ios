@@ -151,7 +151,7 @@ class ReceiveViewController: UIViewController, Subscriber {
     }
 
     private func setReceiveAddress() {
-        guard let wallet = currency.wallet else { return assertionFailure() }   
+        guard let wallet = currency.wallet else { return }   
         let addressText = isBTCLegacy ? wallet.receiveAddress(for: .btcLegacy) : wallet.receiveAddress
         
         address.text = addressText
