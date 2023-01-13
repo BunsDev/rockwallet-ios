@@ -20,7 +20,7 @@ enum ExchangeRateModels {
             var quote: Quote?
             var from: String?
             var to: String?
-            var limits: String?
+            var limits: NSMutableAttributedString?
             var showTimer: Bool?
         }
         

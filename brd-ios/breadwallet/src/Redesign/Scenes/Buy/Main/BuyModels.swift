@@ -162,4 +162,14 @@ enum BuyModels {
         
         struct ResponseDisplay {}
     }
+    
+    struct LimitsInfo {
+        struct ViewAction {}
+        struct ActionResponse {
+            var paymentMethod: PaymentCard.PaymentType?
+        }
+        struct ResponseDisplay {
+            var model: PopupViewModel
+        }
+    }
 }

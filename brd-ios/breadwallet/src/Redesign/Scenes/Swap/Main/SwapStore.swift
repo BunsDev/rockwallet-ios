@@ -52,13 +52,13 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var isKYCLevelTwo: Bool?
     
-    var limits: String? {
+    var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd)
         else { return nil }
         
-        return L10n.Swap.swapLimits(minText, maxText)
+        return NSMutableAttributedString(string: L10n.Swap.swapLimits(minText, maxText))
     }
     
     // MARK: - Aditional helpers
