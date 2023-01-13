@@ -130,7 +130,7 @@ class AssetCollection: Subscriber {
     }
     
     func availableAsset(at index: Int) -> CurrencyMetaData? {
-        guard availableAssets.indices.contains(index) else { assertionFailure(); return nil }
+        guard availableAssets.indices.contains(index) else { return nil }
         return availableAssets[index]
     }
     
@@ -214,7 +214,7 @@ class AssetCollection: Subscriber {
                 default:
                     break
                 }
-                guard let key = newKey, allTokens[key] != nil else { assertionFailure(); return nil }
+                guard let key = newKey, allTokens[key] != nil else { return nil }
                 return key
             }
         }
@@ -227,7 +227,7 @@ class AssetCollection: Subscriber {
 
     private func save() -> Bool {
         do {
-            guard let newAssetIndex = try kvStore.set(assetIndex) as? AssetIndex else { assertionFailure(); return false }
+            guard let newAssetIndex = try kvStore.set(assetIndex) as? AssetIndex else { return false }
             self.assetIndex = newAssetIndex
             hasUnsavedChanges = false
             return true

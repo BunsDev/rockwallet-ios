@@ -354,7 +354,7 @@ extension KeyStore: WalletAuthenticator {
 
     /// Generate a new JWT access token and store it in the keychain.
     private func generateTokenForBlockchainDB(client: AuthenticationClient, completion: @escaping (APIAuthenticationResult) -> Void) {
-        guard let key = apiAuthKey else { assertionFailure(); return completion(.failure(.invalidKey)) }
+        guard let key = apiAuthKey else { return completion(.failure(.invalidKey)) }
         getAuthCredentials(client: client, key: key) { authUserResult in
             let jwtResult = authUserResult.flatMap { authUser -> APIAuthenticationResult in
                 print("[KEYSTORE] BDB user id: \(authUser.userId)")
@@ -414,7 +414,6 @@ extension KeyStore: WalletAuthenticator {
                 return try JSONDecoder().decode(JWT.self, from: tokenData)
             } catch let e {
                 print("[KEYSTORE] keychain error: \(e.localizedDescription)")
-                assertionFailure()
                 return nil
             }
         }
@@ -660,7 +659,7 @@ extension KeyStore: WalletAuthenticator {
         guard let seedPhrase: String = try? keychainItem(key: KeychainKey.mnemonic),
             let account = Account.createFrom(phrase: seedPhrase,
                                              timestamp: creationTime,
-                                             uids: UserDefaults.deviceID) else { assertionFailure(); return nil }
+                                             uids: UserDefaults.deviceID) else { return nil }
         do {
             try setKeychainItem(key: KeychainKey.systemAccount, item: account.serialize)
             clearDeprecatedKeys()
@@ -955,7 +954,7 @@ struct NoAuthWalletAuthenticator: WalletAuthenticator {
     var isBiometricsEnabledForTransactions: Bool = false
     
     var pinLoginRequired: Bool { return false }
-    var pinLength: Int { assertionFailure(); return 0 }
+    var pinLength: Int { return 0 }
     var pinAttemptsRemaining: Int { return 0 }
     
     var walletDisabledUntil: TimeInterval { return TimeInterval() }

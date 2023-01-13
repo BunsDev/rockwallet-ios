@@ -236,7 +236,7 @@ class ModalPresenter: Subscriber {
         case .gift:
             guard let currency = Currencies.shared.btc else { return nil }
             guard let wallet = system.wallet(for: currency),
-                  let kvStore = Backend.kvStore else { assertionFailure(); return nil }
+                  let kvStore = Backend.kvStore else { return nil }
             let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
             let giftView = GiftViewController(sender: sender, wallet: wallet, currency: currency)
             
@@ -268,7 +268,7 @@ class ModalPresenter: Subscriber {
     
     private func makeStakeView(currency: Currency) -> UIViewController? {
         guard let wallet = system.wallet(for: currency),
-              let kvStore = Backend.kvStore else { assertionFailure(); return nil }
+              let kvStore = Backend.kvStore else { return nil }
         let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
         let stakeView = StakeViewController(currency: currency, sender: sender)
         stakeView.presentVerifyPin = { [weak self, weak stakeView] bodyText, success in
@@ -292,7 +292,7 @@ class ModalPresenter: Subscriber {
     
     private func makeSendView(currency: Currency) -> UIViewController? {
         guard let wallet = system.wallet(for: currency),
-              let kvStore = Backend.kvStore else { assertionFailure(); return nil }
+              let kvStore = Backend.kvStore else { return nil }
         guard !(currency.state?.isRescanning ?? false) else {
             let alert = UIAlertController(title: L10n.Alert.error, message: L10n.Send.isRescanning, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .cancel, handler: nil))

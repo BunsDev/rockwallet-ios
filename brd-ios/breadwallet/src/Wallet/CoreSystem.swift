@@ -520,7 +520,7 @@ class CoreSystem: Subscriber {
     
     /// Creates placeholder WalletStates for all enabled currencies which do not have a Wallet yet.
     private var placeholderWalletStates: [CurrencyId: WalletState] {
-        guard let assetCollection = assetCollection else { assertionFailure(); return [:] }
+        guard let assetCollection = assetCollection else { return [:] }
         return assetCollection.enabledAssets
             .filter { self.wallets[$0.uid] == nil }
             .compactMap { self.currencies[$0.uid] }
@@ -588,7 +588,7 @@ class CoreSystem: Subscriber {
     
     /// Returns true of any of the enabled assets in the asset collection are dependent on the wallet manager
     private func isWalletManagerNeeded(_ manager: WalletManager) -> Bool {
-        guard let assetCollection = assetCollection else { assertionFailure(); return false }
+        guard let assetCollection = assetCollection else { return false }
         let enabledCurrencyIds = Set(assetCollection.enabledAssets.map { $0.uid })
         let supportedCurrencyIds = manager.network.currencies.map { $0.uid }
         return !Set(supportedCurrencyIds).isDisjoint(with: enabledCurrencyIds)
