@@ -141,7 +141,7 @@ public struct Amount {
         }
         // override precision digits if the value is too small to show
         if !isZero && tokenFormat.number(from: formattedValue) == 0.0 {
-            guard let formatter = tokenFormat.copy() as? NumberFormatter else { assertionFailure(); return "" }
+            guard let formatter = tokenFormat.copy() as? NumberFormatter else { return "" }
             formatter.maximumFractionDigits = Int(unit.decimals)
             formattedValue = cryptoAmount.string(as: unit, formatter: formatter) ?? formattedValue
         }
@@ -156,7 +156,7 @@ public struct Amount {
             return cryptoAmount.string(base: 10, preface: "")
         }
         guard let str = cryptoAmount.string(as: unit, formatter: rawTokenFormat) else {
-            assertionFailure(); return ""
+            return ""
         }
         return str
     }

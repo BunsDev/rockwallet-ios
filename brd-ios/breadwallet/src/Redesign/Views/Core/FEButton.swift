@@ -1,4 +1,4 @@
-// 
+//
 //  FEButton.swift
 //  breadwallet
 //
@@ -58,7 +58,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         didSet {
             guard isEnabled else { return }
             animateTo(state: isHighlighted ? .highlighted : .normal)
-        }   
+        }
     }
     
     override var isEnabled: Bool {
