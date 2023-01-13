@@ -1,4 +1,4 @@
-// 
+//
 //  FEButton.swift
 //  breadwallet
 //
@@ -10,16 +10,16 @@
 
 import UIKit
 
-// TODO: refactor to use apples button configurations
+// TODO: Refactor to use Apple's button configurations
 struct ButtonConfiguration: Configurable {
     var normalConfiguration: BackgroundConfiguration?
     var selectedConfiguration: BackgroundConfiguration?
     var disabledConfiguration: BackgroundConfiguration?
     var shadowConfiguration: ShadowConfiguration?
-    var buttonContentEdgeInsets = NSDirectionalEdgeInsets(top: Margins.medium.rawValue,
-                                                          leading: Margins.huge.rawValue,
-                                                          bottom: Margins.medium.rawValue,
-                                                          trailing: Margins.huge.rawValue)
+    var buttonContentEdgeInsets = UIEdgeInsets(top: Margins.medium.rawValue,
+                                               left: Margins.huge.rawValue,
+                                               bottom: Margins.medium.rawValue,
+                                               right: Margins.huge.rawValue)
     
     func withBorder(normal: BorderConfiguration? = nil,
                     selected: BorderConfiguration? = nil,
@@ -34,8 +34,8 @@ struct ButtonConfiguration: Configurable {
 
 struct ButtonViewModel: ViewModel {
     var title: String?
+    var attributedTitle: NSAttributedString?
     var isUnderlined = false
-    // update to UIImage
     var image: UIImage?
     var enabled = true
     var callback: (() -> Void)?
@@ -58,7 +58,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         didSet {
             guard isEnabled else { return }
             animateTo(state: isHighlighted ? .highlighted : .normal)
-        }   
+        }
     }
     
     override var isEnabled: Bool {
@@ -84,6 +84,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
     
     func setupSubviews() {
         layer.insertSublayer(shadowLayer, below: layer)
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -96,21 +97,12 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         guard let config = config else { return }
         
         self.config = config
-        
-        // TODO: this might need 2 be adjusted
-        var newConfig = configuration ?? UIButton.Configuration.filled()
-        newConfig.imagePlacement = .leading
-        newConfig.titlePadding = 5
-        newConfig.imagePadding = 5
-        newConfig.contentInsets = config.buttonContentEdgeInsets
-        newConfig.baseBackgroundColor = config.normalConfiguration?.backgroundColor
-        newConfig.cornerStyle = .capsule
-        configuration = newConfig
-        
+        contentEdgeInsets = config.buttonContentEdgeInsets
         setTitleColor(config.normalConfiguration?.tintColor, for: .normal)
         setTitleColor(config.disabledConfiguration?.tintColor, for: .disabled)
         setTitleColor(config.selectedConfiguration?.tintColor, for: .selected)
         setTitleColor(config.selectedConfiguration?.tintColor, for: .highlighted)
+        titleLabel?.font = Fonts.button
         
         layoutIfNeeded()
     }
@@ -119,37 +111,41 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         guard let viewModel = viewModel else { return }
 
         self.viewModel = viewModel
-        let title = viewModel.isUnderlined ? viewModel.title : viewModel.title?.uppercased()
-        if let title = title {
-            if viewModel.isUnderlined {
-                let attributeString = NSMutableAttributedString(
-                    string: title,
-                    attributes: [
-                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
-                    ]
-                )
-                setAttributedTitle(attributeString, for: .normal)
-            } else {
-                setTitle(title, for: .normal)
-            }
+        
+        var defaultAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.button]
+        let attributedString: NSAttributedString
+        
+        if viewModel.isUnderlined {
+            defaultAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
         }
         
+        if let title = viewModel.title {
+            let attributeTitle = NSMutableAttributedString(string: viewModel.isUnderlined ? title : title.uppercased())
+            attributeTitle.addAttributes(defaultAttributes, range: NSRange(location: 0, length: title.count))
+            
+            attributedString = attributeTitle
+        } else if let attributedTitle = viewModel.attributedTitle {
+            defaultAttributes.removeAll()
+            attributedString = attributedTitle
+        } else {
+            attributedString = NSAttributedString(string: "")
+        }
+        
+        setAttributedTitle(attributedString, for: .normal)
+        
         if let image = viewModel.image {
-            if title == nil {
+            if viewModel.title == nil && viewModel.attributedTitle == nil {
                 setBackgroundImage(image, for: .normal)
             } else {
-                var config = configuration ?? UIButton.Configuration.filled()
-                config.image = image
-                config.imagePlacement = .leading
-                configuration = config
+                imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+                titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+                setImage(image, for: .normal)
             }
         }
         
         isEnabled = viewModel.enabled
-        
-        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
-        configure(with: config)
     }
     
     @objc private func buttonTapped() {
@@ -179,11 +175,9 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         displayState = state
         
         UIView.setAnimationsEnabled(withAnimation)
-        
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.updateLayout(background: background, shadow: shadow)
         }
-        
         UIView.setAnimationsEnabled(true)
     }
     
@@ -195,25 +189,16 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
     func configure(shadow: ShadowConfiguration?) {
         guard let shadow = shadow else { return }
         
-        shadowLayer.frame = bounds
-        shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius).cgPath
-        shadowLayer.fillColor = backgroundColor?.cgColor ?? UIColor.clear.cgColor
-        shadowLayer.backgroundColor = UIColor.clear.cgColor
         shadowLayer.setShadow(with: shadow)
     }
     
     func configure(background: BackgroundConfiguration?) {
         guard let background = background else { return }
-        
-        layoutIfNeeded()
-        
+
         tintColor = background.tintColor
         titleLabel?.textColor = background.tintColor
-        titleLabel?.font = Fonts.button
         imageView?.tintColor = background.tintColor
         
         setBackground(with: background)
-        
-        layer.masksToBounds = false
     }
 }
