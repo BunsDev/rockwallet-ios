@@ -106,6 +106,8 @@
 
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
+"Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
+
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
 "Account.LetsGetVerified" = "Let’s get you verified";
@@ -703,7 +705,7 @@
 
 "Buy.achFee" = "ACH fee (%s)";
 
-"Buy.achLimits" = "Currently, minimum is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.\n\nIt currently takes 7-10 days to process a purchase with ACH";
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More info\n\nIt currently takes 7-10 days to process a purchase with ACH.";
 
 "Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
 
@@ -734,7 +736,7 @@
 "Buy.BuyLimit" = "Buy limits";
 
 /* Buy min and max limit text */
-"Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD/day";
+"Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  More info";
 
 "Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
 
