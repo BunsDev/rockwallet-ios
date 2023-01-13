@@ -14,14 +14,17 @@ extension Scenes {
 
 protocol KYCAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
     func formUpdated(viewAction: KYCAddressModels.FormUpdated.ViewAction)
+    func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction)
 }
 
 protocol KYCAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
     func presentForm(actionResponse: KYCAddressModels.FormUpdated.ActionResponse)
+    func presentExternalKYC(actionResponses: KYCAddressModels.ExternalKYC.ActionResponse)
 }
 
 protocol KYCAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay)
+    func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay)
 }
 
 protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
@@ -45,4 +48,5 @@ protocol KYCAddressDataPassing {
 }
 
 protocol KYCAddressRoutes: CoordinatableRoutes {
+    func showExternalKYC(url: String)
 }

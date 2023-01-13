@@ -173,7 +173,12 @@ class BaseCoordinator: NSObject,
     }
     
     func showAccountVerification() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCIntro)
+        let nvc = RootNavigationController()
+        let coordinator = KYCCoordinator(navigationController: nvc)
+        coordinator.start()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        navigationController.present(nvc, animated: true)
     }
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {

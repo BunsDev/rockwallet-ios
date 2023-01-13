@@ -36,4 +36,16 @@ enum KYCAddressModels {
             var isValid: Bool
         }
     }
+    
+    struct ExternalKYC {
+        struct ViewAction {}
+        
+        struct ActionResponse {
+            var address: String?
+        }
+        
+        struct ResponseDisplay {
+            var address: String
+        }
+    }
 }

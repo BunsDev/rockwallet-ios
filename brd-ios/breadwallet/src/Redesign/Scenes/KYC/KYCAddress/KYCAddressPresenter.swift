@@ -55,6 +55,11 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
     func presentForm(actionResponse: KYCAddressModels.FormUpdated.ActionResponse) {
         viewController?.displayForm(responseDisplay: .init(isValid: actionResponse.isValid ?? false))
     }
+    
+    func presentExternalKYC(actionResponses: KYCAddressModels.ExternalKYC.ActionResponse) {
+        guard let address = actionResponses.address else { return }
+        viewController?.displayExternalKYC(responseDisplay: .init(address: address))
+    }
 
     // MARK: - Additional Helpers
 
