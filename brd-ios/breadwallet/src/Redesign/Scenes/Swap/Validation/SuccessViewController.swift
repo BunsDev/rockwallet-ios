@@ -14,9 +14,16 @@ enum SuccessReason: SimpleMessage {
     case buyCard
     case buyAch
     case sell
+    case documentVerification
     
     var iconName: String {
-        return Asset.success.name
+        switch self {
+        case .documentVerification:
+            return Asset.ilVerificationsuccessfull.name
+            
+        default:
+            return Asset.success.name
+        }
     }
     
     var title: String {
@@ -29,6 +36,9 @@ enum SuccessReason: SimpleMessage {
             
         case .sell:
             return L10n.Sell.withdrawalSuccessTitle
+            
+        case .documentVerification:
+            return L10n.Account.idVerificationApproved
         }
     }
     
@@ -42,11 +52,17 @@ enum SuccessReason: SimpleMessage {
             
         case .sell:
             return L10n.Sell.withdrawalSuccessText
+            
+        case .documentVerification:
+            return L10n.Account.startUsingWallet
         }
     }
     
     var firstButtonTitle: String? {
         switch self {
+        case .documentVerification:
+            return L10n.Button.buyDigitalAssets
+            
         default:
             return L10n.Swap.backToHome
         }
@@ -57,10 +73,24 @@ enum SuccessReason: SimpleMessage {
         case .sell:
             return L10n.Sell.withdrawDetails
             
+        case .documentVerification:
+            return L10n.Button.receiveDigitalAssets
+            
         default:
             return L10n.Buy.details
         }
     }
+    
+    var thirdButtonTitle: String? {
+        switch self {
+        case .documentVerification:
+            return L10n.Button.fundWalletWithAch
+            
+        default:
+            return nil
+        }
+    }
+    
 }
 
 extension Scenes {
@@ -85,11 +115,15 @@ class SuccessViewController: BaseInfoViewController {
             }),
             .init(title: success?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
                 self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
+            }),
+            .init(title: success?.thirdButtonTitle, isUnderlined: true, callback: { [weak self] in
+                self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
             })
         ]
     }
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
+                Presets.Button.noBorders,
                 Presets.Button.noBorders]
     }
 }

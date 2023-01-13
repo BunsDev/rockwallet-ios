@@ -353,6 +353,8 @@ internal enum Asset {
   internal static let ilMail = ImageAsset(name: "il_mail")
   internal static let ilSend = ImageAsset(name: "il_send")
   internal static let ilSetup = ImageAsset(name: "il_setup")
+  internal static let ilVerificationsuccessfull = ImageAsset(name: "il_verificationsuccessfull")
+  internal static let ilVerificationunsuccessfull = ImageAsset(name: "il_verificationunsuccessfull")
   internal static let profile = ImageAsset(name: "profile")
   internal static let recoveryPhrase1st = ImageAsset(name: "recovery_phrase_1st ")
   internal static let setup2 = ImageAsset(name: "setup-2")

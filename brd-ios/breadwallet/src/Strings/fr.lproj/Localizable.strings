@@ -106,6 +106,8 @@
 
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
+"Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
+
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
 "Account.LetsGetVerified" = "Let’s get you verified";
