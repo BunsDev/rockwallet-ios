@@ -288,7 +288,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                 self?.amountView.forceUpdateAmount(amount: max)
             } else {
                 self?.amountView.forceUpdateAmount(amount: max)
-                self?.updateFeesMax()
+                self?.updateFeesMax(depth: 0)
             }
         }
     }
@@ -313,8 +313,9 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         }
     }
     
-    @objc private func updateFeesMax() {
+    @objc private func updateFeesMax(depth: Int) {
         guard let amount = amount else { return }
+        guard let maximum = maximum else { return }
         guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
@@ -324,19 +325,19 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
                     
-                    guard let feeBasis = self?.currentFeeBasis,
-                          let feeCurrency = self?.sender.wallet.feeCurrency else {
+                    guard let feeCurrency = self?.sender.wallet.feeCurrency else {
                         return
                     }
-                    let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
+                    let feeUpdated = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
                     
                     var value = amount
-                    if amount.currency == fee.currency {
-                        value = amount > fee ? amount - fee : amount
+                    if amount.currency == feeUpdated.currency {
+                        value = maximum > feeUpdated ? maximum - feeUpdated : maximum
                     }
 
-                    if value != amount {
+                    if value != amount && depth != 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
                         self?.amountView.forceUpdateAmount(amount: value)
+                        self?.updateFeesMax(depth: depth + 1)
                     }
                     
                 case .failure(let error):
