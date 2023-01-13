@@ -191,7 +191,7 @@ extension Presets {
                                                                  tintColor: LightColors.Contrast.two,
                                                                  border: Presets.Border.mediumPlain),
                                                title: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center),
-                                               body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center),
+                                               body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                
                                                buttons: [Presets.Button.primary.withBorder(normal: Presets.Border.normalButtonFullRadius,
                                                                                            selected: Presets.Border.selectedButtonFullRadius,

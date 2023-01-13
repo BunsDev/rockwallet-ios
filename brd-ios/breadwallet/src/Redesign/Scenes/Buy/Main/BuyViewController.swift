@@ -134,6 +134,26 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(font: Fonts.Body.three, textColor: LightColors.Text.two))
+            view.setup(with: model)
+            
+            view.didTapLink = { [weak self] in
+                self?.interactor?.showLimitsInfo(viewAction: .init())
+            }
+        }
+        
+        return cell
+    }
+    
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
@@ -244,16 +264,20 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                                       configuration: responseDisplay.config)
     }
     
-    func displayManageAssetsMessage(actionResponse: BuyModels.AchData.ResponseDisplay) {
-        coordinator?.showToastMessage(model: actionResponse.model,
-                                      configuration: actionResponse.config,
+    func displayManageAssetsMessage(responseDisplay: BuyModels.AchData.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model,
+                                      configuration: responseDisplay.config,
                                       onTapCallback: { [weak self] in
             self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
         })
     }
     
-    func displayAchData(actionResponse: BuyModels.AchData.ResponseDisplay) {
+    func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay) {
         interactor?.getPayments(viewAction: .init())
+    }
+    
+    func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay) {
+        coordinator?.showPopup(with: responseDisplay.model, config: Presets.Popup.normal)
     }
     
     // MARK: - Additional Helpers

@@ -28,7 +28,7 @@ protocol ExchangeRateResponseDisplays {
 }
 
 protocol ExchangeDataStore: NSObject {
-    var limits: String? { get }
+    var limits: NSMutableAttributedString? { get }
     var fromCode: String { get }
     var toCode: String { get }
     var quoteRequestData: QuoteRequestData { get }
@@ -96,7 +96,7 @@ extension Presenter where Self: ExchangeRateActionResponses,
             }
     
             viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: exchangeRateViewModel,
-                                                                       accountLimits: .text(actionResponse.limits)))
+                                                                       accountLimits: .attributedText(actionResponse.limits)))
     }
 }
 

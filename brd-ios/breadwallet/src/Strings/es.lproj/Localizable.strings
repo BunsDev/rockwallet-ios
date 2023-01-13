@@ -37,6 +37,8 @@
 /* Account Verification screen title */
 "Account.AccountVerification" = "Verificación de la cuenta";
 
+"Account.AlreadyCreated" = "Already have an account?";
+
 /* Account balance */
 "Account.balance" = "Saldo";
 
@@ -48,6 +50,8 @@
 
 "Account.City" = "City*";
 
+"Account.ConfirmPassword" = "Confirm your password";
+
 /* Country title label in select countries view */
 "Account.Country" = "País";
 
@@ -56,8 +60,12 @@
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Crea una cuenta de RockWallet introduciendo tu dirección de email.";
 
+"Account.CreateAccountButton" = "Create account";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Límite actual: 1000 $/día";
+
+"Account.Daily" = "Daily";
 
 /* Issues for processing your data label on profile screen */
 "Account.DataIssues" = "¡Vaya! Hemos tenido algunos problemas para procesar tus datos";
@@ -75,10 +83,18 @@
 
 "Account.Email" = "Email";
 
+"Account.EnterEmail" = "Enter your e-mail";
+
+"Account.EnterPassword" = "Create your password";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ por %2$@";
 
+"Account.explanationSSN" = "We are required to verify the identity of all our users to comply with regulations.\n\nThat is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.";
+
 "Account.FinalizingDecision" = "Finalizing the decision";
+
+"Account.ForgotPassword" = "Forgot password?";
 
 /* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "¡Obtén acceso completo a tu RockWallet!";
@@ -90,6 +106,10 @@
 
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
+"Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
+
+"Account.infoLinkSSN" = "Why do we need your SSN?";
+
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -97,6 +117,12 @@
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "¡Verifica tu cuenta para obtener acceso completo a tu RockWallet!";
+
+"Account.Monthly" = "Monthly";
+
+"Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "Pendiente";
 
@@ -110,8 +136,14 @@
 /* Promotion and offers label when registering account */
 "Account.Promotion" = "Estoy de acuerdo con recibir futuras promociones, ofertas y comunicaciones";
 
+"Account.PromotionsTickbox" = "I’m ok with receiving future promotion, offers and communications";
+
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Prueba de identidad";
+
+"Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
+
+"Account.ResetPasswordTitle" = "Reset your password";
 
 "Account.ResidentialAddress" = "Residential address";
 
@@ -124,7 +156,11 @@
 
 "Account.SelectState" = "Seleccionar estado";
 
-"Account.SocialSecurityNumber" = "Social Security Number*";
+"Account.SignIn" = "Sign in";
+
+"Account.SocialSecurityNumber" = "Social Security Number";
+
+"Account.SocialSecurityNumberRequired" = "Social security number*";
 
 "Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
 
@@ -136,6 +172,8 @@
 
 /* Swap and buy limit per day description label */
 "Account.SwapAndBuyLimit" = "Límite de cambio: 10 000 USD/día\nLímite de compra: 500 USD/día";
+
+"Account.TermsTickbox" = "I agree to RockWallet’s";
 
 /* Upgrade your limits label in profile screen */
 "Account.UpgradeLimits" = "Incrementa tus límites";
@@ -173,6 +211,8 @@
 "Account.VerifyPersonalInformation" = "Necesitamos verificar tus datos personales con fines de cumplimiento. Esta información no se compartirá con fuentes externas a menos que lo exija la ley.";
 
 "Account.WaitFewMinutes" = "This may take a few minutes.";
+
+"Account.Weekly" = "Weekly";
 
 /* Welcome title on registration screen */
 "Account.Welcome" = "¡Te damos la bienvenida!";
@@ -424,6 +464,8 @@
 
 /* Addresses Copied Alert sub header */
 "Alerts.copiedAddressesSubheader" = "Todas las direcciones de la cartera se han copiado con éxito.";
+
+"Alerts.emailSent" = "Email sent!";
 
 /* Alert Header Label (the paper key was set) */
 "Alerts.paperKeySet" = "Conjunto de claves en papel";
@@ -691,6 +733,8 @@
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Dirección de facturación";
 
+"Buy.BuyLimit" = "Buy limits";
+
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Actualmente, el mínimo para comprar es de %s USD/día y el máximo es de %s USD/día.";
 
@@ -834,6 +878,8 @@
 "Buy.txHashHeader" = "%s ID de la transacción";
 
 "Buy.understandAndAgree" = "Entiendo y estoy de acuerdo";
+
+"Buy.YourBuyLimits" = "Your buy limits";
 
 /* Your order label in buy flow */
 "Buy.YourOrder" = "Tu pedido:";
@@ -1677,6 +1723,8 @@
 
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Actualizar PIN";
+
+"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap, Buy and Sell seamlessly.";
 
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "Active las notificaciones automáticas y sea el primero en conocer las nuevas funciones y ofertas especiales.";
@@ -2551,6 +2599,8 @@
 /* Swap again button title in swap failure screen */
 "Swap.SwapAgain" = "Cambiar de nuevo";
 
+"Swap.SwapLimit" = "Swap limits";
+
 /* Swap min and max limit text */
 "Swap.SwapLimits" = "Actualmente, el mínimo para cambiar es de %s USD/día y el máximo es de %s USD/día.";
 
@@ -3117,6 +3167,12 @@
 "VerificationCode.title" = "Código de confirmación";
 
 "VerifyAccount.Button" = "Verifica tu cuenta";
+
+"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
+
+"VerifyAccount.VerifyMyIdentity " = "Verify my identity";
+
+"VerifyAccount.VerifyYourIdentity" = "Verify your identity";
 
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "Introduce tu PIN para autorizar esta transacción.";
