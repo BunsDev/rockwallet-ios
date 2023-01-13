@@ -35,7 +35,7 @@ extension KeyStore {
         }
         resetFailedBackupCount()
         guard let account = setSeedPhrase(phrase) else { return .failure(UnlockBackupError.couldNotCreateAccount)}
-        guard setPin(pin) else { fatalError() }
+        guard setPin(pin) else { return .failure(GeneralError.init(errorMessage: "Could not init")) }
         return .success(account)
     }
     

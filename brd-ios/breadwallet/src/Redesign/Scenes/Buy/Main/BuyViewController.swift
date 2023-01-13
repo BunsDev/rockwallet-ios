@@ -205,10 +205,12 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             return
         }
         
+        UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
         tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)

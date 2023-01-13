@@ -304,7 +304,7 @@ class StartFlowPresenter: Subscriber {
     }
     
     private func dismissStartFlow() {
-        guard let navigationController = navigationController else { return assertionFailure() }
+        guard let navigationController = navigationController else { return }
         
         // Onboarding is finished.
         navigationController.dismiss(animated: true) { [unowned self] in

@@ -153,7 +153,7 @@ class LoginViewController: UIViewController, Subscriber {
                                                             
                                                             updatePin.resetFromDisabledSuccess = { pin in
                                                                 if case .initialLaunch = self.context {
-                                                                    guard let account = self.keyMaster.createAccount(withPin: pin) else { return assertionFailure() }
+                                                                    guard let account = self.keyMaster.createAccount(withPin: pin) else { return }
                                                                     self.authenticationSucceded(forLoginWithAccount: account)
                                                                 } else {
                                                                     self.authenticationSucceded()
@@ -295,7 +295,7 @@ class LoginViewController: UIViewController, Subscriber {
             
             updatePin.resetFromDisabledSuccess = { pin in
                 if case .initialLaunch = self.context {
-                    guard let account = self.keyMaster.createAccount(withPin: pin) else { return assertionFailure() }
+                    guard let account = self.keyMaster.createAccount(withPin: pin) else { return }
                     self.authenticationSucceded(forLoginWithAccount: account)
                 } else {
                     self.authenticationSucceded()
@@ -360,7 +360,7 @@ class LoginViewController: UIViewController, Subscriber {
                 self.dismiss(animated: true, completion: {
                     Store.perform(action: LoginSuccess())
                     if case .initialLaunch(let loginHandler) = self.context {
-                        guard let account = account else { return assertionFailure() }
+                        guard let account = account else { return }
                         loginHandler(account)
                     }
                 })

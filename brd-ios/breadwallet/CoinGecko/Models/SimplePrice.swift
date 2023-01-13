@@ -69,7 +69,7 @@ extension SimplePriceParams {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         guard let data = try? encoder.encode(self),
               let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
-        else { fatalError() }
+        else { return [] }
         
         return dict.map { URLQueryItem(name: $0, value: $1) }
     }
