@@ -157,7 +157,7 @@ class ApplicationController: Subscriber {
     
     private func enterOnboarding() {
         guardProtected {
-            guard let startFlowController = self.startFlowController, self.keyStore.noWallet else { return assertionFailure() }
+            guard let startFlowController = self.startFlowController, self.keyStore.noWallet else { return }
             startFlowController.startOnboarding { [unowned self] account in
                 self.setupSystem(with: account)
                 Store.perform(action: LoginSuccess())
@@ -172,7 +172,7 @@ class ApplicationController: Subscriber {
 //                self.coordinator?.open(scene: Scenes.Demo)
 //
 //                return ()
-            guard let startFlowController = self.startFlowController, !self.keyStore.noWallet else { return assertionFailure() }
+            guard let startFlowController = self.startFlowController, !self.keyStore.noWallet else { return }
             Store.perform(action: PinLength.Set(self.keyStore.pinLength))
             startFlowController.startLogin { [unowned self] account in
                 self.setupSystem(with: account)
@@ -314,7 +314,7 @@ class ApplicationController: Subscriber {
     // MARK: Background Task Support
 
     private func beginBackgroundTask() {
-        guard backgroundTaskID == .invalid else { return assertionFailure() }
+        guard backgroundTaskID == .invalid else { return }
         UIApplication.shared.beginBackgroundTask {
             self.endBackgroundTask()
         }

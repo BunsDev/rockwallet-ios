@@ -57,7 +57,7 @@ class WalletConnectionSettings {
     func set(mode: WalletConnectionMode, for currency: Currency) {
         assert(currency.tokenType == .native)
         assert(currency.isBitcoin || currency.isEthereum) //TODO:CRYPTO_V2
-        guard system.isModeSupported(mode, for: currency.network) || E.isRunningTests else { return assertionFailure() }
+        guard system.isModeSupported(mode, for: currency.network) || E.isRunningTests else { return }
         walletInfo.connectionModes[currency.uid] = mode.serialization
         guard let wm = currency.wallet?.manager else { return assert(E.isRunningTests) }
         system.setConnectionMode(mode, forWalletManager: wm)
@@ -66,7 +66,7 @@ class WalletConnectionSettings {
 
     private func save() {
         do {
-            guard let newWalletInfo = try kvStore.set(walletInfo) as? WalletInfo else { return assertionFailure() }
+            guard let newWalletInfo = try kvStore.set(walletInfo) as? WalletInfo else { return }
             self.walletInfo = newWalletInfo
         } catch let error {
             print("[KV] error setting wallet info: \(error)")

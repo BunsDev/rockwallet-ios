@@ -135,25 +135,25 @@ class AssetCollection: Subscriber {
     }
     
     func add(asset: CurrencyMetaData) {
-        guard !enabledAssets.contains(asset) else { return assertionFailure() }
+        guard !enabledAssets.contains(asset) else { return }
         enabledAssets.append(asset)
         hasUnsavedChanges = true
     }
     
     func remove(asset: CurrencyMetaData) {
-        guard let index = enabledAssets.firstIndex(where: { $0.uid == asset.uid }) else { return assertionFailure() }
+        guard let index = enabledAssets.firstIndex(where: { $0.uid == asset.uid }) else { return }
         removeAsset(at: index)
     }
     
     func removeAsset(at index: Int) {
-        guard enabledAssets.indices.contains(index) else { return assertionFailure() }
+        guard enabledAssets.indices.contains(index) else { return }
         enabledAssets.remove(at: index)
         hasUnsavedChanges = true
     }
     
     func moveAsset(from sourceIndex: Int, to destinationIndex: Int) {
         guard enabledAssets.indices.contains(sourceIndex),
-            enabledAssets.indices.contains(destinationIndex) else { return assertionFailure() }
+            enabledAssets.indices.contains(destinationIndex) else { return }
         enabledAssets.insert(enabledAssets.remove(at: sourceIndex), at: destinationIndex)
         hasUnsavedChanges = true
     }

@@ -166,9 +166,9 @@ class ModalPresenter: Subscriber {
         Store.subscribe(self, name: .reImportGift(nil)) { [weak self] in
             guard let trigger = $0, let `self` = self else { return }
             if case let .reImportGift(viewModel) = trigger {
-                guard let gift = viewModel?.gift else { return assertionFailure() }
+                guard let gift = viewModel?.gift else { return }
                 let code = QRCode(url: URL(string: gift.url!)!, viewModel: viewModel)
-                guard let wallet = Currencies.shared.btc?.wallet else { return assertionFailure() }
+                guard let wallet = Currencies.shared.btc?.wallet else { return }
                 self.presentKeyImport(wallet: wallet, scanResult: code)
             }
         }
@@ -770,7 +770,7 @@ class ModalPresenter: Subscriber {
     
     private func presentConnectionModeScreen(menuNav: UINavigationController) {
         guard let kv = Backend.kvStore, let walletInfo = WalletInfo(kvStore: kv) else {
-            return assertionFailure()
+            return
         }
         let connectionSettings = WalletConnectionSettings(system: self.system,
                                                           kvStore: kv,

@@ -200,7 +200,7 @@ class KeyStore {
     
     /// Removes deprecated keys from the keychain
     private func clearDeprecatedKeys() {
-        guard case .success = loadAccount() else { return assertionFailure() }
+        guard case .success = loadAccount() else { return }
         
         do {
             if try keychainItem(key: KeychainKey.masterPubKey) as Data? != nil {

@@ -353,7 +353,7 @@ class GiftViewController: UIViewController {
     
     private func send() {
         let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
-            guard let self = self else { return assertionFailure() }
+            guard let self = self else { return }
             self.sendingActivity.dismiss(animated: false) {
                 self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
                     self.parent?.view.isFrameChangeBlocked = false
