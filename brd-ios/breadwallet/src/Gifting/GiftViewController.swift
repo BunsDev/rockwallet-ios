@@ -11,19 +11,14 @@
 import UIKit
 import WalletKit
 
-class GiftViewController: UIViewController {
-    var presentVerifyPin: ((String, @escaping ((String) -> Void)) -> Void)?
-    var onPublishSuccess: (() -> Void)?
-    
-    private let sender: Sender
+class GiftViewController: BaseSendViewController {
     private let wallet: Wallet
     private let currency: Currency
     
     init(sender: Sender, wallet: Wallet, currency: Currency) {
-        self.sender = sender
         self.wallet = wallet
         self.currency = currency
-        super.init(nibName: nil, bundle: nil)
+        super.init(sender: sender)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -66,7 +61,6 @@ class GiftViewController: UIViewController {
     }()
     
     private var selectedIndex: Int = -1
-    private let sendingActivity = BRActivityViewController(message: L10n.TransactionDetails.titleSending)
     private let extraSwitch = UISwitch()
     private let extraLabel = UILabel.wrapping(font: Fonts.Body.three, color: .white)
     
@@ -351,40 +345,13 @@ class GiftViewController: UIViewController {
         }
     }
     
-    private func send() {
-        let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
-            guard let self = self else { return }
-            self.sendingActivity.dismiss(animated: false) {
-                self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
-                    self.parent?.view.isFrameChangeBlocked = false
-                    pinValidationCallback(pin)
-                    self.present(self.sendingActivity, animated: false)
-                }
-            }
-        }
+    override func onSuccess() {
+        super.onSuccess()
         
-        present(sendingActivity, animated: true)
-        sender.sendTransaction(allowBiometrics: true, pinVerifier: pinVerifier) { [weak self] result in
-            guard let self = self else { return }
-            self.sendingActivity.dismiss(animated: true) {
-                defer { self.sender.reset() }
-                switch result {
-                case .success:
-                    self.onPublishSuccess?()
-                    guard let gift = self.gift else { return }
-                    let share = ShareGiftViewController(gift: gift)
-                    DispatchQueue.main.async {
-                        self.present(share, animated: true, completion: nil)
-                    }
-                case .creationError(let message):
-                    self.showAlert(title: L10n.Alerts.sendFailure, message: message)
-                case .publishFailure(let code, let message):
-                    self.showAlert(title: L10n.Alerts.sendFailure, message: "\(message) (\(code))")
-                case .insufficientGas(let rpcErrorMessage):
-                    print("blah: \(rpcErrorMessage)")
-                    //self.showInsufficientGasError()
-                }
-            }
+        guard let gift = self.gift else { return }
+        let share = ShareGiftViewController(gift: gift)
+        DispatchQueue.main.async {
+            self.present(share, animated: true, completion: nil)
         }
     }
     
