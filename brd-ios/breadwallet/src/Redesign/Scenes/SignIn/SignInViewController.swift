@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SignInViewController: BaseTableViewController<BaseCoordinator,
+class SignInViewController: BaseTableViewController<RegistrationCoordinator,
                             SignInInteractor,
                             SignInPresenter,
                             SignInStore>,
@@ -18,7 +18,7 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
     typealias Models = SignInModels
     
     override var sceneLeftAlignedTitle: String? {
-        return "Sign in"
+        return L10n.Account.signIn
     }
     
     lazy var createAccountButton: FEButton = {
@@ -125,7 +125,7 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
             view.configure(with: .init(buttons: [Presets.Button.noBorders], isRightAligned: true))
             
             view.callbacks = [
-                // TODO: Add necessary logic.
+                forgotPasswordTapped
             ]
         }
         
@@ -151,7 +151,12 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
     
     @objc override func buttonTapped() {
         super.buttonTapped()
-        // TODO: Add necessary logic.
+        
+        interactor?.next(viewAction: .init())
+    }
+    
+    private func forgotPasswordTapped() {
+        coordinator?.showForgotPassword()
     }
     
     // MARK: - SignInResponseDisplay
@@ -159,6 +164,10 @@ class SignInViewController: BaseTableViewController<BaseCoordinator,
     func displayValidate(responseDisplay: SignInModels.Validate.ResponseDisplay) {
         continueButton.viewModel?.enabled = responseDisplay.isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+    }
+    
+    func displayNext(responseDisplay: SignInModels.Next.ResponseDisplay) {
+        coordinator?.dismissFlow()
     }
     
     // MARK: - Additional Helpers

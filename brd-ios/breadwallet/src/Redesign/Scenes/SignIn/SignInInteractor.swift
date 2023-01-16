@@ -38,5 +38,33 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         presenter?.presentValidate(actionResponse: .init(isValid: isValid))
     }
     
+    func next(viewAction: SignInModels.Next.ViewAction) {
+        guard let email = dataStore?.email,
+              let password = dataStore?.password,
+              let token = UserDefaults.walletTokenValue else { return }
+        
+        let data = RegistrationRequestData(email: email,
+                                           password: password,
+                                           token: token,
+                                           subscribe: nil,
+                                           accountHandling: .login)
+        RegistrationWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success(let data):
+                guard let sessionKey = data?.sessionKey else { return }
+                
+                UserDefaults.email = email
+                UserDefaults.kycSessionKeyValue = sessionKey
+                
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentNext(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
     // MARK: - Aditional helpers
 }

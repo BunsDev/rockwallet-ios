@@ -1,0 +1,23 @@
+// 
+//  WalletAPI.swift
+//  breadwallet
+//
+//  Created by Kenan Mamedoff on 16/01/2023.
+//  Copyright © 2023 RockWallet, LLC. All rights reserved.
+//
+//  See the LICENSE file at the project root for license information.
+//
+
+import Foundation
+
+enum WalletEndpoints: String, URLType {
+    static var baseURL: String = "https://"  + E.apiUrl + "blocksatoshi/wallet/auth/%@"
+    
+    case register
+    case login
+    case reset = "password/reset"
+    
+    var url: String {
+        return String(format: Self.baseURL, rawValue)
+    }
+}

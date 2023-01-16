@@ -49,6 +49,10 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
                                                                isTermsTickboxValid: actionResponse.isTermsTickboxValid))
     }
     
+    func presentNext(actionResponse: SignUpModels.Next.ActionResponse) {
+        viewController?.displayNext(responseDisplay: .init())
+    }
+    
     // MARK: - Additional Helpers
     
     private func prepareTermsTickboxText() -> NSMutableAttributedString {

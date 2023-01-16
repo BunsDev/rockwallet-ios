@@ -62,6 +62,8 @@
 
 "Account.CreateAccountButton" = "Create account";
 
+"Account.CreateNewPasswordTitle" = "Create new password";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Current limit: $1,000/day";
 
@@ -171,7 +173,7 @@
 "Account.SubmitPhoto" = "Submit your photo";
 
 /* Swap and buy limit per day description label */
-"Account.SwapAndBuyLimit" = "Swap limit: $10,000 USD/day\nBuy limit: $500 USD/day";
+"Account.SwapAndBuyLimit" = "Swap limit: $20,000 USD/day\nBuy limit: $500 USD/day";
 
 "Account.TermsTickbox" = "I agree to RockWallet’s";
 
@@ -878,6 +880,8 @@
 "Buy.txHashHeader" = "%s Transaction ID";
 
 "Buy.understandAndAgree" = "I understand and agree";
+
+"Buy.YourBuyLimits" = "Your buy limits";
 
 /* Your order label in buy flow */
 "Buy.YourOrder" = "Your order:";

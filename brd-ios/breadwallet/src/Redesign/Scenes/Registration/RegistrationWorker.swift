@@ -33,12 +33,20 @@ struct RegistrationData: Model {
 
 struct RegistrationRequestData: RequestModelData {
     let email: String?
+    let password: String?
     let token: String?
     let subscribe: Bool?
+    
+    enum AccountHandling {
+        case associate, register, login
+    }
+    
+    let accountHandling: AccountHandling
     
     func getParameters() -> [String: Any] {
         let params: [String: Any?] = [
             "email": email,
+            "password": password,
             "token": token,
             "subscribe": subscribe
         ]
@@ -48,7 +56,6 @@ struct RegistrationRequestData: RequestModelData {
 }
 
 class RegistrationWorker: BaseApiWorker<RegistrationMapper> {
-    
     override func getHeaders() -> [String: String] {
         let formatter = DateFormatter()
         formatter.locale = .init(identifier: C.countryUS)
@@ -71,7 +78,21 @@ class RegistrationWorker: BaseApiWorker<RegistrationMapper> {
     }
     
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(KYCAuthEndpoints.register)
+        let accountHandling = (requestData as? RegistrationRequestData)?.accountHandling
+        
+        switch accountHandling {
+        case .associate:
+            return APIURLHandler.getUrl(KYCAuthEndpoints.associate)
+            
+        case .login:
+            return APIURLHandler.getUrl(WalletEndpoints.login)
+            
+        case .register:
+            return APIURLHandler.getUrl(WalletEndpoints.register)
+            
+        default:
+            return ""
+        }
     }
     
     override func getParameters() -> [String: Any] {

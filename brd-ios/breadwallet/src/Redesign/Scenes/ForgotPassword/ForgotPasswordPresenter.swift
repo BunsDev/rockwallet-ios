@@ -38,6 +38,10 @@ final class ForgotPasswordPresenter: NSObject, Presenter, ForgotPasswordActionRe
         viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
     }
     
+    func presentNext(actionResponse: ForgotPasswordModels.Next.ActionResponse) {
+        viewController?.displayNext(responseDisplay: .init())
+    }
+    
     // MARK: - Additional Helpers
     
 }
