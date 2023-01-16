@@ -1,5 +1,5 @@
 //
-//  debug.xcconfig
+//  ldt.xcconfig
 //  breadwallet
 //
 //  Created by Rok on 07/03/2022.
@@ -13,9 +13,9 @@
 
 #include ".env"
 
-API_URL=api.ltd.rockwallet.net/
+API_URL=api.ldt.rockwallet.net/
 
-API_TOKEN=$(LTD_TOKEN)
-CHECKOUT_API_TOKEN=$(LTD_CHECKOUT_TOKEN)
+API_TOKEN=$(LDT_TOKEN)
+CHECKOUT_API_TOKEN=$(LDT_CHECKOUT_TOKEN)
 
-APP_ICON=AppIconLtd
+APP_ICON=AppIconLdt
