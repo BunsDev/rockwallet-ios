@@ -13,12 +13,9 @@
 
 #include ".env"
 
-API_URL=api.dev.rockwallet.net/
+API_URL=api.ltd.rockwallet.net/
 
 API_TOKEN=$(LTD_TOKEN)
 CHECKOUT_API_TOKEN=$(LTD_CHECKOUT_TOKEN)
-
-IS_TEST=true
-IS_SANDBOX=true
 
 APP_ICON=AppIconLtd
