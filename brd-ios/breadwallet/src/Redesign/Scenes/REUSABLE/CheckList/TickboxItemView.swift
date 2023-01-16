@@ -16,6 +16,7 @@ struct TickboxItemConfiguration: Configurable {
 
 struct TickboxItemViewModel: ViewModel {
     var title: LabelViewModel?
+    var url: URL?
 }
 
 class TickboxItemView: FEView<TickboxItemConfiguration, TickboxItemViewModel> {
@@ -29,10 +30,12 @@ class TickboxItemView: FEView<TickboxItemConfiguration, TickboxItemViewModel> {
     
     private lazy var titleLabel: FELabel = {
         let view = FELabel()
+        view.isUserInteractionEnabled = true
         return view
     }()
     
     var didToggleTickbox: ((Bool) -> Void)?
+    var didTapUrl: ((URL?) -> Void)?
     
     override func setupSubviews() {
         super.setupSubviews()
@@ -64,6 +67,14 @@ class TickboxItemView: FEView<TickboxItemConfiguration, TickboxItemViewModel> {
         super.setup(with: viewModel)
         
         titleLabel.setup(with: viewModel?.title)
+        
+        guard viewModel?.url != nil else {
+            titleLabel.gestureRecognizers?.removeAll()
+            return
+        }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(urlTapped))
+        titleLabel.addGestureRecognizer(tapGesture)
     }
     
     // MARK: - User interaction
@@ -72,5 +83,9 @@ class TickboxItemView: FEView<TickboxItemConfiguration, TickboxItemViewModel> {
         sender?.isSelected.toggle()
         
         didToggleTickbox?(sender?.isSelected ?? false)
+    }
+    
+    @objc private func urlTapped() {
+        didTapUrl?(viewModel?.url)
     }
 }

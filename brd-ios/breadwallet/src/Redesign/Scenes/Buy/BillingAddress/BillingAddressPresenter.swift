@@ -63,11 +63,6 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentCountry(actionResponse: BillingAddressModels.SelectCountry.ActionResponse) {
-        guard let countries = actionResponse.countries else { return }
-        viewController?.displayCountry(responseDisplay: .init(countries: countries))
-    }
-    
     func presentPaymentCards(actionResponse: BillingAddressModels.PaymentCards.ActionResponse) {
         viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards ?? []))
     }

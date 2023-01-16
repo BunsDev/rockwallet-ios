@@ -9,6 +9,7 @@ enum AccountVerificationModels {
     enum KYCLevel: Int {
         case one = 0
         case two = 1
+        case veriff = 2
     }
     
     typealias Item = Profile
@@ -27,11 +28,13 @@ enum AccountVerificationModels {
         
         struct ActionResponse {
             var level: KYCLevel
+            var sessionUrl: String?
         }
         
         struct ResponseDisplay {
             var level: KYCLevel
             var isPending: Bool
+            var sessionUrl: String
         }
     }
     

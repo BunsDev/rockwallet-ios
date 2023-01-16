@@ -1,6 +1,6 @@
 //
 //  Coordinator.swift
-//  
+//
 //
 //  Created by Rok Cresnik on 01/12/2021.
 //
@@ -169,22 +169,16 @@ class BaseCoordinator: NSObject,
     }
     
     func showVerifications() {
-        open(scene: Scenes.AccountVerification) { vc in
-            vc.dataStore?.profile = UserManager.shared.profile
-            vc.prepareData()
-        }
-    }
-    
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
+        open(scene: Scenes.AccountVerification)
     }
     
     func showAccountVerification() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification) { vc in
-            vc?.dataStore?.profile = UserManager.shared.profile
-            vc?.prepareData()
-        }
+        let nvc = RootNavigationController()
+        let coordinator = KYCCoordinator(navigationController: nvc)
+        coordinator.start()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        navigationController.present(nvc, animated: true)
     }
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {
@@ -211,14 +205,18 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showSupport() {
-        guard let url = URL(string: C.supportLink) else { return }
+    func showInWebView(urlString: String, title: String) {
+        guard let url = URL(string: urlString) else { return }
         let webViewController = SimpleWebViewController(url: url)
-        webViewController.setup(with: .init(title: L10n.MenuButton.support))
+        webViewController.setup(with: .init(title: title))
         let navController = RootNavigationController(rootViewController: webViewController)
         webViewController.setAsNonDismissableModal()
         
         navigationController.present(navController, animated: true)
+    }
+    
+    func showSupport() {
+        showInWebView(urlString: C.supportLink, title: L10n.MenuButton.support)
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
@@ -268,7 +266,12 @@ class BaseCoordinator: NSObject,
         childCoordinators.removeAll(where: { $0 === child })
     }
     
-    // only call from coordinator subclasses
+    func dismissFlow() {
+        navigationController.dismiss(animated: true)
+        parentCoordinator?.childDidFinish(child: self)
+    }
+    
+    /// Only call from coordinator subclasses
     func open<T: BaseControllable>(scene: T.Type,
                                    presentationStyle: UIModalPresentationStyle = .fullScreen,
                                    configure: ((T) -> Void)? = nil) {
@@ -279,7 +282,7 @@ class BaseCoordinator: NSObject,
         navigationController.show(controller, sender: nil)
     }
 
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func set<C: BaseCoordinator,
              VC: BaseControllable>(coordinator: C.Type,
                                    scene: VC.Type,
@@ -296,7 +299,7 @@ class BaseCoordinator: NSObject,
         navigationController.setViewControllers([controller], animated: true)
     }
     
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func openModally<C: BaseCoordinator,
                      VC: BaseControllable>(coordinator: C.Type,
                                            scene: VC.Type,
@@ -319,7 +322,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    //TODO: refactor this once the "coming soon" screen is added
+    // TODO: refactor this once the "coming soon" screen is added
     func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?
@@ -395,6 +398,14 @@ class BaseCoordinator: NSObject,
             }
             completion?(true)
         }
+    }
+    
+    func showBottomSheetAlert(type: AlertType, completion: (() -> Void)? = nil) {
+        guard let activeWindow = UIApplication.shared.activeWindow else { return }
+        
+        AlertPresenter(window: activeWindow).presentAlert(type, completion: {
+            completion?()
+        })
     }
     
     func showToastMessage(with error: Error? = nil,

@@ -23,6 +23,7 @@ struct DoubleHorizontalTextboxViewModel: ViewModel {
 class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfiguration, DoubleHorizontalTextboxViewModel> {
     var contentSizeChanged: (() -> Void)?
     var valueChanged: ((_ first: String?, _ second: String?) -> Void)?
+    var finishedEditing: ((_ first: String?, _ second: String?) -> Void)?
     var didTriggerDateField: (() -> Void)?
     
     private lazy var stack: UIStackView = {
@@ -117,13 +118,20 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         secondaryTextField.setup(with: viewModel?.secondary)
         
         primaryTextField.valueChanged = { [weak self] in
-            self?.first = $0
+            self?.first = $0.text
             self?.stateChanged()
+        }
+        primaryTextField.finishedEditing = { [weak self] tf in
+            self?.finishedEditing?(tf.text, self?.secondaryTextField.value)
         }
         
         secondaryTextField.valueChanged = { [weak self] in
-            self?.second = $0
+            self?.second = $0.text
             self?.stateChanged()
+        }
+        
+        secondaryTextField.finishedEditing = { [weak self] tf in
+            self?.finishedEditing?(self?.primaryTextField.value, tf.text)
         }
         
         stack.layoutIfNeeded()

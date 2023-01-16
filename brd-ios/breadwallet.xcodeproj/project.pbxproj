@@ -97,7 +97,6 @@
 		71249918222046EB00BEA491 /* PromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71249917222046EB00BEA491 /* PromptTests.swift */; };
 		7138BABB223062F50059091E /* NotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7138BABA223062F40059091E /* NotificationTests.swift */; };
 		713CD8872240117A004657D4 /* RecoveryKeyFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713CD8862240117A004657D4 /* RecoveryKeyFlowController.swift */; };
-		713CD88A2240198A004657D4 /* RecoveryKeyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */; };
 		7141BB5B2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */; };
 		7141BB5D2249543600F7ECF2 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7141BB5C2249543600F7ECF2 /* InfoView.swift */; };
 		716F824321F91D9A0064E6F4 /* AppRatingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */; };
@@ -130,6 +129,12 @@
 		7B0E34CA28ABA73900D15180 /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */; };
 		7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */; };
 		7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */; };
+		7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */; };
+		7B2BF28629659D850037E731 /* RecoveryKeyIntroVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */; };
+		7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */; };
+		7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */; };
+		7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */; };
+		7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */; };
 		7B2C9AFC27D9270B00D5135C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2C9AFB27D9270B00D5135C /* IQKeyboardManagerSwift */; };
 		7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5047289800BB008CACD8 /* FieldValidator.swift */; };
 		7B2E5052289A5F02008CACD8 /* AddCardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E504C289A5F02008CACD8 /* AddCardStore.swift */; };
@@ -138,6 +143,12 @@
 		7B2E5055289A5F02008CACD8 /* AddCardVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E504F289A5F02008CACD8 /* AddCardVIP.swift */; };
 		7B2E5056289A5F02008CACD8 /* AddCardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5050289A5F02008CACD8 /* AddCardPresenter.swift */; };
 		7B2E5057289A5F02008CACD8 /* AddCardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5051289A5F02008CACD8 /* AddCardModels.swift */; };
+		7B394789297000ED007D405E /* ForgotPasswordVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394783297000EC007D405E /* ForgotPasswordVIP.swift */; };
+		7B39478A297000ED007D405E /* ForgotPasswordInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394784297000EC007D405E /* ForgotPasswordInteractor.swift */; };
+		7B39478B297000ED007D405E /* ForgotPasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394785297000EC007D405E /* ForgotPasswordPresenter.swift */; };
+		7B39478C297000ED007D405E /* ForgotPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394786297000EC007D405E /* ForgotPasswordStore.swift */; };
+		7B39478D297000ED007D405E /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394787297000EC007D405E /* ForgotPasswordViewController.swift */; };
+		7B39478E297000ED007D405E /* ForgotPasswordModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B394788297000ED007D405E /* ForgotPasswordModels.swift */; };
 		7B519A932835B506007AC80A /* currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B519A922835B505007AC80A /* currencies.json */; };
 		7B54E59B27F4A2B0002DD1E4 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57127F4A2B0002DD1E4 /* AlertHelper.swift */; };
 		7B54E59D27F4A2B0002DD1E4 /* Shadowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57327F4A2B0002DD1E4 /* Shadowable.swift */; };
@@ -158,6 +169,12 @@
 		7B54E5B427F4A2B1002DD1E4 /* Roundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E58D27F4A2B0002DD1E4 /* Roundable.swift */; };
 		7B54E5B727F4A2B1002DD1E4 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E59127F4A2B0002DD1E4 /* RoundedView.swift */; };
 		7B54E5BB27F4A2B1002DD1E4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E59527F4A2B0002DD1E4 /* LoadingView.swift */; };
+		7B60826229700B9E00C4736B /* SetPasswordModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825C29700B9D00C4736B /* SetPasswordModels.swift */; };
+		7B60826329700B9E00C4736B /* SetPasswordInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825D29700B9E00C4736B /* SetPasswordInteractor.swift */; };
+		7B60826429700B9E00C4736B /* SetPasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825E29700B9E00C4736B /* SetPasswordPresenter.swift */; };
+		7B60826529700B9E00C4736B /* SetPasswordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60825F29700B9E00C4736B /* SetPasswordStore.swift */; };
+		7B60826629700B9E00C4736B /* SetPasswordVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60826029700B9E00C4736B /* SetPasswordVIP.swift */; };
+		7B60826729700B9E00C4736B /* SetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B60826129700B9E00C4736B /* SetPasswordViewController.swift */; };
 		7B62ACF928B381BE00CE81E7 /* TimeoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62ACF828B381BE00CE81E7 /* TimeoutViewController.swift */; };
 		7B62ACFB28B3BDA000CE81E7 /* String+Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B62ACFA28B3BDA000CE81E7 /* String+Chunk.swift */; };
 		7B67708E29053CDF006FB72A /* Shadow+Background+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B67708D29053CDF006FB72A /* Shadow+Background+Extensions.swift */; };
@@ -202,6 +219,8 @@
 		7BBBF4DE287421CF00E4D36B /* SwapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBBF4D8287421CF00E4D36B /* SwapPresenter.swift */; };
 		7BBBF4DF287421CF00E4D36B /* SwapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBBF4D9287421CF00E4D36B /* SwapStore.swift */; };
 		7BBBF4E0287421CF00E4D36B /* SwapMainVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBBF4DA287421CF00E4D36B /* SwapMainVIP.swift */; };
+		7BC3F046294C6F8300947526 /* VeriffSessionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC3F045294C6F8300947526 /* VeriffSessionWorker.swift */; };
+		7BC3F049294C6FBD00947526 /* Veriff in Frameworks */ = {isa = PBXBuildFile; productRef = 7BC3F048294C6FBD00947526 /* Veriff */; };
 		7BC49D1B282E69A3000BF284 /* ManageAssetsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC49D1A282E69A3000BF284 /* ManageAssetsButton.swift */; };
 		7BD88B5028D92A7A003A766B /* ExchangeAuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */; };
 		7BDB49B62805AC780031F015 /* EmailFeedbackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDB49B52805AC780031F015 /* EmailFeedbackManager.swift */; };
@@ -229,6 +248,18 @@
 		7BDB4A112806FA190031F015 /* brd-tokens.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0F2806FA190031F015 /* brd-tokens.tar */; };
 		7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */; };
 		7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */; };
+		7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */; };
+		7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */; };
+		7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */; };
+		7BF5D4ED296BFC8D00942ADB /* SignInStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E7296BFC8C00942ADB /* SignInStore.swift */; };
+		7BF5D4EE296BFC8D00942ADB /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E8296BFC8D00942ADB /* SignInViewController.swift */; };
+		7BF5D4EF296BFC8D00942ADB /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E9296BFC8D00942ADB /* SignInPresenter.swift */; };
+		7BF5D4F7296D4FC900942ADB /* SignUpModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4F1296D4FC800942ADB /* SignUpModels.swift */; };
+		7BF5D4F8296D4FC900942ADB /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4F2296D4FC800942ADB /* SignUpViewController.swift */; };
+		7BF5D4F9296D4FC900942ADB /* SignUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4F3296D4FC900942ADB /* SignUpInteractor.swift */; };
+		7BF5D4FA296D4FC900942ADB /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4F4296D4FC900942ADB /* SignUpPresenter.swift */; };
+		7BF5D4FB296D4FC900942ADB /* SignUpVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4F5296D4FC900942ADB /* SignUpVIP.swift */; };
+		7BF5D4FC296D4FC900942ADB /* SignUpStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4F6296D4FC900942ADB /* SignUpStore.swift */; };
 		7C0A3ACE210A0E1D006C2783 /* NotificationAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0A3ACD210A0E1D006C2783 /* NotificationAuthorizer.swift */; };
 		7C0F3DC42124A81100531E54 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0F3DC32124A81100531E54 /* Backend.swift */; };
 		7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1931CC2327371A0061DE20 /* CoreDatabase.swift */; };
@@ -387,6 +418,8 @@
 		7E9B13FE2857404600BD9EF5 /* DocumentReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F72857404600BD9EF5 /* DocumentReviewViewController.swift */; };
 		7E9B13FF2857404600BD9EF5 /* DocumentReviewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F82857404600BD9EF5 /* DocumentReviewInteractor.swift */; };
 		7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */; };
+		7EA9F7B329683A91000F45B6 /* CountriesAndStatesVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9F7B229683A91000F45B6 /* CountriesAndStatesVIP.swift */; };
+		7EA9F7B529683A9D000F45B6 /* CountriesAndStatesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */; };
 		7EAFC5F22941D6C700A7FF26 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F12941D6C700A7FF26 /* Animations.swift */; };
 		7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */; };
 		7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */; };
@@ -415,6 +448,8 @@
 		7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B042848ABC5000A301F /* RegistrationConfirmationInteractor.swift */; };
 		7EBC6B0D2848B81A000A301F /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B0C2848B81A000A301F /* CodeInputView.swift */; };
 		7EBCAB3C29716720002A4E78 /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCAB3B29716720002A4E78 /* BaseSendViewController.swift */; };
+		7EBCAB3F29716D8D002A4E78 /* MobileIntelligence.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EBCAB3D29716D09002A4E78 /* MobileIntelligence.xcframework */; };
+		7EBCAB4029716D8D002A4E78 /* MobileIntelligence.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7EBCAB3D29716D09002A4E78 /* MobileIntelligence.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EC0F8AA2886D9B90037145C /* ExchangeErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */; };
 		7EC0F8AC2887D8C40037145C /* SwapWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8AB2887D8C40037145C /* SwapWorker.swift */; };
 		7EC0F8B62888049F0037145C /* WrapperPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0F8B52888049F0037145C /* WrapperPopupView.swift */; };
@@ -460,6 +495,13 @@
 		7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDB82528C8684900C287CB /* Amount+Init.swift */; };
 		7EE62495295C141D00FC19CC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE62494295C141D00FC19CC /* main.swift */; };
 		7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE76FC12857648F00724548 /* NewDeviceWorker.swift */; };
+		7EE91A4F2967EB2A00331B1F /* KYCIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */; };
+		7EE91A5A2968310100331B1F /* KYCAddressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A532968310100331B1F /* KYCAddressStore.swift */; };
+		7EE91A5B2968310100331B1F /* KYCAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A542968310100331B1F /* KYCAddressPresenter.swift */; };
+		7EE91A5C2968310100331B1F /* KYCAddressModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A552968310100331B1F /* KYCAddressModels.swift */; };
+		7EE91A5D2968310100331B1F /* KYCAddressVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A562968310100331B1F /* KYCAddressVIP.swift */; };
+		7EE91A5E2968310100331B1F /* KYCAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A572968310100331B1F /* KYCAddressViewController.swift */; };
+		7EE91A5F2968310100331B1F /* KYCAddressInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A582968310100331B1F /* KYCAddressInteractor.swift */; };
 		7EEBAE8A28E7099400686CA3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEBAE8928E7099400686CA3 /* SnapKit */; };
 		7EF2188028630E2F006ABCC1 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2187F28630E2F006ABCC1 /* UserManager.swift */; };
 		7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2998827E3B8C400A2238A /* ApiClient.swift */; };
@@ -690,7 +732,6 @@
 		CECCE5AE1E04AD6300D99448 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5AD1E04AD6300D99448 /* AddressCell.swift */; };
 		CECCE5B01E04AD7600D99448 /* DescriptionSendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5AF1E04AD7600D99448 /* DescriptionSendCell.swift */; };
 		CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5B11E04B00D00D99448 /* SendCell.swift */; };
-		CED341331EF5A5C00014912A /* InAppAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED341321EF5A5C00014912A /* InAppAlert.swift */; };
 		CEDB09331FEAA21C001AF56A /* TxDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB09321FEAA21C001AF56A /* TxDetailViewModel.swift */; };
 		CEDB0B0522D4354C00331FFC /* LineLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB0B0422D4354C00331FFC /* LineLoadingView.swift */; };
 		CEDB0B0722D445DB00331FFC /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB0B0622D445DB00331FFC /* ChartView.swift */; };
@@ -768,6 +809,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7EBCAB4029716D8D002A4E78 /* MobileIntelligence.xcframework in Embed Frameworks */,
 				754AE0B71DFCA870007FD001 /* libbz2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -887,7 +929,6 @@
 		71249917222046EB00BEA491 /* PromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptTests.swift; sourceTree = "<group>"; };
 		7138BABA223062F40059091E /* NotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTests.swift; sourceTree = "<group>"; };
 		713CD8862240117A004657D4 /* RecoveryKeyFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecoveryKeyFlowController.swift; path = src/FlowControllers/RecoveryKeyFlowController.swift; sourceTree = "<group>"; };
-		713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecoveryKeyIntroViewController.swift; path = src/ViewControllers/RecoveryKey/RecoveryKeyIntroViewController.swift; sourceTree = "<group>"; };
 		7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WriteRecoveryKeyViewController.swift; path = src/ViewControllers/RecoveryKey/WriteRecoveryKeyViewController.swift; sourceTree = "<group>"; };
 		7141BB5C2249543600F7ECF2 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfoView.swift; path = src/Views/InfoView.swift; sourceTree = "<group>"; };
 		716F824221F91D9A0064E6F4 /* AppRatingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingManagerTests.swift; sourceTree = "<group>"; };
@@ -931,6 +972,12 @@
 		7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsWorker.swift; sourceTree = "<group>"; };
 		7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCurrencyHelper.swift; sourceTree = "<group>"; };
+		7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroInteractor.swift; sourceTree = "<group>"; };
+		7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroVIP.swift; sourceTree = "<group>"; };
+		7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroPresenter.swift; sourceTree = "<group>"; };
+		7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroStore.swift; sourceTree = "<group>"; };
+		7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroViewController.swift; sourceTree = "<group>"; };
+		7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroModels.swift; sourceTree = "<group>"; };
 		7B2E5047289800BB008CACD8 /* FieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidator.swift; sourceTree = "<group>"; };
 		7B2E504C289A5F02008CACD8 /* AddCardStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardStore.swift; sourceTree = "<group>"; };
 		7B2E504D289A5F02008CACD8 /* AddCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
@@ -938,6 +985,12 @@
 		7B2E504F289A5F02008CACD8 /* AddCardVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardVIP.swift; sourceTree = "<group>"; };
 		7B2E5050289A5F02008CACD8 /* AddCardPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardPresenter.swift; sourceTree = "<group>"; };
 		7B2E5051289A5F02008CACD8 /* AddCardModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardModels.swift; sourceTree = "<group>"; };
+		7B394783297000EC007D405E /* ForgotPasswordVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVIP.swift; sourceTree = "<group>"; };
+		7B394784297000EC007D405E /* ForgotPasswordInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordInteractor.swift; sourceTree = "<group>"; };
+		7B394785297000EC007D405E /* ForgotPasswordPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordPresenter.swift; sourceTree = "<group>"; };
+		7B394786297000EC007D405E /* ForgotPasswordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordStore.swift; sourceTree = "<group>"; };
+		7B394787297000EC007D405E /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		7B394788297000ED007D405E /* ForgotPasswordModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordModels.swift; sourceTree = "<group>"; };
 		7B41447829507788006B8481 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
 		7B4144792950778A006B8481 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
 		7B41447A2950778C006B8481 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
@@ -968,6 +1021,12 @@
 		7B54E58D27F4A2B0002DD1E4 /* Roundable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Roundable.swift; sourceTree = "<group>"; };
 		7B54E59127F4A2B0002DD1E4 /* RoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		7B54E59527F4A2B0002DD1E4 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		7B60825C29700B9D00C4736B /* SetPasswordModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordModels.swift; sourceTree = "<group>"; };
+		7B60825D29700B9E00C4736B /* SetPasswordInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordInteractor.swift; sourceTree = "<group>"; };
+		7B60825E29700B9E00C4736B /* SetPasswordPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordPresenter.swift; sourceTree = "<group>"; };
+		7B60825F29700B9E00C4736B /* SetPasswordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordStore.swift; sourceTree = "<group>"; };
+		7B60826029700B9E00C4736B /* SetPasswordVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordVIP.swift; sourceTree = "<group>"; };
+		7B60826129700B9E00C4736B /* SetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordViewController.swift; sourceTree = "<group>"; };
 		7B62ACF828B381BE00CE81E7 /* TimeoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutViewController.swift; sourceTree = "<group>"; };
 		7B62ACFA28B3BDA000CE81E7 /* String+Chunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Chunk.swift"; sourceTree = "<group>"; };
 		7B662C0C28F545D3007D663C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1004,6 +1063,7 @@
 		7BBBF4D8287421CF00E4D36B /* SwapPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapPresenter.swift; sourceTree = "<group>"; };
 		7BBBF4D9287421CF00E4D36B /* SwapStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapStore.swift; sourceTree = "<group>"; };
 		7BBBF4DA287421CF00E4D36B /* SwapMainVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapMainVIP.swift; sourceTree = "<group>"; };
+		7BC3F045294C6F8300947526 /* VeriffSessionWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VeriffSessionWorker.swift; sourceTree = "<group>"; };
 		7BC49D1A282E69A3000BF284 /* ManageAssetsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManageAssetsButton.swift; path = src/Views/ManageAssetsButton.swift; sourceTree = "<group>"; };
 		7BCFF15628F545B40019D7CD /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeAuthHelper.swift; sourceTree = "<group>"; };
@@ -1027,6 +1087,18 @@
 		7BDB4A0F2806FA190031F015 /* brd-tokens.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; name = "brd-tokens.tar"; path = "Resources/brd-tokens.tar"; sourceTree = "<group>"; };
 		7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardInputDetailsView.swift; sourceTree = "<group>"; };
 		7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalButtonsView.swift; sourceTree = "<group>"; };
+		7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVIP.swift; sourceTree = "<group>"; };
+		7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInInteractor.swift; sourceTree = "<group>"; };
+		7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInModels.swift; sourceTree = "<group>"; };
+		7BF5D4E7296BFC8C00942ADB /* SignInStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInStore.swift; sourceTree = "<group>"; };
+		7BF5D4E8296BFC8D00942ADB /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		7BF5D4E9296BFC8D00942ADB /* SignInPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
+		7BF5D4F1296D4FC800942ADB /* SignUpModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpModels.swift; sourceTree = "<group>"; };
+		7BF5D4F2296D4FC800942ADB /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		7BF5D4F3296D4FC900942ADB /* SignUpInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpInteractor.swift; sourceTree = "<group>"; };
+		7BF5D4F4296D4FC900942ADB /* SignUpPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
+		7BF5D4F5296D4FC900942ADB /* SignUpVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVIP.swift; sourceTree = "<group>"; };
+		7BF5D4F6296D4FC900942ADB /* SignUpStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpStore.swift; sourceTree = "<group>"; };
 		7BFE916229544549009E575F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/BreadwalletWidget.intentdefinition; sourceTree = "<group>"; };
 		7BFE916329544570009E575F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BreadwalletWidget.strings; sourceTree = "<group>"; };
 		7C0A3ACD210A0E1D006C2783 /* NotificationAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationAuthorizer.swift; path = src/NotificationAuthorizer.swift; sourceTree = "<group>"; };
@@ -1178,6 +1250,8 @@
 		7E9B13F72857404600BD9EF5 /* DocumentReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewViewController.swift; sourceTree = "<group>"; };
 		7E9B13F82857404600BD9EF5 /* DocumentReviewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewInteractor.swift; sourceTree = "<group>"; };
 		7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchCreateWorker.swift; sourceTree = "<group>"; };
+		7EA9F7B229683A91000F45B6 /* CountriesAndStatesVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesAndStatesVIP.swift; sourceTree = "<group>"; };
+		7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesAndStatesModels.swift; sourceTree = "<group>"; };
 		7EAFC5F12941D6C700A7FF26 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrowToX.json; sourceTree = "<group>"; };
 		7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+DefaultReceiveAddress.swift"; sourceTree = "<group>"; };
@@ -1206,6 +1280,7 @@
 		7EBC6B042848ABC5000A301F /* RegistrationConfirmationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationInteractor.swift; sourceTree = "<group>"; };
 		7EBC6B0C2848B81A000A301F /* CodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeInputView.swift; sourceTree = "<group>"; };
 		7EBCAB3B29716720002A4E78 /* BaseSendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSendViewController.swift; sourceTree = "<group>"; };
+		7EBCAB3D29716D09002A4E78 /* MobileIntelligence.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = MobileIntelligence.xcframework; sourceTree = "<group>"; };
 		7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeErrors.swift; sourceTree = "<group>"; };
 		7EC0F8AB2887D8C40037145C /* SwapWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapWorker.swift; sourceTree = "<group>"; };
 		7EC0F8B52888049F0037145C /* WrapperPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapperPopupView.swift; sourceTree = "<group>"; };
@@ -1251,6 +1326,13 @@
 		7EDDB82528C8684900C287CB /* Amount+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amount+Init.swift"; sourceTree = "<group>"; };
 		7EE62494295C141D00FC19CC /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = src/main.swift; sourceTree = "<group>"; };
 		7EE76FC12857648F00724548 /* NewDeviceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceWorker.swift; sourceTree = "<group>"; };
+		7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCIntroViewController.swift; sourceTree = "<group>"; };
+		7EE91A532968310100331B1F /* KYCAddressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressStore.swift; sourceTree = "<group>"; };
+		7EE91A542968310100331B1F /* KYCAddressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressPresenter.swift; sourceTree = "<group>"; };
+		7EE91A552968310100331B1F /* KYCAddressModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressModels.swift; sourceTree = "<group>"; };
+		7EE91A562968310100331B1F /* KYCAddressVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressVIP.swift; sourceTree = "<group>"; };
+		7EE91A572968310100331B1F /* KYCAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressViewController.swift; sourceTree = "<group>"; };
+		7EE91A582968310100331B1F /* KYCAddressInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressInteractor.swift; sourceTree = "<group>"; };
 		7EF2187F28630E2F006ABCC1 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		7EF2998827E3B8C400A2238A /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiClient.swift; path = CoinGecko/ApiClient.swift; sourceTree = "<group>"; };
 		7EF2998927E3B8C400A2238A /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resources.swift; path = CoinGecko/Resources.swift; sourceTree = "<group>"; };
@@ -1460,7 +1542,6 @@
 		CECCE5AD1E04AD6300D99448 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressCell.swift; path = src/Views/SendViewCells/AddressCell.swift; sourceTree = "<group>"; };
 		CECCE5AF1E04AD7600D99448 /* DescriptionSendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DescriptionSendCell.swift; path = src/Views/SendViewCells/DescriptionSendCell.swift; sourceTree = "<group>"; };
 		CECCE5B11E04B00D00D99448 /* SendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SendCell.swift; path = src/Views/SendViewCells/SendCell.swift; sourceTree = "<group>"; };
-		CED341321EF5A5C00014912A /* InAppAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppAlert.swift; path = src/Views/InAppAlert.swift; sourceTree = "<group>"; };
 		CEDB09321FEAA21C001AF56A /* TxDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxDetailViewModel.swift; sourceTree = "<group>"; };
 		CEDB0B0422D4354C00331FFC /* LineLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LineLoadingView.swift; path = src/Views/Charts/LineLoadingView.swift; sourceTree = "<group>"; };
 		CEDB0B0622D445DB00331FFC /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartView.swift; path = src/Views/Charts/ChartView.swift; sourceTree = "<group>"; };
@@ -1507,6 +1588,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EBCAB3F29716D8D002A4E78 /* MobileIntelligence.xcframework in Frameworks */,
 				7E0E365928E70D0F00539D99 /* Cosmos in Frameworks */,
 				3ABD8D1B24E1CF1500EC4C91 /* SwiftUI.framework in Frameworks */,
 				7CBC6B2E21751ECA00899AFB /* iAd.framework in Frameworks */,
@@ -1518,6 +1600,7 @@
 				22A9A9621DF61FE0000F0016 /* SystemConfiguration.framework in Frameworks */,
 				22A9A9601DF61FD8000F0016 /* CoreLocation.framework in Frameworks */,
 				22A9A95E1DF61FD0000F0016 /* PushKit.framework in Frameworks */,
+				7BC3F049294C6FBD00947526 /* Veriff in Frameworks */,
 				7B2C9AFC27D9270B00D5135C /* IQKeyboardManagerSwift in Frameworks */,
 				7B05888128A2431E00D7C971 /* Frames in Frameworks */,
 				7E18DBF328C8C2C600B83E3B /* WalletKit in Frameworks */,
@@ -1747,7 +1830,7 @@
 		713CD88822401946004657D4 /* RecoverKey */ = {
 			isa = PBXGroup;
 			children = (
-				713CD8892240198A004657D4 /* RecoveryKeyIntroViewController.swift */,
+				7B2BF27E29659CD00037E731 /* RecoveryKeyIntro */,
 				7141BB5A2245271800F7ECF2 /* WriteRecoveryKeyViewController.swift */,
 				71C44E8F225D135E00EF4459 /* ConfirmRecoveryKeyViewController.swift */,
 				71C44E91225F95B100EF4459 /* RecoveryKeyCompleteViewController.swift */,
@@ -1908,6 +1991,7 @@
 		75B6F52F1DA71DCC0031A93F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				7EBEA4C82966BD62006C9602 /* sardine */,
 				22A9A9971DF63426000F0016 /* libbz2 */,
 				75FEFD1F1DAEE7A400203D3A /* sqlite3 */,
 			);
@@ -1936,6 +2020,13 @@
 			path = CameraHelper;
 			sourceTree = "<group>";
 		};
+		7B2BF27E29659CD00037E731 /* RecoveryKeyIntro */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = RecoveryKeyIntro;
+			sourceTree = "<group>";
+		};
 		7B2E504B289A5EC0008CACD8 /* AddCard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1951,6 +2042,19 @@
 				7B05888628A2698A00D7C971 /* PaymentCardsWorker.swift */,
 			);
 			path = AddCard;
+			sourceTree = "<group>";
+		};
+		7B3947822970007A007D405E /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				7B394785297000EC007D405E /* ForgotPasswordPresenter.swift */,
+				7B394786297000EC007D405E /* ForgotPasswordStore.swift */,
+				7B394788297000ED007D405E /* ForgotPasswordModels.swift */,
+				7B394783297000EC007D405E /* ForgotPasswordVIP.swift */,
+				7B394787297000EC007D405E /* ForgotPasswordViewController.swift */,
+				7B394784297000EC007D405E /* ForgotPasswordInteractor.swift */,
+			);
+			path = ForgotPassword;
 			sourceTree = "<group>";
 		};
 		7B54E56F27F4A2B0002DD1E4 /* Helpers */ = {
@@ -2017,6 +2121,19 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7B60825B29700B1600C4736B /* SetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				7B60825E29700B9E00C4736B /* SetPasswordPresenter.swift */,
+				7B60825F29700B9E00C4736B /* SetPasswordStore.swift */,
+				7B60825C29700B9D00C4736B /* SetPasswordModels.swift */,
+				7B60826029700B9E00C4736B /* SetPasswordVIP.swift */,
+				7B60826129700B9E00C4736B /* SetPasswordViewController.swift */,
+				7B60825D29700B9E00C4736B /* SetPasswordInteractor.swift */,
+			);
+			path = SetPassword;
+			sourceTree = "<group>";
+		};
 		7B8EC63428089729008C6DE5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -2027,15 +2144,7 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
-		7B9434252886A12000638703 /* DeleteProfile */ = {
-			isa = PBXGroup;
-			children = (
-				7B9434292886A7CA00638703 /* DeleteProfileInfo */,
-			);
-			path = DeleteProfile;
-			sourceTree = "<group>";
-		};
-		7B9434292886A7CA00638703 /* DeleteProfileInfo */ = {
+		7B9434292886A7CA00638703 /* DeleteProfile */ = {
 			isa = PBXGroup;
 			children = (
 				7B94342F2886A7FA00638703 /* DeleteProfileInfoPresenter.swift */,
@@ -2047,7 +2156,7 @@
 				7B94343A2886DAF000638703 /* DeleteProfileInfoCoordinator.swift */,
 				7B94343C2887F98E00638703 /* DeleteProfileWorker.swift */,
 			);
-			path = DeleteProfileInfo;
+			path = DeleteProfile;
 			sourceTree = "<group>";
 		};
 		7BBBF4D22874210600E4D36B /* Main */ = {
@@ -2071,6 +2180,45 @@
 				7EC0F8B7288813EE0037145C /* SwapConfirmationView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7BF5D4E2296BF6AD00942ADB /* RecoveryKeyIntro */ = {
+			isa = PBXGroup;
+			children = (
+				7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */,
+				7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */,
+				7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */,
+				7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */,
+				7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */,
+				7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */,
+			);
+			path = RecoveryKeyIntro;
+			sourceTree = "<group>";
+		};
+		7BF5D4E3296BF6CE00942ADB /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				7BF5D4E9296BFC8D00942ADB /* SignInPresenter.swift */,
+				7BF5D4E7296BFC8C00942ADB /* SignInStore.swift */,
+				7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */,
+				7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */,
+				7BF5D4E8296BFC8D00942ADB /* SignInViewController.swift */,
+				7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		7BF5D4F0296D4F9C00942ADB /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				7BF5D4F4296D4FC900942ADB /* SignUpPresenter.swift */,
+				7BF5D4F6296D4FC900942ADB /* SignUpStore.swift */,
+				7BF5D4F1296D4FC800942ADB /* SignUpModels.swift */,
+				7BF5D4F5296D4FC900942ADB /* SignUpVIP.swift */,
+				7BF5D4F2296D4FC800942ADB /* SignUpViewController.swift */,
+				7BF5D4F3296D4FC900942ADB /* SignUpInteractor.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		7C377EBC20F64C1200E8CF1C /* Resources */ = {
@@ -2186,8 +2334,8 @@
 		7E5B305D28A67FE70065D2D8 /* BaseInfo */ = {
 			isa = PBXGroup;
 			children = (
-				C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */,
 				C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */,
+				C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */,
 				C46C28F9287EBF4F0035C843 /* BaseInfoModels.swift */,
 				C46C28FA287EBF4F0035C843 /* BaseInfoVIP.swift */,
 				C46C28FB287EBF4F0035C843 /* BaseInfoViewController.swift */,
@@ -2224,12 +2372,17 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				7B60825B29700B1600C4736B /* SetPassword */,
+				7B3947822970007A007D405E /* ForgotPassword */,
+				7BF5D4F0296D4F9C00942ADB /* SignUp */,
+				7BF5D4E3296BF6CE00942ADB /* SignIn */,
+				7BF5D4E2296BF6AD00942ADB /* RecoveryKeyIntro */,
 				7E8F7E3C293F6ACE0058019B /* Sell */,
 				7E5B305C28A67FDC0065D2D8 /* REUSABLE */,
 				7E52B79D286EF4CE003D2249 /* Swap */,
 				7EF2187D2862F07A006ABCC1 /* Buy */,
 				7EF45F7C2847671F00D1F7B0 /* KYC */,
-				7B9434252886A12000638703 /* DeleteProfile */,
+				7B9434292886A7CA00638703 /* DeleteProfile */,
 				7E2E1A2C284E099300E56E69 /* Registration */,
 				7EBC6AFD2848ABAB000A301F /* RegistrationConfirmation */,
 				C4C0CA542845F2F400B6ED79 /* AccountVerification */,
@@ -2321,6 +2474,7 @@
 		7E5CB34B2835090D00EC787E /* Cycles */ = {
 			isa = PBXGroup;
 			children = (
+				7EA9F7B129683A78000F45B6 /* CountriesAndStates */,
 				7E67A78B294734E40012FB3F /* AchPayment */,
 				7E75AD472943296500E54DEF /* ExchangeRate */,
 				7E5CB34C2835090D00EC787E /* Alerts */,
@@ -2580,6 +2734,15 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
+		7EA9F7B129683A78000F45B6 /* CountriesAndStates */ = {
+			isa = PBXGroup;
+			children = (
+				7EA9F7B229683A91000F45B6 /* CountriesAndStatesVIP.swift */,
+				7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */,
+			);
+			path = CountriesAndStates;
+			sourceTree = "<group>";
+		};
 		7EAFC5F52941EC4B00A7FF26 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
@@ -2616,6 +2779,15 @@
 				7EF45F90284777AC00D1F7B0 /* RegistrationConfirmationWorker.swift */,
 			);
 			path = RegistrationConfirmation;
+			sourceTree = "<group>";
+		};
+		7EBEA4C82966BD62006C9602 /* sardine */ = {
+			isa = PBXGroup;
+			children = (
+				7EBCAB3D29716D09002A4E78 /* MobileIntelligence.xcframework */,
+			);
+			name = sardine;
+			path = Modules/sardine;
 			sourceTree = "<group>";
 		};
 		7EC21A1328991A6500FED711 /* BillingAddress */ = {
@@ -2698,6 +2870,27 @@
 			path = DocumentPicker;
 			sourceTree = "<group>";
 		};
+		7EE91A342967EAEC00331B1F /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */,
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
+		7EE91A51296830F000331B1F /* KYCAddress */ = {
+			isa = PBXGroup;
+			children = (
+				7EE91A532968310100331B1F /* KYCAddressStore.swift */,
+				7EE91A542968310100331B1F /* KYCAddressPresenter.swift */,
+				7EE91A552968310100331B1F /* KYCAddressModels.swift */,
+				7EE91A562968310100331B1F /* KYCAddressVIP.swift */,
+				7EE91A572968310100331B1F /* KYCAddressViewController.swift */,
+				7EE91A582968310100331B1F /* KYCAddressInteractor.swift */,
+			);
+			path = KYCAddress;
+			sourceTree = "<group>";
+		};
 		7EF2187D2862F07A006ABCC1 /* Buy */ = {
 			isa = PBXGroup;
 			children = (
@@ -2741,7 +2934,7 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		7EF45F472845352400D1F7B0 /* KYCLevelOne */ = {
+		7EF45F472845352400D1F7B0 /* KYCPersonal */ = {
 			isa = PBXGroup;
 			children = (
 				7EF45F492845352400D1F7B0 /* KYCBasicPresenter.swift */,
@@ -2752,15 +2945,17 @@
 				7EF45F482845352400D1F7B0 /* KYCBasicInteractor.swift */,
 				7E9B13EF2857213400BD9EF5 /* KYCLevelOneWorker.swift */,
 			);
-			path = KYCLevelOne;
+			path = KYCPersonal;
 			sourceTree = "<group>";
 		};
 		7EF45F7C2847671F00D1F7B0 /* KYC */ = {
 			isa = PBXGroup;
 			children = (
+				7EE91A342967EAEC00331B1F /* Intro */,
 				7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */,
+				7EE91A51296830F000331B1F /* KYCAddress */,
 				7E6729262923A22900A2B612 /* ComingSoon */,
-				7EF45F472845352400D1F7B0 /* KYCLevelOne */,
+				7EF45F472845352400D1F7B0 /* KYCPersonal */,
 				7ED83ACC284F372000261565 /* KYCLevelTwo */,
 			);
 			path = KYC;
@@ -2960,6 +3155,7 @@
 				C45E0BA22845F4C40083F028 /* AccountVerificationModels.swift */,
 				C45E0BA42845F4C40083F028 /* AccountVerificationViewController.swift */,
 				C45E0BA52845F4C40083F028 /* AccountVerificationInteractor.swift */,
+				7BC3F045294C6F8300947526 /* VeriffSessionWorker.swift */,
 			);
 			path = AccountVerification;
 			sourceTree = "<group>";
@@ -3090,7 +3286,6 @@
 				CE6DCC261E6108D50044257B /* EnterPhraseCell.swift */,
 				CEEC70911E95DA4400EF788E /* GradientSwitch.swift */,
 				CE0822651FCE059A00EF371D /* HomeScreenCell.swift */,
-				CED341321EF5A5C00014912A /* InAppAlert.swift */,
 				7141BB5C2249543600F7ECF2 /* InfoView.swift */,
 				CE25BF8C1DF3B8A500BC67B6 /* InViewAlert.swift */,
 				CEBF292D1EF99E55005C330A /* LightWeightAlert.swift */,
@@ -3408,6 +3603,7 @@
 				7E0E365828E70D0F00539D99 /* Cosmos */,
 				C4C7299C2922400A00A3CE24 /* LinkKit */,
 				7E8F7E4D293F84510058019B /* Lottie */,
+				7BC3F048294C6FBD00947526 /* Veriff */,
 			);
 			productName = breadwallet;
 			productReference = 75A2A7901DA5934300A983D8 /* breadwallet.app */;
@@ -3576,6 +3772,7 @@
 				7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
 				7E8F7E4C293F84510058019B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */,
 			);
 			productRefGroup = 75A2A7911DA5934300A983D8 /* Products */;
 			projectDirPath = "";
@@ -3780,6 +3977,8 @@
 				7EBC6B062848ABC5000A301F /* RegistrationConfirmationStore.swift in Sources */,
 				7E9B13F02857213400BD9EF5 /* KYCLevelOneWorker.swift in Sources */,
 				7B8CF81E28A3D0C600D54D14 /* CardDetailsFormatter.swift in Sources */,
+				7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */,
+				7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */,
 				7B8CF82028A64B9300D54D14 /* ExchangeFormatter.swift in Sources */,
 				7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */,
 				7E87B32A2853368E0097671F /* KYCDocumentUploadWorker.swift in Sources */,
@@ -3794,11 +3993,15 @@
 				7EF2999127E3B8D200A2238A /* MarketChart.swift in Sources */,
 				CEA9178620C07FBB00F29B31 /* SyncingHeaderView.swift in Sources */,
 				7BDB49F92806F1090031F015 /* PlatformAuthResult.swift in Sources */,
+				7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */,
 				CEC6AA3B1DEE4EB000EE5AFD /* CGRect+Additions.swift in Sources */,
+				7B60826629700B9E00C4736B /* SetPasswordVIP.swift in Sources */,
 				4F3AB12A25D58AB400B378DC /* SelectBakerViewController.swift in Sources */,
 				7E8D288B28C0CDFC00FF0CBC /* FeeFetchable.swift in Sources */,
+				7EE91A5A2968310100331B1F /* KYCAddressStore.swift in Sources */,
 				E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */,
 				7ECCA98F2873059300F99368 /* ExchangeEndpoints.swift in Sources */,
+				7B39478D297000ED007D405E /* ForgotPasswordViewController.swift in Sources */,
 				7E5CB38B2835090E00EC787E /* Shadable.swift in Sources */,
 				3A36328D225301D60043EBA4 /* PriceChangeView.swift in Sources */,
 				7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */,
@@ -3811,9 +4014,11 @@
 				CE45C1FB1E74F89C002C3847 /* WalletInfo.swift in Sources */,
 				CE90571A1DFF18B2006BA848 /* ScanViewController.swift in Sources */,
 				7CBC6B302177D72600899AFB /* DelistedTokenView.swift in Sources */,
+				7B60826229700B9E00C4736B /* SetPasswordModels.swift in Sources */,
 				7E5CB3A62835090E00EC787E /* ThemeManager.swift in Sources */,
 				7C6ACCB61FEB345E0028ABFA /* TxStatusCell.swift in Sources */,
 				CE5393B022D7CC98000303B3 /* HistoryPeriod.swift in Sources */,
+				7B39478E297000ED007D405E /* ForgotPasswordModels.swift in Sources */,
 				7EB8FD212897D212000FF75C /* BuyCoordinator.swift in Sources */,
 				7EF45F8C284768C100D1F7B0 /* ItemSelectionModels.swift in Sources */,
 				CE20C8F61DBAF77D00C8397A /* UIViewController+Extensions.swift in Sources */,
@@ -3870,6 +4075,7 @@
 				71C44E942264BE2C00EF4459 /* BaseRecoveryKeyViewController.swift in Sources */,
 				7E5CB38E2835090E00EC787E /* UIColor+init.swift in Sources */,
 				CEAA9EA81DC3342E0066731D /* PinView.swift in Sources */,
+				7B39478A297000ED007D405E /* ForgotPasswordInteractor.swift in Sources */,
 				C46C2902287EBF4F0035C843 /* BaseInfoViewController.swift in Sources */,
 				CE5E6C961EB8CCF500A476DB /* SimpleWebViewController.swift in Sources */,
 				7E5CB3A42835090E00EC787E /* StateDisplayable.swift in Sources */,
@@ -3908,12 +4114,14 @@
 				CE8CD8E11E31976800785E02 /* LoginViewController.swift in Sources */,
 				7EF45F8A284768C100D1F7B0 /* ItemSelectionStore.swift in Sources */,
 				7EF45F87284768C100D1F7B0 /* ItemSelectionVIP.swift in Sources */,
+				7BF5D4FC296D4FC900942ADB /* SignUpStore.swift in Sources */,
 				CECCE5AB1E038C9900D99448 /* GenericPinPadCell.swift in Sources */,
 				7EB838462849D49A00C7CC05 /* ScrollableButtonsView.swift in Sources */,
 				7EBCAB3C29716720002A4E78 /* BaseSendViewController.swift in Sources */,
 				7B54E5A427F4A2B0002DD1E4 /* RequestModels.swift in Sources */,
 				C45E0BA92845F4C40083F028 /* AccountVerificationModels.swift in Sources */,
 				7EC21A1A28991A6500FED711 /* BillingAddressModels.swift in Sources */,
+				7B60826429700B9E00C4736B /* SetPasswordPresenter.swift in Sources */,
 				CECCE5B01E04AD7600D99448 /* DescriptionSendCell.swift in Sources */,
 				7E5CB38F2835090E00EC787E /* NSLayoutConstraint+priority.swift in Sources */,
 				C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */,
@@ -3930,11 +4138,13 @@
 				7B992F2529279598008C2174 /* Assets.swift in Sources */,
 				7C424A6E20FD34F20064557E /* NotificationHandler.swift in Sources */,
 				7B54E5B727F4A2B1002DD1E4 /* RoundedView.swift in Sources */,
+				7BF5D4EF296BFC8D00942ADB /* SignInPresenter.swift in Sources */,
 				7E5CB3862835090E00EC787E /* ShadowConfiguration.swift in Sources */,
 				7C35E719200AF3940064808F /* TxListViewModel.swift in Sources */,
 				7EE62495295C141D00FC19CC /* main.swift in Sources */,
 				7E2E1A41284E267000E56E69 /* ProfileWorker.swift in Sources */,
 				CE6314831E08E5BB00D4AFE0 /* UIView+InitAdditions.swift in Sources */,
+				7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */,
 				CEC6AA401DEFC87300EE5AFD /* SendViewController.swift in Sources */,
 				7C72D13622662BB40091B185 /* Wallet.swift in Sources */,
 				CEC6F8451E886723000795B8 /* PaymentRequest.swift in Sources */,
@@ -3943,9 +4153,11 @@
 				3A6C1406257D594A00EA0689 /* ShareGiftViewController.swift in Sources */,
 				7E5CB3B42835090E00EC787E /* FEButton.swift in Sources */,
 				C46C28FE287EBF4F0035C843 /* BaseInfoStore.swift in Sources */,
+				7EE91A5F2968310100331B1F /* KYCAddressInteractor.swift in Sources */,
 				CE4C1CC81ED88B600063E184 /* URLController.swift in Sources */,
 				CE20C9171DBE6F2A00C8397A /* UIButton+Extensions.swift in Sources */,
 				3A611A0C2322139D004B8E36 /* Dot.swift in Sources */,
+				7B2BF28629659D850037E731 /* RecoveryKeyIntroVIP.swift in Sources */,
 				7B54E5B427F4A2B1002DD1E4 /* Roundable.swift in Sources */,
 				7E5CB3852835090E00EC787E /* BackgroundConfiguration.swift in Sources */,
 				CE92F9F41DED59E80046B516 /* UIView+AnimationAdditions.swift in Sources */,
@@ -3983,6 +4195,7 @@
 				7C6FD3F4213F205400EFF35F /* InboxMetaData.swift in Sources */,
 				CEBF292E1EF99E55005C330A /* LightWeightAlert.swift in Sources */,
 				7E5CB3B22835090E00EC787E /* FETextField.swift in Sources */,
+				7BF5D4F8296D4FC900942ADB /* SignUpViewController.swift in Sources */,
 				CEBF32EE1DDBC30000348FC6 /* BRDButton.swift in Sources */,
 				7ED83AEB284F384F00261565 /* KYCDocumentPickerVIP.swift in Sources */,
 				7CBF4B6B2008899100E003AA /* TxAddressCell.swift in Sources */,
@@ -4004,10 +4217,12 @@
 				3A6FD42D24E456B800068ECE /* KeyStoreUtils.swift in Sources */,
 				7EF45F4F2845352400D1F7B0 /* KYCBasicInteractor.swift in Sources */,
 				7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */,
+				7B60826729700B9E00C4736B /* SetPasswordViewController.swift in Sources */,
 				7E52B7A22872CD1E003D2249 /* SupportedCurrenciesWorker.swift in Sources */,
 				7E5CB3982835090E00EC787E /* Controller.swift in Sources */,
 				7EC21A1C28991A6500FED711 /* BillingAddressInteractor.swift in Sources */,
 				3A6FD42F24E4570900068ECE /* KeyStore+CloudBackup.swift in Sources */,
+				7BC3F046294C6F8300947526 /* VeriffSessionWorker.swift in Sources */,
 				C46C2901287EBF4F0035C843 /* BaseInfoVIP.swift in Sources */,
 				7E5CB3872835090E00EC787E /* BorderConfiguration.swift in Sources */,
 				7B54E5A627F4A2B0002DD1E4 /* HTTPRequestHelpers.swift in Sources */,
@@ -4022,18 +4237,22 @@
 				7ED83AEA284F384F00261565 /* KYCDocumentPickerModels.swift in Sources */,
 				CE27F9591E2C8EA300F7F7F2 /* Amount.swift in Sources */,
 				7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */,
+				7EE91A5D2968310100331B1F /* KYCAddressVIP.swift in Sources */,
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,
 				7EBC6B092848ABC5000A301F /* RegistrationConfirmationVIP.swift in Sources */,
 				7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */,
+				7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */,
 				7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */,
 				7E8E97A0283F48EE008606B0 /* NavigationItemView.swift in Sources */,
 				C416BE0628509C4E0020ACCD /* KYCLevelTwoPostValidation.swift in Sources */,
 				22A9A9461DF61945000F0016 /* BRAPIClient.swift in Sources */,
 				7E5CB3A82835090E00EC787E /* Colors.swift in Sources */,
+				7B60826329700B9E00C4736B /* SetPasswordInteractor.swift in Sources */,
 				75A2A7941DA5934300A983D8 /* AppDelegate.swift in Sources */,
 				C491ABFB28A6395D00E79954 /* OrderPreviewVIP.swift in Sources */,
 				CEEC70901E95D5C100EF788E /* PushNotificationsViewController.swift in Sources */,
+				7BF5D4FA296D4FC900942ADB /* SignUpPresenter.swift in Sources */,
 				7E5B306228A681760065D2D8 /* FailureViewController.swift in Sources */,
 				C46C2903287EBF4F0035C843 /* BaseInfoInteractor.swift in Sources */,
 				3AFB571524E2E0BA00087527 /* UIHelpers.swift in Sources */,
@@ -4055,9 +4274,11 @@
 				CE4CA7BC1EE3649100373F11 /* BRActivityView.swift in Sources */,
 				E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */,
 				7EC0F8AC2887D8C40037145C /* SwapWorker.swift in Sources */,
+				7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */,
 				7B02D6282859201500C5C384 /* KYCCameraViewController.swift in Sources */,
 				7E383B4928AE1AFD00A5339F /* AssetSelectionDisplayable.swift in Sources */,
 				7BBBF4DC287421CF00E4D36B /* SwapModels.swift in Sources */,
+				7BF5D4ED296BFC8D00942ADB /* SignInStore.swift in Sources */,
 				7ECCA9912873079100F99368 /* QuoteWorker.swift in Sources */,
 				7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */,
 				3A69885E24591F890084953D /* PayId.swift in Sources */,
@@ -4065,6 +4286,7 @@
 				7EBC6AF728488B10000A301F /* RegistrationPresenter.swift in Sources */,
 				7E9B13FE2857404600BD9EF5 /* DocumentReviewViewController.swift in Sources */,
 				7B9434352886A7FA00638703 /* DeleteProfileInfoStore.swift in Sources */,
+				7BF5D4FB296D4FC900942ADB /* SignUpVIP.swift in Sources */,
 				7B9434362886A7FA00638703 /* DeleteProfileInfoPresenter.swift in Sources */,
 				CEC6AA421DEFC88F00EE5AFD /* ReceiveViewController.swift in Sources */,
 				7C9BC58F231765190011732F /* WalletConnectionSettings.swift in Sources */,
@@ -4098,6 +4320,7 @@
 				CEEC707F1E8D6B4100EF788E /* MenuViewController.swift in Sources */,
 				7ECCA9952874266200F99368 /* FESegmentControl.swift in Sources */,
 				7ED427F428755CB200AA19A8 /* ExchangeDetailsInteractor.swift in Sources */,
+				7EE91A5B2968310100331B1F /* KYCAddressPresenter.swift in Sources */,
 				7E5CB3A52835090E00EC787E /* SubviewConfigurable.swift in Sources */,
 				7ED427F128755CB200AA19A8 /* ExchangeDetailsModels.swift in Sources */,
 				C491ABFD28A6395D00E79954 /* OrderPreviewInteractor.swift in Sources */,
@@ -4118,6 +4341,7 @@
 				CE977109216FA16300B9F621 /* SegwitViewController.swift in Sources */,
 				7BBBF4E0287421CF00E4D36B /* SwapMainVIP.swift in Sources */,
 				71173059220CCC91001931B3 /* PromptView.swift in Sources */,
+				7EE91A5C2968310100331B1F /* KYCAddressModels.swift in Sources */,
 				C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */,
 				7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */,
 				7ECCA9992874342C00F99368 /* FETimerView.swift in Sources */,
@@ -4129,6 +4353,7 @@
 				3AFAD94825698A74005853E8 /* Gift.swift in Sources */,
 				CE4DFB2C1E9BE5880014009E /* ReScanViewController.swift in Sources */,
 				7ECCA9642875A77300617067 /* OrderView.swift in Sources */,
+				7B39478C297000ED007D405E /* ForgotPasswordStore.swift in Sources */,
 				7BB3B7D929558D5F006FF250 /* GradientView.swift in Sources */,
 				7E5CB3A22835090E00EC787E /* Marginable.swift in Sources */,
 				7C9724661FF07B9A004248C4 /* StatusPip.swift in Sources */,
@@ -4151,10 +4376,12 @@
 				7E5CB3912835090E00EC787E /* AlertVIP.swift in Sources */,
 				3AFAD937256826F3005853E8 /* BorderedTextInput.swift in Sources */,
 				CE6D0F991DE8B75900BD4BCF /* DismissModalAnimator.swift in Sources */,
+				7B60826529700B9E00C4736B /* SetPasswordStore.swift in Sources */,
 				CE4C1CC61ED65D830063E184 /* DrawableCircle.swift in Sources */,
 				7E5CB3A12835090E00EC787E /* ViewProtocol.swift in Sources */,
 				7CBD57912107FAFA0042C388 /* PairedWalletIndex.swift in Sources */,
 				CEEC708C1E95461A00EF788E /* AboutViewController.swift in Sources */,
+				7EA9F7B329683A91000F45B6 /* CountriesAndStatesVIP.swift in Sources */,
 				7ED427EF28755CB200AA19A8 /* ExchangeDetailsStore.swift in Sources */,
 				7BC49D1B282E69A3000BF284 /* ManageAssetsButton.swift in Sources */,
 				CE3645481E7B424D0079D0CF /* WhiteNumberPad.swift in Sources */,
@@ -4174,16 +4401,20 @@
 				7E7AFBEA29409FCC0063023F /* RWDrawer.swift in Sources */,
 				CEB909FA1E5FF242001804DC /* RecoverWalletIntroViewController.swift in Sources */,
 				CE25BF911DF9ADE700BC67B6 /* UIImage+Utils.swift in Sources */,
+				7BF5D4F9296D4FC900942ADB /* SignUpInteractor.swift in Sources */,
 				7C7F18ED1FED9A3B0030230E /* TxStatusIndicator.swift in Sources */,
 				7E5CB3992835090E00EC787E /* Interactor.swift in Sources */,
 				7B54E5A927F4A2B0002DD1E4 /* BaseApiWorker.swift in Sources */,
 				7E9B13FC2857404600BD9EF5 /* DocumentReviewModels.swift in Sources */,
+				7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */,
 				C45E0BA62845F4C40083F028 /* AccountVerificationCoordinator.swift in Sources */,
 				7C787AE221ED89510017EA7E /* KeyStore.swift in Sources */,
 				CEAA9E911DC0FDFE0066731D /* UIViewPropertyAnimator+Extensions.swift in Sources */,
 				7B9434312886A7FA00638703 /* DeleteProfileInfoInteractor.swift in Sources */,
 				7B54E5A027F4A2B0002DD1E4 /* NetworkingError.swift in Sources */,
 				7ED83AF6284F40EB00261565 /* ChecklistItemView.swift in Sources */,
+				7EA9F7B529683A9D000F45B6 /* CountriesAndStatesModels.swift in Sources */,
+				7EE91A4F2967EB2A00331B1F /* KYCIntroViewController.swift in Sources */,
 				7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */,
 				7EF45F8D284768C100D1F7B0 /* ItemSelectionCoordinator.swift in Sources */,
 				7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */,
@@ -4194,6 +4425,7 @@
 				7CE940E61FEB8A5F005A2B53 /* TxDetailRowCell.swift in Sources */,
 				3AFAD94F25699112005853E8 /* TxGiftCell.swift in Sources */,
 				7B2E5056289A5F02008CACD8 /* AddCardPresenter.swift in Sources */,
+				7B39478B297000ED007D405E /* ForgotPasswordPresenter.swift in Sources */,
 				CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */,
 				CEBF32F21DDCE10D00348FC6 /* AccountHeaderView.swift in Sources */,
 				CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */,
@@ -4233,6 +4465,7 @@
 				7CBA74E62022784D00FBBFA9 /* HomeScreenAssetViewModel.swift in Sources */,
 				7CA1C47420EC25B9002E9E68 /* QRCode.swift in Sources */,
 				7BBBF4DB287421CF00E4D36B /* SwapInteractor.swift in Sources */,
+				7EE91A5E2968310100331B1F /* KYCAddressViewController.swift in Sources */,
 				CE41327622CACA05002391E6 /* BalanceCell.swift in Sources */,
 				7E5CB3AA2835090E00EC787E /* WrapperAccessoryView.swift in Sources */,
 				C45E0BAC2845F4C40083F028 /* AccountVerificationInteractor.swift in Sources */,
@@ -4246,8 +4479,10 @@
 				7B94343D2887F98E00638703 /* DeleteProfileWorker.swift in Sources */,
 				CE25BF931DFDA7A600BC67B6 /* MessageUIPresenter.swift in Sources */,
 				7E8E979C283F4830008606B0 /* ProfileViewController.swift in Sources */,
+				7BF5D4EE296BFC8D00942ADB /* SignInViewController.swift in Sources */,
 				3A6785FB257019220065F835 /* RedeemTransitioningDelegate.swift in Sources */,
 				CE20C90C1DBC59E600C8397A /* StartFlowPresenter.swift in Sources */,
+				7B394789297000ED007D405E /* ForgotPasswordVIP.swift in Sources */,
 				7B54E5A227F4A2B0002DD1E4 /* Decodable+Extensions.swift in Sources */,
 				7E5CB3832835090E00EC787E /* Presets.swift in Sources */,
 				7B54E5A327F4A2B0002DD1E4 /* HttpRequest.swift in Sources */,
@@ -4278,6 +4513,7 @@
 				3A3D63DC22F10B4F000DE920 /* AddWalletsViewController.swift in Sources */,
 				7B54E5BB27F4A2B1002DD1E4 /* LoadingView.swift in Sources */,
 				7E8E979A283F4830008606B0 /* ProfileModels.swift in Sources */,
+				7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */,
 				CE6DCC271E6108D50044257B /* EnterPhraseCell.swift in Sources */,
 				7B2E5054289A5F02008CACD8 /* AddCardInteractor.swift in Sources */,
 				CE760EDD1E561DF900EFAC2B /* UpdatePinViewController.swift in Sources */,
@@ -4290,18 +4526,17 @@
 				7B88C4852837B8710089CFBE /* Currency+Shared.swift in Sources */,
 				7BDB4A072806F4720031F015 /* LinkStatusCircle.swift in Sources */,
 				CE9057181DFF0FA8006BA848 /* String+Additions.swift in Sources */,
+				7BF5D4F7296D4FC900942ADB /* SignUpModels.swift in Sources */,
 				7B67708E29053CDF006FB72A /* Shadow+Background+Extensions.swift in Sources */,
 				7BDB4A032806F4290031F015 /* CsvExporter.swift in Sources */,
 				7E8F7E44293F6AE50058019B /* SellCoordinator.swift in Sources */,
 				713CD8872240117A004657D4 /* RecoveryKeyFlowController.swift in Sources */,
-				CED341331EF5A5C00014912A /* InAppAlert.swift in Sources */,
 				CE47A8E01F7DA54000FF35BA /* UIScreen+Additions.swift in Sources */,
 				7C9BC58D231764030011732F /* WalletConnectionSettingsViewController.swift in Sources */,
 				CEB909F51E5FE63D001804DC /* EnterPhraseViewController.swift in Sources */,
 				C4D5E803284951DD000BEE6F /* VerifyAccountViewController.swift in Sources */,
 				7BBBF4DD287421CF00E4D36B /* SwapViewController.swift in Sources */,
 				C45E0BAB2845F4C40083F028 /* AccountVerificationViewController.swift in Sources */,
-				713CD88A2240198A004657D4 /* RecoveryKeyIntroViewController.swift in Sources */,
 				7ED83AE8284F384F00261565 /* KYCDocumentPickerStore.swift in Sources */,
 				C46C28FF287EBF4F0035C843 /* BaseInfoPresenter.swift in Sources */,
 				CE6D0F971DE8B73A00BD4BCF /* ModalTransitionDelegate.swift in Sources */,
@@ -5785,6 +6020,14 @@
 				version = 6.5.9;
 			};
 		};
+		7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Veriff/veriff-ios-spm/";
+			requirement = {
+				kind = exactVersion;
+				version = 4.51.0;
+			};
+		};
 		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "WalletKitSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/WalletKitSwift.git";
@@ -5837,6 +6080,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B2C9AFA27D9270B00D5135C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		7BC3F048294C6FBD00947526 /* Veriff */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */;
+			productName = Veriff;
 		};
 		7E0E365828E70D0F00539D99 /* Cosmos */ = {
 			isa = XCSwiftPackageProductDependency;

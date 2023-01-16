@@ -25,9 +25,16 @@ enum FailureReason: SimpleMessage {
     case swap
     case plaidConnection
     case sell
+    case documentVerification
     
     var iconName: String {
-        return Asset.error.name
+        switch self {
+        case .documentVerification:
+            return Asset.ilVerificationunsuccessfull.name
+            
+        default:
+            return Asset.error.name
+        }
     }
     
     var title: String {
@@ -40,6 +47,9 @@ enum FailureReason: SimpleMessage {
             
         case .plaidConnection:
             return L10n.Buy.plaidErrorTitle
+            
+        case .documentVerification:
+            return L10n.Account.idVerificationRejected
         }
     }
     
@@ -59,6 +69,9 @@ enum FailureReason: SimpleMessage {
             
         case .sell:
             return L10n.Sell.tryAgain
+            
+        case .documentVerification:
+            return L10n.Account.IdVerificationRejected.description
         }
     }
     
@@ -76,6 +89,9 @@ enum FailureReason: SimpleMessage {
         switch self {
         case .swap:
             return L10n.Swap.backToHome
+            
+        case .documentVerification:
+            return L10n.Button.tryLater
             
         default:
             return L10n.UpdatePin.contactSupport

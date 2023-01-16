@@ -134,9 +134,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
     }
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
-        coordinator?.showOverlay(with: .success) { [weak self] in
+        coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             self?.coordinator?.dismissFlow()
-        }
+        })
     }
     
     func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {

@@ -224,7 +224,7 @@ class StartFlowPresenter: Subscriber {
         group.enter()
         let activity = BRActivityViewController(message: "")
         let pinCreationView = UpdatePinViewController(keyMaster: self.keyMaster,
-                                                      type: .creationNoPhrase,
+                                                      type: .creationWithPhrase,
                                                       showsBackButton: false)
         pinCreationView.setPinSuccess = { _ in
             pinCreationView.present(activity, animated: true)

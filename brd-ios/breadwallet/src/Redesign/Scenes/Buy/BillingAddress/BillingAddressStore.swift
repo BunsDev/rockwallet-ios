@@ -14,6 +14,7 @@ import UIKit
 class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     // MARK: - BillingAddressDataStore
     
+    var isPickCountryPressed: Bool = false
     var itemId: String?
     var firstName: String?
     var lastName: String?
@@ -25,6 +26,7 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var address: String?
     var paymentReference: String?
     var paymentstatus: AddCard.Status?
+    var countries: [Country] = []
     // from first screen
     var cardNumber: String?
     var expMonth: String?

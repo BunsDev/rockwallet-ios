@@ -37,6 +37,8 @@
 /* Account Verification screen title */
 "Account.AccountVerification" = "Vérification du compte";
 
+"Account.AlreadyCreated" = "Already have an account?";
+
 /* Account balance */
 "Account.balance" = "Solde";
 
@@ -48,6 +50,8 @@
 
 "Account.City" = "City*";
 
+"Account.ConfirmPassword" = "Confirm your password";
+
 /* Country title label in select countries view */
 "Account.Country" = "Pays";
 
@@ -56,8 +60,12 @@
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Créer un compte RockWallet en indiquant votre adresse e-mail.";
 
+"Account.CreateAccountButton" = "Create account";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Limite actuelle : 1 000 USD/jour";
+
+"Account.Daily" = "Daily";
 
 /* Issues for processing your data label on profile screen */
 "Account.DataIssues" = "Oups ! Nous avons rencontré des problèmes dans le traitement de vos données";
@@ -75,10 +83,18 @@
 
 "Account.Email" = "E-mail";
 
+"Account.EnterEmail" = "Enter your e-mail";
+
+"Account.EnterPassword" = "Create your password";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ par %2$@";
 
+"Account.explanationSSN" = "We are required to verify the identity of all our users to comply with regulations.\n\nThat is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.";
+
 "Account.FinalizingDecision" = "Finalizing the decision";
+
+"Account.ForgotPassword" = "Forgot password?";
 
 /* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Accédez à l'intégralité de votre portefeuille RockWallet !";
@@ -90,6 +106,10 @@
 
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
+"Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
+
+"Account.infoLinkSSN" = "Why do we need your SSN?";
+
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -97,6 +117,12 @@
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Faites vérifier votre compte pour accéder à l'intégralité de votre portefeuille RockWallet !";
+
+"Account.Monthly" = "Monthly";
+
+"Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "En cours…";
 
@@ -110,8 +136,14 @@
 /* Promotion and offers label when registering account */
 "Account.Promotion" = "J'accepte de recevoir des promotions, des offres et des communications futures.";
 
+"Account.PromotionsTickbox" = "I’m ok with receiving future promotion, offers and communications";
+
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Document d'identité";
+
+"Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
+
+"Account.ResetPasswordTitle" = "Reset your password";
 
 "Account.ResidentialAddress" = "Residential address";
 
@@ -124,7 +156,11 @@
 
 "Account.SelectState" = "Sélectionner un État";
 
-"Account.SocialSecurityNumber" = "Social Security Number*";
+"Account.SignIn" = "Sign in";
+
+"Account.SocialSecurityNumber" = "Social Security Number";
+
+"Account.SocialSecurityNumberRequired" = "Social security number*";
 
 "Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
 
@@ -136,6 +172,8 @@
 
 /* Swap and buy limit per day description label */
 "Account.SwapAndBuyLimit" = "Limite d'échange : 10 000 USD/jour\nLimite d'achat : 500 USD/jour";
+
+"Account.TermsTickbox" = "I agree to RockWallet’s";
 
 /* Upgrade your limits label in profile screen */
 "Account.UpgradeLimits" = "Mettre à jour vos limites";
@@ -173,6 +211,8 @@
 "Account.VerifyPersonalInformation" = "Nous devons vérifier vos informations personnelles pour des raisons de conformité. Ces informations ne seront pas partagées avec des sources externes, sauf obligation légale.";
 
 "Account.WaitFewMinutes" = "This may take a few minutes.";
+
+"Account.Weekly" = "Weekly";
 
 /* Welcome title on registration screen */
 "Account.Welcome" = "Bienvenue !";
@@ -424,6 +464,8 @@
 
 /* Addresses Copied Alert sub header */
 "Alerts.copiedAddressesSubheader" = "Toutes les adresses du portefeuille ont été copiées avec succès.";
+
+"Alerts.emailSent" = "Email sent!";
 
 /* Alert Header Label (the paper key was set) */
 "Alerts.paperKeySet" = "Ensemble des clés papier";
@@ -690,6 +732,8 @@
 
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Adresse de facturation";
+
+"Buy.BuyLimit" = "Buy limits";
 
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Actuellement, le montant minimum d'achat est de $%s USD et le montant maximum est de $%s USD/jour.";
@@ -1074,7 +1118,7 @@
 "ErrorMessages.emailUnavailableTitle" = "E-mail non disponible";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
+"ErrorMessages.ethBalanceLowAddEth" = "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
 
 "ErrorMessages.exchangeFailed" = "Échec de l'échange. Motif : %s.";
 
@@ -1677,6 +1721,8 @@
 
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Mettre à jour le code PIN";
+
+"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap, Buy and Sell seamlessly.";
 
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "Activez les notifications push et soyez le premier à être informé des nouvelles fonctionnalités et des offres spéciales.";
@@ -2551,6 +2597,8 @@
 /* Swap again button title in swap failure screen */
 "Swap.SwapAgain" = "Recommencer l'échange";
 
+"Swap.SwapLimit" = "Swap limits";
+
 /* Swap min and max limit text */
 "Swap.SwapLimits" = "Actuellement, le montant minimum d'échange est de $%s USD et le maximum est de $%s USD/jour.";
 
@@ -3117,6 +3165,12 @@
 "VerificationCode.title" = "Code de Confirmation";
 
 "VerifyAccount.Button" = "Vérifiez votre compte";
+
+"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
+
+"VerifyAccount.VerifyMyIdentity " = "Verify my identity";
+
+"VerifyAccount.VerifyYourIdentity" = "Verify your identity";
 
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "Veuillez entrer votre PIN pour autoriser cette transaction.";

@@ -13,6 +13,7 @@ import UIKit
 struct ScrollableButtonsConfiguration: Configurable {
     var background: BackgroundConfiguration?
     var buttons: [ButtonConfiguration] = []
+    var isRightAligned = false
     var isDoubleButtonStack = false
 }
 
@@ -95,7 +96,7 @@ class ScrollableButtonsView: FEView<ScrollableButtonsConfiguration, ScrollableBu
             stack.spacing = Margins.huge.rawValue
             
             let spacer = UIView()
-            stack.addArrangedSubview(spacer)
+            stack.insertArrangedSubview(spacer, at: config.isRightAligned ? 0 : stack.arrangedSubviews.endIndex)
             
             spacer.snp.makeConstraints { make in
                 make.width.greaterThanOrEqualToSuperview().priority(.low)

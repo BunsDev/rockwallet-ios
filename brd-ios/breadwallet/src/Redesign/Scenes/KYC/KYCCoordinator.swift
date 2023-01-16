@@ -10,11 +10,14 @@
 
 import AVFoundation
 import UIKit
+import Veriff
 
 class KYCCoordinator: BaseCoordinator,
                       KYCBasicRoutes,
                       KYCDocumentPickerRoutes,
-                      DocumentReviewRoutes {
+                      DocumentReviewRoutes,
+                      CountriesAndStatesRoutes,
+                      KYCAddressRoutes {
     var role: CustomerRole?
     var flow: ExchangeFlow?
     
@@ -27,10 +30,20 @@ class KYCCoordinator: BaseCoordinator,
             childCoordinators.append(coordinator)
             
         default:
-            open(scene: Scenes.VerifyAccount) { [weak self] vc in
-                vc.role = self?.role
-                vc.flow = self?.flow
-            }
+            open(scene: Scenes.KYCIntro)
+//            open(scene: Scenes.VerifyAccount) { [weak self] vc in
+//                vc.role = self?.role
+//                vc.flow = self?.flow
+//            }
+        }
+    }
+    
+    func showAddressForm(dataStore: KYCBasicDataStore?) {
+        open(scene: Scenes.KYCAddress) { vc in
+            vc.dataStore?.name = dataStore?.firstName
+            vc.dataStore?.lastName = dataStore?.lastName
+            vc.dataStore?.birthdates = dataStore?.birthDateString
+            vc.prepareData()
         }
     }
     
@@ -149,6 +162,11 @@ extension KYCCoordinator: ImagePickable {
         controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
         
         navigationController.pushViewController(controller, animated: true)
+    }
+    
+    func showExternalKYC(url: String) {
+        navigationController.popToRootViewController(animated: false)
+        VeriffSdk.shared.startAuthentication(sessionUrl: url, presentingFrom: self.navigationController)
     }
 }
 

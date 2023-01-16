@@ -45,7 +45,7 @@ struct Presets {
             static var normal = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.primary,
                                                         border: .init(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall))
             static var selected = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.Text.one,
-                                                          border: .init(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall))
+                                                          border: .init(tintColor: LightColors.primary, borderWidth: 1, cornerRadius: .extraSmall))
             static var disabled = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.Disabled.two,
                                                           border: .init(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall))
             static var error = BackgroundConfiguration(backgroundColor: LightColors.Background.one, tintColor: LightColors.Error.one,
@@ -142,6 +142,11 @@ extension Presets {
                                                 selectedBackgroundConfiguration: Presets.Background.TextField.selected,
                                                 disabledBackgroundConfiguration: Presets.Background.TextField.disabled,
                                                 errorBackgroundConfiguration: Presets.Background.TextField.error)
+        
+        static var phrase = TextFieldConfiguration(titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
+                                                   selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
+                                                   textConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
+                                                   placeholderConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one))
     }
 }
 
@@ -152,11 +157,9 @@ extension Presets {
                                                         headerTrailing: .init(normalConfiguration: .init(tintColor: LightColors.Text.three),
                                                                               selectedConfiguration: .init(tintColor: LightColors.Text.two),
                                                                               disabledConfiguration: .init(tintColor: LightColors.Disabled.two)),
-                                                        title: .init(font: Fonts.Subtitle.three, textColor: LightColors.Text.one),
+                                                        title: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.three),
                                                         description: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                        button: Presets.Button.primary.withBorder(normal: Presets.Border.normal,
-                                                                                                  selected: Presets.Border.normal,
-                                                                                                  disabled: Presets.Border.normal),
+                                                        button: Presets.Button.noBorders,
                                                         background: .init(backgroundColor: LightColors.Background.three,
                                                                           border: Presets.Border.commonPlain),
                                                         shadow: Presets.Shadow.zero)
@@ -191,7 +194,7 @@ extension Presets {
                                                                  tintColor: LightColors.Contrast.two,
                                                                  border: Presets.Border.mediumPlain),
                                                title: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center),
-                                               body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center),
+                                               body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                
                                                buttons: [Presets.Button.primary.withBorder(normal: Presets.Border.normalButtonFullRadius,
                                                                                            selected: Presets.Border.selectedButtonFullRadius,

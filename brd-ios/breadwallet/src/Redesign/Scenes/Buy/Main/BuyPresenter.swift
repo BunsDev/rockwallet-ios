@@ -21,7 +21,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
         
-        var sections: [Models.Sections] = [
+        var sections: [Models.Section] = [
             .rateAndTimer,
             .from,
             .paymentMethod,
@@ -44,7 +44,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             paymentMethodViewModel = CardSelectionViewModel()
         }
         
-        let sectionRows: [Models.Sections: [ViewModel]] =  [
+        let sectionRows: [Models.Section: [ViewModel]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],

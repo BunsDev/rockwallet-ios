@@ -49,7 +49,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .segment:
             cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
             
@@ -135,7 +135,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
+        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             continueButton.viewModel?.enabled = false
             continueButton.setup(with: continueButton.viewModel)
@@ -148,7 +148,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Sections.accountLimits),
+        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
@@ -195,8 +195,8 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-        guard let fromSection = sections.firstIndex(of: Models.Sections.from),
-              let toSection = sections.firstIndex(of: Models.Sections.paymentMethod),
+        guard let fromSection = sections.firstIndex(of: Models.Section.from),
+              let toSection = sections.firstIndex(of: Models.Section.paymentMethod),
               let fromCell = tableView.cellForRow(at: .init(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
               let toCell = tableView.cellForRow(at: .init(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
             continueButton.viewModel?.enabled = false
