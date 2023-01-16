@@ -1154,6 +1154,7 @@
 		7CF5319C231EE01300E61F12 /* Base32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base32.swift; path = src/Utilities/Base32.swift; sourceTree = "<group>"; };
 		7CF913BD1FFC7DC30085CB70 /* TxMemoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TxMemoCell.swift; path = src/Views/TransactionCells/TxMemoCell.swift; sourceTree = "<group>"; };
 		7E0968B7284A29CE006B4FC2 /* TransparentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentView.swift; sourceTree = "<group>"; };
+		7E1D4AC1297558A200E480C4 /* ldt.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ldt.xcconfig; sourceTree = "<group>"; };
 		7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCCoordinator.swift; sourceTree = "<group>"; };
 		7E2E1A40284E267000E56E69 /* ProfileWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileWorker.swift; sourceTree = "<group>"; };
 		7E383B4828AE1AFD00A5339F /* AssetSelectionDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionDisplayable.swift; sourceTree = "<group>"; };
@@ -2985,6 +2986,7 @@
 		7EF514B328EB5B6D004A31C5 /* configurations */ = {
 			isa = PBXGroup;
 			children = (
+				7E1D4AC1297558A200E480C4 /* ldt.xcconfig */,
 				7EF514B428EB5B6D004A31C5 /* debug.xcconfig */,
 				7EF514B528EB5B6D004A31C5 /* staging.xcconfig */,
 				7EF514B628EB5B6D004A31C5 /* prod.xcconfig */,
@@ -5194,6 +5196,294 @@
 			};
 			name = Release;
 		};
+		7E1D4AC229755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BRCORE_CONFIGURATION = Debug;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INCLUDE_PATHS = "$(SDK_DIR)/usr/include $(SRCROOT)/Modules $(SRCROOT)/breadwallet/src/Platform $(SRCROOT)/Modules/breadwallet-core/Swift/Core";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+			};
+			name = Ldt;
+		};
+		7E1D4AC329755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E1D4AC1297558A200E480C4 /* ldt.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "${APP_ICON}";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = breadwallet/breadwallet.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1100;
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Modules",
+					"$(BUILD_DIR)/$(BRCORE_CONFIGURATION)-$(PLATFORM_NAME)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(SRCROOT)/Modules",
+					"$(BUILD_DIR)/$(BRCORE_CONFIGURATION)-$(PLATFORM_NAME)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
+					"$(SRCROOT)/Modules",
+					"$(BUILD_DIR)/$(BRCORE_CONFIGURATION)-$(PLATFORM_NAME)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Modules/breadwallet-core/bitcoin",
+					"$(SRCROOT)/Modules/breadwallet-core/support",
+					"$(SRCROOT)/Modules/breadwallet-core/**",
+				);
+				INFOPLIST_FILE = breadwallet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Ldt;
+		};
+		7E1D4AC429755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E1D4AC1297558A200E480C4 /* ldt.xcconfig */;
+			buildSettings = {
+				APP_GROUPS_ID = com.rockwallet.app.breadwallet;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = breadwalletWidget/breadwalletWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 635;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = breadwalletWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app.rockwalletWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG IS_EXTENSION_ENVIRONMENT";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Ldt;
+		};
+		7E1D4AC529755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E1D4AC1297558A200E480C4 /* ldt.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 635;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = breadwalletIntentHandler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app.rockwalletIntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG IS_EXTENSION_ENVIRONMENT";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Ldt;
+		};
+		7E1D4AC629755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E1D4AC1297558A200E480C4 /* ldt.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Ldt;
+		};
+		7E1D4AC729755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILD_DIR)/$(BRCORE_CONFIGURATION)-$(PLATFORM_NAME)",
+					"$(SRCROOT)/Modules",
+				);
+				INFOPLIST_FILE = breadwalletTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app.breadwalletTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/breadwallet.app/breadwallet";
+			};
+			name = Ldt;
+		};
+		7E1D4AC829755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILD_DIR)/$(BRCORE_CONFIGURATION)-$(PLATFORM_NAME)",
+					"$(SRCROOT)/Modules",
+				);
+				INFOPLIST_FILE = breadwalletUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(FRAMEWORK_SEARCH_PATHS)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rockwallet.app.breadwalletUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = breadwallet;
+			};
+			name = Ldt;
+		};
+		7E1D4AC929755B1C00E480C4 /* Ldt */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 635;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 9YQ85QS3PL;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 635;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Modules/libbz2/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"MODULEMAP_FILE[sdk=iphoneos*]" = "$(SRCROOT)/Modules/libbz2/iphone.modulemap";
+				"MODULEMAP_FILE[sdk=iphonesimulator*]" = "$(SRCROOT)/Modules/libbz2/iphonesim.modulemap";
+				PRODUCT_BUNDLE_IDENTIFIER = com.breadwallet.libbz2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Ldt;
+		};
 		7E390A2127F57D11003C929D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7EF514B428EB5B6D004A31C5 /* debug.xcconfig */;
@@ -5635,6 +5925,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22A9A9A01DF63426000F0016 /* Debug */,
+				7E1D4AC929755B1C00E480C4 /* Ldt */,
 				22A9A9A11DF63426000F0016 /* Release */,
 				7ECCA9892872FD1000F99368 /* Staging */,
 			);
@@ -5645,6 +5936,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75A2A7D91DA5934400A983D8 /* Debug */,
+				7E1D4AC229755B1C00E480C4 /* Ldt */,
 				75A2A7DA1DA5934400A983D8 /* Release */,
 				7ECCA9842872FD1000F99368 /* Staging */,
 			);
@@ -5655,6 +5947,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75A2A7E41DA5934400A983D8 /* Debug */,
+				7E1D4AC329755B1C00E480C4 /* Ldt */,
 				75A2A7E51DA5934400A983D8 /* Release */,
 				7ECCA9852872FD1000F99368 /* Staging */,
 			);
@@ -5665,6 +5958,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75A2A7E71DA5934400A983D8 /* Debug */,
+				7E1D4AC729755B1C00E480C4 /* Ldt */,
 				75A2A7E81DA5934400A983D8 /* Release */,
 				7ECCA9862872FD1000F99368 /* Staging */,
 			);
@@ -5675,6 +5969,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75A2A7EA1DA5934400A983D8 /* Debug */,
+				7E1D4AC829755B1C00E480C4 /* Ldt */,
 				75A2A7EB1DA5934400A983D8 /* Release */,
 				7ECCA9872872FD1000F99368 /* Staging */,
 			);
@@ -5685,6 +5980,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E390A2127F57D11003C929D /* Debug */,
+				7E1D4AC629755B1C00E480C4 /* Ldt */,
 				7E390A2527F57D11003C929D /* Release */,
 				7ECCA98D2872FD1000F99368 /* Staging */,
 			);
@@ -5695,6 +5991,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F29A9A425D5C605000FEB40 /* Debug */,
+				7E1D4AC529755B1C00E480C4 /* Ldt */,
 				9F29A9A825D5C605000FEB40 /* Release */,
 				7ECCA98C2872FD1000F99368 /* Staging */,
 			);
@@ -5705,6 +6002,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9FB0CA1F25D5AD190057DD11 /* Debug */,
+				7E1D4AC429755B1C00E480C4 /* Ldt */,
 				9FB0CA2325D5AD190057DD11 /* Release */,
 				7ECCA98B2872FD1000F99368 /* Staging */,
 			);
