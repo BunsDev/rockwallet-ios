@@ -28,9 +28,21 @@ class ForgotPasswordInteractor: NSObject, Interactor, ForgotPasswordViewActions 
             dataStore?.email = email
         }
         
-        let isValid = FieldValidator.validate(fields: [dataStore?.email])
+        let isEmailValid = dataStore?.email?.isValidEmailAddress ?? false
         
-        presenter?.presentValidate(actionResponse: .init(isValid: isValid))
+        presenter?.presentValidate(actionResponse: .init(isValid: isEmailValid))
+    }
+    
+    func next(viewAction: ForgotPasswordModels.Next.ViewAction) {
+        PasswordResetWorker().execute(requestData: PasswordResetRequestData(email: dataStore?.email)) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.presentNext(actionResponse: .init())
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     // MARK: - Aditional helpers

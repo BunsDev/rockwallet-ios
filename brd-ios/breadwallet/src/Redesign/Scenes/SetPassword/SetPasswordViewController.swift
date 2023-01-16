@@ -10,15 +10,15 @@
 
 import UIKit
 
-class SetPasswordViewController: BaseTableViewController<BaseCoordinator,
-                                    SetPasswordInteractor,
-                                    SetPasswordPresenter,
-                                    SetPasswordStore>,
-                                    SetPasswordResponseDisplays {
+class SetPasswordViewController: BaseTableViewController<RegistrationCoordinator,
+                                 SetPasswordInteractor,
+                                 SetPasswordPresenter,
+                                 SetPasswordStore>,
+                                 SetPasswordResponseDisplays {
     typealias Models = SetPasswordModels
     
     override var sceneLeftAlignedTitle: String? {
-        return "Create new password"
+        return L10n.Account.createNewPasswordTitle
     }
     
     lazy var createAccountButton: FEButton = {

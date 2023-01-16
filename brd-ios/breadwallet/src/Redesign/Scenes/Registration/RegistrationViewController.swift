@@ -99,6 +99,7 @@ class RegistrationViewController: BaseTableViewController<RegistrationCoordinato
     
     override func buttonTapped() {
         super.buttonTapped()
+        
         interactor?.next(viewAction: .init())
     }
 
@@ -114,6 +115,6 @@ class RegistrationViewController: BaseTableViewController<RegistrationCoordinato
     func displayNext(responseDisplay: RegistrationModels.Next.ResponseDisplay) {
         coordinator?.showRegistrationConfirmation()
     }
-
+    
     // MARK: - Additional Helpers
 }

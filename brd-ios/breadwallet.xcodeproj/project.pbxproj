@@ -125,6 +125,8 @@
 		7B05888528A2668F00D7C971 /* DeleteCardWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05888428A2668F00D7C971 /* DeleteCardWorker.swift */; };
 		7B05888728A2698A00D7C971 /* PaymentCardsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05888628A2698A00D7C971 /* PaymentCardsWorker.swift */; };
 		7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B08D2252860574F00D65ED9 /* SimpleBackBarButtonItem.swift */; };
+		7B0AE7FB29753CEF0079C7E1 /* PasswordResetWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE7FA29753CEF0079C7E1 /* PasswordResetWorker.swift */; };
+		7B0AE7FD29753D6C0079C7E1 /* WalletAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */; };
 		7B0E34C928ABA73900D15180 /* CardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C728ABA73900D15180 /* CardDetailsView.swift */; };
 		7B0E34CA28ABA73900D15180 /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */; };
 		7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */; };
@@ -968,6 +970,8 @@
 		7B05888428A2668F00D7C971 /* DeleteCardWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCardWorker.swift; sourceTree = "<group>"; };
 		7B05888628A2698A00D7C971 /* PaymentCardsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardsWorker.swift; sourceTree = "<group>"; };
 		7B08D2252860574F00D65ED9 /* SimpleBackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleBackBarButtonItem.swift; sourceTree = "<group>"; };
+		7B0AE7FA29753CEF0079C7E1 /* PasswordResetWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetWorker.swift; sourceTree = "<group>"; };
+		7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAPI.swift; sourceTree = "<group>"; };
 		7B0E34C728ABA73900D15180 /* CardDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDetailsView.swift; sourceTree = "<group>"; };
 		7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsWorker.swift; sourceTree = "<group>"; };
@@ -2052,6 +2056,7 @@
 				7B394783297000EC007D405E /* ForgotPasswordVIP.swift */,
 				7B394787297000EC007D405E /* ForgotPasswordViewController.swift */,
 				7B394784297000EC007D405E /* ForgotPasswordInteractor.swift */,
+				7B0AE7FA29753CEF0079C7E1 /* PasswordResetWorker.swift */,
 			);
 			path = ForgotPassword;
 			sourceTree = "<group>";
@@ -2080,6 +2085,7 @@
 				7B54E57F27F4A2B0002DD1E4 /* Workers */,
 				7B54E57B27F4A2B0002DD1E4 /* Models */,
 				7B54E57627F4A2B0002DD1E4 /* KYCAPI.swift */,
+				7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */,
 				7B54E57727F4A2B0002DD1E4 /* NetworkingError.swift */,
 				7B54E57827F4A2B0002DD1E4 /* APIURLHandler.swift */,
 				7B54E57927F4A2B0002DD1E4 /* Decodable+Extensions.swift */,
@@ -4206,6 +4212,7 @@
 				7B78631C287427680092F35B /* MainSwapView.swift in Sources */,
 				7EB8FD252897D212000FF75C /* BuyVIP.swift in Sources */,
 				CEF3D2DD1E8CBA790070178E /* LAContext+Extensions.swift in Sources */,
+				7B0AE7FB29753CEF0079C7E1 /* PasswordResetWorker.swift in Sources */,
 				7B9434392886C6A700638703 /* TickboxItemView.swift in Sources */,
 				7E5CB39F2835090E00EC787E /* VIPViewController.swift in Sources */,
 				CECCE5AE1E04AD6300D99448 /* AddressCell.swift in Sources */,
@@ -4416,6 +4423,7 @@
 				7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */,
 				7EF45F8D284768C100D1F7B0 /* ItemSelectionCoordinator.swift in Sources */,
 				7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */,
+				7B0AE7FD29753D6C0079C7E1 /* WalletAPI.swift in Sources */,
 				7EF45F582845353100D1F7B0 /* DateView.swift in Sources */,
 				3AFAD9302567EE15005853E8 /* GiftViewController.swift in Sources */,
 				7E5CB3952835090E00EC787E /* MessageVIP.swift in Sources */,

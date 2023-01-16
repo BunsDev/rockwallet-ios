@@ -41,6 +41,10 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
         viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
     }
     
+    func presentNext(actionResponse: SignInModels.Next.ActionResponse) {
+        viewController?.displayNext(responseDisplay: .init())
+    }
+    
     // MARK: - Additional Helpers
     
 }

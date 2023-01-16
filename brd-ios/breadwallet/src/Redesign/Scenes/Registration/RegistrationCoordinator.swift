@@ -35,5 +35,13 @@ class RegistrationCoordinator: BaseCoordinator, RegistrationRoutes {
         }
     }
     
+    func showForgotPassword() {
+        open(scene: Scenes.ForgotPassword)
+    }
+    
+    func showSignIn() {
+        open(scene: Scenes.SignIn)
+    }
+    
     // MARK: - Aditional helpers
 }

@@ -56,4 +56,10 @@ enum SignUpModels {
             var value: Bool
         }
     }
+    
+    struct Next {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
+    }
 }

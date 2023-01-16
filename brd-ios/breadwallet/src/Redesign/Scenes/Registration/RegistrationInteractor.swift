@@ -32,14 +32,14 @@ class RegistrationInteractor: NSObject, Interactor, RegistrationViewActions {
     func next(viewAction: RegistrationModels.Next.ViewAction) {
         guard let email = dataStore?.email, let token = UserDefaults.walletTokenValue else { return }
         
-        dataStore?.submitting = true
         presenter?.presentValidate(actionResponse: .init(isValid: dataStore?.isValid))
         
         let data = RegistrationRequestData(email: email,
+                                           password: nil,
                                            token: token,
-                                           subscribe: dataStore?.subscribe)
+                                           subscribe: dataStore?.subscribe,
+                                           accountHandling: .register)
         RegistrationWorker().execute(requestData: data) { [weak self] result in
-            self?.dataStore?.submitting = false
             switch result {
             case .success(let data):
                 guard let sessionKey = data?.sessionKey else { return }

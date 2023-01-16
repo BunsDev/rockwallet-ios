@@ -32,8 +32,11 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
             dataStore?.passwordAgain = passwordAgain
         }
         
-        let isPasswordValid = FieldValidator.validate(fields: [dataStore?.password,
-                                                               dataStore?.passwordAgain]) && dataStore?.password == dataStore?.passwordAgain
+        let passwordRegex = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!?&@€)(/]).{8,}"
+        
+        let isPasswordValid = dataStore?.password?.matches(regularExpression: passwordRegex) ?? false
+        && dataStore?.passwordAgain?.matches(regularExpression: passwordRegex) ?? false
+        && dataStore?.password == dataStore?.passwordAgain
         
         presenter?.presentValidate(actionResponse: .init(isValid: isPasswordValid))
     }

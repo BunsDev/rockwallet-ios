@@ -16,14 +16,17 @@ extension Scenes {
 
 protocol ForgotPasswordViewActions: BaseViewActions, FetchViewActions {
     func validate(viewAction: ForgotPasswordModels.Validate.ViewAction)
+    func next(viewAction: ForgotPasswordModels.Next.ViewAction)
 }
 
 protocol ForgotPasswordActionResponses: BaseActionResponses, FetchActionResponses {
     func presentValidate(actionResponse: ForgotPasswordModels.Validate.ActionResponse)
+    func presentNext(actionResponse: ForgotPasswordModels.Next.ActionResponse)
 }
 
 protocol ForgotPasswordResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
     func displayValidate(responseDisplay: ForgotPasswordModels.Validate.ResponseDisplay)
+    func displayNext(responseDisplay: ForgotPasswordModels.Next.ResponseDisplay)
 }
 
 protocol ForgotPasswordDataStore: BaseDataStore, FetchDataStore {

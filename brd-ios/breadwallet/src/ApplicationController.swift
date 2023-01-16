@@ -117,13 +117,13 @@ class ApplicationController: Subscriber {
     }
     
     private func decideFlow() {
-//         Override point for direct VC opening (Dev helper)
-//        guardProtected {
-//            self.coordinator?.openModally(coordinator: XXCoordinator.self, scene: Scenes.XX) { vc in
-//                // configure
-//            }
-//        }
-//        return ()
+        // Override point for direct VC opening (Dev helper)
+        guardProtected {
+            self.coordinator?.openModally(coordinator: BaseCoordinator.self, scene: Scenes.SignUp) { vc in
+                // configure
+            }
+        }
+        return ()
         
         if keyStore.noWallet {
             enterOnboarding()
