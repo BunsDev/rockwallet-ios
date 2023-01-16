@@ -1,5 +1,5 @@
 //
-//  staging.xcconfig
+//  debug.xcconfig
 //  breadwallet
 //
 //  Created by Rok on 07/03/2022.
@@ -13,9 +13,12 @@
 
 #include ".env"
 
-API_URL=api.stg.rockwallet.net/
+API_URL=api.dev.rockwallet.net/
 
-API_TOKEN=$(STAGING_TOKEN)
-CHECKOUT_API_TOKEN=$(STAGING_CHECKOUT_TOKEN)
+API_TOKEN=$(LTD_TOKEN)
+CHECKOUT_API_TOKEN=$(LTD_CHECKOUT_TOKEN)
 
-APP_ICON=AppIconStg
+IS_TEST=true
+IS_SANDBOX=true
+
+APP_ICON=AppIconLtd
