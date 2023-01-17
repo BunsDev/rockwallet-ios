@@ -13,10 +13,12 @@
 
 #include ".env"
 
-API_URL=$(DEBUG_URL)
+API_URL=api.dev.rockwallet.net/
+
 API_TOKEN=$(DEBUG_TOKEN)
-IS_TEST=$(IS_TEST)
 CHECKOUT_API_TOKEN=$(DEBUG_CHECKOUT_TOKEN)
+
+IS_TEST=true
 IS_SANDBOX=true
 
 APP_ICON=AppIconDev
