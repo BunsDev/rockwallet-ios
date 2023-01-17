@@ -184,4 +184,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                        type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote))
     }
+    
+    func showLimitsInfo(viewAction: BuyModels.LimitsInfo.ViewAction) {
+        presenter?.presentLimitsInfo(actionResponse: .init(paymentMethod: dataStore?.paymentMethod))
+    }
 }
