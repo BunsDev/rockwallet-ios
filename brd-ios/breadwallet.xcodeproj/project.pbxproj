@@ -12,7 +12,6 @@
 			buildConfigurationList = 7E390A2927F57D11003C929D /* Build configuration list for PBXAggregateTarget "syncResources" */;
 			buildPhases = (
 				7E390A2A27F57D15003C929D /* Download */,
-				7E67772628C9C4910052927A /* Phrase */,
 			);
 			dependencies = (
 			);
@@ -3735,25 +3734,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\nswift run -c release swiftgen --config Resources/swiftgen.yml\n";
-		};
-		7E67772628C9C4910052927A /* Phrase */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Phrase;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ..\n/opt/homebrew/bin/phrase pull\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
