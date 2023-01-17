@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SignInViewController: BaseTableViewController<RegistrationCoordinator,
+class SignInViewController: BaseTableViewController<AccountCoordinator,
                             SignInInteractor,
                             SignInPresenter,
                             SignInStore>,
@@ -68,8 +68,6 @@ class SignInViewController: BaseTableViewController<RegistrationCoordinator,
               let createAccountButtonModel = createAccountButton.viewModel else { return }
         verticalButtons.wrappedView.configure(with: .init(buttons: [continueButtonConfig, createAccountButtonConfig]))
         verticalButtons.wrappedView.setup(with: .init(buttons: [continueButtonModel, createAccountButtonModel]))
-        
-        verticalButtons.layoutIfNeeded()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

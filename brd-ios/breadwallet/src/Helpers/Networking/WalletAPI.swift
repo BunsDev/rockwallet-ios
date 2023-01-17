@@ -15,7 +15,9 @@ enum WalletEndpoints: String, URLType {
     
     case register
     case login
+    case confirm = "confirm_email"
     case reset = "password/reset"
+    case set = "password/set"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

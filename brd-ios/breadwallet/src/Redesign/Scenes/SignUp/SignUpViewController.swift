@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SignUpViewController: BaseTableViewController<RegistrationCoordinator,
+class SignUpViewController: BaseTableViewController<AccountCoordinator,
                             SignUpInteractor,
                             SignUpPresenter,
                             SignUpStore>,
@@ -18,7 +18,7 @@ class SignUpViewController: BaseTableViewController<RegistrationCoordinator,
     typealias Models = SignUpModels
     
     override var sceneLeftAlignedTitle: String? {
-        return "Create your account"
+        return L10n.Account.createNewAccountTitle
     }
     
     lazy var createAccountButton: FEButton = {
@@ -68,8 +68,6 @@ class SignUpViewController: BaseTableViewController<RegistrationCoordinator,
               let createAccountButtonModel = createAccountButton.viewModel else { return }
         verticalButtons.wrappedView.configure(with: .init(buttons: [continueButtonConfig, createAccountButtonConfig]))
         verticalButtons.wrappedView.setup(with: .init(buttons: [continueButtonModel, createAccountButtonModel]))
-        
-        verticalButtons.layoutIfNeeded()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

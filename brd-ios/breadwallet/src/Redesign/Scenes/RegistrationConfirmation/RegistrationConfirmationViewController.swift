@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegistrationConfirmationViewController: BaseTableViewController<RegistrationCoordinator,
+class RegistrationConfirmationViewController: BaseTableViewController<AccountCoordinator,
                                               RegistrationConfirmationInteractor,
                                               RegistrationConfirmationPresenter,
                                               RegistrationConfirmationStore>,

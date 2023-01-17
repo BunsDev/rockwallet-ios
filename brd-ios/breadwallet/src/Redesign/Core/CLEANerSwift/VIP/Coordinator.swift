@@ -64,7 +64,7 @@ class BaseCoordinator: NSObject,
         if let profile = UserManager.shared.profile,
            profile.email?.isEmpty == false,
            profile.status == .emailPending {
-            coordinator = RegistrationCoordinator(navigationController: nvc)
+            coordinator = AccountCoordinator(navigationController: nvc)
         } else {
             coordinator = ProfileCoordinator(navigationController: nvc)
         }
@@ -79,7 +79,7 @@ class BaseCoordinator: NSObject,
         guard navigationController.presentedViewController?.children.contains(where: { $0 is RegistrationConfirmationViewController }) == nil else { return }
         
         let nvc = RootNavigationController()
-        let coordinator = RegistrationCoordinator(navigationController: nvc)
+        let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.start()
         coordinator.parentCoordinator = self
         
@@ -337,7 +337,7 @@ class BaseCoordinator: NSObject,
                 || roles?.isEmpty == true
                 || status == VerificationStatus.emailPending
                 || status == VerificationStatus.none {
-                coordinator = RegistrationCoordinator(navigationController: nvc)
+                coordinator = AccountCoordinator(navigationController: nvc)
                 
             } else if let kycLevel = role,
                       roles?.contains(kycLevel) == true {
@@ -368,7 +368,7 @@ class BaseCoordinator: NSObject,
                 return
             }
             
-            coordinator = RegistrationCoordinator(navigationController: RootNavigationController())
+            coordinator = AccountCoordinator(navigationController: RootNavigationController())
             
         default:
             completion?(true)
@@ -422,7 +422,7 @@ class BaseCoordinator: NSObject,
             UserManager.shared.refresh()
             
         case .sessionExpired:
-            openModally(coordinator: RegistrationCoordinator.self, scene: Scenes.Registration) { vc in
+            openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignIn) { vc in
                 vc?.navigationItem.hidesBackButton = true
             }
             

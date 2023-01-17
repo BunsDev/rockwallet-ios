@@ -18,13 +18,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String { return L10n.Button.close }
     override var closeImage: UIImage? { return Asset.close.image}
-
-    // MARK: - Cleaner Swift Setup
-
-    lazy var emptyStateView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    
+    // MARK: - Cleaner Swift setup
     
     lazy var continueButton: FEButton = {
         let view = FEButton()
@@ -33,8 +28,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
 
     override func setupCloseButton(closeAction: Selector) {
         guard navigationItem.leftBarButtonItem?.image != closeImage,
-              navigationItem.rightBarButtonItem?.image != closeImage
-        else { return }
+              navigationItem.rightBarButtonItem?.image != closeImage else { return }
         
         let closeButton = UIBarButtonItem(image: Asset.close.image,
                                           style: .plain,
@@ -45,6 +39,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
             navigationItem.setLeftBarButton(closeButton, animated: false)
             return
         }
+        
         closeButton.tintColor = (navigationController as? RootNavigationController)?.navigationBar.tintColor
         navigationItem.setRightBarButton(closeButton, animated: false)
     }
@@ -52,7 +47,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     override func setupSubviews() {
         super.setupSubviews()
         
-        view.backgroundColor = LightColors.Background.two
+        view.backgroundColor = LightColors.Background.one
         tableView.backgroundColor = .clear
         
         tableView.registerAccessoryView(WrapperAccessoryView<FELabel>.self)

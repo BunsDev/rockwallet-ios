@@ -71,7 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let webpageURL = userActivity.webpageURL else {
             return false
         }
-
+        
+        DynamicLinksManager.handleDynamicLink(on: applicationController.coordinator, dynamicLink: webpageURL)
+        
         // The Plaid Link SDK ignores unexpected URLs passed to `continue(from:)` as
         // per Apple’s recommendations, so there is no need to filter out unrelated URLs.
         // Doing so may prevent a valid URL from being passed to `continue(from:)` and

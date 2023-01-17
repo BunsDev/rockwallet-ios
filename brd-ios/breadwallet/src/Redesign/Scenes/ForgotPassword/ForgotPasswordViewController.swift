@@ -10,7 +10,7 @@
 
 import UIKit
 
-class ForgotPasswordViewController: BaseTableViewController<RegistrationCoordinator,
+class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
                                     ForgotPasswordInteractor,
                                     ForgotPasswordPresenter,
                                     ForgotPasswordStore>,

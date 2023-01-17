@@ -62,6 +62,8 @@
 
 "Account.CreateAccountButton" = "Create account";
 
+"Account.CreateNewAccountTitle" = "Create your account";
+
 "Account.CreateNewPasswordTitle" = "Create new password";
 
 /* Current limit per day label in profile screen */
