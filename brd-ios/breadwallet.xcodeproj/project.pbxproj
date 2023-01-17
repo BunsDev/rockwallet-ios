@@ -128,6 +128,8 @@
 		7B0AE7FB29753CEF0079C7E1 /* PasswordResetWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE7FA29753CEF0079C7E1 /* PasswordResetWorker.swift */; };
 		7B0AE7FD29753D6C0079C7E1 /* WalletAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */; };
 		7B0AE80529768D990079C7E1 /* UserSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE80429768D990079C7E1 /* UserSignature.swift */; };
+		7B0AE807297692140079C7E1 /* DynamicLinksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */; };
+		7B0AE8092976936B0079C7E1 /* SetPasswordWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE8082976936B0079C7E1 /* SetPasswordWorker.swift */; };
 		7B0E34C928ABA73900D15180 /* CardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C728ABA73900D15180 /* CardDetailsView.swift */; };
 		7B0E34CA28ABA73900D15180 /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */; };
 		7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */; };
@@ -968,6 +970,8 @@
 		7B0AE7FA29753CEF0079C7E1 /* PasswordResetWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetWorker.swift; sourceTree = "<group>"; };
 		7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAPI.swift; sourceTree = "<group>"; };
 		7B0AE80429768D990079C7E1 /* UserSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSignature.swift; sourceTree = "<group>"; };
+		7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLinksManager.swift; sourceTree = "<group>"; };
+		7B0AE8082976936B0079C7E1 /* SetPasswordWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordWorker.swift; sourceTree = "<group>"; };
 		7B0E34C728ABA73900D15180 /* CardDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDetailsView.swift; sourceTree = "<group>"; };
 		7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsWorker.swift; sourceTree = "<group>"; };
@@ -2126,6 +2130,7 @@
 				7B60826029700B9E00C4736B /* SetPasswordVIP.swift */,
 				7B60826129700B9E00C4736B /* SetPasswordViewController.swift */,
 				7B60825D29700B9E00C4736B /* SetPasswordInteractor.swift */,
+				7B0AE8082976936B0079C7E1 /* SetPasswordWorker.swift */,
 			);
 			path = SetPassword;
 			sourceTree = "<group>";
@@ -2625,6 +2630,7 @@
 				7B8CF81F28A64B9300D54D14 /* ExchangeFormatter.swift */,
 				7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */,
 				7B0AE80429768D990079C7E1 /* UserSignature.swift */,
+				7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */,
 				7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */,
 				7E87B32C285346E00097671F /* UIImage+Compress.swift */,
 				7B62ACFA28B3BDA000CE81E7 /* String+Chunk.swift */,
@@ -3953,6 +3959,7 @@
 			files = (
 				3A0915CA24D8B31200CDC6A4 /* EnableKeychainView.swift in Sources */,
 				CEBF29301EF9D76F005C330A /* Environment.swift in Sources */,
+				7B0AE807297692140079C7E1 /* DynamicLinksManager.swift in Sources */,
 				7C67B6362056FB13006487BE /* BRAPIClient+Currencies.swift in Sources */,
 				7BDB49F12806EABF0031F015 /* AssetArchive.swift in Sources */,
 				3A4972C52602E0ED0002C3EC /* IosBRDAuthProvider.swift in Sources */,
@@ -4057,6 +4064,7 @@
 				CE5F21DB1E4A93A500C47B8E /* LoginTransitionDelegate.swift in Sources */,
 				71C44E942264BE2C00EF4459 /* BaseRecoveryKeyViewController.swift in Sources */,
 				7E5CB38E2835090E00EC787E /* UIColor+init.swift in Sources */,
+				7B0AE8092976936B0079C7E1 /* SetPasswordWorker.swift in Sources */,
 				CEAA9EA81DC3342E0066731D /* PinView.swift in Sources */,
 				7B39478A297000ED007D405E /* ForgotPasswordInteractor.swift in Sources */,
 				C46C2902287EBF4F0035C843 /* BaseInfoViewController.swift in Sources */,

@@ -104,7 +104,8 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
     
     @objc override func buttonTapped() {
         super.buttonTapped()
-        // TODO: Add necessary logic.
+        
+        interactor?.next(viewAction: .init())
     }
     
     // MARK: - SetPasswordResponseDisplay
@@ -122,6 +123,10 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
             let textColor = responseDisplay.isValid ? LightColors.Text.two : LightColors.Error.one
             view.configure(with: .init(font: Fonts.Body.three, textColor: textColor))
         }
+    }
+    
+    func displayNext(responseDisplay: SetPasswordModels.Next.ResponseDisplay) {
+        coordinator?.dismissFlow()
     }
     
     // MARK: - Additional Helpers

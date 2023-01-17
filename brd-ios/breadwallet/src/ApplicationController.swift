@@ -119,7 +119,7 @@ class ApplicationController: Subscriber {
     private func decideFlow() {
 //         Override point for direct VC opening (Dev helper)
 //        guardProtected {
-//            self.coordinator?.openModally(coordinator: XXCoordinator.self, scene: Scenes.XX) { vc in
+//            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SetPassword) { vc in
 //                // configure
 //            }
 //        }
