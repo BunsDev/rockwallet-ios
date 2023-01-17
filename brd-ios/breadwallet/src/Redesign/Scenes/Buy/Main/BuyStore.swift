@@ -43,14 +43,21 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     }
     var publicToken: String?
     var mask: String?
-    var limits: String? {
+    var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd),
               let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit)
         else { return nil }
         
-        return paymentMethod == .ach ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
+        let limitsString = NSMutableAttributedString(string: paymentMethod == .ach ?
+                                                             L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText))
+        let linkRange = limitsString.mutableString.range(of: L10n.Button.moreInfo)
+        if linkRange.location != NSNotFound {
+            limitsString.addAttribute(.underlineStyle, value: 1, range: linkRange)
+        }
+        
+        return limitsString
     }
     
     var feeAmount: Amount? {
