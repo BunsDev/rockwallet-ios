@@ -39,14 +39,14 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var currency: Currency?
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
-    var limits: String? {
+    var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd),
               let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit)
         else { return nil }
         
-        return L10n.Sell.sellLimits(minText, maxText, lifetimeLimit)
+        return NSMutableAttributedString(string: L10n.Sell.sellLimits(minText, maxText, lifetimeLimit))
     }
     
     var fromAmount: Amount?
