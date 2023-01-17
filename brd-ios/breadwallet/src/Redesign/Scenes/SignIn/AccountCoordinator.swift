@@ -12,7 +12,7 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     // MARK: - RegistrationRoutes
     
     override func start() {
-        if UserDefaults.email != nil {
+        if UserDefaults.email == nil {
             showSignUp()
         } else {
             showRegistrationConfirmation()
