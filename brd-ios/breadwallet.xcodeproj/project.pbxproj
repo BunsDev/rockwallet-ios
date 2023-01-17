@@ -435,13 +435,7 @@
 		7EB8FD262897D212000FF75C /* BuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8FD1F2897D212000FF75C /* BuyViewController.swift */; };
 		7EB8FD272897D212000FF75C /* BuyInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8FD202897D212000FF75C /* BuyInteractor.swift */; };
 		7EB8FD292897F22B000FF75C /* CardSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8FD282897F22B000FF75C /* CardSelectionView.swift */; };
-		7EBC6AF528488B10000A301F /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AEE28488B10000A301F /* RegistrationCoordinator.swift */; };
-		7EBC6AF628488B10000A301F /* RegistrationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AEF28488B10000A301F /* RegistrationStore.swift */; };
-		7EBC6AF728488B10000A301F /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AF028488B10000A301F /* RegistrationPresenter.swift */; };
-		7EBC6AF828488B10000A301F /* RegistrationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AF128488B10000A301F /* RegistrationModels.swift */; };
-		7EBC6AF928488B10000A301F /* RegistrationVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AF228488B10000A301F /* RegistrationVIP.swift */; };
-		7EBC6AFA28488B10000A301F /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AF328488B10000A301F /* RegistrationViewController.swift */; };
-		7EBC6AFB28488B10000A301F /* RegistrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AF428488B10000A301F /* RegistrationInteractor.swift */; };
+		7EBC6AF528488B10000A301F /* AccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AEE28488B10000A301F /* AccountCoordinator.swift */; };
 		7EBC6B062848ABC5000A301F /* RegistrationConfirmationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6AFF2848ABC5000A301F /* RegistrationConfirmationStore.swift */; };
 		7EBC6B072848ABC5000A301F /* RegistrationConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B002848ABC5000A301F /* RegistrationConfirmationPresenter.swift */; };
 		7EBC6B082848ABC5000A301F /* RegistrationConfirmationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC6B012848ABC5000A301F /* RegistrationConfirmationModels.swift */; };
@@ -1269,13 +1263,7 @@
 		7EB8FD1F2897D212000FF75C /* BuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyViewController.swift; sourceTree = "<group>"; };
 		7EB8FD202897D212000FF75C /* BuyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInteractor.swift; sourceTree = "<group>"; };
 		7EB8FD282897F22B000FF75C /* CardSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSelectionView.swift; sourceTree = "<group>"; };
-		7EBC6AEE28488B10000A301F /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
-		7EBC6AEF28488B10000A301F /* RegistrationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationStore.swift; sourceTree = "<group>"; };
-		7EBC6AF028488B10000A301F /* RegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPresenter.swift; sourceTree = "<group>"; };
-		7EBC6AF128488B10000A301F /* RegistrationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationModels.swift; sourceTree = "<group>"; };
-		7EBC6AF228488B10000A301F /* RegistrationVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVIP.swift; sourceTree = "<group>"; };
-		7EBC6AF328488B10000A301F /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
-		7EBC6AF428488B10000A301F /* RegistrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationInteractor.swift; sourceTree = "<group>"; };
+		7EBC6AEE28488B10000A301F /* AccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCoordinator.swift; sourceTree = "<group>"; };
 		7EBC6AFF2848ABC5000A301F /* RegistrationConfirmationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationStore.swift; sourceTree = "<group>"; };
 		7EBC6B002848ABC5000A301F /* RegistrationConfirmationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationPresenter.swift; sourceTree = "<group>"; };
 		7EBC6B012848ABC5000A301F /* RegistrationConfirmationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationConfirmationModels.swift; sourceTree = "<group>"; };
@@ -2210,6 +2198,8 @@
 				7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */,
 				7BF5D4E8296BFC8D00942ADB /* SignInViewController.swift */,
 				7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */,
+				7EBC6AEE28488B10000A301F /* AccountCoordinator.swift */,
+				7EF45F7D2847672C00D1F7B0 /* RegistrationWorker.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -2251,14 +2241,6 @@
 		7E2E1A2C284E099300E56E69 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
-				7EBC6AF028488B10000A301F /* RegistrationPresenter.swift */,
-				7EBC6AEF28488B10000A301F /* RegistrationStore.swift */,
-				7EBC6AF228488B10000A301F /* RegistrationVIP.swift */,
-				7EBC6AF128488B10000A301F /* RegistrationModels.swift */,
-				7EBC6AF328488B10000A301F /* RegistrationViewController.swift */,
-				7EBC6AF428488B10000A301F /* RegistrationInteractor.swift */,
-				7EBC6AEE28488B10000A301F /* RegistrationCoordinator.swift */,
-				7EF45F7D2847672C00D1F7B0 /* RegistrationWorker.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -4047,7 +4029,6 @@
 				7E516D7928B4E83000BBB702 /* ExchangeManager.swift in Sources */,
 				7B78631A2874266A0092F35B /* SwapCoordinator.swift in Sources */,
 				3A1D4180250965730089FE63 /* MarketDataPublisher.swift in Sources */,
-				7EBC6AF628488B10000A301F /* RegistrationStore.swift in Sources */,
 				7E9B13FB2857404600BD9EF5 /* DocumentReviewPresenter.swift in Sources */,
 				7B0E34CA28ABA73900D15180 /* PaymentMethodView.swift in Sources */,
 				7B05887828A23D4500D7C971 /* AddCardWorker.swift in Sources */,
@@ -4188,7 +4169,6 @@
 				3AFB571724E2E10A00087527 /* RadioButton.swift in Sources */,
 				CEEC70831E90C07C00EF788E /* MenuItem.swift in Sources */,
 				7EC37909281C098900028CA1 /* ErrorStruct.swift in Sources */,
-				7EBC6AFA28488B10000A301F /* RegistrationViewController.swift in Sources */,
 				CE92F9F01DED0C790046B516 /* PresentModalAnimator.swift in Sources */,
 				7E5CB3812835090E00EC787E /* DemoStore.swift in Sources */,
 				CEA2480023DE819D00B18BC6 /* AttributeCell.swift in Sources */,
@@ -4271,7 +4251,6 @@
 				7EF45F8B284768C100D1F7B0 /* ItemSelectionViewController.swift in Sources */,
 				CEF3E8321DE55540007C0A9E /* CheckView.swift in Sources */,
 				4F3AB11A25D53F4300B378DC /* ExternalAPIClient.swift in Sources */,
-				7EBC6AF828488B10000A301F /* RegistrationModels.swift in Sources */,
 				CECCE5A91E0378FB00D99448 /* PinPadViewController.swift in Sources */,
 				7E5CB3B02835090E00EC787E /* FEInfoView.swift in Sources */,
 				7B54E5AA27F4A2B0002DD1E4 /* HttpRequestManager.swift in Sources */,
@@ -4290,7 +4269,6 @@
 				7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */,
 				3A69885E24591F890084953D /* PayId.swift in Sources */,
 				7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */,
-				7EBC6AF728488B10000A301F /* RegistrationPresenter.swift in Sources */,
 				7E9B13FE2857404600BD9EF5 /* DocumentReviewViewController.swift in Sources */,
 				7B9434352886A7FA00638703 /* DeleteProfileInfoStore.swift in Sources */,
 				7BF5D4FB296D4FC900942ADB /* SignUpVIP.swift in Sources */,
@@ -4323,7 +4301,7 @@
 				CEE20C361EA5B4620086F724 /* Constants.swift in Sources */,
 				7BDB49F72806F0BA0031F015 /* BRTar.swift in Sources */,
 				7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */,
-				7EBC6AF528488B10000A301F /* RegistrationCoordinator.swift in Sources */,
+				7EBC6AF528488B10000A301F /* AccountCoordinator.swift in Sources */,
 				CEEC707F1E8D6B4100EF788E /* MenuViewController.swift in Sources */,
 				7ECCA9952874266200F99368 /* FESegmentControl.swift in Sources */,
 				7ED427F428755CB200AA19A8 /* ExchangeDetailsInteractor.swift in Sources */,
@@ -4353,7 +4331,6 @@
 				7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */,
 				7ECCA9992874342C00F99368 /* FETimerView.swift in Sources */,
 				7EF45F502845352400D1F7B0 /* KYCBasicPresenter.swift in Sources */,
-				7EBC6AFB28488B10000A301F /* RegistrationInteractor.swift in Sources */,
 				7B9434332886A7FA00638703 /* DeleteProfileInfoVIP.swift in Sources */,
 				7E9B13FD2857404600BD9EF5 /* DocumentReviewVIP.swift in Sources */,
 				CE8CD8DD1E2D9EF200785E02 /* Sender.swift in Sources */,
@@ -4468,7 +4445,6 @@
 				CE3D4C571EF5D5740016B1C8 /* ReachabilityMonitor.swift in Sources */,
 				7B54E59F27F4A2B0002DD1E4 /* KYCAPI.swift in Sources */,
 				7EB8FD292897F22B000FF75C /* CardSelectionView.swift in Sources */,
-				7EBC6AF928488B10000A301F /* RegistrationVIP.swift in Sources */,
 				7EC21A22289946C300FED711 /* CardSelectionViewController.swift in Sources */,
 				7CBA74E62022784D00FBBFA9 /* HomeScreenAssetViewModel.swift in Sources */,
 				7CA1C47420EC25B9002E9E68 /* QRCode.swift in Sources */,

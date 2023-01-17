@@ -38,11 +38,9 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
             dataStore?.passwordAgain = passwordAgain
         }
         
-        let passwordRegex = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!?&@€)(/]).{8,}"
-        
         let isEmailValid = dataStore?.email?.isValidEmailAddress ?? false
-        let isPasswordValid = dataStore?.password?.matches(regularExpression: passwordRegex) ?? false
-        && dataStore?.passwordAgain?.matches(regularExpression: passwordRegex) ?? false
+        let isPasswordValid = dataStore?.password?.isValidPassword ?? false
+        && dataStore?.passwordAgain?.isValidPassword ?? false
         && dataStore?.password == dataStore?.passwordAgain
         let isTermsTickboxValid = dataStore?.termsTickbox == true
         

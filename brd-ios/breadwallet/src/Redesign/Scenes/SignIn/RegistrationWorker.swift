@@ -38,7 +38,7 @@ struct RegistrationRequestData: RequestModelData {
     let subscribe: Bool?
     
     enum AccountHandling {
-        case associate, register, login
+        case register, login
     }
     
     let accountHandling: AccountHandling
@@ -81,9 +81,6 @@ class RegistrationWorker: BaseApiWorker<RegistrationMapper> {
         let accountHandling = (requestData as? RegistrationRequestData)?.accountHandling
         
         switch accountHandling {
-        case .associate:
-            return APIURLHandler.getUrl(KYCAuthEndpoints.associate)
-            
         case .login:
             return APIURLHandler.getUrl(WalletEndpoints.login)
             

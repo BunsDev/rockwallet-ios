@@ -68,7 +68,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             is SwapViewController,
             is AddCardViewController,
             is ExchangeDetailsViewController,
-            is RegistrationViewController,
             is RegistrationConfirmationViewController,
             is AccountVerificationViewController,
             is ProfileViewController,

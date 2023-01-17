@@ -73,6 +73,8 @@ internal enum L10n {
     internal static let createAccount = L10n.tr("Localizable", "Account.CreateAccount", fallback: "Create a RockWallet account by entering your email address.")
     /// Create account
     internal static let createAccountButton = L10n.tr("Localizable", "Account.CreateAccountButton", fallback: "Create account")
+    /// Create your account
+    internal static let createNewAccountTitle = L10n.tr("Localizable", "Account.CreateNewAccountTitle", fallback: "Create your account")
     /// Create new password
     internal static let createNewPasswordTitle = L10n.tr("Localizable", "Account.CreateNewPasswordTitle", fallback: "Create new password")
     /// Current limit per day label in profile screen

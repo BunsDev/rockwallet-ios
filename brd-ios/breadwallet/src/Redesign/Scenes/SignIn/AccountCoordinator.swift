@@ -1,5 +1,5 @@
 //
-//  RegistrationCoordinator.swift
+//  AccountCoordinator.swift
 //  breadwallet
 //
 //  Created by Rok on 02/06/2022.
@@ -8,14 +8,12 @@
 
 import UIKit
 
-class RegistrationCoordinator: BaseCoordinator, RegistrationRoutes {
+class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
     // MARK: - RegistrationRoutes
     
     override func start() {
-        if UserDefaults.email == nil {
-            return open(scene: Scenes.Registration) { vc in
-                vc.navigationItem.hidesBackButton = true
-            }
+        if UserDefaults.email != nil {
+            showSignUp()
         } else {
             showRegistrationConfirmation()
         }
@@ -28,15 +26,21 @@ class RegistrationCoordinator: BaseCoordinator, RegistrationRoutes {
         }
     }
     
+    // TODO: Should this be removed?
     func showChangeEmail() {
-        open(scene: Scenes.Registration) { vc in
-            vc.dataStore?.type = .resend
+        open(scene: Scenes.SignUp) { vc in
             vc.prepareData()
         }
     }
     
     func showForgotPassword() {
         open(scene: Scenes.ForgotPassword)
+    }
+    
+    func showSignUp() {
+        open(scene: Scenes.SignUp) { vc in
+            vc.navigationItem.hidesBackButton = true
+        }
     }
     
     func showSignIn() {
