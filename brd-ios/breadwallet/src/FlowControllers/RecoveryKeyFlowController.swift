@@ -112,8 +112,7 @@ class RecoveryKeyFlowController {
                                                           keyMaster: keyMaster,
                                                           eventContext: eventContext,
                                                           confirmed: {
-                    let goToWallet = (context == .onboarding) ? dismissFlow : nil
-                    Store.perform(action: Alert.Show(.recoveryPhraseConfirmed(callback: { goToWallet?() })))
+                    Store.perform(action: Alert.Show(.recoveryPhraseConfirmed(callback: { dismissFlow() })))
                 }))
                 
             default:
