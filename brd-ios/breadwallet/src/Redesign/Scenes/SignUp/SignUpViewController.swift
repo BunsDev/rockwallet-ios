@@ -210,7 +210,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     }
     
     func displayNext(responseDisplay: SignUpModels.Next.ResponseDisplay) {
-        coordinator?.dismissFlow()
+        coordinator?.showRegistrationConfirmation()
     }
     
     // MARK: - Additional Helpers
