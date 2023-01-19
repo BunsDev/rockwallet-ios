@@ -86,7 +86,7 @@ extension Presenter where Self: ExchangeRateActionResponses,
                let to = actionResponse.to,
                let quote = actionResponse.quote,
                let showTimer = actionResponse.showTimer {
-                let text = String(format: "1 %@ = %@ %@", from.uppercased(), RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", to)
+                let text = String(format: "1 %@ = %@ %@", from.uppercased(), RWFormatter().string(for: quote.exchangeRate) ?? "", to)
 
                 exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
                                                               timer: TimerViewModel(till: quote.timestamp, repeats: false),
