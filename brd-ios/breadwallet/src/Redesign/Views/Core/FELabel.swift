@@ -26,6 +26,7 @@ enum LabelViewModel: ViewModel {
 class FELabel: UILabel, ViewProtocol {
     var viewModel: LabelViewModel?
     var config: LabelConfiguration?
+    var didTapLink: (() -> Void)?
     
     func configure(with config: LabelConfiguration?) {
         guard let config = config else { return }
@@ -50,9 +51,16 @@ class FELabel: UILabel, ViewProtocol {
         case .attributedText(let value):
             attributedText = value
             
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+            isUserInteractionEnabled = true
+            addGestureRecognizer(tapGesture)
         }
         
         sizeToFit()
         needsUpdateConstraints()
+    }
+    
+    @objc private func viewTapped() {
+        didTapLink?()
     }
 }

@@ -42,7 +42,6 @@ protocol ProfileDataPassing {
 }
 
 protocol ProfileRoutes: CoordinatableRoutes {
-    func showAvatarSelection()
     func showSecuirtySettings()
     func showPreferences()
     func showExport()

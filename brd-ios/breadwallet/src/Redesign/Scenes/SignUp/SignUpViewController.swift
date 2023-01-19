@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SignUpViewController: BaseTableViewController<BaseCoordinator,
+class SignUpViewController: BaseTableViewController<AccountCoordinator,
                             SignUpInteractor,
                             SignUpPresenter,
                             SignUpStore>,
@@ -18,7 +18,7 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
     typealias Models = SignUpModels
     
     override var sceneLeftAlignedTitle: String? {
-        return "Create your account"
+        return L10n.Account.createNewAccountTitle
     }
     
     lazy var createAccountButton: FEButton = {
@@ -59,7 +59,7 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
                                               isUnderlined: true,
                                               enabled: true,
                                               callback: { [weak self] in
-            self?.buttonTapped()
+            self?.signInTapped()
         }))
         
         guard let continueButtonConfig = continueButton.config,
@@ -68,8 +68,6 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
               let createAccountButtonModel = createAccountButton.viewModel else { return }
         verticalButtons.wrappedView.configure(with: .init(buttons: [continueButtonConfig, createAccountButtonConfig]))
         verticalButtons.wrappedView.setup(with: .init(buttons: [continueButtonModel, createAccountButtonModel]))
-        
-        verticalButtons.layoutIfNeeded()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -157,24 +155,6 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
-        
-        guard let cell = cell as? WrapperTableViewCell<ScrollableButtonsView> else {
-            return cell
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders], isRightAligned: true))
-            
-            view.callbacks = [
-                // TODO: Add necessary logic.
-            ]
-        }
-        
-        return cell
-    }
-    
     // MARK: - User Interaction
     
     override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
@@ -197,7 +177,14 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
     
     @objc override func buttonTapped() {
         super.buttonTapped()
-        // TODO: Add necessary logic.
+        
+        interactor?.next(viewAction: .init())
+    }
+    
+    @objc func signInTapped() {
+        super.buttonTapped()
+        
+        coordinator?.showSignIn()
     }
     
     // MARK: - SignUpResponseDisplay
@@ -217,13 +204,19 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
             view.configure(with: .init(font: Fonts.Body.three, textColor: textColor))
         }
         
-        let emailCell = getFieldCell(for: .email) as? WrapperTableViewCell<FETextField>
+        let emailCell = getFieldCell(for: .email)
         let passwordCell = getFieldCell(for: .password)
         let confirmPasswordCell = getFieldCell(for: .confirmPassword)
     }
     
+    func displayNext(responseDisplay: SignUpModels.Next.ResponseDisplay) {
+        coordinator?.showRegistrationConfirmation()
+    }
+    
+    // MARK: - Additional Helpers
+    
     // TODO: Fix and FETextFied error state
-    private func getFieldCell(for section: Models.Section) -> UITableViewCell? {
+    private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
         guard let section = sections.firstIndex(of: section),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
             return nil
@@ -231,7 +224,4 @@ class SignUpViewController: BaseTableViewController<BaseCoordinator,
         
         return cell
     }
-    
-    // MARK: - Additional Helpers
-    
 }

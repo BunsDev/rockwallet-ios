@@ -36,4 +36,10 @@ enum SetPasswordModels {
             var isValid: Bool
         }
     }
+    
+    struct Next {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
+    }
 }

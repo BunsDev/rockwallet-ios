@@ -22,6 +22,10 @@ extension String {
         
         return emailPredicate.evaluate(with: self)
     }
+    
+    var isValidPassword: Bool {
+        return matches(regularExpression: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!?&@€)(/]).{8,}")
+    }
 
     var sanitized: String {
         return applyingTransform(.toUnicodeName, reverse: false) ?? ""

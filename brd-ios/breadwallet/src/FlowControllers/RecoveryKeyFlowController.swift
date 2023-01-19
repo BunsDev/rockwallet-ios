@@ -102,7 +102,9 @@ class RecoveryKeyFlowController {
         let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { (action, words) in
             switch action {
             case .abort:
-                self.promptToSetUpRecoveryKeyLater(from: viewController) { userWantsToSetUpLater in
+                let navController = context == .onboarding ? viewController : recoveryKeyNavController
+                
+                promptToSetUpRecoveryKeyLater(from: navController) { userWantsToSetUpLater in
                     guard userWantsToSetUpLater else { return }
                     dismissFlow()
                 }
@@ -112,8 +114,7 @@ class RecoveryKeyFlowController {
                                                           keyMaster: keyMaster,
                                                           eventContext: eventContext,
                                                           confirmed: {
-                    let goToWallet = (context == .onboarding) ? dismissFlow : nil
-                    Store.perform(action: Alert.Show(.recoveryPhraseConfirmed(callback: { goToWallet?() })))
+                    Store.perform(action: Alert.Show(.recoveryPhraseConfirmed(callback: { dismissFlow() })))
                 }))
                 
             default:

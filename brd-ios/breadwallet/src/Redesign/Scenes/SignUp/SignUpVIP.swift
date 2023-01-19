@@ -18,14 +18,17 @@ protocol SignUpViewActions: BaseViewActions, FetchViewActions {
     func validate(viewAction: SignUpModels.Validate.ViewAction)
     func toggleTermsTickbox(viewAction: SignUpModels.TermsTickbox.ViewAction)
     func togglePromotionsTickbox(viewAction: SignUpModels.PromotionsTickbox.ViewAction)
+    func next(viewAction: SignUpModels.Next.ViewAction)
 }
 
 protocol SignUpActionResponses: BaseActionResponses, FetchActionResponses {
     func presentValidate(actionResponse: SignUpModels.Validate.ActionResponse)
+    func presentNext(actionResponse: SignUpModels.Next.ActionResponse)
 }
 
 protocol SignUpResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
     func displayValidate(responseDisplay: SignUpModels.Validate.ResponseDisplay)
+    func displayNext(responseDisplay: SignUpModels.Next.ResponseDisplay)
 }
 
 protocol SignUpDataStore: BaseDataStore, FetchDataStore {

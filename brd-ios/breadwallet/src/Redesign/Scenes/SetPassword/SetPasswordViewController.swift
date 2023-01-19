@@ -10,15 +10,15 @@
 
 import UIKit
 
-class SetPasswordViewController: BaseTableViewController<BaseCoordinator,
-                                    SetPasswordInteractor,
-                                    SetPasswordPresenter,
-                                    SetPasswordStore>,
-                                    SetPasswordResponseDisplays {
+class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
+                                 SetPasswordInteractor,
+                                 SetPasswordPresenter,
+                                 SetPasswordStore>,
+                                 SetPasswordResponseDisplays {
     typealias Models = SetPasswordModels
     
     override var sceneLeftAlignedTitle: String? {
-        return "Create new password"
+        return L10n.Account.createNewPasswordTitle
     }
     
     lazy var createAccountButton: FEButton = {
@@ -104,7 +104,8 @@ class SetPasswordViewController: BaseTableViewController<BaseCoordinator,
     
     @objc override func buttonTapped() {
         super.buttonTapped()
-        // TODO: Add necessary logic.
+        
+        interactor?.next(viewAction: .init())
     }
     
     // MARK: - SetPasswordResponseDisplay
@@ -122,6 +123,10 @@ class SetPasswordViewController: BaseTableViewController<BaseCoordinator,
             let textColor = responseDisplay.isValid ? LightColors.Text.two : LightColors.Error.one
             view.configure(with: .init(font: Fonts.Body.three, textColor: textColor))
         }
+    }
+    
+    func displayNext(responseDisplay: SetPasswordModels.Next.ResponseDisplay) {
+        coordinator?.dismissFlow()
     }
     
     // MARK: - Additional Helpers

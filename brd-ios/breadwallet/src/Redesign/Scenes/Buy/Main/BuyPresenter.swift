@@ -209,13 +209,22 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                   dismissType: .tapToDismiss)
         let config = Presets.InfoView.verification
         
-        viewController?.displayManageAssetsMessage(actionResponse: .init(model: model, config: config))
+        viewController?.displayManageAssetsMessage(responseDisplay: .init(model: model, config: config))
     }
     
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse) {
         let message = actionResponse.method == .card ? L10n.Buy.switchedToDebitCard : L10n.Buy.switchedToAch
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(message)),
                                                               config: Presets.InfoView.verification))
+    }
+    
+    func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse) {
+        // TODO: update when BE with limits is ready
+        let limitText = "Weekly buying limit is $700.00 USD & monthly limit is $900.00 USD. At the moment lifetime limit is $1,000 USD."
+        let model = PopupViewModel(title: .text(L10n.Buy.yourBuyLimits),
+                                   body: limitText)
+        
+        viewController?.displayLimitsInfo(responseDisplay: .init(model: model))
     }
     
     // MARK: - Additional Helpers

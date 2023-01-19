@@ -62,6 +62,10 @@
 
 "Account.CreateAccountButton" = "Create account";
 
+"Account.CreateNewAccountTitle" = "Create your account";
+
+"Account.CreateNewPasswordTitle" = "Create new password";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Límite actual: 1000 $/día";
 
@@ -878,6 +882,8 @@
 "Buy.txHashHeader" = "%s ID de la transacción";
 
 "Buy.understandAndAgree" = "Entiendo y estoy de acuerdo";
+
+"Buy.YourBuyLimits" = "Your buy limits";
 
 /* Your order label in buy flow */
 "Buy.YourOrder" = "Tu pedido:";

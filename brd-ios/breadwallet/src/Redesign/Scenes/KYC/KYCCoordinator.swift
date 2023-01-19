@@ -24,7 +24,7 @@ class KYCCoordinator: BaseCoordinator,
     override func start() {
         switch UserManager.shared.profile?.status {
         case .emailPending:
-            let coordinator = RegistrationCoordinator(navigationController: navigationController)
+            let coordinator = AccountCoordinator(navigationController: navigationController)
             coordinator.start()
             coordinator.parentCoordinator = self
             childCoordinators.append(coordinator)

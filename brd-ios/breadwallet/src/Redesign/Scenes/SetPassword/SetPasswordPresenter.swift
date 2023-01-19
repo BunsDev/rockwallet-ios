@@ -40,6 +40,10 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
         viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
     }
     
+    func presentNext(actionResponse: SetPasswordModels.Next.ActionResponse) {
+        viewController?.displayNext(responseDisplay: .init())
+    }
+    
     // MARK: - Additional Helpers
     
 }

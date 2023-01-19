@@ -10,7 +10,7 @@
 
 import UIKit
 
-class ForgotPasswordViewController: BaseTableViewController<BaseCoordinator,
+class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
                                     ForgotPasswordInteractor,
                                     ForgotPasswordPresenter,
                                     ForgotPasswordStore>,
@@ -88,9 +88,8 @@ class ForgotPasswordViewController: BaseTableViewController<BaseCoordinator,
     
     @objc override func buttonTapped() {
         super.buttonTapped()
-        // TODO: Add necessary logic.
         
-        coordinator?.showBottomSheetAlert(type: .emailSent)
+        interactor?.next(viewAction: .init())
     }
     
     // MARK: - ForgotPasswordResponseDisplay
@@ -98,6 +97,10 @@ class ForgotPasswordViewController: BaseTableViewController<BaseCoordinator,
     func displayValidate(responseDisplay: ForgotPasswordModels.Validate.ResponseDisplay) {
         continueButton.viewModel?.enabled = responseDisplay.isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+    }
+    
+    func displayNext(responseDisplay: ForgotPasswordModels.Next.ResponseDisplay) {
+        coordinator?.showBottomSheetAlert(type: .emailSent)
     }
     
     // MARK: - Additional Helpers

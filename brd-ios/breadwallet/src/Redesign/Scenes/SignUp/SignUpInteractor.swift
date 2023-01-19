@@ -20,7 +20,9 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
     // MARK: - SignUpViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: Models.Item(email: "", password: "", passwordAgain: "")))
+        presenter?.presentData(actionResponse: .init(item: Models.Item(email: dataStore?.email,
+                                                                       password: dataStore?.password,
+                                                                       passwordAgain: dataStore?.passwordAgain)))
     }
     
     func validate(viewAction: SignUpModels.Validate.ViewAction) {
@@ -36,9 +38,10 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
             dataStore?.passwordAgain = passwordAgain
         }
         
-        let isEmailValid = FieldValidator.validate(fields: [dataStore?.email])
-        let isPasswordValid = FieldValidator.validate(fields: [dataStore?.password,
-                                                               dataStore?.passwordAgain]) && dataStore?.password == dataStore?.passwordAgain
+        let isEmailValid = dataStore?.email?.isValidEmailAddress ?? false
+        let isPasswordValid = dataStore?.password?.isValidPassword ?? false
+        && dataStore?.passwordAgain?.isValidPassword ?? false
+        && dataStore?.password == dataStore?.passwordAgain
         let isTermsTickboxValid = dataStore?.termsTickbox == true
         
         presenter?.presentValidate(actionResponse: .init(isEmailValid: isEmailValid,
@@ -54,6 +57,34 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
     
     func togglePromotionsTickbox(viewAction: SignUpModels.PromotionsTickbox.ViewAction) {
         dataStore?.promotionsTickbox = viewAction.value
+    }
+    
+    func next(viewAction: SignUpModels.Next.ViewAction) {
+        guard let email = dataStore?.email,
+              let password = dataStore?.password,
+              let token = UserDefaults.walletTokenValue else { return }
+        
+        let data = RegistrationRequestData(email: email,
+                                           password: password,
+                                           token: token,
+                                           subscribe: dataStore?.promotionsTickbox ?? false,
+                                           accountHandling: .register)
+        RegistrationWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success(let data):
+                guard let sessionKey = data?.sessionKey else { return }
+                
+                UserDefaults.email = email
+                UserDefaults.kycSessionKeyValue = sessionKey
+                
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentNext(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     // MARK: - Aditional helpers

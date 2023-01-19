@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import WalletKit
 
 class RegistrationMapper: ModelMapper<RegistrationResponseData, RegistrationData> {
     override func getModel(from response: RegistrationResponseData?) -> RegistrationData? {
@@ -33,12 +32,20 @@ struct RegistrationData: Model {
 
 struct RegistrationRequestData: RequestModelData {
     let email: String?
+    let password: String?
     let token: String?
     let subscribe: Bool?
+    
+    enum AccountHandling {
+        case register, login
+    }
+    
+    let accountHandling: AccountHandling
     
     func getParameters() -> [String: Any] {
         let params: [String: Any?] = [
             "email": email,
+            "password": password,
             "token": token,
             "subscribe": subscribe
         ]
@@ -48,30 +55,24 @@ struct RegistrationRequestData: RequestModelData {
 }
 
 class RegistrationWorker: BaseApiWorker<RegistrationMapper> {
-    
     override func getHeaders() -> [String: String] {
-        let formatter = DateFormatter()
-        formatter.locale = .init(identifier: C.countryUS)
-        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
-        let dateString = formatter.string(from: Date())
-        
-        guard let email = (getParameters()["email"] as? String),
-              let token = (getParameters()["token"] as? String),
-              let data = (dateString + token + email).data(using: .utf8)?.sha256,
-              let apiKeyString = try? keychainItem(key: KeychainKey.apiAuthKey) as String?,
-              !apiKeyString.isEmpty,
-              let apiKey = Key.createFromString(asPrivate: apiKeyString),
-              let signature = CoreSigner.basicDER.sign(data32: data, using: apiKey)?.base64EncodedString()
-        else { return [:] }
-
-        return [
-            "Date": dateString,
-            "Signature": signature
-        ]
+        return UserSignature().getHeaders(nonce: (getParameters()["email"] as? String),
+                                          token: (getParameters()["token"] as? String))
     }
     
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(KYCAuthEndpoints.register)
+        let accountHandling = (requestData as? RegistrationRequestData)?.accountHandling
+        
+        switch accountHandling {
+        case .login:
+            return APIURLHandler.getUrl(WalletEndpoints.login)
+            
+        case .register:
+            return APIURLHandler.getUrl(WalletEndpoints.register)
+            
+        default:
+            return ""
+        }
     }
     
     override func getParameters() -> [String: Any] {

@@ -32,10 +32,28 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
             dataStore?.passwordAgain = passwordAgain
         }
         
-        let isPasswordValid = FieldValidator.validate(fields: [dataStore?.password,
-                                                               dataStore?.passwordAgain]) && dataStore?.password == dataStore?.passwordAgain
+        let isPasswordValid = dataStore?.password?.isValidPassword ?? false
+        && dataStore?.passwordAgain?.isValidPassword ?? false
+        && dataStore?.password == dataStore?.passwordAgain
         
         presenter?.presentValidate(actionResponse: .init(isValid: isPasswordValid))
+    }
+    
+    func next(viewAction: SetPasswordModels.Next.ViewAction) {
+        let data = SetPasswordRequestData(guid: dataStore?.guid,
+                                          code: dataStore?.code,
+                                          password: dataStore?.password)
+        SetPasswordWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success:
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentNext(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     // MARK: - Aditional helpers

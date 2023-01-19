@@ -17,6 +17,8 @@ class SetPasswordStore: NSObject, BaseDataStore, SetPasswordDataStore {
     
     var password: String?
     var passwordAgain: String?
+    var code: String?
+    var guid: String?
     
     // MARK: - Aditional helpers
 }

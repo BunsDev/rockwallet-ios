@@ -19,8 +19,6 @@ enum KYCAuthEndpoints: String, URLType {
     
     case newDevice = "auth/new-device"
     case profile = "auth/profile"
-    case register = "auth/associate"
-    case confirm = "auth/associate/confirm"
     case resend = "auth/associate/resend"
     
     case veriffSession = "kyc/session"

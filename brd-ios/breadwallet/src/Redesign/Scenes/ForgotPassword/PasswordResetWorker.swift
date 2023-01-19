@@ -1,28 +1,29 @@
 // 
-//  RegistrationConfirmationWorker.swift
+//  PasswordResetWorker.swift
 //  breadwallet
 //
-//  Created by Rok on 01/06/2022.
-//  Copyright © 2022 RockWallet, LLC. All rights reserved.
+//  Created by Kenan Mamedoff on 16/01/2023.
+//  Copyright © 2023 RockWallet, LLC. All rights reserved.
 //
 //  See the LICENSE file at the project root for license information.
 //
 
 import Foundation
 
-struct RegistrationConfirmationRequestData: RequestModelData {
-    let code: String?
+struct PasswordResetRequestData: RequestModelData {
+    let email: String?
     
     func getParameters() -> [String: Any] {
-        return [
-            "confirmation_code": code ?? ""
+        let params = [
+            "email": email
         ]
+        return params.compactMapValues { $0 }
     }
 }
 
-class RegistrationConfirmationWorker: BaseApiWorker<PlainMapper> {
+class PasswordResetWorker: BaseApiWorker<PlainMapper> {
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(WalletEndpoints.confirm)
+        return WalletEndpoints.reset.url
     }
 
     override func getParameters() -> [String: Any] {
