@@ -166,7 +166,28 @@ extension KYCCoordinator: ImagePickable {
     
     func showExternalKYC(url: String) {
         navigationController.popToRootViewController(animated: false)
+        VeriffSdk.shared.delegate = self
         VeriffSdk.shared.startAuthentication(sessionUrl: url, presentingFrom: self.navigationController)
+    }
+}
+
+extension KYCCoordinator: VeriffSdkDelegate {
+    func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
+        switch result.status {
+        case .done:
+            open(scene: Scenes.Success) { vc in
+                vc.success = .documentVerification
+            }
+            
+        case .error(let error):
+            print(error.localizedDescription)
+            open(scene: Scenes.Failure) { vc in
+                vc.failure = .documentVerification
+            }
+            
+        default:
+            parentCoordinator?.childDidFinish(child: self)
+        }
     }
 }
 
