@@ -73,6 +73,10 @@ internal enum L10n {
     internal static let createAccount = L10n.tr("Localizable", "Account.CreateAccount", fallback: "Create a RockWallet account by entering your email address.")
     /// Create account
     internal static let createAccountButton = L10n.tr("Localizable", "Account.CreateAccountButton", fallback: "Create account")
+    /// Create your account
+    internal static let createNewAccountTitle = L10n.tr("Localizable", "Account.CreateNewAccountTitle", fallback: "Create your account")
+    /// Create new password
+    internal static let createNewPasswordTitle = L10n.tr("Localizable", "Account.CreateNewPasswordTitle", fallback: "Create new password")
     /// Current limit per day label in profile screen
     internal static let currentLimit = L10n.tr("Localizable", "Account.CurrentLimit", fallback: "Current limit: $1,000/day")
     /// Daily
@@ -679,6 +683,10 @@ internal enum L10n {
     internal static let country = L10n.tr("Localizable", "Buy.Country", fallback: "Country")
     /// XXX
     internal static let cvvHint = L10n.tr("Localizable", "Buy.CvvHint", fallback: "XXX")
+    /// Daily max
+    internal static let dailyMaLimits = L10n.tr("Localizable", "Buy.dailyMaLimits", fallback: "Daily max")
+    /// Daily min
+    internal static let dailyMinLimits = L10n.tr("Localizable", "Buy.dailyMinLimits", fallback: "Daily min")
     /// Buy details title
     internal static let details = L10n.tr("Localizable", "Buy.Details", fallback: "Purchase details")
     /// USDC needs to be enabled in your wallet first. You can enable it here, or by selecting Manage assets on the home screen.
@@ -715,6 +723,8 @@ internal enum L10n {
     internal static let paymentMethod = L10n.tr("Localizable", "Buy.PaymentMethod", fallback: "Payment method")
     /// Pay with label in buy flow
     internal static let payWith = L10n.tr("Localizable", "Buy.PayWith", fallback: "Pay with")
+    /// Per Transaction Limit
+    internal static let perTransactionLimit = L10n.tr("Localizable", "Buy.perTransactionLimit", fallback: "Per Transaction Limit")
     /// Please check with your bank or try again later.
     internal static let plaidErrorDescription = L10n.tr("Localizable", "Buy.plaidErrorDescription", fallback: "Please check with your bank or try again later.")
     /// There was an error connecting your account via Plaid
@@ -759,8 +769,10 @@ internal enum L10n {
     }
     /// I understand and agree
     internal static let understandAndAgree = L10n.tr("Localizable", "Buy.understandAndAgree", fallback: "I understand and agree")
-    /// Your buy limits
-    internal static let yourBuyLimits = L10n.tr("Localizable", "Buy.YourBuyLimits", fallback: "Your buy limits")
+    /// Your ACH buy limits
+    internal static let yourAchBuyLimits = L10n.tr("Localizable", "Buy.YourAchBuyLimits", fallback: "Your ACH buy limits")
+    /// Your card buy limits
+    internal static let yourBuyLimits = L10n.tr("Localizable", "Buy.YourBuyLimits", fallback: "Your card buy limits")
     /// Your order label in buy flow
     internal static let yourOrder = L10n.tr("Localizable", "Buy.YourOrder", fallback: "Your order:")
     /// ZIP/Postal Code label in billing address view on buy flow
