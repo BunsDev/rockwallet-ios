@@ -3,7 +3,6 @@
 //
 
 import UIKit
-import Veriff
 
 class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
                                          AccountVerificationInteractor,
@@ -120,8 +119,7 @@ class AccountVerificationViewController: BaseTableViewController<KYCCoordinator,
             coordinator?.showKYCLevelTwo()
             
         case .veriff:
-            VeriffSdk.shared.startAuthentication(sessionUrl: responseDisplay.sessionUrl, presentingFrom: self)
-            
+            coordinator?.showExternalKYC(url: responseDisplay.sessionUrl)
         }
     }
     

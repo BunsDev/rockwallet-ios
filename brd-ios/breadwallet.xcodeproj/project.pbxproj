@@ -310,6 +310,7 @@
 		7CF2B052228F478A004AA905 /* DataExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF2B051228F478A004AA905 /* DataExtensionTests.swift */; };
 		7CF5319D231EE01300E61F12 /* Base32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF5319C231EE01300E61F12 /* Base32.swift */; };
 		7CF913BE1FFC7DC30085CB70 /* TxMemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF913BD1FFC7DC30085CB70 /* TxMemoCell.swift */; };
+		7E01B90F297AA7B800C100D1 /* Presets+Veriff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B90E297AA7B800C100D1 /* Presets+Veriff.swift */; };
 		7E0968B8284A29CE006B4FC2 /* TransparentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0968B7284A29CE006B4FC2 /* TransparentView.swift */; };
 		7E0E365928E70D0F00539D99 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 7E0E365828E70D0F00539D99 /* Cosmos */; };
 		7E18DBF328C8C2C600B83E3B /* WalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7E18DBF228C8C2C600B83E3B /* WalletKit */; };
@@ -1151,6 +1152,7 @@
 		7CF2B051228F478A004AA905 /* DataExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtensionTests.swift; sourceTree = "<group>"; };
 		7CF5319C231EE01300E61F12 /* Base32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base32.swift; path = src/Utilities/Base32.swift; sourceTree = "<group>"; };
 		7CF913BD1FFC7DC30085CB70 /* TxMemoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TxMemoCell.swift; path = src/Views/TransactionCells/TxMemoCell.swift; sourceTree = "<group>"; };
+		7E01B90E297AA7B800C100D1 /* Presets+Veriff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Presets+Veriff.swift"; sourceTree = "<group>"; };
 		7E0968B7284A29CE006B4FC2 /* TransparentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentView.swift; sourceTree = "<group>"; };
 		7E1D4AC1297558A200E480C4 /* ldt.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ldt.xcconfig; sourceTree = "<group>"; };
 		7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCCoordinator.swift; sourceTree = "<group>"; };
@@ -2408,6 +2410,7 @@
 			isa = PBXGroup;
 			children = (
 				7E5CB33A2835090D00EC787E /* Presets.swift */,
+				7E01B90E297AA7B800C100D1 /* Presets+Veriff.swift */,
 				7E5CB33C2835090D00EC787E /* BackgroundConfiguration.swift */,
 				7E5CB33D2835090D00EC787E /* ShadowConfiguration.swift */,
 				7E5CB33E2835090D00EC787E /* BorderConfiguration.swift */,
@@ -4324,6 +4327,7 @@
 				71F829422321953F00B3C76E /* AlertPresenter.swift in Sources */,
 				7E5CB3AF2835090E00EC787E /* FELabel.swift in Sources */,
 				CE8F0AE31EB91BB500AA7642 /* SearchHeaderView.swift in Sources */,
+				7E01B90F297AA7B800C100D1 /* Presets+Veriff.swift in Sources */,
 				7BDB49F52806EF890031F015 /* BRAPIClient+Bundles.swift in Sources */,
 				7E5CB39B2835090E00EC787E /* BaseVIP.swift in Sources */,
 				7EC0F8B62888049F0037145C /* WrapperPopupView.swift in Sources */,
