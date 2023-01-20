@@ -76,8 +76,6 @@ class BaseCoordinator: NSObject,
     }
     
     func showRegistration() {
-        guard navigationController.presentedViewController?.children.contains(where: { $0 is RegistrationConfirmationViewController }) == nil else { return }
-        
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.start()
