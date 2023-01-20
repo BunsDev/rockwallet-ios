@@ -13,7 +13,7 @@ import Foundation
 class ResendConfirmationWorker: BaseApiWorker<PlainMapper> {
 
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(KYCAuthEndpoints.resend)
+        return APIURLHandler.getUrl(WalletEndpoints.resend)
     }
 
     override func getParameters() -> [String: Any] {

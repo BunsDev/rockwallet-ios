@@ -15,6 +15,7 @@ enum WalletEndpoints: String, URLType {
     
     case register
     case login
+    case resend = "resend-email"
     case confirm = "confirm_email"
     case reset = "password/reset"
     case set = "password/set"
