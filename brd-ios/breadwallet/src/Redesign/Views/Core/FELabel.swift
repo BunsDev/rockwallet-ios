@@ -16,6 +16,7 @@ struct LabelConfiguration: TextConfigurable {
     var textAlignment: NSTextAlignment = .left
     var numberOfLines: Int = 0
     var lineBreakMode: NSLineBreakMode = .byWordWrapping
+    var isUserInteractionEnabled: Bool = false
 }
 
 enum LabelViewModel: ViewModel {
@@ -38,6 +39,7 @@ class FELabel: UILabel, ViewProtocol {
         lineBreakMode = config.lineBreakMode
         font = config.font
         textColor = config.textColor
+        isUserInteractionEnabled = config.isUserInteractionEnabled
     }
     
     func setup(with viewModel: LabelViewModel?) {
@@ -52,7 +54,6 @@ class FELabel: UILabel, ViewProtocol {
             attributedText = value
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-            isUserInteractionEnabled = true
             addGestureRecognizer(tapGesture)
         }
         
