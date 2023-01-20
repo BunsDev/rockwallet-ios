@@ -30,11 +30,7 @@ class KYCCoordinator: BaseCoordinator,
             childCoordinators.append(coordinator)
             
         default:
-            open(scene: Scenes.KYCIntro)
-//            open(scene: Scenes.VerifyAccount) { [weak self] vc in
-//                vc.role = self?.role
-//                vc.flow = self?.flow
-//            }
+            showKYCLevelOne()
         }
     }
     
