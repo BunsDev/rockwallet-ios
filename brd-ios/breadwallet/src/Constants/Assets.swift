@@ -282,6 +282,7 @@ internal enum Asset {
   internal static let badge = ImageAsset(name: "badge")
   internal static let balance = ImageAsset(name: "balance")
   internal static let bank = ImageAsset(name: "bank")
+  internal static let bullet = ImageAsset(name: "bullet")
   internal static let calendar = ImageAsset(name: "calendar")
   internal static let cancel = ImageAsset(name: "cancel")
   internal static let card = ImageAsset(name: "card")

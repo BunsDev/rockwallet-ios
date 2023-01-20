@@ -31,9 +31,6 @@ class KYCCoordinator: BaseCoordinator,
             
         default:
             open(scene: Scenes.KYCIntro)
-//            open(scene: Scenes.VerifyAccount) { [weak self] vc in
-//                vc.role = self?.role
-//                vc.flow = self?.flow
 //            }
         }
     }
@@ -166,8 +163,11 @@ extension KYCCoordinator: ImagePickable {
     
     func showExternalKYC(url: String) {
         navigationController.popToRootViewController(animated: false)
+        
         VeriffSdk.shared.delegate = self
-        VeriffSdk.shared.startAuthentication(sessionUrl: url, presentingFrom: self.navigationController)
+        VeriffSdk.shared.startAuthentication(sessionUrl: url,
+                                             configuration: Presets.veriff,
+                                             presentingFrom: navigationController)
     }
 }
 
