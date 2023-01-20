@@ -12,14 +12,17 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     // MARK: - RegistrationRoutes
     
     override func start() {
-        if UserDefaults.email == nil {
-            showSignUp()
-        } else {
+        if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation()
+            return
         }
+        
+        showSignUp()
     }
     
     func showRegistrationConfirmation() {
+        guard navigationController.presentedViewController?.children.contains(where: { $0 is RegistrationConfirmationViewController }) == nil else { return }
+        
         open(scene: Scenes.RegistrationConfirmation) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.prepareData()

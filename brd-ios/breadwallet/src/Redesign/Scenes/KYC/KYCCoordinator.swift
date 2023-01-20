@@ -30,8 +30,7 @@ class KYCCoordinator: BaseCoordinator,
             childCoordinators.append(coordinator)
             
         default:
-            open(scene: Scenes.KYCIntro)
-//            }
+            showKYCLevelOne()
         }
     }
     
