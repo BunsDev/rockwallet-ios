@@ -493,7 +493,6 @@
 		7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDB82528C8684900C287CB /* Amount+Init.swift */; };
 		7EE62495295C141D00FC19CC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE62494295C141D00FC19CC /* main.swift */; };
 		7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE76FC12857648F00724548 /* NewDeviceWorker.swift */; };
-		7EE91A4F2967EB2A00331B1F /* KYCIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */; };
 		7EE91A5A2968310100331B1F /* KYCAddressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A532968310100331B1F /* KYCAddressStore.swift */; };
 		7EE91A5B2968310100331B1F /* KYCAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A542968310100331B1F /* KYCAddressPresenter.swift */; };
 		7EE91A5C2968310100331B1F /* KYCAddressModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A552968310100331B1F /* KYCAddressModels.swift */; };
@@ -1323,7 +1322,6 @@
 		7EDDB82528C8684900C287CB /* Amount+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amount+Init.swift"; sourceTree = "<group>"; };
 		7EE62494295C141D00FC19CC /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = src/main.swift; sourceTree = "<group>"; };
 		7EE76FC12857648F00724548 /* NewDeviceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceWorker.swift; sourceTree = "<group>"; };
-		7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCIntroViewController.swift; sourceTree = "<group>"; };
 		7EE91A532968310100331B1F /* KYCAddressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressStore.swift; sourceTree = "<group>"; };
 		7EE91A542968310100331B1F /* KYCAddressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressPresenter.swift; sourceTree = "<group>"; };
 		7EE91A552968310100331B1F /* KYCAddressModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressModels.swift; sourceTree = "<group>"; };
@@ -2858,14 +2856,6 @@
 			path = DocumentPicker;
 			sourceTree = "<group>";
 		};
-		7EE91A342967EAEC00331B1F /* Intro */ = {
-			isa = PBXGroup;
-			children = (
-				7EE91A482967EB2A00331B1F /* KYCIntroViewController.swift */,
-			);
-			path = Intro;
-			sourceTree = "<group>";
-		};
 		7EE91A51296830F000331B1F /* KYCAddress */ = {
 			isa = PBXGroup;
 			children = (
@@ -2939,7 +2929,6 @@
 		7EF45F7C2847671F00D1F7B0 /* KYC */ = {
 			isa = PBXGroup;
 			children = (
-				7EE91A342967EAEC00331B1F /* Intro */,
 				7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */,
 				7EE91A51296830F000331B1F /* KYCAddress */,
 				7E6729262923A22900A2B612 /* ComingSoon */,
@@ -4382,7 +4371,6 @@
 				7B54E5A027F4A2B0002DD1E4 /* NetworkingError.swift in Sources */,
 				7ED83AF6284F40EB00261565 /* ChecklistItemView.swift in Sources */,
 				7EA9F7B529683A9D000F45B6 /* CountriesAndStatesModels.swift in Sources */,
-				7EE91A4F2967EB2A00331B1F /* KYCIntroViewController.swift in Sources */,
 				7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */,
 				7EF45F8D284768C100D1F7B0 /* ItemSelectionCoordinator.swift in Sources */,
 				7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */,
