@@ -278,7 +278,11 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay) {
-        coordinator?.showPopup(with: responseDisplay.model, config: Presets.Popup.normal)
+        let _: WrapperPopupView<LimitsPopupView>? = coordinator?.showPopup(with: responseDisplay.config,
+                                                                           viewModel: responseDisplay.viewModel,
+                                                                           confirmedCallback: { [weak self] in
+            self?.coordinator?.dismissFlow()
+        })
     }
     
     // MARK: - Additional Helpers

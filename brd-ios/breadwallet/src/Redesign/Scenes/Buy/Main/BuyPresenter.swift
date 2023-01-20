@@ -220,11 +220,21 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse) {
         // TODO: update when BE with limits is ready
-        let limitText = "Weekly buying limit is $700.00 USD & monthly limit is $900.00 USD. At the moment lifetime limit is $1,000 USD."
-        let model = PopupViewModel(title: .text(L10n.Buy.yourBuyLimits),
-                                   body: limitText)
+        let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
         
-        viewController?.displayLimitsInfo(responseDisplay: .init(model: model))
+        let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
+         let wrappedViewModel: LimitsPopupViewModel = .init(perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit), value: .text("$15.00 USD")),
+                                                           dailyMin: .init(title: .text(L10n.Buy.dailyMinLimits), value: .text("$30.00 USD")),
+                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits), value: .text("$500.00 USD")),
+                                                           weekly: .init(title: .text(L10n.Account.weekly), value: .text("$2,000.00 USD")),
+                                                           monthly: .init(title: .text(L10n.Account.monthly), value: .text("$5,000.00 USD")))
+        
+        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(title: .text(title),
+                                                                           trailing: .init(image: Asset.close.image),
+                                                                           wrappedView: wrappedViewModel,
+                                                                           hideSeparator: true)
+        
+        viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
     }
     
     // MARK: - Additional Helpers
