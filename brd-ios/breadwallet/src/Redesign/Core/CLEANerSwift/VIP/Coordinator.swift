@@ -248,8 +248,6 @@ class BaseCoordinator: NSObject,
         guard let vc = navigationController.viewControllers.first as? BuyViewController else {
             return
         }
-        
-        vc.dataStore?.paymentMethod = paymentMethod
         vc.updatePaymentMethod()
         
         navigationController.popToViewController(vc, animated: true)

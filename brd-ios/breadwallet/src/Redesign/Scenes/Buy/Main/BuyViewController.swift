@@ -288,10 +288,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     @objc func updatePaymentMethod() {
         guard let availablePayments = dataStore?.availablePayments else { return }
         
-        dataStore?.paymentMethod = availablePayments.contains(.ach) == true ? .ach : .card
+        let paymentMethod: PaymentCard.PaymentType? = availablePayments.contains(.ach) == true ? .ach : .card
         tableView.reloadData()
         
-        interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .card))
+        interactor?.retryPaymentMethod(viewAction: .init(method: paymentMethod ?? .card))
     }
     
     private func mapStructToDictionary<T>(item: T) -> [String: Any] {
