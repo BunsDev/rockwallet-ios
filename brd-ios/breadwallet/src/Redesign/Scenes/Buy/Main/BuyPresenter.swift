@@ -220,7 +220,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse) {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
-        
         let limits = UserManager.shared.profile?.limits
         var perTransactionLimit, dailyMinLimit, dailyMaxLimit, weeklyLimit, monthlyLimit: Decimal
         
