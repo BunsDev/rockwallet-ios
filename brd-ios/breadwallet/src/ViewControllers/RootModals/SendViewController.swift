@@ -310,8 +310,10 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                         }
                         let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
                         
-                        if amount + feeAmount > balance {
-                            _ = self?.handleValidationResult(.insufficientGas)
+                        if amount.currency == feeAmount.currency {
+                            if amount + feeAmount > balance {
+                                _ = self?.handleValidationResult(.insufficientGas)
+                            }
                         }
                     }
                     
