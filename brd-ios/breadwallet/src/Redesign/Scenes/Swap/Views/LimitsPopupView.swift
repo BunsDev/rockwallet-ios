@@ -131,9 +131,18 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
         super.setup(with: viewModel)
         
         perTransactionView.setup(with: viewModel?.perTransaction)
+        perTransactionView.isHidden = viewModel?.perTransaction.value == nil
+        
         dailyMinView.setup(with: viewModel?.dailyMin)
+        dailyMinView.isHidden = viewModel?.dailyMin.value == nil
+        
         dailyMaxView.setup(with: viewModel?.dailyMax)
+        dailyMaxView.isHidden = viewModel?.dailyMax.value == nil
+        
         weeklyView.setup(with: viewModel?.weekly)
+        weeklyView.isHidden = viewModel?.weekly.value == nil
+        
         monthlyView.setup(with: viewModel?.monthly)
+        monthlyView.isHidden = viewModel?.monthly.value == nil
     }
 }
