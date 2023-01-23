@@ -216,7 +216,11 @@ class WrapperPopupView<T: ViewProtocol & UIView>: UIView,
         wrappedView.setup(with: viewModel.wrappedView)
         
         confirmButton.setup(with: viewModel.confirm)
+        confirmButton.isHidden = viewModel.confirm == nil
+        
         cancelButton.setup(with: viewModel.cancel)
+        cancelButton.isHidden = viewModel.cancel == nil
+        
         lineView.isHidden = viewModel.hideSeparator
         
         guard headerLeadingView.isHidden,

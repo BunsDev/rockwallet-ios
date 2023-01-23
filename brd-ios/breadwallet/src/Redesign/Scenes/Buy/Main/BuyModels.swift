@@ -169,7 +169,8 @@ enum BuyModels {
             var paymentMethod: PaymentCard.PaymentType?
         }
         struct ResponseDisplay {
-            var model: PopupViewModel
+            var config: WrapperPopupConfiguration<LimitsPopupConfiguration>
+            var viewModel: WrapperPopupViewModel<LimitsPopupViewModel>
         }
     }
 }
