@@ -75,9 +75,6 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     
     private var amount: Amount? {
         didSet {
-            if amount != maximum {
-                isSendingMax = false
-            }
             if oldValue != amount {
                 updateFees()
             }
@@ -306,18 +303,16 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
                     
-                    guard let balance = self?.balance else { return }
-                    guard let feeCurrency = self?.sender.wallet.feeCurrency else {
-                        return
-                    }
-                    let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
-                    
-                    print("amount: \(amount.fiatValue)")
-                    print("feeAmount: \(feeAmount.fiatValue)")
-                    print("balance: \(balance.fiatValue)")
-                    
-                    if amount + feeAmount > balance {
-                        _ = self?.handleValidationResult(.insufficientGas)
+                    if self?.isSendingMax != true {
+                        guard let balance = self?.balance else { return }
+                        guard let feeCurrency = self?.sender.wallet.feeCurrency else {
+                            return
+                        }
+                        let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
+                        
+                        if amount + feeAmount > balance {
+                            _ = self?.handleValidationResult(.insufficientGas)
+                        }
                     }
                     
                 case .failure(let error):
