@@ -112,7 +112,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     override func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return UITableViewCell()
@@ -278,7 +277,11 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay) {
-        coordinator?.showPopup(with: responseDisplay.model, config: Presets.Popup.normal)
+        let _: WrapperPopupView<LimitsPopupView>? = coordinator?.showPopup(with: responseDisplay.config,
+                                                                           viewModel: responseDisplay.viewModel,
+                                                                           confirmedCallback: { [weak self] in
+            self?.coordinator?.dismissFlow()
+        })
     }
     
     // MARK: - Additional Helpers
