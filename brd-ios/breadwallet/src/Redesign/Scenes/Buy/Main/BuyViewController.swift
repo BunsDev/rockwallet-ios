@@ -112,7 +112,6 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     override func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return UITableViewCell()
@@ -278,17 +277,21 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay) {
-        coordinator?.showPopup(with: responseDisplay.model, config: Presets.Popup.normal)
+        let _: WrapperPopupView<LimitsPopupView>? = coordinator?.showPopup(with: responseDisplay.config,
+                                                                           viewModel: responseDisplay.viewModel,
+                                                                           confirmedCallback: { [weak self] in
+            self?.coordinator?.dismissFlow()
+        })
     }
     
     // MARK: - Additional Helpers
     @objc func updatePaymentMethod() {
         guard let availablePayments = dataStore?.availablePayments else { return }
         
-        dataStore?.paymentMethod = availablePayments.contains(.ach) == true ? .ach : .card
+        let paymentMethod: PaymentCard.PaymentType? = availablePayments.contains(.ach) == true ? .ach : .card
         tableView.reloadData()
         
-        interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .card))
+        interactor?.retryPaymentMethod(viewAction: .init(method: paymentMethod ?? .card))
     }
     
     private func mapStructToDictionary<T>(item: T) -> [String: Any] {
