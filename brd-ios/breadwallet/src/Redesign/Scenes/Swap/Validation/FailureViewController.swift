@@ -26,6 +26,7 @@ enum FailureReason: SimpleMessage {
     case plaidConnection
     case sell
     case documentVerification
+    case documentVerificationRetry
     
     var iconName: String {
         switch self {
@@ -48,7 +49,7 @@ enum FailureReason: SimpleMessage {
         case .plaidConnection:
             return L10n.Buy.plaidErrorTitle
             
-        case .documentVerification:
+        case .documentVerification, .documentVerificationRetry:
             return L10n.Account.idVerificationRejected
         }
     }
@@ -72,6 +73,9 @@ enum FailureReason: SimpleMessage {
             
         case .documentVerification:
             return L10n.Account.IdVerificationRejected.description
+            
+        case .documentVerificationRetry:
+            return "description 2"
         }
     }
     
@@ -79,6 +83,9 @@ enum FailureReason: SimpleMessage {
         switch self {
         case .swap:
             return L10n.Swap.retry
+            
+        case .documentVerification:
+            return "Contact us"
             
         default:
             return L10n.PaymentConfirmation.tryAgain
@@ -90,7 +97,7 @@ enum FailureReason: SimpleMessage {
         case .swap:
             return L10n.Swap.backToHome
             
-        case .documentVerification:
+        case .documentVerification, .documentVerificationRetry:
             return L10n.Button.tryLater
             
         default:
@@ -122,9 +129,19 @@ class FailureViewController: BaseInfoViewController {
         }
         return [
             .init(title: buttonTitle != nil ? buttonTitle : failure?.firstButtonTitle) { [weak self] in
-                if self?.failure == .swap {
+                switch self?.failure {
+                case .swap:
                     self?.coordinator?.showSwap()
-                } else {
+                    
+                case .documentVerification:
+                    // show custumer support
+                    break
+                    
+                case .documentVerificationRetry:
+                    // retry document verification
+                    break
+                    
+                default:
                     if containsDebit || containsBankAccount {
                         self?.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .card : .ach)
                     } else {
@@ -132,10 +149,19 @@ class FailureViewController: BaseInfoViewController {
                     }
                 }},
             .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
-                if self?.failure == .buyCard {
+                switch self?.failure {
+                case .buyCard:
                     self?.coordinator?.showSupport()
-                } else if self?.failure == .swap {
+                    
+                case .swap:
                     self?.coordinator?.dismissFlow()
+                    
+                case .documentVerification, .documentVerificationRetry:
+                    // try later -> dismiss flow?
+                    break
+                    
+                default:
+                    break
                 }
             })
         ]
