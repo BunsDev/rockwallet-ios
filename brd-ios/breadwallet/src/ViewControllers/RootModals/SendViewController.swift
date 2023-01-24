@@ -80,9 +80,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     private var amount: Amount? {
         didSet {
-            if amount != maximum {
-                isSendingMax = false
-            }
             if oldValue != amount {
                 updateFees()
             }
@@ -295,6 +292,10 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     
     @objc private func updateFees() {
         guard let amount = amount else { return }
+        guard amount <= balance else {
+            _ = handleValidationResult(.insufficientFunds)
+            return
+        }
         guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
@@ -303,6 +304,20 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                 case .success(let fee):
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
+                    
+                    if self?.isSendingMax != true {
+                        guard let balance = self?.balance else { return }
+                        guard let feeCurrency = self?.sender.wallet.feeCurrency else {
+                            return
+                        }
+                        let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
+
+                        if amount.currency == feeAmount.currency {
+                            if amount + feeAmount > balance {
+                                _ = self?.handleValidationResult(.insufficientGas)
+                            }
+                        }
+                    }
                     
                 case .failure(let error):
                     self?.handleEstimateFeeError(error: error)
