@@ -645,6 +645,8 @@
 /* More information button */
 "Button.moreInfo" = "자세한 정보";
 
+"Button.moreLimits" = "More limits";
+
 /* No button */
 "Button.no" = "아니오";
 

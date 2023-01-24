@@ -645,6 +645,8 @@
 /* More information button */
 "Button.moreInfo" = "More info";
 
+"Button.moreLimits" = "More limits";
+
 /* No button */
 "Button.no" = "No";
 
