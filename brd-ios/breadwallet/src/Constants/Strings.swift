@@ -571,6 +571,8 @@ internal enum L10n {
     internal static let menu = L10n.tr("Localizable", "Button.menu", fallback: "Menu")
     /// More information button
     internal static let moreInfo = L10n.tr("Localizable", "Button.moreInfo", fallback: "More info")
+    /// More limits
+    internal static let moreLimits = L10n.tr("Localizable", "Button.moreLimits", fallback: "More limits")
     /// No button
     internal static let no = L10n.tr("Localizable", "Button.no", fallback: "No")
     /// OK button label
