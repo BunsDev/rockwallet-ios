@@ -272,16 +272,12 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             }
             self?.isSendingMax = true
             
-            if max.currency.network.name == Currencies.shared.eth?.name {
-                if max.currency.isEthereum { // Only adjust maximum for ETH
-                    let adjustTokenValue = max.tokenValue * 0.85 // Reduce amount for ETH estimate fee API call
-                    max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: max.currency)
-                }
-                self?.amountView.forceUpdateAmount(amount: max)
-            } else {
-                self?.amountView.forceUpdateAmount(amount: max)
-                self?.updateFeesMax(depth: 0)
+            if max.currency.isEthereum { // Only adjust maximum for ETH
+                let adjustTokenValue = max.tokenValue * 0.85 // Reduce amount for ETH estimate fee API call
+                max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: max.currency)
             }
+            self?.amountView.forceUpdateAmount(amount: max)
+            self?.updateFeesMax(depth: 0)
         }
     }
     
@@ -354,7 +350,14 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     }
                     
                 case .failure(let error):
-                    self?.handleEstimateFeeError(error: error)
+                    // updateFeesMax failed, default to a 15% reduction
+                    if maximum.currency.isEthereum {
+                        let adjustTokenValue = maximum.tokenValue * 0.85 // Reduce amount for ETH estimate fee API call
+                        let max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
+                        self?.amountView.forceUpdateAmount(amount: max)
+                    } else {
+                        self?.handleEstimateFeeError(error: error)
+                    }
                 }
                 
                 self?.amountView.updateBalanceLabel()
