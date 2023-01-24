@@ -645,6 +645,8 @@
 /* More information button */
 "Button.moreInfo" = "さらなる情報";
 
+"Button.moreLimits" = "More limits";
+
 /* No button */
 "Button.no" = "いいえ";
 
