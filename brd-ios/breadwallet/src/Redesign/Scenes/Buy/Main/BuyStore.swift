@@ -51,10 +51,16 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         else { return nil }
         
         let limitsString = NSMutableAttributedString(string: paymentMethod == .ach ?
-                                                             L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText))
-        let linkRange = limitsString.mutableString.range(of: L10n.Button.moreInfo)
-        if linkRange.location != NSNotFound {
-            limitsString.addAttribute(.underlineStyle, value: 1, range: linkRange)
+                                                     L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText))
+        
+        let linkRange = limitsString.mutableString.range(of: "More limits")
+        
+        if isCustomLimits {
+            if linkRange.location != NSNotFound {
+                limitsString.addAttribute(.underlineStyle, value: 1, range: linkRange)
+            }
+        } else {
+            limitsString.replaceCharacters(in: linkRange, with: "")
         }
         
         return limitsString
@@ -97,6 +103,16 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
             return false
         }
         return true
+    }
+    
+    var isCustomLimits: Bool {
+        guard let limits = UserManager.shared.profile?.limits else { return false }
+        
+        let isCustom = paymentMethod == .ach ?
+        limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false :
+        limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
+        
+        return isCustom
     }
     
     var availablePayments: [PaymentCard.PaymentType] = []
