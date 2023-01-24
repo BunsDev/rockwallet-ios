@@ -1978,7 +1978,7 @@
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%1$@ de %2$@";
 
-"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word recovery phrase generated  in the next step.";
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated  in the next step.";
 
 "RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
