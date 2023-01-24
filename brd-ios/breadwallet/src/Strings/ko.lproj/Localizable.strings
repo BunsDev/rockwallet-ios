@@ -52,6 +52,9 @@
 
 "Account.ConfirmPassword" = "Confirm your password";
 
+/* Contact us */
+"Account.ContactUs" = "";
+
 /* Country title label in select countries view */
 "Account.Country" = "Country";
 
@@ -111,6 +114,9 @@
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
 "Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
+
+/* Please try to complete your verification again, while keeping the following in mind:, - Please ensure your type of ID is supported., - Make sure the area is well-lit and there's no glare on the ID or your face. , - Double check that your ID isn't expired or invalid. */
+"Account.IdVerificationRetry" = "";
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
@@ -211,6 +217,9 @@
 
 "Account.VerifyIdentityPlain" = "We need to verify your identity before you can buy or swap assets.";
 
+/* Try again */
+"Account.VerifyIdentityTryAgain" = "";
+
 /* Verify personal information text explanation */
 "Account.VerifyPersonalInformation" = "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.";
 
@@ -222,7 +231,7 @@
 "Account.Welcome" = "Welcome!";
 
 /* Why verify my account title */
-"Account.WhyVerify" = "Why should I verify my identity? ";
+"Account.WhyVerify" = "Why should I verify my identity?";
 
 /* Write your name as it appears on your ID label in create account */
 "Account.WriteYourName" = "Write your name as it appears on your ID";
@@ -1967,7 +1976,7 @@
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%2$@ 중 %1$@";
 
-"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word security phrase generated  in the next step.";
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word recovery phrase generated  in the next step.";
 
 "RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
@@ -3183,6 +3192,8 @@
 "VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
 
 "VerifyAccount.VerifyMyIdentity " = "Verify my identity";
+
+"VerifyAccount.VerifyMyIdentity" = "Verify my identity";
 
 "VerifyAccount.VerifyYourIdentity" = "Verify your identity";
 
