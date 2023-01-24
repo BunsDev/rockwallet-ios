@@ -153,6 +153,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             
             let toFee = actionResponse.toFee?.fiatValue ?? 0
             if let to = actionResponse.to?.fiatValue,
+               to > 0,
                to < toFee {
                 // toAmount does not cover widrawal fee
                 presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
