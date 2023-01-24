@@ -143,7 +143,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Body.three,
                                        textColor: LightColors.Text.two,
-                                       isUserInteractionEnabled: true))
+                                       isUserInteractionEnabled: dataStore?.isCustomLimits ?? false))
             view.setup(with: model)
             
             view.didTapLink = { [weak self] in
