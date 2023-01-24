@@ -53,7 +53,7 @@
 "Account.ConfirmPassword" = "Confirm your password";
 
 /* Contact us */
-"Account.ContactUs" = "";
+"Account.ContactUs" = "Contact us";
 
 /* Country title label in select countries view */
 "Account.Country" = "Country";
@@ -115,8 +115,8 @@
 
 "Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
 
-/* Please try to complete your verification again, while keeping the following in mind:, - Please ensure your type of ID is supported., - Make sure the area is well-lit and there's no glare on the ID or your face. , - Double check that your ID isn't expired or invalid. */
-"Account.IdVerificationRetry" = "";
+/* Retry verification description */
+"Account.IdVerificationRetry" = "Please try to complete your verification again, while keeping the following in mind:\n- Please ensure your type of ID is supported.\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n- Double check that your ID isn't expired or invalid.";
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
@@ -218,7 +218,7 @@
 "Account.VerifyIdentityPlain" = "We need to verify your identity before you can buy or swap assets.";
 
 /* Try again */
-"Account.VerifyIdentityTryAgain" = "";
+"Account.VerifyIdentityTryAgain" = "Try again";
 
 /* Verify personal information text explanation */
 "Account.VerifyPersonalInformation" = "We need to verify your personal information for compliance purposes. This information won’t be shared with outside sources unless required by law.";
