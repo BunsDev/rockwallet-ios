@@ -102,6 +102,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     
     private var timer: Timer?
     
+    private var ethMultiplier: Decimal = 0.80
+    
     private func startTimer() {
         guard timer?.isValid != true else { return }
         
@@ -273,7 +275,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             self?.isSendingMax = true
             
             if max.currency.isEthereum { // Only adjust maximum for ETH
-                let adjustTokenValue = max.tokenValue * 0.85 // Reduce amount for ETH estimate fee API call
+                let adjustTokenValue = max.tokenValue * (self?.ethMultiplier ?? 0.80) // Reduce amount for ETH estimate fee API call
                 max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: max.currency)
             }
             self?.amountView.forceUpdateAmount(amount: max)
@@ -350,9 +352,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     }
                     
                 case .failure(let error):
-                    // updateFeesMax failed, default to a 15% reduction
+                    // updateFeesMax failed, default to a fixed reduction
                     if maximum.currency.isEthereum {
-                        let adjustTokenValue = maximum.tokenValue * 0.85 // Reduce amount for ETH estimate fee API call
+                        let adjustTokenValue = maximum.tokenValue * (self?.ethMultiplier ?? 0.80) // Reduce amount for ETH estimate fee API call
                         let max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
                         self?.amountView.forceUpdateAmount(amount: max)
                     } else {
