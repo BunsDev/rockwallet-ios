@@ -180,8 +180,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         
         let currency = selectedCurrency == nil ? dataStore?.toAmount : selectedCurrency
-        dataStore?.toAmount = currency
         dataStore?.paymentMethod = viewAction.method
+        dataStore?.toAmount = currency
         
         getExchangeRate(viewAction: .init())
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
