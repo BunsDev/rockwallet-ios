@@ -147,6 +147,22 @@ enum VerificationStatus: Equatable {
     }
 }
 
+extension VerificationStatus {
+    // TODO: we should really try and combine all this enums :see-no-evil:
+    func isVerified(for role: CustomerRole) -> Bool {
+        switch role {
+        case .kyc1:
+            return self == .levelOne || self == .levelTwo(.levelTwo)
+            
+        case .kyc2:
+            return self == .levelTwo(.levelTwo)
+            
+        default:
+            return false
+        }
+    }
+}
+
 struct StatusViewConfiguration: Configurable {
     var title: LabelConfiguration?
     var background: BackgroundConfiguration?
