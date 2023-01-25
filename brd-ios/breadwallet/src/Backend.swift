@@ -52,7 +52,7 @@ class Backend {
     // MARK: Setup
     
     static func connect(authenticator: WalletAuthenticator) {
-        guard let key = authenticator.apiAuthKey else { return assertionFailure() }
+        guard let key = authenticator.apiAuthKey else { return }
         shared.apiClient = BRAPIClient(authenticator: authenticator)
         shared.kvStore = try? BRReplicatedKVStore(encryptionKey: key, remoteAdaptor: KVStoreAdaptor(client: shared.apiClient))
         shared.exchangeUpdater = ExchangeUpdater()

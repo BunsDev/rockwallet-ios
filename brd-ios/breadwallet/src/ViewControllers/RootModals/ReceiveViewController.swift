@@ -151,7 +151,7 @@ class ReceiveViewController: UIViewController, Subscriber {
     }
 
     private func setReceiveAddress() {
-        guard let wallet = currency.wallet else { return assertionFailure() }   
+        guard let wallet = currency.wallet else { return }   
         let addressText = isBTCLegacy ? wallet.receiveAddress(for: .btcLegacy) : wallet.receiveAddress
         
         address.text = addressText
@@ -215,7 +215,7 @@ class ReceiveViewController: UIViewController, Subscriber {
             alertView.contentView?.isHidden = true
         }
 
-        UIView.spring(Presets.Animation.duration, animations: {
+        UIView.spring(Presets.Animation.short.rawValue, animations: {
             if shouldAdjustPadding {
                 let newPadding = self.sharePopout.isExpanded ? largeSharePadding : smallSharePadding
                 self.topSharePopoutConstraint?.constant = newPadding

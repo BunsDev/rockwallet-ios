@@ -216,7 +216,11 @@ class WrapperPopupView<T: ViewProtocol & UIView>: UIView,
         wrappedView.setup(with: viewModel.wrappedView)
         
         confirmButton.setup(with: viewModel.confirm)
+        confirmButton.isHidden = viewModel.confirm == nil
+        
         cancelButton.setup(with: viewModel.cancel)
+        cancelButton.isHidden = viewModel.cancel == nil
+        
         lineView.isHidden = viewModel.hideSeparator
         
         guard headerLeadingView.isHidden,
@@ -264,7 +268,7 @@ class WrapperPopupView<T: ViewProtocol & UIView>: UIView,
     }
     
     private func hide() {
-        UIView.animate(withDuration: Presets.Animation.duration, animations: { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue, animations: { [weak self] in
             self?.alpha = 0
         }, completion: { [weak self] _ in
             self?.removeFromSuperview()

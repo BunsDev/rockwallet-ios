@@ -37,6 +37,8 @@
 /* Account Verification screen title */
 "Account.AccountVerification" = "Vérification du compte";
 
+"Account.AlreadyCreated" = "Already have an account?";
+
 /* Account balance */
 "Account.balance" = "Solde";
 
@@ -46,14 +48,31 @@
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Modifier votre adresse e-mail";
 
+"Account.City" = "City*";
+
+"Account.ConfirmPassword" = "Confirm your password";
+
+/* Contact us */
+"Account.ContactUs" = "Contact us";
+
 /* Country title label in select countries view */
 "Account.Country" = "Pays";
+
+"Account.CountryRegion" = "Country/Region*";
 
 /* Create a RockWallet account by entering your email address label in registration flow */
 "Account.CreateAccount" = "Créer un compte RockWallet en indiquant votre adresse e-mail.";
 
+"Account.CreateAccountButton" = "Create account";
+
+"Account.CreateNewAccountTitle" = "Create your account";
+
+"Account.CreateNewPasswordTitle" = "Create new password";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Limite actuelle : 1 000 USD/jour";
+
+"Account.Daily" = "Daily";
 
 /* Issues for processing your data label on profile screen */
 "Account.DataIssues" = "Oups ! Nous avons rencontré des problèmes dans le traitement de vos données";
@@ -71,8 +90,18 @@
 
 "Account.Email" = "E-mail";
 
+"Account.EnterEmail" = "Enter your e-mail";
+
+"Account.EnterPassword" = "Create your password";
+
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ par %2$@";
+
+"Account.explanationSSN" = "We are required to verify the identity of all our users to comply with regulations.\n\nThat is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.";
+
+"Account.FinalizingDecision" = "Finalizing the decision";
+
+"Account.ForgotPassword" = "Forgot password?";
 
 /* Get full access for the RockWallet label on profile screen */
 "Account.FullAccess" = "Accédez à l'intégralité de votre portefeuille RockWallet !";
@@ -80,22 +109,53 @@
 /* ID Verification title on account screen */
 "Account.IDVerification" = "Identifiant de vérification";
 
+"Account.IdVerificationApproved" = "Your ID verification was successfully approved!";
+
+"Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
+
+"Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
+
+/* Retry verification description */
+"Account.IdVerificationRetry" = "Please try to complete your verification again, while keeping the following in mind:\n- Please ensure your type of ID is supported.\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n- Double check that your ID isn't expired or invalid.";
+
+"Account.infoLinkSSN" = "Why do we need your SSN?";
+
+"Account.LetsGetVerified" = "Let’s get you verified";
+
 /* Loading Wallet Message */
 "Account.loadingMessage" = "Chargement du portefeuille";
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Faites vérifier votre compte pour accéder à l'intégralité de votre portefeuille RockWallet !";
 
+"Account.Monthly" = "Monthly";
+
+"Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
+
 "Account.Pending" = "En cours…";
 
 /* Account Personal Information title */
 "Account.PersonalInformation" = "Informations personnelles";
 
+"Account.PleaseTryAgain" = "Please try again.";
+
+"Account.PostalCode" = "Postal Code*";
+
 /* Promotion and offers label when registering account */
 "Account.Promotion" = "J'accepte de recevoir des promotions, des offres et des communications futures.";
 
+"Account.PromotionsTickbox" = "I’m ok with receiving future promotion, offers and communications";
+
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Document d'identité";
+
+"Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
+
+"Account.ResetPasswordTitle" = "Reset your password";
+
+"Account.ResidentialAddress" = "Residential address";
 
 "Account.Resubmit" = "Envoyer à nouveau";
 
@@ -106,6 +166,14 @@
 
 "Account.SelectState" = "Sélectionner un État";
 
+"Account.SignIn" = "Sign in";
+
+"Account.SocialSecurityNumber" = "Social Security Number";
+
+"Account.SocialSecurityNumberRequired" = "Social security number*";
+
+"Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
+
 /* State title label in select state view */
 "Account.State" = "État";
 
@@ -115,10 +183,16 @@
 /* Swap and buy limit per day description label */
 "Account.SwapAndBuyLimit" = "Limite d'échange : 10 000 USD/jour\nLimite d'achat : 500 USD/jour";
 
+"Account.TermsTickbox" = "I agree to RockWallet’s";
+
 /* Upgrade your limits label in profile screen */
 "Account.UpgradeLimits" = "Mettre à jour vos limites";
 
 "Account.UpgradeVerificationIdentity" = "Vous devez mettre à jour votre statut de vérification avant de pouvoir acheter des actifs.";
+
+"Account.VeriffPrivacyPolicy" = "Veriff’s Privacy Policy";
+
+"Account.VeriffTerms" = "Your session audio and video may be recorded.\nRead more from %s";
 
 /* You need to be at least 18 years old to complete Level 1 verification label in verify account */
 "Account.Verification" = "Vous devez avoir au moins 18 ans pour effectuer la vérification de niveau 1.";
@@ -139,10 +213,19 @@
 
 "Account.VerifyIdentity" = "Nous devons vérifier votre identité avant que vous puissiez %s des actifs.";
 
+"Account.VerifyIdentityByVeriff" = "RockWallet would like to confirm your identity, a process is powered by Veriff.";
+
 "Account.VerifyIdentityPlain" = "Nous devons vérifier votre identité avant que vous ne puissiez acheter ou échanger des actifs.";
+
+/* Try again */
+"Account.VerifyIdentityTryAgain" = "Try again";
 
 /* Verify personal information text explanation */
 "Account.VerifyPersonalInformation" = "Nous devons vérifier vos informations personnelles pour des raisons de conformité. Ces informations ne seront pas partagées avec des sources externes, sauf obligation légale.";
+
+"Account.WaitFewMinutes" = "This may take a few minutes.";
+
+"Account.Weekly" = "Weekly";
 
 /* Welcome title on registration screen */
 "Account.Welcome" = "Bienvenue !";
@@ -231,6 +314,8 @@
 /* Before start label */
 "AccountKYCLevelTwo.BeforeStart" = "Avant de vous lancer, veuillez :";
 
+"AccountKYCLevelTwo.BiometricsVerified" = "Biometrics verified";
+
 /* Buy limits on KYC2 account */
 "AccountKYCLevelTwo.BuyLimits" = "Limite d'achat : 500 USD/jour, aucune limite à vie";
 
@@ -253,6 +338,8 @@
 /* Document confirmation label for KYC2 */
 "AccountKYCLevelTwo.DocumentConfirmation" = "Assurez-vous que les informations du document soient clairement visibles et dans le cadre.";
 
+"AccountKYCLevelTwo.DocumentInspected" = "Document inspected";
+
 /* Documents review label in KYC2 */
 "AccountKYCLevelTwo.DocumentsReview" = "Nous examinons vos documents et nous vous informerons lorsque votre compte aura été vérifié.";
 
@@ -269,6 +356,8 @@
 
 /* Front page of the document instructions text for KYC2 */
 "AccountKYCLevelTwo.FrontPageInstructions" = "Assurez-vous d'avoir capturé tout le recto du document.";
+
+"AccountKYCLevelTwo.ImageQualityChecked" = "Image quality checked";
 
 /* KYC Level Two status */
 "AccountKYCLevelTwo.InProgress" = "La vérification de votre identité est en cours…";
@@ -299,6 +388,14 @@
 
 /* Sending your data label for verification on KYC2 */
 "AccountKYCLevelTwo.SendingData" = "Envoi de vos données pour vérification…";
+
+"AccountKYCLevelTwo.TakeDocumentBackContent" = "Turn your ID card around and take a photo of the other side.";
+
+"AccountKYCLevelTwo.TakeDocumentBackTitle" = "Turn your ID card around";
+
+"AccountKYCLevelTwo.TakeDocumentFrontContent" = "Make sure your photo is clear and readable. We support ID cards, passports and driver’s license";
+
+"AccountKYCLevelTwo.TakeDocumentFrontTitle" = "Take a photo of your document’s photo page";
 
 "AccountKYCLevelTwo.TakeIdBackPhotoContent" = "Assurez-vous que votre carte d'identité soit claire et lisible et qu'elle tienne entièrement dans le cadre.";
 
@@ -381,11 +478,15 @@
 /* Addresses Copied Alert sub header */
 "Alerts.copiedAddressesSubheader" = "Toutes les adresses du portefeuille ont été copiées avec succès.";
 
+"Alerts.emailSent" = "Email sent!";
+
 /* Alert Header Label (the paper key was set) */
 "Alerts.paperKeySet" = "Ensemble des clés papier";
 
 /* Alert Subheader label (playfully positive) */
 "Alerts.paperKeySetSubheader" = "Impressionnant !";
+
+"Alerts.phraseConfirmed" = "Success!";
 
 /* Alert Header label (the PIN was set) */
 "Alerts.pinSet" = "Ensemble PIN";
@@ -493,6 +594,8 @@
 /* As in "(tap here to) buy (bitcoin)" */
 "Button.buy" = "Acheter";
 
+"Button.BuyDigitalAssets" = "Buy digital assets";
+
 /* Cancel button label */
 "Button.cancel" = "Annuler";
 
@@ -517,6 +620,8 @@
 /* Finish button title */
 "Button.Finish" = "Terminer";
 
+"Button.FundWalletWithAch" = "Fund your wallet with ACH";
+
 /* Go to dashboard button */
 "Button.GoToDashboard" = "Accéder au tableau de bord";
 
@@ -525,6 +630,8 @@
 
 /* Ignore button label */
 "Button.ignore" = "Rejeter";
+
+"Button.letsGo" = "Let’s go!";
 
 /* Map button */
 "Button.map" = "Carte";
@@ -537,6 +644,8 @@
 
 /* More information button */
 "Button.moreInfo" = "Plus d'informations";
+
+"Button.moreLimits" = "More limits";
 
 /* No button */
 "Button.no" = "Non";
@@ -552,6 +661,8 @@
 
 /* receive button */
 "Button.receive" = "Recevoir";
+
+"Button.ReceiveDigitalAssets" = "Receive digital assets";
 
 "Button.remove" = "Supprimer";
 
@@ -578,6 +689,8 @@
 
 /* Settings button label */
 "Button.submit" = "Envoyer";
+
+"Button.TryLater" = "Try later";
 
 /* Button label to uninstall the app. */
 "Button.uninstall.android" = "Désinstallez";
@@ -635,6 +748,8 @@
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Adresse de facturation";
 
+"Buy.BuyLimit" = "Buy limits";
+
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Actuellement, le montant minimum d'achat est de $%s USD et le montant maximum est de $%s USD/jour.";
 
@@ -673,6 +788,10 @@
 "Buy.Country" = "Pays";
 
 "Buy.CvvHint" = "XXX";
+
+"Buy.dailyMaLimits" = "Daily max";
+
+"Buy.dailyMinLimits" = "Daily min";
 
 /* Buy details title */
 "Buy.Details" = "Informations d'achat";
@@ -721,6 +840,8 @@
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Payer avec";
+
+"Buy.perTransactionLimit" = "Per Transaction Limit";
 
 "Buy.plaidErrorDescription" = "Veuillez vérifier auprès de votre banque ou réessayer plus tard.";
 
@@ -778,6 +899,10 @@
 "Buy.txHashHeader" = "Identifiant de transaction %s";
 
 "Buy.understandAndAgree" = "Je comprends et j'accepte";
+
+"Buy.YourAchBuyLimits" = "Your ACH buy limits";
+
+"Buy.YourBuyLimits" = "Your card buy limits";
 
 /* Your order label in buy flow */
 "Buy.YourOrder" = "Votre commande :";
@@ -916,8 +1041,6 @@
 /* Word label eg. Word #1, Word #2 */
 "ConfirmPaperPhrase.word" = "Mot no.%1$@";
 
-"ConfirmRecoveryPhrase.Title" = "Confirmer la phrase de récupération";
-
 "CreateGift.amountLabel" = "Choisissez le montant ($ USD)";
 
 "CreateGift.create" = "Créer";
@@ -1020,13 +1143,15 @@
 "ErrorMessages.emailUnavailableTitle" = "E-mail non disponible";
 
 /* Not enough ETH for transaction fee */
-"ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
+"ErrorMessages.ethBalanceLowAddEth" = "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
 
 "ErrorMessages.exchangeFailed" = "Échec de l'échange. Motif : %s.";
 
 "ErrorMessages.ExchangeQuoteFailed" = "Nous rencontrons actuellement des difficultés pour réaliser un échange entre ces deux pièces. Veuillez réessayer plus tard.";
 
 "ErrorMessages.ExchangesUnavailable" = "Nous rencontrons des problèmes temporaires sur notre réseau. Veuillez réessayer plus tard.";
+
+"ErrorMessages.highWidrawalFee" = "Minimum buy/swap amount for this pair is temporarily higher due to higher withdrawal network fees. Try other pairs or try again later.";
 
 "ErrorMessages.Kyc.Underage" = "Vous devez avoir au moins 18 ans pour effectuer les vérifications de niveaux 1 et 2.";
 
@@ -1574,9 +1699,6 @@
 /* Warning about recovery phrase (formerly paper key). */
 "Prompts.PaperKey.body" = "Votre paperkey doit être sauvegardé au cas où vous perdiez ou changiez votre téléphone.";
 
-/* Warning about paper key (Android-version) */
-"Prompts.PaperKey.Body.Android" = "Paramétrez votre clé papier au cas où vous perdriez ou remplaceriez votre téléphone. Votre clé sera également requise si vous modifiez les paramètres de sécurité de votre téléphone.";
-
 /* An action is required (You must do this action). */
 "Prompts.PaperKey.title" = "Une action est requise";
 
@@ -1624,6 +1746,8 @@
 
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Mettre à jour le code PIN";
+
+"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap, Buy and Sell seamlessly.";
 
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "Activez les notifications push et soyez le premier à être informé des nouvelles fonctionnalités et des offres spéciales.";
@@ -1763,11 +1887,19 @@
 /* Title for a button that takes the user to the wallet after setting up the recovery key. */
 "RecoveryKeyFlow.goToWalletButtonTitle" = "Aller au portefeuille";
 
+"RecoveryKeyFlow.HelpPopup.content" = "Your Recovery Phrase consists of 12 randomly generated words that the wallet creates for you automatically when you start a new wallet.\n\nThe Recovery Phrase is critically important and should be written down and stored in a safe location. In the event of phone theft, destruction or loss, the Recovery Phrase can be used to load your wallet onto a new phone. The Recovery Phrase is also required when upgrading your current phone to a new one.";
+
+"RecoveryKeyFlow.HelpPopup.title" = "What is “Recovery Phrase”?";
+
 /* Hint text for recovery key intro page, e.g., Step 2 */
 "RecoveryKeyFlow.howItWorksStep" = "Comment ça marche - Étape %1$@";
 
 /* Error text displayed when the user enters an incorrect recovery phrase */
 "RecoveryKeyFlow.invalidPhrase" = "Certains mots que vous avez saisis ne correspondent pas à votre clé de récupération. Veuillez réessayer.";
+
+"RecoveryKeyFlow.KeepPhrasePrivate.subtitle" = "Remember that anyone with your Recovery Phrase can access your Assets.";
+
+"RecoveryKeyFlow.KeepPhrasePrivate.title" = "Keep it private";
 
 /* Title for recovery key intro page */
 "RecoveryKeyFlow.keepSecure" = "Gardez-la en sécurité";
@@ -1799,6 +1931,10 @@
 /* Assures the user that BRD will keep the user's funds secure. */
 "RecoveryKeyFlow.securityAssurance" = "Achetez et échangez en sachant que vos fonds sont protégés par la meilleure sécurité et la plus grande confidentialité qui soient.";
 
+"RecoveryKeyFlow.StorePhraseSecurely.subtitle" = "This is the only way you’ll be able to recover your funds. RockWallet does not keep a copy.";
+
+"RecoveryKeyFlow.StorePhraseSecurely.title" = "Store it securely";
+
 /* Recommends that the user stores the recovery key in a secure location */
 "RecoveryKeyFlow.storeSecurelyRecommendation" = "Conservez votre clé dans un endroit sécurisé. C'est le seul moyen de récupérer votre portefeuille. RockWallet n'en conserve pas de copie.";
 
@@ -1807,6 +1943,10 @@
 
 /* Subtitle for the success page after the recovery key has been set up */
 "RecoveryKeyFlow.successSubheading" = "Vous êtes prêt à déposer, échanger et acheter de la crypto-monnaie à partir de votre portefeuille RockWallet.";
+
+"RecoveryKeyFlow.tickbox.value" = "I understand the importance of the Recovery Phrase.";
+
+"RecoveryKeyFlow.Title" = "Secure your wallet with your Recovery Phrase";
 
 /* Title displayed to the user on the intro screen when unlinking a wallet */
 "RecoveryKeyFlow.unlinkWallet" = "Dissociez votre portefeuille de cet appareil.";
@@ -1837,6 +1977,10 @@
 
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%1$@ de %2$@";
+
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated  in the next step.";
+
+"RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
 "RecoveryKeyOnboarding.description1" = "Cette action est requise pour restaurer votre portefeuille en cas de mise à jour ou de perte de votre portable.";
 
@@ -2478,6 +2622,8 @@
 /* Swap again button title in swap failure screen */
 "Swap.SwapAgain" = "Recommencer l'échange";
 
+"Swap.SwapLimit" = "Swap limits";
+
 /* Swap min and max limit text */
 "Swap.SwapLimits" = "Actuellement, le montant minimum d'échange est de $%s USD et le maximum est de $%s USD/jour.";
 
@@ -2941,6 +3087,10 @@
 /* Wipe wallet prompt */
 "UnlockScreen.wipePrompt" = "Voulez-vous vraiment supprimer ce portefeuille ?";
 
+"UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
+
+"UpdatePin.Alert.title" = "What is a PIN?";
+
 /* Update PIN caption text */
 "UpdatePin.caption" = "Souvenez-vous de ce code PIN. Si vous l'oubliez, vous ne pourrez pas accéder à votre bitcoin.";
 
@@ -3040,6 +3190,12 @@
 "VerificationCode.title" = "Code de Confirmation";
 
 "VerifyAccount.Button" = "Vérifiez votre compte";
+
+"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
+
+"VerifyAccount.VerifyMyIdentity" = "Verify my identity";
+
+"VerifyAccount.VerifyYourIdentity" = "Verify your identity";
 
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "Veuillez entrer votre PIN pour autoriser cette transaction.";

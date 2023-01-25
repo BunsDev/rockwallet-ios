@@ -1,4 +1,4 @@
-// 
+//
 //  FEButton.swift
 //  breadwallet
 //
@@ -10,6 +10,7 @@
 
 import UIKit
 
+// TODO: Refactor to use Apple's button configurations
 struct ButtonConfiguration: Configurable {
     var normalConfiguration: BackgroundConfiguration?
     var selectedConfiguration: BackgroundConfiguration?
@@ -33,8 +34,9 @@ struct ButtonConfiguration: Configurable {
 
 struct ButtonViewModel: ViewModel {
     var title: String?
+    var attributedTitle: NSAttributedString?
     var isUnderlined = false
-    var image: String?
+    var image: UIImage?
     var enabled = true
     var callback: (() -> Void)?
 }
@@ -56,7 +58,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         didSet {
             guard isEnabled else { return }
             animateTo(state: isHighlighted ? .highlighted : .normal)
-        }   
+        }
     }
     
     override var isEnabled: Bool {
@@ -82,6 +84,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
     
     func setupSubviews() {
         layer.insertSublayer(shadowLayer, below: layer)
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -94,13 +97,12 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         guard let config = config else { return }
         
         self.config = config
-        
         contentEdgeInsets = config.buttonContentEdgeInsets
-        
         setTitleColor(config.normalConfiguration?.tintColor, for: .normal)
         setTitleColor(config.disabledConfiguration?.tintColor, for: .disabled)
         setTitleColor(config.selectedConfiguration?.tintColor, for: .selected)
         setTitleColor(config.selectedConfiguration?.tintColor, for: .highlighted)
+        titleLabel?.font = Fonts.button
         
         layoutIfNeeded()
     }
@@ -110,27 +112,40 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
 
         self.viewModel = viewModel
         
-        if let title = viewModel.isUnderlined ? viewModel.title : viewModel.title?.uppercased() {
-            if viewModel.isUnderlined {
-                let attributeString = NSMutableAttributedString(
-                    string: title,
-                    attributes: [
-                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
-                    ]
-                )
-                setAttributedTitle(attributeString, for: .normal)
+        var defaultAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.button]
+        let attributedString: NSAttributedString
+        
+        if viewModel.isUnderlined {
+            defaultAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
+        }
+        
+        if let title = viewModel.title {
+            let attributeTitle = NSMutableAttributedString(string: viewModel.isUnderlined ? title : title.uppercased())
+            attributeTitle.addAttributes(defaultAttributes, range: NSRange(location: 0, length: title.count))
+            
+            attributedString = attributeTitle
+        } else if let attributedTitle = viewModel.attributedTitle {
+            defaultAttributes.removeAll()
+            attributedString = attributedTitle
+        } else {
+            attributedString = NSAttributedString(string: "")
+        }
+        
+        setAttributedTitle(attributedString, for: .normal)
+        
+        if let image = viewModel.image {
+            if viewModel.title == nil && viewModel.attributedTitle == nil {
+                setBackgroundImage(image, for: .normal)
             } else {
-                setTitle(title, for: .normal)
+                imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+                titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+                setImage(image, for: .normal)
             }
         }
         
-        if let image = viewModel.image {
-            setBackgroundImage(.init(named: image), for: .normal)
-        }
-        
         isEnabled = viewModel.enabled
-        
-        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
     @objc private func buttonTapped() {
@@ -141,6 +156,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         let background: BackgroundConfiguration?
         let shadow = config?.shadowConfiguration
         
+        isUserInteractionEnabled = true
         switch state {
         case .normal:
             background = config?.normalConfiguration
@@ -150,6 +166,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
 
         case .disabled:
             background = config?.disabledConfiguration
+            isUserInteractionEnabled = false
 
         case .error, .filled:
             background = nil
@@ -158,11 +175,9 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         displayState = state
         
         UIView.setAnimationsEnabled(withAnimation)
-        
-        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.updateLayout(background: background, shadow: shadow)
         }
-        
         UIView.setAnimationsEnabled(true)
     }
     
@@ -174,24 +189,16 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
     func configure(shadow: ShadowConfiguration?) {
         guard let shadow = shadow else { return }
         
-        shadowLayer.frame = bounds
-        shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius).cgPath
-        shadowLayer.fillColor = backgroundColor?.cgColor ?? UIColor.clear.cgColor
-        shadowLayer.backgroundColor = UIColor.clear.cgColor
         shadowLayer.setShadow(with: shadow)
     }
     
     func configure(background: BackgroundConfiguration?) {
         guard let background = background else { return }
-        
-        layoutIfNeeded()
-        
+
         tintColor = background.tintColor
         titleLabel?.textColor = background.tintColor
-        titleLabel?.font = Fonts.button
+        imageView?.tintColor = background.tintColor
         
         setBackground(with: background)
-        
-        layer.masksToBounds = false
     }
 }

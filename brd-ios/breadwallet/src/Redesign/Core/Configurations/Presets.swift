@@ -103,8 +103,10 @@ extension Presets {
         
         static var secondary = ButtonConfiguration(normalConfiguration: Presets.Background.Secondary.normal
             .withBorder(border: Presets.Border.normalButtonFullRadius),
-                                                   selectedConfiguration: Presets.Background.Secondary.selected.withBorder(border: Presets.Border.selectedButtonFullRadius),
-                                                   disabledConfiguration: Presets.Background.Secondary.disabled.withBorder(border: Presets.Border.disabledButtonFullRadius))
+                                                   selectedConfiguration: Presets.Background.Secondary.selected
+            .withBorder(border: Presets.Border.selectedButtonFullRadius),
+                                                   disabledConfiguration: Presets.Background.Secondary.disabled
+            .withBorder(border: Presets.Border.disabledButtonFullRadius))
         
         static var noBorders = ButtonConfiguration(normalConfiguration: BackgroundConfiguration(tintColor: LightColors.secondary),
                                                    selectedConfiguration: Presets.Background.Secondary.selected,
@@ -189,7 +191,7 @@ extension Presets {
                                                                  tintColor: LightColors.Contrast.two,
                                                                  border: Presets.Border.mediumPlain),
                                                title: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center),
-                                               body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center),
+                                               body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                
                                                buttons: [Presets.Button.primary.withBorder(normal: Presets.Border.normalButtonFullRadius,
                                                                                            selected: Presets.Border.selectedButtonFullRadius,
@@ -211,8 +213,9 @@ extension Presets {
 }
 
 extension Presets {
-    struct Animation {
-        static var duration = 0.25
+    enum Animation: Double {
+        case short = 0.25
+        case long = 0.45
     }
 }
 
