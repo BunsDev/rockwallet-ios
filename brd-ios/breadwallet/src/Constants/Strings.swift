@@ -293,7 +293,9 @@ internal enum L10n {
     /// Biometrics verified
     internal static let biometricsVerified = L10n.tr("Localizable", "AccountKYCLevelTwo.BiometricsVerified", fallback: "Biometrics verified")
     /// Buy limits on KYC2 account
-    internal static let buyLimits = L10n.tr("Localizable", "AccountKYCLevelTwo.BuyLimits", fallback: "Buy limits: $500 USD/day, no lifetime limit")
+    internal static func buyLimits(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "AccountKYCLevelTwo.BuyLimits", p1, fallback: "Buy limits: $%s USD/day, no lifetime limit")
+    }
     /// Capture back page of the document text
     internal static let captureBackPage = L10n.tr("Localizable", "AccountKYCLevelTwo.CaptureBackPage", fallback: "Make sure to capture the entire back page of the document.")
     /// Make sure to capture the entire document.
@@ -331,7 +333,9 @@ internal enum L10n {
     /// Level two title in Account screen
     internal static let levelTwo = L10n.tr("Localizable", "AccountKYCLevelTwo.LevelTwo", fallback: "Level 2")
     /// Swap limits on KYC2 account
-    internal static let limits = L10n.tr("Localizable", "AccountKYCLevelTwo.Limits", fallback: "Swap limits: $10,000 USD/day, no lifetime limit")
+    internal static func limits(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "AccountKYCLevelTwo.Limits", p1, fallback: "Swap limits: $%s USD/day, no lifetime limit")
+    }
     /// Make sure before photo label in KYC2
     internal static let makeSure = L10n.tr("Localizable", "AccountKYCLevelTwo.MakeSure", fallback: "Make sure you are in a well-lit room")
     /// National ID card

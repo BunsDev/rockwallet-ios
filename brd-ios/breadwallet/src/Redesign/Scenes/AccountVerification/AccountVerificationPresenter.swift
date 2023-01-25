@@ -41,6 +41,9 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
         
         let sections = [ Models.Section.verificationLevel ]
         
+        let swapLimit = ExchangeFormatter.current.string(for: UserManager.shared.profile?.swapAllowanceDaily) ?? ""
+        let buyLimit = ExchangeFormatter.current.string(for: UserManager.shared.profile?.buyAllowanceDaily) ?? ""
+        
         let sectionRows: [Models.Section: [Any]] = [
             .verificationLevel: [
                 VerificationViewModel(kyc: .levelOne,
@@ -53,8 +56,8 @@ final class AccountVerificationPresenter: NSObject, Presenter, AccountVerificati
                                       title: .text(L10n.AccountKYCLevelTwo.levelTwo),
                                       status: levelTwoStatus,
                                       description: .text(description),
-                                      benefits: .text(L10n.AccountKYCLevelTwo.limits),
-                                      buyBenefits: .text(L10n.AccountKYCLevelTwo.buyLimits),
+                                      benefits: .text(L10n.AccountKYCLevelTwo.limits(swapLimit)),
+                                      buyBenefits: .text(L10n.AccountKYCLevelTwo.buyLimits(buyLimit)),
                                       isActive: isActive)
             ]
         ]
