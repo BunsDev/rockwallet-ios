@@ -317,7 +317,7 @@
 "AccountKYCLevelTwo.BiometricsVerified" = "Biometrics verified";
 
 /* Buy limits on KYC2 account */
-"AccountKYCLevelTwo.BuyLimits" = "Buy limits: $500 USD/day, no lifetime limit";
+"AccountKYCLevelTwo.BuyLimits" = "Buy limits: $%s USD/day, no lifetime limit";
 
 /* Capture back page of the document text */
 "AccountKYCLevelTwo.CaptureBackPage" = "Make sure to capture the entire back page of the document.";
@@ -369,7 +369,7 @@
 "AccountKYCLevelTwo.LevelTwo" = "Level 2";
 
 /* Swap limits on KYC2 account */
-"AccountKYCLevelTwo.Limits" = "Swap limits: $10,000 USD/day, no lifetime limit";
+"AccountKYCLevelTwo.Limits" = "Swap limits: $%s USD/day, no lifetime limit";
 
 /* Make sure before photo label in KYC2 */
 "AccountKYCLevelTwo.MakeSure" = "Make sure you are in a well-lit room";
@@ -1978,7 +1978,7 @@
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%1$@ von %2$@";
 
-"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word recovery phrase generated  in the next step.";
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated  in the next step.";
 
 "RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
