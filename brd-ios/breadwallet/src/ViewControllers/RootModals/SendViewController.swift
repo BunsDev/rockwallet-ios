@@ -14,19 +14,16 @@ typealias PresentScan = ((@escaping ScanCompletion) -> Void)
 typealias FeeEstimationError = WalletKit.Wallet.FeeEstimationError
 
 // swiftlint:disable type_body_length
-class SendViewController: UIViewController, Subscriber, ModalPresentable {
+class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     // MARK: - Public
     
     var presentScan: PresentScan?
-    var presentVerifyPin: ((String, @escaping ((String) -> Void)) -> Void)?
-    var onPublishSuccess: (() -> Void)?
     var parentView: UIView? //ModalPresentable
     
     init(sender: Sender, initialRequest: PaymentRequest? = nil) {
         let currency = sender.wallet.currency
         
         self.currency = currency
-        self.sender = sender
         self.initialRequest = initialRequest
         self.balance = currency.state?.balance ?? Amount.zero(currency)
         self.maximum = self.balance
@@ -35,7 +32,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         amountView = AmountViewController(currency: currency, isPinPadExpandedAtLaunch: false)
         attributeCell = AttributeCell(currency: currency)
         
-        super.init(nibName: nil, bundle: nil)
+        super.init(sender: sender)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -55,8 +52,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     private let sendButton = BRDButton(title: L10n.Send.sendLabel, type: .secondary)
     private var attributeCellHeight: NSLayoutConstraint?
     private let confirmTransitioningDelegate = PinTransitioningDelegate()
-    private let sendingActivity = BRActivityViewController(message: L10n.TransactionDetails.titleSending)
-    private let sender: Sender
     private let currency: Currency
     private let initialRequest: PaymentRequest?
     private var paymentProtocolRequest: PaymentProtocolRequest?
@@ -296,7 +291,10 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
             _ = handleValidationResult(.insufficientFunds)
             return
         }
-        guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
+        guard let address = address, !address.isEmpty else {
+            _ = handleValidationResult(.invalidAddress)
+            return
+        }
         
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
@@ -304,20 +302,6 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
                 case .success(let fee):
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
-                    
-                    if self?.isSendingMax != true {
-                        guard let balance = self?.balance else { return }
-                        guard let feeCurrency = self?.sender.wallet.feeCurrency else {
-                            return
-                        }
-                        let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
-
-                        if amount.currency == feeAmount.currency {
-                            if amount + feeAmount > balance {
-                                _ = self?.handleValidationResult(.insufficientGas)
-                            }
-                        }
-                    }
                     
                 case .failure(let error):
                     self?.handleEstimateFeeError(error: error)
@@ -474,7 +458,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
     }
     
     private func hideDestinationTag() {
-        UIView.animate(withDuration: Presets.Animation.duration, animations: {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue, animations: {
             self.attributeCellHeight?.constant = 0.0
             self.attributeCell?.alpha = 0.0
         }, completion: { _ in
@@ -564,7 +548,7 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         }
     }
     
-    private func showInsufficientGasError() {
+    internal override func showInsufficientGasError() {
         if currency.isEthereum {
             showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientGas)
         } else if currency.isERC20Token {
@@ -677,38 +661,10 @@ class SendViewController: UIViewController, Subscriber, ModalPresentable {
         return
     }
     
-    private func send() {
-        let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
-            guard let self = self else { return assertionFailure() }
-            self.sendingActivity.dismiss(animated: false) {
-                self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
-                    self.parent?.view.isFrameChangeBlocked = false
-                    pinValidationCallback(pin)
-                    self.present(self.sendingActivity, animated: false)
-                }
-            }
-        }
-        
-        present(sendingActivity, animated: true)
-        sender.sendTransaction(allowBiometrics: true, pinVerifier: pinVerifier) { [weak self] result in
-            guard let self = self else { return }
-            self.sendingActivity.dismiss(animated: true) {
-                defer { self.sender.reset() }
-                switch result {
-                case .success:
-                    self.dismiss(animated: true) {
-                        Store.trigger(name: .showStatusBar)
-                        self.onPublishSuccess?()
-                    }
-                case .creationError(let message):
-                    self.showAlert(title: L10n.Alerts.sendFailure, message: message)
-                case .publishFailure(let code, let message):
-                    let codeStr = code == 0 ? "" : " (\(code))"
-                    self.showAlert(title: L10n.Send.sendError, message: message + codeStr)
-                case .insufficientGas:
-                    self.showInsufficientGasError()
-                }
-            }
+    override func onSuccess() {
+        self.dismiss(animated: true) {
+            Store.trigger(name: .showStatusBar)
+            super.onSuccess()
         }
     }
     

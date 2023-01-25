@@ -16,6 +16,7 @@ struct LabelConfiguration: TextConfigurable {
     var textAlignment: NSTextAlignment = .left
     var numberOfLines: Int = 0
     var lineBreakMode: NSLineBreakMode = .byWordWrapping
+    var isUserInteractionEnabled: Bool = false
 }
 
 enum LabelViewModel: ViewModel {
@@ -26,6 +27,7 @@ enum LabelViewModel: ViewModel {
 class FELabel: UILabel, ViewProtocol {
     var viewModel: LabelViewModel?
     var config: LabelConfiguration?
+    var didTapLink: (() -> Void)?
     
     func configure(with config: LabelConfiguration?) {
         guard let config = config else { return }
@@ -37,6 +39,7 @@ class FELabel: UILabel, ViewProtocol {
         lineBreakMode = config.lineBreakMode
         font = config.font
         textColor = config.textColor
+        isUserInteractionEnabled = config.isUserInteractionEnabled
     }
     
     func setup(with viewModel: LabelViewModel?) {
@@ -50,9 +53,15 @@ class FELabel: UILabel, ViewProtocol {
         case .attributedText(let value):
             attributedText = value
             
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+            addGestureRecognizer(tapGesture)
         }
         
         sizeToFit()
         needsUpdateConstraints()
+    }
+    
+    @objc private func viewTapped() {
+        didTapLink?()
     }
 }

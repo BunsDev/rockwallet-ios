@@ -250,9 +250,9 @@ public extension Data {
     
     func chacha20Poly1305AEADEncrypt(key: Key) -> Data {
         let nonce = genNonce()
-        guard key.hasSecret else { assertionFailure(); return Data() }
+        guard key.hasSecret else { return Data() }
         let encrypter = CoreCipher.chacha20_poly1305(key: key, nonce12: Data(nonce), ad: Data())
-        guard let outData = encrypter.encrypt(data: self) else { assertionFailure(); return Data() }
+        guard let outData = encrypter.encrypt(data: self) else { return Data() }
         return Data(nonce + outData)
     }
     
@@ -263,7 +263,7 @@ public extension Data {
         let nonce = Array(data[data.startIndex..<data.startIndex.advanced(by: 12)])
         let inData = Array(data[data.startIndex.advanced(by: 12)..<data.endIndex])
         let decrypter = CoreCipher.chacha20_poly1305(key: key, nonce12: Data(nonce), ad: Data())
-        guard let decrypted = decrypter.decrypt(data: Data(inData)) else { /*assertionFailure();*/ throw BRReplicatedKVStoreError.malformedData }
+        guard let decrypted = decrypter.decrypt(data: Data(inData)) else { throw BRReplicatedKVStoreError.malformedData }
         return decrypted
     }
 }

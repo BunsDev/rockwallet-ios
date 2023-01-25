@@ -16,7 +16,7 @@ struct RescanCoordinator {
     private static let incrementalRescanInterval: TimeInterval = C.secondsInDay
     
     static func initiateRescan(system: CoreSystem, wallet: Wallet) {
-        guard let primaryWallet = wallet.networkPrimaryWallet else { return assertionFailure() }
+        guard let primaryWallet = wallet.networkPrimaryWallet else { return }
         let manager = primaryWallet.manager
         let currency = primaryWallet.currency
         
