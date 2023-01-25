@@ -55,7 +55,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
-        let isRelinking = dataStore?.selected?.status != .statusOk
+        let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
     }
     
@@ -179,10 +179,14 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
         }
         
+        let currency = selectedCurrency == nil ? dataStore?.toAmount : selectedCurrency
+        dataStore?.toAmount = currency
+        dataStore?.paymentMethod = viewAction.method
+        
         getExchangeRate(viewAction: .init())
-        presenter?.presentAssets(actionResponse: .init(amount: selectedCurrency,
+        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
                                                        card: dataStore?.selected,
-                                                       type: viewAction.method,
+                                                       type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote))
     }
     
