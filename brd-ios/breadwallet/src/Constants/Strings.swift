@@ -1860,8 +1860,8 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.StorePhraseSecurely.title", fallback: "Store it securely")
     }
     internal enum WritePhrase {
-      /// Save your 12 word recovery phrase generated  in the next step.
-      internal static let subtitle = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.subtitle", fallback: "Save your 12 word recovery phrase generated  in the next step.")
+      /// Save your 12 word Recovery Phrase generated  in the next step.
+      internal static let subtitle = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.subtitle", fallback: "Save your 12 word Recovery Phrase generated  in the next step.")
       /// Write it down
       internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.title", fallback: "Write it down")
     }
