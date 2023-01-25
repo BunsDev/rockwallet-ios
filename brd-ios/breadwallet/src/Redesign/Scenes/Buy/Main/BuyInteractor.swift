@@ -55,7 +55,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
-        let isRelinking = dataStore?.selected?.status != .statusOk
+        let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
     }
     
