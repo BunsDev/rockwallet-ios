@@ -116,7 +116,7 @@
 "Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
 
 /* Retry verification description */
-"Account.IdVerificationRetry" = "Please try to complete your verification again, while keeping the following in mind:\n- Please ensure your type of ID is supported.\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n- Double check that your ID isn't expired or invalid.";
+"Account.IdVerificationRetry" = "Please try to complete your verification again, while keeping the following in mind:\n\n- Please ensure your type of ID is supported.\n\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n\n- Double check that your ID isn't expired or invalid.";
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
