@@ -55,7 +55,7 @@ struct ProfileResponseData: ModelResponse {
     var kycStatus: String?
     var kycFailureReason: String?
     var roles: [CustomerRole]
-    var limits: [Limits]
+    var limits: [Limits]?
     
     var exchangeLimits: ExchangeLimits?
     var kycAccessRights: AccessRights?
@@ -122,7 +122,7 @@ struct Profile: Model {
     var canSwap: Bool
     var canUseAch: Bool
     var restrictionReason: String?
-    var limits: [Limits]
+    var limits: [Limits]?
     
     var swapDailyRemainingLimit: Decimal {
         return swapAllowanceDaily - usedSwapDaily
