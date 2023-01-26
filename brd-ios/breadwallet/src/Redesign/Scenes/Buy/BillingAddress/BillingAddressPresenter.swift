@@ -83,4 +83,10 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
     func presentSubmit(actionResponse: BillingAddressModels.Submit.ActionResponse) {
         viewController?.displaySubmit(responseDisplay: .init())
     }
+    
+    func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
+        let model = InfoViewModel(description: .text(L10n.Buy.paymentFailed), dismissType: .auto)
+        let config = Presets.InfoView.error
+        viewController?.displayMessage(responseDisplay: .init(model: model, config: config))
+    }
 }
