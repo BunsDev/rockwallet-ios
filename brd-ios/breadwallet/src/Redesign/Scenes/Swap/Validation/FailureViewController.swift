@@ -166,8 +166,34 @@ class FailureViewController: BaseInfoViewController {
             })
         ]
     }
+    
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
                 Presets.Button.noBorders]
+    }
+    
+    override func tableView(_ tableView: UITableView, descriptionLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Align text to left for retry bullet points text
+        guard failure == .documentVerificationRetry else {
+            return super.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
+        }
+        
+        guard let value = descriptionText,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+
+        cell.setup { view in
+            view.configure(with: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, textAlignment: .left))
+            view.setup(with: .text(value))
+            view.setupCustomMargins(vertical: .extraHuge, horizontal: .extraHuge)
+            view.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.leading.trailing.equalToSuperview().inset(Margins.extraHuge.rawValue)
+            }
+        }
+
+        return cell
     }
 }
