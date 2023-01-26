@@ -112,16 +112,14 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     override func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? SegmentControlViewModel
+        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return UITableViewCell()
         }
         
         cell.setup { view in
             view.configure(with: .init())
-            view.setup(with: model)
+            view.setup(with: SegmentControlViewModel(selectedIndex: dataStore?.paymentMethod))
             
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
@@ -143,7 +141,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         }
         
         cell.setup { view in
-            view.configure(with: .init(font: Fonts.Body.three, textColor: LightColors.Text.two))
+            view.configure(with: .init(font: Fonts.Body.three,
+                                       textColor: LightColors.Text.two,
+                                       isUserInteractionEnabled: dataStore?.isCustomLimits ?? false))
             view.setup(with: model)
             
             view.didTapLink = { [weak self] in
@@ -277,15 +277,21 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     }
     
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay) {
-        coordinator?.showPopup(with: responseDisplay.model, config: Presets.Popup.normal)
+        let _: WrapperPopupView<LimitsPopupView>? = coordinator?.showPopup(with: responseDisplay.config,
+                                                                           viewModel: responseDisplay.viewModel,
+                                                                           confirmedCallback: { [weak self] in
+            self?.coordinator?.dismissFlow()
+        })
     }
     
     // MARK: - Additional Helpers
     @objc func updatePaymentMethod() {
         guard let availablePayments = dataStore?.availablePayments else { return }
         
-        dataStore?.paymentMethod = availablePayments.contains(.ach) == true ? .ach : .card
-        interactor?.retryPaymentMethod(viewAction: .init(method: dataStore?.paymentMethod ?? .card))
+        let paymentMethod: PaymentCard.PaymentType? = availablePayments.contains(.ach) == true ? .ach : .card
+        tableView.reloadData()
+        
+        interactor?.retryPaymentMethod(viewAction: .init(method: paymentMethod ?? .card))
     }
     
     private func mapStructToDictionary<T>(item: T) -> [String: Any] {
