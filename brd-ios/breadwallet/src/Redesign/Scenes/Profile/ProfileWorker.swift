@@ -17,9 +17,32 @@ enum CustomerRole: String, Codable {
     case kyc2
 }
 
+struct Limits: Codable {
+    var exchangeType: ExchangeType
+    var interval: Interval
+    var limit: Decimal
+    var isCustom: Bool
+}
+
 enum ExchangeFlow {
     case buy
     case swap
+}
+
+enum ExchangeType: String, Codable {
+    case swap = "SWAP"
+    case buyCard = "BUY_CARD"
+    case buyAch = "BUY_ACH"
+    case sell = "SELL_ACH"
+}
+
+enum Interval: String, Codable {
+    case daily = "DAILY"
+    case weekly = "WEEKLY"
+    case monthly = "MONTHLY"
+    case lifetime = "LIFETIME"
+    case perExchange = "PER_EXCHANGE"
+    case minimum = "MINIMUM"
 }
 
 struct ProfileResponseData: ModelResponse {
@@ -32,6 +55,7 @@ struct ProfileResponseData: ModelResponse {
     var kycStatus: String?
     var kycFailureReason: String?
     var roles: [CustomerRole]
+    var limits: [Limits]?
     
     var exchangeLimits: ExchangeLimits?
     var kycAccessRights: AccessRights?
@@ -98,6 +122,7 @@ struct Profile: Model {
     var canSwap: Bool
     var canUseAch: Bool
     var restrictionReason: String?
+    var limits: [Limits]?
     
     var swapDailyRemainingLimit: Decimal {
         return swapAllowanceDaily - usedSwapDaily
@@ -174,7 +199,8 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      canBuy: response.kycAccessRights?.hasBuyAccess ?? false,
                      canSwap: response.kycAccessRights?.hasSwapAccess ?? false,
                      canUseAch: response.kycAccessRights?.hasAchAccess ?? false,
-                     restrictionReason: response.kycAccessRights?.restrictionReason)
+                     restrictionReason: response.kycAccessRights?.restrictionReason,
+                     limits: response.limits)
     }
 }
 

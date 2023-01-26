@@ -205,7 +205,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         UIView.transition(with: switchPlacesButton,
                           duration: Presets.Animation.short.rawValue) { [weak self] in
             self?.switchPlacesButton.alpha = value ? 1.0 : 0.5
-            self?.switchPlacesButton.isUserInteractionEnabled = value
+            self?.switchPlacesButton.isEnabled = value
         }
     }
     
