@@ -1747,7 +1747,7 @@
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Uppgradera PIN-kod";
 
-"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap, Buy and Sell seamlessly.";
+"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap and Buy seamlessly.";
 
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "Slå på push-meddelanden och var den första att höra om nya funktioner och specialerbjudanden.";
@@ -3191,7 +3191,7 @@
 
 "VerifyAccount.Button" = "Verify your account";
 
-"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
+"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying and swapping.";
 
 "VerifyAccount.VerifyMyIdentity" = "Verify my identity";
 
