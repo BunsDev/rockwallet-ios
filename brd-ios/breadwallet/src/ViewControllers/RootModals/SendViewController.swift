@@ -102,7 +102,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     
     private var timer: Timer?
     
-    private var ethMultiplier: Decimal = 0.80
+    private var ethMultiplier: Decimal = 0.60
     
     private func startTimer() {
         guard timer?.isValid != true else { return }
@@ -345,16 +345,22 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     if amount.currency == feeUpdated.currency {
                         value = maximum > feeUpdated ? maximum - feeUpdated : maximum
                     }
-
-                    if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
+                    
+                    if maximum.currency.isEthereum {
+                        let adjustTokenValue = value.tokenValue * 0.95 // Reduce amount for ETH createTxn API call
+                        value = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: value.currency)
                         self?.amountView.forceUpdateAmount(amount: value)
-                        self?.updateFeesMax(depth: depth + 1)
+                    } else {
+                        if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
+                            self?.amountView.forceUpdateAmount(amount: value)
+                            self?.updateFeesMax(depth: depth + 1)
+                        }
                     }
                     
                 case .failure(let error):
                     // updateFeesMax failed, default to a fixed reduction
                     if maximum.currency.isEthereum {
-                        let adjustTokenValue = maximum.tokenValue * (self?.ethMultiplier ?? 0.80) // Reduce amount for ETH estimate fee API call
+                        let adjustTokenValue = maximum.tokenValue * 0.80 // Reduce amount for ETH estimate fee API call
                         let max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
                         self?.amountView.forceUpdateAmount(amount: max)
                     } else {
