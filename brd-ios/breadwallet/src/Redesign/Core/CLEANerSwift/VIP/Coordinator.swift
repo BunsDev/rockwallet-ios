@@ -244,8 +244,6 @@ class BaseCoordinator: NSObject,
         guard let vc = navigationController.viewControllers.first as? BuyViewController else {
             return
         }
-        
-        vc.dataStore?.paymentMethod = paymentMethod
         vc.updatePaymentMethod()
         
         navigationController.popToViewController(vc, animated: true)
@@ -343,20 +341,28 @@ class BaseCoordinator: NSObject,
             } else if role == nil {
                 completion?(true)
             } else if let role = role {
-                guard profile?.roles.contains(role) == false else {
+                if profile?.status.isVerified(for: role) == true {
+                    // new verirication (if user upgraded was used in sprint_5, this verification is needed
                     completion?(true)
                     return
-                }
                     
-                let coordinator = KYCCoordinator(navigationController: nvc)
-                coordinator.role = role
-                coordinator.flow = flow
-                coordinator.start()
-                coordinator.parentCoordinator = self
-                childCoordinators.append(coordinator)
-                navigationController.show(coordinator.navigationController, sender: nil)
-                
-                completion?(false)
+                } else if profile?.roles.contains(role) == true {
+                    // normal sprint_4 users (till they create profile in sprint_5)
+                    completion?(true)
+                    return
+                    
+                } else {
+                    let coordinator = KYCCoordinator(navigationController: nvc)
+                    coordinator.role = role
+                    coordinator.flow = flow
+                    coordinator.start()
+                    coordinator.parentCoordinator = self
+                    childCoordinators.append(coordinator)
+                    navigationController.show(coordinator.navigationController, sender: nil)
+                    
+                    completion?(false)
+                    
+                }
             }
             
         case .failure(let error):

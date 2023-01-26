@@ -219,12 +219,48 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse) {
-        // TODO: update when BE with limits is ready
-        let limitText = "Weekly buying limit is $700.00 USD & monthly limit is $900.00 USD. At the moment lifetime limit is $1,000 USD."
-        let model = PopupViewModel(title: .text(L10n.Buy.yourBuyLimits),
-                                   body: limitText)
+        let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
+        let limits = UserManager.shared.profile?.limits
+        var perTransactionLimit, dailyMinLimit, dailyMaxLimit, weeklyLimit, monthlyLimit: Decimal
         
-        viewController?.displayLimitsInfo(responseDisplay: .init(model: model))
+        if actionResponse.paymentMethod == .card {
+            perTransactionLimit = limits?.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyCard })?.limit ?? 0
+            dailyMinLimit = limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyCard })?.limit ?? 0
+            dailyMaxLimit = limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
+            weeklyLimit = limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyCard })?.limit ?? 0
+            monthlyLimit = limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyCard })?.limit ?? 0
+        } else {
+            perTransactionLimit = limits?.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyAch })?.limit ?? 0
+            dailyMinLimit = limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyAch })?.limit ?? 0
+            dailyMaxLimit = limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyAch })?.limit ?? 0
+            weeklyLimit = limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyAch })?.limit ?? 0
+            monthlyLimit = limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyAch })?.limit ?? 0
+        }
+        
+        let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
+        let dailyMinLimitText = ExchangeFormatter.crypto.string(for: dailyMinLimit) ?? ""
+        let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
+        let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
+        let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
+        
+        let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
+        let wrappedViewModel: LimitsPopupViewModel = .init(perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
+                                                                                 value: .text("$\(perTransactionLimitText) \(C.usdCurrencyCode)")),
+                                                           dailyMin: .init(title: .text(L10n.Buy.dailyMinLimits),
+                                                                           value: .text("$\(dailyMinLimitText) \(C.usdCurrencyCode)")),
+                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
+                                                                           value: .text("$\(dailyMaxLimitText) \(C.usdCurrencyCode)")),
+                                                           weekly: .init(title: .text(L10n.Account.weekly),
+                                                                         value: .text("$\(weeklyLimitText) \(C.usdCurrencyCode)")),
+                                                           monthly: .init(title: .text(L10n.Account.monthly),
+                                                                          value: .text("$\(monthlyLimitText) \(C.usdCurrencyCode)")))
+        
+        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(title: .text(title),
+                                                                           trailing: .init(image: Asset.close.image),
+                                                                           wrappedView: wrappedViewModel,
+                                                                           hideSeparator: true)
+        
+        viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
     }
     
     // MARK: - Additional Helpers

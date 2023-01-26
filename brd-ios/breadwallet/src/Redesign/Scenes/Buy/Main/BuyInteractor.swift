@@ -55,7 +55,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
-        let isRelinking = dataStore?.selected?.status != .statusOk
+        let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
     }
     
@@ -159,24 +159,29 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     }
     
     func retryPaymentMethod(viewAction: BuyModels.RetryPaymentMethod.ViewAction) {
-        dataStore?.paymentMethod = viewAction.method
+        var selectedCurrency: Amount?
         
         switch viewAction.method {
         case .ach:
             dataStore?.selected = dataStore?.ach
-            
             presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
             
         case .card:
             if dataStore?.autoSelectDefaultPaymentMethod == true {
                 if dataStore?.availablePayments.contains(.card) == true {
                     dataStore?.selected = dataStore?.cards.first(where: { $0.cardType == .debit })
+                    guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
+                    selectedCurrency = .zero(currency)
                 } else {
                     dataStore?.selected = dataStore?.cards.first
                 }
             }
             presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
         }
+        
+        let currency = selectedCurrency == nil ? dataStore?.toAmount : selectedCurrency
+        dataStore?.paymentMethod = viewAction.method
+        dataStore?.toAmount = currency
         
         getExchangeRate(viewAction: .init())
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
