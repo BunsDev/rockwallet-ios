@@ -52,6 +52,9 @@
 
 "Account.ConfirmPassword" = "Confirm your password";
 
+/* Contact us */
+"Account.ContactUs" = "Contact us";
+
 /* Country title label in select countries view */
 "Account.Country" = "Pays";
 
@@ -111,6 +114,9 @@
 "Account.IdVerificationRejected" = "We’re sorry, your ID verification was rejected.";
 
 "Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
+
+/* Retry verification description */
+"Account.IdVerificationRetry" = "Please try to complete your verification again, while keeping the following in mind:\n- Please ensure your type of ID is supported.\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n- Double check that your ID isn't expired or invalid.";
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
@@ -210,6 +216,9 @@
 "Account.VerifyIdentityByVeriff" = "RockWallet would like to confirm your identity, a process is powered by Veriff.";
 
 "Account.VerifyIdentityPlain" = "Nous devons vérifier votre identité avant que vous ne puissiez acheter ou échanger des actifs.";
+
+/* Try again */
+"Account.VerifyIdentityTryAgain" = "Try again";
 
 /* Verify personal information text explanation */
 "Account.VerifyPersonalInformation" = "Nous devons vérifier vos informations personnelles pour des raisons de conformité. Ces informations ne seront pas partagées avec des sources externes, sauf obligation légale.";
@@ -635,6 +644,8 @@
 
 /* More information button */
 "Button.moreInfo" = "Plus d'informations";
+
+"Button.moreLimits" = "More limits";
 
 /* No button */
 "Button.no" = "Non";
@@ -1967,7 +1978,7 @@
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%1$@ de %2$@";
 
-"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word security phrase generated  in the next step.";
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated  in the next step.";
 
 "RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
@@ -3182,7 +3193,7 @@
 
 "VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
 
-"VerifyAccount.VerifyMyIdentity " = "Verify my identity";
+"VerifyAccount.VerifyMyIdentity" = "Verify my identity";
 
 "VerifyAccount.VerifyYourIdentity" = "Verify your identity";
 
