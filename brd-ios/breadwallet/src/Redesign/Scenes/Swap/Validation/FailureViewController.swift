@@ -30,7 +30,7 @@ enum FailureReason: SimpleMessage {
     
     var iconName: String {
         switch self {
-        case .documentVerification:
+        case .documentVerification, .documentVerificationRetry:
             return Asset.ilVerificationunsuccessfull.name
             
         default:
@@ -75,7 +75,7 @@ enum FailureReason: SimpleMessage {
             return L10n.Account.IdVerificationRejected.description
             
         case .documentVerificationRetry:
-            return "description 2"
+            return L10n.Account.idVerificationRetry.replacingOccurrences(of: "-", with: "\u{2022}")
         }
     }
     
@@ -85,7 +85,7 @@ enum FailureReason: SimpleMessage {
             return L10n.Swap.retry
             
         case .documentVerification:
-            return "Contact us"
+            return L10n.Account.contactUs
             
         default:
             return L10n.PaymentConfirmation.tryAgain

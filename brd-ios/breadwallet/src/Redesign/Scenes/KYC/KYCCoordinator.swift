@@ -176,11 +176,14 @@ extension KYCCoordinator: VeriffSdkDelegate {
         case .done:
             handleKYCSessionEnd()
             
-        case .error(let error)
+        case .error(let error):
             print(error.localizedDescription)
             open(scene: Scenes.Failure) { vc in
                 vc.failure = .documentVerification
             }
+            
+        default:
+            parentCoordinator?.childDidFinish(child: self)
         }
     }
     
