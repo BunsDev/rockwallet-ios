@@ -75,9 +75,6 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     
     private var amount: Amount? {
         didSet {
-            if amount != maximum {
-                isSendingMax = false
-            }
             if oldValue != amount {
                 updateFees()
             }
@@ -290,6 +287,10 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     
     @objc private func updateFees() {
         guard let amount = amount else { return }
+        guard amount <= balance else {
+            _ = handleValidationResult(.insufficientFunds)
+            return
+        }
         guard let address = address, !address.isEmpty else {
             _ = handleValidationResult(.invalidAddress)
             return
@@ -301,6 +302,20 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                 case .success(let fee):
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
+                    
+                    if self?.isSendingMax != true {
+                        guard let balance = self?.balance else { return }
+                        guard let feeCurrency = self?.sender.wallet.feeCurrency else {
+                            return
+                        }
+                        let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
+
+                        if amount.currency == feeAmount.currency {
+                            if amount + feeAmount > balance {
+                                _ = self?.handleValidationResult(.insufficientGas)
+                            }
+                        }
+                    }
                     
                 case .failure(let error):
                     self?.handleEstimateFeeError(error: error)
@@ -544,6 +559,29 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             }
         } else {
             _ = handleValidationResult(.insufficientFunds)
+        }
+    }
+    
+    internal override func showInsufficientGasError() {
+        if currency.isEthereum {
+            showAlert(title: L10n.Alert.error, message: L10n.Send.insufficientGas)
+        } else if currency.isERC20Token {
+            showAlert(message: L10n.ErrorMessages.ethBalanceLowAddEth(currency.code))
+        } else if let feeAmount = currentFeeBasis?.fee {
+            let title = L10n.Send.insufficientGasTitle(feeAmount.currency.name)
+            let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
+
+            let alertController = UIAlertController(title: title,
+                                                    message: message,
+                                                    preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: L10n.Button.yes, style: .default, handler: { [weak self] _ in
+                guard let self = self else { return }
+                Store.trigger(name: .showCurrency(self.sender.wallet.feeCurrency))
+            }))
+
+            alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel))
+
+            present(alertController, animated: true, completion: nil)
         }
     }
     
