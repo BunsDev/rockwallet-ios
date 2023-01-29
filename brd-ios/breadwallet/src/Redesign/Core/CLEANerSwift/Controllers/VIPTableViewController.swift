@@ -34,7 +34,7 @@ class VIPTableViewController<C: CoordinatableRoutes,
         tableView.estimatedSectionHeaderHeight = CGFloat.leastNormalMagnitude
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
         
         tableView.estimatedSectionFooterHeight = CGFloat.leastNormalMagnitude
