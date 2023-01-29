@@ -132,8 +132,9 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - User Interaction
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
-        super.textFieldDidUpdate(for: indexPath, with: text, on: section)
+    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
+        super.textFieldDidUpdate(for: indexPath, with: text)
+        let section = sections[indexPath.section]
         
         switch section as? Models.Section {
         case .email:
@@ -160,8 +161,21 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - SignInResponseDisplay
     
     func displayValidate(responseDisplay: SignInModels.Validate.ResponseDisplay) {
-        continueButton.viewModel?.enabled = responseDisplay.isValid
+        let isValid = responseDisplay.isValid
+        
+        continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+        
+        if responseDisplay.email != nil {
+            _ = getFieldCell(for: .email)?.setup { view in
+                view.update(with: responseDisplay.emailModel)
+            }
+        }
+        if responseDisplay.password != nil {
+            _ = getFieldCell(for: .password)?.setup { view in
+                view.update(with: responseDisplay.passwordModel)
+            }
+        }
     }
     
     func displayNext(responseDisplay: SignInModels.Next.ResponseDisplay) {
@@ -170,4 +184,12 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - Additional Helpers
     
+    private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
+        guard let section = sections.firstIndex(of: section),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
+            return nil
+        }
+        
+        return cell
+    }
 }

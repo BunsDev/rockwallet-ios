@@ -44,9 +44,37 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
     }
     
     func presentValidate(actionResponse: SignUpModels.Validate.ActionResponse) {
-        viewController?.displayValidate(responseDisplay: .init(isEmailValid: actionResponse.isEmailValid,
+        let isValid = actionResponse.isEmailValid &&
+        actionResponse.isPasswordValid &&
+        actionResponse.isPasswordAgainValid &&
+        actionResponse.passwordsMatch &&
+        actionResponse.isTermsTickboxValid
+        
+        let textColor = (actionResponse.passwordState == .error || actionResponse.passwordAgainState == .error) && !isValid ? LightColors.Error.one : LightColors.Text.two
+        
+        let noticeConfiguration = LabelConfiguration(font: Fonts.Body.three, textColor: textColor)
+        
+        viewController?.displayValidate(responseDisplay: .init(email: actionResponse.email,
+                                                               password: actionResponse.password,
+                                                               passwordAgain: actionResponse.passwordAgain,
+                                                               isEmailValid: actionResponse.isEmailValid,
+                                                               isEmailEmpty: actionResponse.isEmailEmpty,
+                                                               emailModel: .init(title: L10n.Account.enterEmail,
+                                                                                 hint: actionResponse.emailState == .error ? "Error" : nil,
+                                                                                 displayState: actionResponse.emailState),
                                                                isPasswordValid: actionResponse.isPasswordValid,
-                                                               isTermsTickboxValid: actionResponse.isTermsTickboxValid))
+                                                               isPasswordEmpty: actionResponse.isPasswordEmpty,
+                                                               passwordModel: .init(title: L10n.Account.enterPassword,
+                                                                                    hint: actionResponse.passwordState == .error ? "Error" : nil,
+                                                                                    displayState: actionResponse.passwordState),
+                                                               isPasswordAgainValid: actionResponse.isPasswordAgainValid,
+                                                               isPasswordAgainEmpty: actionResponse.isPasswordAgainEmpty,
+                                                               passwordAgainModel: .init(title: L10n.Account.confirmPassword,
+                                                                                         hint: actionResponse.passwordAgainState == .error ? "Error" : nil,
+                                                                                         displayState: actionResponse.passwordAgainState),
+                                                               isTermsTickboxValid: actionResponse.isTermsTickboxValid,
+                                                               noticeConfiguration: noticeConfiguration,
+                                                               isValid: isValid))
     }
     
     func presentNext(actionResponse: SignUpModels.Next.ActionResponse) {

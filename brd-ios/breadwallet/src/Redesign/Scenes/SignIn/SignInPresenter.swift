@@ -38,7 +38,22 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
     }
     
     func presentValidate(actionResponse: SignInModels.Validate.ActionResponse) {
-        viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
+        let isValid = actionResponse.isEmailValid &&
+        actionResponse.isPasswordValid
+        
+        viewController?.displayValidate(responseDisplay: .init(email: actionResponse.email,
+                                                               password: actionResponse.password,
+                                                               isEmailValid: actionResponse.isEmailValid,
+                                                               isEmailEmpty: actionResponse.isEmailEmpty,
+                                                               emailModel: .init(title: L10n.Account.enterEmail,
+                                                                                 hint: actionResponse.emailState == .error ? "Error" : nil,
+                                                                                 displayState: actionResponse.emailState),
+                                                               isPasswordValid: actionResponse.isPasswordValid,
+                                                               isPasswordEmpty: actionResponse.isPasswordEmpty,
+                                                               passwordModel: .init(title: L10n.Account.enterPassword,
+                                                                                    hint: actionResponse.passwordState == .error ? "Error" : nil,
+                                                                                    displayState: actionResponse.passwordState),
+                                                               isValid: isValid))
     }
     
     func presentNext(actionResponse: SignInModels.Next.ActionResponse) {

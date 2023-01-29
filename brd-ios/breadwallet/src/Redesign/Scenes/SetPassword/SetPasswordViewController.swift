@@ -87,8 +87,14 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - User Interaction
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
-        super.textFieldDidUpdate(for: indexPath, with: text, on: section)
+    @objc override func buttonTapped() {
+        super.buttonTapped()
+        
+        interactor?.next(viewAction: .init())
+    }
+    
+    override func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
+        let section = sections[indexPath.section]
         
         switch section as? Models.Section {
         case .password:
@@ -100,28 +106,33 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
         default:
             break
         }
-    }
-    
-    @objc override func buttonTapped() {
-        super.buttonTapped()
         
-        interactor?.next(viewAction: .init())
+        super.textFieldDidTrigger(for: indexPath, with: text)
     }
     
     // MARK: - SetPasswordResponseDisplay
     
     func displayValidate(responseDisplay: SetPasswordModels.Validate.ResponseDisplay) {
-        continueButton.viewModel?.enabled = responseDisplay.isValid
+        let isValid = responseDisplay.isValid
+        
+        continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
         guard let noticeSection = sections.firstIndex(of: Models.Section.notice),
-              let noticeCell = tableView.cellForRow(at: .init(row: 0, section: noticeSection)) as? WrapperTableViewCell<FELabel> else {
-            return
+              let noticeCell = tableView.cellForRow(at: .init(row: 0, section: noticeSection)) as? WrapperTableViewCell<FELabel> else { return }
+        noticeCell.setup { view in
+            view.configure(with: responseDisplay.noticeConfiguration)
         }
         
-        noticeCell.setup { view in
-            let textColor = responseDisplay.isValid ? LightColors.Text.two : LightColors.Error.one
-            view.configure(with: .init(font: Fonts.Body.three, textColor: textColor))
+        if responseDisplay.password != nil {
+            _ = getFieldCell(for: .password)?.setup { view in
+                view.update(with: responseDisplay.passwordModel)
+            }
+        }
+        if responseDisplay.passwordAgain != nil {
+            _ = getFieldCell(for: .confirmPassword)?.setup { view in
+                view.update(with: responseDisplay.passwordAgainModel)
+            }
         }
     }
     
@@ -131,4 +142,12 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - Additional Helpers
     
+    private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
+        guard let section = sections.firstIndex(of: section),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
+            return nil
+        }
+        
+        return cell
+    }
 }

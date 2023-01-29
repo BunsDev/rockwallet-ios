@@ -25,19 +25,21 @@ class VIPTableViewController<C: CoordinatableRoutes,
         var tableView = ContentSizedTableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-
+        
         // this prevents the top offset on tableViews
         let zeroView = UIView(frame: .init(origin: .zero, size: .init(width: 0, height: CGFloat.leastNonzeroMagnitude)))
         tableView.tableHeaderView = zeroView
         tableView.tableFooterView = zeroView
+        
         tableView.estimatedSectionHeaderHeight = CGFloat.leastNormalMagnitude
-        tableView.estimatedRowHeight = CGFloat.leastNormalMagnitude
-        tableView.estimatedSectionFooterHeight = CGFloat.leastNormalMagnitude
-
         tableView.sectionHeaderHeight = UITableView.automaticDimension
+        
+        tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.estimatedSectionFooterHeight = CGFloat.leastNormalMagnitude
         tableView.sectionFooterHeight = UITableView.automaticDimension
-
+        
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -169,4 +171,12 @@ class VIPTableViewController<C: CoordinatableRoutes,
     func tableView(_ tableView: UITableView, didSelectHeaderIn section: Int) {}
 
     func tableView(_ tableView: UITableView, didSelectFooterIn section: Int) {}
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
 }

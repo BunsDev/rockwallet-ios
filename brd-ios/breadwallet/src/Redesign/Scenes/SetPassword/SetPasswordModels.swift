@@ -29,10 +29,32 @@ enum SetPasswordModels {
         }
         
         struct ActionResponse {
-            var isValid: Bool
+            var password: String?
+            var passwordAgain: String?
+            
+            var isPasswordValid: Bool
+            var isPasswordEmpty: Bool
+            var passwordState: DisplayState
+            
+            var isPasswordAgainValid: Bool
+            var isPasswordAgainEmpty: Bool
+            var passwordAgainState: DisplayState
+            var passwordsMatch: Bool
         }
         
         struct ResponseDisplay {
+            var password: String?
+            var passwordAgain: String?
+            
+            var isPasswordValid: Bool
+            var isPasswordEmpty: Bool
+            var passwordModel: TextFieldModel
+            
+            var isPasswordAgainValid: Bool
+            var isPasswordAgainEmpty: Bool
+            var passwordAgainModel: TextFieldModel
+            
+            var noticeConfiguration: LabelConfiguration
             var isValid: Bool
         }
     }

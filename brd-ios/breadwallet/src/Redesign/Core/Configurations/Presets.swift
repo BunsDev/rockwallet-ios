@@ -26,7 +26,7 @@ struct Presets {
                                                           border: Presets.Border.disabledButtonFullRadius)
             
             static var error = BackgroundConfiguration(backgroundColor: LightColors.primary,
-                                                       tintColor: .red,
+                                                       tintColor: LightColors.Error.one,
                                                        border: Presets.Border.error)
             
             static var tertiary = BackgroundConfiguration(backgroundColor: LightColors.Background.three,
@@ -38,7 +38,7 @@ struct Presets {
             static var normal = BackgroundConfiguration(tintColor: LightColors.primary)
             static var selected = BackgroundConfiguration(tintColor: LightColors.Text.one)
             static var disabled = BackgroundConfiguration(tintColor: LightColors.Disabled.two)
-            static var error = BackgroundConfiguration(tintColor: .red)
+            static var error = BackgroundConfiguration(tintColor: LightColors.Error.one)
         }
         
         struct TextField {
@@ -61,7 +61,7 @@ struct Presets {
         static var mediumPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .medium)
         static var commonPlain = BorderConfiguration(borderWidth: 0, cornerRadius: .common)
         
-        static var error = BorderConfiguration(tintColor: LightColors.Error.one, borderWidth: 1, cornerRadius: .medium)
+        static var error = BorderConfiguration(tintColor: LightColors.Error.one, borderWidth: 1, cornerRadius: .extraSmall)
         static var accountVerification = BorderConfiguration(tintColor: LightColors.Outline.one, borderWidth: 1, cornerRadius: .small)
         
         static var normal = BorderConfiguration(borderWidth: 0, cornerRadius: .medium)
@@ -123,14 +123,14 @@ extension Presets {
     struct TextField {
         static var primary = TextFieldConfiguration(leadingImageConfiguration: .init(backgroundColor: .clear, tintColor: LightColors.Text.two),
                                                     titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                    selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
+                                                    selectedTitleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.two),
                                                     textConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                     placeholderConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                     hintConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
                                                     backgroundConfiguration: Presets.Background.TextField.normal,
                                                     selectedBackgroundConfiguration: Presets.Background.TextField.selected,
                                                     disabledBackgroundConfiguration: Presets.Background.TextField.disabled,
-                                                    errorBackgroundConfiguration: Presets.Background.Secondary.error.withBorder(border: Presets.Border.error))
+                                                    errorBackgroundConfiguration: Presets.Background.TextField.error.withBorder(border: Presets.Border.error))
         
         static var two = TextFieldConfiguration(titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                 selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),

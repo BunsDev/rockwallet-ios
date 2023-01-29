@@ -35,7 +35,15 @@ final class ForgotPasswordPresenter: NSObject, Presenter, ForgotPasswordActionRe
     }
     
     func presentValidate(actionResponse: ForgotPasswordModels.Validate.ActionResponse) {
-        viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
+        let isValid = actionResponse.isEmailValid
+        
+        viewController?.displayValidate(responseDisplay: .init(email: actionResponse.email,
+                                                               isEmailValid: actionResponse.isEmailValid,
+                                                               isEmailEmpty: actionResponse.isEmailEmpty,
+                                                               emailModel: .init(title: L10n.Account.email,
+                                                                                 hint: actionResponse.emailState == .error ? "Error" : nil,
+                                                                                 displayState: actionResponse.emailState),
+                                                               isValid: isValid))
     }
     
     func presentNext(actionResponse: ForgotPasswordModels.Next.ActionResponse) {

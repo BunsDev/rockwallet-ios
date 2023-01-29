@@ -157,8 +157,20 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - User Interaction
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
-        super.textFieldDidUpdate(for: indexPath, with: text, on: section)
+    @objc override func buttonTapped() {
+        super.buttonTapped()
+        
+        interactor?.next(viewAction: .init())
+    }
+    
+    @objc func signInTapped() {
+        super.buttonTapped()
+        
+        coordinator?.showSignIn()
+    }
+    
+    override func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
+        let section = sections[indexPath.section]
         
         switch section as? Models.Section {
         case .email:
@@ -173,40 +185,39 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
         default:
             break
         }
-    }
-    
-    @objc override func buttonTapped() {
-        super.buttonTapped()
         
-        interactor?.next(viewAction: .init())
-    }
-    
-    @objc func signInTapped() {
-        super.buttonTapped()
-        
-        coordinator?.showSignIn()
+        super.textFieldDidTrigger(for: indexPath, with: text)
     }
     
     // MARK: - SignUpResponseDisplay
     
     func displayValidate(responseDisplay: SignUpModels.Validate.ResponseDisplay) {
-        let isValid = responseDisplay.isEmailValid && responseDisplay.isPasswordValid && responseDisplay.isTermsTickboxValid
+        let isValid = responseDisplay.isValid
+        
         continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
         guard let noticeSection = sections.firstIndex(of: Models.Section.notice),
-              let noticeCell = tableView.cellForRow(at: .init(row: 0, section: noticeSection)) as? WrapperTableViewCell<FELabel> else {
-            return
-        }
-        
+              let noticeCell = tableView.cellForRow(at: .init(row: 0, section: noticeSection)) as? WrapperTableViewCell<FELabel> else { return }
         noticeCell.setup { view in
-            let textColor = responseDisplay.isPasswordValid ? LightColors.Text.two : LightColors.Error.one
-            view.configure(with: .init(font: Fonts.Body.three, textColor: textColor))
+            view.configure(with: responseDisplay.noticeConfiguration)
         }
         
-        let emailCell = getFieldCell(for: .email)
-        let passwordCell = getFieldCell(for: .password)
-        let confirmPasswordCell = getFieldCell(for: .confirmPassword)
+        if responseDisplay.email != nil {
+            _ = getFieldCell(for: .email)?.setup { view in
+                view.update(with: responseDisplay.emailModel)
+            }
+        }
+        if responseDisplay.password != nil {
+            _ = getFieldCell(for: .password)?.setup { view in
+                view.update(with: responseDisplay.passwordModel)
+            }
+        }
+        if responseDisplay.passwordAgain != nil {
+            _ = getFieldCell(for: .confirmPassword)?.setup { view in
+                view.update(with: responseDisplay.passwordAgainModel)
+            }
+        }
     }
     
     func displayNext(responseDisplay: SignUpModels.Next.ResponseDisplay) {
@@ -215,7 +226,6 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - Additional Helpers
     
-    // TODO: Fix and FETextFied error state
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
         guard let section = sections.firstIndex(of: section),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {

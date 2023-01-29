@@ -15,8 +15,8 @@ class SetPasswordStore: NSObject, BaseDataStore, SetPasswordDataStore {
     
     // MARK: - ProfileDataStore
     
-    var password: String?
-    var passwordAgain: String?
+    var password: String = ""
+    var passwordAgain: String = ""
     var code: String?
     var guid: String?
     

@@ -122,11 +122,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
             view.configure(with: Presets.TextField.two)
             view.setup(with: model)
             
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            
             view.isUserInteractionEnabled = false
         }
         
@@ -207,8 +202,9 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     
     // MARK: - Additional Helpers
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
-        super.textFieldDidUpdate(for: indexPath, with: text, on: section)
+    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
+        super.textFieldDidUpdate(for: indexPath, with: text)
+        let section = sections[indexPath.section]
         
         switch section as? Models.Section {
         case .stateProvince:

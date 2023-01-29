@@ -30,8 +30,8 @@ protocol SignInResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseD
 }
 
 protocol SignInDataStore: BaseDataStore, FetchDataStore {
-    var email: String? { get set }
-    var password: String? { get set }
+    var email: String { get set }
+    var password: String { get set }
 }
 
 protocol SignInDataPassing {

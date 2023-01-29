@@ -332,15 +332,21 @@ class BaseTableViewController<C: CoordinatableRoutes,
         cell.setup { view in
             view.configure(with: Presets.TextField.primary)
             view.setup(with: model)
-            view.valueChanged = { [weak self] field in
-                self?.textFieldDidUpdate(for: indexPath, with: field.text, on: section)
+            
+            view.beganEditing = { [weak self] field in
+                self?.textFieldDidBegin(for: indexPath, with: field.text)
             }
+            
+            view.valueChanged = { [weak self] field in
+                self?.textFieldDidUpdate(for: indexPath, with: field.text)
+            }
+            
             view.finishedEditing = { [weak self] field in
                 self?.textFieldDidFinish(for: indexPath, with: field.text)
             }
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
+            
+            view.triggered = { [weak self] field in
+                self?.textFieldDidTrigger(for: indexPath, with: field.text)
             }
         }
         
@@ -496,6 +502,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
+        
         switch self {
         case is SwapViewController,
             is BuyViewController,
@@ -517,21 +524,34 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     // MARK: UserInteractions
-    func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        // Override in subclass
-    }
-
-    func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
+    
+    /// Override in subclass
+    func textFieldDidBegin(for indexPath: IndexPath, with text: String?) {
     }
     
+    /// Override in subclass
+    func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
+    }
+    
+    /// Override in subclass
+    func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
+    }
+    
+    /// Override in subclass
+    func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
+        tableView.performBatchUpdates {}
+    }
+    
+    /// Override in subclass
     @objc func buttonTapped() {
-        // Override in subclass
         view.endEditing(true)
     }
 
+    /// Override in subclass
     func didSelectItem(in section: Int, row: Int) {
     }
-
+    
+    /// Override in subclass
     func didLongPressItem(in section: Int, row: Int) {
     }
 }

@@ -601,7 +601,6 @@
 		A2439D7BB746E6CFC3F9B64A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2439F5D8263945E73EFF4A3 /* CacheService.swift */; };
 		C416BE0628509C4E0020ACCD /* KYCLevelTwoPostValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C416BE0528509C4E0020ACCD /* KYCLevelTwoPostValidation.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
-		C45E0BA62845F4C40083F028 /* AccountVerificationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0B9F2845F4C40083F028 /* AccountVerificationCoordinator.swift */; };
 		C45E0BA72845F4C40083F028 /* AccountVerificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0BA02845F4C40083F028 /* AccountVerificationStore.swift */; };
 		C45E0BA82845F4C40083F028 /* AccountVerificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0BA12845F4C40083F028 /* AccountVerificationPresenter.swift */; };
 		C45E0BA92845F4C40083F028 /* AccountVerificationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0BA22845F4C40083F028 /* AccountVerificationModels.swift */; };
@@ -1402,7 +1401,6 @@
 		A2439F5D8263945E73EFF4A3 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		C416BE0528509C4E0020ACCD /* KYCLevelTwoPostValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCLevelTwoPostValidation.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
-		C45E0B9F2845F4C40083F028 /* AccountVerificationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationCoordinator.swift; sourceTree = "<group>"; };
 		C45E0BA02845F4C40083F028 /* AccountVerificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationStore.swift; sourceTree = "<group>"; };
 		C45E0BA12845F4C40083F028 /* AccountVerificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationPresenter.swift; sourceTree = "<group>"; };
 		C45E0BA22845F4C40083F028 /* AccountVerificationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationModels.swift; sourceTree = "<group>"; };
@@ -3131,7 +3129,6 @@
 		C4C0CA542845F2F400B6ED79 /* AccountVerification */ = {
 			isa = PBXGroup;
 			children = (
-				C45E0B9F2845F4C40083F028 /* AccountVerificationCoordinator.swift */,
 				C45E0BA12845F4C40083F028 /* AccountVerificationPresenter.swift */,
 				C45E0BA02845F4C40083F028 /* AccountVerificationStore.swift */,
 				C45E0BA32845F4C40083F028 /* AccountVerificationVIP.swift */,
@@ -4372,7 +4369,6 @@
 				7B54E5A927F4A2B0002DD1E4 /* BaseApiWorker.swift in Sources */,
 				7E9B13FC2857404600BD9EF5 /* DocumentReviewModels.swift in Sources */,
 				7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */,
-				C45E0BA62845F4C40083F028 /* AccountVerificationCoordinator.swift in Sources */,
 				7C787AE221ED89510017EA7E /* KeyStore.swift in Sources */,
 				CEAA9E911DC0FDFE0066731D /* UIViewPropertyAnimator+Extensions.swift in Sources */,
 				7B9434312886A7FA00638703 /* DeleteProfileInfoInteractor.swift in Sources */,

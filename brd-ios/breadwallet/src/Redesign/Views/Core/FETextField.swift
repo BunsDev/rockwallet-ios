@@ -47,17 +47,21 @@ struct TextFieldModel: ViewModel {
     var value: String?
     var placeholder: String?
     var hint: String?
-    var error: String?
     var info: InfoViewModel?
     var trailing: ImageViewModel?
+    var displayState: DisplayState?
+    var displayStateAnimated: Bool?
 }
 
 class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDelegate, StateDisplayable {
+    // TODO: displayState is unused. Remove later.
     var displayState: DisplayState = .normal
     
-    var contentSizeChanged: (() -> Void)?
     var valueChanged: ((UITextField) -> Void)?
+    var beganEditing: ((UITextField) -> Void)?
     var finishedEditing: ((UITextField) -> Void)?
+    var triggered: ((UITextField) -> Void)?
+    
     var didTapTrailingView: (() -> Void)?
     var didPasteText: ((String) -> Void)?
     
@@ -166,7 +170,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             make.leading.equalTo(Margins.large.rawValue)
             make.trailing.equalTo(trailingView.snp.leading).offset(-Margins.minimum.rawValue)
             make.top.equalToSuperview()
-            make.bottom.equalToSuperview().priority(.low)
         }
         
         textFieldStack.addArrangedSubview(titleStack)
@@ -241,10 +244,8 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             ]
             textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: attributes)
         }
-        if let hint = viewModel.hint {
-            hintLabel.setup(with: .text(hint))
-        }
-        hintLabel.isHidden = viewModel.hint == nil
+        
+        hintLabel.setup(with: .text(viewModel.hint))
         
         leadingView.setup(with: viewModel.leading)
         leadingView.isHidden = viewModel.leading == nil
@@ -257,25 +258,44 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         titleStack.isHidden = leadingView.isHidden && trailingView.isHidden && titleLabel.isHidden
         
-        animateTo(state: textField.text?.isEmpty == true ? .normal : .filled, withAnimation: false)
+        animateTo(state: viewModel.displayState ?? .normal, withAnimation: viewModel.displayStateAnimated == true)
+    }
+    
+    func update(with viewModel: TextFieldModel) {
+        self.viewModel = TextFieldModel(leading: viewModel.leading,
+                                        title: viewModel.title,
+                                        value: textField.text,
+                                        placeholder: viewModel.placeholder,
+                                        hint: viewModel.hint,
+                                        info: viewModel.info,
+                                        trailing: viewModel.trailing,
+                                        displayState: viewModel.displayState,
+                                        displayStateAnimated: true)
+        
+        setup(with: self.viewModel)
     }
     
     @objc private func startEditing() {
         textField.becomeFirstResponder()
+        
+        animateTo(state: .selected, withAnimation: true)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        animateTo(state: .selected)
+        beganEditing?(textField)
+        triggered?(textField)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        animateTo(state: textField.text?.isEmpty == true ? .normal : .filled)
+        animateTo(state: .normal, withAnimation: true)
+        
         finishedEditing?(textField)
+        triggered?(textField)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         valueChanged?(textField)
-        contentSizeChanged?()
+        triggered?(textField)
     }
     
     @objc func trailingViewTapped() {
@@ -283,9 +303,13 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     func animateTo(state: DisplayState, withAnimation: Bool = true) {
+        let state = state != .error && textField.isFirstResponder == false ? .normal : state
+        
+        viewModel?.displayState = state
+        
         let background: BackgroundConfiguration?
         
-        var hint = viewModel?.hint
+        let hint = viewModel?.hint
         var hideTextField = textField.text?.isEmpty == true
         let titleStackCurrentState = titleStack.isHidden
         var titleConfig: LabelConfiguration? = config?.titleConfiguration
@@ -308,15 +332,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             background = config?.errorBackgroundConfiguration
             
             hideTextField = false
-            hint = viewModel?.error
         }
         
-        if let text = hint,
-           !text.isEmpty {
-            hintLabel.setup(with: .text(text))
-        }
-        
-        displayState = state
+        hintLabel.setup(with: .text(hint))
         
         titleLabel.configure(with: titleConfig)
         hintLabel.configure(with: .init(textColor: background?.tintColor))
@@ -327,10 +345,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.titleStack.isHidden = self?.hideTitleForState == state || titleStackCurrentState
             self?.textField.isHidden = hideTextField
-            self?.hintLabel.isHidden = hint == nil
-            
-            self?.layoutIfNeeded()
-            self?.contentSizeChanged?()
+            self?.hintLabel.isHidden = self?.hintLabel.text?.isEmpty == true
         }
         
         UIView.setAnimationsEnabled(true)

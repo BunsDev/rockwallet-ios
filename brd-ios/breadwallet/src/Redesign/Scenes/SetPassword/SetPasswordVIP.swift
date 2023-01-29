@@ -30,8 +30,8 @@ protocol SetPasswordResponseDisplays: AnyObject, BaseResponseDisplays, FetchResp
 }
 
 protocol SetPasswordDataStore: BaseDataStore, FetchDataStore {
-    var password: String? { get set }
-    var passwordAgain: String? { get set }
+    var password: String { get set }
+    var passwordAgain: String { get set }
     var code: String? { get set }
     var guid: String? { get set }
 }

@@ -32,11 +32,35 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
             dataStore?.passwordAgain = passwordAgain
         }
         
-        let isPasswordValid = dataStore?.password?.isValidPassword ?? false
-        && dataStore?.passwordAgain?.isValidPassword ?? false
-        && dataStore?.password == dataStore?.passwordAgain
+        let isPasswordValid = dataStore?.password.isValidPassword ?? false
+        let isPasswordEmpty = dataStore?.password.isEmpty == true
+        var passwordState: DisplayState = .selected
+        if isPasswordEmpty {
+            passwordState = .selected
+        } else {
+            passwordState = isPasswordValid ? .selected : .error
+        }
         
-        presenter?.presentValidate(actionResponse: .init(isValid: isPasswordValid))
+        let isPasswordAgainValid = dataStore?.passwordAgain.isValidPassword ?? false
+        let isPasswordAgainEmpty = dataStore?.passwordAgain.isEmpty == true
+        var passwordAgainState: DisplayState = .selected
+        if isPasswordAgainEmpty {
+            passwordAgainState = .selected
+        } else {
+            passwordAgainState = isPasswordAgainValid ? .selected : .error
+        }
+        
+        let passwordsMatch = !isPasswordEmpty && !isPasswordAgainEmpty && dataStore?.password == dataStore?.passwordAgain
+        
+        presenter?.presentValidate(actionResponse: .init(password: viewAction.password,
+                                                         passwordAgain: viewAction.passwordAgain,
+                                                         isPasswordValid: isPasswordValid,
+                                                         isPasswordEmpty: isPasswordEmpty,
+                                                         passwordState: passwordState,
+                                                         isPasswordAgainValid: isPasswordAgainValid,
+                                                         isPasswordAgainEmpty: isPasswordAgainEmpty,
+                                                         passwordAgainState: passwordAgainState,
+                                                         passwordsMatch: passwordsMatch))
     }
     
     func next(viewAction: SetPasswordModels.Next.ViewAction) {

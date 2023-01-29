@@ -38,14 +38,50 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
             dataStore?.passwordAgain = passwordAgain
         }
         
-        let isEmailValid = dataStore?.email?.isValidEmailAddress ?? false
-        let isPasswordValid = dataStore?.password?.isValidPassword ?? false
-        && dataStore?.passwordAgain?.isValidPassword ?? false
-        && dataStore?.password == dataStore?.passwordAgain
+        let isEmailValid = dataStore?.email.isValidEmailAddress ?? false
+        let isEmailEmpty = dataStore?.email.isEmpty == true
+        var emailState: DisplayState = .selected
+        if isEmailEmpty {
+            emailState = .selected
+        } else {
+            emailState = isEmailValid ? .selected : .error
+        }
+        
+        let isPasswordValid = dataStore?.password.isValidPassword ?? false
+        let isPasswordEmpty = dataStore?.password.isEmpty == true
+        var passwordState: DisplayState = .selected
+        if isPasswordEmpty {
+            passwordState = .selected
+        } else {
+            passwordState = isPasswordValid ? .selected : .error
+        }
+        
+        let isPasswordAgainValid = dataStore?.passwordAgain.isValidPassword ?? false
+        let isPasswordAgainEmpty = dataStore?.passwordAgain.isEmpty == true
+        var passwordAgainState: DisplayState = .selected
+        if isPasswordAgainEmpty {
+            passwordAgainState = .selected
+        } else {
+            passwordAgainState = isPasswordAgainValid ? .selected : .error
+        }
+        
+        let passwordsMatch = !isPasswordEmpty && !isPasswordAgainEmpty && dataStore?.password == dataStore?.passwordAgain
+        
         let isTermsTickboxValid = dataStore?.termsTickbox == true
         
-        presenter?.presentValidate(actionResponse: .init(isEmailValid: isEmailValid,
+        presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
+                                                         password: viewAction.password,
+                                                         passwordAgain: viewAction.passwordAgain,
+                                                         isEmailValid: isEmailValid,
+                                                         isEmailEmpty: isEmailEmpty,
+                                                         emailState: emailState,
                                                          isPasswordValid: isPasswordValid,
+                                                         isPasswordEmpty: isPasswordEmpty,
+                                                         passwordState: passwordState,
+                                                         isPasswordAgainValid: isPasswordAgainValid,
+                                                         isPasswordAgainEmpty: isPasswordAgainEmpty,
+                                                         passwordAgainState: passwordAgainState,
+                                                         passwordsMatch: passwordsMatch,
                                                          isTermsTickboxValid: isTermsTickboxValid))
     }
     
