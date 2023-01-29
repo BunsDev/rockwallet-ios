@@ -50,12 +50,12 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
                                                                isPasswordValid: actionResponse.isPasswordValid,
                                                                isPasswordEmpty: actionResponse.isPasswordEmpty,
                                                                passwordModel: .init(title: L10n.Account.enterPassword,
-                                                                                    hint: actionResponse.passwordState == .error ? "Error" : nil,
                                                                                     displayState: actionResponse.passwordState),
                                                                isPasswordAgainValid: actionResponse.isPasswordAgainValid,
                                                                isPasswordAgainEmpty: actionResponse.isPasswordAgainEmpty,
                                                                passwordAgainModel: .init(title: L10n.Account.confirmPassword,
-                                                                                         hint: actionResponse.passwordAgainState == .error ? "Error" : nil,
+                                                                                         hint: actionResponse.passwordAgainState == .error
+                                                                                         && !actionResponse.passwordsMatch ? "Passwords should match." : nil,
                                                                                          displayState: actionResponse.passwordAgainState),
                                                                noticeConfiguration: noticeConfiguration,
                                                                isValid: isValid))

@@ -46,12 +46,11 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
                                                                isEmailValid: actionResponse.isEmailValid,
                                                                isEmailEmpty: actionResponse.isEmailEmpty,
                                                                emailModel: .init(title: L10n.Account.enterEmail,
-                                                                                 hint: actionResponse.emailState == .error ? "Error" : nil,
+                                                                                 hint: actionResponse.emailState == .error ? "Wrong e-mail address." : nil,
                                                                                  displayState: actionResponse.emailState),
                                                                isPasswordValid: actionResponse.isPasswordValid,
                                                                isPasswordEmpty: actionResponse.isPasswordEmpty,
                                                                passwordModel: .init(title: L10n.Account.enterPassword,
-                                                                                    hint: actionResponse.passwordState == .error ? "Error" : nil,
                                                                                     displayState: actionResponse.passwordState),
                                                                isValid: isValid))
     }
