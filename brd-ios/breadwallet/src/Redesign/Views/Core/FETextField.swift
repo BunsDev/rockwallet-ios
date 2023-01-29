@@ -345,7 +345,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.titleStack.isHidden = self?.hideTitleForState == state || titleStackCurrentState
             self?.textField.isHidden = hideTextField
-            self?.hintLabel.isHidden = self?.hintLabel.text?.isEmpty == true
+            self?.hintLabel.isHidden = self?.hintLabel.text.isNilOrEmpty == true
         }
         
         UIView.setAnimationsEnabled(true)
