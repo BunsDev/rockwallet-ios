@@ -171,12 +171,4 @@ class VIPTableViewController<C: CoordinatableRoutes,
     func tableView(_ tableView: UITableView, didSelectHeaderIn section: Int) {}
 
     func tableView(_ tableView: UITableView, didSelectFooterIn section: Int) {}
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
 }
