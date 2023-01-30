@@ -122,7 +122,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         if dataStore?.selected?.cardType == .debit,
            dataStore?.paymentMethod == .card,
            dataStore?.ach != nil,
-           dataStore?.toAmount?.currency.code == C.USDC {
+           dataStore?.toAmount?.currency.code == C.USDT {
             dataStore?.availablePayments.append(.ach)
         }
         
@@ -138,7 +138,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
         case .ach:
-            guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else {
+            guard let currency = Store.state.currencies.first(where: { $0.code == C.USDT }) else {
                 presenter?.presentUSDCMessage(actionResponse: .init())
                 return
             }
