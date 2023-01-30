@@ -42,14 +42,12 @@ class DynamicLinksManager {
     
     private static func handleReSetPassword(on coordinator: BaseCoordinator?, dynamicLinkType: DynamicLinkType, with url: URL) {
         guard let parameters = url.queryParameters,
-              let code = parameters["code"],
-              let guid = parameters["guid"] else {
+              let code = parameters["code"] else {
             return
         }
         
         coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SetPassword) { vc in
             vc?.dataStore?.code = code
-            vc?.dataStore?.guid = guid
         }
     }
 }

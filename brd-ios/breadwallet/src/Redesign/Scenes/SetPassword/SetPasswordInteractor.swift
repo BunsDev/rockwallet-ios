@@ -64,8 +64,7 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
     }
     
     func next(viewAction: SetPasswordModels.Next.ViewAction) {
-        let data = SetPasswordRequestData(guid: dataStore?.guid,
-                                          code: dataStore?.code,
+        let data = SetPasswordRequestData(code: dataStore?.code,
                                           password: dataStore?.password)
         SetPasswordWorker().execute(requestData: data) { [weak self] result in
             switch result {
