@@ -31,7 +31,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         didSet {
             let selectedCurrency: Currency
             if paymentMethod == .ach {
-                guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else { return }
+                guard let currency = Store.state.currencies.first(where: { $0.code == C.USDT }) else { return }
                 selectedCurrency = currency
             } else {
                 guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first  else { return  }
