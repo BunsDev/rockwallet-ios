@@ -108,6 +108,14 @@ extension Presets {
                                                    disabledConfiguration: Presets.Background.Secondary.disabled
             .withBorder(border: Presets.Border.disabledButtonFullRadius))
         
+        static var secondaryNoBorder = ButtonConfiguration(
+            normalConfiguration: BackgroundConfiguration(backgroundColor: LightColors.Background.two,
+                                                         tintColor: LightColors.primary,
+                                                         border: .init(tintColor: .clear, borderWidth: 0, cornerRadius: .fullRadius)),
+            selectedConfiguration: Presets.Background.Secondary.selected,
+            disabledConfiguration: Presets.Background.Secondary.disabled,
+            buttonContentEdgeInsets: .zero)
+        
         static var noBorders = ButtonConfiguration(normalConfiguration: BackgroundConfiguration(tintColor: LightColors.secondary),
                                                    selectedConfiguration: Presets.Background.Secondary.selected,
                                                    disabledConfiguration: Presets.Background.Secondary.disabled,

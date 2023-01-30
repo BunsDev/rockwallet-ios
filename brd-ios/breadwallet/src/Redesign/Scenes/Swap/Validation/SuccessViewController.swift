@@ -91,6 +91,45 @@ enum SuccessReason: SimpleMessage {
         }
     }
     
+    var secondButtonUnderlined: Bool {
+        switch self {
+        case .documentVerification:
+            return false
+            
+        default:
+            return true
+        }
+    }
+    
+    var thirdButtoUnderlined: Bool {
+        switch self {
+        case .documentVerification:
+            return false
+            
+        default:
+            return true
+        }
+    }
+    
+    var secondButtonConfig: ButtonConfiguration {
+        switch self {
+        case .documentVerification:
+            return Presets.Button.secondaryNoBorder
+            
+        default:
+            return Presets.Button.noBorders
+        }
+    }
+    
+    var thirdButtonConfig: ButtonConfiguration {
+        switch self {
+        case .documentVerification:
+            return Presets.Button.secondaryNoBorder
+            
+        default:
+            return Presets.Button.noBorders
+        }
+    }
 }
 
 extension Scenes {
@@ -113,17 +152,18 @@ class SuccessViewController: BaseInfoViewController {
             .init(title: success?.firstButtonTitle, callback: { [weak self] in
                 self?.coordinator?.dismissFlow()
             }),
-            .init(title: success?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
+            .init(title: success?.secondButtonTitle, isUnderlined: success?.secondButtonUnderlined ?? true, callback: { [weak self] in
                 self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
             }),
-            .init(title: success?.thirdButtonTitle, isUnderlined: true, callback: { [weak self] in
+            .init(title: success?.thirdButtonTitle, isUnderlined: success?.thirdButtoUnderlined ?? true, callback: { [weak self] in
                 self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
             })
         ]
     }
+    
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
-                Presets.Button.noBorders,
-                Presets.Button.noBorders]
+                success?.secondButtonConfig ?? Presets.Button.noBorders,
+                success?.thirdButtonConfig ?? Presets.Button.noBorders]
     }
 }
