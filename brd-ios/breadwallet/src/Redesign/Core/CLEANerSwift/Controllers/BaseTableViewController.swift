@@ -16,8 +16,10 @@ class BaseTableViewController<C: CoordinatableRoutes,
                               DS: BaseDataStore & NSObject>: VIPTableViewController<C, I, P, DS>,
                                                              FetchResponseDisplays {
     override var isModalDismissableEnabled: Bool { return true }
-    override var dismissText: String { return L10n.Button.close }
-    override var closeImage: UIImage? { return Asset.close.image}
+    override var dismissText: String {
+        return coordinator is AccountCoordinator ? L10n.Button.close : L10n.Button.skip
+    }
+    override var closeImage: UIImage? { return Asset.close.image }
     
     // MARK: - Cleaner Swift setup
     
@@ -27,14 +29,22 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }()
 
     override func setupCloseButton(closeAction: Selector) {
-        guard navigationItem.leftBarButtonItem?.image != closeImage,
-              navigationItem.rightBarButtonItem?.image != closeImage else { return }
+        var closeButton: UIBarButtonItem = .init()
         
-        let closeButton = UIBarButtonItem(image: Asset.close.image,
+        if coordinator is AccountCoordinator {
+            let attributes: [NSAttributedString.Key: Any] = [.font: Fonts.Subtitle.two,
+                                                             .foregroundColor: LightColors.Text.three,
+                                                             .underlineStyle: NSUnderlineStyle.single.rawValue]
+            closeButton = UIBarButtonItem(title: dismissText, style: .plain, target: self, action: closeAction)
+            closeButton.setTitleTextAttributes(attributes, for: .normal)
+            closeButton.setTitleTextAttributes(attributes, for: .highlighted)
+        } else {
+            closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
                                           action: closeAction)
-
+        }
+        
         guard navigationItem.rightBarButtonItem == nil else {
             navigationItem.setLeftBarButton(closeButton, animated: false)
             return

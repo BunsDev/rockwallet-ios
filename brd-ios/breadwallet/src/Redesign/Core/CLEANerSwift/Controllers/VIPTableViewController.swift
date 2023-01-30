@@ -43,7 +43,7 @@ class VIPTableViewController<C: CoordinatableRoutes,
         tableView.sectionFooterHeight = UITableView.automaticDimension
         
         tableView.separatorStyle = .none
-        tableView.sizeToFit()
+        
         return tableView
     }()
     
