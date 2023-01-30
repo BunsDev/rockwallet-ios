@@ -298,7 +298,42 @@ class ImportKeyViewController: UIViewController, Subscriber {
         case .unexpectedError:
             showErrorMessage(L10n.Alert.somethingWentWrong)
         case .clientError(let error):
-            showErrorMessage(error.localizedDescription)
+            let errorMsg = error.localizedDescription
+
+            do {
+                let regex = try NSRegularExpression(pattern: #"SystemClientError error (\d+)"#)
+                let results = regex.matches(in: errorMsg,
+                                            range: NSRange(errorMsg.startIndex..., in: errorMsg))
+                let resultString: [String] = results.map {
+                    String(errorMsg[Range($0.range, in: errorMsg)!])
+                }
+
+                if resultString.isEmpty != true {
+                    let errorNumber = resultString[0].filter { "0"..."9" ~= $0 }
+                    switch Int(errorNumber) {
+                    case 0:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 1:
+                        showErrorMessage(L10n.Import.Error.failedSubmit)
+                    case 2:
+                        showErrorMessage(L10n.ErrorMessages.networkIssues)
+                    case 3:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 4:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 5:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 6:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    default:
+                        showErrorMessage(error.localizedDescription)
+                    }
+                } else {
+                    showErrorMessage(error.localizedDescription)
+                }
+            } catch let error {
+                showErrorMessage(error.localizedDescription)
+            }
         }
     }
     
