@@ -110,7 +110,9 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     }
     
     func displayNext(responseDisplay: ForgotPasswordModels.Next.ResponseDisplay) {
-        coordinator?.showBottomSheetAlert(type: .emailSent)
+        coordinator?.showBottomSheetAlert(type: .emailSent) { [weak self] in
+            self?.coordinator?.dismissFlow()
+        }
     }
     
     // MARK: - Additional Helpers
