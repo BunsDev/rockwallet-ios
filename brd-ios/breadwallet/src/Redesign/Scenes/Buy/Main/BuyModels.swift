@@ -133,7 +133,9 @@ enum BuyModels {
     struct AchData {
         struct ViewAction {}
         
-        struct ActionResponse {}
+        struct ActionResponse {
+            var currencyCode: String?
+        }
         
         struct ResponseDisplay {
             var model: InfoViewModel?

@@ -198,7 +198,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse) {
-        let infoMessage = NSMutableAttributedString(string: L10n.Buy.disabledUSDCMessage)
+        let currencyCode = actionResponse.currencyCode ?? ""
+        let infoMessage = NSMutableAttributedString(string: L10n.Buy.Ach.walletDisabled(currencyCode, L10n.WalletConnectionSettings.link))
         let linkRange = infoMessage.mutableString.range(of: L10n.WalletConnectionSettings.link)
         
         if linkRange.location != NSNotFound {
