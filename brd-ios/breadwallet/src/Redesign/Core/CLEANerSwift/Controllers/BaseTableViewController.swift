@@ -61,7 +61,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<ProfileView>.self)
         tableView.register(WrapperTableViewCell<DoubleHorizontalTextboxView>.self)
         tableView.register(WrapperTableViewCell<FEImageView>.self)
-        tableView.register(WrapperTableViewCell<ScrollableButtonsView>.self)
+        tableView.register(WrapperTableViewCell<HorizontalButtonsView>.self)
         tableView.register(WrapperTableViewCell<ChecklistItemView>.self)
         tableView.register(WrapperTableViewCell<TickboxItemView>.self)
         tableView.register(WrapperTableViewCell<FESegmentControl>.self)
@@ -306,8 +306,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? ScrollableButtonsViewModel,
-              let cell: WrapperTableViewCell<ScrollableButtonsView> = tableView.dequeueReusableCell(for: indexPath)
+        guard let model = sectionRows[section]?[indexPath.row] as? HorizontalButtonsViewModel,
+              let cell: WrapperTableViewCell<HorizontalButtonsView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -539,19 +539,14 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     /// Override in subclass
     func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
-        tableView.performBatchUpdates {}
+        DispatchQueue.main.async {
+            self.tableView.isScrollEnabled = false
+            self.tableView.isScrollEnabled = true
+        }
     }
     
     /// Override in subclass
     @objc func buttonTapped() {
         view.endEditing(true)
-    }
-
-    /// Override in subclass
-    func didSelectItem(in section: Int, row: Int) {
-    }
-    
-    /// Override in subclass
-    func didLongPressItem(in section: Int, row: Int) {
     }
 }

@@ -129,7 +129,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     
     private lazy var hintLabel: FELabel = {
         let view = FELabel()
-        view.isHidden = true
         return view
     }()
     
@@ -169,7 +168,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
             make.leading.equalTo(Margins.large.rawValue)
             make.trailing.equalTo(trailingView.snp.leading).offset(-Margins.minimum.rawValue)
-            make.top.equalToSuperview()
         }
         
         textFieldStack.addArrangedSubview(titleStack)
@@ -334,23 +332,25 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             hideTextField = false
         }
         
-        hintLabel.setup(with: .text(hint))
-        
-        titleLabel.configure(with: titleConfig)
-        hintLabel.configure(with: .init(textColor: background?.tintColor))
-        configure(background: background)
-        
         UIView.setAnimationsEnabled(withAnimation)
         
-        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
+        UIView.transition(with: mainStack,
+                          duration: Presets.Animation.short.rawValue,
+                          options: [.layoutSubviews],
+                          animations: { [weak self] in
             self?.titleStack.isHidden = self?.hideTitleForState == state || titleStackCurrentState
             self?.textField.isHidden = hideTextField
-            self?.hintLabel.isHidden = self?.hintLabel.text.isNilOrEmpty == true
-        }
+            self?.hintLabel.transform = hint.isNilOrEmpty == true ? CGAffineTransform.init(scaleX: 1, y: 0) : .identity
+        })
+        
+        hintLabel.setup(with: .text(hint))
+        hintLabel.configure(with: .init(textColor: background?.tintColor))
+        titleLabel.configure(with: titleConfig)
+        configure(background: background)
         
         UIView.setAnimationsEnabled(true)
     }
-
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard E.isDebug || E.isTestFlight else { return true }
         if string.count > 1,
