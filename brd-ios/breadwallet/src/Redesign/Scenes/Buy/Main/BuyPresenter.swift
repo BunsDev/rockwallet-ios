@@ -197,7 +197,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
     }
     
-    func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse) {
+    func presentDisabledCurrencyMessage(actionResponse: BuyModels.AchData.ActionResponse) {
         let currencyCode = actionResponse.currencyCode ?? ""
         let infoMessage = NSMutableAttributedString(string: L10n.Buy.Ach.walletDisabled(currencyCode, L10n.WalletConnectionSettings.link))
         let linkRange = infoMessage.mutableString.range(of: L10n.WalletConnectionSettings.link)
