@@ -18,10 +18,10 @@ enum CustomerRole: String, Codable {
 }
 
 struct Limits: Codable {
-    var exchangeType: ExchangeType
-    var interval: Interval
-    var limit: Decimal
-    var isCustom: Bool
+    var exchangeType: ExchangeType?
+    var interval: Interval?
+    var limit: Decimal?
+    var isCustom: Bool?
 }
 
 enum ExchangeFlow {
