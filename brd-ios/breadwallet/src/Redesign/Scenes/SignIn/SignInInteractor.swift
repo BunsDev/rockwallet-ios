@@ -34,21 +34,11 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         
         let isEmailValid = dataStore?.email.isValidEmailAddress ?? false
         let isEmailEmpty = dataStore?.email.isEmpty == true
-        var emailState: DisplayState = .selected
-        if isEmailEmpty {
-            emailState = .selected
-        } else {
-            emailState = isEmailValid ? .selected : .error
-        }
+        let emailState: DisplayState = isEmailEmpty || isEmailValid ? .selected : .error
         
         let isPasswordValid = dataStore?.password.isValidPassword ?? false
         let isPasswordEmpty = dataStore?.password.isEmpty == true
-        var passwordState: DisplayState = .selected
-        if isPasswordEmpty {
-            passwordState = .selected
-        } else {
-            passwordState = isPasswordValid ? .selected : .error
-        }
+        let passwordState: DisplayState = isPasswordEmpty || isPasswordValid ? .selected : .error
         
         presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
                                                          password: viewAction.password,
