@@ -43,6 +43,8 @@ class RequestAmountViewController: UIViewController {
         }
     }
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         addSubviews()
         addConstraints()
         setData()
