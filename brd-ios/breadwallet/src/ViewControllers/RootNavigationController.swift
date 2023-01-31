@@ -62,6 +62,12 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = LightColors.primary
             tintColor = LightColors.Contrast.two
             
+        case is BuyViewController,
+            is SwapViewController:
+            
+            backgroundColor = LightColors.Background.two
+            tintColor = LightColors.Text.three
+            
         default:
             backgroundColor = LightColors.Background.one
             tintColor = LightColors.Text.three
