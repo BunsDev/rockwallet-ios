@@ -183,7 +183,7 @@ class SuccessViewController: BaseInfoViewController {
                                                             supportedCurrencies: responseDisplay.supportedCurrencies) { selectedCurrency in
             guard let model = selectedCurrency as? AssetViewModel,
                     let currency = Store.state.currencies.first(where: { $0.code == model.subtitle }) else { return }
-            let wallet = Store.state.wallets[currency.uid]?.wallet // TODO: Might not be correct, cannot fully test until whole KYC flow is up and running
+            let wallet = Store.state.wallets[currency.uid]?.wallet
             let accountViewController = AccountViewController(currency: currency, wallet: wallet)
             coordinator.navigationController.pushViewController(accountViewController, animated: true)
         }
