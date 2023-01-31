@@ -124,7 +124,10 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     // MARK: - User Interaction
     
-    // MARK: - SwapInfoResponseDisplay
+    // MARK: - BaseInfoResponseDisplay
+    
+    // Override in subclass
+    func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) { }
     
     // MARK: - Additional Helpers
 }

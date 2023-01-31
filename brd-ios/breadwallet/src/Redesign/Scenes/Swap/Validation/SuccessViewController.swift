@@ -153,7 +153,15 @@ class SuccessViewController: BaseInfoViewController {
                 self?.coordinator?.dismissFlow()
             }),
             .init(title: success?.secondButtonTitle, isUnderlined: success?.secondButtonUnderlined ?? true, callback: { [weak self] in
-                self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
+                switch self?.success {
+                case .documentVerification:
+                    LoadingView.show()
+                    self?.interactor?.getAssetSelectionData(viewModel: .init())
+                    
+                default:
+                    self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
+                                                           type: self?.transactionType ?? .defaultTransaction)
+                }
             }),
             .init(title: success?.thirdButtonTitle, isUnderlined: success?.thirdButtoUnderlined ?? true, callback: { [weak self] in
                 self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
@@ -165,5 +173,19 @@ class SuccessViewController: BaseInfoViewController {
         return [Presets.Button.primary,
                 success?.secondButtonConfig ?? Presets.Button.noBorders,
                 success?.thirdButtonConfig ?? Presets.Button.noBorders]
+    }
+    
+    override func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) {
+        LoadingView.hide()
+        guard let coordinator = coordinator as? KYCCoordinator else { return }
+        coordinator.showAssetSelector(title: responseDisplay.title ?? "",
+                                                            currencies: responseDisplay.currencies,
+                                                            supportedCurrencies: responseDisplay.supportedCurrencies) { selectedCurrency in
+            guard let model = selectedCurrency as? AssetViewModel,
+                    let currency = Store.state.currencies.first(where: { $0.code == model.subtitle }) else { return }
+            let wallet = Store.state.wallets[currency.uid]?.wallet
+            let accountViewController = AccountViewController(currency: currency, wallet: wallet)
+            coordinator.navigationController.pushViewController(accountViewController, animated: true)
+        }
     }
 }

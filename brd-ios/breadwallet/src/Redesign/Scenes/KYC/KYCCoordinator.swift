@@ -17,7 +17,8 @@ class KYCCoordinator: BaseCoordinator,
                       KYCDocumentPickerRoutes,
                       DocumentReviewRoutes,
                       CountriesAndStatesRoutes,
-                      KYCAddressRoutes {
+                      KYCAddressRoutes,
+                      AssetSelectionDisplayable {
     var role: CustomerRole?
     var flow: ExchangeFlow?
     
