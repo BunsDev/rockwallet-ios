@@ -16,33 +16,33 @@ class DynamicLinksManager {
     var code: String?
     
     enum DynamicLinkType: String {
+        // User Account
         case setPassword = "op=password"
-        case unknown
     }
     
-    private static func getDynamicLinkType(from url: String) -> DynamicLinkType {
-        if url.contains(DynamicLinkType.setPassword.rawValue) {
+    static func getDynamicLinkType(from url: URL) -> DynamicLinkType? {
+        if url.absoluteString.contains(DynamicLinkType.setPassword.rawValue) {
             return .setPassword
         }
         
-        return .unknown
+        return nil
     }
     
     static func handleDynamicLink(dynamicLink: URL?) {
         guard let url = dynamicLink else { return }
         
-        let dynamicLinkType = DynamicLinksManager.getDynamicLinkType(from: url.absoluteString)
+        let dynamicLinkType = DynamicLinksManager.getDynamicLinkType(from: url)
         
         switch dynamicLinkType {
         case .setPassword:
-            handleReSetPassword(dynamicLinkType: dynamicLinkType, with: url)
+            handleReSetPassword(with: url)
             
-        case .unknown:
+        default:
             break
         }
     }
     
-    private static func handleReSetPassword(dynamicLinkType: DynamicLinkType, with url: URL) {
+    private static func handleReSetPassword(with url: URL) {
         guard let parameters = url.queryParameters,
               let code = parameters["code"] else {
             return
