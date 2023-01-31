@@ -198,8 +198,16 @@ internal enum L10n {
     internal static let verified = L10n.tr("Localizable", "Account.Verified", fallback: "Verified")
     /// Verified account message on profile screen
     internal static let verifiedAccountMessage = L10n.tr("Localizable", "Account.VerifiedAccountMessage", fallback: "We’ll let you know when your account is verified.")
+    /// You now have access to:
+    /// ・Unlimited deposits
+    /// ・Enhanced security
+    /// ・Full asset support
+    /// ・Buy assets with credit card.
+    internal static let verifiedAccountText = L10n.tr("Localizable", "Account.VerifiedAccountText", fallback: "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
+    /// Your account is verified!
+    internal static let verifiedAccountTitle = L10n.tr("Localizable", "Account.VerifiedAccountTitle", fallback: "Your account is verified!")
     /// Verify account text in popup
-    internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
+    internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Enter and verify your email address for your account label in registration flow
     internal static let verifyEmail = L10n.tr("Localizable", "Account.VerifyEmail", fallback: "Enter and verify your new email address for your RockWallet account.")
     /// We need to verify your identity before you can %s assets.
