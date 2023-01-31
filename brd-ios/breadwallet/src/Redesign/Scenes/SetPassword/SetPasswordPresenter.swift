@@ -50,12 +50,18 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
                                                                isPasswordValid: actionResponse.isPasswordValid,
                                                                isPasswordEmpty: actionResponse.isPasswordEmpty,
                                                                passwordModel: .init(title: L10n.Account.enterPassword,
+                                                                                    hint: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
+                                                                                    && !actionResponse.isPasswordAgainEmpty ? L10n.Account.passwordDoNotMatch : nil,
+                                                                                    trailing: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
+                                                                                    && !actionResponse.isPasswordAgainEmpty ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
                                                                                     displayState: actionResponse.passwordState),
                                                                isPasswordAgainValid: actionResponse.isPasswordAgainValid,
                                                                isPasswordAgainEmpty: actionResponse.isPasswordAgainEmpty,
                                                                passwordAgainModel: .init(title: L10n.Account.confirmPassword,
-                                                                                         hint: actionResponse.passwordAgainState == .error
-                                                                                         && !actionResponse.passwordsMatch ? "Passwords should match." : nil,
+                                                                                         hint: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
+                                                                                         && !actionResponse.isPasswordAgainEmpty ? L10n.Account.passwordDoNotMatch : nil,
+                                                                                         trailing: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
+                                                                                         && !actionResponse.isPasswordAgainEmpty ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
                                                                                          displayState: actionResponse.passwordAgainState),
                                                                noticeConfiguration: noticeConfiguration,
                                                                isValid: isValid))
