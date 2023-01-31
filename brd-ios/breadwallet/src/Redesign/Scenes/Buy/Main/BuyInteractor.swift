@@ -139,7 +139,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         switch viewAction.method {
         case .ach:
             guard let currency = Store.state.currencies.first(where: { $0.code == C.USDT }) else {
-                presenter?.presentUSDCMessage(actionResponse: .init())
+                presenter?.presentDisabledCurrencyMessage(actionResponse: .init(currencyCode: C.USDT))
                 return
             }
             dataStore?.toAmount = .zero(currency)
