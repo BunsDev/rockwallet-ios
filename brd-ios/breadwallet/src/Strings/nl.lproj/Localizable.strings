@@ -120,6 +120,8 @@
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
+"Account.InvalidEmail" = "Please enter a valid Email Address";
+
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -131,6 +133,8 @@
 "Account.Monthly" = "Monthly";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordDoNotMatch" = "Passwords do not match";
 
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
@@ -205,8 +209,12 @@
 /* Verified account message on profile screen */
 "Account.VerifiedAccountMessage" = "We’ll let you know when your account is verified.";
 
+"Account.VerifiedAccountText" = "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+
+"Account.VerifiedAccountTitle" = "Your account is verified!";
+
 /* Verify account text in popup */
-"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
@@ -1597,6 +1605,8 @@
 
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "Welkom bij uw nieuwe wereldwijde portemonnee!";
+
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
 
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Investeer en diversifieer met RockWallet, snel en veilig.";
