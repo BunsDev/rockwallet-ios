@@ -120,6 +120,8 @@
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
+"Account.InvalidEmail" = "Please enter a valid Email Address";
+
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -131,6 +133,8 @@
 "Account.Monthly" = "Monthly";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordDoNotMatch" = "Passwords do not match";
 
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
@@ -1601,6 +1605,8 @@
 
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "Benvenuto nel tuo nuovo portafoglio globale!";
+
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
 
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Investi e diversifica con RockWallet, facilmente ed in maniera sicura.";
