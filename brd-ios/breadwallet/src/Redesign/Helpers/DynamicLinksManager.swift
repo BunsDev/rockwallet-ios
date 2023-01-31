@@ -13,6 +13,8 @@ import Foundation
 class DynamicLinksManager {
     static var shared = DynamicLinksManager()
     
+    var code: String?
+    
     enum DynamicLinkType: String {
         case setPassword = "op=password"
         case unknown
@@ -26,28 +28,26 @@ class DynamicLinksManager {
         return .unknown
     }
     
-    static func handleDynamicLink(on coordinator: BaseCoordinator?, dynamicLink: URL?) {
+    static func handleDynamicLink(dynamicLink: URL?) {
         guard let url = dynamicLink else { return }
         
         let dynamicLinkType = DynamicLinksManager.getDynamicLinkType(from: url.absoluteString)
         
         switch dynamicLinkType {
         case .setPassword:
-            handleReSetPassword(on: coordinator, dynamicLinkType: dynamicLinkType, with: url)
+            handleReSetPassword(dynamicLinkType: dynamicLinkType, with: url)
             
         case .unknown:
             break
         }
     }
     
-    private static func handleReSetPassword(on coordinator: BaseCoordinator?, dynamicLinkType: DynamicLinkType, with url: URL) {
+    private static func handleReSetPassword(dynamicLinkType: DynamicLinkType, with url: URL) {
         guard let parameters = url.queryParameters,
               let code = parameters["code"] else {
             return
         }
         
-        coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SetPassword) { vc in
-            vc?.dataStore?.code = code
-        }
+        DynamicLinksManager.shared.code = code
     }
 }

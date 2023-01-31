@@ -58,34 +58,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         applicationController.application(application, didFailToRegisterForRemoteNotificationsWithError: error)
     }
-
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         applicationController.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
     }
-
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         return applicationController.open(url: url)
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let webpageURL = userActivity.webpageURL else {
-            return false
-        }
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let webpageURL = userActivity.webpageURL else { return false }
         
-        DynamicLinksManager.handleDynamicLink(on: applicationController.coordinator, dynamicLink: webpageURL)
+        DynamicLinksManager.handleDynamicLink(dynamicLink: webpageURL)
         
         // The Plaid Link SDK ignores unexpected URLs passed to `continue(from:)` as
         // per Apple’s recommendations, so there is no need to filter out unrelated URLs.
         // Doing so may prevent a valid URL from being passed to `continue(from:)` and
         // OAuth may not continue as expected.
         guard let linkOAuthHandler = window?.rootViewController as? LinkOAuthHandling,
-            let handler = linkOAuthHandler.linkHandler
-        else {
-            return false
-        }
-
+              let handler = linkOAuthHandler.linkHandler else { return false }
         // Continue the Link flow
         handler.continue(from: webpageURL)
+        
         return true
     }
 
@@ -105,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             try? logData.write(to: previousLogFilePath, options: Data.WritingOptions.atomic)
         }
         
-        C.logFilePath.withUnsafeFileSystemRepresentation {
+        logFilePath.withUnsafeFileSystemRepresentation {
             _ = freopen($0, "w+", stdout)
         }
     }

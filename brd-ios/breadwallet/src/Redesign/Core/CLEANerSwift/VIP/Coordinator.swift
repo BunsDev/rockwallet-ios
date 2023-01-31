@@ -75,14 +75,25 @@ class BaseCoordinator: NSObject,
         navigationController.show(nvc, sender: nil)
     }
     
-    func showRegistration() {
+    func handleUser() {
+        if DynamicLinksManager.shared.code != nil {
+            dismissFlow()
+        }
+        
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.start()
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
-        navigationController.show(coordinator.navigationController, sender: nil)
+        
+        if DynamicLinksManager.shared.code != nil {
+            UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
+            
+            DynamicLinksManager.shared.code = nil
+        } else {
+            navigationController.show(coordinator.navigationController, sender: nil)
+        }
     }
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
@@ -187,11 +198,6 @@ class BaseCoordinator: NSObject,
         
         childCoordinators.append(coordinator)
         UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
-        
-        // TODO: Cleanup when everything is moved to Coordinators.
-        // There are problems with showing this vc from both menu and profile menu.
-        // Cannot get it work reliably. Navigation Controllers are messed up.
-        // More hint: deleteAccountCallback inside ModalPresenter.
     }
     
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {

@@ -12,6 +12,11 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     // MARK: - RegistrationRoutes
     
     override func start() {
+        if DynamicLinksManager.shared.code != nil {
+            showSetPassword()
+            return
+        }
+        
         if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation()
             return
@@ -29,7 +34,6 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
         }
     }
     
-    // TODO: Should this be removed?
     func showChangeEmail() {
         open(scene: Scenes.SignUp) { vc in
             vc.prepareData()
@@ -43,6 +47,14 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     func showSignUp() {
         open(scene: Scenes.SignUp) { vc in
             vc.navigationItem.hidesBackButton = true
+        }
+    }
+    
+    func showSetPassword() {
+        open(scene: Scenes.SetPassword) { vc in
+            vc.navigationItem.hidesBackButton = true
+            
+            vc.dataStore?.code = DynamicLinksManager.shared.code
         }
     }
     
