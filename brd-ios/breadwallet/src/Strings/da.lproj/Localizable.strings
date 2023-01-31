@@ -205,8 +205,12 @@
 /* Verified account message on profile screen */
 "Account.VerifiedAccountMessage" = "We’ll let you know when your account is verified.";
 
+"Account.VerifiedAccountText" = "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+
+"Account.VerifiedAccountTitle" = "Your account is verified!";
+
 /* Verify account text in popup */
-"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";

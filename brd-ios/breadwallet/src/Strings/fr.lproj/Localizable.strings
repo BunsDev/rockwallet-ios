@@ -205,6 +205,10 @@
 /* Verified account message on profile screen */
 "Account.VerifiedAccountMessage" = "Nous vous informerons lorsque votre compte aura été vérifié.";
 
+"Account.VerifiedAccountText" = "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+
+"Account.VerifiedAccountTitle" = "Your account is verified!";
+
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "Si vous faites vérifier votre compte, vous bénéficierez des avantages suivants :\n・Dépôts/retraits illimités\n・Sécurité renforcée\n・Assistance complète pour les actifs\n・Achat d'actifs avec une carte de crédit";
 

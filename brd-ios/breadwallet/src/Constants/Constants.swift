@@ -81,6 +81,7 @@ struct C {
     static let ETH = "ETH"
     static let BSV = "BSV"
     static let USDC = "USDC"
+    static let USDT = "USDT"
     
     static var backendHost: String {
         if let debugBackendHost = UserDefaults.debugBackendHost {

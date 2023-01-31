@@ -124,7 +124,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
                 self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
-                guard (Store.state.currencies.first(where: { $0.code == C.USDC }) == nil) else { return }
+                guard (Store.state.currencies.first(where: { $0.code == C.USDT }) == nil) else { return }
                 view.setup(with: SegmentControlViewModel(selectedIndex: .card))
             }
         }
@@ -188,7 +188,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
         switch dataStore?.paymentMethod {
         case .ach:
-            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDC }) {
+            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDT }) {
                 supportedCurrencies = [usdCurrency]
             }
         default:

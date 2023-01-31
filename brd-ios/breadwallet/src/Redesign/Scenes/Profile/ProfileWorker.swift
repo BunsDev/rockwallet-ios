@@ -18,10 +18,10 @@ enum CustomerRole: String, Codable {
 }
 
 struct Limits: Codable {
-    var exchangeType: ExchangeType
-    var interval: Interval
-    var limit: Decimal
-    var isCustom: Bool
+    var exchangeType: ExchangeType?
+    var interval: Interval?
+    var limit: Decimal?
+    var isCustom: Bool?
 }
 
 enum ExchangeFlow {
@@ -146,6 +146,32 @@ struct Profile: Model {
     
     var achLifetimeRemainingLimit: Decimal {
         return achAllowanceLifetime - usedAchLifetime
+    }
+    
+    var buyAllowanceWeekly: Decimal {
+        return limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyCard })?.limit ?? 0
+    }
+    var buyAllowanceMonthly: Decimal {
+        return limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyCard })?.limit ?? 0
+    }
+    var buyAllowanceDailyMin: Decimal {
+        return limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyCard })?.limit ?? 0
+    }
+    var buyAllowanceDailyMax: Decimal {
+        return limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
+    }
+    
+    var achAllowanceWeekly: Decimal {
+        return limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyAch })?.limit ?? 0
+    }
+    var achAllowanceMonthly: Decimal {
+        return limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyAch })?.limit ?? 0
+    }
+    var achAllowanceDailyMin: Decimal {
+        return limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyAch })?.limit ?? 0
+    }
+    var achAllowanceDailyMax: Decimal {
+        return limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyAch })?.limit ?? 0
     }
 }
 
