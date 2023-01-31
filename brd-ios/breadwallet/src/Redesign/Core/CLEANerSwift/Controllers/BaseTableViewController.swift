@@ -32,6 +32,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
         var closeButton: UIBarButtonItem = .init()
         
         if coordinator is AccountCoordinator {
+            guard navigationItem.leftBarButtonItem?.title != dismissText,
+                  navigationItem.rightBarButtonItem?.title != dismissText else { return }
+            
             let attributes: [NSAttributedString.Key: Any] = [.font: Fonts.Subtitle.two,
                                                              .foregroundColor: LightColors.Text.three,
                                                              .underlineStyle: NSUnderlineStyle.single.rawValue]
@@ -39,6 +42,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
             closeButton.setTitleTextAttributes(attributes, for: .normal)
             closeButton.setTitleTextAttributes(attributes, for: .highlighted)
         } else {
+            guard navigationItem.leftBarButtonItem?.image != closeImage,
+                  navigationItem.rightBarButtonItem?.image != closeImage else { return }
+            
             closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
