@@ -13,12 +13,15 @@ extension Scenes {
 }
 
 protocol BaseInfoViewActions: BaseViewActions, FetchViewActions {
+    func getAssetSelectionData(viewModel: BaseInfoModels.Assets.ViewAction)
 }
 
 protocol BaseInfoActionResponses: BaseActionResponses, FetchActionResponses {
+    func presentAssetSelectionData(actionResponse: BaseInfoModels.Assets.ActionResponse)
 }
 
 protocol BaseInfoResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+    func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay)
 }
 
 protocol BaseInfoDataStore: BaseDataStore, FetchDataStore {
