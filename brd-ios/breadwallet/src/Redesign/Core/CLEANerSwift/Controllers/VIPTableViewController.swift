@@ -21,24 +21,29 @@ class VIPTableViewController<C: CoordinatableRoutes,
     var sectionRows: [AnyHashable: [Any]] = [:]
 
     // MARK: LazyUI
+    
     lazy var tableView: ContentSizedTableView = {
         var tableView = ContentSizedTableView(frame: .zero, style: .grouped)
+        
         tableView.dataSource = self
         tableView.delegate = self
-
-        // this prevents the top offset on tableViews
+        
+        // This prevents the top offset on tableViews
         let zeroView = UIView(frame: .init(origin: .zero, size: .init(width: 0, height: CGFloat.leastNonzeroMagnitude)))
         tableView.tableHeaderView = zeroView
         tableView.tableFooterView = zeroView
+        
         tableView.estimatedSectionHeaderHeight = CGFloat.leastNormalMagnitude
-        tableView.estimatedRowHeight = CGFloat.leastNormalMagnitude
-        tableView.estimatedSectionFooterHeight = CGFloat.leastNormalMagnitude
-
         tableView.sectionHeaderHeight = UITableView.automaticDimension
+        
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.estimatedSectionFooterHeight = CGFloat.leastNormalMagnitude
         tableView.sectionFooterHeight = UITableView.automaticDimension
-
+        
         tableView.separatorStyle = .none
+        
         return tableView
     }()
     

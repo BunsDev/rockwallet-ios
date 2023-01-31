@@ -62,30 +62,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = LightColors.primary
             tintColor = LightColors.Contrast.two
             
-        case is ShareDataViewController,
-            is DeleteProfileInfoViewController,
-            is BuyViewController,
-            is SwapViewController,
-            is AddCardViewController,
-            is ExchangeDetailsViewController,
-            is RegistrationConfirmationViewController,
-            is AccountVerificationViewController,
-            is ProfileViewController,
-            is KYCBasicViewController,
-            is KYCLevelTwoEntryViewController,
-            is KYCDocumentPickerViewController,
-            is KYCLevelTwoPostValidationViewController,
-            is SimpleWebViewController,
-            is VerifyAccountViewController,
-            is OrderPreviewViewController,
-            is BaseInfoViewController,
-            is ItemSelectionViewController,
-            is BillingAddressViewController,
-            is SellViewController,
-            is KYCAddressViewController:
-            backgroundColor = LightColors.Background.two
-            tintColor = LightColors.Text.three
-            
         default:
             backgroundColor = LightColors.Background.one
             tintColor = LightColors.Text.three

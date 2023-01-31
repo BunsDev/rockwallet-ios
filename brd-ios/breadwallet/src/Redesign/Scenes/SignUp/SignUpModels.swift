@@ -33,15 +33,47 @@ enum SignUpModels {
         }
         
         struct ActionResponse {
+            var email: String?
+            var password: String?
+            var passwordAgain: String?
+            
             var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailState: DisplayState
+            
             var isPasswordValid: Bool
+            var isPasswordEmpty: Bool
+            var passwordState: DisplayState
+            
+            var isPasswordAgainValid: Bool
+            var isPasswordAgainEmpty: Bool
+            var passwordAgainState: DisplayState
+            var passwordsMatch: Bool
+            
             var isTermsTickboxValid: Bool
         }
         
         struct ResponseDisplay {
+            var email: String?
+            var password: String?
+            var passwordAgain: String?
+            
             var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailModel: TextFieldModel
+            
             var isPasswordValid: Bool
+            var isPasswordEmpty: Bool
+            var passwordModel: TextFieldModel
+            
+            var isPasswordAgainValid: Bool
+            var isPasswordAgainEmpty: Bool
+            var passwordAgainModel: TextFieldModel
+            
             var isTermsTickboxValid: Bool
+            
+            var noticeConfiguration: LabelConfiguration
+            var isValid: Bool
         }
     }
     

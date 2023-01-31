@@ -428,7 +428,7 @@
 		7EAFC5F22941D6C700A7FF26 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F12941D6C700A7FF26 /* Animations.swift */; };
 		7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */; };
 		7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */; };
-		7EB838462849D49A00C7CC05 /* ScrollableButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */; };
+		7EB838462849D49A00C7CC05 /* HorizontalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */; };
 		7EB838482849DD8200C7CC05 /* FELink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838472849DD8200C7CC05 /* FELink.swift */; };
 		7EB8FD212897D212000FF75C /* BuyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8FD1A2897D212000FF75C /* BuyCoordinator.swift */; };
 		7EB8FD222897D212000FF75C /* BuyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8FD1B2897D212000FF75C /* BuyStore.swift */; };
@@ -601,7 +601,6 @@
 		A2439D7BB746E6CFC3F9B64A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2439F5D8263945E73EFF4A3 /* CacheService.swift */; };
 		C416BE0628509C4E0020ACCD /* KYCLevelTwoPostValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C416BE0528509C4E0020ACCD /* KYCLevelTwoPostValidation.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
-		C45E0BA62845F4C40083F028 /* AccountVerificationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0B9F2845F4C40083F028 /* AccountVerificationCoordinator.swift */; };
 		C45E0BA72845F4C40083F028 /* AccountVerificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0BA02845F4C40083F028 /* AccountVerificationStore.swift */; };
 		C45E0BA82845F4C40083F028 /* AccountVerificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0BA12845F4C40083F028 /* AccountVerificationPresenter.swift */; };
 		C45E0BA92845F4C40083F028 /* AccountVerificationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E0BA22845F4C40083F028 /* AccountVerificationModels.swift */; };
@@ -1260,7 +1259,7 @@
 		7EAFC5F12941D6C700A7FF26 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrowToX.json; sourceTree = "<group>"; };
 		7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+DefaultReceiveAddress.swift"; sourceTree = "<group>"; };
-		7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableButtonsView.swift; sourceTree = "<group>"; };
+		7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalButtonsView.swift; sourceTree = "<group>"; };
 		7EB838472849DD8200C7CC05 /* FELink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FELink.swift; sourceTree = "<group>"; };
 		7EB8FD1A2897D212000FF75C /* BuyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyCoordinator.swift; sourceTree = "<group>"; };
 		7EB8FD1B2897D212000FF75C /* BuyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyStore.swift; sourceTree = "<group>"; };
@@ -1402,7 +1401,6 @@
 		A2439F5D8263945E73EFF4A3 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		C416BE0528509C4E0020ACCD /* KYCLevelTwoPostValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCLevelTwoPostValidation.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
-		C45E0B9F2845F4C40083F028 /* AccountVerificationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationCoordinator.swift; sourceTree = "<group>"; };
 		C45E0BA02845F4C40083F028 /* AccountVerificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationStore.swift; sourceTree = "<group>"; };
 		C45E0BA12845F4C40083F028 /* AccountVerificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationPresenter.swift; sourceTree = "<group>"; };
 		C45E0BA22845F4C40083F028 /* AccountVerificationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVerificationModels.swift; sourceTree = "<group>"; };
@@ -2571,7 +2569,7 @@
 				7EF45F322844D26E00D1F7B0 /* VerificationView.swift */,
 				7E8E97A1283F78B0008606B0 /* ProfileView.swift */,
 				7EBC6B0C2848B81A000A301F /* CodeInputView.swift */,
-				7EB838452849D49A00C7CC05 /* ScrollableButtonsView.swift */,
+				7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */,
 				7E0968B7284A29CE006B4FC2 /* TransparentView.swift */,
 				7EC0F8B928881C680037145C /* TitleValueView.swift */,
 				7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */,
@@ -3131,7 +3129,6 @@
 		C4C0CA542845F2F400B6ED79 /* AccountVerification */ = {
 			isa = PBXGroup;
 			children = (
-				C45E0B9F2845F4C40083F028 /* AccountVerificationCoordinator.swift */,
 				C45E0BA12845F4C40083F028 /* AccountVerificationPresenter.swift */,
 				C45E0BA02845F4C40083F028 /* AccountVerificationStore.swift */,
 				C45E0BA32845F4C40083F028 /* AccountVerificationVIP.swift */,
@@ -4082,7 +4079,7 @@
 				7EF45F87284768C100D1F7B0 /* ItemSelectionVIP.swift in Sources */,
 				7BF5D4FC296D4FC900942ADB /* SignUpStore.swift in Sources */,
 				CECCE5AB1E038C9900D99448 /* GenericPinPadCell.swift in Sources */,
-				7EB838462849D49A00C7CC05 /* ScrollableButtonsView.swift in Sources */,
+				7EB838462849D49A00C7CC05 /* HorizontalButtonsView.swift in Sources */,
 				7EBCAB3C29716720002A4E78 /* BaseSendViewController.swift in Sources */,
 				7B54E5A427F4A2B0002DD1E4 /* RequestModels.swift in Sources */,
 				C45E0BA92845F4C40083F028 /* AccountVerificationModels.swift in Sources */,
@@ -4372,7 +4369,6 @@
 				7B54E5A927F4A2B0002DD1E4 /* BaseApiWorker.swift in Sources */,
 				7E9B13FC2857404600BD9EF5 /* DocumentReviewModels.swift in Sources */,
 				7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */,
-				C45E0BA62845F4C40083F028 /* AccountVerificationCoordinator.swift in Sources */,
 				7C787AE221ED89510017EA7E /* KeyStore.swift in Sources */,
 				CEAA9E911DC0FDFE0066731D /* UIViewPropertyAnimator+Extensions.swift in Sources */,
 				7B9434312886A7FA00638703 /* DeleteProfileInfoInteractor.swift in Sources */,

@@ -27,10 +27,19 @@ enum ForgotPasswordModels {
         }
         
         struct ActionResponse {
-            var isValid: Bool
+            var email: String?
+            
+            var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailState: DisplayState
         }
         
         struct ResponseDisplay {
+            var email: String?
+            
+            var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailModel: TextFieldModel
             var isValid: Bool
         }
     }

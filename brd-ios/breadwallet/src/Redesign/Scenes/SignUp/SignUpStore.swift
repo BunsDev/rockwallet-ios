@@ -15,11 +15,11 @@ class SignUpStore: NSObject, BaseDataStore, SignUpDataStore {
     
     // MARK: - ProfileDataStore
     
-    var email: String?
-    var password: String?
-    var passwordAgain: String?
-    var termsTickbox: Bool = false
-    var promotionsTickbox: Bool = false
+    var email = ""
+    var password = ""
+    var passwordAgain = ""
+    var termsTickbox = false
+    var promotionsTickbox = false
     
     // MARK: - Aditional helpers
 }

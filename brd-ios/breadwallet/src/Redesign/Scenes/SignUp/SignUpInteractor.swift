@@ -38,14 +38,35 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
             dataStore?.passwordAgain = passwordAgain
         }
         
-        let isEmailValid = dataStore?.email?.isValidEmailAddress ?? false
-        let isPasswordValid = dataStore?.password?.isValidPassword ?? false
-        && dataStore?.passwordAgain?.isValidPassword ?? false
-        && dataStore?.password == dataStore?.passwordAgain
+        let isEmailValid = dataStore?.email.isValidEmailAddress ?? false
+        let isEmailEmpty = dataStore?.email.isEmpty == true
+        let emailState: DisplayState = isEmailEmpty || isEmailValid ? .selected : .error
+        
+        let isPasswordValid = dataStore?.password.isValidPassword ?? false
+        let isPasswordEmpty = dataStore?.password.isEmpty == true
+        let passwordState: DisplayState = isPasswordEmpty || isPasswordValid ? .selected : .error
+        
+        let isPasswordAgainValid = dataStore?.passwordAgain.isValidPassword ?? false
+        let isPasswordAgainEmpty = dataStore?.passwordAgain.isEmpty == true
+        let passwordAgainState: DisplayState = isPasswordAgainEmpty || isPasswordAgainValid ? .selected : .error
+        
+        let passwordsMatch = !isPasswordEmpty && !isPasswordAgainEmpty && dataStore?.password == dataStore?.passwordAgain
+        
         let isTermsTickboxValid = dataStore?.termsTickbox == true
         
-        presenter?.presentValidate(actionResponse: .init(isEmailValid: isEmailValid,
+        presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
+                                                         password: viewAction.password,
+                                                         passwordAgain: viewAction.passwordAgain,
+                                                         isEmailValid: isEmailValid,
+                                                         isEmailEmpty: isEmailEmpty,
+                                                         emailState: emailState,
                                                          isPasswordValid: isPasswordValid,
+                                                         isPasswordEmpty: isPasswordEmpty,
+                                                         passwordState: passwordState,
+                                                         isPasswordAgainValid: isPasswordAgainValid,
+                                                         isPasswordAgainEmpty: isPasswordAgainEmpty,
+                                                         passwordAgainState: passwordAgainState,
+                                                         passwordsMatch: passwordsMatch,
                                                          isTermsTickboxValid: isTermsTickboxValid))
     }
     

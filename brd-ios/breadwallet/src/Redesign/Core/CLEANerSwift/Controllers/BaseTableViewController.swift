@@ -16,8 +16,10 @@ class BaseTableViewController<C: CoordinatableRoutes,
                               DS: BaseDataStore & NSObject>: VIPTableViewController<C, I, P, DS>,
                                                              FetchResponseDisplays {
     override var isModalDismissableEnabled: Bool { return true }
-    override var dismissText: String { return L10n.Button.close }
-    override var closeImage: UIImage? { return Asset.close.image}
+    override var dismissText: String {
+        return coordinator is AccountCoordinator ? L10n.Button.close : L10n.Button.skip
+    }
+    override var closeImage: UIImage? { return Asset.close.image }
     
     // MARK: - Cleaner Swift setup
     
@@ -27,14 +29,28 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }()
 
     override func setupCloseButton(closeAction: Selector) {
-        guard navigationItem.leftBarButtonItem?.image != closeImage,
-              navigationItem.rightBarButtonItem?.image != closeImage else { return }
+        var closeButton: UIBarButtonItem = .init()
         
-        let closeButton = UIBarButtonItem(image: Asset.close.image,
+        if coordinator is AccountCoordinator {
+            guard navigationItem.leftBarButtonItem?.title != dismissText,
+                  navigationItem.rightBarButtonItem?.title != dismissText else { return }
+            
+            let attributes: [NSAttributedString.Key: Any] = [.font: Fonts.Subtitle.two,
+                                                             .foregroundColor: LightColors.Text.three,
+                                                             .underlineStyle: NSUnderlineStyle.single.rawValue]
+            closeButton = UIBarButtonItem(title: dismissText, style: .plain, target: self, action: closeAction)
+            closeButton.setTitleTextAttributes(attributes, for: .normal)
+            closeButton.setTitleTextAttributes(attributes, for: .highlighted)
+        } else {
+            guard navigationItem.leftBarButtonItem?.image != closeImage,
+                  navigationItem.rightBarButtonItem?.image != closeImage else { return }
+            
+            closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
                                           action: closeAction)
-
+        }
+        
         guard navigationItem.rightBarButtonItem == nil else {
             navigationItem.setLeftBarButton(closeButton, animated: false)
             return
@@ -61,7 +77,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<ProfileView>.self)
         tableView.register(WrapperTableViewCell<DoubleHorizontalTextboxView>.self)
         tableView.register(WrapperTableViewCell<FEImageView>.self)
-        tableView.register(WrapperTableViewCell<ScrollableButtonsView>.self)
+        tableView.register(WrapperTableViewCell<HorizontalButtonsView>.self)
         tableView.register(WrapperTableViewCell<ChecklistItemView>.self)
         tableView.register(WrapperTableViewCell<TickboxItemView>.self)
         tableView.register(WrapperTableViewCell<FESegmentControl>.self)
@@ -306,8 +322,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? ScrollableButtonsViewModel,
-              let cell: WrapperTableViewCell<ScrollableButtonsView> = tableView.dequeueReusableCell(for: indexPath)
+        guard let model = sectionRows[section]?[indexPath.row] as? HorizontalButtonsViewModel,
+              let cell: WrapperTableViewCell<HorizontalButtonsView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -332,15 +348,21 @@ class BaseTableViewController<C: CoordinatableRoutes,
         cell.setup { view in
             view.configure(with: Presets.TextField.primary)
             view.setup(with: model)
-            view.valueChanged = { [weak self] field in
-                self?.textFieldDidUpdate(for: indexPath, with: field.text, on: section)
+            
+            view.beganEditing = { [weak self] field in
+                self?.textFieldDidBegin(for: indexPath, with: field.text)
             }
+            
+            view.valueChanged = { [weak self] field in
+                self?.textFieldDidUpdate(for: indexPath, with: field.text)
+            }
+            
             view.finishedEditing = { [weak self] field in
                 self?.textFieldDidFinish(for: indexPath, with: field.text)
             }
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
+            
+            view.triggered = { [weak self] field in
+                self?.textFieldDidTrigger(for: indexPath, with: field.text)
             }
         }
         
@@ -496,6 +518,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
+        
         switch self {
         case is SwapViewController,
             is BuyViewController,
@@ -517,21 +540,29 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     // MARK: UserInteractions
-    func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        // Override in subclass
-    }
-
-    func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
+    
+    /// Override in subclass
+    func textFieldDidBegin(for indexPath: IndexPath, with text: String?) {
     }
     
+    /// Override in subclass
+    func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
+    }
+    
+    /// Override in subclass
+    func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
+    }
+    
+    /// Override in subclass
+    func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
+        DispatchQueue.main.async {
+            self.tableView.isScrollEnabled = false
+            self.tableView.isScrollEnabled = true
+        }
+    }
+    
+    /// Override in subclass
     @objc func buttonTapped() {
-        // Override in subclass
         view.endEditing(true)
-    }
-
-    func didSelectItem(in section: Int, row: Int) {
-    }
-
-    func didLongPressItem(in section: Int, row: Int) {
     }
 }

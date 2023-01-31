@@ -32,9 +32,9 @@ protocol SignUpResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseD
 }
 
 protocol SignUpDataStore: BaseDataStore, FetchDataStore {
-    var email: String? { get set }
-    var password: String? { get set }
-    var passwordAgain: String? { get set }
+    var email: String { get set }
+    var password: String { get set }
+    var passwordAgain: String { get set }
     var termsTickbox: Bool { get set }
     var promotionsTickbox: Bool { get set }
 }

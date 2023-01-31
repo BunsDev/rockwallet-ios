@@ -32,10 +32,22 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
             dataStore?.password = password
         }
         
-        let isValid = FieldValidator.validate(fields: [dataStore?.email,
-                                                       dataStore?.password])
+        let isEmailValid = dataStore?.email.isValidEmailAddress ?? false
+        let isEmailEmpty = dataStore?.email.isEmpty == true
+        let emailState: DisplayState = isEmailEmpty || isEmailValid ? .selected : .error
         
-        presenter?.presentValidate(actionResponse: .init(isValid: isValid))
+        let isPasswordValid = dataStore?.password.isValidPassword ?? false
+        let isPasswordEmpty = dataStore?.password.isEmpty == true
+        let passwordState: DisplayState = isPasswordEmpty || isPasswordValid ? .selected : .error
+        
+        presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
+                                                         password: viewAction.password,
+                                                         isEmailValid: isEmailValid,
+                                                         isEmailEmpty: isEmailEmpty,
+                                                         emailState: emailState,
+                                                         isPasswordValid: isPasswordValid,
+                                                         isPasswordEmpty: isPasswordEmpty,
+                                                         passwordState: passwordState))
     }
     
     func next(viewAction: SignInModels.Next.ViewAction) {

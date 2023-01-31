@@ -1,5 +1,5 @@
 // 
-//  ScrollableButtonsView.swift
+//  HorizontalButtonsView.swift
 //  breadwallet
 //
 //  Created by Rok on 03/06/2022.
@@ -10,24 +10,19 @@
 
 import UIKit
 
-struct ScrollableButtonsConfiguration: Configurable {
+struct HorizontalButtonsConfiguration: Configurable {
     var background: BackgroundConfiguration?
     var buttons: [ButtonConfiguration] = []
     var isRightAligned = false
     var isDoubleButtonStack = false
 }
 
-struct ScrollableButtonsViewModel: ViewModel {
+struct HorizontalButtonsViewModel: ViewModel {
     var buttons: [ButtonViewModel] = []
 }
 
-class ScrollableButtonsView: FEView<ScrollableButtonsConfiguration, ScrollableButtonsViewModel> {
+class HorizontalButtonsView: FEView<HorizontalButtonsConfiguration, HorizontalButtonsViewModel> {
     var callbacks: [(() -> Void)] = []
-    
-    private lazy var scrollView: UIScrollView = {
-        let view = UIScrollView()
-        return view
-    }()
     
     private lazy var stack: UIStackView = {
         let view = UIStackView()
@@ -42,21 +37,14 @@ class ScrollableButtonsView: FEView<ScrollableButtonsConfiguration, ScrollableBu
         
         content.setupClearMargins()
         
-        content.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
+        content.addSubview(stack)
+        stack.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
         }
-        
-        scrollView.addSubview(stack)
-        stack.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalTo(scrollView.snp.width)
-            make.height.equalToSuperview()
-        }
     }
     
-    override func configure(with config: ScrollableButtonsConfiguration?) {
+    override func configure(with config: HorizontalButtonsConfiguration?) {
         super.configure(with: config)
         
         configure(background: config?.background)
