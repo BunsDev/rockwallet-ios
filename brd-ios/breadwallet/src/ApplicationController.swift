@@ -271,16 +271,10 @@ class ApplicationController: Subscriber {
             UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: timeSinceLastExitKey)
         }
 
-        Backend.kvStore?.syncAllKeys { error in
-            print("[KV] finished syncing. result: \(error == nil ? "ok" : error!.localizedDescription)")
-            Store.trigger(name: .didSyncKVStore)
-        }
-
         WidgetCenter.shared.reloadAllTimelines()
     }
     
     private func resume() {
-        fetchBackendUpdates()
         coreSystem.resume()
     }
     
