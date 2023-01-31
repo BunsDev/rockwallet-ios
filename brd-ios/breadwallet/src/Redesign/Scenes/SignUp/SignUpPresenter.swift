@@ -62,6 +62,7 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
                       isEmailEmpty: actionResponse.isEmailEmpty,
                       emailModel: .init(title: L10n.Account.enterEmail,
                                         hint: actionResponse.emailState == .error ? "Wrong e-mail address." : nil,
+                                        trailing: .image(Asset.warning.image.tinted(with: LightColors.Error.one)),
                                         displayState: actionResponse.emailState),
                       isPasswordValid: actionResponse.isPasswordValid,
                       isPasswordEmpty: actionResponse.isPasswordEmpty,
