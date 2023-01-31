@@ -1493,6 +1493,8 @@ internal enum L10n {
   internal enum OnboardingPageOne {
     /// Onboarding screen Page 1 title
     internal static let title = L10n.tr("Localizable", "OnboardingPageOne.title", fallback: "Empowering you to navigate the digital asset economy easily and securely")
+    /// Buy, swap, use, and store top cryptocurrencies for low fees
+    internal static let titleOne = L10n.tr("Localizable", "OnboardingPageOne.titleOne", fallback: "Buy, swap, use, and store top cryptocurrencies for low fees")
   }
   internal enum OnboardingPageThree {
     /// Onboarding screen Page 3 subtitle

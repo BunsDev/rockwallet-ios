@@ -1602,6 +1602,8 @@
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "Velkommen til din nye digitale aktivbog!";
 
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
+
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Invester og diversificer med RockWallet, nemt og sikkert.";
 

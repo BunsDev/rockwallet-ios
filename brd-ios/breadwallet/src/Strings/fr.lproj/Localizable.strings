@@ -1602,6 +1602,8 @@
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "Bienvenue dans votre nouveau portefeuille international !";
 
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
+
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Investissez et diversifiez facilement et en toute sécurité avec RockWallet.";
 

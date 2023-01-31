@@ -1602,6 +1602,8 @@
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "Empowering you to navigate the digital asset economy easily and securely";
 
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
+
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Invest and diversify with RockWallet, easily and securely.";
 

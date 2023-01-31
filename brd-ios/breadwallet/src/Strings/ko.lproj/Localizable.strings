@@ -1602,6 +1602,8 @@
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "새로운 디지털 자산 지갑에 오신 것을 환영합니다!";
 
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
+
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "BRD와 함께 쉽고 안전하게 투자하고 다양하게 분산시키세요.";
 
