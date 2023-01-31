@@ -29,10 +29,30 @@ enum SignInModels {
         }
         
         struct ActionResponse {
-            var isValid: Bool
+            var email: String?
+            var password: String?
+            
+            var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailState: DisplayState
+            
+            var isPasswordValid: Bool
+            var isPasswordEmpty: Bool
+            var passwordState: DisplayState
         }
         
         struct ResponseDisplay {
+            var email: String?
+            var password: String?
+            
+            var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailModel: TextFieldModel
+            
+            var isPasswordValid: Bool
+            var isPasswordEmpty: Bool
+            var passwordModel: TextFieldModel
+            
             var isValid: Bool
         }
     }

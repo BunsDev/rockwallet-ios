@@ -30,7 +30,7 @@ final class DocumentReviewPresenter: NSObject, Presenter, DocumentReviewActionRe
             .checkmarks: item.checklist ?? [],
             .image: [ImageViewModel.photo(image)],
             .buttons: [
-                ScrollableButtonsViewModel(buttons: [
+                HorizontalButtonsViewModel(buttons: [
                     .init(title: L10n.Account.retakePhoto),
                     .init(title: L10n.Button.confirm)
                 ])

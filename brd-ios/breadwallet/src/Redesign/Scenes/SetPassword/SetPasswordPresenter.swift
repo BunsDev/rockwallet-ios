@@ -37,7 +37,28 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
     }
     
     func presentValidate(actionResponse: SetPasswordModels.Validate.ActionResponse) {
-        viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
+        let isValid = actionResponse.isPasswordValid &&
+        actionResponse.isPasswordAgainValid &&
+        actionResponse.passwordsMatch
+        
+        let textColor = (actionResponse.passwordState == .error || actionResponse.passwordAgainState == .error) && !isValid ? LightColors.Error.one : LightColors.Text.two
+        
+        let noticeConfiguration = LabelConfiguration(font: Fonts.Body.three, textColor: textColor)
+        
+        viewController?.displayValidate(responseDisplay: .init(password: actionResponse.password,
+                                                               passwordAgain: actionResponse.passwordAgain,
+                                                               isPasswordValid: actionResponse.isPasswordValid,
+                                                               isPasswordEmpty: actionResponse.isPasswordEmpty,
+                                                               passwordModel: .init(title: L10n.Account.enterPassword,
+                                                                                    displayState: actionResponse.passwordState),
+                                                               isPasswordAgainValid: actionResponse.isPasswordAgainValid,
+                                                               isPasswordAgainEmpty: actionResponse.isPasswordAgainEmpty,
+                                                               passwordAgainModel: .init(title: L10n.Account.confirmPassword,
+                                                                                         hint: actionResponse.passwordAgainState == .error
+                                                                                         && !actionResponse.passwordsMatch ? "Passwords should match." : nil,
+                                                                                         displayState: actionResponse.passwordAgainState),
+                                                               noticeConfiguration: noticeConfiguration,
+                                                               isValid: isValid))
     }
     
     func presentNext(actionResponse: SetPasswordModels.Next.ActionResponse) {

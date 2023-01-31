@@ -30,7 +30,7 @@ protocol ForgotPasswordResponseDisplays: AnyObject, BaseResponseDisplays, FetchR
 }
 
 protocol ForgotPasswordDataStore: BaseDataStore, FetchDataStore {
-    var email: String? { get set }
+    var email: String { get set }
 }
 
 protocol ForgotPasswordDataPassing {

@@ -15,7 +15,7 @@ class ForgotPasswordStore: NSObject, BaseDataStore, ForgotPasswordDataStore {
     
     // MARK: - ProfileDataStore
     
-    var email: String?
+    var email: String = ""
     
     // MARK: - Aditional helpers
 }

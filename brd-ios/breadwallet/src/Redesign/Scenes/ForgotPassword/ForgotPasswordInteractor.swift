@@ -28,9 +28,14 @@ class ForgotPasswordInteractor: NSObject, Interactor, ForgotPasswordViewActions 
             dataStore?.email = email
         }
         
-        let isEmailValid = dataStore?.email?.isValidEmailAddress ?? false
+        let isEmailValid = dataStore?.email.isValidEmailAddress ?? false
+        let isEmailEmpty = dataStore?.email.isEmpty == true
+        let emailState: DisplayState = isEmailEmpty || isEmailValid ? .selected : .error
         
-        presenter?.presentValidate(actionResponse: .init(isValid: isEmailValid))
+        presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
+                                                         isEmailValid: isEmailValid,
+                                                         isEmailEmpty: isEmailEmpty,
+                                                         emailState: emailState))
     }
     
     func next(viewAction: ForgotPasswordModels.Next.ViewAction) {

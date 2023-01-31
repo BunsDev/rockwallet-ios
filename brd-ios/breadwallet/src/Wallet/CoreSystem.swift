@@ -185,7 +185,7 @@ class CoreSystem: Subscriber {
     }
     
     /// Fetch network fees from backend
-    func updateFees() {
+    func updateFees(completion: (() -> Void)? = nil) {
         queue.async {
             guard let system = self.system else { return }
             system.updateNetworkFees { result in
@@ -195,6 +195,8 @@ class CoreSystem: Subscriber {
                 case .failure(let error):
                     print("[SYS] Fees: failed to update with error: \(error)")
                 }
+                
+                completion?()
             }
         }
     }

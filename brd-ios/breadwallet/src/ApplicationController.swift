@@ -119,7 +119,7 @@ class ApplicationController: Subscriber {
     private func decideFlow() {
 //         Override point for direct VC opening (Dev helper)
 //        guardProtected {
-//            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SetPassword) { vc in
+//            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignIn) { vc in
 //                // configure
 //            }
 //        }
@@ -172,9 +172,6 @@ class ApplicationController: Subscriber {
     /// Prompts for login if account needs to be recreated from seed
     private func unlockExistingAccount() {
         guardProtected {
-//                self.coordinator?.open(scene: Scenes.Demo)
-//
-//                return ()
             guard let startFlowController = self.startFlowController, !self.keyStore.noWallet else { return }
             Store.perform(action: PinLength.Set(self.keyStore.pinLength))
             startFlowController.startLogin { [unowned self] account in
@@ -263,7 +260,13 @@ class ApplicationController: Subscriber {
         }
         
         resume()
-        coreSystem.updateFees()
+        coreSystem.updateFees {
+            if !self.shouldRequireLogin() {
+                guard DynamicLinksManager.shared.code != nil else { return }
+                Store.trigger(name: .handleReSetPassword)
+            }
+        }
+        
         bumpLaunchCount()
     }
 
@@ -363,12 +366,16 @@ class ApplicationController: Subscriber {
     }
     
     private func afterLoginFlow() {
+        Store.subscribe(self, name: .handleReSetPassword, callback: { _ in
+            self.coordinator?.handleUser()
+        })
+        
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
                 guard profile?.status == VerificationStatus.none || profile?.status == .emailPending || profile?.roles.contains(.unverified) == true else { return }
                 
-                self?.coordinator?.showRegistration()
+                Store.trigger(name: .handleReSetPassword)
                 
             case .failure:
                 if let token = UserDefaults.walletTokenValue {
@@ -379,7 +386,7 @@ class ApplicationController: Subscriber {
                             UserDefaults.email = data?.email
                             UserDefaults.kycSessionKeyValue = data?.sessionKey
                             
-                            self?.coordinator?.showRegistration()
+                            Store.trigger(name: .handleReSetPassword)
                             
                         case .failure(let error):
                             guard let error = error as? NetworkingError, error != .dataUnavailable else { return }
@@ -496,7 +503,7 @@ class ApplicationController: Subscriber {
         })
     }
     
-    // do not call directly, instead use wipeWalletNoPrompt trigger so other subscribers are notified
+    /// Do not call directly, instead use wipeWalletNoPrompt trigger so other subscribers are notified
     private func wipeWalletNoPrompt() {
         let activity = BRActivityViewController(message: L10n.WipeWallet.wiping)
         var topViewController = rootNavigationController as UIViewController?

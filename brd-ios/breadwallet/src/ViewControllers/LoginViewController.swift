@@ -359,10 +359,14 @@ class LoginViewController: UIViewController, Subscriber {
             guard case .confirmation = self.context else {
                 self.dismiss(animated: true, completion: {
                     Store.perform(action: LoginSuccess())
+                    
                     if case .initialLaunch(let loginHandler) = self.context {
                         guard let account = account else { return }
                         loginHandler(account)
                     }
+                    
+                    guard DynamicLinksManager.shared.code != nil else { return }
+                    Store.trigger(name: .handleReSetPassword)
                 })
                 return
             }

@@ -30,7 +30,7 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
         let sectionRows: [Models.Section: [Any]] = [
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
             .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password)],
-            .forgotPassword: [ScrollableButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.forgotPassword,
+            .forgotPassword: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.forgotPassword,
                                                                                    isUnderlined: true)])]
         ]
         
@@ -38,7 +38,21 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
     }
     
     func presentValidate(actionResponse: SignInModels.Validate.ActionResponse) {
-        viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
+        let isValid = actionResponse.isEmailValid &&
+        actionResponse.isPasswordValid
+        
+        viewController?.displayValidate(responseDisplay: .init(email: actionResponse.email,
+                                                               password: actionResponse.password,
+                                                               isEmailValid: actionResponse.isEmailValid,
+                                                               isEmailEmpty: actionResponse.isEmailEmpty,
+                                                               emailModel: .init(title: L10n.Account.enterEmail,
+                                                                                 hint: actionResponse.emailState == .error ? "Wrong e-mail address." : nil,
+                                                                                 displayState: actionResponse.emailState),
+                                                               isPasswordValid: actionResponse.isPasswordValid,
+                                                               isPasswordEmpty: actionResponse.isPasswordEmpty,
+                                                               passwordModel: .init(title: L10n.Account.enterPassword,
+                                                                                    displayState: actionResponse.passwordState),
+                                                               isValid: isValid))
     }
     
     func presentNext(actionResponse: SignInModels.Next.ActionResponse) {

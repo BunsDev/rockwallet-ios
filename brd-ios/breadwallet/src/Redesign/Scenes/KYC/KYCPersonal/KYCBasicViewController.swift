@@ -113,11 +113,6 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
             view.configure(with: Presets.TextField.two)
             view.setup(with: model)
             
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            
             view.isUserInteractionEnabled = false
         }
         

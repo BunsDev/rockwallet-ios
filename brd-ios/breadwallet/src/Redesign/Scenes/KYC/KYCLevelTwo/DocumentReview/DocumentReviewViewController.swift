@@ -56,7 +56,7 @@ class DocumentReviewViewController: BaseTableViewController<KYCCoordinator,
     override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
         
-        guard let cell = cell as? WrapperTableViewCell<ScrollableButtonsView> else {
+        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
             return cell
         }
         

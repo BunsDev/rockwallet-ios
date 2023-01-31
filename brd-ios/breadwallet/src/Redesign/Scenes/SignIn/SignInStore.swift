@@ -15,8 +15,8 @@ class SignInStore: NSObject, BaseDataStore, SignInDataStore {
     
     // MARK: - ProfileDataStore
     
-    var email: String?
-    var password: String?
+    var email: String = ""
+    var password: String = ""
     
     // MARK: - Aditional helpers
 }

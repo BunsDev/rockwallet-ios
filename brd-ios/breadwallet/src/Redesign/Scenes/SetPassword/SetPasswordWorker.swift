@@ -11,13 +11,11 @@
 import Foundation
 
 struct SetPasswordRequestData: RequestModelData {
-    let guid: String?
     let code: String?
     let password: String?
     
     func getParameters() -> [String: Any] {
         let params = [
-            "guid": guid,
             "code": code,
             "password": password
         ]

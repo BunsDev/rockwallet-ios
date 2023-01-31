@@ -197,8 +197,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
     }
     
-    func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse) {
-        let infoMessage = NSMutableAttributedString(string: L10n.Buy.disabledUSDCMessage)
+    func presentDisabledCurrencyMessage(actionResponse: BuyModels.AchData.ActionResponse) {
+        let currencyCode = actionResponse.currencyCode ?? ""
+        let infoMessage = NSMutableAttributedString(string: L10n.Buy.Ach.walletDisabled(currencyCode, L10n.WalletConnectionSettings.link))
         let linkRange = infoMessage.mutableString.range(of: L10n.WalletConnectionSettings.link)
         
         if linkRange.location != NSNotFound {
@@ -220,22 +221,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse) {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
-        let limits = UserManager.shared.profile?.limits
-        var perTransactionLimit, dailyMinLimit, dailyMaxLimit, weeklyLimit, monthlyLimit: Decimal
+        let profile = UserManager.shared.profile
         
-        if actionResponse.paymentMethod == .card {
-            perTransactionLimit = limits?.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyCard })?.limit ?? 0
-            dailyMinLimit = limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyCard })?.limit ?? 0
-            dailyMaxLimit = limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
-            weeklyLimit = limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyCard })?.limit ?? 0
-            monthlyLimit = limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyCard })?.limit ?? 0
-        } else {
-            perTransactionLimit = limits?.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyAch })?.limit ?? 0
-            dailyMinLimit = limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyAch })?.limit ?? 0
-            dailyMaxLimit = limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyAch })?.limit ?? 0
-            weeklyLimit = limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyAch })?.limit ?? 0
-            monthlyLimit = limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyAch })?.limit ?? 0
-        }
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
+        let dailyMinLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMin : profile?.achAllowanceDailyMin
+        let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
+        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
+        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
         let dailyMinLimitText = ExchangeFormatter.crypto.string(for: dailyMinLimit) ?? ""
