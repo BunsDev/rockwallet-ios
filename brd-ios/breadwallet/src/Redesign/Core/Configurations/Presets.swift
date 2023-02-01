@@ -153,7 +153,7 @@ extension Presets {
         
         static var phrase = TextFieldConfiguration(titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                    selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
-                                                   textConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
+                                                   textConfiguration: .init(font: Fonts.Body.phrase, textColor: LightColors.Text.one),
                                                    placeholderConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one))
     }
 }
@@ -220,6 +220,17 @@ extension Presets {
                                                                                           disabled: Presets.Border.disabledButtonFullRadius),
                                                         Presets.Button.secondary],
                                               closeButton: Presets.Button.blackIcon)
+        
+        static var whiteCentered = PopupConfiguration(background: .init(backgroundColor: LightColors.Background.one,
+                                                                        tintColor: LightColors.Contrast.two,
+                                                                        border: Presets.Border.mediumPlain),
+                                                      title: .init(font: Fonts.Title.five, textColor: LightColors.Text.three, textAlignment: .center),
+                                                      body: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, textAlignment: .center),
+                                                      buttons: [Presets.Button.primary.withBorder(normal: Presets.Border.normalButtonFullRadius,
+                                                                                                  selected: Presets.Border.selectedButtonFullRadius,
+                                                                                                  disabled: Presets.Border.disabledButtonFullRadius),
+                                                                Presets.Button.secondary],
+                                                      closeButton: Presets.Button.blackIcon)
     }
 }
 

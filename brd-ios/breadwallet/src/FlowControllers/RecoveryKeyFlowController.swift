@@ -124,6 +124,7 @@ class RecoveryKeyFlowController {
         
         // The landing page for setting up the recovery key.
         let introVC = RecoveryKeyIntroViewController()
+        introVC.exitAction = .generateKey
         introVC.exitCallback = { exitAction in
             switch exitAction {
             case .generateKey:
@@ -160,6 +161,7 @@ class RecoveryKeyFlowController {
         }
         
         let introVC = RecoveryKeyIntroViewController()
+        introVC.exitAction = .unlinkWallet
         introVC.exitCallback = { action in
             if action == .unlinkWallet {
                 enterPhrase()

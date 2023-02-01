@@ -25,6 +25,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
     
     override var isModalDismissableEnabled: Bool { return false }
     
+    var exitAction: ExitRecoveryKeyAction?
     var exitCallback: DidExitRecoveryKeyIntroWithAction?
     
     // MARK: - Overrides
@@ -63,7 +64,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
             self.showInfoPopup(with: model)
         })
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: helpButton)]
-    }
+        }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section] as? Models.Section
@@ -115,7 +116,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
         super.buttonTapped()
         
         if let exit = exitCallback {
-            exit(.generateKey)
+            exit(self.exitAction ?? .generateKey)
         }
     }
     
