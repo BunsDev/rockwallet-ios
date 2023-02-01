@@ -153,7 +153,7 @@ extension Presets {
         
         static var phrase = TextFieldConfiguration(titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
                                                    selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
-                                                   textConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
+                                                   textConfiguration: .init(font: Fonts.Body.phrase, textColor: LightColors.Text.one),
                                                    placeholderConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one))
     }
 }
