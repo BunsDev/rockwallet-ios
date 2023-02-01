@@ -116,7 +116,7 @@
 "Account.idVerificationRejected.description" = "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.";
 
 /* Retry verification description */
-"Account.IdVerificationRetry" = "Please try to complete your verification again, while keeping the following in mind:\n- Please ensure your type of ID is supported.\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n- Double check that your ID isn't expired or invalid.";
+"Account.IdVerificationRetry" = "Please try to complete your verification again, while keeping the following in mind:\n\n- Please ensure your type of ID is supported.\n\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n\n- Double check that your ID isn't expired or invalid.";
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
@@ -1747,7 +1747,7 @@
 /* Upgrade PIN prompt title. */
 "Prompts.UpgradePin.title" = "Mettre à jour le code PIN";
 
-"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap, Buy and Sell seamlessly.";
+"Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap and Buy seamlessly.";
 
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "Activez les notifications push et soyez le premier à être informé des nouvelles fonctionnalités et des offres spéciales.";
@@ -3191,7 +3191,7 @@
 
 "VerifyAccount.Button" = "Vérifiez votre compte";
 
-"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying, swapping and selling.";
+"VerifyAccount.VerifyIdentityDescription" = "Verify your identity before you can start buying and swapping.";
 
 "VerifyAccount.VerifyMyIdentity" = "Verify my identity";
 

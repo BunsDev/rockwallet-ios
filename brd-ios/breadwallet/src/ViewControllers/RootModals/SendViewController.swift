@@ -102,6 +102,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     
     private var timer: Timer?
     
+    private var ethMultiplier: Decimal = 0.60
+    
     private func startTimer() {
         guard timer?.isValid != true else { return }
         
@@ -272,16 +274,12 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             }
             self?.isSendingMax = true
             
-            if max.currency.network.name == Currencies.shared.eth?.name {
-                if max.currency.isEthereum { // Only adjust maximum for ETH
-                    let adjustTokenValue = max.tokenValue * 0.85 // Reduce amount for ETH estimate fee API call
-                    max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: max.currency)
-                }
-                self?.amountView.forceUpdateAmount(amount: max)
-            } else {
-                self?.amountView.forceUpdateAmount(amount: max)
-                self?.updateFeesMax(depth: 0)
+            if max.currency.isEthereum { // Only adjust maximum for ETH
+                let adjustTokenValue = max.tokenValue * (self?.ethMultiplier ?? 0.80) // Reduce amount for ETH estimate fee API call
+                max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: max.currency)
             }
+            self?.amountView.forceUpdateAmount(amount: max)
+            self?.updateFeesMax(depth: 0)
         }
     }
     
@@ -302,6 +300,20 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                 case .success(let fee):
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
+                    
+                    if self?.isSendingMax != true {
+                        guard let balance = self?.balance else { return }
+                        guard let feeCurrency = self?.sender.wallet.feeCurrency else {
+                            return
+                        }
+                        let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
+
+                        if amount.currency == feeAmount.currency {
+                            if amount + feeAmount > balance {
+                                _ = self?.handleValidationResult(.insufficientGas)
+                            }
+                        }
+                    }
                     
                 case .failure(let error):
                     self?.handleEstimateFeeError(error: error)
@@ -333,14 +345,27 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     if amount.currency == feeUpdated.currency {
                         value = maximum > feeUpdated ? maximum - feeUpdated : maximum
                     }
-
-                    if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
-                        self?.amountView.forceUpdateAmount(amount: value)
-                        self?.updateFeesMax(depth: depth + 1)
-                    }
                     
+                    if maximum.currency.isEthereum {
+                        let adjustTokenValue = value.tokenValue * 0.95 // Reduce amount for ETH createTxn API call
+                        value = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: value.currency)
+                        self?.amountView.forceUpdateAmount(amount: value)
+                    } else {
+                        if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
+                            self?.amountView.forceUpdateAmount(amount: value)
+                            self?.updateFeesMax(depth: depth + 1)
+                        }
+                    }
+
                 case .failure(let error):
-                    self?.handleEstimateFeeError(error: error)
+                    // updateFeesMax failed, default to a fixed reduction
+                    if maximum.currency.isEthereum {
+                        let adjustTokenValue = maximum.tokenValue * 0.80 // Reduce amount for ETH estimate fee API call
+                        let max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
+                        self?.amountView.forceUpdateAmount(amount: max)
+                    } else {
+                        self?.handleEstimateFeeError(error: error)
+                    }
                 }
                 
                 self?.amountView.updateBalanceLabel()
@@ -556,7 +581,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         } else if let feeAmount = currentFeeBasis?.fee {
             let title = L10n.Send.insufficientGasTitle(feeAmount.currency.name)
             let message = L10n.Send.insufficientGasMessage(feeAmount.description, feeAmount.currency.name)
-            
+
             let alertController = UIAlertController(title: title,
                                                     message: message,
                                                     preferredStyle: .alert)
@@ -564,9 +589,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                 guard let self = self else { return }
                 Store.trigger(name: .showCurrency(self.sender.wallet.feeCurrency))
             }))
-            
+
             alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel))
-            
+
             present(alertController, animated: true, completion: nil)
         }
     }
