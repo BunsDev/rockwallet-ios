@@ -25,6 +25,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
     
     override var isModalDismissableEnabled: Bool { return false }
     
+    var exitAction: ExitRecoveryKeyAction?
     var exitCallback: DidExitRecoveryKeyIntroWithAction?
     
     // MARK: - Overrides
@@ -63,6 +64,8 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
             self.showInfoPopup(with: model)
         })
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: helpButton)]
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: L10n.Button.close, style: .plain, target: self, action: #selector(closeTapped(_:)))
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,12 +118,16 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
         super.buttonTapped()
         
         if let exit = exitCallback {
-            exit(.generateKey)
+            exit(self.exitAction ?? .generateKey)
         }
     }
     
     func tickboxToggled(value: Bool) {
         interactor?.toggleTickbox(viewAction: .init(value: value))
+    }
+    
+    @objc func closeTapped(_ sender: UIBarButtonItem) {
+        exitCallback?(.abort)
     }
     
     // MARK: - RecoveryKeyIntroResponseDisplay
