@@ -13,10 +13,26 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
 
     var presenter: KYCAddressPresenter?
     var dataStore: KYCAddressStore?
-
+    
     // MARK: - KYCAddressViewActions
+    
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: dataStore))
+        UserInformationWorker().execute { [weak self] result in
+            switch result {
+            case .success(let profileData):
+                self?.dataStore?.address = profileData?.address
+                self?.dataStore?.city = profileData?.city
+                self?.dataStore?.state = profileData?.state
+                self?.dataStore?.postalCode = profileData?.zip
+                self?.dataStore?.country = profileData?.country
+                self?.dataStore?.countryFullName = profileData?.country
+                
+                self?.presenter?.presentData(actionResponse: .init(item: self?.dataStore))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     func formUpdated(viewAction: KYCAddressModels.FormUpdated.ViewAction) {

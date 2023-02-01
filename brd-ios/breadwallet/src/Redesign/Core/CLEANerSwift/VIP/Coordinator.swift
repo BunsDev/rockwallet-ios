@@ -177,10 +177,6 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showVerifications() {
-        open(scene: Scenes.AccountVerification)
-    }
-    
     func showAccountVerification() {
         let nvc = RootNavigationController()
         let coordinator = KYCCoordinator(navigationController: nvc)

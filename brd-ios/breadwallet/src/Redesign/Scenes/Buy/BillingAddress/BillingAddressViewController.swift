@@ -20,9 +20,9 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     override var sceneTitle: String? {
         return L10n.Buy.billingAddress
     }
+    
     private var isValid = false
-    private var isPickCountryPressed = false
-
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
@@ -73,11 +73,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
             view.configure(with: .init())
             view.setup(with: model)
             
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            
             view.valueChanged = { [weak self] first, second in
                 self?.interactor?.nameSet(viewAction: .init(first: first, last: second))
             }
@@ -96,11 +91,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: model)
-            
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
             
             view.valueChanged = { [weak self] first, second in
                 self?.interactor?.cityAndZipPostalSet(viewAction: .init(city: first, zipPostal: second))
@@ -156,7 +146,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         switch sections[indexPath.section] as? Models.Section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
-            isPickCountryPressed = true
             
         default:
             return

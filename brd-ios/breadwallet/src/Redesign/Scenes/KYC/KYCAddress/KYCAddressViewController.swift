@@ -21,7 +21,8 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func setupSubviews() {
-        super.setupSubviews()    
+        super.setupSubviews()
+        
         setRoundedShadowBackground()
     }
     
@@ -81,11 +82,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: model)
-            
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
             
             view.finishedEditing = { [weak self] first, second in
                 self?.interactor?.formUpdated(viewAction: .init(section: section, value: (first, second)))

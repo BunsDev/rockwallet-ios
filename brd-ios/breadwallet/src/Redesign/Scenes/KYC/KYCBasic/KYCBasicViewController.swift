@@ -30,12 +30,6 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         setRoundedShadowBackground()
     }
     
-    override func prepareData() {
-        super.prepareData()
-        
-        LoadingView.show()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -68,11 +62,6 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: model)
-            
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
             
             view.valueChanged = { [weak self] first, last in
                 self?.interactor?.nameSet(viewAction: .init(first: first, last: last))
@@ -159,7 +148,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func displaySubmit(responseDisplay: KYCBasicModels.Submit.ResponseDisplay) {
-        coordinator?.showAddressForm(dataStore: dataStore)
+        coordinator?.showKYCAddress()
     }
     
     // MARK: - Additional Helpers

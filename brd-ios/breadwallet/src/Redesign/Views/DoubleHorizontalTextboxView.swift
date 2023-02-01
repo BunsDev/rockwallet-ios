@@ -21,7 +21,6 @@ struct DoubleHorizontalTextboxViewModel: ViewModel {
 }
 
 class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfiguration, DoubleHorizontalTextboxViewModel> {
-    var contentSizeChanged: (() -> Void)?
     var valueChanged: ((_ first: String?, _ second: String?) -> Void)?
     var finishedEditing: ((_ first: String?, _ second: String?) -> Void)?
     var didTriggerDateField: (() -> Void)?
@@ -142,7 +141,6 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.content.layoutIfNeeded()
-            self?.contentSizeChanged?()
         }
     }
 }

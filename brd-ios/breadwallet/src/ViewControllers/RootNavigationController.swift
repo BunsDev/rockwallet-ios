@@ -50,10 +50,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = .clear
             tintColor = LightColors.Text.three
             
-        case is KYCCameraViewController:
-            backgroundColor = .black
-            tintColor = LightColors.Background.one
-            
         case is OnboardingViewController:
             backgroundColor = .clear
             tintColor = LightColors.Background.two

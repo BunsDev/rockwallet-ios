@@ -4,6 +4,10 @@
 
 import Foundation
 
+protocol MultipartModelData: RequestModelData {
+    func getMultipartData() -> [MultipartMedia]
+}
+
 protocol APIWorker {
     func execute()
     func executeMultipartRequest(data: MultipartModelData)

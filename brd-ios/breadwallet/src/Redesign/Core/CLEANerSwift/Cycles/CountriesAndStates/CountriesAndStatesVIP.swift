@@ -23,7 +23,6 @@ protocol CountriesAndStatesResponseDisplays: FetchResponseDisplays {
 }
 
 protocol CountriesAndStatesDataStore: FetchDataStore {
-    var isPickCountryPressed: Bool { get set }
     var country: String? { get set }
     var countryFullName: String? { get set }
     var countries: [Country] { get set }
@@ -38,14 +37,13 @@ extension Interactor where Self: CountriesAndStatesViewActions,
                            Self.ActionResponses: CountriesAndStatesActionResponses {
     
     func pickCountry(viewAction: CountriesAndStatesModels.SelectCountry.ViewAction) {
-        guard viewAction.code == nil, dataStore?.isPickCountryPressed == false else {
+        guard viewAction.code == nil else {
             dataStore?.country = viewAction.code
             dataStore?.countryFullName = viewAction.countryFullName
             presenter?.presentData(actionResponse: .init(item: dataStore))
             
             return
         }
-        dataStore?.isPickCountryPressed = true
         
         let data = CountriesRequestData()
         CountriesWorker().execute(requestData: data) { [weak self] result in
@@ -56,7 +54,6 @@ extension Interactor where Self: CountriesAndStatesViewActions,
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
-            self?.dataStore?.isPickCountryPressed = false
         }
     }
 }

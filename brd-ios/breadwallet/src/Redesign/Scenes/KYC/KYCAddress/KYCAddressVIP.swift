@@ -28,11 +28,6 @@ protocol KYCAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesA
 }
 
 protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
-    // passed
-    var name: String? { get set }
-    var lastName: String? { get set }
-    var birthdates: String? { get set }
-    // gathered
     var address: String? { get set }
     var city: String? { get set }
     var state: String? { get set }

@@ -49,12 +49,16 @@ class URLController: Subscriber {
                     switch key {
                     case "x-source":
                         xSource = value
+                        
                     case "x-success":
                         xSuccess = value
+                        
                     case "x-error":
                         xError = value
+                        
                     case "uri":
                         uri = value
+                        
                     default:
                         print("Key not supported: \(key)")
                     }
@@ -81,15 +85,17 @@ class URLController: Subscriber {
 
             case "debug":
                 handleDebugLink(url)
+                
             case "gift":
                 handleGiftUrl(url: url)
+                
             default:
                 print("unknown deep link: \(target)")
             }
             
             return true
             
-        case "https" where DynamicLinksManager.getDynamicLinkType(from: url) != nil:
+        case "https" where DynamicLinksManager.getDynamicLinkType(from: url) == .setPassword:
             DynamicLinksManager.handleDynamicLink(dynamicLink: url)
             Store.trigger(name: .handleUserAccount)
             
