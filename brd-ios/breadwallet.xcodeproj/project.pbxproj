@@ -2797,8 +2797,8 @@
 			isa = PBXGroup;
 			children = (
 				7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */,
-				7EE91A51296830F000331B1F /* KYCAddress */,
 				7E6729262923A22900A2B612 /* ComingSoon */,
+				7EE91A51296830F000331B1F /* KYCAddress */,
 				7EF45F472845352400D1F7B0 /* KYCBasic */,
 			);
 			path = KYC;
