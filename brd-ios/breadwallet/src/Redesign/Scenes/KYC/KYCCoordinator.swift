@@ -33,13 +33,8 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showAddressForm(dataStore: KYCBasicDataStore?) {
-        open(scene: Scenes.KYCAddress) { vc in
-            vc.dataStore?.name = dataStore?.firstName
-            vc.dataStore?.lastName = dataStore?.lastName
-            vc.dataStore?.birthdates = dataStore?.birthDateString
-            vc.prepareData()
-        }
+    func showKYCAddress() {
+        open(scene: Scenes.KYCAddress)
     }
     
     func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?) {
@@ -69,7 +64,7 @@ class KYCCoordinator: BaseCoordinator,
     }
     
     func showKYCLevelOne() {
-        let controller = KYCBasicViewController()
+        let controller = KYCAddressViewController()
         controller.coordinator = self
         controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
         navigationController.pushViewController(controller, animated: true)

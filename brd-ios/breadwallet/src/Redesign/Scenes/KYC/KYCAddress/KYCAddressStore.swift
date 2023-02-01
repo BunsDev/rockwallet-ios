@@ -11,16 +11,10 @@ import UIKit
 class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     
     // MARK: - KYCAddressDataStore
-    var isPickCountryPressed: Bool = false
+    
     var countries: [Country] = []
     
-    // passed
     var itemId: String?
-    var name: String?
-    var lastName: String?
-    var birthdates: String?
-    
-    // gathered
     var address: String?
     var city: String?
     var state: String?
@@ -29,10 +23,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var countryFullName: String?
     
     var isValid: Bool {
-        guard name?.isEmpty == false,
-              lastName?.isEmpty == false,
-              birthdates?.isEmpty == false,
-              address?.isEmpty == false,
+        guard address?.isEmpty == false,
               city?.isEmpty == false,
               postalCode?.isEmpty == false,
               country?.isEmpty == false else {
@@ -45,5 +36,6 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
         
         return state?.isEmpty == false
     }
+    
     // MARK: - Aditional helpers
 }

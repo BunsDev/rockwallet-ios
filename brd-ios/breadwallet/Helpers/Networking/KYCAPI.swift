@@ -8,6 +8,7 @@ enum KYCEndpoints: String, URLType {
     static var baseURL: String = "https://" + E.apiUrl + "blocksatoshi/one/kyc/%@"
     
     case countriesList = "countries"
+    case userInformation = "user-information"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

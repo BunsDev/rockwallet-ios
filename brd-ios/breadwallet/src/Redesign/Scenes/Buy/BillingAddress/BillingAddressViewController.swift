@@ -73,11 +73,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
             view.configure(with: .init())
             view.setup(with: model)
             
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            
             view.valueChanged = { [weak self] first, second in
                 self?.interactor?.nameSet(viewAction: .init(first: first, last: second))
             }
@@ -96,11 +91,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: model)
-            
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
             
             view.valueChanged = { [weak self] first, second in
                 self?.interactor?.cityAndZipPostalSet(viewAction: .init(city: first, zipPostal: second))
