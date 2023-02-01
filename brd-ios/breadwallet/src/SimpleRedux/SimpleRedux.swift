@@ -75,7 +75,7 @@ enum TriggerName {
     case reImportGift((any TxViewModel)?)
     case didSelectBaker(Baker?)
     case promptKyc
-    case handleReSetPassword
+    case handleUserAccount
 } //NB : remember to add to triggers to == fuction below
 
 extension TriggerName: Equatable {}
@@ -152,7 +152,7 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.promptKyc, .promptKyc):
         return true
-    case (.handleReSetPassword, .handleReSetPassword):
+    case (.handleUserAccount, .handleUserAccount):
         return true
     default:
         return false
