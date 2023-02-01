@@ -20,6 +20,8 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     override var sceneTitle: String? {
         return L10n.Buy.addCard
     }
+    
+    private var isValid = false
 
     // MARK: - Overrides
     
@@ -85,11 +87,13 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? ButtonViewModel,
+        guard var model = sectionRows[section]?[indexPath.row] as? ButtonViewModel,
               let cell: WrapperTableViewCell<FEButton> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
+        
+        model.enabled = isValid
         cell.setup { view in
             view.configure(with: Presets.Button.primary)
             view.setup(with: model)
@@ -124,11 +128,10 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     
     func displayValidate(responseDisplay: AddCardModels.Validate.ResponseDisplay) {
         guard let section = sections.firstIndex(of: Models.Section.confirm),
-              var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel else { return }
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
-        model.enabled = responseDisplay.isValid
-        sectionRows[Models.Section.confirm] = [model]
-        tableView.reloadSections([section], with: .none)
+        isValid = responseDisplay.isValid
+        cell.wrappedView.isEnabled = isValid
     }
     
     func displaySubmit(responseDisplay: AddCardModels.Submit.ResponseDisplay) {
