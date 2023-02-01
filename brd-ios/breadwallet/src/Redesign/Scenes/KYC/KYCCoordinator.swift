@@ -14,8 +14,6 @@ import Veriff
 
 class KYCCoordinator: BaseCoordinator,
                       KYCBasicRoutes,
-                      KYCDocumentPickerRoutes,
-                      DocumentReviewRoutes,
                       CountriesAndStatesRoutes,
                       KYCAddressRoutes,
                       AssetSelectionDisplayable {
@@ -70,58 +68,11 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showDocumentReview(checklist: [ChecklistItemViewModel], image: UIImage) {
-        let controller = DocumentReviewViewController()
-        controller.dataStore?.checklist = checklist
-        controller.dataStore?.image = image
-        controller.prepareData()
-        controller.coordinator = self
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        
-        controller.retakePhoto = { [weak self] in
-            self?.navigationController.popViewController(animated: true)
-        }
-        
-        controller.confirmPhoto = { [weak self] in
-            let picker = self?.navigationController.children.first(where: { $0 is KYCDocumentPickerViewController }) as? KYCDocumentPickerViewController
-            picker?.interactor?.confirmPhoto(viewAction: .init(photo: image))
-            
-            LoadingView.show()
-        }
-        
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showKYCFinal() {
-        let controller = KYCLevelTwoPostValidationViewController()
-        controller.coordinator = self
-        controller.navigationItem.hidesBackButton = true
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
     func showKYCLevelOne() {
         let controller = KYCBasicViewController()
         controller.coordinator = self
         controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
         navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showKYCLevelTwo() {
-        let controller = KYCLevelTwoEntryViewController()
-        controller.coordinator = self
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showIdentitySelector() {
-        let controller = KYCDocumentPickerViewController()
-        controller.coordinator = self
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showDocumentVerification(for document: Document) {
-        showUnderConstruction("\(document.title) verification")
     }
     
     // MARK: - Aditional helpers
@@ -135,32 +86,7 @@ class KYCCoordinator: BaseCoordinator,
     }
 }
 
-extension KYCCoordinator: ImagePickable {
-    func showImagePicker(model: KYCCameraImagePickerModel?,
-                         isSelfie: Bool,
-                         completion: ((UIImage?) -> Void)?) {
-        let controller = KYCCameraViewController()
-        let device: AVCaptureDevice?
-        if isSelfie {
-            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
-        } else {
-            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
-        }
-        
-        let backButtonVisibility = navigationController.children.last is KYCDocumentPickerViewController == false
-        controller.navigationItem.hidesBackButton = backButtonVisibility
-        controller.defaultVideoDevice = device
-        controller.configure(with: .init(instructions: .init(font: Fonts.Body.one,
-                                                             textColor: LightColors.Background.one,
-                                                             textAlignment: .center),
-                                         instructionsBackground: .init(backgroundColor: LightColors.Text.one)))
-        controller.setup(with: model)
-        controller.photoSelected = completion
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
+extension KYCCoordinator: VeriffSdkDelegate {
     func showExternalKYC(url: String) {
         navigationController.popToRootViewController(animated: false)
         
@@ -169,9 +95,7 @@ extension KYCCoordinator: ImagePickable {
                                              configuration: Presets.veriff,
                                              presentingFrom: navigationController)
     }
-}
-
-extension KYCCoordinator: VeriffSdkDelegate {
+    
     func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
         switch result.status {
         case .done:
