@@ -64,9 +64,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
             self.showInfoPopup(with: model)
         })
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: helpButton)]
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: L10n.Button.close, style: .plain, target: self, action: #selector(closeTapped(_:)))
-    }
+        }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section] as? Models.Section
@@ -124,10 +122,6 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
     
     func tickboxToggled(value: Bool) {
         interactor?.toggleTickbox(viewAction: .init(value: value))
-    }
-    
-    @objc func closeTapped(_ sender: UIBarButtonItem) {
-        exitCallback?(.abort)
     }
     
     // MARK: - RecoveryKeyIntroResponseDisplay
