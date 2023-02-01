@@ -64,7 +64,7 @@ class KYCCoordinator: BaseCoordinator,
     }
     
     func showKYCLevelOne() {
-        let controller = KYCAddressViewController()
+        let controller = KYCBasicViewController()
         controller.coordinator = self
         controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
         navigationController.pushViewController(controller, animated: true)
