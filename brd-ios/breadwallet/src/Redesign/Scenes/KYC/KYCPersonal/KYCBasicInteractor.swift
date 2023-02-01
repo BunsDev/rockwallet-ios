@@ -15,6 +15,7 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
     var dataStore: KYCBasicStore?
     
     // MARK: - KYCBasicViewActions
+    
     func getData(viewAction: FetchModels.Get.ViewAction) {
         ProfileWorker().execute { [weak self] result in
             switch result {

@@ -15,6 +15,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     var dataStore: KYCAddressStore?
 
     // MARK: - KYCAddressViewActions
+    
     func getData(viewAction: FetchModels.Get.ViewAction) {
         presenter?.presentData(actionResponse: .init(item: dataStore))
     }

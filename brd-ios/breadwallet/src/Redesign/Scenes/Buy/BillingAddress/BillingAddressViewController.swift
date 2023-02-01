@@ -20,9 +20,9 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     override var sceneTitle: String? {
         return L10n.Buy.billingAddress
     }
+    
     private var isValid = false
-    private var isPickCountryPressed = false
-
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
@@ -156,7 +156,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         switch sections[indexPath.section] as? Models.Section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
-            isPickCountryPressed = true
             
         default:
             return
