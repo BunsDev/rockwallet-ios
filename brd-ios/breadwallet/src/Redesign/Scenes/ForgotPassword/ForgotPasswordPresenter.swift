@@ -41,7 +41,8 @@ final class ForgotPasswordPresenter: NSObject, Presenter, ForgotPasswordActionRe
                                                                isEmailValid: actionResponse.isEmailValid,
                                                                isEmailEmpty: actionResponse.isEmailEmpty,
                                                                emailModel: .init(title: L10n.Account.email,
-                                                                                 hint: actionResponse.emailState == .error ? "Wrong e-mail address." : nil,
+                                                                                 hint: actionResponse.emailState == .error ? L10n.Account.invalidEmail : nil,
+                                                                                 trailing: actionResponse.emailState == .error ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
                                                                                  displayState: actionResponse.emailState),
                                                                isValid: isValid))
     }
