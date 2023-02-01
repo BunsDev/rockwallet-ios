@@ -219,9 +219,15 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        LoadingView.hide()
-        // TODO: do we need to handle smth else here?
-        _ = isAccessDenied(responseDisplay: responseDisplay)
+        if responseDisplay.error != nil {
+            LoadingView.hide()
+        }
+        
+        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
+        
+        coordinator?.showToastMessage(with: responseDisplay.error,
+                                      model: responseDisplay.model,
+                                      configuration: responseDisplay.config)
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
