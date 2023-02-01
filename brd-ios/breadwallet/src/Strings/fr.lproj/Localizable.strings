@@ -120,6 +120,8 @@
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
+"Account.InvalidEmail" = "Please enter a valid Email Address";
+
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -128,9 +130,15 @@
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Faites vérifier votre compte pour accéder à l'intégralité de votre portefeuille RockWallet !";
 
+"Account.MissingDataPromptText" = "Please fill in the missing information  to use your RockWallet seamlessly.";
+
+"Account.MissingDataPromptTitle" = "Add the missing information";
+
 "Account.Monthly" = "Monthly";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordDoNotMatch" = "Passwords do not match";
 
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
@@ -204,6 +212,10 @@
 
 /* Verified account message on profile screen */
 "Account.VerifiedAccountMessage" = "Nous vous informerons lorsque votre compte aura été vérifié.";
+
+"Account.VerifiedAccountText" = "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+
+"Account.VerifiedAccountTitle" = "Your account is verified!";
 
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "Si vous faites vérifier votre compte, vous bénéficierez des avantages suivants :\n・Dépôts/retraits illimités\n・Sécurité renforcée\n・Assistance complète pour les actifs\n・Achat d'actifs avec une carte de crédit";
@@ -1597,6 +1609,8 @@
 
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "Bienvenue dans votre nouveau portefeuille international !";
+
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
 
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Investissez et diversifiez facilement et en toute sécurité avec RockWallet.";
