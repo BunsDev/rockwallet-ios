@@ -415,7 +415,6 @@
 		7E8F7E4A293F6AE50058019B /* SellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E43293F6AE50058019B /* SellInteractor.swift */; };
 		7E8F7E4E293F84510058019B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7E8F7E4D293F84510058019B /* Lottie */; };
 		7E9B13EE285720D400BD9EF5 /* KYCSubmitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13ED285720D400BD9EF5 /* KYCSubmitWorker.swift */; };
-		7E9B13F02857213400BD9EF5 /* KYCLevelOneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13EF2857213400BD9EF5 /* KYCLevelOneWorker.swift */; };
 		7E9B13FA2857404600BD9EF5 /* DocumentReviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F32857404600BD9EF5 /* DocumentReviewStore.swift */; };
 		7E9B13FB2857404600BD9EF5 /* DocumentReviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F42857404600BD9EF5 /* DocumentReviewPresenter.swift */; };
 		7E9B13FC2857404600BD9EF5 /* DocumentReviewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9B13F52857404600BD9EF5 /* DocumentReviewModels.swift */; };
@@ -1246,7 +1245,6 @@
 		7E8F7E42293F6AE50058019B /* SellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
 		7E8F7E43293F6AE50058019B /* SellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellInteractor.swift; sourceTree = "<group>"; };
 		7E9B13ED285720D400BD9EF5 /* KYCSubmitWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitWorker.swift; sourceTree = "<group>"; };
-		7E9B13EF2857213400BD9EF5 /* KYCLevelOneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCLevelOneWorker.swift; sourceTree = "<group>"; };
 		7E9B13F32857404600BD9EF5 /* DocumentReviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewStore.swift; sourceTree = "<group>"; };
 		7E9B13F42857404600BD9EF5 /* DocumentReviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewPresenter.swift; sourceTree = "<group>"; };
 		7E9B13F52857404600BD9EF5 /* DocumentReviewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReviewModels.swift; sourceTree = "<group>"; };
@@ -2891,7 +2889,7 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		7EF45F472845352400D1F7B0 /* KYCPersonal */ = {
+		7EF45F472845352400D1F7B0 /* KYCBasic */ = {
 			isa = PBXGroup;
 			children = (
 				7EF45F492845352400D1F7B0 /* KYCBasicPresenter.swift */,
@@ -2900,9 +2898,8 @@
 				7EF45F4D2845352400D1F7B0 /* KYCBasicModels.swift */,
 				7EF45F4A2845352400D1F7B0 /* KYCBasicViewController.swift */,
 				7EF45F482845352400D1F7B0 /* KYCBasicInteractor.swift */,
-				7E9B13EF2857213400BD9EF5 /* KYCLevelOneWorker.swift */,
 			);
-			path = KYCPersonal;
+			path = KYCBasic;
 			sourceTree = "<group>";
 		};
 		7EF45F7C2847671F00D1F7B0 /* KYC */ = {
@@ -2911,7 +2908,7 @@
 				7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */,
 				7EE91A51296830F000331B1F /* KYCAddress */,
 				7E6729262923A22900A2B612 /* ComingSoon */,
-				7EF45F472845352400D1F7B0 /* KYCPersonal */,
+				7EF45F472845352400D1F7B0 /* KYCBasic */,
 				7ED83ACC284F372000261565 /* KYCLevelTwo */,
 			);
 			path = KYC;
@@ -3913,7 +3910,6 @@
 				3A4972C52602E0ED0002C3EC /* IosBRDAuthProvider.swift in Sources */,
 				CEC6AA4D1DF0741100EE5AFD /* ModalDisplayable.swift in Sources */,
 				7EBC6B062848ABC5000A301F /* RegistrationConfirmationStore.swift in Sources */,
-				7E9B13F02857213400BD9EF5 /* KYCLevelOneWorker.swift in Sources */,
 				7B8CF81E28A3D0C600D54D14 /* CardDetailsFormatter.swift in Sources */,
 				7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */,
 				7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */,

@@ -63,33 +63,14 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
     }
     
     func submit(viewAction: KYCBasicModels.Submit.ViewAction) {
-        guard let _ = dataStore?.firstName,
-              let _ = dataStore?.lastName,
-              let _ = dataStore?.birthDateString,
-              let birthDate = dataStore?.birthdate
-        else { return }
-        
-        guard let legalDate = Calendar.current.date(byAdding: .year, value: -18, to: Date()),
+        guard let birthDate = dataStore?.birthdate,
+              let legalDate = Calendar.current.date(byAdding: .year, value: -18, to: Date()),
               birthDate <= legalDate else {
-                  presenter?.presentNotification(actionResponse: .init(body: L10n.Account.verification))
+            presenter?.presentNotification(actionResponse: .init(body: L10n.Account.verification))
             return
         }
         
         presenter?.presentSubmit(actionResponse: .init())
-        // TODO: call new EP here or pass data on?
-//        let data = KYCBasicRequestData(firstName: firstName,
-//                                       lastName: lastName,
-//                                       country: "",
-//                                       birthDate: birthDateText)
-//        KYCLevelOneWorker().execute(requestData: data) { [weak self] result in
-//            switch result {
-//            case .success:
-//                Store.trigger(name: .didApplyKyc)
-//
-//            case .failure(let error):
-//                self?.presenter?.presentError(actionResponse: .init(error: error))
-//            }
-//        }
     }
     
     // MARK: - Aditional helpers
