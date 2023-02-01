@@ -366,7 +366,7 @@ class LoginViewController: UIViewController, Subscriber {
                     }
                     
                     guard DynamicLinksManager.shared.code != nil else { return }
-                    Store.trigger(name: .handleReSetPassword)
+                    Store.trigger(name: .handleUserAccount)
                 })
                 return
             }

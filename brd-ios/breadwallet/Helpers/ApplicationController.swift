@@ -216,8 +216,8 @@ class ApplicationController: Subscriber {
         Store.trigger(name: .wipeWalletNoPrompt)
     }
     
+    /// Deep link handling
     private func handleDeferedLaunchURL() {
-        // deep link handling
         self.urlController = URLController(walletAuthenticator: self.keyStore)
         if let url = self.launchURL {
             _ = self.urlController?.handleUrl(url)
@@ -260,14 +260,14 @@ class ApplicationController: Subscriber {
         }
         
         resume()
+        bumpLaunchCount()
+        
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
                 guard DynamicLinksManager.shared.code != nil else { return }
-                Store.trigger(name: .handleReSetPassword)
+                Store.trigger(name: .handleUserAccount)
             }
         }
-        
-        bumpLaunchCount()
     }
 
     func didEnterBackground() {
@@ -366,8 +366,8 @@ class ApplicationController: Subscriber {
     }
     
     private func afterLoginFlow() {
-        Store.subscribe(self, name: .handleReSetPassword, callback: { _ in
-            self.coordinator?.handleUser()
+        Store.subscribe(self, name: .handleUserAccount, callback: { _ in
+            self.coordinator?.handleUserAccount()
         })
         
         UserManager.shared.refresh { [weak self] result in
@@ -375,7 +375,7 @@ class ApplicationController: Subscriber {
             case .success(let profile):
                 guard profile?.status == VerificationStatus.none || profile?.status == .emailPending || profile?.roles.contains(.unverified) == true else { return }
                 
-                Store.trigger(name: .handleReSetPassword)
+                Store.trigger(name: .handleUserAccount)
                 
             case .failure:
                 if let token = UserDefaults.walletTokenValue {
@@ -386,7 +386,7 @@ class ApplicationController: Subscriber {
                             UserDefaults.email = data?.email
                             UserDefaults.kycSessionKeyValue = data?.sessionKey
                             
-                            Store.trigger(name: .handleReSetPassword)
+                            Store.trigger(name: .handleUserAccount)
                             
                         case .failure(let error):
                             guard let error = error as? NetworkingError, error != .dataUnavailable else { return }

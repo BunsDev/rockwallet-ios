@@ -89,6 +89,12 @@ class URLController: Subscriber {
             
             return true
             
+        case "https" where DynamicLinksManager.getDynamicLinkType(from: url) != nil:
+            DynamicLinksManager.handleDynamicLink(dynamicLink: url)
+            Store.trigger(name: .handleUserAccount)
+            
+            return true
+            
         case "bitid":
             if BRBitID.isBitIDURL(url) {
                 return handleBitId(url)
@@ -177,7 +183,7 @@ class URLController: Subscriber {
 
 extension URL {
     public var isDeepLink: Bool {
-        guard let domain = host?.split(separator: ".").suffix(2).joined(separator: "."), domain == "brd.com" else { return false }
+        guard let domain = host?.split(separator: ".").suffix(2).joined(separator: "."), domain == "rockwallet.net" else { return false }
         return path.hasPrefix("/x/")
     }
     

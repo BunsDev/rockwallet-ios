@@ -75,7 +75,7 @@ class BaseCoordinator: NSObject,
         navigationController.show(nvc, sender: nil)
     }
     
-    func handleUser() {
+    func handleUserAccount() {
         if DynamicLinksManager.shared.code != nil {
             dismissFlow()
         }
