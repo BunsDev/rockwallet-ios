@@ -23,6 +23,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var fromCode: String { currency?.code ?? "" }
     var toCode: String { C.usdCurrencyCode }
+    var fromBuy = false
     var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,

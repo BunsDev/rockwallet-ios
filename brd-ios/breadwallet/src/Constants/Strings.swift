@@ -131,6 +131,10 @@ internal enum L10n {
     internal static let loadingMessage = L10n.tr("Localizable", "Account.loadingMessage", fallback: "Loading Wallet")
     /// Verify your account to get full access to the wallet message
     internal static let messageVerifyAccount = L10n.tr("Localizable", "Account.MessageVerifyAccount", fallback: "Verify your account to get full access to your RockWallet!")
+    /// Please fill in the missing information  to use your RockWallet seamlessly.
+    internal static let missingDataPromptText = L10n.tr("Localizable", "Account.MissingDataPromptText", fallback: "Please fill in the missing information  to use your RockWallet seamlessly.")
+    /// Add the missing information
+    internal static let missingDataPromptTitle = L10n.tr("Localizable", "Account.MissingDataPromptTitle", fallback: "Add the missing information")
     /// Monthly
     internal static let monthly = L10n.tr("Localizable", "Account.Monthly", fallback: "Monthly")
     /// New to RockWallet?
@@ -211,7 +215,7 @@ internal enum L10n {
     /// Your account is verified!
     internal static let verifiedAccountTitle = L10n.tr("Localizable", "Account.VerifiedAccountTitle", fallback: "Your account is verified!")
     /// Verify account text in popup
-    internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
+    internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Enter and verify your email address for your account label in registration flow
     internal static let verifyEmail = L10n.tr("Localizable", "Account.VerifyEmail", fallback: "Enter and verify your new email address for your RockWallet account.")
     /// We need to verify your identity before you can %s assets.

@@ -22,6 +22,7 @@ enum ExchangeRateModels {
             var to: String?
             var limits: NSMutableAttributedString?
             var showTimer: Bool?
+            var fromBuy: Bool?
         }
         
         struct ResponseDisplay {

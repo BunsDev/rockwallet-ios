@@ -130,6 +130,10 @@
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
 
+"Account.MissingDataPromptText" = "Please fill in the missing information  to use your RockWallet seamlessly.";
+
+"Account.MissingDataPromptTitle" = "Add the missing information";
+
 "Account.Monthly" = "Monthly";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
@@ -214,7 +218,7 @@
 "Account.VerifiedAccountTitle" = "Your account is verified!";
 
 /* Verify account text in popup */
-"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";

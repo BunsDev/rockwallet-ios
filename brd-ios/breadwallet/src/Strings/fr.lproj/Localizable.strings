@@ -130,6 +130,10 @@
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Faites vérifier votre compte pour accéder à l'intégralité de votre portefeuille RockWallet !";
 
+"Account.MissingDataPromptText" = "Please fill in the missing information  to use your RockWallet seamlessly.";
+
+"Account.MissingDataPromptTitle" = "Add the missing information";
+
 "Account.Monthly" = "Monthly";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
