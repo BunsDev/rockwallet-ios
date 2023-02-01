@@ -59,7 +59,7 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
                                               isUnderlined: true,
                                               enabled: true,
                                               callback: { [weak self] in
-            self?.buttonTapped()
+            self?.coordinator?.showSignUp()
         }))
         
         guard let continueButtonConfig = continueButton.config,
