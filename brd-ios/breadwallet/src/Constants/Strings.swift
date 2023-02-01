@@ -120,7 +120,7 @@ internal enum L10n {
     /// We’re sorry, your ID verification was rejected.
     internal static let idVerificationRejected = L10n.tr("Localizable", "Account.IdVerificationRejected", fallback: "We’re sorry, your ID verification was rejected.")
     /// Retry verification description
-    internal static let idVerificationRetry = L10n.tr("Localizable", "Account.IdVerificationRetry", fallback: "Please try to complete your verification again, while keeping the following in mind:\n- Please ensure your type of ID is supported.\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n- Double check that your ID isn't expired or invalid.")
+    internal static let idVerificationRetry = L10n.tr("Localizable", "Account.IdVerificationRetry", fallback: "Please try to complete your verification again, while keeping the following in mind:\n\n- Please ensure your type of ID is supported.\n\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n\n- Double check that your ID isn't expired or invalid.")
     /// Why do we need your SSN?
     internal static let infoLinkSSN = L10n.tr("Localizable", "Account.infoLinkSSN", fallback: "Why do we need your SSN?")
     /// Let’s get you verified
@@ -1644,8 +1644,8 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "Prompts.UpgradePin.title", fallback: "Upgrade PIN")
     }
     internal enum VerifyAccount {
-      /// One more step and you’ll be able to Swap, Buy and Sell seamlessly.
-      internal static let body = L10n.tr("Localizable", "Prompts.VerifyAccount.body", fallback: "One more step and you’ll be able to Swap, Buy and Sell seamlessly.")
+      /// One more step and you’ll be able to Swap and Buy seamlessly.
+      internal static let body = L10n.tr("Localizable", "Prompts.VerifyAccount.body", fallback: "One more step and you’ll be able to Swap and Buy seamlessly.")
     }
   }
   internal enum PushNotifications {
@@ -2955,8 +2955,8 @@ internal enum L10n {
   internal enum VerifyAccount {
     /// Verify your account
     internal static let button = L10n.tr("Localizable", "VerifyAccount.Button", fallback: "Verify your account")
-    /// Verify your identity before you can start buying, swapping and selling.
-    internal static let verifyIdentityDescription = L10n.tr("Localizable", "VerifyAccount.VerifyIdentityDescription", fallback: "Verify your identity before you can start buying, swapping and selling.")
+    /// Verify your identity before you can start buying and swapping.
+    internal static let verifyIdentityDescription = L10n.tr("Localizable", "VerifyAccount.VerifyIdentityDescription", fallback: "Verify your identity before you can start buying and swapping.")
     /// Verify my identity
     internal static let verifyMyIdentity = L10n.tr("Localizable", "VerifyAccount.VerifyMyIdentity", fallback: "Verify my identity")
     /// Verify your identity
