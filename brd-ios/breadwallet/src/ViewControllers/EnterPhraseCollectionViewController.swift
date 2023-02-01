@@ -47,9 +47,9 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     private let keyMaster: KeyMaster
     var phrase: String {
         return (0...11).map { index in
-                guard let phraseCell = collectionView?.cellForItem(at: IndexPath(item: index, section: 0)) as? EnterPhraseCell else { return ""}
-                return phraseCell.textField.value?.lowercased() ?? ""
-            }.joined(separator: " ")
+            guard let phraseCell = collectionView?.cellForItem(at: IndexPath(item: index, section: 0)) as? EnterPhraseCell else { return ""}
+            return phraseCell.textField.value?.lowercased() ?? ""
+        }.joined(separator: " ")
     }
     private var displayedPhrase: [String] = []
     
