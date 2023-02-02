@@ -120,6 +120,8 @@
 
 "Account.infoLinkSSN" = "Why do we need your SSN?";
 
+"Account.InvalidEmail" = "Please enter a valid Email Address";
+
 "Account.LetsGetVerified" = "Let’s get you verified";
 
 /* Loading Wallet Message */
@@ -128,9 +130,15 @@
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
 
+"Account.MissingDataPromptText" = "Please fill in the missing information  to use your RockWallet seamlessly.";
+
+"Account.MissingDataPromptTitle" = "Add the missing information";
+
 "Account.Monthly" = "Monthly";
 
 "Account.NewToRockwallet" = "New to RockWallet?";
+
+"Account.PasswordDoNotMatch" = "Passwords do not match";
 
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
@@ -204,6 +212,10 @@
 
 /* Verified account message on profile screen */
 "Account.VerifiedAccountMessage" = "We’ll let you know when your account is verified.";
+
+"Account.VerifiedAccountText" = "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+
+"Account.VerifiedAccountTitle" = "Your account is verified!";
 
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
@@ -486,6 +498,8 @@
 /* Alert Subheader label (playfully positive) */
 "Alerts.paperKeySetSubheader" = "Geweldig!";
 
+"Alerts.passwordUpdated" = "Password updated";
+
 "Alerts.phraseConfirmed" = "Success!";
 
 /* Alert Header label (the PIN was set) */
@@ -748,7 +762,7 @@
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Billing address";
 
-"Buy.BuyLimit" = "Buy limits";
+"Buy.BuyAchLimitsTitle" = "Buy limits (Card + ACH)";
 
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  More limits";
@@ -1597,6 +1611,8 @@
 
 /* Onboarding screen Page 1 title */
 "OnboardingPageOne.title" = "Welkom bij uw nieuwe wereldwijde portemonnee!";
+
+"OnboardingPageOne.titleOne" = "Buy, swap, use, and store top cryptocurrencies for low fees";
 
 /* Onboarding screen Page 3 subtitle */
 "OnboardingPageThree.subtitle" = "Investeer en diversifieer met RockWallet, snel en veilig.";
