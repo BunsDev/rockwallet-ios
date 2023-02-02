@@ -764,6 +764,8 @@
 
 "Buy.BuyAchLimitsTitle" = "Buy limits (Card + ACH)";
 
+"Buy.BuyLimit" = "Buy limits";
+
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  More limits";
 

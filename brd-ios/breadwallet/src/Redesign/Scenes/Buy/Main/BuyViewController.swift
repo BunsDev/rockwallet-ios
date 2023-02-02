@@ -41,6 +41,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
         tableView.register(WrapperTableViewCell<CardSelectionView>.self)
         tableView.delaysContentTouches = false
+        tableView.backgroundColor = LightColors.Background.two
         
         didTriggerGetData = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
