@@ -1780,12 +1780,12 @@
 		75A2A7871DA5934300A983D8 = {
 			isa = PBXGroup;
 			children = (
-				7EF514B328EB5B6D004A31C5 /* configurations */,
 				75A2A7921DA5934300A983D8 /* breadwallet */,
 				75A2A7A71DA5934300A983D8 /* breadwalletTests */,
 				75A2A7B21DA5934300A983D8 /* breadwalletUITests */,
 				9FB0CA1325D5AD180057DD11 /* breadwalletWidget */,
 				9F29A99D25D5C605000FEB40 /* breadwalletIntentHandler */,
+				7EF514B328EB5B6D004A31C5 /* Configurations */,
 				75B6F52F1DA71DCC0031A93F /* Modules */,
 				75A2A7F11DA5935F00A983D8 /* Frameworks */,
 				75A2A7911DA5934300A983D8 /* Products */,
@@ -1808,14 +1808,7 @@
 		75A2A7921DA5934300A983D8 /* breadwallet */ = {
 			isa = PBXGroup;
 			children = (
-				7EE62494295C141D00FC19CC /* main.swift */,
 				7E5CB32E2835090D00EC787E /* Redesign */,
-				75A2A87C1DA59E4E00A983D8 /* breadwallet.entitlements */,
-				75A2A79F1DA5934300A983D8 /* Info.plist */,
-				7EF36C052829893600BB43A7 /* theme.plist */,
-				75A2A79A1DA5934300A983D8 /* Assets.xcassets */,
-				CE5E6C991EB9135000A476DB /* Icon.xcassets */,
-				75A2A79C1DA5934300A983D8 /* LaunchScreen.storyboard */,
 				7E87B32B285346D50097671F /* Helpers */,
 				7EF2998727E3B8AA00A2238A /* CoinGecko */,
 				3A6785EF256F2EF70065F835 /* ReceiveGift */,
@@ -1836,6 +1829,13 @@
 				CE20C90F1DBE5B5100C8397A /* Views */,
 				CE7B40981FA03C9900BA4196 /* Wallet */,
 				3A6FD41E24E4568800068ECE /* KeyStore */,
+				7EE62494295C141D00FC19CC /* main.swift */,
+				75A2A87C1DA59E4E00A983D8 /* breadwallet.entitlements */,
+				75A2A79F1DA5934300A983D8 /* Info.plist */,
+				7EF36C052829893600BB43A7 /* theme.plist */,
+				75A2A79A1DA5934300A983D8 /* Assets.xcassets */,
+				CE5E6C991EB9135000A476DB /* Icon.xcassets */,
+				75A2A79C1DA5934300A983D8 /* LaunchScreen.storyboard */,
 			);
 			path = breadwallet;
 			sourceTree = "<group>";
@@ -2810,7 +2810,7 @@
 			path = ItemSelection;
 			sourceTree = "<group>";
 		};
-		7EF514B328EB5B6D004A31C5 /* configurations */ = {
+		7EF514B328EB5B6D004A31C5 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
 				7E1D4AC1297558A200E480C4 /* ldt.xcconfig */,
@@ -2818,7 +2818,7 @@
 				7EF514B528EB5B6D004A31C5 /* staging.xcconfig */,
 				7EF514B628EB5B6D004A31C5 /* prod.xcconfig */,
 			);
-			path = configurations;
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 		9F29A99D25D5C605000FEB40 /* breadwalletIntentHandler */ = {
