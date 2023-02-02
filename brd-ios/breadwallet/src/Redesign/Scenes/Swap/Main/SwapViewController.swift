@@ -42,6 +42,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.delaysContentTouches = false
+        tableView.backgroundColor = LightColors.Background.two
         
         didTriggerGetExchangeRate = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
