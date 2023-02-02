@@ -382,7 +382,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
         } else if let currentPin = currentPin {
             success = keyMaster.changePin(newPin: newPin, currentPin: currentPin)
             DispatchQueue.main.async { Store.trigger(name: .didUpgradePin) }
-        } else if type == .creationNoPhrase {
+        } else if type == .creationNoPhrase || type == .creationWithPhrase {
             success = keyMaster.setPin(newPin)
         }
 
