@@ -129,6 +129,7 @@
 		7B0E34C928ABA73900D15180 /* CardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C728ABA73900D15180 /* CardDetailsView.swift */; };
 		7B0E34CA28ABA73900D15180 /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */; };
 		7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */; };
+		7B1A4690298BEF2500A6F68F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B1A4684298BEF2500A6F68F /* InfoPlist.strings */; };
 		7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */; };
 		7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */; };
 		7B2BF28629659D850037E731 /* RecoveryKeyIntroVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */; };
@@ -941,6 +942,17 @@
 		7B0E34C728ABA73900D15180 /* CardDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDetailsView.swift; sourceTree = "<group>"; };
 		7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodView.swift; sourceTree = "<group>"; };
 		7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDetailsWorker.swift; sourceTree = "<group>"; };
+		7B1A4685298BEF2500A6F68F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A4686298BEF2500A6F68F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A4687298BEF2500A6F68F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A4688298BEF2500A6F68F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A4689298BEF2500A6F68F /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A468A298BEF2500A6F68F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A468B298BEF2500A6F68F /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A468C298BEF2500A6F68F /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A468D298BEF2500A6F68F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A468E298BEF2500A6F68F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7B1A468F298BEF2500A6F68F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCurrencyHelper.swift; sourceTree = "<group>"; };
 		7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroInteractor.swift; sourceTree = "<group>"; };
 		7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroVIP.swift; sourceTree = "<group>"; };
@@ -1926,6 +1938,15 @@
 			path = Modules/sqlite3;
 			sourceTree = "<group>";
 		};
+		7B1A4683298BEF2500A6F68F /* InfoPlistLocalization */ = {
+			isa = PBXGroup;
+			children = (
+				7B1A4684298BEF2500A6F68F /* InfoPlist.strings */,
+			);
+			name = InfoPlistLocalization;
+			path = Resources/InfoPlistLocalization;
+			sourceTree = "<group>";
+		};
 		7B2BF27E29659CD00037E731 /* RecoveryKeyIntro */ = {
 			isa = PBXGroup;
 			children = (
@@ -2118,6 +2139,7 @@
 		7C377EBC20F64C1200E8CF1C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B1A4683298BEF2500A6F68F /* InfoPlistLocalization */,
 				7EAFC5F52941EC4B00A7FF26 /* Animations */,
 				7B8EC63428089729008C6DE5 /* Assets */,
 				71014F7B2327E49400DA1373 /* fiat_currencies.json */,
@@ -3620,6 +3642,7 @@
 				CE4C1CD01ED8BCC70063E184 /* BIP39Words.plist in Resources */,
 				75A2A79E1DA5934300A983D8 /* LaunchScreen.storyboard in Resources */,
 				7EF36C062829893700BB43A7 /* theme.plist in Resources */,
+				7B1A4690298BEF2500A6F68F /* InfoPlist.strings in Resources */,
 				7BDB49F32806EB4C0031F015 /* AssetBundles.plist in Resources */,
 				7B519A932835B506007AC80A /* currencies.json in Resources */,
 				7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */,
@@ -4486,6 +4509,24 @@
 				75A2A79D1DA5934300A983D8 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		7B1A4684298BEF2500A6F68F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7B1A4685298BEF2500A6F68F /* de */,
+				7B1A4686298BEF2500A6F68F /* ja */,
+				7B1A4687298BEF2500A6F68F /* en */,
+				7B1A4688298BEF2500A6F68F /* es */,
+				7B1A4689298BEF2500A6F68F /* da */,
+				7B1A468A298BEF2500A6F68F /* it */,
+				7B1A468B298BEF2500A6F68F /* sv */,
+				7B1A468C298BEF2500A6F68F /* ko */,
+				7B1A468D298BEF2500A6F68F /* fr */,
+				7B1A468E298BEF2500A6F68F /* nl */,
+				7B1A468F298BEF2500A6F68F /* pt */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		9FC529D42604FAA300855473 /* BreadwalletWidget.intentdefinition */ = {
