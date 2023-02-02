@@ -162,7 +162,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     // MARK: - Extras
     private func becomeFirstResponder(atIndex: Int) {
         guard let phraseCell = collectionView?.cellForItem(at: IndexPath(item: atIndex, section: 0)) as? EnterPhraseCell else { return }
-        phraseCell.textField.becomeFirstResponder()
+        phraseCell.textField.changeToFirstResponder()
     }
 
     private func setText(_ text: String, atIndex: Int) {
