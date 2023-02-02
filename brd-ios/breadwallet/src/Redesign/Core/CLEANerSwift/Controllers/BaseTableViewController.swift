@@ -17,7 +17,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
                                                              FetchResponseDisplays {
     override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String {
-        return coordinator is AccountCoordinator ? L10n.Button.close : L10n.Button.skip
+        return coordinator is AccountCoordinator ? L10n.Button.skip : L10n.Button.close
     }
     override var closeImage: UIImage? { return Asset.close.image }
     
