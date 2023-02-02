@@ -164,6 +164,8 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         enterPhrase.configure(background: .init(backgroundColor: enterPhrase.isViewOnly ? LightColors.Background.one : .clear,
                                                 tintColor: LightColors.primary,
                                                 border: .init(borderWidth: 0, cornerRadius: .medium)))
+        
+        guard enterPhrase.isViewOnly else { return }
         enterPhrase.configure(shadow: Presets.Shadow.normal)
     }
 
@@ -235,6 +237,10 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         case .setSeed:
             heading.text = L10n.RecoveryKeyFlow.recoveryYourWallet
             subheading.text = L10n.RecoveryKeyFlow.recoveryYourWalletSubtitle
+            faq.tap = {
+                self.faqButtonPressed()
+            }
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
         case .validateForResettingPin:
             heading.text = L10n.RecoveryKeyFlow.enterRecoveryKey
             subheading.text = L10n.RecoveryKeyFlow.resetPINInstruction
