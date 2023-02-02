@@ -19,7 +19,7 @@ struct UserInformationResponseData: ModelResponse {
     var zip: String?
     var country: String?
     var state: String?
-    var ssn: String?
+    var nologSsn: String?
 }
 
 struct UserInformation: Model {
@@ -31,7 +31,7 @@ struct UserInformation: Model {
     var zip: String?
     var country: String?
     var state: String?
-    var ssn: String?
+    var nologSsn: String?
 }
 
 class UserInformationWorkerMapper: ModelMapper<UserInformationResponseData, UserInformation> {
@@ -44,7 +44,7 @@ class UserInformationWorkerMapper: ModelMapper<UserInformationResponseData, User
                      zip: response?.zip,
                      country: response?.country,
                      state: response?.state,
-                     ssn: response?.ssn)
+                     nologSsn: response?.nologSsn)
     }
 }
 
