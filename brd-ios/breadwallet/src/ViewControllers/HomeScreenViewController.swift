@@ -379,6 +379,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             self.updateTotalAssets()
             self.updateAmountsForWidgets()
         })
+        
+        Store.subscribe(self, name: .promptKyc, callback: { _ in
+            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+        })
     }
     
     private func updateTotalAssets() {
@@ -502,7 +506,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                     Store.trigger(name: trigger)
                 }
                 
-                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type else { return }
+                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type, nextPrompt.trigger != .promptKyc else { return }
                 self.hidePrompt(firstType)
             }
         }

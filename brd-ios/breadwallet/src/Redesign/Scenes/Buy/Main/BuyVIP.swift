@@ -35,7 +35,7 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
-    func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse)
+    func presentDisabledCurrencyMessage(actionResponse: BuyModels.AchData.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
     func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse)
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse)

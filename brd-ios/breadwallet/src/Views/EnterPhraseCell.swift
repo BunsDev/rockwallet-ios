@@ -21,16 +21,19 @@ class EnterPhraseCell: UICollectionViewCell {
     }
     
     func updatePlaceholder() {
-        if let text = textField.text, text.isEmpty, let index = self.index, !textField.isFirstResponder {
-            textField.attributedPlaceholder = self.cellPlaceHolder(index)
-        } else {
-            textField.attributedPlaceholder = nil
-        }
+        // What happens here?
+        textField.displayState = textField.isFirstResponder ? .selected : .normal
     }
     
     var index: Int? {
         didSet {
             updatePlaceholder()
+        }
+    }
+    var hideBorder: Bool = false {
+        didSet {
+            contentView.layer.borderColor = hideBorder ? nil : LightColors.Text.two.cgColor
+            contentView.layer.borderWidth = hideBorder ? 0 : 1
         }
     }
     
@@ -60,7 +63,14 @@ class EnterPhraseCell: UICollectionViewCell {
 
     var didEnterSpace: (() -> Void)?
     var isWordValid: ((String) -> Bool)?
-    var didPasteWords: (([String]) -> Bool)?
+    var didPasteWords: ((String) -> Void)? {
+        get {
+            return textField.didPasteText
+        }
+        set {
+            textField.didPasteText = newValue
+        }
+    }
 
     func disablePreviousButton() {
         previousField.tintColor = LightColors.Disabled.one
@@ -73,7 +83,7 @@ class EnterPhraseCell: UICollectionViewCell {
     }
 
     // MARK: - Private
-    let textField = UITextField()
+    let textField = FETextField()
     private let nextField = UIButton.icon(image: Asset.rightArrow.image, accessibilityLabel: L10n.RecoverWallet.rightArrow, position: .middle)
     private let previousField = UIButton.icon(image: Asset.leftArrow.image, accessibilityLabel: L10n.RecoverWallet.leftArrow, position: .middle)
     private let done = UIButton(type: .system)
@@ -81,7 +91,7 @@ class EnterPhraseCell: UICollectionViewCell {
     fileprivate var hasDisplayedInvalidState = false
 
     private func setup() {
-        contentView.layer.borderColor = LightColors.Text.two.cgColor
+        contentView.layer.borderColor = hideBorder ? nil : LightColors.Text.two.cgColor
         contentView.layer.borderWidth = 1
         
         contentView.layer.cornerRadius = CornerRadius.extraSmall.rawValue
@@ -117,19 +127,14 @@ class EnterPhraseCell: UICollectionViewCell {
     }
 
     private func setData() {
-        textField.textColor = LightColors.Text.one
-        textField.inputAccessoryView = accessoryView
-        textField.autocorrectionType = .no
-        textField.textAlignment = .center
-        textField.autocapitalizationType = .none
-        textField.font = Fonts.Body.two
+        textField.configure(with: Presets.TextField.phrase)
         textField.delegate = self
-        textField.addTarget(self, action: #selector(EnterPhraseCell.textChanged(textField:)), for: .editingChanged)
-
+        textField.valueChanged = textChanged(textField:)
         previousField.tintColor = LightColors.Text.one
         nextField.tintColor = LightColors.Text.one
         done.setTitle(L10n.RecoverWallet.done, for: .normal)
         done.setTitleColor(LightColors.primary, for: .normal)
+        textField.hideTitleForState = .highlighted
     }
 
     private var accessoryView: UIView {
@@ -174,6 +179,7 @@ extension EnterPhraseCell: UITextFieldDelegate {
         setColors(textField: textField)
         didEndEditing?()
         
+        self.text = textField.text
         if let text = textField.text, let isValid = isWordValid, (isValid(text) || text.isEmpty) {
             hideFocusBar()
         }
@@ -200,12 +206,9 @@ extension EnterPhraseCell: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard E.isDebug || E.isTestFlight else { return true }
         if string.count == UIPasteboard.general.string?.count,
-            let didPasteWords = didPasteWords,
-            string == UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
-            let words = string.components(separatedBy: " ")
-            if didPasteWords(words) {
-                return false
-            }
+           let didPasteWords = didPasteWords {
+            didPasteWords(string)
+            return false
         }
         return true
     }
@@ -222,5 +225,4 @@ extension EnterPhraseCell: UITextFieldDelegate {
             hasDisplayedInvalidState = true
         }
     }
-    
 }

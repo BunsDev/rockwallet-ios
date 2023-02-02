@@ -50,7 +50,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -131,7 +131,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
+        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             return nil
         }
@@ -140,7 +140,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Sections.accountLimits),
+        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
@@ -192,7 +192,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         tableView.beginUpdates()
         
-        guard let section = sections.firstIndex(of: Models.Sections.swapCard),
+        guard let section = sections.firstIndex(of: Models.Section.swapCard),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
         cell.setup { view in

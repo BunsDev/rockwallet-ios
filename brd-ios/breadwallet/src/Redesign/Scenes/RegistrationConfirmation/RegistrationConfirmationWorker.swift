@@ -21,9 +21,8 @@ struct RegistrationConfirmationRequestData: RequestModelData {
 }
 
 class RegistrationConfirmationWorker: BaseApiWorker<PlainMapper> {
-
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(KYCAuthEndpoints.confirm)
+        return APIURLHandler.getUrl(WalletEndpoints.confirm)
     }
 
     override func getParameters() -> [String: Any] {

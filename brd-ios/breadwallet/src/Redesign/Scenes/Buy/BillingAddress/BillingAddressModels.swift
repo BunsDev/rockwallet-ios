@@ -44,21 +44,6 @@ enum BillingAddressModels {
         }
     }
     
-    struct SelectCountry {
-        struct ViewAction {
-            var code: String?
-            var countryFullName: String?
-        }
-        
-        struct ActionResponse {
-            var countries: [Country]?
-        }
-        
-        struct ResponseDisplay {
-            var countries: [Country]
-        }
-    }
-    
     struct StateProvince {
         struct ViewAction {
             var stateProvince: String?

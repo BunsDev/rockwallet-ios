@@ -50,7 +50,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
     }
     
     func showVerificationInfo(viewAction: ProfileModels.VerificationInfo.ViewAction) {
-        presenter?.presentVerificationInfo(actionResponse: .init())
+        presenter?.presentVerificationInfo(actionResponse: .init(status: dataStore?.profile?.status))
     }
     
     func navigate(viewAction: ProfileModels.Navigate.ViewAction) {

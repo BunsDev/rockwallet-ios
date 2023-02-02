@@ -12,6 +12,8 @@ enum AlertType {
     case pinSet(callback: () -> Void)
     case pinUpdated(callback: () -> Void)
     case paperKeySet(callback: () -> Void)
+    case generalSuccess
+    case emailSent
     case sendSuccess
     case addressesCopied
     case sweepSuccess(callback: () -> Void)
@@ -20,6 +22,7 @@ enum AlertType {
     case cloudBackupSuccess
     case walletRestored(callback: () -> Void)
     case walletUnlinked(callback: () -> Void)
+    case recoveryPhraseConfirmed(callback: () -> Void)
     case none
 
     var header: String {
@@ -34,12 +37,14 @@ enum AlertType {
             return L10n.Alerts.sendSuccess
         case .addressesCopied:
             return L10n.Alerts.copiedAddressesHeader
-        case .sweepSuccess:
-            return L10n.Import.success
-        case .accountCreation, .cloudBackupRestoreSuccess, .cloudBackupSuccess:
+        case .accountCreation, .cloudBackupRestoreSuccess, .cloudBackupSuccess, .sweepSuccess:
             return L10n.Import.success
         case .walletRestored:
             return L10n.Alerts.walletRestored
+        case .recoveryPhraseConfirmed, .generalSuccess:
+            return L10n.Alerts.phraseConfirmed
+        case .emailSent:
+            return L10n.Alerts.emailSent
         case .walletUnlinked:
             return ""
         case .none:

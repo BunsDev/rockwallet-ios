@@ -9,7 +9,7 @@
 //
 
 import UIKit
-import WalletKit
+import MobileIntelligence
 
 struct NewDeviceResponseData: ModelResponse {
     var status: String?
@@ -41,26 +41,22 @@ struct NewDeviceRequestData: RequestModelData {
 }
 
 class NewDeviceWorker: BaseApiWorker<NewDeviceMapper> {
-    
     override func getHeaders() -> [String: String] {
-        let formatter = DateFormatter()
-        formatter.locale = .init(identifier: C.countryUS)
-        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
-        let dateString = formatter.string(from: Date())
+        return UserSignature().getHeaders(nonce: (getParameters()["nonce"] as? String),
+                                          token: (getParameters()["token"] as? String))
+    }
+    
+    override func apiCallDidFinish(response: HTTPResponse) {
+        super.apiCallDidFinish(response: response)
+        guard let result = result,
+              let sessionKey = result.sessionKey
+        else { return }
         
-        guard let nonce = (getParameters()["nonce"] as? String),
-              let token = (getParameters()["token"] as? String),
-              let data = (dateString + token + nonce).data(using: .utf8)?.sha256,
-              let apiKeyString = try? keychainItem(key: KeychainKey.apiAuthKey) as String?,
-              !apiKeyString.isEmpty,
-              let apiKey = Key.createFromString(asPrivate: apiKeyString),
-              let signature = CoreSigner.basicDER.sign(data32: data, using: apiKey)?.base64EncodedString()
-        else { return [:] }
+        var options = UpdateOptions()
+        guard sessionKey != options.sessionKey else { return }
         
-        return [
-            "Date": dateString,
-            "Signature": signature
-        ]
+        options.sessionKey = sessionKey
+        MobileIntelligence.updateOptions(options: options)
     }
     
     override func getUrl() -> String {

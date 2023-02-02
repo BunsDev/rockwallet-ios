@@ -28,6 +28,7 @@ struct Fonts {
         static var one = ThemeManager.shared.font(for: Fonts.Secondary, size: 16)
         static var two = ThemeManager.shared.font(for: Fonts.Secondary, size: 14)
         static var three = ThemeManager.shared.font(for: Fonts.Secondary, size: 12)
+        static var phrase = ThemeManager.shared.font(for: Fonts.Primary, size: 14)
     }
     
     static var button = ThemeManager.shared.font(for: Fonts.Tertiary, size: 14)

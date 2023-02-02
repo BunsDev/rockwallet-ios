@@ -40,6 +40,7 @@ struct C {
     static let termsAndConditions = "https://\(companyURL)/tc"
     static let supportLink = "https://help.\(companyURL)"
     static let feedbackEmail = "support@\(companyURL)"
+    static let veriffPrivacyPolicy = "https://www.veriff.com/privacy-policy"
     static let reviewLink = "https://apps.apple.com/us/app/rockwallet-buy-and-swap/id6444194230?action=write-review"
     static var standardPort: Int {
         return E.isTestnet ? 18333 : 8333
@@ -80,6 +81,7 @@ struct C {
     static let ETH = "ETH"
     static let BSV = "BSV"
     static let USDC = "USDC"
+    static let USDT = "USDT"
     
     static var backendHost: String {
         if let debugBackendHost = UserDefaults.debugBackendHost {

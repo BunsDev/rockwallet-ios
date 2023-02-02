@@ -29,7 +29,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let sections: [Models.Sections] = [
+        let sections: [Models.Section] = [
             .rateAndTimer,
             .swapCard,
             .accountLimits
@@ -37,7 +37,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
         
-        let sectionRows: [Models.Sections: [Any]] = [
+        let sectionRows: [Models.Section: [Any]] = [
             .rateAndTimer: [
                 exchangeRateViewModel
             ],

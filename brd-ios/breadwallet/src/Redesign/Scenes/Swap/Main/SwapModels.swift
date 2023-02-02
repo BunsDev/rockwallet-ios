@@ -14,7 +14,7 @@ import WalletKit
 enum SwapModels {
     typealias Item = (from: Amount?, to: Amount?, quote: Quote?, isKYCLevelTwo: Bool?)
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case rateAndTimer
         case accountLimits
         case swapCard

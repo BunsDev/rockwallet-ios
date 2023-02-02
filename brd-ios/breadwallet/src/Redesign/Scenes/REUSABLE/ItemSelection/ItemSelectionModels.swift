@@ -15,7 +15,7 @@ enum ItemSelectionModels {
         var isAddingEnabled: Bool?
     }
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case addItem
         case items
         

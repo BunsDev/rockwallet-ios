@@ -9,6 +9,7 @@
 import UIKit
 
 enum PhraseEntryReason {
+    case display(String, (ExitRecoveryKeyAction, [String]) -> Void)
     case setSeed(LoginCompletionHandler)
     case validateForResettingPin(EnterPhraseCallback)
     case validateForWipingWallet(() -> Void)
@@ -40,11 +41,11 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     private let faq: UIButton
     private let scrollView = UIScrollView()
     private let container = UIView()
-    var phrase: String = ""
+    var phrase: String?
 
     private let headingLeftRightMargins: CGFloat = E.isSmallScreen ? 24 : 54
     
-    lazy var contactSupportButton: UIButton = {
+    private lazy var contactSupportButton: UIButton = {
         let button = UIButton()
         let attributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.underlineStyle: 1,
@@ -59,9 +60,21 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
-    lazy var nextButton: FEButton = {
+    private lazy var buttonStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = Margins.large.rawValue
+        return view
+    }()
+    
+    private lazy var nextButton: FEButton = {
         let button = FEButton()
-        
+        return button
+    }()
+    
+    private lazy var skipButton: FEButton = {
+        let button = FEButton()
+        button.isHidden = true
         return button
     }()
     
@@ -136,11 +149,22 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         container.addSubview(heading)
         container.addSubview(subheading)
         container.addSubview(contactSupportButton)
-        scrollView.addSubview(nextButton)
+        scrollView.addSubview(buttonStack)
+        buttonStack.addArrangedSubview(nextButton)
+        buttonStack.addArrangedSubview(skipButton)
 
         addChild(enterPhrase)
         container.addSubview(enterPhrase.view)
         enterPhrase.didMove(toParent: self)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        enterPhrase.configure(background: .init(backgroundColor: enterPhrase.isViewOnly ? LightColors.Background.one : .clear,
+                                                tintColor: LightColors.primary,
+                                                border: .init(borderWidth: 0, cornerRadius: .medium)))
+        enterPhrase.configure(shadow: Presets.Shadow.normal)
     }
 
     private func addConstraints() {
@@ -177,20 +201,31 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
             contactSupportButton.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -Margins.large.rawValue)
         ])
         
+        buttonStack.constrain([
+            buttonStack.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            buttonStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -ViewSizes.Common.defaultCommon.rawValue),
+            buttonStack.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: Margins.large.rawValue)
+        ])
+        
+        skipButton.constrain([
+            skipButton.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue)
+        ])
+        
         nextButton.constrain([
-            nextButton.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -ViewSizes.Common.defaultCommon.rawValue),
-            nextButton.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: Margins.large.rawValue),
             nextButton.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue)
         ])
+
         nextButton.configure(with: Presets.Button.primary)
+        skipButton.configure(with: Presets.Button.secondary)
         nextButton.addTarget(self, action: #selector(nextTapped(_:)), for: .touchUpInside)
+        skipButton.addTarget(self, action: #selector(skipTapped(_:)), for: .touchUpInside)
     }
 
     private func setInitialData() {
         scrollView.delegate = self
         view.backgroundColor = LightColors.Background.one
         nextButton.setup(with: .init(title: L10n.RecoverWallet.next))
+        skipButton.setup(with: .init(title: "SKIP AND SAVE LATER"))
         
         enterPhrase.didFinishPhraseEntry = { [weak self] phrase in
             self?.phrase = phrase
@@ -213,14 +248,30 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         case .validateForWipingWalletAndDeletingFromDevice:
             heading.text = L10n.RecoveryKeyFlow.enterRecoveryKey
             subheading.text = L10n.RecoverWallet.enterRecoveryPhrase
+        case .display(let phrase, _):
+            heading.text = L10n.SecurityCenter.paperKeyTitle
+            subheading.text = L10n.RecoveryKeyFlow.writeKeyScreenSubtitle
+            self.phrase = phrase
+            enterPhrase.setPhrase(phrase)
+            enterPhrase.isViewOnly = true
+            skipButton.isHidden = false
         }
     }
     
     // MARK: - User Interaction
-    @objc func nextTapped(_ sender: UIButton?) {
+    @objc private func nextTapped(_ sender: UIButton?) {
         view.endEditing(true)
+        
         nextButton.isEnabled = false
-        validatePhrase(phrase)
+        validatePhrase(phrase ?? enterPhrase.phrase)
+    }
+    
+    @objc private func skipTapped(_ sender: UIButton?) {
+        view.endEditing(true)
+        guard case let .display(phrase, callback) = reason else { return }
+        
+        let words = phrase.split(separator: " ").compactMap { String($0) }
+        callback(.abort, words)
     }
     
     @objc private func contactSupportTapped() {
@@ -273,6 +324,10 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
             }
             didToggleNextButton?(nextButton, navigationItem.rightBarButtonItem)
             return callback()
+            
+        case .display(let phrase, let callback):
+            let words = phrase.split(separator: " ").compactMap { String($0) }
+            callback(.confirmKey, words)
         }
     }
     

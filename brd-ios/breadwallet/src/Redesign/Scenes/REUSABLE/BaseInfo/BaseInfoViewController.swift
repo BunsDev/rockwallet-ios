@@ -16,15 +16,15 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     typealias Models = BaseInfoModels
     
     var imageName: String? { return Asset.timeoutStatusIcon.name }
-    var titleText: String? { return "OVERRIDE IN SUBCLASS" }
-    var descriptionText: String? { return "THIS AS WELL" }
+    var titleText: String? { return "Override" }
+    var descriptionText: String? { return "Override" }
     
     var buttonViewModels: [ButtonViewModel] { return [] }
     var buttonConfigurations: [ButtonConfiguration] { return [] }
     
     // MARK: - Overrides
     
-    override var closeImage: UIImage? { return .init(named: "")}
+    override var closeImage: UIImage? { return Asset.close.image }
     
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
@@ -124,7 +124,10 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     // MARK: - User Interaction
     
-    // MARK: - SwapInfoResponseDisplay
+    // MARK: - BaseInfoResponseDisplay
+    
+    // Override in subclass
+    func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) { }
     
     // MARK: - Additional Helpers
 }

@@ -123,16 +123,24 @@ internal enum L10n {
     internal static let idVerificationRetry = L10n.tr("Localizable", "Account.IdVerificationRetry", fallback: "Please try to complete your verification again, while keeping the following in mind:\n\n- Please ensure your type of ID is supported.\n\n- Make sure the area is well-lit and there's no glare on the ID or your face.\n\n- Double check that your ID isn't expired or invalid.")
     /// Why do we need your SSN?
     internal static let infoLinkSSN = L10n.tr("Localizable", "Account.infoLinkSSN", fallback: "Why do we need your SSN?")
+    /// Please enter a valid Email Address
+    internal static let invalidEmail = L10n.tr("Localizable", "Account.InvalidEmail", fallback: "Please enter a valid Email Address")
     /// Let’s get you verified
     internal static let letsGetVerified = L10n.tr("Localizable", "Account.LetsGetVerified", fallback: "Let’s get you verified")
     /// Loading Wallet Message
     internal static let loadingMessage = L10n.tr("Localizable", "Account.loadingMessage", fallback: "Loading Wallet")
     /// Verify your account to get full access to the wallet message
     internal static let messageVerifyAccount = L10n.tr("Localizable", "Account.MessageVerifyAccount", fallback: "Verify your account to get full access to your RockWallet!")
+    /// Please fill in the missing information  to use your RockWallet seamlessly.
+    internal static let missingDataPromptText = L10n.tr("Localizable", "Account.MissingDataPromptText", fallback: "Please fill in the missing information  to use your RockWallet seamlessly.")
+    /// Add the missing information
+    internal static let missingDataPromptTitle = L10n.tr("Localizable", "Account.MissingDataPromptTitle", fallback: "Add the missing information")
     /// Monthly
     internal static let monthly = L10n.tr("Localizable", "Account.Monthly", fallback: "Monthly")
     /// New to RockWallet?
     internal static let newToRockwallet = L10n.tr("Localizable", "Account.NewToRockwallet", fallback: "New to RockWallet?")
+    /// Passwords do not match
+    internal static let passwordDoNotMatch = L10n.tr("Localizable", "Account.PasswordDoNotMatch", fallback: "Passwords do not match")
     /// Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.
     internal static let passwordRequirements = L10n.tr("Localizable", "Account.PasswordRequirements", fallback: "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.")
     /// Pending
@@ -198,6 +206,14 @@ internal enum L10n {
     internal static let verified = L10n.tr("Localizable", "Account.Verified", fallback: "Verified")
     /// Verified account message on profile screen
     internal static let verifiedAccountMessage = L10n.tr("Localizable", "Account.VerifiedAccountMessage", fallback: "We’ll let you know when your account is verified.")
+    /// You now have access to:
+    /// ・Unlimited deposits
+    /// ・Enhanced security
+    /// ・Full asset support
+    /// ・Buy assets with credit card.
+    internal static let verifiedAccountText = L10n.tr("Localizable", "Account.VerifiedAccountText", fallback: "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
+    /// Your account is verified!
+    internal static let verifiedAccountTitle = L10n.tr("Localizable", "Account.VerifiedAccountTitle", fallback: "Your account is verified!")
     /// Verify account text in popup
     internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Enter and verify your email address for your account label in registration flow
@@ -1485,6 +1501,8 @@ internal enum L10n {
   internal enum OnboardingPageOne {
     /// Onboarding screen Page 1 title
     internal static let title = L10n.tr("Localizable", "OnboardingPageOne.title", fallback: "Empowering you to navigate the digital asset economy easily and securely")
+    /// Buy, swap, use, and store top cryptocurrencies for low fees
+    internal static let titleOne = L10n.tr("Localizable", "OnboardingPageOne.titleOne", fallback: "Buy, swap, use, and store top cryptocurrencies for low fees")
   }
   internal enum OnboardingPageThree {
     /// Onboarding screen Page 3 subtitle

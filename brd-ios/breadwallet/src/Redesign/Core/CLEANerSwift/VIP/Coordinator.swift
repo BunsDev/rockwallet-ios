@@ -1,6 +1,6 @@
 //
 //  Coordinator.swift
-//  
+//
 //
 //  Created by Rok Cresnik on 01/12/2021.
 //
@@ -64,7 +64,7 @@ class BaseCoordinator: NSObject,
         if let profile = UserManager.shared.profile,
            profile.email?.isEmpty == false,
            profile.status == .emailPending {
-            coordinator = RegistrationCoordinator(navigationController: nvc)
+            coordinator = AccountCoordinator(navigationController: nvc)
         } else {
             coordinator = ProfileCoordinator(navigationController: nvc)
         }
@@ -75,16 +75,25 @@ class BaseCoordinator: NSObject,
         navigationController.show(nvc, sender: nil)
     }
     
-    func showRegistration() {
-        guard navigationController.presentedViewController?.children.contains(where: { $0 is RegistrationConfirmationViewController }) == nil else { return }
+    func handleUserAccount() {
+        if DynamicLinksManager.shared.code != nil {
+            dismissFlow()
+        }
         
         let nvc = RootNavigationController()
-        let coordinator = RegistrationCoordinator(navigationController: nvc)
+        let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.start()
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
-        navigationController.show(coordinator.navigationController, sender: nil)
+        
+        if DynamicLinksManager.shared.code != nil {
+            UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
+            
+            DynamicLinksManager.shared.code = nil
+        } else {
+            navigationController.show(coordinator.navigationController, sender: nil)
+        }
     }
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
@@ -168,23 +177,13 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showVerifications() {
-        open(scene: Scenes.AccountVerification) { vc in
-            vc.dataStore?.profile = UserManager.shared.profile
-            vc.prepareData()
-        }
-    }
-    
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
-    }
-    
     func showAccountVerification() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification) { vc in
-            vc?.dataStore?.profile = UserManager.shared.profile
-            vc?.prepareData()
-        }
+        let nvc = RootNavigationController()
+        let coordinator = KYCCoordinator(navigationController: nvc)
+        coordinator.start()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        navigationController.present(nvc, animated: true)
     }
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {
@@ -195,11 +194,6 @@ class BaseCoordinator: NSObject,
         
         childCoordinators.append(coordinator)
         UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
-        
-        // TODO: Cleanup when everything is moved to Coordinators.
-        // There are problems with showing this vc from both menu and profile menu.
-        // Cannot get it work reliably. Navigation Controllers are messed up.
-        // More hint: deleteAccountCallback inside ModalPresenter.
     }
     
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
@@ -211,14 +205,18 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showSupport() {
-        guard let url = URL(string: C.supportLink) else { return }
+    func showInWebView(urlString: String, title: String) {
+        guard let url = URL(string: urlString) else { return }
         let webViewController = SimpleWebViewController(url: url)
-        webViewController.setup(with: .init(title: L10n.MenuButton.support))
+        webViewController.setup(with: .init(title: title))
         let navController = RootNavigationController(rootViewController: webViewController)
         webViewController.setAsNonDismissableModal()
         
         navigationController.present(navController, animated: true)
+    }
+    
+    func showSupport() {
+        showInWebView(urlString: C.supportLink, title: L10n.MenuButton.support)
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
@@ -266,7 +264,12 @@ class BaseCoordinator: NSObject,
         childCoordinators.removeAll(where: { $0 === child })
     }
     
-    // only call from coordinator subclasses
+    func dismissFlow() {
+        navigationController.dismiss(animated: true)
+        parentCoordinator?.childDidFinish(child: self)
+    }
+    
+    /// Only call from coordinator subclasses
     func open<T: BaseControllable>(scene: T.Type,
                                    presentationStyle: UIModalPresentationStyle = .fullScreen,
                                    configure: ((T) -> Void)? = nil) {
@@ -277,7 +280,7 @@ class BaseCoordinator: NSObject,
         navigationController.show(controller, sender: nil)
     }
 
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func set<C: BaseCoordinator,
              VC: BaseControllable>(coordinator: C.Type,
                                    scene: VC.Type,
@@ -294,7 +297,7 @@ class BaseCoordinator: NSObject,
         navigationController.setViewControllers([controller], animated: true)
     }
     
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func openModally<C: BaseCoordinator,
                      VC: BaseControllable>(coordinator: C.Type,
                                            scene: VC.Type,
@@ -317,7 +320,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    //TODO: refactor this once the "coming soon" screen is added
+    // TODO: refactor this once the "coming soon" screen is added
     func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?
@@ -332,7 +335,7 @@ class BaseCoordinator: NSObject,
                 || roles?.isEmpty == true
                 || status == VerificationStatus.emailPending
                 || status == VerificationStatus.none {
-                coordinator = RegistrationCoordinator(navigationController: nvc)
+                coordinator = AccountCoordinator(navigationController: nvc)
                 
             } else if let kycLevel = role,
                       roles?.contains(kycLevel) == true {
@@ -371,7 +374,7 @@ class BaseCoordinator: NSObject,
                 return
             }
             
-            coordinator = RegistrationCoordinator(navigationController: RootNavigationController())
+            coordinator = AccountCoordinator(navigationController: RootNavigationController())
             
         default:
             completion?(true)
@@ -403,6 +406,14 @@ class BaseCoordinator: NSObject,
         }
     }
     
+    func showBottomSheetAlert(type: AlertType, completion: (() -> Void)? = nil) {
+        guard let activeWindow = UIApplication.shared.activeWindow else { return }
+        
+        AlertPresenter(window: activeWindow).presentAlert(type, completion: {
+            completion?()
+        })
+    }
+    
     func showToastMessage(with error: Error? = nil,
                           model: InfoViewModel? = nil,
                           configuration: InfoViewConfiguration? = nil,
@@ -417,7 +428,7 @@ class BaseCoordinator: NSObject,
             UserManager.shared.refresh()
             
         case .sessionExpired:
-            openModally(coordinator: RegistrationCoordinator.self, scene: Scenes.Registration) { vc in
+            openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignIn) { vc in
                 vc?.navigationItem.hidesBackButton = true
             }
             

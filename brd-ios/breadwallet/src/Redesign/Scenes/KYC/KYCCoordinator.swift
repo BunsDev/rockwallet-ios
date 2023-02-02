@@ -10,28 +10,31 @@
 
 import AVFoundation
 import UIKit
+import Veriff
 
 class KYCCoordinator: BaseCoordinator,
                       KYCBasicRoutes,
-                      KYCDocumentPickerRoutes,
-                      DocumentReviewRoutes {
+                      CountriesAndStatesRoutes,
+                      KYCAddressRoutes,
+                      AssetSelectionDisplayable {
     var role: CustomerRole?
     var flow: ExchangeFlow?
     
     override func start() {
         switch UserManager.shared.profile?.status {
         case .emailPending:
-            let coordinator = RegistrationCoordinator(navigationController: navigationController)
+            let coordinator = AccountCoordinator(navigationController: navigationController)
             coordinator.start()
             coordinator.parentCoordinator = self
             childCoordinators.append(coordinator)
             
         default:
-            open(scene: Scenes.VerifyAccount) { [weak self] vc in
-                vc.role = self?.role
-                vc.flow = self?.flow
-            }
+            showKYCLevelOne()
         }
+    }
+    
+    func showKYCAddress() {
+        open(scene: Scenes.KYCAddress)
     }
     
     func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?) {
@@ -60,58 +63,11 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showDocumentReview(checklist: [ChecklistItemViewModel], image: UIImage) {
-        let controller = DocumentReviewViewController()
-        controller.dataStore?.checklist = checklist
-        controller.dataStore?.image = image
-        controller.prepareData()
-        controller.coordinator = self
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        
-        controller.retakePhoto = { [weak self] in
-            self?.navigationController.popViewController(animated: true)
-        }
-        
-        controller.confirmPhoto = { [weak self] in
-            let picker = self?.navigationController.children.first(where: { $0 is KYCDocumentPickerViewController }) as? KYCDocumentPickerViewController
-            picker?.interactor?.confirmPhoto(viewAction: .init(photo: image))
-            
-            LoadingView.show()
-        }
-        
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showKYCFinal() {
-        let controller = KYCLevelTwoPostValidationViewController()
-        controller.coordinator = self
-        controller.navigationItem.hidesBackButton = true
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
     func showKYCLevelOne() {
         let controller = KYCBasicViewController()
         controller.coordinator = self
         controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
         navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showKYCLevelTwo() {
-        let controller = KYCLevelTwoEntryViewController()
-        controller.coordinator = self
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showIdentitySelector() {
-        let controller = KYCDocumentPickerViewController()
-        controller.coordinator = self
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        navigationController.pushViewController(controller, animated: true)
-    }
-    
-    func showDocumentVerification(for document: Document) {
-        showUnderConstruction("\(document.title) verification")
     }
     
     // MARK: - Aditional helpers
@@ -125,30 +81,73 @@ class KYCCoordinator: BaseCoordinator,
     }
 }
 
-extension KYCCoordinator: ImagePickable {
-    func showImagePicker(model: KYCCameraImagePickerModel?,
-                         isSelfie: Bool,
-                         completion: ((UIImage?) -> Void)?) {
-        let controller = KYCCameraViewController()
-        let device: AVCaptureDevice?
-        if isSelfie {
-            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
-        } else {
-            device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+extension KYCCoordinator: VeriffSdkDelegate {
+    func showExternalKYC(url: String) {
+        navigationController.popToRootViewController(animated: false)
+        
+        VeriffSdk.shared.delegate = self
+        VeriffSdk.shared.startAuthentication(sessionUrl: url,
+                                             configuration: Presets.veriff,
+                                             presentingFrom: navigationController)
+    }
+    
+    func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
+        switch result.status {
+        case .done:
+            handleKYCSessionEnd()
+            
+        case .error(let error):
+            print(error.localizedDescription)
+            open(scene: Scenes.Failure) { vc in
+                vc.failure = .documentVerification
+            }
+            
+        default:
+            parentCoordinator?.childDidFinish(child: self)
         }
-        
-        let backButtonVisibility = navigationController.children.last is KYCDocumentPickerViewController == false
-        controller.navigationItem.hidesBackButton = backButtonVisibility
-        controller.defaultVideoDevice = device
-        controller.configure(with: .init(instructions: .init(font: Fonts.Body.one,
-                                                             textColor: LightColors.Background.one,
-                                                             textAlignment: .center),
-                                         instructionsBackground: .init(backgroundColor: LightColors.Text.one)))
-        controller.setup(with: model)
-        controller.photoSelected = completion
-        controller.setBarButtonItem(from: navigationController, to: .right, target: self, action: #selector(popFlow(sender:)))
-        
-        navigationController.pushViewController(controller, animated: true)
+    }
+    
+    private func handleKYCSessionEnd() {
+        UserManager.shared.refresh { [weak self] result in
+            switch result {
+            case .success(let profile):
+                switch profile?.status {
+                case .levelTwo(.levelTwo):
+                    self?.open(scene: Scenes.Success) { vc in
+                        vc.success = .documentVerification
+                    }
+                    
+                case .levelTwo(.declined):
+                    self?.open(scene: Scenes.Failure) { vc in
+                        vc.failure = .documentVerification
+                    }
+                    
+                case .levelTwo(.resubmit):
+                    self?.open(scene: Scenes.Failure) { vc in
+                        vc.failure = .documentVerificationRetry
+                    }
+                    
+                case .levelTwo(.submitted):
+                    // If not confirmed/failed yet check again after delay (can take up to 2 mins)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 15, execute: {
+                        self?.handleKYCSessionEnd()
+                    })
+                    
+                default:
+                    break
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                self?.open(scene: Scenes.Failure) { vc in
+                    vc.failure = .documentVerification
+                }
+                
+            default:
+                guard let child = self else { return }
+                self?.parentCoordinator?.childDidFinish(child: child)
+            }
+        }
     }
 }
 

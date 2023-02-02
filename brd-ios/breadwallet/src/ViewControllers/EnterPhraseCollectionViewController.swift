@@ -8,12 +8,13 @@
 
 import UIKit
 
-private let itemHeight: CGFloat = 32
+private let itemHeight: CGFloat = ViewSizes.Common.defaultCommon.rawValue
 
 class EnterPhraseCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     // MARK: - Public
     var didFinishPhraseEntry: ((String) -> Void)?
+    var isViewOnly = false
     var height: CGFloat {
         return (itemHeight * 4.0) + (2 * sectionInsets) + (3 * interItemSpacing)
     }
@@ -23,7 +24,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
-    private let cellHeight: CGFloat = 32
+    private let cellHeight: CGFloat = ViewSizes.Common.defaultCommon.rawValue
     
     var interItemSpacing: CGFloat {
         return E.isSmallScreen ? 6 : Margins.small.rawValue
@@ -44,12 +45,13 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     // MARK: - Private
     private let cellIdentifier = "CellIdentifier"
     private let keyMaster: KeyMaster
-    private var phrase: String {
+    var phrase: String {
         return (0...11).map { index in
-                guard let phraseCell = collectionView?.cellForItem(at: IndexPath(item: index, section: 0)) as? EnterPhraseCell else { return ""}
-                return phraseCell.textField.text?.lowercased() ?? ""
-            }.joined(separator: " ")
+            guard let phraseCell = collectionView?.cellForItem(at: IndexPath(item: index, section: 0)) as? EnterPhraseCell else { return ""}
+            return phraseCell.textField.value?.lowercased() ?? ""
+        }.joined(separator: " ")
     }
+    private var displayedPhrase: [String] = []
     
     override func viewDidLoad() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
@@ -79,6 +81,16 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
 
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
         guard let enterPhraseCell = item as? EnterPhraseCell else { return item }
+        
+        var word: String? = enterPhraseCell.textField.value
+        if displayedPhrase.count > indexPath.row {
+            word = displayedPhrase[indexPath.row]
+        }
+        enterPhraseCell.hideBorder = isViewOnly
+        enterPhraseCell.textField.configure(with: Presets.TextField.phrase)
+        enterPhraseCell.textField.setup(with: .init(title: String(format: "%02i", indexPath.row + 1),
+                                                          value: word))
+        
         enterPhraseCell.index = indexPath.row
         enterPhraseCell.didTapNext = { [weak self] in
             self?.becomeFirstResponder(atIndex: indexPath.row + 1)
@@ -101,13 +113,21 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
         enterPhraseCell.didEnterSpace = {
             enterPhraseCell.didTapNext?()
         }
-        enterPhraseCell.didPasteWords = { [weak self] words in
-            guard E.isDebug || E.isTestFlight else { return false }
-            guard enterPhraseCell.index == 0, words.count <= 12, let `self` = self else { return false }
-            for (index, word) in words.enumerated() {
-                self.setText(word, atIndex: index)
-            }
-            return true
+        enterPhraseCell.didPasteWords = { [weak self] text in
+            let text = text.replacingOccurrences(of: "\n", with: " ")
+            let words = text.split(separator: " ").compactMap { String($0) }
+            
+            guard E.isDebug || E.isTestFlight,
+                  enterPhraseCell.index == 0, words.count <= 12, let `self` = self
+            else { return }
+            self.displayedPhrase = words
+            self.collectionView.reloadData()
+        }
+        
+        if displayedPhrase.count > indexPath.row {
+            let word = displayedPhrase[indexPath.row]
+            enterPhraseCell.textField.value = word
+            enterPhraseCell.isUserInteractionEnabled = false
         }
 
         if indexPath.item == 0 {
@@ -146,11 +166,30 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     }
 
     private func setText(_ text: String, atIndex: Int) {
-        guard let phraseCell = collectionView?.cellForItem(at: IndexPath(item: atIndex, section: 0)) as? EnterPhraseCell else { return }
-        phraseCell.textField.text = text
+        guard let phraseCell = collectionView.cellForItem(at: IndexPath(row: atIndex, section: 0)) as? EnterPhraseCell else { return }
+        phraseCell.textField.value = text
+    }
+    
+    func setPhrase(_ phrase: String) {
+        displayedPhrase = phrase.split(separator: " ").compactMap { String($0) }
+        collectionView.reloadData()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension EnterPhraseCollectionViewController: Shadable {
+    func configure(shadow: ShadowConfiguration?) {
+        guard let shadow = shadow else { return }
+        collectionView.layer.setShadow(with: shadow)
+    }
+}
+
+extension EnterPhraseCollectionViewController: Borderable {
+    func configure(background: BackgroundConfiguration?) {
+        guard let background = background else { return }
+        collectionView.setBackground(with: background)
     }
 }

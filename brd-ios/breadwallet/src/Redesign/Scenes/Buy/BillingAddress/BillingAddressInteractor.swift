@@ -84,28 +84,6 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         validate(viewAction: .init())
     }
     
-    func pickCountry(viewAction: BillingAddressModels.SelectCountry.ViewAction) {
-        guard viewAction.code == nil else {
-            dataStore?.country = viewAction.code
-            dataStore?.countryFullName = viewAction.countryFullName
-            presenter?.presentData(actionResponse: .init(item: dataStore))
-            validate(viewAction: .init())
-            
-            return
-        }
-        
-        let data = CountriesRequestData()
-        CountriesWorker().execute(requestData: data) { [weak self] result in
-            switch result {
-            case .success(let data):
-                self?.presenter?.presentCountry(actionResponse: .init(countries: data))
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
-    }
-    
     func validate(viewAction: BillingAddressModels.Validate.ViewAction) {
         presenter?.presentValidate(actionResponse: .init(isValid: dataStore?.isValid ?? false))
     }

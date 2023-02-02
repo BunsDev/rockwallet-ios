@@ -1,4 +1,4 @@
-// 
+//
 //  VerificationView.swift
 //  breadwallet
 //
@@ -100,13 +100,19 @@ enum VerificationStatus: Equatable {
     }
     
     var viewModel: InfoViewModel? {
+        let profile = UserManager.shared.profile
+        let swapAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.swapAllowanceDaily) ?? ""
+        let buyAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.buyAllowanceDaily) ?? ""
+        let buyAllowanceWeekly = ExchangeFormatter.crypto.string(for: profile?.buyAllowanceWeekly) ?? ""
+        let buyAllowanceMonthly = ExchangeFormatter.crypto.string(for: profile?.buyAllowanceMonthly) ?? ""
+        
         switch self {
-        case .none, .email:
-            return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.Account.accountLimits),
+        case .none, .email, .levelOne, .levelTwo(.notStarted):
+            return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.VerifyAccount.verifyYourIdentity),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.none,
-                                 description: .text(L10n.Account.fullAccess),
-                                 button: .init(title: L10n.VerifyAccount.button.uppercased()),
+                                 description: .text(L10n.VerifyAccount.verifyIdentityDescription),
+                                 button: .init(title: L10n.VerifyAccount.verifyMyIdentity, isUnderlined: true),
                                  dismissType: .persistent)
             
         case .emailPending, .levelTwo(.submitted):
@@ -115,19 +121,20 @@ enum VerificationStatus: Equatable {
                                  status: VerificationStatus.emailPending,
                                  description: .text(L10n.Account.verifiedAccountMessage),
                                  dismissType: .persistent)
-            
-        case .levelOne, .levelTwo(.notStarted):
-            return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.Account.accountLimits),
-                                 headerTrailing: .init(image: Asset.info.image),
-                                 status: VerificationStatus.levelOne,
-                                 description: .text(L10n.Account.currentLimit),
-                                 button: .init(title: L10n.Account.upgradeLimits.uppercased()),
-                                 dismissType: .persistent)
         case .levelTwo(.levelTwo):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.levelTwo(.levelTwo),
-                                 description: .text(L10n.Account.swapAndBuyLimit),
+                                 swapLimits: .text(L10n.Swap.swapLimit),
+                                 buyLimits: .text(L10n.Buy.buyLimit),
+                                 swapLimitsValue: .init(title: .text(L10n.Account.daily),
+                                                        value: .text("$\(swapAllowanceDaily) \(C.usdCurrencyCode)")),
+                                 buyDailyLimitsView: .init(title: .text(L10n.Account.daily),
+                                                           value: .text("$\(buyAllowanceDaily) \(C.usdCurrencyCode)")),
+                                 buyWeeklyLimitsView: .init(title: .text(L10n.Account.weekly),
+                                                            value: .text("$\(buyAllowanceWeekly) \(C.usdCurrencyCode)")),
+                                 buyMonthlyLimitsView: .init(title: .text(L10n.Account.monthly),
+                                                             value: .text("$\(buyAllowanceMonthly) \(C.usdCurrencyCode)")),
                                  dismissType: .persistent)
         case .levelTwo(.expired), .levelTwo(.resubmit):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
@@ -181,6 +188,7 @@ struct VerificationConfiguration: Configurable {
 enum KYC {
     case levelOne
     case levelTwo
+    case veriff
 }
 
 struct VerificationViewModel: ViewModel {
@@ -338,11 +346,13 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
         arrowImageView.isHidden = viewModel.infoButton != nil
         statusView.wrappedView.setup(with: .text(viewModel.status.title))
         statusView.isHidden = viewModel.status == VerificationStatus.none
-        // if level 1 was done, but we present level 2, status is hidden
+        
+        // If level 1 was done, but we present level 2, status is hidden
         if viewModel.status == .levelOne,
            viewModel.kyc == .levelTwo {
             statusView.isHidden = true
         }
+        
         descriptionLabel.setup(with: viewModel.description)
         descriptionLabel.isHidden = viewModel.description == nil
         
@@ -357,6 +367,7 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
         buyBenefitsLabel.configure(background: backgroundConfiguration)
         
         let image: String
+        
         switch viewModel.status {
         case .none, .email:
             image = Asset.selectedGray.name
