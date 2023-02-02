@@ -29,13 +29,15 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
+        case .mandatory:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
         case .country:
             cell = self.tableView(tableView, countryTextFieldCellForRowAt: indexPath)
             
-        case .stateProvince:
+        case .postalCode:
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
-        case .cityAndZipPostal:
+        case .cityAndState:
             cell = self.tableView(tableView, cityAndZipPostalCellForRowAt: indexPath)
             
         case .address:

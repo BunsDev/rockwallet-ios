@@ -17,32 +17,34 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
         let sections: [Models.Section] = [
+            .mandatory,
             .address,
-            .cityAndZipPostal,
-            .stateProvince,
             .country,
+            .cityAndState,
+            .postalCode,
             .confirm
         ]
         
         let sectionRows: [Models.Section: [Any]] = [
+            .mandatory: [LabelViewModel.text(L10n.Account.mandatoryFields)],
             .address: [
-                TextFieldModel(title: L10n.Buy.address,
+                TextFieldModel(title: "\(L10n.Buy.address)*",
                                value: item.address)
             ],
-            .cityAndZipPostal: [
-                DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Buy.city,
-                                                                value: item.city),
-                                                 secondary: .init(title: L10n.Buy.zipPostalCode,
-                                                                  value: item.postalCode))
-            ],
-            .stateProvince: [
-                TextFieldModel(title: L10n.Buy.stateProvince,
-                               value: item.state)
-            ],
             .country: [
-                TextFieldModel(title: L10n.Account.country,
+                TextFieldModel(title: L10n.Account.countryRegion,
                                value: item.countryFullName,
                                trailing: .image(Asset.chevronDown.image))
+            ],
+            .cityAndState: [
+                DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,
+                                                                value: item.city),
+                                                 secondary: .init(title: L10n.Buy.stateProvince,
+                                                                  value: item.state))
+            ],
+            .postalCode: [
+                TextFieldModel(title: L10n.Account.postalCode,
+                               value: item.postalCode)
             ],
             .confirm: [
                 ButtonViewModel(title: L10n.Button.confirm, enabled: item.isValid)

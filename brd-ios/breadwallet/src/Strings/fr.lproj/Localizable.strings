@@ -127,6 +127,8 @@
 /* Loading Wallet Message */
 "Account.loadingMessage" = "Chargement du portefeuille";
 
+"Account.MandatoryFields" = "(*)Mandatory Fields";
+
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Faites vérifier votre compte pour accéder à l'intégralité de votre portefeuille RockWallet !";
 

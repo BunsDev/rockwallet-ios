@@ -129,6 +129,8 @@ internal enum L10n {
     internal static let letsGetVerified = L10n.tr("Localizable", "Account.LetsGetVerified", fallback: "Let’s get you verified")
     /// Loading Wallet Message
     internal static let loadingMessage = L10n.tr("Localizable", "Account.loadingMessage", fallback: "Loading Wallet")
+    /// (*)Mandatory Fields
+    internal static let mandatoryFields = L10n.tr("Localizable", "Account.MandatoryFields", fallback: "(*)Mandatory Fields")
     /// Verify your account to get full access to the wallet message
     internal static let messageVerifyAccount = L10n.tr("Localizable", "Account.MessageVerifyAccount", fallback: "Verify your account to get full access to your RockWallet!")
     /// Please fill in the missing information  to use your RockWallet seamlessly.

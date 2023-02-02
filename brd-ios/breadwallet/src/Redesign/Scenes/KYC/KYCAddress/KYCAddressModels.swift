@@ -12,9 +12,10 @@ enum KYCAddressModels {
     typealias Item = KYCAddressStore
     
     enum Section: Sectionable {
+        case mandatory
         case address
-        case cityAndZipPostal
-        case stateProvince
+        case cityAndState
+        case postalCode
         case country
         case confirm
         

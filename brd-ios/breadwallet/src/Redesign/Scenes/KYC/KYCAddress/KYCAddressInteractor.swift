@@ -40,13 +40,16 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         case .address:
             dataStore?.address = viewAction.value as? String
             
-        case .stateProvince:
-            dataStore?.state = viewAction.value as? String
+        case .country:
+            dataStore?.country = viewAction.value as? String
             
-        case .cityAndZipPostal:
+        case .postalCode:
+            dataStore?.postalCode = viewAction.value as? String
+            
+        case .cityAndState:
             let item = viewAction.value as? (String?, String?)
             dataStore?.city = item?.0
-            dataStore?.postalCode = item?.1
+            dataStore?.state = item?.1
             
         default:
             return
