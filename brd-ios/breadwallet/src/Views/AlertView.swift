@@ -14,6 +14,7 @@ enum AlertType {
     case paperKeySet(callback: () -> Void)
     case generalSuccess
     case emailSent
+    case passwordUpdated
     case sendSuccess
     case addressesCopied
     case sweepSuccess(callback: () -> Void)
@@ -45,6 +46,8 @@ enum AlertType {
             return L10n.Alerts.phraseConfirmed
         case .emailSent:
             return L10n.Alerts.emailSent
+        case .passwordUpdated:
+            return L10n.Alerts.passwordUpdated
         case .walletUnlinked:
             return ""
         case .none:
