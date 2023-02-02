@@ -161,7 +161,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        enterPhrase.configure(background: .init(backgroundColor: LightColors.Background.one,
+        enterPhrase.configure(background: .init(backgroundColor: enterPhrase.isViewOnly ? LightColors.Background.one : .clear,
                                                 tintColor: LightColors.primary,
                                                 border: .init(borderWidth: 0, cornerRadius: .medium)))
         enterPhrase.configure(shadow: Presets.Shadow.normal)
