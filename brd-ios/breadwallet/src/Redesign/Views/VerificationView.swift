@@ -126,7 +126,7 @@ enum VerificationStatus: Equatable {
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.levelTwo(.levelTwo),
                                  swapLimits: .text(L10n.Swap.swapLimit),
-                                 buyLimits: .text(L10n.Buy.buyLimit),
+                                 buyLimits: .text(L10n.Buy.buyAchLimitsTitle),
                                  swapLimitsValue: .init(title: .text(L10n.Account.daily),
                                                         value: .text("$\(swapAllowanceDaily) \(C.usdCurrencyCode)")),
                                  buyDailyLimitsView: .init(title: .text(L10n.Account.daily),
