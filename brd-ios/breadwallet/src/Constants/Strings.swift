@@ -461,6 +461,8 @@ internal enum L10n {
     internal static let paperKeySet = L10n.tr("Localizable", "Alerts.paperKeySet", fallback: "Recovery Key Set")
     /// Alert Subheader label (playfully positive)
     internal static let paperKeySetSubheader = L10n.tr("Localizable", "Alerts.paperKeySetSubheader", fallback: "Awesome!")
+    /// Password updated
+    internal static let passwordUpdated = L10n.tr("Localizable", "Alerts.passwordUpdated", fallback: "Password updated")
     /// Success!
     internal static let phraseConfirmed = L10n.tr("Localizable", "Alerts.phraseConfirmed", fallback: "Success!")
     /// Alert Header label (the PIN was set)
@@ -679,6 +681,8 @@ internal enum L10n {
     internal static let bankAccountSuccessTitle = L10n.tr("Localizable", "Buy.bankAccountSuccessTitle", fallback: "Your purchase is being processed")
     /// Billing address label on buy flow
     internal static let billingAddress = L10n.tr("Localizable", "Buy.BillingAddress", fallback: "Billing address")
+    /// Buy limits (Card + ACH)
+    internal static let buyAchLimitsTitle = L10n.tr("Localizable", "Buy.BuyAchLimitsTitle", fallback: "Buy limits (Card + ACH)")
     /// Buy limits
     internal static let buyLimit = L10n.tr("Localizable", "Buy.BuyLimit", fallback: "Buy limits")
     /// Buy min and max limit text

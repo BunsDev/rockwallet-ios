@@ -498,6 +498,8 @@
 /* Alert Subheader label (playfully positive) */
 "Alerts.paperKeySetSubheader" = "Impressionnant !";
 
+"Alerts.passwordUpdated" = "Password updated";
+
 "Alerts.phraseConfirmed" = "Success!";
 
 /* Alert Header label (the PIN was set) */
@@ -759,6 +761,8 @@
 
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Adresse de facturation";
+
+"Buy.BuyAchLimitsTitle" = "Buy limits (Card + ACH)";
 
 "Buy.BuyLimit" = "Buy limits";
 
