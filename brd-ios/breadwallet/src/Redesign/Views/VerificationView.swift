@@ -284,7 +284,7 @@ class VerificationView: FEView<VerificationConfiguration, VerificationViewModel>
         headerStack.addArrangedSubview(headerLabel)
         headerLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().priority(.low)
-            make.height.equalTo(40)
+            make.height.equalTo(ViewSizes.large.rawValue)
         }
         
         headerStack.addArrangedSubview(statusView)
