@@ -11,7 +11,7 @@
 import UIKit
 
 struct TickboxItemConfiguration: Configurable {
-    var title: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two)
+    var title: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, isUserInteractionEnabled: true)
 }
 
 struct TickboxItemViewModel: ViewModel {
@@ -30,7 +30,6 @@ class TickboxItemView: FEView<TickboxItemConfiguration, TickboxItemViewModel> {
     
     private lazy var titleLabel: FELabel = {
         let view = FELabel()
-        view.isUserInteractionEnabled = true
         return view
     }()
     
