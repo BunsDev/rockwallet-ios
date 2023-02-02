@@ -498,6 +498,8 @@
 /* Alert Subheader label (playfully positive) */
 "Alerts.paperKeySetSubheader" = "Impressionnant !";
 
+"Alerts.passwordUpdated" = "Password updated";
+
 "Alerts.phraseConfirmed" = "Success!";
 
 /* Alert Header label (the PIN was set) */
@@ -760,7 +762,7 @@
 /* Billing address label on buy flow */
 "Buy.BillingAddress" = "Adresse de facturation";
 
-"Buy.BuyLimit" = "Buy limits";
+"Buy.BuyAchLimitsTitle" = "Buy limits (Card + ACH)";
 
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Actuellement, le montant minimum d'achat est de $%s USD et le montant maximum est de $%s USD/jour.";
