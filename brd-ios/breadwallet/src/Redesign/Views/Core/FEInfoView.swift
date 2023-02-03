@@ -33,8 +33,7 @@ struct InfoViewConfiguration: Configurable {
     
     var swapLimitsValue: TitleValueConfiguration = Presets.TitleValue.bold
     var buyDailyLimitsView: TitleValueConfiguration = Presets.TitleValue.bold
-    var buyWeeklyLimitsView: TitleValueConfiguration = Presets.TitleValue.bold
-    var buyMonthlyLimitsView: TitleValueConfiguration = Presets.TitleValue.bold
+    var buyAchDailyLimitsView: TitleValueConfiguration = Presets.TitleValue.bold
     
     var button: ButtonConfiguration?
     var tickboxItem: TickboxItemConfiguration?
@@ -58,13 +57,13 @@ struct InfoViewModel: ViewModel {
     
     var swapLimitsValue: TitleValueViewModel?
     var buyDailyLimitsView: TitleValueViewModel?
-    var buyWeeklyLimitsView: TitleValueViewModel?
-    var buyMonthlyLimitsView: TitleValueViewModel?
+    var buyAchDailyLimitsView: TitleValueViewModel?
     
     var button: ButtonViewModel?
     var tickbox: TickboxItemViewModel?
     
     var dismissType: DismissType = .auto
+    var canUseAch: Bool = false
 }
 
 class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
@@ -156,12 +155,7 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         return view
     }()
     
-    private lazy var buyWeeklyLimitsView: TitleValueView = {
-        let view = TitleValueView()
-        return view
-    }()
-    
-    private lazy var buyMonthlyLimitsView: TitleValueView = {
+    private lazy var buyAchDailyLimitsView: TitleValueView = {
         let view = TitleValueView()
         return view
     }()
@@ -238,12 +232,8 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         buyDailyLimitsView.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.extraSmall.rawValue)
         }
-        verticalStackView.addArrangedSubview(buyWeeklyLimitsView)
-        buyWeeklyLimitsView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-        }
-        verticalStackView.addArrangedSubview(buyMonthlyLimitsView)
-        buyMonthlyLimitsView.snp.makeConstraints { make in
+        verticalStackView.addArrangedSubview(buyAchDailyLimitsView)
+        buyAchDailyLimitsView.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.extraSmall.rawValue)
         }
         
@@ -289,8 +279,7 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         swapLimitsView.configure(with: config.swapLimitsValue)
         buyLimitsLabel.configure(with: config.buyLimits)
         buyDailyLimitsView.configure(with: config.buyDailyLimitsView)
-        buyWeeklyLimitsView.configure(with: config.buyWeeklyLimitsView)
-        buyMonthlyLimitsView.configure(with: config.buyMonthlyLimitsView)
+        buyAchDailyLimitsView.configure(with: config.buyAchDailyLimitsView)
         
         bottomButton.configure(with: config.button)
         tickboxItemView.configure(with: config.tickboxItem)
@@ -337,11 +326,8 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         buyDailyLimitsView.setup(with: viewModel.buyDailyLimitsView)
         buyDailyLimitsView.isHidden = viewModel.buyDailyLimitsView == nil
         
-        buyWeeklyLimitsView.setup(with: viewModel.buyWeeklyLimitsView)
-        buyWeeklyLimitsView.isHidden = viewModel.buyWeeklyLimitsView == nil
-        
-        buyMonthlyLimitsView.setup(with: viewModel.buyMonthlyLimitsView)
-        buyMonthlyLimitsView.isHidden = viewModel.buyMonthlyLimitsView == nil
+        buyAchDailyLimitsView.setup(with: viewModel.buyAchDailyLimitsView)
+        buyAchDailyLimitsView.isHidden = !viewModel.canUseAch
         
         bottomButton.setup(with: viewModel.button)
         buttonsStackView.isHidden = viewModel.button == nil
