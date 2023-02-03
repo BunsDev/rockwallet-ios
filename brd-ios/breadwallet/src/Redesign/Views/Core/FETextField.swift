@@ -361,4 +361,12 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         }
         return true
     }
+    
+    func setAccessoryView(with view: UIView) {
+        textField.inputAccessoryView = view
+    }
+    
+    func changeToFirstResponder() {
+        startEditing()
+    }
 }

@@ -128,6 +128,7 @@ class EnterPhraseCell: UICollectionViewCell {
 
     private func setData() {
         textField.configure(with: Presets.TextField.phrase)
+        textField.setAccessoryView(with: accessoryView)
         textField.delegate = self
         textField.valueChanged = textChanged(textField:)
         previousField.tintColor = LightColors.Text.one
