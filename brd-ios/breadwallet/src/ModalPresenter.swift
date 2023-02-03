@@ -1098,7 +1098,7 @@ class ModalPresenter: Subscriber {
             // Paper key
             MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in
                 guard let self = self else { return }
-                self.presentWritePaperKey(fromViewController: menuNav, context: .viewOnly)
+                self.presentWritePaperKey(fromViewController: menuNav, context: .viewRecoveryPhrase)
             },
             
             // Portfolio data for widget

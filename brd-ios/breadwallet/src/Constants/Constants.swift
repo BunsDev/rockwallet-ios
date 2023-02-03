@@ -15,7 +15,7 @@ public enum EventContext: String {
     case generateKey
     case writeKey
     case recoverCloud
-    case viewOnly
+    case viewRecoveryPhrase
     
     var name: String { return rawValue }
 }

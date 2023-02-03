@@ -102,7 +102,7 @@ class RecoveryKeyFlowController {
         let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { (action, words) in
             switch action {
             case .abort:
-                guard context != .viewOnly else {
+                guard context != .viewRecoveryPhrase else {
                     dismissFlow()
                     return
                 }
@@ -138,7 +138,7 @@ class RecoveryKeyFlowController {
                                         keyMaster: keyMaster,
                                         pinResponse: { (responsePin) in
                     guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
-                    let hideActionButtons = context == .viewOnly
+                    let hideActionButtons = context == .viewRecoveryPhrase
                     pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, hideActionButtons, handleWriteKeyResult)))
                 })
 
