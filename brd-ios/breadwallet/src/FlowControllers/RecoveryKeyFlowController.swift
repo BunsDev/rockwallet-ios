@@ -58,7 +58,6 @@ class RecoveryKeyFlowController {
                                      context: EventContext,
                                      dismissAction: (() -> Void)?,
                                      modalPresentation: Bool = true,
-                                     hideActionButtons: Bool = false,
                                      canExit: Bool = true) {
         
         let isGeneratingKey = UserDefaults.walletRequiresBackup
@@ -103,6 +102,11 @@ class RecoveryKeyFlowController {
         let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { (action, words) in
             switch action {
             case .abort:
+                guard context != .viewOnly else {
+                    dismissFlow()
+                    return
+                }
+                
                 let navController = context == .onboarding ? viewController : recoveryKeyNavController
                 
                 promptToSetUpRecoveryKeyLater(from: navController) { userWantsToSetUpLater in
@@ -134,6 +138,7 @@ class RecoveryKeyFlowController {
                                         keyMaster: keyMaster,
                                         pinResponse: { (responsePin) in
                     guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
+                    let hideActionButtons = context == .viewOnly
                     pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, hideActionButtons, handleWriteKeyResult)))
                 })
 

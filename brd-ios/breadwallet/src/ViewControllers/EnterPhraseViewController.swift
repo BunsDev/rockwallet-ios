@@ -129,6 +129,12 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func onBackButton() {
+        defer {
+            if case let .display(_, _, callback) = reason {
+                callback(.abort, [])
+            }
+        }
+        
         guard navigationController?.viewControllers.first == self else {
             navigationController?.popViewController(animated: true)
             return
