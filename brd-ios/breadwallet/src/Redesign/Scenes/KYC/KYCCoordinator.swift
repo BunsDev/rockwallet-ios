@@ -139,6 +139,7 @@ extension KYCCoordinator: VeriffSdkDelegate {
                 
             case .failure(let error):
                 print(error.localizedDescription)
+                
                 self?.open(scene: Scenes.Failure) { vc in
                     vc.failure = .documentVerification
                 }

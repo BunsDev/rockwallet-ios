@@ -10,6 +10,12 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  /// RockWallet uses the NFC reader to verify nfc-enabled passports.
+  internal static let nfcReaderUsageDescription = L10n.tr("Localizable", "NFCReaderUsageDescription", fallback: "RockWallet uses the NFC reader to verify nfc-enabled passports.")
+  /// RockWallet utilizes the camera function to scan crypto addresses and capture images of documents for the purpose of identity verification.
+  internal static let nsCameraUsageDescription = L10n.tr("Localizable", "NSCameraUsageDescription", fallback: "RockWallet utilizes the camera function to scan crypto addresses and capture images of documents for the purpose of identity verification.")
+  /// RockWallet utilizes the Microphone and Camera to capture a live video during the identify verification process.
+  internal static let nsMicrophoneUsageDescription = L10n.tr("Localizable", "NSMicrophoneUsageDescription", fallback: "RockWallet utilizes the Microphone and Camera to capture a live video during the identify verification process.")
   /// FIO
   internal static let sendFioToLabel = L10n.tr("Localizable", "Send_fio_toLabel", fallback: "FIO")
   /// Always require passcode option
