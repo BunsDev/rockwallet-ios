@@ -37,6 +37,8 @@
 /* Account Verification screen title */
 "Account.AccountVerification" = "Account Verification";
 
+"Account.AchDailyLimits" = "Daily (ACH)";
+
 "Account.AlreadyCreated" = "Already have an account?";
 
 /* Account balance */
@@ -126,6 +128,8 @@
 
 /* Loading Wallet Message */
 "Account.loadingMessage" = "Indlæser pung";
+
+"Account.MandatoryFields" = "(*)Mandatory Fields";
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
@@ -218,7 +222,7 @@
 "Account.VerifiedAccountTitle" = "Your account is verified!";
 
 /* Verify account text in popup */
-"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits/withdrawals\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+"Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
@@ -1550,6 +1554,8 @@
 /* Paper Key Skip modal title */
 "Modal.PaperKeySkip.Title" = "Vær opmærksom";
 
+"NFCReaderUsageDescription" = "RockWallet uses the NFC reader to verify nfc-enabled passports.";
+
 /* Node selection mode is automatic */
 "NodeSelector.automatic" = "Automatisk";
 
@@ -1589,6 +1595,10 @@
 "NoInternet.Body" = "We couldn’t connect to the server. Please check your internet connection and try again.";
 
 "NoInternet.Title" = "Check your connection";
+
+"NSCameraUsageDescription" = "RockWallet utilizes the camera function to scan crypto addresses and capture images of documents for the purpose of identity verification.";
+
+"NSMicrophoneUsageDescription" = "RockWallet utilizes the Microphone and Camera to capture a live video during the identify verification process.";
 
 /* Onboarding screen 'I'll browse first' button */
 "Onboarding.browseFirst" = "Jeg kigger først";
