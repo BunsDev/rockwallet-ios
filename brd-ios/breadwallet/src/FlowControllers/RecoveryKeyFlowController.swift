@@ -58,6 +58,7 @@ class RecoveryKeyFlowController {
                                      context: EventContext,
                                      dismissAction: (() -> Void)?,
                                      modalPresentation: Bool = true,
+                                     hideActionButtons: Bool = false,
                                      canExit: Bool = true) {
         
         let isGeneratingKey = UserDefaults.walletRequiresBackup
@@ -133,7 +134,7 @@ class RecoveryKeyFlowController {
                                         keyMaster: keyMaster,
                                         pinResponse: { (responsePin) in
                     guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
-                    pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, handleWriteKeyResult)))
+                    pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, hideActionButtons, handleWriteKeyResult)))
                 })
 
             default:

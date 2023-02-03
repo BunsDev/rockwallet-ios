@@ -9,7 +9,7 @@
 import UIKit
 
 enum PhraseEntryReason {
-    case display(String, (ExitRecoveryKeyAction, [String]) -> Void)
+    case display(String, Bool, (ExitRecoveryKeyAction, [String]) -> Void)
     case setSeed(LoginCompletionHandler)
     case validateForResettingPin(EnterPhraseCallback)
     case validateForWipingWallet(() -> Void)
@@ -241,6 +241,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
                 self.faqButtonPressed()
             }
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
+            
         case .validateForResettingPin:
             heading.text = L10n.RecoveryKeyFlow.enterRecoveryKey
             subheading.text = L10n.RecoveryKeyFlow.resetPINInstruction
@@ -248,19 +249,23 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
                 self.faqButtonPressed()
             }
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
+            
         case .validateForWipingWallet:
             heading.text = L10n.RecoveryKeyFlow.enterRecoveryKey
             subheading.text = L10n.RecoveryKeyFlow.enterRecoveryKeySubtitle
+            
         case .validateForWipingWalletAndDeletingFromDevice:
             heading.text = L10n.RecoveryKeyFlow.enterRecoveryKey
             subheading.text = L10n.RecoverWallet.enterRecoveryPhrase
-        case .display(let phrase, _):
+            
+        case .display(let phrase, let hideActions, _):
             heading.text = L10n.SecurityCenter.paperKeyTitle
             subheading.text = L10n.RecoveryKeyFlow.writeKeyScreenSubtitle
             self.phrase = phrase
             enterPhrase.setPhrase(phrase)
             enterPhrase.isViewOnly = true
-            skipButton.isHidden = false
+            skipButton.isHidden = hideActions
+            nextButton.isHidden = hideActions
         }
     }
     
@@ -274,7 +279,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     
     @objc private func skipTapped(_ sender: UIButton?) {
         view.endEditing(true)
-        guard case let .display(phrase, callback) = reason else { return }
+        guard case let .display(phrase, _, callback) = reason else { return }
         
         let words = phrase.split(separator: " ").compactMap { String($0) }
         callback(.abort, words)
@@ -331,7 +336,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
             didToggleNextButton?(nextButton, navigationItem.rightBarButtonItem)
             return callback()
             
-        case .display(let phrase, let callback):
+        case .display(let phrase, _, let callback):
             let words = phrase.split(separator: " ").compactMap { String($0) }
             callback(.confirmKey, words)
         }

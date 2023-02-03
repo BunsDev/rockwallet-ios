@@ -799,12 +799,13 @@ class ModalPresenter: Subscriber {
         }
     }
     
-    private func presentWritePaperKey(fromViewController vc: UIViewController) {
+    private func presentWritePaperKey(fromViewController vc: UIViewController, hideActionButtons: Bool = false) {
         RecoveryKeyFlowController.enterRecoveryKeyFlow(pin: nil,
                                                        keyMaster: self.keyStore,
                                                        from: vc,
                                                        context: .none,
-                                                       dismissAction: nil)
+                                                       dismissAction: nil,
+                                                       hideActionButtons: hideActionButtons)
     }
     
     private func wipeWallet() {
@@ -1098,7 +1099,7 @@ class ModalPresenter: Subscriber {
             // Paper key
             MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in
                 guard let self = self else { return }
-                self.presentWritePaperKey(fromViewController: menuNav)
+                self.presentWritePaperKey(fromViewController: menuNav, hideActionButtons: true)
             },
             
             // Portfolio data for widget
