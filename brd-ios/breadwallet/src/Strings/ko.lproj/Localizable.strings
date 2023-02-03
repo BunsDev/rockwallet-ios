@@ -738,9 +738,9 @@
 
 "Buy.achFee" = "ACH fee (%s)";
 
-"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits\n\nIt currently takes 7-10 days to process a purchase with ACH.";
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits\n\nIt currently takes 3-5 days to process a purchase with ACH.";
 
-"Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 7-10 days to complete.";
+"Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 3-5 days to complete.";
 
 "Buy.achPaymentMethodRelinked" = "ACH payment method was relinked successfully";
 
@@ -759,7 +759,7 @@
 
 "Buy.bankAccountFailureText" = "Please try again or select a different payment method.";
 
-"Buy.bankAccountSuccessText" = "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";
+"Buy.bankAccountSuccessText" = "It currently takes 3-5 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";
 
 "Buy.bankAccountSuccessTitle" = "Your purchase is being processed";
 
