@@ -113,9 +113,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
                 ssnInfoTapped
             ]
         }
-        cell.wrappedView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.minimum.rawValue)
-        }
         
         return cell
     }
