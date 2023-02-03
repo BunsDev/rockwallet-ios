@@ -783,17 +783,11 @@ class ModalPresenter: Subscriber {
     
     private func presentScan(parent: UIViewController, currency: Currency?) -> PresentScan {
         return { [weak parent] scanCompletion in
-            guard ScanViewController.isCameraAllowed else {
-                if let parent = parent {
-                    ScanViewController.presentCameraUnavailableAlert(fromRoot: parent)
-                }
-                return
-            }
-            
             let vc = ScanViewController(forPaymentRequestForCurrency: currency, completion: { scanResult in
                 scanCompletion(scanResult)
                 parent?.view.isFrameChangeBlocked = false
             })
+            
             parent?.view.isFrameChangeBlocked = true
             parent?.present(vc, animated: true, completion: {})
         }
