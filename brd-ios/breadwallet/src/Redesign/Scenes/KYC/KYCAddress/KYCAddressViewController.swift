@@ -43,6 +43,12 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         case .address:
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
+        case .ssn:
+            cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
+            
+        case .ssnInfo:
+            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            
         case .confirm:
             cell = self.tableView(tableView, buttonCellForRowAt: indexPath)
             
@@ -93,6 +99,27 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+        
+        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+            return cell
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(buttons: [Presets.Button.noBorders], isRightAligned: true))
+            
+            view.callbacks = [
+                ssnInfoTapped
+            ]
+        }
+        cell.wrappedView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.minimum.rawValue)
+        }
+        
+        return cell
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch sections[indexPath.section] as? Models.Section {
         case .country:
@@ -125,9 +152,17 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         coordinator?.showExternalKYC(url: responseDisplay.address)
     }
     
+    func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay) {
+        coordinator?.showPopup(with: responseDisplay.model)
+    }
+    
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()
         interactor?.startExternalKYC(viewAction: .init())
+    }
+    
+    private func ssnInfoTapped() {
+        interactor?.showSsnInfo(viewAction: .init())
     }
 }
