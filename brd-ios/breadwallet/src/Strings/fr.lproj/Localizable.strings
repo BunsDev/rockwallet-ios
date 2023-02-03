@@ -1554,6 +1554,8 @@
 /* Paper Key Skip modal title */
 "Modal.PaperKeySkip.Title" = "Attention";
 
+"NFCReaderUsageDescription" = "RockWallet uses the NFC reader to verify nfc-enabled passports.";
+
 /* Node selection mode is automatic */
 "NodeSelector.automatic" = "Automatique";
 
@@ -1593,6 +1595,10 @@
 "NoInternet.Body" = "Connexion au serveur impossible. Veuillez vérifier votre connexion Internet, puis réessayer.";
 
 "NoInternet.Title" = "Vérifiez votre connexion";
+
+"NSCameraUsageDescription" = "RockWallet utilizes the camera function to scan crypto addresses and capture images of documents for the purpose of identity verification.";
+
+"NSMicrophoneUsageDescription" = "RockWallet utilizes the Microphone and Camera to capture a live video during the identify verification process.";
 
 /* Onboarding screen 'I'll browse first' button */
 "Onboarding.browseFirst" = "Je vais d'abord explorer le site";
