@@ -1,5 +1,5 @@
 //
-//  ReScanViewController.swift
+//  ReScanSyncViewController.swift
 //  breadwallet
 //
 //  Created by Adrian Corscadden on 2017-04-10.
@@ -8,8 +8,7 @@
 
 import UIKit
 
-class ReScanViewController: UIViewController, Subscriber {
-
+class ReScanSyncViewController: UIViewController, Subscriber {
     init(system: CoreSystem, wallet: Wallet) {
         self.system = system
         self.wallet = wallet

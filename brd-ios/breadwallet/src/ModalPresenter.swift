@@ -410,7 +410,7 @@ class ModalPresenter: Subscriber {
         if let btc = Currencies.shared.btc, let btcWallet = btc.wallet {
             // Rescan
             var rescan = MenuItem(title: L10n.Settings.sync, callback: { [unowned self] in
-                menuNav.pushViewController(ReScanViewController(system: self.system, wallet: btcWallet), animated: true)
+                menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: btcWallet), animated: true)
             })
             rescan.shouldShow = { [unowned self] in
                 self.system.connectionMode(for: btc) == .p2p_only
@@ -456,7 +456,7 @@ class ModalPresenter: Subscriber {
                 // Rescan
                 bchItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
                     guard let self = self else { return }
-                    menuNav.pushViewController(ReScanViewController(system: self.system, wallet: bchWallet), animated: true)
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: bchWallet), animated: true)
                 }))
             }
             bchItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
@@ -476,7 +476,7 @@ class ModalPresenter: Subscriber {
                 // Rescan
                 bsvItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
                     guard let self = self else { return }
-                    menuNav.pushViewController(ReScanViewController(system: self.system, wallet: bsvWallet), animated: true)
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: bsvWallet), animated: true)
                 }))
             }
             bsvItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
@@ -496,7 +496,7 @@ class ModalPresenter: Subscriber {
                 // Rescan
                 ethItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
                     guard let self = self else { return }
-                    menuNav.pushViewController(ReScanViewController(system: self.system, wallet: ethWallet), animated: true)
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: ethWallet), animated: true)
                 }))
             }
         }
@@ -783,17 +783,11 @@ class ModalPresenter: Subscriber {
     
     private func presentScan(parent: UIViewController, currency: Currency?) -> PresentScan {
         return { [weak parent] scanCompletion in
-            guard ScanViewController.isCameraAllowed else {
-                if let parent = parent {
-                    ScanViewController.presentCameraUnavailableAlert(fromRoot: parent)
-                }
-                return
-            }
-            
             let vc = ScanViewController(forPaymentRequestForCurrency: currency, completion: { scanResult in
                 scanCompletion(scanResult)
                 parent?.view.isFrameChangeBlocked = false
             })
+            
             parent?.view.isFrameChangeBlocked = true
             parent?.present(vc, animated: true, completion: {})
         }

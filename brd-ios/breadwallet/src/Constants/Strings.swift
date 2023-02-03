@@ -10,6 +10,12 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  /// RockWallet uses the NFC reader to verify nfc-enabled passports.
+  internal static let nfcReaderUsageDescription = L10n.tr("Localizable", "NFCReaderUsageDescription", fallback: "RockWallet uses the NFC reader to verify nfc-enabled passports.")
+  /// RockWallet utilizes the camera function to scan crypto addresses and capture images of documents for the purpose of identity verification.
+  internal static let nsCameraUsageDescription = L10n.tr("Localizable", "NSCameraUsageDescription", fallback: "RockWallet utilizes the camera function to scan crypto addresses and capture images of documents for the purpose of identity verification.")
+  /// RockWallet utilizes the Microphone and Camera to capture a live video during the identify verification process.
+  internal static let nsMicrophoneUsageDescription = L10n.tr("Localizable", "NSMicrophoneUsageDescription", fallback: "RockWallet utilizes the Microphone and Camera to capture a live video during the identify verification process.")
   /// FIO
   internal static let sendFioToLabel = L10n.tr("Localizable", "Send_fio_toLabel", fallback: "FIO")
   /// Always require passcode option
@@ -659,12 +665,12 @@ internal enum L10n {
     }
     /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits
     /// 
-    /// It currently takes 7-10 days to process a purchase with ACH.
+    /// It currently takes 3-5 days to process a purchase with ACH.
     internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits\n\nIt currently takes 7-10 days to process a purchase with ACH.")
+      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits\n\nIt currently takes 3-5 days to process a purchase with ACH.")
     }
-    /// Currently, ACH payments will take 7-10 days to complete.
-    internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 7-10 days to complete.")
+    /// Currently, ACH payments will take 3-5 days to complete.
+    internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "Currently, ACH payments will take 3-5 days to complete.")
     /// ACH payment method was relinked successfully
     internal static let achPaymentMethodRelinked = L10n.tr("Localizable", "Buy.achPaymentMethodRelinked", fallback: "ACH payment method was relinked successfully")
     /// ACH Payments
@@ -679,8 +685,8 @@ internal enum L10n {
     internal static let address = L10n.tr("Localizable", "Buy.Address", fallback: "Address")
     /// Please try again or select a different payment method.
     internal static let bankAccountFailureText = L10n.tr("Localizable", "Buy.bankAccountFailureText", fallback: "Please try again or select a different payment method.")
-    /// It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.
-    internal static let bankAccountSuccessText = L10n.tr("Localizable", "Buy.bankAccountSuccessText", fallback: "It currently takes 7-10 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.")
+    /// It currently takes 3-5 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.
+    internal static let bankAccountSuccessText = L10n.tr("Localizable", "Buy.bankAccountSuccessText", fallback: "It currently takes 3-5 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.")
     /// Your purchase is being processed
     internal static let bankAccountSuccessTitle = L10n.tr("Localizable", "Buy.bankAccountSuccessTitle", fallback: "Your purchase is being processed")
     /// Billing address label on buy flow
