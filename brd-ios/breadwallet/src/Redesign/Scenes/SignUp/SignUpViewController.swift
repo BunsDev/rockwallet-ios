@@ -78,12 +78,12 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.keyboardType = .emailAddress
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.keyboardType = .emailAddress
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         case .password:
@@ -91,12 +91,12 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.isSecureTextEntry = true
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.isSecureTextEntry = true
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         case .confirmPassword:
@@ -104,12 +104,12 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.isSecureTextEntry = true
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.isSecureTextEntry = true
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         case .notice:
@@ -169,7 +169,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
         coordinator?.showSignIn()
     }
     
-    override func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
         switch section as? Models.Section {
@@ -186,7 +186,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
             break
         }
         
-        super.textFieldDidTrigger(for: indexPath, with: text)
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     // MARK: - SignUpResponseDisplay
@@ -203,20 +203,14 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
             view.configure(with: responseDisplay.noticeConfiguration)
         }
         
-        if responseDisplay.email != nil {
-            _ = getFieldCell(for: .email)?.setup { view in
-                view.update(with: responseDisplay.emailModel)
-            }
+        _ = getFieldCell(for: .email)?.setup { view in
+            view.setup(with: responseDisplay.emailModel)
         }
-        if responseDisplay.password != nil {
-            _ = getFieldCell(for: .password)?.setup { view in
-                view.update(with: responseDisplay.passwordModel)
-            }
+        _ = getFieldCell(for: .password)?.setup { view in
+            view.setup(with: responseDisplay.passwordModel)
         }
-        if responseDisplay.passwordAgain != nil {
-            _ = getFieldCell(for: .confirmPassword)?.setup { view in
-                view.update(with: responseDisplay.passwordAgainModel)
-            }
+        _ = getFieldCell(for: .confirmPassword)?.setup { view in
+            view.setup(with: responseDisplay.passwordAgainModel)
         }
     }
     

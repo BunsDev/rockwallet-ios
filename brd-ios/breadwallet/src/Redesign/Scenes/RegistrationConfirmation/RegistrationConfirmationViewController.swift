@@ -110,6 +110,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     // MARK: - User Interaction
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         interactor?.validate(viewAction: .init(item: text))
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     override func buttonTapped() {

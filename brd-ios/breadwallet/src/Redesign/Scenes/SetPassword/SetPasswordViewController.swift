@@ -51,12 +51,12 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.isSecureTextEntry = true
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.isSecureTextEntry = true
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         case .confirmPassword:
@@ -64,12 +64,12 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.isSecureTextEntry = true
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.isSecureTextEntry = true
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         case .notice:
@@ -93,7 +93,7 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
         interactor?.next(viewAction: .init())
     }
     
-    override func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
         switch section as? Models.Section {
@@ -107,7 +107,7 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
             break
         }
         
-        super.textFieldDidTrigger(for: indexPath, with: text)
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     // MARK: - SetPasswordResponseDisplay
@@ -126,12 +126,12 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
         
         if responseDisplay.password != nil {
             _ = getFieldCell(for: .password)?.setup { view in
-                view.update(with: responseDisplay.passwordModel)
+                view.setup(with: responseDisplay.passwordModel)
             }
         }
         if responseDisplay.passwordAgain != nil {
             _ = getFieldCell(for: .confirmPassword)?.setup { view in
-                view.update(with: responseDisplay.passwordAgainModel)
+                view.setup(with: responseDisplay.passwordAgainModel)
             }
         }
     }

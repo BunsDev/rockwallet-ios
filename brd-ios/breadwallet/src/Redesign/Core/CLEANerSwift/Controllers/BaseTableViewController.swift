@@ -75,7 +75,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<WrapperView<FEInfoView>>.self)
         tableView.register(WrapperTableViewCell<NavigationItemView>.self)
         tableView.register(WrapperTableViewCell<ProfileView>.self)
-        tableView.register(WrapperTableViewCell<DoubleHorizontalTextboxView>.self)
+        tableView.register(WrapperTableViewCell<DoubleHorizontalTextboxView>.self) // TODO: Add validators
         tableView.register(WrapperTableViewCell<FEImageView>.self)
         tableView.register(WrapperTableViewCell<HorizontalButtonsView>.self)
         tableView.register(WrapperTableViewCell<ChecklistItemView>.self)
@@ -360,10 +360,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
             view.finishedEditing = { [weak self] field in
                 self?.textFieldDidFinish(for: indexPath, with: field.text)
             }
-            
-            view.triggered = { [weak self] field in
-                self?.textFieldDidTrigger(for: indexPath, with: field.text)
-            }
         }
         
         return cell
@@ -547,18 +543,14 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     /// Override in subclass
     func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-    }
-    
-    /// Override in subclass
-    func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
-    }
-    
-    /// Override in subclass
-    func textFieldDidTrigger(for indexPath: IndexPath, with text: String?) {
         DispatchQueue.main.async {
             self.tableView.isScrollEnabled = false
             self.tableView.isScrollEnabled = true
         }
+    }
+    
+    /// Override in subclass
+    func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
     }
     
     /// Override in subclass

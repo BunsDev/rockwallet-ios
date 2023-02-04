@@ -54,12 +54,12 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.keyboardType = .emailAddress
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.keyboardType = .emailAddress
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         default:
@@ -74,7 +74,7 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - User Interaction
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
         switch section as? Models.Section {
@@ -85,7 +85,7 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
             break
         }
         
-        super.textFieldDidTrigger(for: indexPath, with: text)
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     @objc override func buttonTapped() {
@@ -104,7 +104,7 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
         
         if responseDisplay.email != nil {
             _ = getFieldCell(for: .email)?.setup { view in
-                view.update(with: responseDisplay.emailModel)
+                view.setup(with: responseDisplay.emailModel)
             }
         }
     }

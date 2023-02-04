@@ -54,13 +54,11 @@ struct TextFieldModel: ViewModel {
 }
 
 class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDelegate, StateDisplayable {
-    // TODO: displayState is unused. Remove later.
     var displayState: DisplayState = .normal
     
     var valueChanged: ((UITextField) -> Void)?
     var beganEditing: ((UITextField) -> Void)?
     var finishedEditing: ((UITextField) -> Void)?
-    var triggered: ((UITextField) -> Void)?
     
     var didTapTrailingView: (() -> Void)?
     var didPasteText: ((String) -> Void)?
@@ -139,12 +137,12 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     
     private lazy var textField: UITextField = {
         let view = UITextField()
-        view.isHidden = true
         return view
     }()
     
     private lazy var trailingView: FEImageView = {
         let view = FEImageView()
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -165,6 +163,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textFieldContent.addSubview(trailingView)
         
         textFieldStack.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
             make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
             make.leading.equalTo(Margins.large.rawValue)
             make.trailing.equalTo(trailingView.snp.leading).offset(-Margins.minimum.rawValue)
@@ -195,7 +194,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         addGestureRecognizer(tapped)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(trailingViewTapped))
-        trailingView.isUserInteractionEnabled = true
         trailingView.addGestureRecognizer(tapGestureRecognizer)
     }
     
@@ -215,6 +213,8 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             textField.textAlignment = textConfig.textAlignment
         }
         
+        hintLabel.configure(with: config.hintConfiguration)
+        
         leadingView.configure(with: config.leadingImageConfiguration)
         trailingView.configure(with: config.trailingImageConfiguration)
         
@@ -232,7 +232,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         titleLabel.setup(with: .text(viewModel.title))
         titleLabel.isHidden = viewModel.title == nil
-        textField.text = viewModel.value
+        textField.text = viewModel.value ?? textField.text
         
         if let placeholder = viewModel.placeholder,
            let config = config?.placeholderConfiguration {
@@ -259,41 +259,29 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         animateTo(state: viewModel.displayState ?? .normal, withAnimation: viewModel.displayStateAnimated == true)
     }
     
-    func update(with viewModel: TextFieldModel) {
-        self.viewModel = TextFieldModel(leading: viewModel.leading,
-                                        title: viewModel.title,
-                                        value: textField.text,
-                                        placeholder: viewModel.placeholder,
-                                        hint: viewModel.hint,
-                                        info: viewModel.info,
-                                        trailing: viewModel.trailing,
-                                        displayState: viewModel.displayState,
-                                        displayStateAnimated: true)
-        
-        setup(with: self.viewModel)
-    }
-    
     @objc private func startEditing() {
         textField.becomeFirstResponder()
         
-        animateTo(state: .selected, withAnimation: true)
+        viewModel?.displayState = .selected
+        animateTo(state: viewModel?.displayState ?? .normal, withAnimation: true)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        viewModel?.displayState = .selected
+        animateTo(state: viewModel?.displayState ?? .normal, withAnimation: true)
+        
         beganEditing?(textField)
-        triggered?(textField)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        animateTo(state: .normal, withAnimation: true)
+        viewModel?.displayState = .normal
+        animateTo(state: viewModel?.displayState ?? .normal, withAnimation: true)
         
         finishedEditing?(textField)
-        triggered?(textField)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         valueChanged?(textField)
-        triggered?(textField)
     }
     
     @objc func trailingViewTapped() {
@@ -301,21 +289,17 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     func animateTo(state: DisplayState, withAnimation: Bool = true) {
-        let state = state != .error && textField.isFirstResponder == false ? .normal : state
-        
         viewModel?.displayState = state
-        
-        let background: BackgroundConfiguration?
         
         let hint = viewModel?.hint
         var hideTextField = textField.text?.isEmpty == true
         let titleStackCurrentState = titleStack.isHidden
         var titleConfig: LabelConfiguration? = config?.titleConfiguration
+        let background: BackgroundConfiguration?
         
         switch state {
         case .normal:
             background = config?.backgroundConfiguration
-            titleConfig = config?.titleConfiguration
             
         case .highlighted, .selected, .filled:
             background = config?.selectedBackgroundConfiguration
@@ -328,8 +312,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             
         case .error:
             background = config?.errorBackgroundConfiguration
-            
-            hideTextField = false
         }
         
         UIView.setAnimationsEnabled(withAnimation)
@@ -344,7 +326,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         })
         
         hintLabel.setup(with: .text(hint))
-        hintLabel.configure(with: .init(textColor: background?.tintColor))
         titleLabel.configure(with: titleConfig)
         configure(background: background)
         
