@@ -102,6 +102,11 @@ class RecoveryKeyFlowController {
         let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { (action, words) in
             switch action {
             case .abort:
+                guard context != .viewRecoveryPhrase else {
+                    dismissFlow()
+                    return
+                }
+                
                 let navController = context == .onboarding ? viewController : recoveryKeyNavController
                 
                 promptToSetUpRecoveryKeyLater(from: navController) { userWantsToSetUpLater in
@@ -133,7 +138,8 @@ class RecoveryKeyFlowController {
                                         keyMaster: keyMaster,
                                         pinResponse: { (responsePin) in
                     guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
-                    pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, handleWriteKeyResult)))
+                    let hideActionButtons = context == .viewRecoveryPhrase
+                    pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, hideActionButtons, handleWriteKeyResult)))
                 })
 
             default:

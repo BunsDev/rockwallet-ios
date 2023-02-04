@@ -127,15 +127,15 @@ class ImportKeyViewController: UIViewController, Subscriber {
         bullet.tintColor = LightColors.Text.two
         message.text = L10n.Import.message
         warning.text = L10n.Import.warning
-
+        
         // Set up the tap handler for the "Scan Private Key" button.
         button.tap = { [weak self] in
-            guard let self = self else { return }
             let scan = ScanViewController(forScanningPrivateKeysOnly: true) { result in
                 guard let result = result else { return }
-                self.handleScanResult(result)
+                self?.handleScanResult(result)
             }
-            self.parent?.present(scan, animated: true, completion: nil)
+            
+            self?.parent?.present(scan, animated: true, completion: nil)
         }
     }
     
