@@ -79,8 +79,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         }
     }
     
-    var hideTitleForState: DisplayState?
-    
     var value: String? {
         get { return textField.text }
         set {
@@ -254,7 +252,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             make.width.equalTo(viewModel.trailing == nil ? 0 : ViewSizes.extraSmall.rawValue)
         }
         
-        titleStack.isHidden = leadingView.isHidden && trailingView.isHidden && titleLabel.isHidden
+        titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
         animateTo(state: viewModel.displayState ?? .normal, withAnimation: viewModel.displayStateAnimated == true)
     }
@@ -320,7 +318,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
                           duration: Presets.Animation.short.rawValue,
                           options: [.layoutSubviews],
                           animations: { [weak self] in
-            self?.titleStack.isHidden = self?.hideTitleForState == state || titleStackCurrentState
+            self?.titleStack.isHidden = titleStackCurrentState
             self?.textField.isHidden = hideTextField
             self?.hintLabel.transform = hint.isNilOrEmpty == true ? CGAffineTransform.init(scaleX: 1, y: 0) : .identity
         })

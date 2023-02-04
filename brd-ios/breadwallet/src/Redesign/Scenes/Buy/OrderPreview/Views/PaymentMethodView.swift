@@ -60,7 +60,6 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     
     private lazy var cvvTextField: FETextField = {
         let view = FETextField()
-        view.hideTitleForState = .filled
         return view
     }()
     
