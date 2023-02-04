@@ -167,15 +167,11 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
         continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
-        if responseDisplay.email != nil {
-            _ = getFieldCell(for: .email)?.setup { view in
-                view.setup(with: responseDisplay.emailModel)
-            }
+        _ = getFieldCell(for: .email)?.setup { view in
+            view.setup(with: responseDisplay.emailModel)
         }
-        if responseDisplay.password != nil {
-            _ = getFieldCell(for: .password)?.setup { view in
-                view.setup(with: responseDisplay.passwordModel)
-            }
+        _ = getFieldCell(for: .password)?.setup { view in
+            view.setup(with: responseDisplay.passwordModel)
         }
     }
     

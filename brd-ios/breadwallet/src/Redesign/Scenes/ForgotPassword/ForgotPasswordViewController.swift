@@ -102,10 +102,8 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
         continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
-        if responseDisplay.email != nil {
-            _ = getFieldCell(for: .email)?.setup { view in
-                view.setup(with: responseDisplay.emailModel)
-            }
+        _ = getFieldCell(for: .email)?.setup { view in
+            view.setup(with: responseDisplay.emailModel)
         }
     }
     

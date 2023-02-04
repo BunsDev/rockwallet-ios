@@ -31,7 +31,7 @@ enum ForgotPasswordModels {
             
             var isEmailValid: Bool
             var isEmailEmpty: Bool
-            var emailState: DisplayState
+            var emailState: DisplayState?
         }
         
         struct ResponseDisplay {

@@ -124,15 +124,11 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
             view.configure(with: responseDisplay.noticeConfiguration)
         }
         
-        if responseDisplay.password != nil {
-            _ = getFieldCell(for: .password)?.setup { view in
-                view.setup(with: responseDisplay.passwordModel)
-            }
+        _ = getFieldCell(for: .password)?.setup { view in
+            view.setup(with: responseDisplay.passwordModel)
         }
-        if responseDisplay.passwordAgain != nil {
-            _ = getFieldCell(for: .confirmPassword)?.setup { view in
-                view.setup(with: responseDisplay.passwordAgainModel)
-            }
+        _ = getFieldCell(for: .confirmPassword)?.setup { view in
+            view.setup(with: responseDisplay.passwordAgainModel)
         }
     }
     
