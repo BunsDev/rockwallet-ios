@@ -67,11 +67,7 @@ enum PromptType: Int {
     
     var actionTitle: String {
         switch self {
-        case .noInternet: return L10n.Button.continueAction
-        case .biometrics: return L10n.Button.continueAction
-        case .paperKey: return L10n.Button.continueAction
-        case .upgradePin: return L10n.Button.continueAction
-        case .noPasscode: return L10n.Button.continueAction
+        case .biometrics, .paperKey, .upgradePin, .noPasscode: return L10n.Button.continueAction
         case .kyc: return L10n.VerifyAccount.button
         case .noAccount: return L10n.Account.createNewAccountTitle
         default: return ""
