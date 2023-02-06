@@ -84,6 +84,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
+    var didTapCreateAccountFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
     var isInExchangeFlow = false
@@ -142,7 +143,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         isRefreshing = true
         
         UserManager.shared.refresh { [weak self] _ in
-            self?.attemptShowGeneralPrompt()
+            PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: self?.walletAuthenticator, on: self)
         }
         
         Currencies.shared.reloadCurrencies()
@@ -164,7 +165,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        attemptShowGeneralPrompt()
+        PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: walletAuthenticator, on: self)
     }
     
     override func viewDidLoad() {
@@ -197,6 +198,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         subHeaderView.addSubview(logoImageView)
         subHeaderView.addSubview(totalAssetsTitleLabel)
         subHeaderView.addSubview(totalAssetsAmountLabel)
+        
+        let promptContainerScrollView = PromptPresenter.shared.promptContainerScrollView
+        let promptContainerStack = PromptPresenter.shared.promptContainerStack
         
         view.addSubview(promptContainerScrollView)
         promptContainerScrollView.addSubview(promptContainerStack)
@@ -354,22 +358,26 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         // Prompts
         Store.subscribe(self, name: .didUpgradePin, callback: { _ in
-            self.hidePrompt(.upgradePin)
+            PromptPresenter.shared.hidePrompt(.upgradePin)
         })
         
         Store.subscribe(self, name: .didWritePaperKey, callback: { _ in
-            self.hidePrompt(.paperKey)
+            PromptPresenter.shared.hidePrompt(.paperKey)
         })
         
         Store.subscribe(self, name: .didApplyKyc, callback: { _ in
-            self.hidePrompt(.kyc)
+            PromptPresenter.shared.hidePrompt(.kyc)
+        })
+        
+        Store.subscribe(self, name: .didCreateAccount, callback: { _ in
+            PromptPresenter.shared.hidePrompt(.noAccount)
         })
         
         Reachability.addDidChangeCallback({ [weak self] isReachable in
-            self?.hidePrompt(.noInternet)
+            PromptPresenter.shared.hidePrompt(.noInternet)
             
             if !isReachable {
-                self?.attemptShowGeneralPrompt()
+                PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: self?.walletAuthenticator, on: self)
             }
         })
         
@@ -383,6 +391,23 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         Store.subscribe(self, name: .promptKyc, callback: { _ in
             self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
         })
+        
+        Store.subscribe(self, name: .promptNoAccount, callback: { _ in
+            self.didTapCreateAccountFromPrompt?()
+        })
+        
+        PromptPresenter.shared.trailingButtonCallback = { [weak self] promptType in
+            switch promptType {
+            case .kyc:
+                self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+                
+            case .noAccount:
+                self?.didTapCreateAccountFromPrompt?()
+                
+            default:
+                break
+            }
+        }
     }
     
     private func updateTotalAssets() {
@@ -458,93 +483,5 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     @objc private func menu() {
         commotTapAction()
         didTapMenu?()
-    }
-    
-    // MARK: - Prompt
-    
-    private lazy var promptContainerStack: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.distribution = .fill
-        return view
-    }()
-    
-    private lazy var promptContainerScrollView: UIScrollView = {
-        let view = UIScrollView()
-        return view
-    }()
-    
-    private var generalPromptView: PromptView?
-    
-    private func attemptShowGeneralPrompt() {
-        UserManager.shared.refresh { [weak self] _ in
-            guard let self = self,
-                  let nextPrompt = PromptFactory.nextPrompt(walletAuthenticator: self.walletAuthenticator),
-                  !nextPrompt.didPrompt() else { return }
-            
-            self.generalPromptView = PromptFactory.createPromptView(prompt: nextPrompt, presenter: self)
-            
-            _ = nextPrompt.didPrompt()
-            
-            self.layoutPrompts(self.generalPromptView)
-            
-            self.generalPromptView?.kycStatusView.headerButtonCallback = { [weak self] in
-                self?.hidePrompt(.kyc)
-            }
-            
-            self.generalPromptView?.kycStatusView.trailingButtonCallback = { [weak self] in
-                self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
-            }
-            
-            self.generalPromptView?.dismissButton.tap = { [unowned self] in
-                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type else { return }
-                self.hidePrompt(firstType)
-            }
-            
-            self.generalPromptView?.continueButton.tap = { [unowned self] in
-                if let trigger = nextPrompt.trigger {
-                    Store.trigger(name: trigger)
-                }
-                
-                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type, nextPrompt.trigger != .promptKyc else { return }
-                self.hidePrompt(firstType)
-            }
-        }
-    }
-    
-    private func hidePrompt(_ promptType: PromptType) {
-        guard let prompt = (promptContainerStack.arrangedSubviews as? [PromptView])?.first(where: { $0.type == promptType }) else { return }
-        
-        let next = promptContainerStack.arrangedSubviews.dropFirst().first
-        next?.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
-        
-        UIView.animate(withDuration: Presets.Animation.short.rawValue, delay: 0, options: .curveLinear) {
-            prompt.transform = .init(translationX: UIScreen.main.bounds.width, y: 0)
-            prompt.isHidden = true
-            
-            next?.isHidden = false
-            next?.transform = .identity
-        } completion: { [weak self] _ in
-            prompt.removeFromSuperview()
-            
-            self?.promptContainerStack.layoutIfNeeded()
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    private func layoutPrompts(_ prompt: PromptView?) {
-        guard let prompt = prompt,
-              (promptContainerStack.arrangedSubviews as? [PromptView])?.contains(where: { $0.type == prompt.type }) == false else { return }
-        
-        prompt.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
-        promptContainerStack.insertArrangedSubview(prompt, at: 0)
-        
-        UIView.animate(withDuration: Presets.Animation.short.rawValue, delay: 0, options: .curveLinear) { [weak self] in
-            self?.promptContainerStack.arrangedSubviews.dropFirst().forEach({ $0.isHidden = true })
-            prompt.transform = .identity
-        } completion: { [weak self] _ in
-            self?.promptContainerStack.layoutIfNeeded()
-            self?.view.layoutIfNeeded()
-        }
     }
 }
