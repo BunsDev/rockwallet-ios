@@ -12,10 +12,13 @@ enum KYCAddressModels {
     typealias Item = KYCAddressStore
     
     enum Section: Sectionable {
+        case mandatory
         case address
-        case cityAndZipPostal
-        case stateProvince
+        case cityAndState
+        case postalCode
         case country
+        case ssn
+        case ssnInfo
         case confirm
         
         var header: AccessoryType? { nil }
@@ -46,6 +49,14 @@ enum KYCAddressModels {
         
         struct ResponseDisplay {
             var address: String
+        }
+    }
+    
+    struct SsnInfo {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {
+            var model: PopupViewModel
         }
     }
 }
