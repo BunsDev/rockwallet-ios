@@ -99,6 +99,8 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
                 UserDefaults.kycSessionKeyValue = sessionKey
                 
                 UserManager.shared.refresh { _ in
+                    Store.trigger(name: .didCreateAccount)
+                    
                     self?.presenter?.presentNext(actionResponse: .init())
                 }
                 

@@ -453,6 +453,10 @@ class ApplicationController: Subscriber {
             }
         }
         
+        homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
+            coordinator?.showProfile()
+        }
+        
         homeScreen.didTapMenu = { [unowned self] in
             self.modalPresenter?.presentMenu()
         }

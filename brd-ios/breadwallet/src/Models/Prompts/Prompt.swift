@@ -13,6 +13,7 @@ import LocalAuthentication
 enum PromptType: Int {
     case none
     case noInternet
+    case noAccount
     case kyc
     case upgradePin
     case paperKey
@@ -22,7 +23,7 @@ enum PromptType: Int {
     var order: Int { return rawValue }
     
     static var defaultTypes: [PromptType] = {
-        return [.noInternet, .kyc, .upgradePin, .paperKey, .noPasscode, .biometrics]
+        return [.noInternet, .noAccount, .kyc, .upgradePin, .paperKey, .noPasscode, .biometrics]
     }()
     
     var title: String {
@@ -33,6 +34,7 @@ enum PromptType: Int {
         case .upgradePin: return L10n.Prompts.UpgradePin.title
         case .noPasscode: return L10n.Prompts.NoPasscode.title
         case .kyc: return L10n.VerifyAccount.button
+        case .noAccount: return L10n.Account.createNewAccountTitle
         default: return ""
         }
     }
@@ -45,6 +47,7 @@ enum PromptType: Int {
         case .paperKey: return "paperKeyPrompt"
         case .upgradePin: return "upgradePinPrompt"
         case .noPasscode: return "noPasscodePrompt"
+        case .noAccount: return "noAccountPrompt"
         default: return ""
         }
     }
@@ -57,6 +60,7 @@ enum PromptType: Int {
         case .upgradePin: return L10n.Prompts.UpgradePin.body
         case .noPasscode: return L10n.Prompts.NoPasscode.body
         case .kyc: return L10n.Prompts.VerifyAccount.body
+        case .noAccount: return L10n.Prompts.CreateAccount.body
         default: return ""
         }
     }
@@ -82,6 +86,7 @@ enum PromptType: Int {
         case .paperKey: return .promptPaperKey
         case .upgradePin: return .promptUpgradePin
         case .kyc: return .promptKyc
+        case .noAccount: return .promptNoAccount
         default: return nil
         }
     }
@@ -179,12 +184,16 @@ extension Prompt {
     
     // Default implementation based on the type of prompt
     func shouldPrompt(walletAuthenticator: WalletAuthenticator?) -> Bool {
+        let profile = UserManager.shared.profile
+        
         switch type {
         case .noInternet:
             return !Reachability.isReachable
             
+        case .noAccount:
+            return profile == nil
+            
         case .kyc:
-            let profile = UserManager.shared.profile
             let hasKYC = profile?.status.hasKYC
             let isUnverified = profile?.roles.contains(.unverified) == true
             
@@ -275,6 +284,105 @@ class PromptFactory: Subscriber {
     private func addDefaultPrompts() {
         PromptType.defaultTypes.forEach { type in
             prompts.append(StandardPrompt(type: type))
+        }
+    }
+}
+
+class PromptPresenter {
+    static var shared = PromptPresenter()
+    
+    lazy var promptContainerStack: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.distribution = .fill
+        return view
+    }()
+    
+    lazy var promptContainerScrollView: UIScrollView = {
+        let view = UIScrollView()
+        return view
+    }()
+    
+    var trailingButtonCallback: ((PromptType?) -> Void)?
+    
+    private var generalPromptView: PromptView?
+    private var viewController: UIViewController?
+    private var walletAuthenticator: WalletAuthenticator?
+    
+    func attemptShowGeneralPrompt(walletAuthenticator: WalletAuthenticator?, on viewController: UIViewController?) {
+        guard let viewController, let walletAuthenticator else { return }
+        
+        self.viewController = viewController
+        self.walletAuthenticator = walletAuthenticator
+        
+        UserManager.shared.refresh { [weak self] _ in
+            guard let self = self,
+                  let nextPrompt = PromptFactory.nextPrompt(walletAuthenticator: walletAuthenticator),
+                  !nextPrompt.didPrompt() else { return }
+            
+            self.generalPromptView = PromptFactory.createPromptView(prompt: nextPrompt, presenter: viewController)
+            
+            _ = nextPrompt.didPrompt()
+            
+            self.layoutPrompts(self.generalPromptView)
+            
+            guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type else { return }
+            
+            self.generalPromptView?.kycStatusView.headerButtonCallback = { [weak self] in
+                self?.hidePrompt(firstType)
+            }
+            
+            self.generalPromptView?.kycStatusView.trailingButtonCallback = { [weak self] in
+                self?.trailingButtonCallback?(firstType)
+            }
+            
+            self.generalPromptView?.dismissButton.tap = { [unowned self] in
+                self.hidePrompt(firstType)
+            }
+            
+            self.generalPromptView?.continueButton.tap = { [unowned self] in
+                if let trigger = nextPrompt.trigger {
+                    Store.trigger(name: trigger)
+                }
+                
+                self.hidePrompt(firstType)
+            }
+        }
+    }
+    
+    func hidePrompt(_ promptType: PromptType) {
+        guard let prompt = (promptContainerStack.arrangedSubviews as? [PromptView])?.first(where: { $0.type == promptType }) else { return }
+        
+        let next = promptContainerStack.arrangedSubviews.dropFirst().first
+        next?.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
+        
+        UIView.animate(withDuration: Presets.Animation.short.rawValue, delay: 0, options: .curveLinear) {
+            prompt.transform = .init(translationX: UIScreen.main.bounds.width, y: 0)
+            prompt.isHidden = true
+            
+            next?.isHidden = false
+            next?.transform = .identity
+        } completion: { [weak self] _ in
+            prompt.removeFromSuperview()
+            
+            self?.promptContainerStack.layoutIfNeeded()
+            self?.viewController?.view.layoutIfNeeded()
+        }
+    }
+    
+    private func layoutPrompts(_ prompt: PromptView?) {
+        guard let prompt = prompt,
+              (promptContainerStack.arrangedSubviews as? [PromptView])?.contains(where: { $0.type == prompt.type }) == false else { return }
+        
+        prompt.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
+        promptContainerStack.insertArrangedSubview(prompt, at: 0)
+        
+        UIView.animate(withDuration: Presets.Animation.short.rawValue, delay: 0, options: .curveLinear) { [weak self] in
+            self?.promptContainerStack.arrangedSubviews.dropFirst().forEach({ $0.isHidden = true })
+            prompt.transform = .identity
+        } completion: { [weak self] _ in
+            self?.promptContainerStack.layoutIfNeeded()
+            self?.viewController?.view?.layoutIfNeeded()
         }
     }
 }

@@ -1583,6 +1583,10 @@ internal enum L10n {
       /// Connection issues
       internal static let title = L10n.tr("Localizable", "Prompts.ConnectionIssues.title", fallback: "Connection issues")
     }
+    internal enum CreateAccount {
+      /// With your RockWallet account you’ll be able to Swap and Buy seamlessly.
+      internal static let body = L10n.tr("Localizable", "Prompts.CreateAccount.body", fallback: "With your RockWallet account you’ll be able to Swap and Buy seamlessly.")
+    }
     internal enum Email {
       /// Body text for a prompt that asks the user to subscribe to email updates to find out product updates.
       internal static let body = L10n.tr("Localizable", "Prompts.Email.body", fallback: "Be the first to receive important support and product updates")
