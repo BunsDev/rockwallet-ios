@@ -324,19 +324,10 @@ class StartFlowPresenter: Subscriber {
     }
 
     private func presentLoginFlow(for context: LoginViewController.Context) {
-        do {
-            guard let phrase: String = try keychainItem(key: KeychainKey.mnemonic),
-                  try keychainItem(key: KeychainKey.pin) as String? == nil else {
-                
-                loginFlowPinPresenter(viewController: prepareLoginViewController(context: context))
-                
-                return
-            }
-            
-            loginFlowPinPresenter(viewController: prepareUpdatePinViewController(phrase: phrase))
-            
-        } catch {
-            return
+        if let accountPhraseWithoutPin = keyMaster.accountPhraseWithoutPin {
+            loginFlowPinPresenter(viewController: prepareUpdatePinViewController(phrase: accountPhraseWithoutPin))
+        } else {
+            loginFlowPinPresenter(viewController: prepareLoginViewController(context: context))
         }
     }
     
