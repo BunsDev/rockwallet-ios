@@ -26,8 +26,6 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     }
     
     func showRegistrationConfirmation() {
-        guard navigationController.presentedViewController?.children.contains(where: { $0 is RegistrationConfirmationViewController }) == nil else { return }
-        
         open(scene: Scenes.RegistrationConfirmation) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.prepareData()

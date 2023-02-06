@@ -128,10 +128,11 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        super.textFieldDidFinish(for: indexPath, with: text)
         let section = sections[indexPath.section]
         
         interactor?.formUpdated(viewAction: .init(section: section, value: text))
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {

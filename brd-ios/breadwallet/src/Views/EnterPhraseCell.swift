@@ -135,7 +135,6 @@ class EnterPhraseCell: UICollectionViewCell {
         nextField.tintColor = LightColors.Text.one
         done.setTitle(L10n.RecoverWallet.done, for: .normal)
         done.setTitleColor(LightColors.primary, for: .normal)
-        textField.hideTitleForState = .highlighted
     }
 
     private var accessoryView: UIView {

@@ -34,11 +34,11 @@ enum SetPasswordModels {
             
             var isPasswordValid: Bool
             var isPasswordEmpty: Bool
-            var passwordState: DisplayState
+            var passwordState: DisplayState?
             
             var isPasswordAgainValid: Bool
             var isPasswordAgainEmpty: Bool
-            var passwordAgainState: DisplayState
+            var passwordAgainState: DisplayState?
             var passwordsMatch: Bool
         }
         

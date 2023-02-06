@@ -34,11 +34,11 @@ enum SignInModels {
             
             var isEmailValid: Bool
             var isEmailEmpty: Bool
-            var emailState: DisplayState
+            var emailState: DisplayState?
             
             var isPasswordValid: Bool
             var isPasswordEmpty: Bool
-            var passwordState: DisplayState
+            var passwordState: DisplayState?
         }
         
         struct ResponseDisplay {
