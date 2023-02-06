@@ -13,6 +13,10 @@ import Foundation
 class DynamicLinksManager {
     static var shared = DynamicLinksManager()
     
+    var shouldHandleDynamicLink: Bool {
+        return DynamicLinksManager.shared.code != nil
+    }
+    
     var code: String?
     
     enum DynamicLinkType: String {
