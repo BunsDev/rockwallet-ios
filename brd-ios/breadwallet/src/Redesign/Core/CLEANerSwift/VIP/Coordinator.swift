@@ -340,14 +340,6 @@ class BaseCoordinator: NSObject,
                 || status == VerificationStatus.none {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
-            } else if profile?.isMigrated == true {
-                completion?(true)
-                return
-                
-            } else if profile?.isMigrated == false {
-                completion?(false)
-                return
-                
             } else {
                 let coordinator = KYCCoordinator(navigationController: nvc)
                 coordinator.flow = flow
