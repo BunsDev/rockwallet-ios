@@ -48,7 +48,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd),
-              let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit)
+              let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achAllowanceLifetime)
         else { return nil }
         
         let limitsString = NSMutableAttributedString(string: paymentMethod == .ach ?
@@ -90,7 +90,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var autoSelectDefaultPaymentMethod = true
-    var canUseAch = UserManager.shared.profile?.canUseAch
+    var canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess
     
     // MARK: - Aditional helpers
     

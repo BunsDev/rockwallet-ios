@@ -26,6 +26,11 @@ enum ProfileModels {
         case preferences
     }
     
+    enum ExchangeFlow {
+        case buy
+        case swap
+    }
+    
     struct Navigate {
         struct ViewAction {
             var index: Int

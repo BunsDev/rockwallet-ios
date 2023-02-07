@@ -17,8 +17,7 @@ class KYCCoordinator: BaseCoordinator,
                       CountriesAndStatesRoutes,
                       KYCAddressRoutes,
                       AssetSelectionDisplayable {
-    var role: CustomerRole?
-    var flow: ExchangeFlow?
+    var flow: ProfileModels.ExchangeFlow?
     
     override func start() {
         switch UserManager.shared.profile?.status {

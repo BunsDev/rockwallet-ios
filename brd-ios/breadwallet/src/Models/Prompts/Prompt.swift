@@ -203,10 +203,7 @@ extension Prompt {
             return profile == nil
             
         case .kyc:
-            let hasKYC = profile?.status.hasKYC
-            let isUnverified = profile?.roles.contains(.unverified) == true
-            
-            return hasKYC == false && isUnverified == false
+            return profile?.status.hasKYC == false
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }

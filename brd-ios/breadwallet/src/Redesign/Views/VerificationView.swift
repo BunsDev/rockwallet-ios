@@ -25,6 +25,9 @@ enum VerificationStatus: Equatable {
     case email
     case levelOne
     case levelTwo(Kyc2)
+    case infoProvided
+    case withoutSsn
+    case withSsn
     
     var hasKYC: Bool {
         switch self {
@@ -53,6 +56,9 @@ enum VerificationStatus: Equatable {
         case .email: return "EMAIL_VERIFIED"
         case .levelOne: return "KYC1"
         case .levelTwo(let kyc2): return kyc2.rawValue
+        case .infoProvided: return "KYC_INFO_PROVIDED"
+        case .withoutSsn: return "KYC_WITHOUT_SSN"
+        case .withSsn: return "KYC_WITH_SSN"
         }
     }
 
@@ -62,7 +68,10 @@ enum VerificationStatus: Equatable {
         case "EMAIL_VERIFICATION_PENDING": self = .emailPending
         case "EMAIL_VERIFIED": self = .email
         case "KYC1": self = .levelOne
-            
+        case "KYC_INFO_PROVIDED": self = .infoProvided
+        case "KYC_WITHOUT_SSN": self = .withoutSsn
+        case "KYC_WITH_SSN": self = .withSsn
+        
         default:
             let kyc2 = Kyc2.init(rawValue: rawValue?.uppercased() ?? "")
             if let kyc2 = kyc2 {
@@ -75,19 +84,11 @@ enum VerificationStatus: Equatable {
     
     var title: String {
         switch self {
-        case .levelOne, .levelTwo(.levelTwo): return "Verified"
-        case .levelTwo(.declined): return "Declined"
-        case .levelTwo(.resubmit), .levelTwo(.expired): return "Resubmit"
-        default: return "Pending"
+        case .levelOne, .levelTwo(.levelTwo): return L10n.Account.verified
+        case .levelTwo(.declined): return L10n.Account.declined
+        case .levelTwo(.resubmit), .levelTwo(.expired): return L10n.Account.resubmit
+        default: return L10n.Account.pending
         }
-    }
-    
-    var dailyLimit: Double {
-        return 0.0
-    }
-    
-    var monthlyLimit: Double {
-        return 0.0
     }
     
     static func > (lhs: VerificationStatus, rhs: VerificationStatus) -> Bool {
@@ -101,13 +102,13 @@ enum VerificationStatus: Equatable {
     
     var viewModel: InfoViewModel? {
         let profile = UserManager.shared.profile
-        let canUseAch = profile?.canUseAch ?? false
+        let canUseAch = profile?.kycAccessRights.hasAchAccess ?? false
         let swapAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.swapAllowanceDaily) ?? ""
         let buyAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.buyAllowanceDaily) ?? ""
         let achAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.achAllowanceDaily) ?? ""
         
         switch self {
-        case .none, .email, .levelOne, .levelTwo(.notStarted):
+        case .none, .email, .levelOne, .levelTwo(.notStarted), .infoProvided:
             return InfoViewModel(kyc: .levelOne, headerTitle: .text(L10n.VerifyAccount.verifyYourIdentity),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.none,
@@ -121,7 +122,7 @@ enum VerificationStatus: Equatable {
                                  status: VerificationStatus.emailPending,
                                  description: .text(L10n.Account.verifiedAccountMessage),
                                  dismissType: .persistent)
-        case .levelTwo(.levelTwo):
+        case .levelTwo(.levelTwo), .withoutSsn, .withSsn:
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.levelTwo(.levelTwo),
@@ -149,22 +150,6 @@ enum VerificationStatus: Equatable {
                                  description: .text(L10n.Account.dataIssues),
                                  button: .init(title: L10n.Account.verificationDeclined.uppercased()),
                                  dismissType: .persistent)
-        }
-    }
-}
-
-extension VerificationStatus {
-    // TODO: we should really try and combine all this enums :see-no-evil:
-    func isVerified(for role: CustomerRole) -> Bool {
-        switch role {
-        case .kyc1:
-            return self == .levelOne || self == .levelTwo(.levelTwo)
-            
-        case .kyc2:
-            return self == .levelTwo(.levelTwo)
-            
-        default:
-            return false
         }
     }
 }

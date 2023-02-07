@@ -107,8 +107,8 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             let tokenValue = actionResponse.from?.tokenValue ?? 0
             let tokenCode = actionResponse.from?.currency.code.uppercased() ?? ""
             let profile = UserManager.shared.profile
-            let dailyLimit = profile?.swapDailyRemainingLimit ?? 0
-            let lifetimeLimit = profile?.swapLifetimeRemainingLimit ?? 0
+            let dailyLimit = profile?.swapAllowanceDaily ?? 0
+            let lifetimeLimit = profile?.swapAllowanceLifetime ?? 0
             let exchangeLimit = profile?.swapAllowancePerExchange ?? 0
             
             switch (fiatValue, tokenValue) {

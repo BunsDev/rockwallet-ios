@@ -12,7 +12,7 @@ import Foundation
 
 class DeleteProfileWorker: BaseApiWorker<PlainMapper> {
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(KYCAuthEndpoints.profile)
+        return APIURLHandler.getUrl(WalletEndpoints.profile)
     }
     
     override func getMethod() -> HTTPMethod {
