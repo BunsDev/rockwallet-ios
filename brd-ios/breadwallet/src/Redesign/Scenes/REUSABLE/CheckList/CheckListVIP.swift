@@ -13,12 +13,15 @@ extension Scenes {
 }
 
 protocol CheckListViewActions: BaseViewActions {
+    func checkVerificationProgress(viewAction: CheckListModels.VerificationInProgress.ViewAction)
 }
 
 protocol CheckListActionResponses: BaseActionResponses {
+    func presentVerificationProgress(actionResponse: CheckListModels.VerificationInProgress.ActionResponse)
 }
 
 protocol CheckListResponseDisplays: AnyObject, BaseResponseDisplays {
+    func displayVerificationProgress(responseDisplay: CheckListModels.VerificationInProgress.ResponseDisplay)
 }
 
 protocol CheckListDataStore: BaseDataStore {

@@ -54,6 +54,29 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         presenter?.presentForm(actionResponse: .init(isValid: dataStore?.isValid))
     }
     
+    func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction) {
+        let data = KYCUserInfoRequestData(firstName: dataStore?.firstName ?? "",
+                                          lastName: dataStore?.lastName ?? "",
+                                          dateOfBirth: dataStore?.birthDateString ?? "",
+                                          address: dataStore?.address ?? "",
+                                          city: dataStore?.city ?? "",
+                                          zip: dataStore?.postalCode ?? "",
+                                          country: dataStore?.country ?? "",
+                                          state: dataStore?.state,
+                                          nologSSN: nil)
+        
+        KYCSubmitInfoWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success:
+                self?.startExternalKYC(viewAction: .init())
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+            
+        }
+    }
+    
     func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction) {
         VeriffSessionWorker().execute { [weak self] result in
             switch result {

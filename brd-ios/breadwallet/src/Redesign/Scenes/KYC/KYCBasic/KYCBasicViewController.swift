@@ -148,7 +148,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func displaySubmit(responseDisplay: KYCBasicModels.Submit.ResponseDisplay) {
-        coordinator?.showKYCAddress()
+        coordinator?.showKYCAddress(firstName: dataStore?.firstName, lastName: dataStore?.lastName, birthDate: dataStore?.birthDateString)
     }
     
     // MARK: - Additional Helpers

@@ -15,6 +15,7 @@ extension Scenes {
 protocol KYCAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
     func formUpdated(viewAction: KYCAddressModels.FormUpdated.ViewAction)
     func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction)
+    func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction)
 }
 
 protocol KYCAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
@@ -28,6 +29,9 @@ protocol KYCAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesA
 }
 
 protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
+    var firstName: String? { get set }
+    var lastName: String? { get set }
+    var birthDateString: String? { get set }
     var address: String? { get set }
     var city: String? { get set }
     var state: String? { get set }

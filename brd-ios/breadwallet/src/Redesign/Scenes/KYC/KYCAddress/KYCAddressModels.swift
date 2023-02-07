@@ -48,4 +48,8 @@ enum KYCAddressModels {
             var address: String
         }
     }
+    
+    enum Submit {
+        struct ViewAction {}
+    }
 }

@@ -15,6 +15,9 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var countries: [Country] = []
     
     var itemId: String?
+    var firstName: String?
+    var lastName: String?
+    var birthDateString: String?
     var address: String?
     var city: String?
     var state: String?
