@@ -145,9 +145,9 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      state: .init(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
                      status: .init(rawValue: response.kycStatus),
                      limits: response.exchangeLimits ?? [],
-                     kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false && response.isMigrated ?? false,
-                                            hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false && response.isMigrated ?? false,
-                                            hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false && response.isMigrated ?? false,
+                     kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                            hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                            hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false,
                                             restrictionReason: response.kycAccessRights?.restrictionReason),
                      kycFailureReason: response.kycFailureReason,
                      isMigrated: response.isMigrated ?? false)
