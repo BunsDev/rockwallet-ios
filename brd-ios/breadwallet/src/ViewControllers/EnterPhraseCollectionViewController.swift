@@ -54,6 +54,8 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     private var displayedPhrase: [String] = []
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
         collectionView?.register(EnterPhraseCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collectionView?.delegate = self
@@ -63,6 +65,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         becomeFirstResponder(atIndex: 0)
     }
 
