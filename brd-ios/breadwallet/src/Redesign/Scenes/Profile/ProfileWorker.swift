@@ -175,7 +175,7 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
                                             hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
                                             hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false),
-                     kycFailureReason: response.kycFailureReason
+                     kycFailureReason: response.kycFailureReason)
     }
 }
 
