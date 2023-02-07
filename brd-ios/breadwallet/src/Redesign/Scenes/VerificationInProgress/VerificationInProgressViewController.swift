@@ -21,21 +21,21 @@ class VerificationInProgressViewController: CheckListViewController {
     override var sceneLeftAlignedTitle: String? { return nil }
     
     override var checklistTitle: LabelViewModel {
-        let attributedText = NSAttributedString(string: "Your ID verification is in progress",
+        let attributedText = NSAttributedString(string: L10n.AccountKYCLevelTwo.inProgress,
                                                 attributes: [.font: Fonts.Title.five])
         return .attributedText(attributedText)
     }
     
     override var checkmarks: [ChecklistItemViewModel] {
-        return [.init(title: .text("Photos processed"), image: .image(Asset.checkboxSelectedCircle.image)),
-                .init(title: .text("Image quality checked"), image: .image(Asset.checkboxSelectedCircle.image)),
-                .init(title: .text("Document inspected"), image: .image(Asset.checkboxSelectedCircle.image)),
-                .init(title: .text("Biometrics verified"), image: .image(Asset.checkboxSelectedCircle.image)),
-                .init(title: .text("Finalizing the decision"), image: .animation(Animations.verificationInProgress.animation, .loop))]
+        return [.init(title: .text(L10n.AccountKYCLevelTwo.uploadingPhoto), image: .image(Asset.checkboxSelectedCircle.image)),
+                .init(title: .text(L10n.AccountKYCLevelTwo.imageQualityChecked), image: .image(Asset.checkboxSelectedCircle.image)),
+                .init(title: .text(L10n.AccountKYCLevelTwo.documentInspected), image: .image(Asset.checkboxSelectedCircle.image)),
+                .init(title: .text(L10n.AccountKYCLevelTwo.biometricsVerified), image: .image(Asset.checkboxSelectedCircle.image)),
+                .init(title: .text(L10n.Account.finalizingDecision), image: .animation(Animations.verificationInProgress.animation, .loop))]
     }
     
     override var footerViewModel: LabelViewModel? {
-        return .text("This may take a few minutes.")
+        return .text(L10n.Account.waitFewMinutes)
     }
     
     override func prepareData() {
