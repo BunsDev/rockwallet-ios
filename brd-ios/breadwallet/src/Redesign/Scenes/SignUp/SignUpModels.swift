@@ -39,15 +39,15 @@ enum SignUpModels {
             
             var isEmailValid: Bool
             var isEmailEmpty: Bool
-            var emailState: DisplayState
+            var emailState: DisplayState?
             
             var isPasswordValid: Bool
             var isPasswordEmpty: Bool
-            var passwordState: DisplayState
+            var passwordState: DisplayState?
             
             var isPasswordAgainValid: Bool
             var isPasswordAgainEmpty: Bool
-            var passwordAgainState: DisplayState
+            var passwordAgainState: DisplayState?
             var passwordsMatch: Bool
             
             var isTermsTickboxValid: Bool

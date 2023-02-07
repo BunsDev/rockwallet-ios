@@ -76,7 +76,7 @@ class BaseCoordinator: NSObject,
     }
     
     func handleUserAccount() {
-        if DynamicLinksManager.shared.code != nil {
+        if DynamicLinksManager.shared.shouldHandleDynamicLink {
             dismissFlow()
         }
         
@@ -172,7 +172,9 @@ class BaseCoordinator: NSObject,
     }
     
     func showProfile() {
-        upgradeAccountOrShowPopup { [weak self] _ in
+        upgradeAccountOrShowPopup { [weak self] showPopup in
+            guard showPopup else { return }
+            
             self?.openModally(coordinator: ProfileCoordinator.self, scene: Scenes.Profile)
         }
     }
@@ -322,6 +324,11 @@ class BaseCoordinator: NSObject,
     // In which case we show 3rd party popup or continue to Buy/Swap.
     // TODO: refactor this once the "coming soon" screen is added
     func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
+        guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
+            completion?(false)
+            return
+        }
+        
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?
         

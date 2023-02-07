@@ -40,13 +40,19 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         case .address:
             dataStore?.address = viewAction.value as? String
             
-        case .stateProvince:
-            dataStore?.state = viewAction.value as? String
+        case .country:
+            dataStore?.country = viewAction.value as? String
             
-        case .cityAndZipPostal:
+        case .postalCode:
+            dataStore?.postalCode = viewAction.value as? String
+            
+        case .ssn:
+            dataStore?.ssn = viewAction.value as? String
+            
+        case .cityAndState:
             let item = viewAction.value as? (String?, String?)
             dataStore?.city = item?.0
-            dataStore?.postalCode = item?.1
+            dataStore?.state = item?.1
             
         default:
             return
@@ -87,6 +93,10 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
         }
+    }
+    
+    func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction) {
+        presenter?.presentSsnInfo(actionResponse: .init())
     }
 
     // MARK: - Aditional helpers

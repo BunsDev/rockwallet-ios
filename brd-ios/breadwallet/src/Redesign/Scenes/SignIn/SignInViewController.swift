@@ -78,12 +78,12 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.keyboardType = .emailAddress
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.keyboardType = .emailAddress
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         case .password:
@@ -91,12 +91,12 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
             
             let castedCell = cell as? WrapperTableViewCell<FETextField>
             castedCell?.setup { view in
-                var emailConfig = Presets.TextField.primary
-                emailConfig.autocapitalizationType = UITextAutocapitalizationType.none
-                emailConfig.autocorrectionType = .no
-                emailConfig.isSecureTextEntry = true
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.isSecureTextEntry = true
                 
-                view.configure(with: emailConfig)
+                view.configure(with: config)
             }
             
         case .forgotPassword:
@@ -132,8 +132,7 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - User Interaction
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
-        super.textFieldDidUpdate(for: indexPath, with: text)
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
         switch section as? Models.Section {
@@ -146,6 +145,8 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
         default:
             break
         }
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     @objc override func buttonTapped() {
@@ -166,15 +167,11 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
         continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
-        if responseDisplay.email != nil {
-            _ = getFieldCell(for: .email)?.setup { view in
-                view.update(with: responseDisplay.emailModel)
-            }
+        _ = getFieldCell(for: .email)?.setup { view in
+            view.setup(with: responseDisplay.emailModel)
         }
-        if responseDisplay.password != nil {
-            _ = getFieldCell(for: .password)?.setup { view in
-                view.update(with: responseDisplay.passwordModel)
-            }
+        _ = getFieldCell(for: .password)?.setup { view in
+            view.setup(with: responseDisplay.passwordModel)
         }
     }
     

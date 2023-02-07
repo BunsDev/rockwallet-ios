@@ -224,15 +224,18 @@ class UpdatePinViewController: UIViewController, Subscriber {
                 caption.isHidden = true
             }
         }
-
-        if !showsBackButton {
-            navigationItem.leftBarButtonItem = nil
-            navigationItem.hidesBackButton = true
-        }
+        
         addCloudView()
     }
     
     func setupBackButton() {
+        if !showsBackButton {
+            navigationItem.leftBarButtonItem = nil
+            navigationItem.hidesBackButton = true
+            
+            return
+        }
+        
         let back = UIBarButtonItem(image: Asset.back.image,
                                    style: .plain,
                                    target: self,
@@ -396,9 +399,11 @@ class UpdatePinViewController: UIViewController, Subscriber {
                 } else {
                     let callback = { [weak self] in
                         guard let self = self else { return }
+                        
                         self.setPinSuccess?(newPin)
+                        
                         if self.type != .creationNoPhrase {
-                            self.parent?.dismiss(animated: true, completion: nil)
+                            (self.parent ?? self)?.dismiss(animated: true)
                         }
                     }
                     

@@ -264,7 +264,7 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                guard DynamicLinksManager.shared.code != nil else { return }
+                guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
                 Store.trigger(name: .handleUserAccount)
             }
         }
@@ -451,6 +451,10 @@ class ApplicationController: Subscriber {
             default:
                 break
             }
+        }
+        
+        homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
+            coordinator?.showProfile()
         }
         
         homeScreen.didTapMenu = { [unowned self] in

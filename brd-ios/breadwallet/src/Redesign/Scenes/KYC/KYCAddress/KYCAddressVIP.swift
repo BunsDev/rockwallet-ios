@@ -16,16 +16,19 @@ protocol KYCAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
     func formUpdated(viewAction: KYCAddressModels.FormUpdated.ViewAction)
     func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction)
     func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction)
+    func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction)
 }
 
 protocol KYCAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
     func presentForm(actionResponse: KYCAddressModels.FormUpdated.ActionResponse)
     func presentExternalKYC(actionResponses: KYCAddressModels.ExternalKYC.ActionResponse)
+    func presentSsnInfo(actionResponse: KYCAddressModels.SsnInfo.ActionResponse)
 }
 
 protocol KYCAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay)
     func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay)
+    func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay)
 }
 
 protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {

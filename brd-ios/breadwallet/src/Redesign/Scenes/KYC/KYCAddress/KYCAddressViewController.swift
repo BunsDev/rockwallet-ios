@@ -29,17 +29,25 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
+        case .mandatory:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
         case .country:
             cell = self.tableView(tableView, countryTextFieldCellForRowAt: indexPath)
             
-        case .stateProvince:
+        case .postalCode:
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
-        case .cityAndZipPostal:
+        case .cityAndState:
             cell = self.tableView(tableView, cityAndZipPostalCellForRowAt: indexPath)
             
         case .address:
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
+            
+        case .ssn:
+            cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
+            
+        case .ssnInfo:
+            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
             
         case .confirm:
             cell = self.tableView(tableView, buttonCellForRowAt: indexPath)
@@ -91,6 +99,24 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+        
+        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+            return cell
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(buttons: [Presets.Button.noBorders], isRightAligned: true))
+            
+            view.callbacks = [
+                ssnInfoTapped
+            ]
+        }
+        
+        return cell
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch sections[indexPath.section] as? Models.Section {
         case .country:
@@ -102,10 +128,11 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        super.textFieldDidFinish(for: indexPath, with: text)
         let section = sections[indexPath.section]
         
         interactor?.formUpdated(viewAction: .init(section: section, value: text))
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
@@ -123,10 +150,18 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         coordinator?.showExternalKYC(url: responseDisplay.address)
     }
     
+    func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay) {
+        coordinator?.showPopup(with: responseDisplay.model)
+    }
+    
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()
         
         interactor?.submitInfo(viewAction: .init())
+    }
+    
+    private func ssnInfoTapped() {
+        interactor?.showSsnInfo(viewAction: .init())
     }
 }

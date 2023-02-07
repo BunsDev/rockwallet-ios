@@ -144,13 +144,20 @@ class SuccessViewController: BaseInfoViewController {
     }
     
     var transactionType: TransactionType = .defaultTransaction
+    let canUseAch = UserManager.shared.profile?.canUseAch ?? false
     override var imageName: String? { return success?.iconName }
     override var titleText: String? { return success?.title }
     override var descriptionText: String? { return success?.description }
     override var buttonViewModels: [ButtonViewModel] {
-        return [
+        var buttons: [ButtonViewModel] = [
             .init(title: success?.firstButtonTitle, callback: { [weak self] in
-                self?.coordinator?.dismissFlow()
+                switch self?.success {
+                case .documentVerification:
+                    self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem,
+                                               keyStore: self?.dataStore?.keyStore)
+                default:
+                    self?.coordinator?.dismissFlow()
+                }
             }),
             .init(title: success?.secondButtonTitle, isUnderlined: success?.secondButtonUnderlined ?? true, callback: { [weak self] in
                 switch self?.success {
@@ -164,15 +171,34 @@ class SuccessViewController: BaseInfoViewController {
                 }
             }),
             .init(title: success?.thirdButtonTitle, isUnderlined: success?.thirdButtoUnderlined ?? true, callback: { [weak self] in
-                self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId, type: self?.transactionType ?? .defaultTransaction)
+                switch self?.success {
+                case .documentVerification:
+                    self?.coordinator?.showBuy(type: .ach,
+                                               coreSystem: self?.dataStore?.coreSystem,
+                                               keyStore: self?.dataStore?.keyStore)
+                default:
+                    self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
+                                                           type: self?.transactionType ?? .defaultTransaction)
+                }
             })
         ]
+        if !canUseAch && success == .documentVerification {
+            buttons.removeLast()
+        }
+        
+        return buttons
     }
     
     override var buttonConfigurations: [ButtonConfiguration] {
-        return [Presets.Button.primary,
-                success?.secondButtonConfig ?? Presets.Button.noBorders,
-                success?.thirdButtonConfig ?? Presets.Button.noBorders]
+        var buttons = [Presets.Button.primary,
+                       success?.secondButtonConfig ?? Presets.Button.noBorders,
+                       success?.thirdButtonConfig ?? Presets.Button.noBorders]
+        
+        if !canUseAch && success == .documentVerification {
+            buttons.removeLast()
+        }
+        
+        return buttons
     }
     
     override func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) {

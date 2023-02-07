@@ -22,6 +22,7 @@ struct DoubleHorizontalTextboxViewModel: ViewModel {
 
 class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfiguration, DoubleHorizontalTextboxViewModel> {
     var valueChanged: ((_ first: String?, _ second: String?) -> Void)?
+    var beganEditing: ((_ first: String?, _ second: String?) -> Void)?
     var finishedEditing: ((_ first: String?, _ second: String?) -> Void)?
     var didTriggerDateField: (() -> Void)?
     
@@ -116,6 +117,9 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         primaryTextField.setup(with: viewModel?.primary)
         secondaryTextField.setup(with: viewModel?.secondary)
         
+        primaryTextField.beganEditing = { [weak self] in
+            self?.first = $0.text
+        }
         primaryTextField.valueChanged = { [weak self] in
             self?.first = $0.text
             self?.stateChanged()
@@ -124,11 +128,13 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
             self?.finishedEditing?(tf.text, self?.secondaryTextField.value)
         }
         
+        secondaryTextField.beganEditing = { [weak self] in
+            self?.second = $0.text
+        }
         secondaryTextField.valueChanged = { [weak self] in
             self?.second = $0.text
             self?.stateChanged()
         }
-        
         secondaryTextField.finishedEditing = { [weak self] tf in
             self?.finishedEditing?(self?.primaryTextField.value, tf.text)
         }

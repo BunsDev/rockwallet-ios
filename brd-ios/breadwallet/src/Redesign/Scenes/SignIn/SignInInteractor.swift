@@ -34,11 +34,11 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         
         let isEmailValid = dataStore?.email.isValidEmailAddress ?? false
         let isEmailEmpty = dataStore?.email.isEmpty == true
-        let emailState: DisplayState = isEmailEmpty || isEmailValid ? .selected : .error
+        let emailState: DisplayState? = isEmailEmpty || isEmailValid ? nil : .error
         
         let isPasswordValid = dataStore?.password.isValidPassword ?? false
         let isPasswordEmpty = dataStore?.password.isEmpty == true
-        let passwordState: DisplayState = isPasswordEmpty || isPasswordValid ? .selected : .error
+        let passwordState: DisplayState? = isPasswordEmpty || isPasswordValid ? nil : .error
         
         presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
                                                          password: viewAction.password,
@@ -69,6 +69,8 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
                 UserDefaults.kycSessionKeyValue = sessionKey
                 
                 UserManager.shared.refresh { _ in
+                    Store.trigger(name: .didCreateAccount)
+                    
                     self?.presenter?.presentNext(actionResponse: .init())
                 }
                 

@@ -24,6 +24,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var postalCode: String?
     var country: String?
     var countryFullName: String?
+    var ssn: String?
     
     var isValid: Bool {
         guard address?.isEmpty == false,
@@ -37,7 +38,10 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
             return true
         }
         
-        return state?.isEmpty == false
+        guard state?.isEmpty == false, ssn?.isEmpty == false else {
+            return false
+        }
+        return true
     }
     
     // MARK: - Aditional helpers
