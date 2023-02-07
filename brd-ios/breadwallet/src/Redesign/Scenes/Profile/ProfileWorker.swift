@@ -26,17 +26,17 @@ struct ProfileResponseData: ModelResponse {
     }
     
     struct AccessRights: Codable {
-        var hasSwapAccess: Bool
-        var hasBuyAccess: Bool
-        var hasAchAccess: Bool
-        var restrictionReason: String?
+        let hasSwapAccess: Bool
+        let hasBuyAccess: Bool
+        let hasAchAccess: Bool
+        let restrictionReason: String?
     }
     
     struct ExchangeLimit: Codable {
-        var exchangeType: ExchangeType?
-        var interval: Interval?
-        var limit: Decimal?
-        var isCustom: Bool?
+        let exchangeType: ExchangeType?
+        let interval: Interval?
+        let limit: Decimal?
+        let isCustom: Bool?
         
         enum ExchangeType: String, Codable {
             case swap = "SWAP"
@@ -61,9 +61,9 @@ struct Profile: Model {
     let country: Country
     let state: Country
     let status: VerificationStatus
-    var limits: [ExchangeLimit]
+    let limits: [ProfileResponseData.ExchangeLimit]
     let kycAccessRights: AccessRights
-    let kycFailureReason: String
+    let kycFailureReason: String?
     let isMigrated: Bool
     
     struct Country {
@@ -72,33 +72,10 @@ struct Profile: Model {
     }
     
     struct AccessRights {
-        var hasSwapAccess: Bool
-        var hasBuyAccess: Bool
-        var hasAchAccess: Bool
-        var restrictionReason: String
-    }
-    
-    struct ExchangeLimit {
-        var exchangeType: ExchangeType
-        var interval: Interval
-        var limit: Decimal
-        var isCustom: Bool
-        
-        enum ExchangeType {
-            case swap
-            case buyCard
-            case buyAch
-            case sell
-        }
-        
-        enum Interval {
-            case daily
-            case weekly
-            case monthly
-            case lifetime
-            case perExchange
-            case minimum
-        }
+        let hasSwapAccess: Bool
+        let hasBuyAccess: Bool
+        let hasAchAccess: Bool
+        let restrictionReason: String?
     }
     
     var swapAllowanceLifetime: Decimal {
@@ -113,13 +90,13 @@ struct Profile: Model {
     }
     
     var buyAllowanceLifetime: Decimal {
-        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .buy })?.limit ?? 0
+        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     var buyAllowanceDaily: Decimal {
-        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buy })?.limit ?? 0
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     var buyAllowancePerPurchase: Decimal {
-        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .buy })?.limit ?? 0
+        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     
     var achAllowanceLifetime: Decimal {
@@ -163,19 +140,17 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
     override func getModel(from response: ProfileResponseData?) -> Profile? {
         guard let response = response else { return nil }
         
-        return .init(email: response.email,
-                     country: .init(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
-                     state: .init(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
-                     status: .init(rawValue: response.kycStatus),
-                     limits: response.exchangeLimits?.compactMap { return .init(exchangeType: $0.exchangeType,
-                                                                                interval: $0.interval,
-                                                                                limit: $0.limit,
-                                                                                isCustom: $0.isCustom) },
-                     kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                            hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                            hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false),
-                     kycFailureReason: response.kycFailureReason,
-                     isMigrated: response.isMigrated)
+        return Profile(email: response.email ?? "",
+                       country: .init(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
+                       state: .init(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
+                       status: .init(rawValue: response.kycStatus),
+                       limits: response.exchangeLimits ?? [],
+                       kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                              hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                              hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                              restrictionReason: response.kycAccessRights?.restrictionReason),
+                       kycFailureReason: response.kycFailureReason,
+                       isMigrated: response.isMigrated ?? false)
     }
 }
 
