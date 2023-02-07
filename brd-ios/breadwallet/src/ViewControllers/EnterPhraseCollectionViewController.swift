@@ -63,7 +63,10 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        becomeFirstResponder(atIndex: 0)
+        
+        if displayedPhrase.isEmpty {
+            becomeFirstResponder(atIndex: 0)
+        }
     }
 
     // MARK: - UICollectionViewDataSource
