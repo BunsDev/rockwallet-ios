@@ -11,14 +11,14 @@ import UIKit
 private let itemHeight: CGFloat = ViewSizes.Common.defaultCommon.rawValue
 
 class EnterPhraseCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+    
     // MARK: - Public
     var didFinishPhraseEntry: ((String) -> Void)?
     var isViewOnly = false
     var height: CGFloat {
         return (itemHeight * 4.0) + (2 * sectionInsets) + (3 * interItemSpacing)
     }
-
+    
     init(keyMaster: KeyMaster) {
         self.keyMaster = keyMaster
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -66,9 +66,11 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        becomeFirstResponder(atIndex: 0)
+        if !isViewOnly {
+            becomeFirstResponder(atIndex: 0)
+        }
     }
-
+    
     // MARK: - UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 12
@@ -81,7 +83,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
         guard let enterPhraseCell = item as? EnterPhraseCell else { return item }
         
@@ -92,7 +94,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
         enterPhraseCell.hideBorder = isViewOnly
         enterPhraseCell.textField.configure(with: Presets.TextField.phrase)
         enterPhraseCell.textField.setup(with: .init(title: String(format: "%02i", indexPath.row + 1),
-                                                          value: word))
+                                                    value: word))
         
         enterPhraseCell.index = indexPath.row
         enterPhraseCell.didTapNext = { [weak self] in
@@ -132,7 +134,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
             enterPhraseCell.textField.value = word
             enterPhraseCell.isUserInteractionEnabled = false
         }
-
+        
         if indexPath.item == 0 {
             enterPhraseCell.disablePreviousButton()
         } else if indexPath.item == 11 {
@@ -140,7 +142,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
         }
         return item
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -167,7 +169,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
         guard let phraseCell = collectionView?.cellForItem(at: IndexPath(item: atIndex, section: 0)) as? EnterPhraseCell else { return }
         phraseCell.textField.changeToFirstResponder()
     }
-
+    
     private func setText(_ text: String, atIndex: Int) {
         guard let phraseCell = collectionView.cellForItem(at: IndexPath(row: atIndex, section: 0)) as? EnterPhraseCell else { return }
         phraseCell.textField.value = text
@@ -177,7 +179,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
         displayedPhrase = phrase.split(separator: " ").compactMap { String($0) }
         collectionView.reloadData()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
