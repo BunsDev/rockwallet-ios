@@ -125,7 +125,7 @@ class PromptView: UIView {
         continueButton.setTitleColor(LightColors.Text.two, for: .highlighted)
         continueButton.titleLabel?.font = Fonts.Subtitle.two
         
-        let title = type == .kyc ? L10n.VerifyAccount.button : L10n.Button.continueAction
+        let title = prompt?.type.actionTitle ?? ""
         let attributeString = NSMutableAttributedString(
             string: title,
             attributes: [

@@ -65,6 +65,15 @@ enum PromptType: Int {
         }
     }
     
+    var actionTitle: String {
+        switch self {
+        case .biometrics, .paperKey, .upgradePin, .noPasscode: return L10n.Button.continueAction
+        case .kyc: return L10n.VerifyAccount.button
+        case .noAccount: return L10n.Account.createNewAccountTitle
+        default: return ""
+        }
+    }
+    
     var backgroundColor: UIColor {
         switch self {
         case .noInternet: return LightColors.Error.two
