@@ -141,14 +141,14 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
         guard let response = response else { return nil }
         
         return .init(email: response.email ?? "",
-                     country: .init(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
-                     state: .init(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
-                     status: .init(rawValue: response.kycStatus),
+                     country: Profile.Country(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
+                     state: Profile.Country(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
+                     status: VerificationStatus(rawValue: response.kycStatus),
                      limits: response.exchangeLimits ?? [],
-                     kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                            hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                            hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                            restrictionReason: response.kycAccessRights?.restrictionReason),
+                     kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                                           hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                                           hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                                           restrictionReason: response.kycAccessRights?.restrictionReason),
                      kycFailureReason: response.kycFailureReason,
                      isMigrated: response.isMigrated ?? false)
     }
