@@ -111,6 +111,8 @@ extension KYCCoordinator: VeriffSdkDelegate {
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
+                Store.trigger(name: .didApplyKyc)
+                
                 switch profile?.status {
                 case .levelTwo(.levelTwo):
                     self?.open(scene: Scenes.Success) { vc in

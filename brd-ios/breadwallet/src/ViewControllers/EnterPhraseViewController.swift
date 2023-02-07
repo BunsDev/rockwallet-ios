@@ -322,29 +322,38 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
                 showErrorMessage()
                 return
             }
-            //Since we know that the user had their phrase at this point,
-            //this counts as a write date
+            
+            // Since we know that the user had their phrase at this point, this counts as a write date
             UserDefaults.writePaperPhraseDate = Date()
             Store.perform(action: LoginSuccess())
+            
             return callback(account)
+            
         case .validateForResettingPin(let callback):
             guard self.keyMaster.authenticate(withPhrase: phrase) else {
                 showErrorMessage()
                 return
             }
+            
             UserDefaults.writePaperPhraseDate = Date()
+            
             return callback(phrase)
+            
         case .validateForWipingWallet(let callback), .validateForWipingWalletAndDeletingFromDevice(let callback):
             guard self.keyMaster.authenticate(withPhrase: phrase) else {
                 showErrorMessage()
                 return
             }
+            
             didToggleNextButton?(nextButton, navigationItem.rightBarButtonItem)
+            
             return callback()
             
         case .display(let phrase, _, let callback):
             let words = phrase.split(separator: " ").compactMap { String($0) }
+            
             callback(.confirmKey, words)
+            
         }
     }
     

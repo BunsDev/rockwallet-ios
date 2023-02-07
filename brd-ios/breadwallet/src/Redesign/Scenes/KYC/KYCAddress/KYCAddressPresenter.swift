@@ -16,33 +16,47 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
     // MARK: - KYCAddressActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
-        let sections: [Models.Section] = [
+        var sections: [Models.Section] = [
+            .mandatory,
             .address,
-            .cityAndZipPostal,
-            .stateProvince,
             .country,
+            .cityAndState,
+            .postalCode,
             .confirm
         ]
         
+        if item.country == C.countryUS {
+            sections.insert(.ssn, at: 5)
+            sections.insert(.ssnInfo, at: 6)
+        }
+        
         let sectionRows: [Models.Section: [Any]] = [
+            .mandatory: [LabelViewModel.text(L10n.Account.mandatoryFields)],
             .address: [
-                TextFieldModel(title: L10n.Buy.address,
+                TextFieldModel(title: "\(L10n.Buy.address)*",
                                value: item.address)
             ],
-            .cityAndZipPostal: [
-                DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Buy.city,
-                                                                value: item.city),
-                                                 secondary: .init(title: L10n.Buy.zipPostalCode,
-                                                                  value: item.postalCode))
-            ],
-            .stateProvince: [
-                TextFieldModel(title: L10n.Buy.stateProvince,
-                               value: item.state)
-            ],
             .country: [
-                TextFieldModel(title: L10n.Account.country,
+                TextFieldModel(title: L10n.Account.countryRegion,
                                value: item.countryFullName,
                                trailing: .image(Asset.chevronDown.image))
+            ],
+            .cityAndState: [
+                DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,
+                                                                value: item.city),
+                                                 secondary: .init(title: L10n.Buy.stateProvince,
+                                                                  value: item.state))
+            ],
+            .postalCode: [
+                TextFieldModel(title: L10n.Account.postalCode,
+                               value: item.postalCode)
+            ],
+            .ssn: [
+                TextFieldModel(title: L10n.Account.socialSecurityNumberRequired,
+                               value: item.ssn)
+            ],
+            .ssnInfo: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.infoLinkSSN,
+                                                                            isUnderlined: true)])
             ],
             .confirm: [
                 ButtonViewModel(title: L10n.Button.confirm, enabled: item.isValid)
@@ -59,6 +73,13 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
     func presentExternalKYC(actionResponses: KYCAddressModels.ExternalKYC.ActionResponse) {
         guard let address = actionResponses.address else { return }
         viewController?.displayExternalKYC(responseDisplay: .init(address: address))
+    }
+    
+    func presentSsnInfo(actionResponse: KYCAddressModels.SsnInfo.ActionResponse) {
+        let model = PopupViewModel(title: .text(L10n.Account.socialSecurityNumber),
+                                   body: L10n.Account.explanationSSN)
+        
+        viewController?.displaySsnInfo(responseDisplay: .init(model: model))
     }
 
     // MARK: - Additional Helpers

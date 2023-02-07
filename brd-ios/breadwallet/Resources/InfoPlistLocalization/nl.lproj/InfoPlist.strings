@@ -1688,6 +1688,8 @@
 
 "Prompts.ConnectionIssues.title" = "Connection issues";
 
+"Prompts.CreateAccount.body" = "With your RockWallet account you’ll be able to Swap and Buy seamlessly.";
+
 /* Body text for a prompt that asks the user to subscribe to email updates to find out product updates. */
 "Prompts.Email.body" = "Wees de eerste om belangrijke support- en productupdates te ontvangen";
 
