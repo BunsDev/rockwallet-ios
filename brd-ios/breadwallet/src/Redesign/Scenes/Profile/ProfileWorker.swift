@@ -101,7 +101,6 @@ struct Profile: Model {
         }
     }
     
-    
     var swapAllowanceLifetime: Decimal {
         return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .swap })?.limit ?? 0
     }
@@ -175,7 +174,8 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
                                             hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
                                             hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false),
-                     kycFailureReason: response.kycFailureReason)
+                     kycFailureReason: response.kycFailureReason,
+                     isMigrated: response.isMigrated)
     }
 }
 
