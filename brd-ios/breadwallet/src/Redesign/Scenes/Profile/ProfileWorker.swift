@@ -63,7 +63,6 @@ struct Profile: Model {
     let status: VerificationStatus
     let limits: [ProfileResponseData.ExchangeLimit]
     let kycAccessRights: AccessRights
-    let kycFailureReason: String?
     let isMigrated: Bool
     
     struct Country {
@@ -75,7 +74,6 @@ struct Profile: Model {
         let hasSwapAccess: Bool
         let hasBuyAccess: Bool
         let hasAchAccess: Bool
-        let restrictionReason: String?
     }
     
     var swapAllowanceLifetime: Decimal {
@@ -147,9 +145,7 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      limits: response.exchangeLimits ?? [],
                      kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
                                                            hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                                           hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                                           restrictionReason: response.kycAccessRights?.restrictionReason),
-                     kycFailureReason: response.kycFailureReason,
+                                                           hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false),
                      isMigrated: response.isMigrated ?? false)
     }
 }
