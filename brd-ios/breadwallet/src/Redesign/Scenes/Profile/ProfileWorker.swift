@@ -144,8 +144,8 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      status: VerificationStatus(rawValue: response.kycStatus),
                      limits: response.exchangeLimits ?? [],
                      kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                                           hasBuyAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                                           hasAchAccess: response.kycAccessRights?.hasSwapAccess ?? false),
+                                                           hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
+                                                           hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false),
                      isMigrated: response.isMigrated ?? false)
     }
 }
