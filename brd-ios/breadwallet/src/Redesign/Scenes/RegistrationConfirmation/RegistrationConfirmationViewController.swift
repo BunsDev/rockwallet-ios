@@ -16,7 +16,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     
     typealias Models = RegistrationConfirmationModels
     
-    override var isModalDismissableEnabled: Bool { return true }
+    override var dismissText: String { return "" }
 
     // MARK: - Overrides
     

@@ -27,7 +27,6 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     
     func showRegistrationConfirmation() {
         open(scene: Scenes.RegistrationConfirmation) { vc in
-            vc.navigationItem.hidesBackButton = true
             vc.prepareData()
         }
     }
