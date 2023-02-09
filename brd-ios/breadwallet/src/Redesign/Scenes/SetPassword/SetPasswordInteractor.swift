@@ -34,11 +34,11 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
         
         let isPasswordValid = dataStore?.password.isValidPassword ?? false
         let isPasswordEmpty = dataStore?.password.isEmpty == true
-        let passwordState: DisplayState? = !isPasswordEmpty || isPasswordValid ? nil : .error
+        let passwordState: DisplayState? = isPasswordEmpty || isPasswordValid ? nil : .error
         
         let isPasswordAgainValid = dataStore?.passwordAgain.isValidPassword ?? false
         let isPasswordAgainEmpty = dataStore?.passwordAgain.isEmpty == true
-        let passwordAgainState: DisplayState? = !isPasswordAgainEmpty || isPasswordAgainValid ? nil : .error
+        let passwordAgainState: DisplayState? = isPasswordAgainEmpty || isPasswordAgainValid ? nil : .error
         
         let passwordsMatch = !isPasswordEmpty && !isPasswordAgainEmpty && dataStore?.password == dataStore?.passwordAgain
         

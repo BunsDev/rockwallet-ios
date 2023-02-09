@@ -38,7 +38,7 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         
         let isPasswordValid = dataStore?.password.isValidPassword ?? false
         let isPasswordEmpty = dataStore?.password.isEmpty == true
-        let passwordState: DisplayState? = !isPasswordEmpty || isPasswordValid ? nil : .error
+        let passwordState: DisplayState? = isPasswordEmpty || isPasswordValid ? nil : .error
         
         presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
                                                          password: viewAction.password,
