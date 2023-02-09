@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MobileIntelligence
 
 protocol BaseControllable: UIViewController {
     associatedtype CoordinatorType: CoordinatableRoutes
@@ -222,6 +223,8 @@ class BaseCoordinator: NSObject,
     /// Determines whether the viewcontroller or navigation stack are being dismissed
     /// SHOULD NEVER BE CALLED MANUALLY
     func goBack() {
+        turnOffSardineMobileIntelligence()
+        
         guard parentCoordinator != nil,
               parentCoordinator?.navigationController != navigationController,
               navigationController.viewControllers.count < 1 else {
@@ -484,5 +487,38 @@ class BaseCoordinator: NSObject,
         }
         
         return view
+    }
+}
+
+extension BaseCoordinator {
+    func turnOffSardineMobileIntelligence() {
+        guard self is KYCCoordinator == false else { return }
+        
+        let options = OptionsBuilder()
+            .enableBehaviorBiometrics(with: false)
+            .enableClipboardTracking(with: false)
+            .enableFieldTracking(with: false)
+            .setShouldAutoSubmitOnInit(with: false)
+            .build()
+        MobileIntelligence(withOptions: options)
+    }
+    
+    func turnOnSardineMobileIntelligence() {
+        guard let sessionTokenHash = UserDefaults.sessionTokenHash else { return }
+        
+        let options = OptionsBuilder()
+            .setClientId(with: E.sardineClientId)
+            .setSessionKey(with: sessionTokenHash)
+            .setEnvironment(with: E.isSandbox ? Options.ENV_SANDBOX : Options.ENV_PRODUCTION)
+            .enableBehaviorBiometrics(with: true)
+            .enableClipboardTracking(with: true)
+            .enableFieldTracking(with: true)
+            .setShouldAutoSubmitOnInit(with: true)
+            .build()
+        MobileIntelligence(withOptions: options)
+    }
+    
+    func submitSardineMobileIntelligence() {
+        MobileIntelligence.submitData { _ in }
     }
 }
