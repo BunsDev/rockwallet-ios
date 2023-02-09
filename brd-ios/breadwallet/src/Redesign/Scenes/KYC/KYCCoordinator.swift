@@ -9,7 +9,6 @@
 //
 
 import AVFoundation
-import MobileIntelligence
 import UIKit
 import Veriff
 
@@ -86,13 +85,7 @@ class KYCCoordinator: BaseCoordinator,
 
 extension KYCCoordinator: VeriffSdkDelegate {
     func showExternalKYC(url: String) {
-        guard let sessionTokenHash = UserDefaults.sessionTokenHash else { return }
-        let options = OptionsBuilder()
-            .setClientId(with: E.sardineClientId)
-            .setSessionKey(with: sessionTokenHash)
-            .setEnvironment(with: E.isSandbox ? Options.ENV_SANDBOX : Options.ENV_PRODUCTION)
-            .build()
-        MobileIntelligence(withOptions: options)
+        turnOnSardineMobileIntelligence()
         
         navigationController.popToRootViewController(animated: false)
         
@@ -103,24 +96,22 @@ extension KYCCoordinator: VeriffSdkDelegate {
     }
     
     func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
-        MobileIntelligence.submitData { [weak self] _ in
-            guard let self = self else { return }
-            
-            switch result.status {
-            case .done:
-                self.open(scene: Scenes.verificationInProgress) { vc in
-                    vc.navigationItem.hidesBackButton = true
-                }
-            case .error(let error):
-                print(error.localizedDescription)
-                
-                self.open(scene: Scenes.Failure) { vc in
-                    vc.failure = .documentVerification
-                }
-                
-            default:
-                self.parentCoordinator?.childDidFinish(child: self)
+        submitSardineMobileIntelligence()
+        
+        switch result.status {
+        case .done:
+            open(scene: Scenes.verificationInProgress) { vc in
+                vc.navigationItem.hidesBackButton = true
             }
+        case .error(let error):
+            print(error.localizedDescription)
+            
+            open(scene: Scenes.Failure) { vc in
+                vc.failure = .documentVerification
+            }
+            
+        default:
+            parentCoordinator?.childDidFinish(child: self)
         }
     }
 }
