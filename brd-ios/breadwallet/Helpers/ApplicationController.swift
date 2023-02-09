@@ -367,7 +367,7 @@ class ApplicationController: Subscriber {
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
-                guard profile?.status == VerificationStatus.none || profile?.status == .emailPending else { return }
+                guard profile == nil else { return }
                 
                 Store.trigger(name: .handleUserAccount)
                 

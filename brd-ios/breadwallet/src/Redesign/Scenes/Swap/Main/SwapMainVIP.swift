@@ -61,7 +61,6 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var currencies: [Currency] { get set }
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
-    var isKYCLevelTwo: Bool? { get set }
 }
 
 protocol SwapDataPassing {

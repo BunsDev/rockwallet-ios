@@ -45,8 +45,7 @@ class BaseCoordinator: NSObject,
     var parentCoordinator: Coordinatable?
     var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
-    var isKYCLevelTwo: Bool?
-
+    
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -112,7 +111,6 @@ class BaseCoordinator: NSObject,
                     vc?.dataStore?.currencies = currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
-                    vc?.dataStore?.isKYCLevelTwo = self?.isKYCLevelTwo
                 }
             }
         }
@@ -334,12 +332,14 @@ class BaseCoordinator: NSObject,
         switch UserManager.shared.profileResult {
         case .success(let profile):
             let status = profile?.status
-            isKYCLevelTwo = status == .levelTwo(.levelTwo)
             
             if status == VerificationStatus.emailPending
                 || status == VerificationStatus.none {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
+            } else if profile?.isMigrated ?? false || profile?.kycAccessRights.hasBuyAccess ?? false || profile?.kycAccessRights.hasSwapAccess ?? false {
+                completion?(true)
+                return
             } else {
                 let coordinator = KYCCoordinator(navigationController: nvc)
                 coordinator.flow = flow
@@ -349,7 +349,7 @@ class BaseCoordinator: NSObject,
                 navigationController.show(coordinator.navigationController, sender: nil)
                 
                 completion?(false)
-                
+                return
             }
             
         case .failure(let error):

@@ -200,7 +200,7 @@ extension Prompt {
             return !Reachability.isReachable
             
         case .noAccount:
-            return profile == nil
+            return profile == nil || profile?.isMigrated == false
             
         case .kyc:
             return profile?.status.hasKYC == false
@@ -213,6 +213,7 @@ extension Prompt {
             
         case .paperKey:
             return UserDefaults.walletRequiresBackup && !UserDefaults.debugShouldSuppressPaperKeyPrompt
+            
         case .upgradePin:
             return walletAuthenticator?.pinLength != 6
             

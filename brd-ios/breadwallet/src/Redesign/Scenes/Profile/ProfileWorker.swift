@@ -18,7 +18,7 @@ struct ProfileResponseData: ModelResponse {
     let exchangeLimits: [ExchangeLimit]?
     let kycAccessRights: AccessRights?
     let kycFailureReason: String?
-    let isMigrated: Bool?
+    let isRegistered: Bool?
     
     struct Country: Codable {
         let iso2: String
@@ -146,7 +146,7 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                      kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
                                                            hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
                                                            hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false),
-                     isMigrated: response.isMigrated ?? false)
+                     isMigrated: response.isRegistered ?? false)
     }
 }
 
