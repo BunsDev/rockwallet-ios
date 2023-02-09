@@ -166,7 +166,7 @@ class RecoveryKeyFlowController {
             navController.pushViewController(enterPhraseVC, animated: true)
         }
         
-        let introVC = RecoveryKeyIntroViewController()
+        let introVC = UnlinkWalletViewController()
         introVC.exitAction = .unlinkWallet
         introVC.exitCallback = { action in
             if action == .unlinkWallet {

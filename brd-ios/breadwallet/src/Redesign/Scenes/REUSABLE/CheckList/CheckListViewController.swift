@@ -28,7 +28,7 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
     var checkmarks: [ChecklistItemViewModel] { return [] }
     var footerViewModel: LabelViewModel? { return nil }
     
-    private lazy var header: FELabel = {
+    lazy var header: FELabel = {
         let label = FELabel()
         label.configure(with: .init(font: Fonts.Body.two,
                                     textColor: LightColors.Text.two,
@@ -36,7 +36,7 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
         return label
     }()
     
-    private lazy var footer: FELabel = {
+    lazy var footer: FELabel = {
         let label = FELabel()
         label.configure(with: .init(font: Fonts.Body.two,
                                     textColor: LightColors.Text.two,
@@ -142,6 +142,8 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
     @objc func footerTapped() {}
     
     // MARK: - CheckListResponseDisplay
+    
+    func displayVerificationProgress(responseDisplay: CheckListModels.VerificationInProgress.ResponseDisplay) {}
     
     // MARK: - Additional Helpers
 }

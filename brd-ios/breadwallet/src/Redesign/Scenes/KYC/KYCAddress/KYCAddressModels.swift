@@ -52,6 +52,10 @@ enum KYCAddressModels {
         }
     }
     
+    enum Submit {
+        struct ViewAction {}
+    }
+        
     struct SsnInfo {
         struct ViewAction {}
         struct ActionResponse {}

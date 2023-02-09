@@ -19,7 +19,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
     override var dismissText: String {
         return coordinator is AccountCoordinator ? L10n.Button.skip : L10n.Button.close
     }
-    override var closeImage: UIImage? { return Asset.close.image }
+    override var closeImage: UIImage? {
+        return coordinator is AccountCoordinator ? nil : Asset.close.image
+    }
     
     // MARK: - Cleaner Swift setup
     

@@ -15,7 +15,8 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
                               KYCBasicResponseDisplays {
     typealias Models = KYCBasicModels
     
-    override var isModalDismissableEnabled: Bool { return false }
+    override var isModalDismissableEnabled: Bool { return true }
+    override var dismissText: String { return L10n.Button.close }
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Account.personalInformation
@@ -148,7 +149,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func displaySubmit(responseDisplay: KYCBasicModels.Submit.ResponseDisplay) {
-        coordinator?.showKYCAddress()
+        coordinator?.showKYCAddress(firstName: dataStore?.firstName, lastName: dataStore?.lastName, birthDate: dataStore?.birthDateString)
     }
     
     // MARK: - Additional Helpers

@@ -33,8 +33,12 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showKYCAddress() {
-        open(scene: Scenes.KYCAddress)
+    func showKYCAddress(firstName: String?, lastName: String?, birthDate: String?) {
+        open(scene: Scenes.KYCAddress) { vc in
+            vc.dataStore?.firstName = firstName
+            vc.dataStore?.lastName = lastName
+            vc.dataStore?.birthDateString = birthDate
+        }
     }
     
     func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?) {
@@ -105,8 +109,9 @@ extension KYCCoordinator: VeriffSdkDelegate {
             
             switch result.status {
             case .done:
-                self.handleKYCSessionEnd()
-                
+                self.open(scene: Scenes.verificationInProgress) { vc in
+                    vc.navigationItem.hidesBackButton = true
+                }
             case .error(let error):
                 print(error.localizedDescription)
                 
@@ -116,52 +121,6 @@ extension KYCCoordinator: VeriffSdkDelegate {
                 
             default:
                 self.parentCoordinator?.childDidFinish(child: self)
-            }
-        }
-    }
-    
-    private func handleKYCSessionEnd() {
-        UserManager.shared.refresh { [weak self] result in
-            switch result {
-            case .success(let profile):
-                Store.trigger(name: .didApplyKyc)
-                
-                switch profile?.status {
-                case .levelTwo(.levelTwo):
-                    self?.open(scene: Scenes.Success) { vc in
-                        vc.success = .documentVerification
-                    }
-                    
-                case .levelTwo(.declined):
-                    self?.open(scene: Scenes.Failure) { vc in
-                        vc.failure = .documentVerification
-                    }
-                    
-                case .levelTwo(.resubmit):
-                    self?.open(scene: Scenes.Failure) { vc in
-                        vc.failure = .documentVerificationRetry
-                    }
-                    
-                case .levelTwo(.submitted):
-                    // If not confirmed/failed yet check again after delay (can take up to 2 mins)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 15, execute: {
-                        self?.handleKYCSessionEnd()
-                    })
-                    
-                default:
-                    break
-                }
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-                
-                self?.open(scene: Scenes.Failure) { vc in
-                    vc.failure = .documentVerification
-                }
-                
-            default:
-                guard let child = self else { return }
-                self?.parentCoordinator?.childDidFinish(child: child)
             }
         }
     }
