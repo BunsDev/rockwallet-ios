@@ -29,16 +29,10 @@ struct KYCUserInfoRequestData: RequestModelData {
             "address": address,
             "city": city,
             "zip": zip,
-            "country": country
+            "country": country,
+            "state": state,
+            "nolog_ssn": nologSSN
         ]
-        
-        if let state = state {
-            params["state"] = state
-        }
-        
-        if let nologSSN = nologSSN {
-            params["nolog_ssn"] = nologSSN
-        }
         
         return params.compactMapValues { $0 }
     }
