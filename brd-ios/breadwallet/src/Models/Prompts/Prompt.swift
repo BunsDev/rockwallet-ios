@@ -193,17 +193,19 @@ extension Prompt {
     
     // Default implementation based on the type of prompt
     func shouldPrompt(walletAuthenticator: WalletAuthenticator?) -> Bool {
-        let profile = UserManager.shared.profile
-        
         switch type {
         case .noInternet:
             return !Reachability.isReachable
             
         case .noAccount:
-            return profile == nil || profile?.isMigrated == false
+            guard let isMigrated = UserManager.shared.profile?.isMigrated else { return true }
+            
+            return !isMigrated
             
         case .kyc:
-            return profile?.status.hasKYC == false
+            guard let hasKYC = UserManager.shared.profile?.status.hasKYC else { return false }
+            
+            return !hasKYC
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }
