@@ -122,7 +122,7 @@
 		7B05888728A2698A00D7C971 /* PaymentCardsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05888628A2698A00D7C971 /* PaymentCardsWorker.swift */; };
 		7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B08D2252860574F00D65ED9 /* SimpleBackBarButtonItem.swift */; };
 		7B0AE7FB29753CEF0079C7E1 /* PasswordResetWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE7FA29753CEF0079C7E1 /* PasswordResetWorker.swift */; };
-		7B0AE7FD29753D6C0079C7E1 /* WalletAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */; };
+		7B0AE7FD29753D6C0079C7E1 /* WalletEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */; };
 		7B0AE80529768D990079C7E1 /* UserSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE80429768D990079C7E1 /* UserSignature.swift */; };
 		7B0AE807297692140079C7E1 /* DynamicLinksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */; };
 		7B0AE8092976936B0079C7E1 /* SetPasswordWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0AE8082976936B0079C7E1 /* SetPasswordWorker.swift */; };
@@ -131,6 +131,7 @@
 		7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */; };
 		7B1A4690298BEF2500A6F68F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B1A4684298BEF2500A6F68F /* InfoPlist.strings */; };
 		7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */; };
+		7B23D63729923D3D00AC341F /* KYCAuthEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23D63629923D3D00AC341F /* KYCAuthEndpoints.swift */; };
 		7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */; };
 		7B2BF28629659D850037E731 /* RecoveryKeyIntroVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */; };
 		7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */; };
@@ -155,7 +156,7 @@
 		7B54E59B27F4A2B0002DD1E4 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57127F4A2B0002DD1E4 /* AlertHelper.swift */; };
 		7B54E59D27F4A2B0002DD1E4 /* Shadowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57327F4A2B0002DD1E4 /* Shadowable.swift */; };
 		7B54E59E27F4A2B0002DD1E4 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57427F4A2B0002DD1E4 /* DatePickerViewController.swift */; };
-		7B54E59F27F4A2B0002DD1E4 /* KYCAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57627F4A2B0002DD1E4 /* KYCAPI.swift */; };
+		7B54E59F27F4A2B0002DD1E4 /* KYCEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57627F4A2B0002DD1E4 /* KYCEndpoints.swift */; };
 		7B54E5A027F4A2B0002DD1E4 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57727F4A2B0002DD1E4 /* NetworkingError.swift */; };
 		7B54E5A127F4A2B0002DD1E4 /* APIURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57827F4A2B0002DD1E4 /* APIURLHandler.swift */; };
 		7B54E5A227F4A2B0002DD1E4 /* Decodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B54E57927F4A2B0002DD1E4 /* Decodable+Extensions.swift */; };
@@ -473,7 +474,6 @@
 		7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */; };
 		7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDB82528C8684900C287CB /* Amount+Init.swift */; };
 		7EE62495295C141D00FC19CC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE62494295C141D00FC19CC /* main.swift */; };
-		7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE76FC12857648F00724548 /* NewDeviceWorker.swift */; };
 		7EE91A5A2968310100331B1F /* KYCAddressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A532968310100331B1F /* KYCAddressStore.swift */; };
 		7EE91A5B2968310100331B1F /* KYCAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A542968310100331B1F /* KYCAddressPresenter.swift */; };
 		7EE91A5C2968310100331B1F /* KYCAddressModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A552968310100331B1F /* KYCAddressModels.swift */; };
@@ -939,7 +939,7 @@
 		7B05888628A2698A00D7C971 /* PaymentCardsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardsWorker.swift; sourceTree = "<group>"; };
 		7B08D2252860574F00D65ED9 /* SimpleBackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleBackBarButtonItem.swift; sourceTree = "<group>"; };
 		7B0AE7FA29753CEF0079C7E1 /* PasswordResetWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetWorker.swift; sourceTree = "<group>"; };
-		7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAPI.swift; sourceTree = "<group>"; };
+		7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletEndpoints.swift; sourceTree = "<group>"; };
 		7B0AE80429768D990079C7E1 /* UserSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSignature.swift; sourceTree = "<group>"; };
 		7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLinksManager.swift; sourceTree = "<group>"; };
 		7B0AE8082976936B0079C7E1 /* SetPasswordWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordWorker.swift; sourceTree = "<group>"; };
@@ -958,6 +958,7 @@
 		7B1A468E298BEF2500A6F68F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7B1A468F298BEF2500A6F68F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCurrencyHelper.swift; sourceTree = "<group>"; };
+		7B23D63629923D3D00AC341F /* KYCAuthEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAuthEndpoints.swift; sourceTree = "<group>"; };
 		7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroInteractor.swift; sourceTree = "<group>"; };
 		7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroVIP.swift; sourceTree = "<group>"; };
 		7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroPresenter.swift; sourceTree = "<group>"; };
@@ -991,7 +992,7 @@
 		7B54E57127F4A2B0002DD1E4 /* AlertHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		7B54E57327F4A2B0002DD1E4 /* Shadowable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shadowable.swift; sourceTree = "<group>"; };
 		7B54E57427F4A2B0002DD1E4 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
-		7B54E57627F4A2B0002DD1E4 /* KYCAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KYCAPI.swift; sourceTree = "<group>"; };
+		7B54E57627F4A2B0002DD1E4 /* KYCEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KYCEndpoints.swift; sourceTree = "<group>"; };
 		7B54E57727F4A2B0002DD1E4 /* NetworkingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		7B54E57827F4A2B0002DD1E4 /* APIURLHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIURLHandler.swift; sourceTree = "<group>"; };
 		7B54E57927F4A2B0002DD1E4 /* Decodable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+Extensions.swift"; sourceTree = "<group>"; };
@@ -1288,7 +1289,6 @@
 		7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckListInteractor.swift; sourceTree = "<group>"; };
 		7EDDB82528C8684900C287CB /* Amount+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amount+Init.swift"; sourceTree = "<group>"; };
 		7EE62494295C141D00FC19CC /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = src/main.swift; sourceTree = "<group>"; };
-		7EE76FC12857648F00724548 /* NewDeviceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceWorker.swift; sourceTree = "<group>"; };
 		7EE91A532968310100331B1F /* KYCAddressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressStore.swift; sourceTree = "<group>"; };
 		7EE91A542968310100331B1F /* KYCAddressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressPresenter.swift; sourceTree = "<group>"; };
 		7EE91A552968310100331B1F /* KYCAddressModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCAddressModels.swift; sourceTree = "<group>"; };
@@ -1998,8 +1998,10 @@
 			children = (
 				7B54E57F27F4A2B0002DD1E4 /* Workers */,
 				7B54E57B27F4A2B0002DD1E4 /* Models */,
-				7B54E57627F4A2B0002DD1E4 /* KYCAPI.swift */,
-				7B0AE7FC29753D6C0079C7E1 /* WalletAPI.swift */,
+				7B54E57627F4A2B0002DD1E4 /* KYCEndpoints.swift */,
+				7B23D63629923D3D00AC341F /* KYCAuthEndpoints.swift */,
+				7ECCA98E2873059300F99368 /* ExchangeEndpoints.swift */,
+				7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */,
 				7B54E57727F4A2B0002DD1E4 /* NetworkingError.swift */,
 				7B54E57827F4A2B0002DD1E4 /* APIURLHandler.swift */,
 				7B54E57927F4A2B0002DD1E4 /* Decodable+Extensions.swift */,
@@ -2205,7 +2207,6 @@
 			isa = PBXGroup;
 			children = (
 				7B7863192874266A0092F35B /* SwapCoordinator.swift */,
-				7ECCA98E2873059300F99368 /* ExchangeEndpoints.swift */,
 				7E516D7828B4E83000BBB702 /* ExchangeManager.swift */,
 				7BD88B5128D9D371003A766B /* Views */,
 				7E52B79E286EF4CE003D2249 /* Workers */,
@@ -2696,7 +2697,6 @@
 				7EBC6B032848ABC5000A301F /* RegistrationConfirmationViewController.swift */,
 				7EBC6B042848ABC5000A301F /* RegistrationConfirmationInteractor.swift */,
 				7E67680228479765007EC155 /* ResendConfirmationWorker.swift */,
-				7EE76FC12857648F00724548 /* NewDeviceWorker.swift */,
 				7EF45F90284777AC00D1F7B0 /* RegistrationConfirmationWorker.swift */,
 			);
 			path = RegistrationConfirmation;
@@ -4041,7 +4041,6 @@
 				7E5CB39F2835090E00EC787E /* VIPViewController.swift in Sources */,
 				CECCE5AE1E04AD6300D99448 /* AddressCell.swift in Sources */,
 				7C377EC220F6C29E00E8CF1C /* UIAlertController+Additions.swift in Sources */,
-				7EE76FC22857648F00724548 /* NewDeviceWorker.swift in Sources */,
 				7ED83AF8284F40EB00261565 /* CheckListStore.swift in Sources */,
 				3A6FD42D24E456B800068ECE /* KeyStoreUtils.swift in Sources */,
 				7EF45F4F2845352400D1F7B0 /* KYCBasicInteractor.swift in Sources */,
@@ -4236,7 +4235,7 @@
 				7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */,
 				7EF45F8D284768C100D1F7B0 /* ItemSelectionCoordinator.swift in Sources */,
 				7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */,
-				7B0AE7FD29753D6C0079C7E1 /* WalletAPI.swift in Sources */,
+				7B0AE7FD29753D6C0079C7E1 /* WalletEndpoints.swift in Sources */,
 				7EF45F582845353100D1F7B0 /* DateView.swift in Sources */,
 				3AFAD9302567EE15005853E8 /* GiftViewController.swift in Sources */,
 				7E5CB3952835090E00EC787E /* MessageVIP.swift in Sources */,
@@ -4276,10 +4275,11 @@
 				7C72D134226625130091B185 /* CoreSystem.swift in Sources */,
 				7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */,
 				CE3D4C571EF5D5740016B1C8 /* ReachabilityMonitor.swift in Sources */,
-				7B54E59F27F4A2B0002DD1E4 /* KYCAPI.swift in Sources */,
+				7B54E59F27F4A2B0002DD1E4 /* KYCEndpoints.swift in Sources */,
 				7EB8FD292897F22B000FF75C /* CardSelectionView.swift in Sources */,
 				7EC21A22289946C300FED711 /* CardSelectionViewController.swift in Sources */,
 				7CBA74E62022784D00FBBFA9 /* HomeScreenAssetViewModel.swift in Sources */,
+				7B23D63729923D3D00AC341F /* KYCAuthEndpoints.swift in Sources */,
 				7CA1C47420EC25B9002E9E68 /* QRCode.swift in Sources */,
 				7BBBF4DB287421CF00E4D36B /* SwapInteractor.swift in Sources */,
 				7EE91A5E2968310100331B1F /* KYCAddressViewController.swift in Sources */,

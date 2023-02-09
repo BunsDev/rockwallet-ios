@@ -127,7 +127,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
         
         let profile = UserManager.shared.profile
-        let lifetimeLimit = profile?.buyLifetimeRemainingLimit ?? 0
+        let lifetimeLimit = profile?.buyAllowanceLifetime ?? 0
         
         switch fiat {
         case _ where fiat <= 0:

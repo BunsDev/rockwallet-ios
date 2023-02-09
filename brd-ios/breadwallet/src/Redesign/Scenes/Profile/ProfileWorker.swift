@@ -10,228 +10,148 @@
 
 import Foundation
 
-enum CustomerRole: String, Codable {
-    case customer
-    case unverified
-    case kyc1
-    case kyc2
-}
-
-struct Limits: Codable {
-    var exchangeType: ExchangeType?
-    var interval: Interval?
-    var limit: Decimal?
-    var isCustom: Bool?
-}
-
-enum ExchangeFlow {
-    case buy
-    case swap
-}
-
-enum ExchangeType: String, Codable {
-    case swap = "SWAP"
-    case buyCard = "BUY_CARD"
-    case buyAch = "BUY_ACH"
-    case sell = "SELL_ACH"
-}
-
-enum Interval: String, Codable {
-    case daily = "DAILY"
-    case weekly = "WEEKLY"
-    case monthly = "MONTHLY"
-    case lifetime = "LIFETIME"
-    case perExchange = "PER_EXCHANGE"
-    case minimum = "MINIMUM"
-}
-
 struct ProfileResponseData: ModelResponse {
-    var country: String?
-    var state: String?
-    var dateOfBirth: String?
-    var firstName: String?
-    var lastName: String?
-    var email: String?
-    var kycStatus: String?
-    var kycFailureReason: String?
-    var roles: [CustomerRole]
-    var limits: [Limits]?
+    let email: String?
+    let country: Country?
+    let state: Country?
+    let kycStatus: String?
+    let exchangeLimits: [ExchangeLimit]?
+    let kycAccessRights: AccessRights?
+    let kycFailureReason: String?
+    let isRegistered: Bool?
     
-    var exchangeLimits: ExchangeLimits?
-    var kycAccessRights: AccessRights?
-    
-    struct ExchangeLimits: Codable {
-        var swapAllowanceLifetime: Decimal
-        var swapAllowanceDaily: Decimal
-        var swapAllowancePerExchange: Decimal
-        var usedSwapLifetime: Decimal
-        var usedSwapDaily: Decimal
-        
-        var buyAllowanceLifetime: Decimal
-        var buyAllowanceDaily: Decimal
-        var buyAllowancePerPurchase: Decimal
-        var usedBuyLifetime: Decimal
-        var usedBuyDaily: Decimal
-        
-        var buyAchAllowanceLifetime: Decimal
-        var buyAchAllowanceDaily: Decimal
-        var buyAchAllowancePerPurchase: Decimal
-        var usedBuyAchLifetime: Decimal
-        var usedBuyAchDaily: Decimal
+    struct Country: Codable {
+        let iso2: String
+        let name: String
     }
     
     struct AccessRights: Codable {
-        var hasSwapAccess: Bool
-        var hasBuyAccess: Bool
-        var hasAchAccess: Bool
-        var restrictionReason: String?
+        let hasSwapAccess: Bool
+        let hasBuyAccess: Bool
+        let hasAchAccess: Bool
+        let restrictionReason: String?
+    }
+    
+    struct ExchangeLimit: Codable {
+        let exchangeType: ExchangeType?
+        let interval: Interval?
+        let limit: Decimal?
+        let isCustom: Bool?
+        
+        enum ExchangeType: String, Codable {
+            case swap = "SWAP"
+            case buyCard = "BUY_CARD"
+            case buyAch = "BUY_ACH"
+            case sell = "SELL_ACH"
+        }
+        
+        enum Interval: String, Codable {
+            case daily = "DAILY"
+            case weekly = "WEEKLY"
+            case monthly = "MONTHLY"
+            case lifetime = "LIFETIME"
+            case perExchange = "PER_EXCHANGE"
+            case minimum = "MINIMUM"
+        }
     }
 }
 
 struct Profile: Model {
-    var country: String?
-    var state: String?
-    var dateOfBirth: String?
-    var firstName: String?
-    var lastName: String?
-    var email: String?
-    var status: VerificationStatus
-    var failureReason: String?
+    let email: String
+    let country: Country
+    let state: Country
+    let status: VerificationStatus
+    let limits: [ProfileResponseData.ExchangeLimit]
+    let kycAccessRights: AccessRights
+    let isMigrated: Bool
     
-    var swapAllowanceLifetime: Decimal
-    var swapAllowanceDaily: Decimal
-    var swapAllowancePerExchange: Decimal
-    var usedSwapLifetime: Decimal
-    var usedSwapDaily: Decimal
-    
-    var buyAllowanceLifetime: Decimal
-    var buyAllowanceDaily: Decimal
-    var buyAllowancePerPurchase: Decimal
-    var usedBuyLifetime: Decimal
-    var usedBuyDaily: Decimal
-    
-    var achAllowanceLifetime: Decimal
-    var achAllowanceDaily: Decimal
-    var achAllowancePerPurchase: Decimal
-    var usedAchLifetime: Decimal
-    var usedAchDaily: Decimal
-    
-    var roles: [CustomerRole]
-    
-    var canBuy: Bool
-    var canSwap: Bool
-    var canUseAch: Bool
-    var restrictionReason: String?
-    var limits: [Limits]?
-    
-    var swapDailyRemainingLimit: Decimal {
-        return swapAllowanceDaily - usedSwapDaily
+    struct Country {
+        let iso2: String
+        let name: String
     }
     
-    var swapLifetimeRemainingLimit: Decimal {
-        return swapAllowanceLifetime - usedSwapLifetime
+    struct AccessRights {
+        let hasSwapAccess: Bool
+        let hasBuyAccess: Bool
+        let hasAchAccess: Bool
     }
     
-    var buyDailyRemainingLimit: Decimal {
-        return buyAllowanceDaily - usedBuyDaily
+    var swapAllowanceLifetime: Decimal {
+        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .swap })?.limit ?? 0
+    }
+    var swapAllowanceDaily: Decimal {
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .swap })?.limit ?? 0
     }
     
-    var buyLifetimeRemainingLimit: Decimal {
-        return buyAllowanceLifetime - usedBuyLifetime
+    var swapAllowancePerExchange: Decimal {
+        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .swap })?.limit ?? 0
     }
     
-    var achDailyRemainingLimit: Decimal {
-        return achAllowanceDaily - usedAchDaily
+    var buyAllowanceLifetime: Decimal {
+        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .buyCard })?.limit ?? 0
+    }
+    var buyAllowanceDaily: Decimal {
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
+    }
+    var buyAllowancePerPurchase: Decimal {
+        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     
-    var achLifetimeRemainingLimit: Decimal {
-        return achAllowanceLifetime - usedAchLifetime
+    var achAllowanceLifetime: Decimal {
+        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .buyAch })?.limit ?? 0
+    }
+    var achAllowanceDaily: Decimal {
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyAch })?.limit ?? 0
+    }
+    var achAllowancePerPurchase: Decimal {
+        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyAch })?.limit ?? 0
     }
     
     var buyAllowanceWeekly: Decimal {
-        return limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .weekly && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     var buyAllowanceMonthly: Decimal {
-        return limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .monthly && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     var buyAllowanceDailyMin: Decimal {
-        return limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .minimum && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     var buyAllowanceDailyMax: Decimal {
-        return limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     
     var achAllowanceWeekly: Decimal {
-        return limits?.first(where: { $0.interval == .weekly && $0.exchangeType == .buyAch })?.limit ?? 0
+        return limits.first(where: { $0.interval == .weekly && $0.exchangeType == .buyAch })?.limit ?? 0
     }
     var achAllowanceMonthly: Decimal {
-        return limits?.first(where: { $0.interval == .monthly && $0.exchangeType == .buyAch })?.limit ?? 0
+        return limits.first(where: { $0.interval == .monthly && $0.exchangeType == .buyAch })?.limit ?? 0
     }
     var achAllowanceDailyMin: Decimal {
-        return limits?.first(where: { $0.interval == .minimum && $0.exchangeType == .buyAch })?.limit ?? 0
+        return limits.first(where: { $0.interval == .minimum && $0.exchangeType == .buyAch })?.limit ?? 0
     }
     var achAllowanceDailyMax: Decimal {
-        return limits?.first(where: { $0.interval == .daily && $0.exchangeType == .buyAch })?.limit ?? 0
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyAch })?.limit ?? 0
     }
 }
 
 class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
     override func getModel(from response: ProfileResponseData?) -> Profile? {
         guard let response = response else { return nil }
-        let limits = response.exchangeLimits
         
-        let swapAllowanceLifetime = limits?.swapAllowanceLifetime ?? 0
-        let swapAllowanceDaily = limits?.swapAllowanceDaily ?? 0
-        let swapAllowancePerExchange = limits?.swapAllowancePerExchange ?? 0
-        let usedSwapDaily = limits?.usedSwapDaily ?? 0
-        let usedBuyLifetime = limits?.usedBuyLifetime ?? 0
-        
-        let buyAllowanceLifetime = limits?.buyAllowanceLifetime ?? 0
-        let buyAllowanceDaily = limits?.buyAllowanceDaily ?? 0
-        let buyAllowancePerPurchase = limits?.buyAllowancePerPurchase ?? 0
-        let usedSwapLifetime = limits?.usedSwapLifetime ?? 0
-        let usedBuyDaily = limits?.usedBuyDaily ?? 0
-        
-        let achAllowanceLifetime = limits?.buyAchAllowanceLifetime ?? 0
-        let achAllowanceDaily = limits?.buyAchAllowanceDaily ?? 0
-        let achAllowancePerPurchase = limits?.buyAchAllowancePerPurchase ?? 0
-        let usedAchLifetime = limits?.usedBuyAchLifetime ?? 0
-        let usedAchDaily = limits?.usedBuyAchDaily ?? 0
-        
-        return .init(country: response.country,
-                     state: response.state,
-                     dateOfBirth: response.dateOfBirth,
-                     firstName: response.firstName,
-                     lastName: response.lastName,
-                     email: response.email,
-                     status: .init(rawValue: response.kycStatus),
-                     failureReason: response.kycFailureReason,
-                     swapAllowanceLifetime: swapAllowanceLifetime,
-                     swapAllowanceDaily: swapAllowanceDaily,
-                     swapAllowancePerExchange: swapAllowancePerExchange,
-                     usedSwapLifetime: usedSwapLifetime,
-                     usedSwapDaily: usedSwapDaily,
-                     buyAllowanceLifetime: buyAllowanceLifetime,
-                     buyAllowanceDaily: buyAllowanceDaily,
-                     buyAllowancePerPurchase: buyAllowancePerPurchase,
-                     usedBuyLifetime: usedBuyLifetime,
-                     usedBuyDaily: usedBuyDaily,
-                     achAllowanceLifetime: achAllowanceLifetime,
-                     achAllowanceDaily: achAllowanceDaily,
-                     achAllowancePerPurchase: achAllowancePerPurchase,
-                     usedAchLifetime: usedAchLifetime,
-                     usedAchDaily: usedAchDaily,
-                     roles: response.roles,
-                     canBuy: response.kycAccessRights?.hasBuyAccess ?? false,
-                     canSwap: response.kycAccessRights?.hasSwapAccess ?? false,
-                     canUseAch: response.kycAccessRights?.hasAchAccess ?? false,
-                     restrictionReason: response.kycAccessRights?.restrictionReason,
-                     limits: response.limits)
+        return .init(email: response.email ?? "",
+                     country: Profile.Country(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
+                     state: Profile.Country(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
+                     status: VerificationStatus(rawValue: response.kycStatus),
+                     limits: response.exchangeLimits ?? [],
+                     kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                                           hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
+                                                           hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false),
+                     isMigrated: response.isRegistered ?? false)
     }
 }
 
 class ProfileWorker: BaseApiWorker<ProfileMapper> {
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(KYCAuthEndpoints.profile)
+        return APIURLHandler.getUrl(WalletEndpoints.profile)
     }
 }

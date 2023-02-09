@@ -367,28 +367,12 @@ class ApplicationController: Subscriber {
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
-                guard profile?.status == VerificationStatus.none || profile?.status == .emailPending || profile?.roles.contains(.unverified) == true else { return }
+                guard profile == nil else { return }
                 
                 Store.trigger(name: .handleUserAccount)
                 
-            case .failure:
-                if let token = UserDefaults.walletTokenValue {
-                    let newDeviceRequestData = NewDeviceRequestData(token: token)
-                    NewDeviceWorker().execute(requestData: newDeviceRequestData) { [weak self] result in
-                        switch result {
-                        case .success(let data):
-                            UserDefaults.email = data?.email
-                            UserDefaults.kycSessionKeyValue = data?.sessionKey
-                            
-                            Store.trigger(name: .handleUserAccount)
-                            
-                        case .failure(let error):
-                            guard let error = error as? NetworkingError, error != .dataUnavailable else { return }
-                            
-                            self?.coordinator?.showToastMessage(with: error)
-                        }
-                    }
-                }
+            case .failure(let error):
+                self?.coordinator?.showToastMessage(with: error)
                 
             default:
                 return

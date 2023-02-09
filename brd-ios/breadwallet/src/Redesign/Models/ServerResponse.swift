@@ -17,7 +17,6 @@ struct ServerResponse: Decodable {
     
     var result: String?
     var error: ServerError?
-    var data: Data?
     var errorType: String?
     
     struct ServerError: Decodable, FEError {

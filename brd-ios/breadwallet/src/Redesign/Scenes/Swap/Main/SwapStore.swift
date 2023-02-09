@@ -51,8 +51,6 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     
-    var isKYCLevelTwo: Bool?
-    
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),

@@ -12,22 +12,32 @@ import UIKit
 
 class RegistrationMapper: ModelMapper<RegistrationResponseData, RegistrationData> {
     override func getModel(from response: RegistrationResponseData?) -> RegistrationData? {
-        guard let key = response?.sessionKey else {
+        guard let sessionKey = response?.sessionKey, let sessionKeyHash = response?.sessionKeyHash else {
             return nil
         }
-        return .init(sessionKey: key)
+        
+        return .init(sessionKey: sessionKey, sessionKeyHash: sessionKeyHash)
     }
 }
 
 struct RegistrationResponseData: ModelResponse {
-    var data: [String: String]?
+    struct SessionData: ModelResponse {
+        let sessionKey, sessionKeyHash: String?
+    }
+    
+    var data: SessionData?
+    
     var sessionKey: String? {
-        return data?["sessionKey"]
+        return data?.sessionKey
+    }
+    var sessionKeyHash: String? {
+        return data?.sessionKeyHash
     }
 }
 
 struct RegistrationData: Model {
     var sessionKey: String?
+    var sessionKeyHash: String?
 }
 
 struct RegistrationRequestData: RequestModelData {

@@ -38,7 +38,7 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         
         let isPasswordValid = dataStore?.password.isValidPassword ?? false
         let isPasswordEmpty = dataStore?.password.isEmpty == true
-        let passwordState: DisplayState? = isPasswordEmpty || isPasswordValid ? nil : .error
+        let passwordState: DisplayState? = !isPasswordEmpty || isPasswordValid ? nil : .error
         
         presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
                                                          password: viewAction.password,
@@ -63,10 +63,11 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         RegistrationWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
-                guard let sessionKey = data?.sessionKey else { return }
+                guard let sessionKey = data?.sessionKey, let sessionKeyHash = data?.sessionKeyHash else { return }
                 
                 UserDefaults.email = email
                 UserDefaults.kycSessionKeyValue = sessionKey
+                UserDefaults.sessionTokenHash = sessionKeyHash
                 
                 UserManager.shared.refresh { _ in
                     Store.trigger(name: .didCreateAccount)

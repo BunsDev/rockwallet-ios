@@ -8,7 +8,6 @@
 
 import UIKit
 import LocalAuthentication
-import MobileIntelligence
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -22,14 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIView.swizzleSetFrame()
         applicationController.launch(application: application, options: launchOptions)
-        
-        let options = OptionsBuilder()
-            .setClientId(with: E.sardineClientId)
-            .setSessionKey(with: UserDefaults.sessionToken)
-            .setEnvironment(with: E.isSandbox ? Options.ENV_SANDBOX : Options.ENV_PRODUCTION)
-            .build()
-
-        MobileIntelligence(withOptions: options)
         
         return true
     }
