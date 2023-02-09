@@ -45,8 +45,7 @@ class BaseCoordinator: NSObject,
     var parentCoordinator: Coordinatable?
     var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
-    var isKYCLevelTwo: Bool?
-
+    
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -62,7 +61,7 @@ class BaseCoordinator: NSObject,
         let coordinator: Coordinatable
         
         if let profile = UserManager.shared.profile,
-           profile.email?.isEmpty == false,
+           profile.email.isEmpty == false,
            profile.status == .emailPending {
             coordinator = AccountCoordinator(navigationController: nvc)
         } else {
@@ -98,10 +97,10 @@ class BaseCoordinator: NSObject,
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .swap, role: .kyc1) { showPopup in
+            upgradeAccountOrShowPopup(flow: .swap) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.canSwap == false {
+                if UserManager.shared.profile?.kycAccessRights.hasSwapAccess == false {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
@@ -112,7 +111,6 @@ class BaseCoordinator: NSObject,
                     vc?.dataStore?.currencies = currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
-                    vc?.dataStore?.isKYCLevelTwo = self?.isKYCLevelTwo
                 }
             }
         }
@@ -120,17 +118,17 @@ class BaseCoordinator: NSObject,
     
     func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
+            upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.canBuy == false, type == .card {
+                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
                     return
                 }
                 
-                if UserManager.shared.profile?.canUseAch == false, type == .ach {
+                if UserManager.shared.profile?.kycAccessRights.hasAchAccess == false, type == .ach {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem
@@ -151,10 +149,10 @@ class BaseCoordinator: NSObject,
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
+            upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.canUseAch == false {
+                if UserManager.shared.profile?.kycAccessRights.hasAchAccess == false {
                     self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .sell
                     }
@@ -322,8 +320,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    // TODO: refactor this once the "coming soon" screen is added
-    func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
+    func upgradeAccountOrShowPopup(flow: ProfileModels.ExchangeFlow? = nil, completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return
@@ -334,44 +331,25 @@ class BaseCoordinator: NSObject,
         
         switch UserManager.shared.profileResult {
         case .success(let profile):
-            let roles = profile?.roles
             let status = profile?.status
-            isKYCLevelTwo = status == .levelTwo(.levelTwo)
             
-            if roles?.contains(.unverified) == true
-                || roles?.isEmpty == true
-                || status == VerificationStatus.emailPending
+            if status == VerificationStatus.emailPending
                 || status == VerificationStatus.none {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
-            } else if let kycLevel = role,
-                      roles?.contains(kycLevel) == true {
+            } else if profile?.isMigrated ?? false || profile?.kycAccessRights.hasBuyAccess ?? false || profile?.kycAccessRights.hasSwapAccess ?? false {
                 completion?(true)
-            } else if role == nil {
-                completion?(true)
-            } else if let role = role {
-                if profile?.status.isVerified(for: role) == true {
-                    // new verirication (if user upgraded was used in sprint_5, this verification is needed
-                    completion?(true)
-                    return
-                    
-                } else if profile?.roles.contains(role) == true {
-                    // normal sprint_4 users (till they create profile in sprint_5)
-                    completion?(true)
-                    return
-                    
-                } else {
-                    let coordinator = KYCCoordinator(navigationController: nvc)
-                    coordinator.role = role
-                    coordinator.flow = flow
-                    coordinator.start()
-                    coordinator.parentCoordinator = self
-                    childCoordinators.append(coordinator)
-                    navigationController.show(coordinator.navigationController, sender: nil)
-                    
-                    completion?(false)
-                    
-                }
+                return
+            } else {
+                let coordinator = KYCCoordinator(navigationController: nvc)
+                coordinator.flow = flow
+                coordinator.start()
+                coordinator.parentCoordinator = self
+                childCoordinators.append(coordinator)
+                navigationController.show(coordinator.navigationController, sender: nil)
+                
+                completion?(false)
+                return
             }
             
         case .failure(let error):
@@ -399,18 +377,6 @@ class BaseCoordinator: NSObject,
         navigationController.show(coordinator.navigationController, sender: nil)
         
         completion?(false)
-    }
-    
-    private func checkProfileforRole(role: CustomerRole = .kyc1, completion: ((Bool) -> Void)?) {
-        UserManager.shared.refresh { result in
-            guard case let .success(profile) = result,
-                  profile?.roles.contains(role) == true
-            else {
-                completion?(false)
-                return
-            }
-            completion?(true)
-        }
     }
     
     func showBottomSheetAlert(type: AlertType, completion: (() -> Void)? = nil) {

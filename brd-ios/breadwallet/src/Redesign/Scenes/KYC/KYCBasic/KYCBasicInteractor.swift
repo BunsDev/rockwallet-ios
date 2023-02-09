@@ -17,7 +17,7 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
     // MARK: - KYCBasicViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        UserManager.shared.refresh { [weak self] result in
+        UserInformationWorker().execute { [weak self] result in
             switch result {
             case .success(let profileData):
                 self?.dataStore?.firstName = profileData?.firstName
@@ -34,8 +34,6 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
                 self?.presenter?.presentData(actionResponse: .init(item: self?.dataStore))
                 self?.presenter?.presentError(actionResponse: .init(error: error))
                 
-            default:
-                return
             }
         }
     }

@@ -33,7 +33,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency),
                                                                                      paymentCard: self?.dataStore?.selected,
                                                                                      type: self?.dataStore?.paymentMethod,
-                                                                                     achEnabled: UserManager.shared.profile?.canUseAch)))
+                                                                                     achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
                 self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
                                                                      card: self?.dataStore?.selected,
                                                                      type: self?.dataStore?.paymentMethod,

@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import MobileIntelligence
 import Lottie
 
 class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
@@ -166,6 +167,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         super.viewDidAppear(animated)
         
         PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: walletAuthenticator, on: self)
+        
+        // Deinitialize Sardine
+        let options = OptionsBuilder().build()
+        MobileIntelligence(withOptions: options)
     }
     
     override func viewDidLoad() {

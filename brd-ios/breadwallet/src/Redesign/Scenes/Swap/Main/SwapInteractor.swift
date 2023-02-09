@@ -50,8 +50,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 
                 let item = Models.Item(from: self?.dataStore?.from,
                                        to: self?.dataStore?.to,
-                                       quote: self?.dataStore?.quote,
-                                       isKYCLevelTwo: self?.dataStore?.isKYCLevelTwo)
+                                       quote: self?.dataStore?.quote)
                 self?.presenter?.presentData(actionResponse: .init(item: item))
                 self?.getExchangeRate(viewAction: .init(getFees: false))
                 
