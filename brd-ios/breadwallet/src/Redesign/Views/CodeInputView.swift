@@ -126,7 +126,7 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         
         let textArray = Array(text)
         for (index, field) in inputStack.arrangedSubviews.enumerated() {
-            var value: String?
+            var value = ""
             if textArray.count > index {
                 value = String(textArray[index])
             }
