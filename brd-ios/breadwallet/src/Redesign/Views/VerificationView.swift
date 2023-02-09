@@ -17,8 +17,8 @@ enum Kyc2: String, Equatable {
     case levelTwo = "KYC2"
     case resubmit = "KYC2_RESUBMISSION_REQUESTED"
     case declined = "KYC2_DECLINED"
-    case KYCwithSSN = "KYC_WITH_SSN"
-    case KYCwithoutSSN = "KYC_WITHOUT_SSN"
+    case kycWithSsn = "KYC_WITH_SSN"
+    case kycWithoutSsn = "KYC_WITHOUT_SSN"
 }
 
 enum VerificationStatus: Equatable {
@@ -123,7 +123,7 @@ enum VerificationStatus: Equatable {
                                  status: VerificationStatus.emailPending,
                                  description: .text(L10n.Account.verifiedAccountMessage),
                                  dismissType: .persistent)
-        case .levelTwo(.levelTwo), .levelTwo(.KYCwithSSN), .levelTwo(.KYCwithoutSSN):
+        case .levelTwo(.levelTwo), .levelTwo(.kycWithSsn), .levelTwo(.kycWithoutSsn):
             return InfoViewModel(kyc: .levelTwo, headerTitle: .text(L10n.Account.accountLimits),
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.levelTwo(.levelTwo),
@@ -163,7 +163,7 @@ extension VerificationStatus {
             return self == .levelOne || self == .levelTwo(.levelTwo)
             
         case .kyc2:
-            return self == .levelTwo(.levelTwo) || self == .levelTwo(.KYCwithoutSSN) || self == .levelTwo(.KYCwithSSN)
+            return self == .levelTwo(.levelTwo) || self == .levelTwo(.kycWithoutSsn) || self == .levelTwo(.kycWithSsn)
             
         default:
             return false

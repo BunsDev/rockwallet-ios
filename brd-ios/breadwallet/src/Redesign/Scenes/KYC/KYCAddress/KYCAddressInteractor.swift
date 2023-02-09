@@ -69,7 +69,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
                                           zip: dataStore?.postalCode ?? "",
                                           country: dataStore?.country ?? "",
                                           state: dataStore?.state,
-                                          nologSSN: nil)
+                                          nologSSN: nil) // TODO: Pass SSN when implemented
         
         KYCSubmitInfoWorker().execute(requestData: data) { [weak self] result in
             switch result {
@@ -79,7 +79,6 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
-            
         }
     }
     

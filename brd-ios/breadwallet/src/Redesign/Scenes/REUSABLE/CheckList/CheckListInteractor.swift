@@ -35,7 +35,6 @@ class CheckListInteractor: NSObject, Interactor, CheckListViewActions {
                 default:
                     // waiting for verification, check every 30 seconds
                     DispatchQueue.main.asyncAfter(deadline: .now() + 30, execute: {
-                        print("checking verification status again")
                         self?.checkVerificationProgress(viewAction: .init())
                     })
                 }

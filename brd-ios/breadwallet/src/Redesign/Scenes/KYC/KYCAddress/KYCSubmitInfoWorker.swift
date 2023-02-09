@@ -40,7 +40,7 @@ struct KYCUserInfoRequestData: RequestModelData {
             params["nolog_ssn"] = nologSSN
         }
         
-        return params
+        return params.compactMapValues { $0 }
     }
 }
 
