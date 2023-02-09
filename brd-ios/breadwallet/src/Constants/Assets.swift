@@ -290,6 +290,7 @@ internal enum Asset {
   internal static let check = ImageAsset(name: "check")
   internal static let check2Circled = ImageAsset(name: "check2-circled")
   internal static let check2 = ImageAsset(name: "check2")
+  internal static let checkboxSelectedCircle = ImageAsset(name: "checkbox-selected-circle")
   internal static let checkboxSelected = ImageAsset(name: "checkbox-selected")
   internal static let checkbox = ImageAsset(name: "checkbox")
   internal static let checked = ImageAsset(name: "checked")

@@ -157,7 +157,8 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()
-        interactor?.startExternalKYC(viewAction: .init())
+        
+        interactor?.submitInfo(viewAction: .init())
     }
     
     private func ssnInfoTapped() {

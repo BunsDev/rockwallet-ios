@@ -731,6 +731,9 @@
 		CEF3E8341DE57166007C0A9E /* AnimatableIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3E8331DE57166007C0A9E /* AnimatableIcon.swift */; };
 		CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */; };
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
+		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
+		D7F0AF33298D378700474E5C /* verificationLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = D7F0AF32298D378700474E5C /* verificationLoader.json */; };
+		D7F7595E299236E100FB4BFA /* KYCSubmitInfoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1523,6 +1526,9 @@
 		CEF3E8331DE57166007C0A9E /* AnimatableIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatableIcon.swift; path = src/Views/AnimatedIcons/AnimatableIcon.swift; sourceTree = "<group>"; };
 		CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AmountViewController.swift; path = src/ViewControllers/AmountViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
+		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
+		D7F0AF32298D378700474E5C /* verificationLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = verificationLoader.json; sourceTree = "<group>"; };
+		D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitInfoWorker.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2274,6 +2280,7 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				D7F0AF21298D2D3A00474E5C /* VerificationInProgress */,
 				7B60825B29700B1600C4736B /* SetPassword */,
 				7B3947822970007A007D405E /* ForgotPassword */,
 				7BF5D4F0296D4F9C00942ADB /* SignUp */,
@@ -2659,6 +2666,7 @@
 		7EAFC5F52941EC4B00A7FF26 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				D7F0AF32298D378700474E5C /* verificationLoader.json */,
 				7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */,
 			);
 			name = Animations;
@@ -2756,6 +2764,7 @@
 				7EE91A572968310100331B1F /* KYCAddressViewController.swift */,
 				7EE91A582968310100331B1F /* KYCAddressInteractor.swift */,
 				7BC3F045294C6F8300947526 /* VeriffSessionWorker.swift */,
+				D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */,
 			);
 			path = KYCAddress;
 			sourceTree = "<group>";
@@ -3368,6 +3377,14 @@
 			name = AnimatedIcons;
 			sourceTree = "<group>";
 		};
+		D7F0AF21298D2D3A00474E5C /* VerificationInProgress */ = {
+			isa = PBXGroup;
+			children = (
+				D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */,
+			);
+			path = VerificationInProgress;
+			sourceTree = "<group>";
+		};
 		E843C10F2188CBDA00F46672 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -3656,6 +3673,7 @@
 				CE29901A1EFD6DE50093A0F2 /* Localizable.strings in Resources */,
 				75A2A79B1DA5934300A983D8 /* Assets.xcassets in Resources */,
 				7BDB4A102806FA190031F015 /* brd-tokens-staging.tar in Resources */,
+				D7F0AF33298D378700474E5C /* verificationLoader.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4162,6 +4180,7 @@
 				C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */,
 				7EF45F542845352400D1F7B0 /* KYCBasicModels.swift in Sources */,
 				7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */,
+				D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */,
 				7ECCA99D28745E0400F99368 /* AssetView.swift in Sources */,
 				7E42ACCA293F3BA700E1FC26 /* PlaidEventWorker.swift in Sources */,
 				7C35E712200AC2080064808F /* TxViewModel.swift in Sources */,
@@ -4209,6 +4228,7 @@
 				7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */,
 				7C787AE221ED89510017EA7E /* KeyStore.swift in Sources */,
 				CEAA9E911DC0FDFE0066731D /* UIViewPropertyAnimator+Extensions.swift in Sources */,
+				D7F7595E299236E100FB4BFA /* KYCSubmitInfoWorker.swift in Sources */,
 				7B9434312886A7FA00638703 /* DeleteProfileInfoInteractor.swift in Sources */,
 				7B54E5A027F4A2B0002DD1E4 /* NetworkingError.swift in Sources */,
 				7ED83AF6284F40EB00261565 /* ChecklistItemView.swift in Sources */,
