@@ -38,7 +38,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
         case .cityAndState:
-            cell = self.tableView(tableView, cityAndZipPostalCellForRowAt: indexPath)
+            cell = self.tableView(tableView, cityAndStateCellForRowAt: indexPath)
             
         case .address:
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
@@ -80,7 +80,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, cityAndZipPostalCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cityAndStateCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
               let model = sectionRows[section]?[indexPath.row] as? DoubleHorizontalTextboxViewModel else {
