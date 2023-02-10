@@ -83,15 +83,14 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     func tableView(_ tableView: UITableView, cityAndStateCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? DoubleHorizontalTextboxViewModel else {
+              var model = sectionRows[section]?[indexPath.row] as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
         }
         
         cell.setup { view in
             view.configure(with: .init())
+            model.isUserInteractionEnabled = dataStore?.country != C.countryUS
             view.setup(with: model)
-            
-            view.secondaryTextField.isUserInteractionEnabled = dataStore?.country != C.countryUS
             
             view.finishedEditing = { [weak self] first, second in
                 self?.interactor?.formUpdated(viewAction: .init(section: section, value: (first, second)))

@@ -18,6 +18,7 @@ struct DoubleHorizontalTextboxViewModel: ViewModel {
     var secondaryTitle: LabelViewModel?
     var primary: TextFieldModel?
     var secondary: TextFieldModel?
+    var isUserInteractionEnabled: Bool?
 }
 
 class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfiguration, DoubleHorizontalTextboxViewModel> {
@@ -63,7 +64,7 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         return view
     }()
     
-    lazy var secondaryTextField: FETextField = {
+    private lazy var secondaryTextField: FETextField = {
         let view = FETextField()
         return view
     }()
@@ -116,6 +117,10 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         second = viewModel?.secondary?.value
         primaryTextField.setup(with: viewModel?.primary)
         secondaryTextField.setup(with: viewModel?.secondary)
+        
+        if let isUserInteractionEnabled = viewModel?.isUserInteractionEnabled {
+            secondaryTextField.isUserInteractionEnabled = isUserInteractionEnabled
+        }
         
         primaryTextField.beganEditing = { [weak self] in
             self?.first = $0.text
