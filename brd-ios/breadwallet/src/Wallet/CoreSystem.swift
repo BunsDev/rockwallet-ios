@@ -71,7 +71,9 @@ class CoreSystem: Subscriber {
     /// Creates and configures the System with the Account and BDB authentication token.
     func create(account: Account, btcWalletCreationCallback: @escaping () -> Void, completion: @escaping () -> Void) {
         self.btcWalletCreationCallback = btcWalletCreationCallback
-        guard let kvStore = Backend.kvStore else { return }
+        
+        guard let kvStore = Backend.kvStore, let sessionToken = UserDefaults.sessionToken else { return }
+        
         print("[SYS] create | account timestamp: \(account.timestamp)")
         assert(self.system == nil)
         
@@ -79,7 +81,7 @@ class CoreSystem: Subscriber {
                                             bdbDataTaskFunc: { session, request, completion -> URLSessionDataTask in
             var req = request
             req.decorate()
-            req.authorize(withToken: UserDefaults.sessionToken)
+            req.authorize(withToken: sessionToken)
             
             //TODO:CRYPTO does not handle 401, other headers, redirects
             return session.dataTask(with: req, completionHandler: completion)
