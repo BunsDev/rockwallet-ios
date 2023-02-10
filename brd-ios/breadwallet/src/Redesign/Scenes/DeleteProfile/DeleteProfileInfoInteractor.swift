@@ -29,8 +29,6 @@ class DeleteProfileInfoInteractor: NSObject, Interactor, DeleteProfileInfoViewAc
             case .success:
                 UserDefaults.shouldWipeWalletNoPrompt = true
                 
-                UserManager.shared.resetUserCredentials()
-                
                 self?.presenter?.presentDeleteProfile(actionResponse: .init())
 
             case .failure(let error):
