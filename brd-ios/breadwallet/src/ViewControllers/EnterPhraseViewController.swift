@@ -232,7 +232,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     private func setInitialData() {
         scrollView.delegate = self
         view.backgroundColor = LightColors.Background.one
-        nextButton.setup(with: .init(title: L10n.RecoverWallet.next))
+        nextButton.setup(with: .init(title: L10n.Button.continueAction))
         skipButton.setup(with: .init(title: "SKIP AND SAVE LATER"))
         
         enterPhrase.didFinishPhraseEntry = { [weak self] phrase in
