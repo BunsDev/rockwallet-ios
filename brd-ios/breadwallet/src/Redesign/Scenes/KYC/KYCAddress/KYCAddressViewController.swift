@@ -91,6 +91,8 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
             view.configure(with: .init())
             view.setup(with: model)
             
+            view.secondaryTextField.isUserInteractionEnabled = dataStore?.country != C.countryUS
+            
             view.finishedEditing = { [weak self] first, second in
                 self?.interactor?.formUpdated(viewAction: .init(section: section, value: (first, second)))
             }
@@ -122,6 +124,9 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         case .country:
             interactor?.pickCountry(viewAction: .init())
             
+        case .cityAndState:
+            interactor?.pickState(viewAction: .init())
+            
         default:
             super.tableView(tableView, didSelectRowAt: indexPath)
         }
@@ -152,6 +157,12 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
+    }
+    
+    func displayStates(responseDisplay: CountriesAndStatesModels.SelectState.ResponseDisplay) {
+        coordinator?.showStateSelector(states: responseDisplay.states) { [weak self] model in
+            self?.interactor?.pickState(viewAction: .init(code: model?.iso2, stateName: model?.name))
+        }
     }
     
     // MARK: - User Interaction

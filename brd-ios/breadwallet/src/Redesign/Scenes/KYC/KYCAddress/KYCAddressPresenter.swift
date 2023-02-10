@@ -25,6 +25,8 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .confirm
         ]
         
+        let trailingModel: ImageViewModel? = item.country == C.countryUS ? .image(Asset.chevronDown.image) : nil
+        
         if item.country == C.countryUS {
             sections.insert(.ssn, at: 5)
             sections.insert(.ssnInfo, at: 6)
@@ -45,7 +47,8 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,
                                                                 value: item.city),
                                                  secondary: .init(title: L10n.Buy.stateProvince,
-                                                                  value: item.state))
+                                                                  value: item.stateName,
+                                                                  trailing: trailingModel))
             ],
             .postalCode: [
                 TextFieldModel(title: L10n.Account.postalCode,
@@ -80,6 +83,11 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                                    body: L10n.Account.explanationSSN)
         
         viewController?.displaySsnInfo(responseDisplay: .init(model: model))
+    }
+    
+    func presentState(actionResponse: CountriesAndStatesModels.SelectState.ActionResponse) {
+        guard let states = actionResponse.states else { return }
+        viewController?.displayStates(responseDisplay: .init(states: states))
     }
 
     // MARK: - Additional Helpers

@@ -63,7 +63,7 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         return view
     }()
     
-    private lazy var secondaryTextField: FETextField = {
+    lazy var secondaryTextField: FETextField = {
         let view = FETextField()
         return view
     }()
