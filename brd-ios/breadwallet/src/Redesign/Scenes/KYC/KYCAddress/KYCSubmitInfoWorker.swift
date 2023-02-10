@@ -21,7 +21,7 @@ struct KYCUserInfoRequestData: RequestModelData {
     let state: String?
     let nologSSN: String?
     
-    func getParameters() -> [String : Any] {
+    func getParameters() -> [String: Any] {
         var params = [
             "first_name": firstName,
             "last_name": lastName,
@@ -43,7 +43,7 @@ class KYCSubmitInfoWorker: BaseApiWorker<PlainMapper> {
         return KYCEndpoints.userInformation.url
     }
     
-    override func getParameters() -> [String : Any] {
+    override func getParameters() -> [String: Any] {
         return requestData?.getParameters() ?? [:]
     }
     

@@ -12,7 +12,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     
     // MARK: - KYCAddressDataStore
     
-    var countries: [Country] = []
+    var countries: [Place] = []
     
     var itemId: String?
     var firstName: String?

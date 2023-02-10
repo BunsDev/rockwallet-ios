@@ -8,42 +8,26 @@ struct CountriesResponseData: ModelResponse {
     struct CountryResponseData: ModelResponse {
         var iso2: String
         var localizedName: String
-        var states: [USState]?
+        var states: [Place]?
     }
     var countries: [CountryResponseData]
 }
 
-struct USState: ModelResponse, ItemSelectable {
+struct Place: ModelResponse, ItemSelectable {
     var iso2: String
     var name: String
     
-    var displayName: String? {
-        return name
-    }
-    
-    var displayImage: ImageViewModel? { return nil }
-}
-
-protocol ItemSelectable {
-    var displayName: String? { get }
-    var displayImage: ImageViewModel? { get }
-}
-
-struct Country: Model, ItemSelectable {
-    var code: String
-    var name: String
-    
-    var states: [USState]?
+    var states: [Place]?
     
     var displayName: String? { return name }
-    var displayImage: ImageViewModel? { return .imageName(code) }
+    var displayImage: ImageViewModel? { return .imageName(iso2) }
 }
 
-class CountriesMapper: ModelMapper<CountriesResponseData, [Country]> {
-    override func getModel(from response: CountriesResponseData?) -> [Country]? {
-        var countries = response?.countries.compactMap({ return Country(code: $0.iso2, name: $0.localizedName, states: $0.states) })
+class CountriesMapper: ModelMapper<CountriesResponseData, [Place]> {
+    override func getModel(from response: CountriesResponseData?) -> [Place]? {
+        var countries = response?.countries.compactMap({ return Place(iso2: $0.iso2, name: $0.localizedName, states: $0.states) })
         
-        if let firstIndexUS = countries?.firstIndex(where: { $0.code == C.countryUS }), let us = countries?[firstIndexUS] {
+        if let firstIndexUS = countries?.firstIndex(where: { $0.iso2 == C.countryUS }), let us = countries?[firstIndexUS] {
             countries?.remove(at: firstIndexUS)
             countries?.insert(us, at: 0)
         }
@@ -53,17 +37,14 @@ class CountriesMapper: ModelMapper<CountriesResponseData, [Country]> {
 }
 
 struct CountriesRequestData: RequestModelData {
-    let locale: String = Locale.current.identifier
-    
     func getParameters() -> [String: Any] {
         return [
-            "_locale": locale
+            "_locale": Locale.current.identifier
         ]
     }
 }
 
 class CountriesWorker: BaseApiWorker<CountriesMapper> {
-    
     override func getUrl() -> String {
         return APIURLHandler.getUrl(KYCEndpoints.countriesList)
     }
