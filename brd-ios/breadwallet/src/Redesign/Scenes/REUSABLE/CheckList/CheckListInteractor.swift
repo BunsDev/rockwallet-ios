@@ -22,7 +22,7 @@ class CheckListInteractor: NSObject, Interactor, CheckListViewActions {
             case .success(let profile):
                 print(profile?.status)
                 switch profile?.status {
-                case .levelTwo(.levelTwo):
+                case .levelTwo(.levelTwo), .levelTwo(.kycWithSsn), .levelTwo(.kycWithoutSsn):
                     self?.presenter?.presentVerificationProgress(actionResponse: .init(status: .success))
                     
                 case .levelTwo(.declined):
