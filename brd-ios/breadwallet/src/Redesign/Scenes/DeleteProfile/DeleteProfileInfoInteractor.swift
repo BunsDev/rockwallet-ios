@@ -32,6 +32,7 @@ class DeleteProfileInfoInteractor: NSObject, Interactor, DeleteProfileInfoViewAc
                 UserDefaults.shouldWipeWalletNoPrompt = true
                 UserDefaults.email = nil
                 UserDefaults.kycSessionKeyValue = nil
+                UserDefaults.sessionTokenHash = nil
                 UserDefaults.deviceID = ""
 
                 self?.presenter?.presentDeleteProfile(actionResponse: .init())
