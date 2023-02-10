@@ -124,7 +124,7 @@ enum VerificationStatus: Equatable {
                                  buyLimits: .text(L10n.Buy.buyLimit),
                                  swapLimitsValue: .init(title: .text(L10n.Account.daily),
                                                         value: .text("$\(swapAllowanceDaily) \(C.usdCurrencyCode)")),
-                                 buyDailyLimitsView: .init(title: .text("\(L10n.Account.daily) (\(L10n.Button.buy))"),
+                                 buyDailyLimitsView: .init(title: .text("\(L10n.Account.daily) (\(L10n.Buy.card))"),
                                                            value: .text("$\(buyAllowanceDaily) \(C.usdCurrencyCode)")),
                                  buyAchDailyLimitsView: .init(title: .text(L10n.Account.achDailyLimits),
                                                               value: .text("$\(achAllowanceDaily) \(C.usdCurrencyCode)")),
