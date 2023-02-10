@@ -13,16 +13,16 @@ import Foundation
 enum CountriesAndStatesModels {
     struct SelectCountry {
         struct ViewAction {
-            var code: String?
+            var iso2: String?
             var countryFullName: String?
         }
         
         struct ActionResponse {
-            var countries: [Place]?
+            var countries: [Country]?
         }
         
         struct ResponseDisplay {
-            var countries: [Place]
+            var countries: [Country]
         }
     }
 }

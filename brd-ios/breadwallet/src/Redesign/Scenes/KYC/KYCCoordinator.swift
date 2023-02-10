@@ -40,27 +40,27 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showCountrySelector(countries: [Place], selected: ((Place?) -> Void)?) {
+    func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.ItemSelection,
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = countries
             vc?.dataStore?.sceneTitle = L10n.Account.selectCountry
             vc?.itemSelected = { item in
-                selected?(item as? Place)
+                selected?(item as? Country)
             }
             vc?.prepareData()
         }
     }
     
-    func showStateSelector(states: [Place], selected: ((Place?) -> Void)?) {
+    func showStateSelector(states: [Country], selected: ((Country?) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.ItemSelection,
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = states
             vc?.dataStore?.sceneTitle = L10n.Account.selectState
             vc?.itemSelected = { item in
-                selected?(item as? Place)
+                selected?(item as? Country)
             }
             vc?.prepareData()
         }

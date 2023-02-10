@@ -10,10 +10,19 @@ struct CountriesResponseData: ModelResponse {
         var localizedName: String
         var states: [Place]?
     }
+    
     var countries: [CountryResponseData]
 }
 
 struct Place: ModelResponse, ItemSelectable {
+    var iso2: String
+    var name: String
+    
+    var displayName: String? { return name }
+    var displayImage: ImageViewModel? { return .imageName(iso2) }
+}
+
+struct Country: Model, ItemSelectable {
     var iso2: String
     var name: String
     
@@ -23,9 +32,9 @@ struct Place: ModelResponse, ItemSelectable {
     var displayImage: ImageViewModel? { return .imageName(iso2) }
 }
 
-class CountriesMapper: ModelMapper<CountriesResponseData, [Place]> {
-    override func getModel(from response: CountriesResponseData?) -> [Place]? {
-        var countries = response?.countries.compactMap({ return Place(iso2: $0.iso2, name: $0.localizedName, states: $0.states) })
+class CountriesMapper: ModelMapper<CountriesResponseData, [Country]> {
+    override func getModel(from response: CountriesResponseData?) -> [Country]? {
+        var countries = response?.countries.compactMap({ return Country(iso2: $0.iso2, name: $0.localizedName, states: $0.states) })
         
         if let firstIndexUS = countries?.firstIndex(where: { $0.iso2 == C.countryUS }), let us = countries?[firstIndexUS] {
             countries?.remove(at: firstIndexUS)

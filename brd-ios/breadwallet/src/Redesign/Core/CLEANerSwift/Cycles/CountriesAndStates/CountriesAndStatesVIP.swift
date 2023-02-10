@@ -25,11 +25,11 @@ protocol CountriesAndStatesResponseDisplays: FetchResponseDisplays {
 protocol CountriesAndStatesDataStore: FetchDataStore {
     var country: String? { get set }
     var countryFullName: String? { get set }
-    var countries: [Place] { get set }
+    var countries: [Country] { get set }
 }
 
 protocol CountriesAndStatesRoutes {
-    func showCountrySelector(countries: [Place], selected: ((Place?) -> Void)?)
+    func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?)
 }
 
 extension Interactor where Self: CountriesAndStatesViewActions,
@@ -37,8 +37,8 @@ extension Interactor where Self: CountriesAndStatesViewActions,
                            Self.ActionResponses: CountriesAndStatesActionResponses {
     
     func pickCountry(viewAction: CountriesAndStatesModels.SelectCountry.ViewAction) {
-        guard viewAction.code == nil else {
-            dataStore?.country = viewAction.code
+        guard viewAction.iso2 == nil else {
+            dataStore?.country = viewAction.iso2
             dataStore?.countryFullName = viewAction.countryFullName
             presenter?.presentData(actionResponse: .init(item: dataStore))
             
@@ -72,7 +72,7 @@ extension Controller where Self: CountriesAndStatesResponseDisplays,
     
     func displayCountry(responseDisplay: CountriesAndStatesModels.SelectCountry.ResponseDisplay) {
         coordinator?.showCountrySelector(countries: responseDisplay.countries) { [weak self] model in
-            self?.interactor?.pickCountry(viewAction: .init(code: model?.iso2, countryFullName: model?.name))
+            self?.interactor?.pickCountry(viewAction: .init(iso2: model?.iso2, countryFullName: model?.name))
         }
     }
 }
