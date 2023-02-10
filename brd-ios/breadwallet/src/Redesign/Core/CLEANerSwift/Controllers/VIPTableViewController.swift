@@ -13,9 +13,7 @@ class VIPTableViewController<C: CoordinatableRoutes,
                              DS: BaseDataStore & NSObject>: VIPViewController<C, I, P, DS>,
                                                             UITableViewDelegate,
                                                             UITableViewDataSource {
-    override var isModalDismissableEnabled: Bool {
-        return true
-    }
+    override var isModalDismissableEnabled: Bool { return true }
 
     var sections: [AnyHashable] = []
     var sectionRows: [AnyHashable: [Any]] = [:]

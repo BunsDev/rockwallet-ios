@@ -366,9 +366,7 @@ class ApplicationController: Subscriber {
         
         UserManager.shared.refresh { [weak self] result in
             switch result {
-            case .success(let profile):
-                guard profile == nil else { return }
-                
+            case .success:
                 Store.trigger(name: .handleUserAccount)
                 
             case .failure(let error):
@@ -438,7 +436,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
-            coordinator?.showProfile()
+            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
         }
         
         homeScreen.didTapMenu = { [unowned self] in

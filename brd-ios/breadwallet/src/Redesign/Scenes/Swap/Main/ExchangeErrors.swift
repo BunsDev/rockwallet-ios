@@ -58,7 +58,6 @@ enum ExchangeErrors: FEError {
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
                 
             default:
-                // TODO: Add error messages
                 return ""
             }
             
