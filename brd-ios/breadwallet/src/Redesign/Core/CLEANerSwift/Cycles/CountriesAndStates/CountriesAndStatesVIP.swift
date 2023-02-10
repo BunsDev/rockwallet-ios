@@ -29,14 +29,14 @@ protocol CountriesAndStatesDataStore: FetchDataStore {
     var country: String? { get set }
     var countryFullName: String? { get set }
     var countries: [Country] { get set }
-    var states: [USState] { get set }
+    var states: [Place] { get set }
     var state: String? { get set }
     var stateCode: String? { get set }
 }
 
 protocol CountriesAndStatesRoutes {
     func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?)
-    func showStateSelector(states: [USState], selected: ((USState?) -> Void)?)
+    func showStateSelector(states: [Place], selected: ((Place?) -> Void)?)
 }
 
 extension Interactor where Self: CountriesAndStatesViewActions,
@@ -73,7 +73,7 @@ extension Interactor where Self: CountriesAndStatesViewActions,
             return
         }
         
-        let states = dataStore?.countries.first(where: { $0.code == C.countryUS })?.states
+        let states = dataStore?.countries.first(where: { $0.iso2 == C.countryUS })?.states
         presenter?.presentState(actionResponse: .init(states: states))
     }
 }

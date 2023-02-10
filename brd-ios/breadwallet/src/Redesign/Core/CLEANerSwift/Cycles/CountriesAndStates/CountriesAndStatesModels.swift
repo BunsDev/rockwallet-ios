@@ -33,11 +33,11 @@ enum CountriesAndStatesModels {
         }
         
         struct ActionResponse {
-            var states: [USState]?
+            var states: [Place]?
         }
         
         struct ResponseDisplay {
-            var states: [USState]
+            var states: [Place]
         }
     }
 }
