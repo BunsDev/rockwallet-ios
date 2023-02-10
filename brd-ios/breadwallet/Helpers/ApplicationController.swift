@@ -366,11 +366,17 @@ class ApplicationController: Subscriber {
         
         UserManager.shared.refresh { [weak self] result in
             switch result {
-            case .success:
+            case .success(let profile):
+                guard profile?.isMigrated == false else { return }
+                
                 Store.trigger(name: .handleUserAccount)
                 
             case .failure(let error):
                 self?.coordinator?.showToastMessage(with: error)
+                
+                guard self?.isReachable == true else { return }
+                
+                Store.trigger(name: .handleUserAccount)
                 
             default:
                 return
