@@ -143,6 +143,8 @@ class ApplicationController: Subscriber {
             }
             
             PromptFactory.shared.presentedPopups.removeAll()
+            UserManager.shared.resetUserCredentials()
+            
             self.modalPresenter = nil
             self.rootNavigationController?.viewControllers = []
             
