@@ -812,7 +812,7 @@ class ModalPresenter: Subscriber {
         let nav = RootNavigationController()
         guard let phrase = keyStore.seedPhrase(pin: responsePin) else { return }
         let hideActionButtons = context == .viewRecoveryPhrase
-        let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { [weak self] (action, words) in
+        let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { [weak self] action, _ in
             switch action {
             case .abort:
                 self?.topViewController?.dismiss(animated: true)

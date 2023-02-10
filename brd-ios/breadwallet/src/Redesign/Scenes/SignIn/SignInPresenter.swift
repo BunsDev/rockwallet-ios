@@ -54,7 +54,7 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
                       isPasswordEmpty: actionResponse.isPasswordEmpty,
                       passwordModel: .init(title: L10n.Account.enterPassword,
                                            trailing: !actionResponse.isPasswordEmpty
-                                           && actionResponse.isPasswordValid ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
+                                           && !actionResponse.isPasswordValid ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
                                            displayState: actionResponse.passwordState),
                       isValid: isValid))
     }

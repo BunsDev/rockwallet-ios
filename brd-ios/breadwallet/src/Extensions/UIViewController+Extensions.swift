@@ -24,27 +24,6 @@ extension UIViewController {
         layout()
         viewController.didMove(toParent: self)
     }
-
-    func setBarButtonItem(from navigationController: UINavigationController, to side: NavBarButtonSide, target: AnyObject? = nil, action: Selector? = nil) {
-        switch side {
-        case .left:
-            navigationItem.leftBarButtonItem = navigationController.children.last?.navigationItem.leftBarButtonItem
-            
-            if target != nil && action != nil {
-                navigationItem.leftBarButtonItem?.target = target
-                navigationItem.leftBarButtonItem?.action = action
-            }
-            
-        case .right:
-            navigationItem.rightBarButtonItem = navigationController.children.last?.navigationItem.rightBarButtonItem
-            
-            if target != nil && action != nil {
-                navigationItem.rightBarButtonItem?.target = target
-                navigationItem.rightBarButtonItem?.action = action
-            }
-            
-        }
-    }
     
     func addCloseNavigationItem(side: NavBarButtonSide = .left) {
         let close = side == .left ? UIButton.buildModernCloseButton(position: .left) : UIButton.buildModernCloseButton(position: .right)

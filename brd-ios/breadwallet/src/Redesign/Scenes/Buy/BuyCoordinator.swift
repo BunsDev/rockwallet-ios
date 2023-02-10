@@ -62,13 +62,13 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
         }
     }
     
-    func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?) {
+    func showCountrySelector(countries: [Place], selected: ((Place?) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.ItemSelection,
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = countries
             vc?.itemSelected = { item in
-                selected?(item as? Country)
+                selected?(item as? Place)
             }
             vc?.prepareData()
         }
