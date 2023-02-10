@@ -423,13 +423,9 @@ extension UserDefaults {
         set { defaults.set(newValue, forKey: hasBchConnectedKey) }
     }
     
-    static var kycSessionKeyValue: String? {
-        get { return defaults.string(forKey: kycSessionKey) }
+    static var sessionToken: String? {
+        get { return defaults.string(forKey: kycSessionKey) ?? E.apiToken }
         set { defaults.set(newValue, forKey: kycSessionKey) }
-    }
-    
-    static var sessionToken: String {
-        return Self.kycSessionKeyValue ?? E.apiToken
     }
     
     static var sessionTokenHash: String? {

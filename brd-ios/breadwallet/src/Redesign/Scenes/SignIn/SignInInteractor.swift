@@ -65,9 +65,7 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
             case .success(let data):
                 guard let sessionKey = data?.sessionKey, let sessionKeyHash = data?.sessionKeyHash else { return }
                 
-                UserDefaults.email = email
-                UserDefaults.kycSessionKeyValue = sessionKey
-                UserDefaults.sessionTokenHash = sessionKeyHash
+                UserManager.shared.setUserCredentials(email: email, sessionToken: sessionKey, sessionTokenHash: sessionKeyHash)
                 
                 UserManager.shared.refresh { _ in
                     Store.trigger(name: .didCreateAccount)
