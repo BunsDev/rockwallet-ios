@@ -29,7 +29,7 @@ enum CountriesAndStatesModels {
     struct SelectState {
         struct ViewAction {
             var code: String?
-            var stateName: String?
+            var state: String?
         }
         
         struct ActionResponse {

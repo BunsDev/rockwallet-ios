@@ -68,7 +68,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
                                           address: dataStore?.address ?? "",
                                           city: dataStore?.city ?? "",
                                           zip: dataStore?.postalCode ?? "",
-                                          country: dataStore?.countryFullName ?? "",
+                                          country: dataStore?.country ?? "",
                                           state: dataStore?.state,
                                           nologSSN: dataStore?.ssn)
         

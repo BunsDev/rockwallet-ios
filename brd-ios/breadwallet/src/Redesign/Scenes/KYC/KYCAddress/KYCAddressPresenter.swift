@@ -47,7 +47,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,
                                                                 value: item.city),
                                                  secondary: .init(title: L10n.Buy.stateProvince,
-                                                                  value: item.stateName,
+                                                                  value: item.state,
                                                                   trailing: trailingModel))
             ],
             .postalCode: [
@@ -83,11 +83,6 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                                    body: L10n.Account.explanationSSN)
         
         viewController?.displaySsnInfo(responseDisplay: .init(model: model))
-    }
-    
-    func presentState(actionResponse: CountriesAndStatesModels.SelectState.ActionResponse) {
-        guard let states = actionResponse.states else { return }
-        viewController?.displayStates(responseDisplay: .init(states: states))
     }
 
     // MARK: - Additional Helpers

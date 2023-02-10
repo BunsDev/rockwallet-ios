@@ -22,11 +22,11 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var address: String?
     var city: String?
     var state: String?
+    var stateCode: String?
     var postalCode: String?
     var country: String?
     var countryFullName: String?
     var ssn: String?
-    var stateName: String?
     
     var isValid: Bool {
         guard address?.isEmpty == false,

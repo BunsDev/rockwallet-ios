@@ -159,12 +159,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         coordinator?.showPopup(with: responseDisplay.model)
     }
     
-    func displayStates(responseDisplay: CountriesAndStatesModels.SelectState.ResponseDisplay) {
-        coordinator?.showStateSelector(states: responseDisplay.states) { [weak self] model in
-            self?.interactor?.pickState(viewAction: .init(code: model?.iso2, stateName: model?.name))
-        }
-    }
-    
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()

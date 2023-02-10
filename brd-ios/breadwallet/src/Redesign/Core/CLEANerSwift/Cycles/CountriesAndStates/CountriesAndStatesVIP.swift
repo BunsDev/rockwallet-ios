@@ -30,7 +30,8 @@ protocol CountriesAndStatesDataStore: FetchDataStore {
     var countryFullName: String? { get set }
     var countries: [Country] { get set }
     var states: [USState] { get set }
-    var stateName: String? { get set }
+    var state: String? { get set }
+    var stateCode: String? { get set }
 }
 
 protocol CountriesAndStatesRoutes {
@@ -66,7 +67,8 @@ extension Interactor where Self: CountriesAndStatesViewActions,
     
     func pickState(viewAction: CountriesAndStatesModels.SelectState.ViewAction) {
         guard viewAction.code == nil else {
-            dataStore?.stateName = viewAction.stateName
+            dataStore?.state = viewAction.state
+            dataStore?.stateCode = viewAction.code
             presenter?.presentData(actionResponse: .init(item: dataStore))
             
             return
@@ -103,7 +105,7 @@ extension Controller where Self: CountriesAndStatesResponseDisplays,
     
     func displayState(responseDisplay: CountriesAndStatesModels.SelectState.ResponseDisplay) {
         coordinator?.showStateSelector(states: responseDisplay.states) { [weak self] model in
-            self?.interactor?.pickState(viewAction: .init(code: model?.iso2, stateName: model?.name))
+            self?.interactor?.pickState(viewAction: .init(code: model?.iso2, state: model?.name))
         }
     }
 }
