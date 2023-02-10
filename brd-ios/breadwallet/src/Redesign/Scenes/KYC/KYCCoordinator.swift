@@ -67,9 +67,7 @@ class KYCCoordinator: BaseCoordinator,
     }
     
     func showKYCLevelOne() {
-        open(scene: Scenes.KYCBasic, presentationStyle: .fullScreen) { vc in
-            vc.setBarButtonItem(from: self.navigationController, to: .right, target: self, action: #selector(self.popFlow(sender:)))
-        }
+        open(scene: Scenes.KYCBasic)
     }
     
     // MARK: - Aditional helpers
