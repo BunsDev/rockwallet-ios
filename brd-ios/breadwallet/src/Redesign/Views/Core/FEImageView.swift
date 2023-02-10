@@ -80,7 +80,6 @@ class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
             imageView.isHidden = false
             imageView.image = .init(named: name ?? "")
             
-            
         case .animation(let animation, let playMode):
             animationView.isHidden = false
             animationView.animation = animation

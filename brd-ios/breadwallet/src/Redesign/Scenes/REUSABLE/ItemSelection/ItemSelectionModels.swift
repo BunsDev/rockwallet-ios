@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ItemSelectable {
+    var displayName: String? { get }
+    var displayImage: ImageViewModel? { get }
+}
+
 enum ItemSelectionModels {
 
     struct Item {

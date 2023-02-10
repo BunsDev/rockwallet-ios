@@ -12,18 +12,13 @@ import Foundation
 
 struct ProfileResponseData: ModelResponse {
     let email: String?
-    let country: Country?
-    let state: Country?
+    let country: Place?
+    let state: Place?
     let kycStatus: String?
     let exchangeLimits: [ExchangeLimit]?
     let kycAccessRights: AccessRights?
     let kycFailureReason: String?
     let isRegistered: Bool?
-    
-    struct Country: Codable {
-        let iso2: String
-        let name: String
-    }
     
     struct AccessRights: Codable {
         let hasSwapAccess: Bool
@@ -58,17 +53,12 @@ struct ProfileResponseData: ModelResponse {
 
 struct Profile: Model {
     let email: String
-    let country: Country
-    let state: Country
+    let country: Place
+    let state: Place
     let status: VerificationStatus
     let limits: [ProfileResponseData.ExchangeLimit]
     let kycAccessRights: AccessRights
     let isMigrated: Bool
-    
-    struct Country {
-        let iso2: String
-        let name: String
-    }
     
     struct AccessRights {
         let hasSwapAccess: Bool
@@ -138,15 +128,15 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
     override func getModel(from response: ProfileResponseData?) -> Profile? {
         guard let response = response else { return nil }
         
-        return .init(email: response.email ?? "",
-                     country: Profile.Country(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
-                     state: Profile.Country(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
-                     status: VerificationStatus(rawValue: response.kycStatus),
-                     limits: response.exchangeLimits ?? [],
-                     kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                                           hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
-                                                           hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false),
-                     isMigrated: response.isRegistered ?? false)
+        return Profile(email: response.email ?? "",
+                       country: Place(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
+                       state: Place(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
+                       status: VerificationStatus(rawValue: response.kycStatus),
+                       limits: response.exchangeLimits ?? [],
+                       kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                                             hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
+                                                             hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false),
+                       isMigrated: response.isRegistered ?? false)
     }
 }
 

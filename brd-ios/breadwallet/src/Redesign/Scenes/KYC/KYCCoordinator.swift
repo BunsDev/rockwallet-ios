@@ -53,23 +53,21 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showStateSelector(states: [USState], selected: ((USState?) -> Void)?) {
+    func showStateSelector(states: [Country], selected: ((Country?) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.ItemSelection,
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = states
             vc?.dataStore?.sceneTitle = L10n.Account.selectState
             vc?.itemSelected = { item in
-                selected?(item as? USState)
+                selected?(item as? Country)
             }
             vc?.prepareData()
         }
     }
     
     func showKYCLevelOne() {
-        open(scene: Scenes.KYCBasic, presentationStyle: .fullScreen) { vc in
-            vc.setBarButtonItem(from: self.navigationController, to: .right, target: self, action: #selector(self.popFlow(sender:)))
-        }
+        open(scene: Scenes.KYCBasic)
     }
     
     // MARK: - Aditional helpers
