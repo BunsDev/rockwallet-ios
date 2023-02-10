@@ -40,4 +40,21 @@ class UserManager: NSObject {
             }
         }
     }
+    
+    func setUserCredentials(email: String, sessionToken: String, sessionTokenHash: String) {
+        UserDefaults.email = email
+        UserDefaults.sessionToken = sessionToken
+        UserDefaults.sessionTokenHash = sessionTokenHash
+    }
+    
+    func resetUserCredentials() {
+        UserDefaults.email = nil
+        UserDefaults.sessionToken = nil
+        UserDefaults.sessionTokenHash = nil
+        UserDefaults.deviceID = ""
+        
+        UserManager.shared.profile = nil
+        UserManager.shared.profileResult = nil
+        UserManager.shared.error = nil
+    }
 }
