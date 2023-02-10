@@ -52,7 +52,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                                value: item.postalCode)
             ],
             .ssn: [
-                TextFieldModel(title: L10n.Account.socialSecurityNumberRequired,
+                TextFieldModel(title: L10n.Account.socialSecurityNumber,
                                value: item.ssn)
             ],
             .ssnInfo: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.infoLinkSSN,

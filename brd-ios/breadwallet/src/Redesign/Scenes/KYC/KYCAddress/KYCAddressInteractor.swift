@@ -26,6 +26,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
                 self?.dataStore?.postalCode = profileData?.zip
                 self?.dataStore?.country = profileData?.country
                 self?.dataStore?.countryFullName = profileData?.country
+                self?.dataStore?.ssn = profileData?.nologSsn
                 
                 self?.presenter?.presentData(actionResponse: .init(item: self?.dataStore))
                 

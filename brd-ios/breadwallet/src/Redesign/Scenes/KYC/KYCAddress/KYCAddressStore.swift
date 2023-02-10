@@ -38,7 +38,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
             return true
         }
         
-        guard state?.isEmpty == false, ssn?.isEmpty == false else {
+        guard state?.isEmpty == false else {
             return false
         }
         return true
