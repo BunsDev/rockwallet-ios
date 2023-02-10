@@ -16,12 +16,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
                               DS: BaseDataStore & NSObject>: VIPTableViewController<C, I, P, DS>,
                                                              FetchResponseDisplays {
     override var isModalDismissableEnabled: Bool { return true }
-    override var dismissText: String {
-        return coordinator is AccountCoordinator ? L10n.Button.skip : L10n.Button.close
-    }
-    override var closeImage: UIImage? {
-        return coordinator is AccountCoordinator ? nil : Asset.close.image
-    }
+    override var dismissText: String { return L10n.Button.skip }
+    override var closeImage: UIImage? { return Asset.close.image }
     
     // MARK: - Cleaner Swift setup
     
@@ -33,7 +29,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     override func setupCloseButton(closeAction: Selector) {
         var closeButton: UIBarButtonItem = .init()
         
-        if coordinator is AccountCoordinator {
+        if coordinator is AccountCoordinator && !self.isKind(of: RegistrationConfirmationViewController.self) {
             guard navigationItem.leftBarButtonItem?.title != dismissText,
                   navigationItem.rightBarButtonItem?.title != dismissText else { return }
             

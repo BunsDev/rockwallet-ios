@@ -367,12 +367,16 @@ class ApplicationController: Subscriber {
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
-                guard profile == nil else { return }
+                guard profile?.isMigrated == false else { return }
                 
                 Store.trigger(name: .handleUserAccount)
                 
             case .failure(let error):
                 self?.coordinator?.showToastMessage(with: error)
+                
+                guard self?.isReachable == true else { return }
+                
+                Store.trigger(name: .handleUserAccount)
                 
             default:
                 return
@@ -438,7 +442,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
-            coordinator?.showProfile()
+            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
         }
         
         homeScreen.didTapMenu = { [unowned self] in
