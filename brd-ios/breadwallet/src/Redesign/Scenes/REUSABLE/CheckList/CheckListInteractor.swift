@@ -20,7 +20,6 @@ class CheckListInteractor: NSObject, Interactor, CheckListViewActions {
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
-                print(profile?.status)
                 switch profile?.status {
                 case .levelTwo(.levelTwo), .levelTwo(.kycWithSsn), .levelTwo(.kycWithoutSsn):
                     self?.presenter?.presentVerificationProgress(actionResponse: .init(status: .success))
@@ -30,8 +29,7 @@ class CheckListInteractor: NSObject, Interactor, CheckListViewActions {
                     
                 case .levelTwo(.resubmit):
                     self?.presenter?.presentVerificationProgress(actionResponse: .init(status: .failure(.documentVerificationRetry)))
-                    
-                    
+                             
                 default:
                     // waiting for verification, check every 30 seconds
                     DispatchQueue.main.asyncAfter(deadline: .now() + 30, execute: {
