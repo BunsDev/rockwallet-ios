@@ -48,7 +48,8 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                                                                 value: item.city),
                                                  secondary: .init(title: L10n.Buy.stateProvince,
                                                                   value: item.state,
-                                                                  trailing: trailingModel))
+                                                                  trailing: trailingModel,
+                                                                  isUserInteractionEnabled: item.country != C.countryUS))
             ],
             .postalCode: [
                 TextFieldModel(title: L10n.Account.postalCode,

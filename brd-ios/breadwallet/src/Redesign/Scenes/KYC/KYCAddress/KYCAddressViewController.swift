@@ -89,7 +89,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         
         cell.setup { view in
             view.configure(with: .init())
-            model.isUserInteractionEnabled = dataStore?.country != C.countryUS
             view.setup(with: model)
             
             view.finishedEditing = { [weak self] first, second in

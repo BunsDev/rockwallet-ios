@@ -51,6 +51,7 @@ struct TextFieldModel: ViewModel {
     var trailing: ImageViewModel?
     var displayState: DisplayState?
     var displayStateAnimated: Bool?
+    var isUserInteractionEnabled: Bool?
 }
 
 class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDelegate, StateDisplayable {
@@ -255,6 +256,10 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
         animateTo(state: viewModel.displayState ?? .normal, withAnimation: viewModel.displayStateAnimated == true)
+    
+        if let canEnterText = viewModel.isUserInteractionEnabled {
+            self.isUserInteractionEnabled = canEnterText
+        }
     }
     
     @objc private func startEditing() {
