@@ -2172,14 +2172,14 @@
 		7E2E1A2F284E169E00E56E69 /* CheckList */ = {
 			isa = PBXGroup;
 			children = (
+				7ED83AF0284F40EA00261565 /* CheckListPresenter.swift */,
+				7ED83AF1284F40EA00261565 /* CheckListStore.swift */,
+				7ED83AEE284F40EA00261565 /* CheckListVIP.swift */,
+				7ED83AF2284F40EA00261565 /* CheckListModels.swift */,
+				7ED83AF3284F40EB00261565 /* CheckListViewController.swift */,
 				7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */,
 				7ED83AEF284F40EA00261565 /* ChecklistItemView.swift */,
 				7B9434382886C6A700638703 /* TickboxItemView.swift */,
-				7ED83AF2284F40EA00261565 /* CheckListModels.swift */,
-				7ED83AF0284F40EA00261565 /* CheckListPresenter.swift */,
-				7ED83AF1284F40EA00261565 /* CheckListStore.swift */,
-				7ED83AF3284F40EB00261565 /* CheckListViewController.swift */,
-				7ED83AEE284F40EA00261565 /* CheckListVIP.swift */,
 			);
 			path = CheckList;
 			sourceTree = "<group>";
