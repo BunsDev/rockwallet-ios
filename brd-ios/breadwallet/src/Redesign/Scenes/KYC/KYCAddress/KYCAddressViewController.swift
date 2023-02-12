@@ -127,7 +127,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
             interactor?.pickState(viewAction: .init())
             
         default:
-            super.tableView(tableView, didSelectRowAt: indexPath)
+            return
         }
     }
     

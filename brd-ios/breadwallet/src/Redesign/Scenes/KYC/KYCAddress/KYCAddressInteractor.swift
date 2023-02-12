@@ -59,6 +59,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     }
     
     func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction) {
+        let state = dataStore?.country == C.countryUS ? dataStore?.stateCode : dataStore?.state
         let data = KYCUserInfoRequestData(firstName: dataStore?.firstName ?? "",
                                           lastName: dataStore?.lastName ?? "",
                                           dateOfBirth: dataStore?.birthDateString ?? "",
@@ -66,7 +67,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
                                           city: dataStore?.city ?? "",
                                           zip: dataStore?.postalCode ?? "",
                                           country: dataStore?.country ?? "",
-                                          state: dataStore?.state,
+                                          state: state,
                                           nologSSN: dataStore?.ssn)
         
         KYCSubmitInfoWorker().execute(requestData: data) { [weak self] result in
