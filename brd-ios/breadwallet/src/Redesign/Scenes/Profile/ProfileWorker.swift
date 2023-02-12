@@ -12,8 +12,6 @@ import Foundation
 
 struct ProfileResponseData: ModelResponse {
     let email: String?
-    let country: Place?
-    let state: Place?
     let kycStatus: String?
     let exchangeLimits: [ExchangeLimit]?
     let kycAccessRights: AccessRights?
@@ -53,8 +51,6 @@ struct ProfileResponseData: ModelResponse {
 
 struct Profile: Model {
     let email: String
-    let country: Place
-    let state: Place
     let status: VerificationStatus
     let limits: [ProfileResponseData.ExchangeLimit]
     let kycAccessRights: AccessRights
@@ -129,8 +125,6 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
         guard let response = response else { return nil }
         
         return Profile(email: response.email ?? "",
-                       country: Place(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
-                       state: Place(iso2: response.state?.iso2 ?? "", name: response.state?.name ?? ""),
                        status: VerificationStatus(rawValue: response.kycStatus),
                        limits: response.exchangeLimits ?? [],
                        kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
