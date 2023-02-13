@@ -41,7 +41,8 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .country: [
                 TextFieldModel(title: L10n.Account.countryRegion,
                                value: item.countryFullName,
-                               trailing: .image(Asset.chevronDown.image))
+                               trailing: .image(Asset.chevronDown.image),
+                               isUserInteractionEnabled: false)
             ],
             .cityAndState: [
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,

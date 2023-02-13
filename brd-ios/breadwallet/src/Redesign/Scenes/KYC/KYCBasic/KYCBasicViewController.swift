@@ -91,24 +91,6 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? TextFieldModel,
-              let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: Presets.TextField.two)
-            view.setup(with: model)
-            
-            view.isUserInteractionEnabled = false
-        }
-        
-        return cell
-    }
-    
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard var model = sectionRows[section]?[indexPath.row] as? ButtonViewModel,
