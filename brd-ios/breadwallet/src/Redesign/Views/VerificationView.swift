@@ -29,6 +29,12 @@ enum VerificationStatus: Equatable {
     case levelOne
     case levelTwo(Kyc2)
     
+    var isKYCLocationRestricted: Bool {
+        guard let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason else { return false }
+        
+        return restrictionReason == .country || restrictionReason == .state
+    }
+    
     var hasKYCLevelTwo: Bool {
         switch self {
         case .levelTwo(.levelTwo), .levelTwo(.kycWithSsn), .levelTwo(.kycWithoutSsn):
@@ -42,16 +48,6 @@ enum VerificationStatus: Equatable {
     var hasKYC: Bool {
         switch self {
         case .levelOne, .levelTwo:
-            return true
-            
-        default:
-            return false
-        }
-    }
-    
-    var canBuy: Bool {
-        switch self {
-        case .levelTwo:
             return true
             
         default:
