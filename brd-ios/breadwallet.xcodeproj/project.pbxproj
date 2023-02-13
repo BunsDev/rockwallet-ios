@@ -184,6 +184,7 @@
 		7B78631A2874266A0092F35B /* SwapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7863192874266A0092F35B /* SwapCoordinator.swift */; };
 		7B78631C287427680092F35B /* MainSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B78631B287427680092F35B /* MainSwapView.swift */; };
 		7B78631E2874D36D0092F35B /* SwapCurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B78631D2874D36D0092F35B /* SwapCurrencyView.swift */; };
+		7B7A92A9299A648800E54CD4 /* VerifyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7A92A8299A648800E54CD4 /* VerifyAccountViewController.swift */; };
 		7B8140BA27FD6DBB00662724 /* Currency+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8140B927FD6DBB00662724 /* Currency+Extensions.swift */; };
 		7B8140BB27FD6DBB00662724 /* Currency+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8140B927FD6DBB00662724 /* Currency+Extensions.swift */; };
 		7B88C4852837B8710089CFBE /* Currency+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B88C4842837B8710089CFBE /* Currency+Shared.swift */; };
@@ -1021,6 +1022,7 @@
 		7B7863192874266A0092F35B /* SwapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapCoordinator.swift; sourceTree = "<group>"; };
 		7B78631B287427680092F35B /* MainSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSwapView.swift; sourceTree = "<group>"; };
 		7B78631D2874D36D0092F35B /* SwapCurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapCurrencyView.swift; sourceTree = "<group>"; };
+		7B7A92A8299A648800E54CD4 /* VerifyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAccountViewController.swift; sourceTree = "<group>"; };
 		7B8140B927FD6DBB00662724 /* Currency+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Currency+Extensions.swift"; sourceTree = "<group>"; };
 		7B88C4842837B8710089CFBE /* Currency+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Currency+Shared.swift"; sourceTree = "<group>"; };
 		7B8CF81D28A3D0C600D54D14 /* CardDetailsFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsFormatter.swift; sourceTree = "<group>"; };
@@ -2056,6 +2058,14 @@
 			path = SetPassword;
 			sourceTree = "<group>";
 		};
+		7B7A92A7299A647300E54CD4 /* VerifyAccount */ = {
+			isa = PBXGroup;
+			children = (
+				7B7A92A8299A648800E54CD4 /* VerifyAccountViewController.swift */,
+			);
+			path = VerifyAccount;
+			sourceTree = "<group>";
+		};
 		7B8EC63428089729008C6DE5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -2815,6 +2825,7 @@
 			isa = PBXGroup;
 			children = (
 				7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */,
+				7B7A92A7299A647300E54CD4 /* VerifyAccount */,
 				7E6729262923A22900A2B612 /* ComingSoon */,
 				7EE91A51296830F000331B1F /* KYCAddress */,
 				7EF45F472845352400D1F7B0 /* KYCBasic */,
@@ -4005,6 +4016,7 @@
 				7ED83AF5284F40EB00261565 /* CheckListVIP.swift in Sources */,
 				7EF45F592845353100D1F7B0 /* DoubleHorizontalTextboxView.swift in Sources */,
 				CEAA9E951DC1659F0066731D /* UILabel+Extensions.swift in Sources */,
+				7B7A92A9299A648800E54CD4 /* VerifyAccountViewController.swift in Sources */,
 				7C6FD3F4213F205400EFF35F /* InboxMetaData.swift in Sources */,
 				CEBF292E1EF99E55005C330A /* LightWeightAlert.swift in Sources */,
 				7E5CB3B22835090E00EC787E /* FETextField.swift in Sources */,

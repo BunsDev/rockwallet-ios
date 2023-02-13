@@ -31,7 +31,7 @@ enum VerificationStatus: Equatable {
     
     var hasKYCLevelTwo: Bool {
         switch self {
-        case .levelTwo(.levelTwo), .levelTwo(.kycWithSsn) ,.levelTwo(.kycWithoutSsn):
+        case .levelTwo(.levelTwo), .levelTwo(.kycWithSsn), .levelTwo(.kycWithoutSsn):
             return true
             
         default:

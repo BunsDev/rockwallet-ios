@@ -101,7 +101,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .swap) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasSwapAccess == false {
+                if UserManager.shared.profile?.kycAccessRights.restrictionReason == .state {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
@@ -122,14 +122,14 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false, type == .card {
+                if UserManager.shared.profile?.kycAccessRights.restrictionReason == .state, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
                     return
                 }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasAchAccess == false, type == .ach {
+                if UserManager.shared.profile?.kycAccessRights.restrictionReason == .state, type == .ach {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem
@@ -153,7 +153,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasAchAccess == false {
+                if UserManager.shared.profile?.kycAccessRights.restrictionReason == .state {
                     self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .sell
                     }
@@ -337,21 +337,38 @@ class BaseCoordinator: NSObject,
             let status = profile?.status
             
             if status == VerificationStatus.emailPending
-                || status == VerificationStatus.none {
+                || status == VerificationStatus.none
+                || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
-            } else if profile?.isMigrated ?? false || profile?.kycAccessRights.hasBuyAccess ?? false || profile?.kycAccessRights.hasSwapAccess ?? false {
+            } else if let profile = profile, profile.isMigrated && flow != nil {
+                if profile.kycAccessRights.hasBuyAccess || profile.kycAccessRights.hasSwapAccess || profile.kycAccessRights.hasAchAccess {
+                    completion?(true)
+                    return
+                } else {
+                    let coordinator = KYCCoordinator(navigationController: nvc)
+                    coordinator.start(flow: flow)
+                    coordinator.parentCoordinator = self
+                    childCoordinators.append(coordinator)
+                    navigationController.show(coordinator.navigationController, sender: nil)
+                    
+                    completion?(false)
+                    
+                    return
+                }
+                
+            } else if let profile = profile, profile.isMigrated && flow == nil {
                 completion?(true)
                 return
             } else {
                 let coordinator = KYCCoordinator(navigationController: nvc)
-                coordinator.flow = flow
-                coordinator.start()
+                coordinator.start(flow: flow)
                 coordinator.parentCoordinator = self
                 childCoordinators.append(coordinator)
                 navigationController.show(coordinator.navigationController, sender: nil)
                 
                 completion?(false)
+                
                 return
             }
             
