@@ -101,8 +101,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .swap) { showPopup in
                 guard showPopup else { return }
                 
-                let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason
-                if restrictionReason == .state || restrictionReason == .country {
+                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
@@ -123,15 +122,14 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason
-                if restrictionReason == .state || restrictionReason == .country, type == .card {
+                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
                     return
                 }
                 
-                if restrictionReason == .state || restrictionReason == .country, type == .ach {
+                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false, type == .ach {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem
@@ -155,8 +153,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason
-                if restrictionReason == .state || restrictionReason == .country {
+                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false {
                     self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .sell
                     }
