@@ -19,7 +19,7 @@ final class ForgotPasswordPresenter: NSObject, Presenter, ForgotPasswordActionRe
     // MARK: - ProfileActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? String else { return }
+        guard let value = actionResponse.item as? String else { return }
         
         let sections: [Models.Section] =  [
             .notice,
@@ -27,7 +27,7 @@ final class ForgotPasswordPresenter: NSObject, Presenter, ForgotPasswordActionRe
         ]
         
         let sectionRows: [Models.Section: [Any]] = [
-            .email: [TextFieldModel(title: L10n.Account.email, value: item)],
+            .email: [TextFieldModel(title: L10n.Account.email, value: value)],
             .notice: [LabelViewModel.text(L10n.Account.resetPasswordMessage)]
         ]
         
