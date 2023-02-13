@@ -18,7 +18,8 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
               let status = item.status,
-              let infoView: InfoViewModel = status.viewModel else { return }
+              let infoView: InfoViewModel = status.viewModel,
+              let isLevelTwo = item.isLevelTwo else { return }
         
         let sections: [Models.Section] = [
             .profile,
@@ -27,7 +28,7 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
         ]
         
         var navigationModel = Models.NavigationItems.allCases
-        if status != .levelTwo(.levelTwo) {
+        if !isLevelTwo {
             navigationModel = navigationModel.filter { $0 != .paymentMethods }
         }
         

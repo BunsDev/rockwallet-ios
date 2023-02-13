@@ -35,6 +35,7 @@ protocol ProfileDataStore: BaseDataStore, FetchDataStore {
     var allPaymentCards: [PaymentCard]? { get set }
     var paymentCard: PaymentCard? { get set }
     var autoSelectDefaultPaymentMethod: Bool { get set }
+    var isLevelTwo: Bool { get set }
 }
 
 protocol ProfileDataPassing {
