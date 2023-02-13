@@ -81,7 +81,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         stack.addArrangedSubview(errorLabel)
         
         for _ in (0..<CodeInputView.numberOfFields) {
-            let view =
             inputStack.addArrangedSubview(FETextField())
         }
         
