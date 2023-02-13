@@ -16,10 +16,8 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
 
     // MARK: - ProfileActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? Models.Item,
-              let status = item.status,
-              let infoView: InfoViewModel = status.viewModel,
-              let isLevelTwo = item.isLevelTwo else { return }
+        guard let profile = UserManager.shared.profile,
+              let infoView: InfoViewModel = profile.status.viewModel else { return }
         
         let sections: [Models.Section] = [
             .profile,
@@ -27,19 +25,20 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
             .navigation
         ]
         
-        var navigationModel = Models.NavigationItems.allCases
-        if !isLevelTwo {
-            navigationModel = navigationModel.filter { $0 != .paymentMethods }
+        var navigationItems = Models.NavigationItems.allCases
+        if !profile.status.hasKYCLevelTwo {
+            navigationItems = navigationItems.filter { $0 != .paymentMethods }
         }
+        let navigationModel = navigationItems.compactMap { $0.model }
         
         let sectionRows: [Models.Section: [Any]] = [
             .profile: [
-                ProfileViewModel(name: item.title ?? "", image: item.image ?? "")
+                ProfileViewModel(name: profile.email, image: Asset.avatar.name)
             ],
             .verification: [
                 infoView
             ],
-            .navigation: navigationModel.compactMap { $0.model }
+            .navigation: navigationModel
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
