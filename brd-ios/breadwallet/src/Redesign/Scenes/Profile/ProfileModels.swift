@@ -9,7 +9,7 @@
 import UIKit
 
 enum ProfileModels {
-    typealias Item = (title: String?, image: String?, status: VerificationStatus?)
+    typealias Item = (title: String?, image: String?, status: VerificationStatus?, isLevelTwo: Bool?)
     
     enum Section: Sectionable {
         case profile
