@@ -111,8 +111,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         cell.setup { view in
             view.configure(with: Presets.TextField.two)
             view.setup(with: model)
-            
-            view.isUserInteractionEnabled = false
         }
         
         return cell

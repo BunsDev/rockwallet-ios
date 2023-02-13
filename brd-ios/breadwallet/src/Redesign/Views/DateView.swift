@@ -48,19 +48,16 @@ class DateView: FEView<DateConfiguration, DateViewModel>, StateDisplayable {
     
     private lazy var monthTextfield: FETextField = {
         let view = FETextField()
-        view.isUserInteractionEnabled = false
         return view
     }()
     
     private lazy var dayTextField: FETextField = {
         let view = FETextField()
-        view.isUserInteractionEnabled = false
         return view
     }()
     
     private lazy var yearTextField: FETextField = {
         let view = FETextField()
-        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -100,9 +97,19 @@ class DateView: FEView<DateConfiguration, DateViewModel>, StateDisplayable {
         super.setup(with: viewModel)
 
         titleLabel.setup(with: viewModel?.title)
-        monthTextfield.setup(with: viewModel?.month)
-        dayTextField.setup(with: viewModel?.day)
-        yearTextField.setup(with: viewModel?.year)
+        
+        var month = viewModel?.month
+        month?.isUserInteractionEnabled = false
+        
+        var day = viewModel?.day
+        day?.isUserInteractionEnabled = false
+        
+        var year = viewModel?.year
+        year?.isUserInteractionEnabled = false
+        
+        monthTextfield.setup(with: month)
+        dayTextField.setup(with: day)
+        yearTextField.setup(with: year)
         
         animateTo(state: .normal)
     }

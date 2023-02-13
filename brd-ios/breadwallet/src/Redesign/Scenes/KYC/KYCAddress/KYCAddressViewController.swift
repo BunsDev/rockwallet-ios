@@ -73,8 +73,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         cell.setup { view in
             view.configure(with: Presets.TextField.two)
             view.setup(with: model)
-            
-            view.isUserInteractionEnabled = false
         }
         
         return cell
@@ -122,8 +120,11 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         case .country:
             interactor?.pickCountry(viewAction: .init())
             
+        case .cityAndState:
+            interactor?.pickState(viewAction: .init())
+            
         default:
-            super.tableView(tableView, didSelectRowAt: indexPath)
+            return
         }
     }
     

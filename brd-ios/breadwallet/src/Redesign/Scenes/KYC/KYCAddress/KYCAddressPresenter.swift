@@ -25,6 +25,8 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .confirm
         ]
         
+        let trailingModel: ImageViewModel? = item.country == C.countryUS ? .image(Asset.chevronDown.image) : nil
+        
         if item.country == C.countryUS {
             sections.insert(.ssn, at: 5)
             sections.insert(.ssnInfo, at: 6)
@@ -39,13 +41,16 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .country: [
                 TextFieldModel(title: L10n.Account.countryRegion,
                                value: item.countryFullName,
-                               trailing: .image(Asset.chevronDown.image))
+                               trailing: .image(Asset.chevronDown.image),
+                               isUserInteractionEnabled: false)
             ],
             .cityAndState: [
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,
                                                                 value: item.city),
                                                  secondary: .init(title: L10n.Buy.stateProvince,
-                                                                  value: item.state))
+                                                                  value: item.state,
+                                                                  trailing: trailingModel,
+                                                                  isUserInteractionEnabled: item.country != C.countryUS))
             ],
             .postalCode: [
                 TextFieldModel(title: L10n.Account.postalCode,

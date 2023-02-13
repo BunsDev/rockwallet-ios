@@ -26,6 +26,9 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var paymentReference: String?
     var paymentstatus: AddCard.Status?
     var countries: [Country] = []
+    var states: [Place] = []
+    var state: String?
+    var stateCode: String?
     
     // From first screen
     var cardNumber: String?

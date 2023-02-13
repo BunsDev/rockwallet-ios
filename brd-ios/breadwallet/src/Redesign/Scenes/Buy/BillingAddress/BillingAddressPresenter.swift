@@ -39,7 +39,8 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
             .country: [
                 TextFieldModel(title: L10n.Account.country,
                                value: item.countryFullName,
-                               trailing: .image(Asset.chevronDown.image))
+                               trailing: .image(Asset.chevronDown.image),
+                               isUserInteractionEnabled: false)
             ],
             .stateProvince: [
                 TextFieldModel(title: L10n.Buy.stateProvince,

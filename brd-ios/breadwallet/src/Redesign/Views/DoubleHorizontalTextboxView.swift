@@ -116,7 +116,7 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         second = viewModel?.secondary?.value
         primaryTextField.setup(with: viewModel?.primary)
         secondaryTextField.setup(with: viewModel?.secondary)
-        
+
         primaryTextField.beganEditing = { [weak self] in
             self?.first = $0.text
         }
