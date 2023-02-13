@@ -29,7 +29,7 @@ enum VerificationStatus: Equatable {
     case levelOne
     case levelTwo(Kyc2)
     
-    var isKycLocationRestricted: Bool {
+    var isKYCLocationRestricted: Bool {
         guard let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason else { return false }
         
         return restrictionReason == .country || restrictionReason == .state

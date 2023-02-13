@@ -101,7 +101,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .swap) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false {
+                if UserManager.shared.profile?.status.isKYCLocationRestricted ?? false {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
@@ -122,14 +122,14 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false, type == .card {
+                if UserManager.shared.profile?.status.isKYCLocationRestricted ?? false, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
                     return
                 }
                 
-                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false, type == .ach {
+                if UserManager.shared.profile?.status.isKYCLocationRestricted ?? false, type == .ach {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem
@@ -153,7 +153,7 @@ class BaseCoordinator: NSObject,
             upgradeAccountOrShowPopup(flow: .buy) { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.status.isKycLocationRestricted ?? false {
+                if UserManager.shared.profile?.status.isKYCLocationRestricted ?? false {
                     self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .sell
                     }
