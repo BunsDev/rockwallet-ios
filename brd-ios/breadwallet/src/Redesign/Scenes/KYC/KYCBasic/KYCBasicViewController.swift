@@ -115,6 +115,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     // MARK: - User Interaction
+    
     @objc override func buttonTapped() {
         super.buttonTapped()
         
@@ -122,6 +123,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
 
     // MARK: - KYCBasicResponseDisplay
+    
     func displayValidate(responseDisplay: KYCBasicModels.Validate.ResponseDisplay) {
         guard let section = sections.firstIndex(of: Models.Section.confirm),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }

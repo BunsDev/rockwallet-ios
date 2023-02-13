@@ -36,15 +36,15 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
             
             dateViewModel = DateViewModel(date: date,
                                           title: title,
-                                          month: .init(value: String(format: dateFormat, month), isUserInteractionEnabled: false),
-                                          day: .init(value: String(format: dateFormat, day), isUserInteractionEnabled: false),
-                                          year: .init(value: "\(year)", isUserInteractionEnabled: false))
+                                          month: .init(value: String(format: dateFormat, month)),
+                                          day: .init(value: String(format: dateFormat, day)),
+                                          year: .init(value: "\(year)"))
         } else {
             dateViewModel = DateViewModel(date: nil,
                                           title: title,
-                                          month: .init(title: "MM", isUserInteractionEnabled: false),
-                                          day: .init(title: "DD", isUserInteractionEnabled: false),
-                                          year: .init(title: "YYYY", isUserInteractionEnabled: false))
+                                          month: .init(title: "MM"),
+                                          day: .init(title: "DD"),
+                                          year: .init(title: "YYYY"))
         }
         
         let sectionRows: [Models.Section: [Any]] = [

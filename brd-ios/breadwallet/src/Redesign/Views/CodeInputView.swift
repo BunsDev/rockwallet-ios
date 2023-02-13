@@ -81,9 +81,8 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         stack.addArrangedSubview(errorLabel)
         
         for _ in (0..<CodeInputView.numberOfFields) {
-            let view = FETextField()
-            view.isUserInteractionEnabled = false
-            inputStack.addArrangedSubview(view)
+            let view =
+            inputStack.addArrangedSubview(FETextField())
         }
         
         hiddenTextField.snp.makeConstraints { make in
@@ -131,7 +130,7 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
                 value = String(textArray[index])
             }
             
-            (field as? FETextField)?.setup(with: .init(value: value))
+            (field as? FETextField)?.setup(with: .init(value: value, isUserInteractionEnabled: false))
         }
         
         animateTo(state: text.isEmpty ? .normal : .selected)

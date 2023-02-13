@@ -68,6 +68,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         super.prepareForReuse()
         
         isUserInteractionEnabled = true
+        value = nil
     }
     
     override var isUserInteractionEnabled: Bool {
