@@ -64,7 +64,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
             self.showInfoPopup(with: model)
         })
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: helpButton)]
-        }
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section] as? Models.Section

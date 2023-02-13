@@ -298,6 +298,7 @@ class StartFlowPresenter: Subscriber {
                                                        keyMaster: self.keyMaster,
                                                        from: navController,
                                                        context: eventContext,
+                                                       showIntro: true,
                                                        dismissAction: dismissAction,
                                                        modalPresentation: false,
                                                        canExit: false)
