@@ -793,39 +793,13 @@ class ModalPresenter: Subscriber {
         }
     }
     
-    private func presentWritePaperKey(fromViewController vc: UIViewController, context: EventContext = .none) {
-        let nav = RootNavigationController()
-        let pinViewController = VerifyPinViewController(bodyText: L10n.VerifyPin.continueBody,
-                                                        pinLength: Store.state.pinLength,
-                                                        walletAuthenticator: self.keyStore,
-                                                        pinAuthenticationType: .recoveryKey,
-                                                        success: { responsePin in
-            self.showRecoveryPhrase(responsePin: responsePin, context: context)
-        })
-        
-        nav.viewControllers = [pinViewController]
-        nav.modalPresentationStyle = .fullScreen
-        topViewController?.present(nav, animated: true)
-    }
-    
-    private func showRecoveryPhrase(responsePin: String, context: EventContext) {
-        let nav = RootNavigationController()
-        guard let phrase = keyStore.seedPhrase(pin: responsePin) else { return }
-        let hideActionButtons = context == .viewRecoveryPhrase
-        let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { [weak self] action, _ in
-            switch action {
-            case .abort:
-                self?.topViewController?.dismiss(animated: true)
-                
-            default:
-                break
-            }
-        }
-        
-        let phraseViewController = EnterPhraseViewController(keyMaster: keyStore, reason: .display(phrase, hideActionButtons, handleWriteKeyResult))
-        nav.viewControllers = [phraseViewController]
-        nav.modalPresentationStyle = .fullScreen
-        topViewController?.present(nav, animated: true)
+    private func presentWritePaperKey(fromViewController vc: UIViewController, context: EventContext = .writeKey) {
+        RecoveryKeyFlowController.enterRecoveryKeyFlow(pin: nil,
+                                                       keyMaster: self.keyStore,
+                                                       from: vc,
+                                                       context: context,
+                                                       showIntro: false,
+                                                       dismissAction: nil)
     }
     
     private func wipeWallet() {

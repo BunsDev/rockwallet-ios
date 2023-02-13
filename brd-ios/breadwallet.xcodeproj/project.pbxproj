@@ -2172,24 +2172,14 @@
 		7E2E1A2F284E169E00E56E69 /* CheckList */ = {
 			isa = PBXGroup;
 			children = (
-				7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */,
-				7ED83AEF284F40EA00261565 /* ChecklistItemView.swift */,
-				7B9434382886C6A700638703 /* TickboxItemView.swift */,
-				7ED83AF2284F40EA00261565 /* CheckListModels.swift */,
 				7ED83AF0284F40EA00261565 /* CheckListPresenter.swift */,
 				7ED83AF1284F40EA00261565 /* CheckListStore.swift */,
-				7ED83AF3284F40EB00261565 /* CheckListViewController.swift */,
 				7ED83AEE284F40EA00261565 /* CheckListVIP.swift */,
+				7ED83AF2284F40EA00261565 /* CheckListModels.swift */,
+				7ED83AF3284F40EB00261565 /* CheckListViewController.swift */,
+				7ED83AF4284F40EB00261565 /* CheckListInteractor.swift */,
 			);
 			path = CheckList;
-			sourceTree = "<group>";
-		};
-		7E383B4728AE1AE900A5339F /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				7E383B4828AE1AFD00A5339F /* AssetSelectionDisplayable.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		7E42ACC8293F3AAC00E1FC26 /* Workers */ = {
@@ -2488,6 +2478,8 @@
 				7EF45F572845353100D1F7B0 /* DoubleHorizontalTextboxView.swift */,
 				7EF45F322844D26E00D1F7B0 /* VerificationView.swift */,
 				7E8E97A1283F78B0008606B0 /* ProfileView.swift */,
+				7ED83AEF284F40EA00261565 /* ChecklistItemView.swift */,
+				7B9434382886C6A700638703 /* TickboxItemView.swift */,
 				7EBC6B0C2848B81A000A301F /* CodeInputView.swift */,
 				7E0968B7284A29CE006B4FC2 /* TransparentView.swift */,
 				7EC0F8B928881C680037145C /* TitleValueView.swift */,
@@ -2589,6 +2581,7 @@
 			isa = PBXGroup;
 			children = (
 				7E8D288A28C0CDFC00FF0CBC /* FeeFetchable.swift */,
+				7E383B4828AE1AFD00A5339F /* AssetSelectionDisplayable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -2764,6 +2757,7 @@
 				7EE91A572968310100331B1F /* KYCAddressViewController.swift */,
 				7EE91A582968310100331B1F /* KYCAddressInteractor.swift */,
 				7BC3F045294C6F8300947526 /* VeriffSessionWorker.swift */,
+				C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */,
 				D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */,
 			);
 			path = KYCAddress;
@@ -2838,8 +2832,6 @@
 				7EF45F84284768C100D1F7B0 /* ItemSelectionViewController.swift */,
 				7EF45F81284768C100D1F7B0 /* ItemSelectionInteractor.swift */,
 				7EF45F86284768C100D1F7B0 /* ItemSelectionCoordinator.swift */,
-				7E383B4728AE1AE900A5339F /* Protocols */,
-				C4BD1C67284A16BE00AFA2A6 /* Workers */,
 			);
 			path = ItemSelection;
 			sourceTree = "<group>";
@@ -3002,14 +2994,6 @@
 				7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		C4BD1C67284A16BE00AFA2A6 /* Workers */ = {
-			isa = PBXGroup;
-			children = (
-				C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */,
-			);
-			path = Workers;
 			sourceTree = "<group>";
 		};
 		CE1E5F241EF081F300BD0F72 /* Import */ = {
