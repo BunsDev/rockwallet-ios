@@ -103,7 +103,7 @@ class RecoveryKeyFlowController {
                     return
                 }
                 
-                let navController = context == .onboarding ? viewController : recoveryKeyNavController
+                let navController = context == .onboarding ? viewController : (baseNavigationController ?? recoveryKeyNavController)
                 
                 promptToSetUpRecoveryKeyLater(from: navController) { userWantsToSetUpLater in
                     guard userWantsToSetUpLater else { return }
