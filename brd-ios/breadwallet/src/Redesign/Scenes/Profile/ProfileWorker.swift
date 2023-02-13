@@ -60,6 +60,13 @@ struct Profile: Model {
         let hasSwapAccess: Bool
         let hasBuyAccess: Bool
         let hasAchAccess: Bool
+        let restrictionReason: RestrictionReason?
+        
+        enum RestrictionReason: String {
+            case kyc
+            case country
+            case state
+        }
     }
     
     var swapAllowanceLifetime: Decimal {
@@ -127,9 +134,10 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
         return Profile(email: response.email ?? "",
                        status: VerificationStatus(rawValue: response.kycStatus),
                        limits: response.exchangeLimits ?? [],
-                       kycAccessRights: Profile.AccessRights(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
-                                                             hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
-                                                             hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false),
+                       kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
+                                              hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
+                                              hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false,
+                                              restrictionReason: .init(rawValue: response.kycAccessRights?.restrictionReason ?? "")),
                        isMigrated: response.isRegistered ?? false)
     }
 }

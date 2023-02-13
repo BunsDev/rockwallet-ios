@@ -17,9 +17,19 @@ class KYCCoordinator: BaseCoordinator,
                       CountriesAndStatesRoutes,
                       KYCAddressRoutes,
                       AssetSelectionDisplayable {
-    var flow: ProfileModels.ExchangeFlow?
-    
     override func start() {
+        start(flow: nil)
+    }
+    
+    func start(flow: ProfileModels.ExchangeFlow?) {
+        if let flow = flow {
+            open(scene: Scenes.VerifyAccount) { vc in
+                vc.flow = flow
+            }
+            
+            return
+        }
+        
         switch UserManager.shared.profile?.status {
         case .emailPending:
             let coordinator = AccountCoordinator(navigationController: navigationController)
