@@ -44,10 +44,6 @@ class VerificationInProgressViewController: CheckListViewController {
         interactor?.checkVerificationProgress(viewAction: .init())
     }
     
-    override func setupCloseButton(closeAction: Selector) {
-        // Close button is not shown
-    }
-    
     // Override to change footer bottom constraint, since there are no buttons on this screen
     override func setupSubviews() {
         super.setupSubviews()

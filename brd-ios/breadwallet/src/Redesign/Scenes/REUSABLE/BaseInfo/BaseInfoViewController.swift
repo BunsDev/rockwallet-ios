@@ -15,6 +15,11 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
                               BaseInfoResponseDisplays {
     typealias Models = BaseInfoModels
     
+    override var isModalDismissableEnabled: Bool { return isModalDismissable }
+    var isModalDismissable = true
+    
+    var shouldDismiss = false
+    
     var imageName: String? { return Asset.timeoutStatusIcon.name }
     var titleText: String? { return "Override" }
     var descriptionText: String? { return "Override" }
@@ -25,6 +30,13 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     // MARK: - Overrides
     
     override var closeImage: UIImage? { return Asset.close.image }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard shouldDismiss else { return }
+        coordinator?.dismissFlow()
+    }
     
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
@@ -126,7 +138,7 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     // MARK: - BaseInfoResponseDisplay
     
-    // Override in subclass
+    /// Override in subclass
     func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) { }
     
     // MARK: - Additional Helpers

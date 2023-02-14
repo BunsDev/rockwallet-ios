@@ -108,7 +108,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
             view.setup(with: model)
             
             view.finishedEditing = { [weak self] first, second in
-                self?.interactor?.formUpdated(viewAction: .init(section: section, value: (first, second)))
+                self?.interactor?.updateForm(viewAction: .init(section: section, value: (first, second)))
             }
         }
         
@@ -155,20 +155,25 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
-        interactor?.formUpdated(viewAction: .init(section: section, value: text))
+        interactor?.updateForm(viewAction: .init(section: section, value: text))
         
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
-        guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel,
-              model.enabled != responseDisplay.isValid
-        else { return }
+        guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel else { return }
         
         model.enabled = responseDisplay.isValid
         sectionRows[Models.Section.confirm] = [model]
-        let index = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }) ?? 0
-        tableView.reloadRows(at: [IndexPath(row: 0, section: index)], with: .none)
+        
+        guard let index = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: index)) as? WrapperTableViewCell<FEButton> else {
+            return
+        }
+        
+        cell.setup { view in
+            view.setup(with: model)
+        }
     }
     
     func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay) {
