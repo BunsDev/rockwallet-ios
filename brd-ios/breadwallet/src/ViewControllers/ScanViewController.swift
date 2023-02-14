@@ -223,7 +223,7 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         hasCompleted = true
         
         // Add a small delay so the green guide will be seen
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.short.rawValue, execute: {
             self.dismiss(animated: true, completion: {
                 self.completion(result)
             })

@@ -246,6 +246,17 @@ extension Presets {
 }
 
 extension Presets {
+    enum Delay: Double {
+        case immediate = 0.1
+        case short = 0.5
+        case regular = 1.0
+        case medium = 1.5
+        case long = 2.0
+        case repeatingAction = 30.0
+    }
+}
+
+extension Presets {
     struct VerificationView {
         static var resubmitAndDeclined = VerificationConfiguration(shadow: Presets.Shadow.zero,
                                                                    background: .init(backgroundColor: LightColors.Background.one,

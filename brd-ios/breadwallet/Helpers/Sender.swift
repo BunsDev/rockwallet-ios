@@ -374,7 +374,7 @@ class Sender: Subscriber {
         
         if newGift != nil {
             //gifing needs a delay for some reason
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.long.rawValue) {
                 print("[gifting] txMetaDataUpdated: \(tx.hash)")
                 Store.trigger(name: .txMetaDataUpdated(tx.hash))
             }

@@ -198,6 +198,7 @@
 		7B8EC631280896F1008C6DE5 /* brd-tokens.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0F2806FA190031F015 /* brd-tokens.tar */; };
 		7B8EC632280896F3008C6DE5 /* brd-tokens-staging.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0E2806FA190031F015 /* brd-tokens-staging.tar */; };
 		7B8EC633280896F3008C6DE5 /* brd-tokens-staging.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0E2806FA190031F015 /* brd-tokens-staging.tar */; };
+		7B8FAF01299B898D002EB972 /* TouchSpamPreventer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FAF00299B898D002EB972 /* TouchSpamPreventer.swift */; };
 		7B9434312886A7FA00638703 /* DeleteProfileInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94342A2886A7F900638703 /* DeleteProfileInfoInteractor.swift */; };
 		7B9434322886A7FA00638703 /* DeleteProfileInfoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94342B2886A7F900638703 /* DeleteProfileInfoModels.swift */; };
 		7B9434332886A7FA00638703 /* DeleteProfileInfoVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94342C2886A7F900638703 /* DeleteProfileInfoVIP.swift */; };
@@ -1027,6 +1028,7 @@
 		7B88C4842837B8710089CFBE /* Currency+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Currency+Shared.swift"; sourceTree = "<group>"; };
 		7B8CF81D28A3D0C600D54D14 /* CardDetailsFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsFormatter.swift; sourceTree = "<group>"; };
 		7B8CF81F28A64B9300D54D14 /* ExchangeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeFormatter.swift; sourceTree = "<group>"; };
+		7B8FAF00299B898D002EB972 /* TouchSpamPreventer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchSpamPreventer.swift; sourceTree = "<group>"; };
 		7B94342A2886A7F900638703 /* DeleteProfileInfoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteProfileInfoInteractor.swift; sourceTree = "<group>"; };
 		7B94342B2886A7F900638703 /* DeleteProfileInfoModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteProfileInfoModels.swift; sourceTree = "<group>"; };
 		7B94342C2886A7F900638703 /* DeleteProfileInfoVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteProfileInfoVIP.swift; sourceTree = "<group>"; };
@@ -2576,6 +2578,7 @@
 				754AE0BB1DFE8A46007FD001 /* SecureAllocator.swift */,
 				CE8CD8DC1E2D9EF200785E02 /* Sender.swift */,
 				7B54E57327F4A2B0002DD1E4 /* Shadowable.swift */,
+				7B8FAF00299B898D002EB972 /* TouchSpamPreventer.swift */,
 				7B62ACFA28B3BDA000CE81E7 /* String+Chunk.swift */,
 				7ECCA99628742E1700F99368 /* UIApplication+ActiveWindow.swift */,
 				7E87B32C285346E00097671F /* UIImage+Compress.swift */,
@@ -3915,6 +3918,7 @@
 				7EF45F532845352400D1F7B0 /* KYCBasicVIP.swift in Sources */,
 				CEA05CC31F21B53C00D850F0 /* FeeSelector.swift in Sources */,
 				7BDB4A012806F40D0031F015 /* ExchangeUpdater.swift in Sources */,
+				7B8FAF01299B898D002EB972 /* TouchSpamPreventer.swift in Sources */,
 				CE20C8F21DBAF71500C8397A /* ApplicationController.swift in Sources */,
 				7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */,
 				7B54E5A527F4A2B0002DD1E4 /* Generic.swift in Sources */,

@@ -724,7 +724,7 @@ extension CoreSystem: SystemListener {
                 print("[SYS] \(manager.network) sync error: \(messagePayload)")
                 syncState = .connecting
                 // retry by reconnecting
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                     guard UIApplication.shared.applicationState == .active else { return }
                     self.queue.async {
                         manager.connect(using: manager.customPeer)
