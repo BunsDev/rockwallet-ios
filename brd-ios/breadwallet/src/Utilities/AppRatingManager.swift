@@ -82,7 +82,7 @@ class AppRatingManager: NSObject, Subscriber {
                         if UserDefaults.debugShowAppRatingOnEnterWallet || self.shouldTriggerPrompt(transactions: transactions) {
                             // Add a slight delay before showing the prompt so the user has a chance
                             // to view the transactions.
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue, execute: {
                                 self.triggerRatingsPrompt(reason: self.ratingPromptReasonViewedTransactions)
                             })
                         }
