@@ -137,10 +137,6 @@ extension Scenes {
 }
 
 class SuccessViewController: BaseInfoViewController {
-    
-    override var isModalDismissableEnabled: Bool { return isModalDismissable }
-    var isModalDismissable = true
-    
     var success: SuccessReason? {
         didSet {
             prepareData()
@@ -149,12 +145,15 @@ class SuccessViewController: BaseInfoViewController {
     
     var transactionType: TransactionType = .defaultTransaction
     let canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false
+    
     override var imageName: String? { return success?.iconName }
     override var titleText: String? { return success?.title }
     override var descriptionText: String? { return success?.description }
     override var buttonViewModels: [ButtonViewModel] {
         var buttons: [ButtonViewModel] = [
             .init(title: success?.firstButtonTitle, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 switch self?.success {
                 case .documentVerification:
                     self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem,
@@ -164,6 +163,8 @@ class SuccessViewController: BaseInfoViewController {
                 }
             }),
             .init(title: success?.secondButtonTitle, isUnderlined: success?.secondButtonUnderlined ?? true, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 switch self?.success {
                 case .documentVerification:
                     LoadingView.show()
@@ -175,6 +176,8 @@ class SuccessViewController: BaseInfoViewController {
                 }
             }),
             .init(title: success?.thirdButtonTitle, isUnderlined: success?.thirdButtoUnderlined ?? true, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 switch self?.success {
                 case .documentVerification:
                     self?.coordinator?.showBuy(type: .ach,
@@ -186,6 +189,7 @@ class SuccessViewController: BaseInfoViewController {
                 }
             })
         ]
+        
         if !canUseAch && success == .documentVerification {
             buttons.removeLast()
         }
@@ -207,7 +211,9 @@ class SuccessViewController: BaseInfoViewController {
     
     override func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) {
         LoadingView.hide()
+        
         guard let coordinator = coordinator as? KYCCoordinator else { return }
+        
         coordinator.showAssetSelector(title: responseDisplay.title ?? "",
                                                             currencies: responseDisplay.currencies,
                                                             supportedCurrencies: responseDisplay.supportedCurrencies) { selectedCurrency in
