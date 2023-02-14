@@ -51,5 +51,4 @@ protocol KYCAddressDataPassing {
 }
 
 protocol KYCAddressRoutes: CoordinatableRoutes {
-    func showExternalKYC(url: String)
 }

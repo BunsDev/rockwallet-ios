@@ -27,7 +27,7 @@ final class BaseInfoPresenter: NSObject, Presenter, BaseInfoActionResponses {
     // MARK: - BaseInfoActionResponses
     
     func presentAssetSelectionData(actionResponse: BaseInfoModels.Assets.ActionResponse) {
-        viewController?.displayAssetSelectionData(responseDisplay: .init(title:  L10n.Swap.selectAssets,
+        viewController?.displayAssetSelectionData(responseDisplay: .init(title: L10n.Swap.selectAssets,
                                                                          currencies: Store.state.currencies,
                                                                          supportedCurrencies: actionResponse.supportedCurrencies))
     }

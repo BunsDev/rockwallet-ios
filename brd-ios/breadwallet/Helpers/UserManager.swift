@@ -41,6 +41,12 @@ class UserManager: NSObject {
         }
     }
     
+    func getVeriffSessionUrl(completion: @escaping ((Result<VeriffSession?, Error>?) -> Void)) {
+        VeriffSessionWorker().execute { result in
+            completion(result)
+        }
+    }
+    
     func setUserCredentials(email: String, sessionToken: String, sessionTokenHash: String) {
         UserDefaults.email = email
         UserDefaults.sessionToken = sessionToken

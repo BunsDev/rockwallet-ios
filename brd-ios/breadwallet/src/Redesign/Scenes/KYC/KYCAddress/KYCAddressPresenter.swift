@@ -76,8 +76,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
     }
     
     func presentExternalKYC(actionResponses: KYCAddressModels.ExternalKYC.ActionResponse) {
-        guard let address = actionResponses.address else { return }
-        viewController?.displayExternalKYC(responseDisplay: .init(address: address))
+        viewController?.displayExternalKYC(responseDisplay: .init())
     }
     
     func presentSsnInfo(actionResponse: KYCAddressModels.SsnInfo.ActionResponse) {
