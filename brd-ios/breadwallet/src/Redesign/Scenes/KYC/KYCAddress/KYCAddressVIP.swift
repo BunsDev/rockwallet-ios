@@ -13,7 +13,7 @@ extension Scenes {
 }
 
 protocol KYCAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
-    func formUpdated(viewAction: KYCAddressModels.FormUpdated.ViewAction)
+    func updateForm(viewAction: KYCAddressModels.FormUpdated.ViewAction)
     func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction)
     func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction)
     func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction)
