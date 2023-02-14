@@ -71,6 +71,8 @@
 
 "Account.CreateNewPasswordTitle" = "Create new password";
 
+"Account.CreatePassword" = "Create your password";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Current limit: $1,000/day";
 
@@ -94,7 +96,7 @@
 
 "Account.EnterEmail" = "Enter your e-mail";
 
-"Account.EnterPassword" = "Create your password";
+"Account.EnterPassword" = "Enter your password";
 
 /* $10000 per BTC */
 "Account.exchangeRate" = "%2$s 당 %1$s";

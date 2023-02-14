@@ -257,7 +257,7 @@ class AmountViewController: UIViewController {
 
     @objc private func didTapBalance() {
         didTapMax?()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.immediate.rawValue, execute: { [weak self] in
             self?.didTap()
         })
     }

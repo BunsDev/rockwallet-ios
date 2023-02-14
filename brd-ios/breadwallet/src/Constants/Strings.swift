@@ -87,6 +87,8 @@ internal enum L10n {
     internal static let createNewAccountTitle = L10n.tr("Localizable", "Account.CreateNewAccountTitle", fallback: "Create your account")
     /// Create new password
     internal static let createNewPasswordTitle = L10n.tr("Localizable", "Account.CreateNewPasswordTitle", fallback: "Create new password")
+    /// Create your password
+    internal static let createPassword = L10n.tr("Localizable", "Account.CreatePassword", fallback: "Create your password")
     /// Current limit per day label in profile screen
     internal static let currentLimit = L10n.tr("Localizable", "Account.CurrentLimit", fallback: "Current limit: $1,000/day")
     /// Daily
@@ -105,8 +107,8 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "Account.Email", fallback: "Email")
     /// Enter your e-mail
     internal static let enterEmail = L10n.tr("Localizable", "Account.EnterEmail", fallback: "Enter your e-mail")
-    /// Create your password
-    internal static let enterPassword = L10n.tr("Localizable", "Account.EnterPassword", fallback: "Create your password")
+    /// Enter your password
+    internal static let enterPassword = L10n.tr("Localizable", "Account.EnterPassword", fallback: "Enter your password")
     /// $10000 per BTC
     internal static func exchangeRate(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "Account.exchangeRate", String(describing: p1), String(describing: p2), fallback: "%1$@ per %2$@")

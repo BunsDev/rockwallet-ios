@@ -899,7 +899,7 @@ class ModalPresenter: Subscriber {
                     topVC.dismiss(animated: true, completion: {
                         //TODO:BCH
                         Store.perform(action: RootModalActions.Present(modal: .send(currency: Currencies.btc)))
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { //This is a hack because present has no callback
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.short.rawValue, execute: { //This is a hack because present has no callback
                             _ = attemptConfirmRequest()
                         })
                     })

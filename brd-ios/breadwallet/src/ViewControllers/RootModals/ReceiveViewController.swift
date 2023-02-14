@@ -229,7 +229,7 @@ class ReceiveViewController: UIViewController, Subscriber {
             self.address.isUserInteractionEnabled = true
             alertView.contentView?.isHidden = false
             if shouldShrinkAfter {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.long.rawValue, execute: {
                     if alertView.isExpanded {
                         self.toggle(alertView: alertView, shouldAdjustPadding: shouldAdjustPadding)
                     }

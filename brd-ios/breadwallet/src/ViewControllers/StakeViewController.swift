@@ -191,7 +191,7 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
                 switch result {
                 case .success:
                     self.onPublishSuccess?()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                         self.dismiss(animated: true, completion: nil)
                     }
                 case .creationError(let message):
