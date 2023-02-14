@@ -137,6 +137,10 @@ extension Scenes {
 }
 
 class SuccessViewController: BaseInfoViewController {
+    
+    override var isModalDismissableEnabled: Bool { return isModalDismissable }
+    var isModalDismissable = true
+    
     var success: SuccessReason? {
         didSet {
             prepareData()

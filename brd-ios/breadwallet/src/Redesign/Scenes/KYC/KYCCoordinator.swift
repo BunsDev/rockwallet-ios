@@ -17,9 +17,19 @@ class KYCCoordinator: BaseCoordinator,
                       CountriesAndStatesRoutes,
                       KYCAddressRoutes,
                       AssetSelectionDisplayable {
-    var flow: ProfileModels.ExchangeFlow?
-    
     override func start() {
+        start(flow: nil)
+    }
+    
+    func start(flow: ProfileModels.ExchangeFlow?) {
+        if let flow = flow {
+            open(scene: Scenes.VerifyAccount) { vc in
+                vc.flow = flow
+            }
+            
+            return
+        }
+        
         switch UserManager.shared.profile?.status {
         case .emailPending:
             let coordinator = AccountCoordinator(navigationController: navigationController)
@@ -53,14 +63,14 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showStateSelector(states: [Country], selected: ((Country?) -> Void)?) {
+    func showStateSelector(states: [Place], selected: ((Place?) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.ItemSelection,
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = states
             vc?.dataStore?.sceneTitle = L10n.Account.selectState
             vc?.itemSelected = { item in
-                selected?(item as? Country)
+                selected?(item as? Place)
             }
             vc?.prepareData()
         }

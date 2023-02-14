@@ -111,8 +111,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         cell.setup { view in
             view.configure(with: Presets.TextField.two)
             view.setup(with: model)
-            
-            view.isUserInteractionEnabled = false
         }
         
         return cell
@@ -199,8 +197,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     
     // MARK: - Additional Helpers
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
-        super.textFieldDidUpdate(for: indexPath, with: text)
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
         switch section as? Models.Section {
@@ -213,5 +210,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         default:
             break
         }
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
 }

@@ -15,7 +15,6 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
                               KYCBasicResponseDisplays {
     typealias Models = KYCBasicModels
     
-    override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String { return L10n.Button.close }
     
     override var sceneLeftAlignedTitle: String? {
@@ -91,24 +90,6 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? TextFieldModel,
-              let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: Presets.TextField.two)
-            view.setup(with: model)
-            
-            view.isUserInteractionEnabled = false
-        }
-        
-        return cell
-    }
-    
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard var model = sectionRows[section]?[indexPath.row] as? ButtonViewModel,
@@ -133,6 +114,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     // MARK: - User Interaction
+    
     @objc override func buttonTapped() {
         super.buttonTapped()
         
@@ -140,6 +122,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
 
     // MARK: - KYCBasicResponseDisplay
+    
     func displayValidate(responseDisplay: KYCBasicModels.Validate.ResponseDisplay) {
         guard let section = sections.firstIndex(of: Models.Section.confirm),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }

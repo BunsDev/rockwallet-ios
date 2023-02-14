@@ -19,7 +19,7 @@ struct Place: ModelResponse, ItemSelectable {
     var name: String
     
     var displayName: String? { return name }
-    var displayImage: ImageViewModel? { return .imageName(iso2) }
+    var displayImage: ImageViewModel? { return nil }
 }
 
 struct Country: Model, ItemSelectable {

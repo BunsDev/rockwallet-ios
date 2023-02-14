@@ -13,6 +13,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     // MARK: - KYCAddressDataStore
     
     var countries: [Country] = []
+    var states: [Place] = []
     
     var itemId: String?
     var firstName: String?
@@ -21,6 +22,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var address: String?
     var city: String?
     var state: String?
+    var stateCode: String?
     var postalCode: String?
     var country: String?
     var countryFullName: String?

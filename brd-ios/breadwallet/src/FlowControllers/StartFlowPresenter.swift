@@ -194,7 +194,7 @@ class StartFlowPresenter: Subscriber {
     
     private func handleRecoveredAccount(_ recoveredAccount: Account) {
         var account = recoveredAccount
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + Presets.Delay.long.rawValue) { [weak self] in
             self?.keyMaster.fetchCreationDate(for: account) { updatedAccount in
                 account = updatedAccount
                 DispatchQueue.main.async {
@@ -298,6 +298,7 @@ class StartFlowPresenter: Subscriber {
                                                        keyMaster: self.keyMaster,
                                                        from: navController,
                                                        context: eventContext,
+                                                       showIntro: true,
                                                        dismissAction: dismissAction,
                                                        modalPresentation: false,
                                                        canExit: false)

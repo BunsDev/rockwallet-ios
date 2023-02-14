@@ -191,6 +191,7 @@ class LoginViewController: UIViewController, Subscriber {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         unlockTimer?.invalidate()
+        hideToastMessage()
     }
     
     func setupCloseButton() {

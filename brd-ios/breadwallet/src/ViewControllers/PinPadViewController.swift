@@ -140,7 +140,7 @@ class PinPadViewController: UICollectionViewController {
 #if targetEnvironment(simulator)
         // Only invoke the auto-enter PIN for the login case.
         if UserDefaults.debugShouldAutoEnterPIN && Store.state.isLoginRequired {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                 for _ in 0...5 {
                     self.handleInputAtItemIndex(index: 0)
                 }

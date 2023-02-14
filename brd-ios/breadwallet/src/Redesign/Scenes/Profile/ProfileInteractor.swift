@@ -21,9 +21,8 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
             switch result {
             case .success(let data):
                 self?.dataStore?.profile = data
-                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(title: data?.email,
-                                                                                     image: Asset.avatar.name,
-                                                                                     status: data?.status)))
+                
+                self?.presenter?.presentData(actionResponse: .init(item: Models.Item()))
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))

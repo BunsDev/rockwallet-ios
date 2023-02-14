@@ -25,4 +25,19 @@ enum CountriesAndStatesModels {
             var countries: [Country]
         }
     }
+    
+    struct SelectState {
+        struct ViewAction {
+            var code: String?
+            var state: String?
+        }
+        
+        struct ActionResponse {
+            var states: [Place]?
+        }
+        
+        struct ResponseDisplay {
+            var states: [Place]
+        }
+    }
 }

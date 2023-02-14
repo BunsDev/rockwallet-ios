@@ -112,6 +112,8 @@ class VerificationInProgressViewController: CheckListViewController {
         case .success:
             coordinator?.open(scene: Scenes.Success) { vc in
                 vc.success = .documentVerification
+                vc.isModalDismissable = false
+                vc.navigationItem.hidesBackButton = true
             }
             
         case .failure(let reason):
