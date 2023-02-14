@@ -197,8 +197,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     
     // MARK: - Additional Helpers
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
-        super.textFieldDidUpdate(for: indexPath, with: text)
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
         switch section as? Models.Section {
@@ -211,5 +210,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         default:
             break
         }
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
 }
