@@ -88,15 +88,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     }
     
     func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction) {
-        VeriffSessionWorker().execute { [weak self] result in
-            switch result {
-            case .success(let data):
-                self?.presenter?.presentExternalKYC(actionResponses: .init(address: data?.sessionUrl))
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
+        presenter?.presentExternalKYC(actionResponses: .init())
     }
     
     func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction) {

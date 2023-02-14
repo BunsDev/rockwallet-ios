@@ -129,17 +129,17 @@ class FailureViewController: BaseInfoViewController {
         }
         return [
             .init(title: buttonTitle != nil ? buttonTitle : failure?.firstButtonTitle) { [weak self] in
+                self?.shouldDismiss = true
+                
                 switch self?.failure {
                 case .swap:
                     self?.coordinator?.showSwap()
                     
                 case .documentVerification:
-                    // show custumer support
-                    break
+                    self?.coordinator?.showSupport()
                     
                 case .documentVerificationRetry:
-                    // retry document verification
-                    break
+                    self?.coordinator?.showExternalKYC()
                     
                 default:
                     if containsDebit || containsBankAccount {
@@ -149,6 +149,8 @@ class FailureViewController: BaseInfoViewController {
                     }
                 }},
             .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 switch self?.failure {
                 case .buyCard:
                     self?.coordinator?.showSupport()
@@ -156,9 +158,11 @@ class FailureViewController: BaseInfoViewController {
                 case .swap:
                     self?.coordinator?.dismissFlow()
                     
-                case .documentVerification, .documentVerificationRetry:
-                    // try later -> dismiss flow?
-                    break
+                case .documentVerification:
+                    self?.coordinator?.dismissFlow()
+
+                case .documentVerificationRetry:
+                    self?.coordinator?.dismissFlow()
                     
                 default:
                     break
