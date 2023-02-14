@@ -363,6 +363,8 @@
 
 "AccountKYCLevelTwo.DrivingLicence" = "Carnet de conducir";
 
+"AccountKYCLevelTwo.EnterAddress" = "Enter address";
+
 /* Face capture instructions text on documents for KYC2 */
 "AccountKYCLevelTwo.FaceCaptureInstructions" = "Asegúrate de haber encajado toda tu cara en el marco.";
 
