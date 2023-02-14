@@ -737,6 +737,8 @@
 		D7F0AF33298D378700474E5C /* verificationLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = D7F0AF32298D378700474E5C /* verificationLoader.json */; };
 		D7F7595E299236E100FB4BFA /* KYCSubmitInfoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */; };
 		D7F75963299A1D2300FB4BFA /* FindAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */; };
+		D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */; };
+		D7F75967299BB55100FB4BFA /* LoqateEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1535,6 +1537,8 @@
 		D7F0AF32298D378700474E5C /* verificationLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = verificationLoader.json; sourceTree = "<group>"; };
 		D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitInfoWorker.swift; sourceTree = "<group>"; };
 		D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressViewController.swift; sourceTree = "<group>"; };
+		D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressWorker.swift; sourceTree = "<group>"; };
+		D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoqateEndpoints.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2014,6 +2018,7 @@
 				7B54E57A27F4A2B0002DD1E4 /* HttpRequest.swift */,
 				7B54E57E27F4A2B0002DD1E4 /* HTTPRequestHelpers.swift */,
 				7B54E58327F4A2B0002DD1E4 /* HttpRequestManager.swift */,
+				D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -3390,6 +3395,7 @@
 			isa = PBXGroup;
 			children = (
 				D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */,
+				D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */,
 			);
 			path = FindAddress;
 			sourceTree = "<group>";
@@ -3829,6 +3835,7 @@
 				7B8CF82028A64B9300D54D14 /* ExchangeFormatter.swift in Sources */,
 				7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */,
 				CEE0EF521EBD14B60018DB36 /* PinTransitioningDelegate.swift in Sources */,
+				D7F75967299BB55100FB4BFA /* LoqateEndpoints.swift in Sources */,
 				754AE0BC1DFE8A46007FD001 /* SecureAllocator.swift in Sources */,
 				7B54E59D27F4A2B0002DD1E4 /* Shadowable.swift in Sources */,
 				7B05888528A2668F00D7C971 /* DeleteCardWorker.swift in Sources */,
@@ -4106,6 +4113,7 @@
 				7E5CB3B02835090E00EC787E /* FEInfoView.swift in Sources */,
 				7B54E5AA27F4A2B0002DD1E4 /* HttpRequestManager.swift in Sources */,
 				CE65C66A207D41BB000C99C4 /* AssetIndex.swift in Sources */,
+				D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */,
 				7EF45F89284768C100D1F7B0 /* ItemSelectionPresenter.swift in Sources */,
 				7E5CB3902835090E00EC787E /* AlertModels.swift in Sources */,
 				CE4CA7BC1EE3649100373F11 /* BRActivityView.swift in Sources */,
