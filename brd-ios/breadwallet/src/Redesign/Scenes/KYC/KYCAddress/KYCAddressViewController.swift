@@ -153,7 +153,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay) {
-        coordinator?.showExternalKYC(url: responseDisplay.address)
+        coordinator?.showExternalKYC()
     }
     
     func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay) {
