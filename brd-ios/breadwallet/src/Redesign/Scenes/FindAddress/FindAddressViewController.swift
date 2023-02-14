@@ -29,7 +29,6 @@ class FindAddressViewController: ItemSelectionViewController {
     
     override func setupCloseButton(closeAction: Selector) {
         navigationItem.rightBarButtonItem = .init(title: L10n.Button.done.capitalized, style: .plain, target: self, action: #selector(doneTapped(_:)))
-        navigationItem.hidesBackButton = true // TODO: check if still needed when presented modally
     }
     
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
