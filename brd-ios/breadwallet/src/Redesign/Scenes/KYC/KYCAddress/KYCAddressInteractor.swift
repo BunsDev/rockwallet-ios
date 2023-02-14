@@ -36,7 +36,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         }
     }
     
-    func formUpdated(viewAction: KYCAddressModels.FormUpdated.ViewAction) {
+    func updateForm(viewAction: KYCAddressModels.FormUpdated.ViewAction) {
         switch viewAction.section as? Models.Section {
         case .address:
             dataStore?.address = viewAction.value as? String
