@@ -64,7 +64,10 @@ class FindAddressViewController: ItemSelectionViewController {
     // MARK: - User Interaction
     
     @objc func doneTapped(_ sender: UIBarButtonItem) {
-        guard let text = searchController.searchBar.text, !text.isEmpty else { return }
+        guard let text = searchController.searchBar.text, !text.isEmpty else {
+            coordinator?.dismissFlow()
+            return
+        }
         callback?(text)
         coordinator?.dismissFlow()
     }

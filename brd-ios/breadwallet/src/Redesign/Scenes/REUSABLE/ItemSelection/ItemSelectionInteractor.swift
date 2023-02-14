@@ -110,11 +110,9 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
 
 struct FindAddressRequestModel: RequestModelData {
     let text: String?
-    let key: String? = "MD12-TM55-MR74-RP36"
     
     func getParameters() -> [String: Any] {
         let params = [
-            "Key": key,
             "Text": text
         ]
         
@@ -125,12 +123,11 @@ struct FindAddressRequestModel: RequestModelData {
 class FindAddressWorker: BaseApiWorker<FindAddressMapper> {
     override func getUrl() -> String {
         guard let urlParams = (requestData as? FindAddressRequestModel),
-              let key = urlParams.key,
               let text = urlParams.text else {
             return ""
         }
                 
-        return APIURLHandler.getUrl(LoquateEndpoints.base, parameters: [key, text])
+        return APIURLHandler.getUrl(LoquateEndpoints.base, parameters: [E.loqateKey, text])
     }
     
     override func getParameters() -> [String: Any] {
