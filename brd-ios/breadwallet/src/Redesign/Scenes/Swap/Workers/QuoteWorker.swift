@@ -114,7 +114,7 @@ class QuoteMapper: ModelMapper<QuoteModelResponse, Quote> {
         
         var toFee: EstimateFee?
         if let currency = response.toFeeCurrency?.feeCurrency,
-            let value = response.toFee {
+           let value = response.toFee {
             toFee = .init(fee: value, feeRate: response.toFeeCurrency?.depositRate ?? 0, currency: currency)
         }
         

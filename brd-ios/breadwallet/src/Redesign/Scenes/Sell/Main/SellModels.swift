@@ -10,7 +10,7 @@ import UIKit
 
 enum SellModels {
     typealias Item = Currency
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case rateAndTimer
         case accountLimits
         case payoutMethod

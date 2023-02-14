@@ -526,6 +526,22 @@ extension KeyStore: WalletAuthenticator {
             return 0
         }
     }
+    
+    /// An account which has a phrase set but no PIN
+    var accountPhraseWithoutPin: String? {
+        do {
+            guard let phrase: String = try keychainItem(key: KeychainKey.mnemonic),
+                  try keychainItem(key: KeychainKey.pin) as String? == nil else {
+                
+                return nil
+            }
+            
+            return phrase
+            
+        } catch {
+            return nil
+        }
+    }
 
     //Can be expensive...result should be cached
     var pinLength: Int {

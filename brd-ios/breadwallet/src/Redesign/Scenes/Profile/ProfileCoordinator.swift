@@ -15,10 +15,6 @@ class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
         open(scene: Scenes.Profile)
     }
     
-    func showAvatarSelection() {
-        showUnderConstruction("avatar selection")
-    }
-    
     func showSecuirtySettings() {
         modalPresenter?.presentSecuritySettings()
     }

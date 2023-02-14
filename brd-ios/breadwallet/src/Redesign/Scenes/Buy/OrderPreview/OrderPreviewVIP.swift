@@ -30,6 +30,7 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentInfoPopup(actionResponse: OrderPreviewModels.InfoPopup.ActionResponse)
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse)
     func presentCvvInfoPopup(actionResponse: OrderPreviewModels.CvvInfoPopup.ActionResponse)
+    func presentThreeDSecure(actionResponse: OrderPreviewModels.ThreeDSecure.ActionResponse)
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse)
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse)
 }
@@ -40,6 +41,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayInfoPopup(responseDisplay: OrderPreviewModels.InfoPopup.ResponseDisplay)
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay)
     func displayCvvInfoPopup(responseDisplay: OrderPreviewModels.CvvInfoPopup.ResponseDisplay)
+    func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay)
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay)
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay)
 }

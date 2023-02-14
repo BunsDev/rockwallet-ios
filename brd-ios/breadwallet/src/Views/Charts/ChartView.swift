@@ -181,7 +181,7 @@ class ChartView: UIView {
         fetchHistory(forPeriod: historyPeriod)
         
         //Fetch all others after slight delay
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + Presets.Delay.immediate.rawValue) {
             let periodsToFetch = HistoryPeriod.allCases.filter { $0 != self.historyPeriod }
             periodsToFetch.forEach { self.fetchHistory(forPeriod: $0) }
         }

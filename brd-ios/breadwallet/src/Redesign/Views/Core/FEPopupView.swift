@@ -23,6 +23,7 @@ struct PopupViewModel: ViewModel {
     var imageName: String?
     var body: String?
     var buttons: [ButtonViewModel] = []
+    var config: PopupConfiguration?
     var closeButton: ButtonViewModel? = .init(image: Asset.close.image)
 }
 
@@ -79,7 +80,7 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
         view.textContainer.lineFragmentPadding = 0
         view.textContainerInset = .init(top: Margins.zero.rawValue,
                                         left: Margins.zero.rawValue,
-                                        bottom: Margins.medium.rawValue,
+                                        bottom: Margins.large.rawValue,
                                         right: Margins.zero.rawValue)
         return view
     }()

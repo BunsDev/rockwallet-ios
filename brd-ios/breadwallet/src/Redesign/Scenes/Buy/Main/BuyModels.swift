@@ -17,7 +17,7 @@ enum BuyModels {
         var achEnabled: Bool?
     }
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case segment
         case rateAndTimer
         case accountLimits
@@ -133,7 +133,9 @@ enum BuyModels {
     struct AchData {
         struct ViewAction {}
         
-        struct ActionResponse {}
+        struct ActionResponse {
+            var currencyCode: String?
+        }
         
         struct ResponseDisplay {
             var model: InfoViewModel?

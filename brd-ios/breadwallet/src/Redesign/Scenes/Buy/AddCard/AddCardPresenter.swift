@@ -32,7 +32,8 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
                                                                                     title: L10n.Buy.cardNumber,
                                                                                     value: item.cardNumber),
                                                                       expiration: .init(title: L10n.Buy.monthYear,
-                                                                                        value: item.cardExpDateString),
+                                                                                        value: item.cardExpDateString,
+                                                                                        isUserInteractionEnabled: false),
                                                                       cvv: .init(title: L10n.Buy.cardCVV,
                                                                                  value: item.cardCVV,
                                                                                  trailing: .image(Asset.help.image.withRenderingMode(.alwaysOriginal))))

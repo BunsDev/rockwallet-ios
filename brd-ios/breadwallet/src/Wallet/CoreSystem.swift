@@ -71,7 +71,9 @@ class CoreSystem: Subscriber {
     /// Creates and configures the System with the Account and BDB authentication token.
     func create(account: Account, btcWalletCreationCallback: @escaping () -> Void, completion: @escaping () -> Void) {
         self.btcWalletCreationCallback = btcWalletCreationCallback
-        guard let kvStore = Backend.kvStore else { return }
+        
+        guard let kvStore = Backend.kvStore, let sessionToken = UserDefaults.sessionToken else { return }
+        
         print("[SYS] create | account timestamp: \(account.timestamp)")
         assert(self.system == nil)
         
@@ -79,7 +81,7 @@ class CoreSystem: Subscriber {
                                             bdbDataTaskFunc: { session, request, completion -> URLSessionDataTask in
             var req = request
             req.decorate()
-            req.authorize(withToken: UserDefaults.sessionToken)
+            req.authorize(withToken: sessionToken)
             
             //TODO:CRYPTO does not handle 401, other headers, redirects
             return session.dataTask(with: req, completionHandler: completion)
@@ -185,7 +187,7 @@ class CoreSystem: Subscriber {
     }
     
     /// Fetch network fees from backend
-    func updateFees() {
+    func updateFees(completion: (() -> Void)? = nil) {
         queue.async {
             guard let system = self.system else { return }
             system.updateNetworkFees { result in
@@ -195,6 +197,8 @@ class CoreSystem: Subscriber {
                 case .failure(let error):
                     print("[SYS] Fees: failed to update with error: \(error)")
                 }
+                
+                completion?()
             }
         }
     }
@@ -720,7 +724,7 @@ extension CoreSystem: SystemListener {
                 print("[SYS] \(manager.network) sync error: \(messagePayload)")
                 syncState = .connecting
                 // retry by reconnecting
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                     guard UIApplication.shared.applicationState == .active else { return }
                     self.queue.async {
                         manager.connect(using: manager.customPeer)

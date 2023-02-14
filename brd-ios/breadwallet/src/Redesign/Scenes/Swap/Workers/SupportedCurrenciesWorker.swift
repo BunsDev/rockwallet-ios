@@ -14,7 +14,7 @@ struct SupportedCurrenciesResponseData: ModelResponse {
     var supportedCurrencies: [String]
 }
 
-struct SupportedCurrency {
+struct SupportedCurrency: Model {
     var name: String
 }
 

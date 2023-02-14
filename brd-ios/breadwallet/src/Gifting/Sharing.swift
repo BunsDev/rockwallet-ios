@@ -87,7 +87,7 @@ class GiftSharingCoordinator {
                            amount: gift.amount)
         viewModel?.tx?.updateGiftStatus(gift: newGift, kvStore: kvStore)
         if let hash = newGift.txnHash {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                 print("[gifting] txMetaDataUpdated")
                 Store.trigger(name: .txMetaDataUpdated(hash))
             }

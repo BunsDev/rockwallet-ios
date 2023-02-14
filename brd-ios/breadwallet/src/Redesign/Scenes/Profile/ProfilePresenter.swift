@@ -16,9 +16,8 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
 
     // MARK: - ProfileActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? Models.Item,
-              let status = item.status,
-              let infoView: InfoViewModel = status.viewModel else { return }
+        guard let profile = UserManager.shared.profile,
+              let infoView: InfoViewModel = profile.status.viewModel else { return }
         
         let sections: [Models.Section] = [
             .profile,
@@ -26,19 +25,20 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
             .navigation
         ]
         
-        var navigationModel = Models.NavigationItems.allCases
-        if status != .levelTwo(.levelTwo) {
-            navigationModel = navigationModel.filter { $0 != .paymentMethods }
+        var navigationItems = Models.NavigationItems.allCases
+        if !profile.status.hasKYCLevelTwo {
+            navigationItems = navigationItems.filter { $0 != .paymentMethods }
         }
+        let navigationModel = navigationItems.compactMap { $0.model }
         
         let sectionRows: [Models.Section: [Any]] = [
             .profile: [
-                ProfileViewModel(name: item.title ?? "", image: item.image ?? "")
+                ProfileViewModel(name: profile.email, image: Asset.avatar.name)
             ],
             .verification: [
                 infoView
             ],
-            .navigation: navigationModel.compactMap { $0.model }
+            .navigation: navigationModel
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
@@ -49,8 +49,11 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
     }
     
     func presentVerificationInfo(actionResponse: ProfileModels.VerificationInfo.ActionResponse) {
-        let model = PopupViewModel(title: .text(L10n.Account.whyVerify),
-                                   body: L10n.Account.verifyAccountText)
+        let title = actionResponse.status == .levelTwo(.levelTwo) ? L10n.Account.verifiedAccountTitle : L10n.Account.whyVerify
+        let body = actionResponse.status == .levelTwo(.levelTwo) ? L10n.Account.verifiedAccountText : L10n.Account.verifyAccountText
+        
+        let model = PopupViewModel(title: .text(title),
+                                   body: body)
         
         viewController?.displayVerificationInfo(responseDisplay: .init(model: model))
     }

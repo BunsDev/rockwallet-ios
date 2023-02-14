@@ -60,11 +60,10 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     
     private lazy var cvvTextField: FETextField = {
         let view = FETextField()
-        view.hideTitleForState = .filled
         return view
     }()
     
-    var didTypeCVV: ((String?) -> Void)? {
+    var didTypeCVV: ((UITextField) -> Void)? {
         get {
             cvvTextField.valueChanged
         }

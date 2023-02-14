@@ -20,17 +20,17 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         guard let item = actionResponse.item as? Models.Item else { return }
 
         let sections = [
-            Models.Sections.rateAndTimer,
-            Models.Sections.swapCard,
-            Models.Sections.payoutMethod,
-            Models.Sections.accountLimits
+            Models.Section.rateAndTimer,
+            Models.Section.swapCard,
+            Models.Section.payoutMethod,
+            Models.Section.accountLimits
         ]
 
         let sectionRows = [
-            Models.Sections.rateAndTimer: [
+            Models.Section.rateAndTimer: [
                 ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
             ],
-            Models.Sections.swapCard: [
+            Models.Section.swapCard: [
                 MainSwapViewModel(from: .init(amount: .zero(item),
                                               formattedTokenString: .init(string: ""),
                                               title: .text("I have 10.12000473 USDC"),
@@ -43,10 +43,10 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                             selectionDisabled: true),
                                  hideSwapButton: true)
             ],
-            Models.Sections.payoutMethod: [
+            Models.Section.payoutMethod: [
                 paymentModel ?? CardSelectionViewModel(userInteractionEnabled: true)
             ],
-            Models.Sections.accountLimits: [
+            Models.Section.accountLimits: [
                 LabelViewModel.text("")
             ]
         ]

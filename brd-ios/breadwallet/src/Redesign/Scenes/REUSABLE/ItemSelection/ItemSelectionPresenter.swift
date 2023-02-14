@@ -14,20 +14,21 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
     weak var viewController: ItemSelectionViewController?
 
     // MARK: - ItemSelectionActionResponses
+    
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
               let items = item.items,
               let isAddingEnabled = item.isAddingEnabled
         else { return }
         
-        var sections = [Models.Sections.items]
+        var sections = [Models.Section.items]
         if isAddingEnabled {
-            sections.insert(Models.Sections.addItem, at: 0)
+            sections.insert(Models.Section.addItem, at: 0)
         }
         
-        let sectionRows: [Models.Sections: [Any]] = [
-            Models.Sections.items: items,
-            Models.Sections.addItem: [L10n.Swap.addItem]
+        let sectionRows: [Models.Section: [Any]] = [
+            Models.Section.items: items,
+            Models.Section.addItem: [L10n.Swap.addItem]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))

@@ -121,6 +121,14 @@ struct E {
         return token
     }
     
+    static var sardineClientId: String {
+        guard let clientid = Bundle.main.object(forInfoDictionaryKey: "SARDINE_CLIENT_ID") as? String,
+              !clientid.isEmpty else {
+            return fail()
+        }
+        return clientid
+    }
+    
     static var isTest: Bool {
         return Bundle.main.object(forInfoDictionaryKey: "IS_TEST") as? String == "true"
     }

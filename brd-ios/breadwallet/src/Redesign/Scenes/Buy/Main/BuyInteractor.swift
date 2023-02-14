@@ -33,7 +33,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency),
                                                                                      paymentCard: self?.dataStore?.selected,
                                                                                      type: self?.dataStore?.paymentMethod,
-                                                                                     achEnabled: UserManager.shared.profile?.canUseAch)))
+                                                                                     achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
                 self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
                                                                      card: self?.dataStore?.selected,
                                                                      type: self?.dataStore?.paymentMethod,
@@ -122,7 +122,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         if dataStore?.selected?.cardType == .debit,
            dataStore?.paymentMethod == .card,
            dataStore?.ach != nil,
-           dataStore?.toAmount?.currency.code == C.USDC {
+           dataStore?.toAmount?.currency.code == C.USDT {
             dataStore?.availablePayments.append(.ach)
         }
         
@@ -138,8 +138,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
         case .ach:
-            guard let currency = Store.state.currencies.first(where: { $0.code == C.USDC }) else {
-                presenter?.presentUSDCMessage(actionResponse: .init())
+            guard let currency = Store.state.currencies.first(where: { $0.code == C.USDT }) else {
+                presenter?.presentDisabledCurrencyMessage(actionResponse: .init(currencyCode: C.USDT))
                 return
             }
             dataStore?.toAmount = .zero(currency)

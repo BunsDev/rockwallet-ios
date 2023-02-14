@@ -74,6 +74,19 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
         }
     }
     
+    func showStateSelector(states: [Place], selected: ((Place?) -> Void)?) {
+        openModally(coordinator: ItemSelectionCoordinator.self,
+                    scene: Scenes.ItemSelection,
+                    presentationStyle: .formSheet) { vc in
+            vc?.dataStore?.items = states
+            vc?.dataStore?.sceneTitle = L10n.Account.selectState
+            vc?.itemSelected = { item in
+                selected?(item as? Place)
+            }
+            vc?.prepareData()
+        }
+    }
+    
     func showManageAssets(coreSystem: CoreSystem?) {
         guard let coreSystem = coreSystem, let assetCollection = coreSystem.assetCollection else { return }
         

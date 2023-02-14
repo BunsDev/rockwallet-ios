@@ -410,7 +410,7 @@ class ModalPresenter: Subscriber {
         if let btc = Currencies.shared.btc, let btcWallet = btc.wallet {
             // Rescan
             var rescan = MenuItem(title: L10n.Settings.sync, callback: { [unowned self] in
-                menuNav.pushViewController(ReScanViewController(system: self.system, wallet: btcWallet), animated: true)
+                menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: btcWallet), animated: true)
             })
             rescan.shouldShow = { [unowned self] in
                 self.system.connectionMode(for: btc) == .p2p_only
@@ -456,7 +456,7 @@ class ModalPresenter: Subscriber {
                 // Rescan
                 bchItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
                     guard let self = self else { return }
-                    menuNav.pushViewController(ReScanViewController(system: self.system, wallet: bchWallet), animated: true)
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: bchWallet), animated: true)
                 }))
             }
             bchItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
@@ -476,7 +476,7 @@ class ModalPresenter: Subscriber {
                 // Rescan
                 bsvItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
                     guard let self = self else { return }
-                    menuNav.pushViewController(ReScanViewController(system: self.system, wallet: bsvWallet), animated: true)
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: bsvWallet), animated: true)
                 }))
             }
             bsvItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
@@ -496,7 +496,7 @@ class ModalPresenter: Subscriber {
                 // Rescan
                 ethItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
                     guard let self = self else { return }
-                    menuNav.pushViewController(ReScanViewController(system: self.system, wallet: ethWallet), animated: true)
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: ethWallet), animated: true)
                 }))
             }
         }
@@ -783,27 +783,22 @@ class ModalPresenter: Subscriber {
     
     private func presentScan(parent: UIViewController, currency: Currency?) -> PresentScan {
         return { [weak parent] scanCompletion in
-            guard ScanViewController.isCameraAllowed else {
-                if let parent = parent {
-                    ScanViewController.presentCameraUnavailableAlert(fromRoot: parent)
-                }
-                return
-            }
-            
             let vc = ScanViewController(forPaymentRequestForCurrency: currency, completion: { scanResult in
                 scanCompletion(scanResult)
                 parent?.view.isFrameChangeBlocked = false
             })
+            
             parent?.view.isFrameChangeBlocked = true
             parent?.present(vc, animated: true, completion: {})
         }
     }
     
-    private func presentWritePaperKey(fromViewController vc: UIViewController) {
+    private func presentWritePaperKey(fromViewController vc: UIViewController, context: EventContext = .writeKey) {
         RecoveryKeyFlowController.enterRecoveryKeyFlow(pin: nil,
                                                        keyMaster: self.keyStore,
                                                        from: vc,
-                                                       context: .none,
+                                                       context: context,
+                                                       showIntro: false,
                                                        dismissAction: nil)
     }
     
@@ -904,7 +899,7 @@ class ModalPresenter: Subscriber {
                     topVC.dismiss(animated: true, completion: {
                         //TODO:BCH
                         Store.perform(action: RootModalActions.Present(modal: .send(currency: Currencies.btc)))
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { //This is a hack because present has no callback
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.short.rawValue, execute: { //This is a hack because present has no callback
                             _ = attemptConfirmRequest()
                         })
                     })
@@ -1098,7 +1093,7 @@ class ModalPresenter: Subscriber {
             // Paper key
             MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in
                 guard let self = self else { return }
-                self.presentWritePaperKey(fromViewController: menuNav)
+                self.presentWritePaperKey(fromViewController: menuNav, context: .viewRecoveryPhrase)
             },
             
             // Portfolio data for widget
@@ -1124,8 +1119,7 @@ class ModalPresenter: Subscriber {
             self?.deleteAccountCallback?()
         }
         
-        if UserManager.shared.profile?.roles.contains(.customer) == true,
-           UserDefaults.email != nil {
+        if UserManager.shared.profile != nil, UserDefaults.email != nil {
             securityItems.append(deleteAccount)
         }
         

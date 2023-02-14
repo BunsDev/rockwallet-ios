@@ -23,18 +23,19 @@ struct CodeInputConfiguration: Configurable {
 
 struct CodeInputViewModel: ViewModel {}
 
-class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDisplayable {
-    
-    var numberOfFields: Int { return 6 }
+class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDisplayable, UITextFieldDelegate {
+    static var numberOfFields: Int { return 6 }
     
     var contentSizeChanged: (() -> Void)?
     var valueChanged: ((String?) -> Void)?
+    
     var displayState: DisplayState = .normal
     
     private lazy var stack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = Margins.extraSmall.rawValue
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -42,6 +43,7 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         let view = UIStackView()
         view.distribution = .fillEqually
         view.spacing = Margins.small.rawValue
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -55,18 +57,20 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
     private lazy var hiddenTextField: UITextField = {
         let view = UITextField()
         view.keyboardType = .numberPad
+        view.tintColor = .clear
+        view.textColor = .clear
+        view.backgroundColor = .clear
+        view.borderStyle = .none
+        view.font = UIFont.systemFont(ofSize: 0)
+        view.delegate = self
         return view
     }()
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
     
     override func setupSubviews() {
         super.setupSubviews()
         
-        addSubview(hiddenTextField)
-        hiddenTextField.alpha = 0
+        content.addSubview(hiddenTextField)
+        
         content.addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -76,19 +80,14 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         stack.addArrangedSubview(inputStack)
         stack.addArrangedSubview(errorLabel)
         
-        for _ in (0..<numberOfFields) {
-            let view = FETextField()
-            view.hideTitleForState = .filled
-            view.isUserInteractionEnabled = false
-            inputStack.addArrangedSubview(view)
+        for _ in (0..<CodeInputView.numberOfFields) {
+            inputStack.addArrangedSubview(FETextField())
         }
         
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
+        hiddenTextField.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
+            make.height.equalTo(inputStack.snp.height)
+        }
         
         hiddenTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
@@ -112,37 +111,28 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         }
     }
     
-    @objc private func tapped() {
-        hiddenTextField.becomeFirstResponder()
-        animateTo(state: .selected)
-    }
-    
-    @objc func keyboardWillHide() {
-        animateTo(state: .normal)
-    }
-    
     @objc private func textFieldDidChange(_ textField: UITextField) {
         valueChanged?(textField.text)
         
         guard let text = textField.text,
-              text.count <= numberOfFields else {
-            if let text = textField.text?.prefix(numberOfFields) {
+              text.count <= CodeInputView.numberOfFields else {
+            if let text = textField.text?.prefix(CodeInputView.numberOfFields) {
                 textField.text = String(text)
             }
             return
         }
         
-        animateTo(state: .selected)
-        
         let textArray = Array(text)
         for (index, field) in inputStack.arrangedSubviews.enumerated() {
-            var value: String?
+            var value = ""
             if textArray.count > index {
                 value = String(textArray[index])
             }
             
-            (field as? FETextField)?.setup(with: .init(value: value))
+            (field as? FETextField)?.setup(with: .init(value: value, isUserInteractionEnabled: false))
         }
+        
+        animateTo(state: text.isEmpty ? .normal : .selected)
     }
     
     func animateTo(state: DisplayState, withAnimation: Bool = true) {
@@ -178,5 +168,14 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
     func showErrorMessage() {
         errorLabel.text = L10n.InputView.invalidCode
         animateTo(state: .error)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return false }
+        
+        let newLength = text.count + string.count - range.length
+        let characterSet = CharacterSet(charactersIn: text)
+        
+        return CharacterSet.decimalDigits.isSuperset(of: characterSet) && newLength <= CodeInputView.numberOfFields
     }
 }
