@@ -734,6 +734,7 @@
 		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
 		D7F0AF33298D378700474E5C /* verificationLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = D7F0AF32298D378700474E5C /* verificationLoader.json */; };
 		D7F7595E299236E100FB4BFA /* KYCSubmitInfoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */; };
+		D7F75963299A1D2300FB4BFA /* FindAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1529,6 +1530,7 @@
 		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
 		D7F0AF32298D378700474E5C /* verificationLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = verificationLoader.json; sourceTree = "<group>"; };
 		D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitInfoWorker.swift; sourceTree = "<group>"; };
+		D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressViewController.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2281,6 +2283,7 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				D7F75961299A1D1700FB4BFA /* FindAddress */,
 				D7F0AF21298D2D3A00474E5C /* VerificationInProgress */,
 				7B60825B29700B1600C4736B /* SetPassword */,
 				7B3947822970007A007D405E /* ForgotPassword */,
@@ -3385,6 +3388,14 @@
 			path = VerificationInProgress;
 			sourceTree = "<group>";
 		};
+		D7F75961299A1D1700FB4BFA /* FindAddress */ = {
+			isa = PBXGroup;
+			children = (
+				D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */,
+			);
+			path = FindAddress;
+			sourceTree = "<group>";
+		};
 		E843C10F2188CBDA00F46672 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -3881,6 +3892,7 @@
 				7B05887828A23D4500D7C971 /* AddCardWorker.swift in Sources */,
 				CEF3E82D1DE528BF007C0A9E /* AlertView.swift in Sources */,
 				7E852748286C551C0058F4C0 /* ServerResponse.swift in Sources */,
+				D7F75963299A1D2300FB4BFA /* FindAddressViewController.swift in Sources */,
 				7CCD9F6C1FEC1FA300175E64 /* TxAmountCell.swift in Sources */,
 				3A6CA703244239FD001833CA /* WalletInitializer.swift in Sources */,
 				3AEA2C9C24D122EA00DA4C3A /* CloudBackupView.swift in Sources */,

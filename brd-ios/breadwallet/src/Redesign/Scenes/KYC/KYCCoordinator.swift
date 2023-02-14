@@ -70,6 +70,16 @@ class KYCCoordinator: BaseCoordinator,
         open(scene: Scenes.KYCBasic)
     }
     
+    func showFindAddress(completion: ((String) -> Void)?) {
+        openModally(coordinator: ItemSelectionCoordinator.self,
+                    scene: Scenes.FindAddress,
+                    presentationStyle: .formSheet) { vc in
+            vc?.callback = { text in
+                completion?(text)
+            }
+        }
+    }
+    
     // MARK: - Aditional helpers
     
     @objc func popFlow(sender: UIBarButtonItem) {

@@ -20,6 +20,7 @@ struct AssetConfiguration: Configurable {
     var imageSize: ViewSizes = .medium
     var imageAlpha: CGFloat = 1.0
     var imageBackground = BackgroundConfiguration(border: BorderConfiguration(borderWidth: 0, cornerRadius: .fullRadius))
+    var titleOnly: Bool?
 }
 
 struct AssetViewModel: ViewModel, ItemSelectable {
@@ -138,6 +139,12 @@ class AssetView: FEView<AssetConfiguration, AssetViewModel> {
         super.setup(with: viewModel)
         
         iconView.wrappedView.setup(with: .image(viewModel.icon))
+        if viewModel.icon == nil {
+            iconView.isHidden = true
+            titleStack.snp.remakeConstraints { make in
+                make.leading.equalToSuperview().offset(Margins.huge.rawValue)
+            }
+        }
         
         titleLabel.setup(with: .text(viewModel.title))
         titleLabel.isHidden = viewModel.title == nil
@@ -152,5 +159,14 @@ class AssetView: FEView<AssetConfiguration, AssetViewModel> {
         bottomRightLabel.isHidden = viewModel.bottomRightText == nil || viewModel.isDisabled
         
         valueStack.isHidden = topRightLabel.isHidden && bottomRightLabel.isHidden
+        
+        if subtitleLabel.isHidden {
+            titleStack.snp.remakeConstraints { make in
+                make.leading.equalToSuperview().offset(Margins.huge.rawValue)
+                make.top.equalTo(content.snp.topMargin)
+                make.bottom.equalTo(content.snp.bottomMargin)
+                make.width.greaterThanOrEqualTo(ViewSizes.extralarge.rawValue)
+            }
+        }
     }
 }
