@@ -15,7 +15,7 @@ extension Scenes {
 }
 
 class FindAddressViewController: ItemSelectionViewController {
-    override var sceneTitle: String? { return "Enter address" } // TODO: Localize
+    override var sceneTitle: String? { return L10n.AccountKYCLevelTwo.enterAddress }
     
     var callback: ((String) -> Void)?
     
