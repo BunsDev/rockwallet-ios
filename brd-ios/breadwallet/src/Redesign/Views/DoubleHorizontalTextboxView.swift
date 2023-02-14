@@ -21,9 +21,19 @@ struct DoubleHorizontalTextboxViewModel: ViewModel {
 }
 
 class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfiguration, DoubleHorizontalTextboxViewModel> {
-    var contentSizeChanged: (() -> Void)?
     var valueChanged: ((_ first: String?, _ second: String?) -> Void)?
+    var beganEditing: ((_ first: String?, _ second: String?) -> Void)?
+    var finishedEditing: ((_ first: String?, _ second: String?) -> Void)?
     var didTriggerDateField: (() -> Void)?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        first = nil
+        second = nil
+        primaryTextField.value = nil
+        secondaryTextField.value = nil
+    }
     
     private lazy var stack: UIStackView = {
         let view = UIStackView()
@@ -115,15 +125,27 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         second = viewModel?.secondary?.value
         primaryTextField.setup(with: viewModel?.primary)
         secondaryTextField.setup(with: viewModel?.secondary)
-        
+
+        primaryTextField.beganEditing = { [weak self] in
+            self?.first = $0.text
+        }
         primaryTextField.valueChanged = { [weak self] in
-            self?.first = $0
+            self?.first = $0.text
             self?.stateChanged()
         }
+        primaryTextField.finishedEditing = { [weak self] tf in
+            self?.finishedEditing?(tf.text, self?.secondaryTextField.value)
+        }
         
+        secondaryTextField.beganEditing = { [weak self] in
+            self?.second = $0.text
+        }
         secondaryTextField.valueChanged = { [weak self] in
-            self?.second = $0
+            self?.second = $0.text
             self?.stateChanged()
+        }
+        secondaryTextField.finishedEditing = { [weak self] tf in
+            self?.finishedEditing?(self?.primaryTextField.value, tf.text)
         }
         
         stack.layoutIfNeeded()
@@ -134,7 +156,6 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
         
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.content.layoutIfNeeded()
-            self?.contentSizeChanged?()
         }
     }
 }

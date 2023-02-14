@@ -28,11 +28,12 @@ class LoginViewController: UIViewController, Subscriber {
         }
     }
 
-    init(for context: Context, keyMaster: KeyMaster, shouldDisableBiometrics: Bool) {
+    init(for context: Context, keyMaster: KeyMaster, shouldDisableBiometrics: Bool, showsBackButton: Bool = true) {
         self.context = context
         self.keyMaster = keyMaster
         self.disabledView = WalletDisabledView()
         self.shouldDisableBiometrics = shouldDisableBiometrics
+        self.showsBackButton = showsBackButton
         
         guard case .confirmation = context else {
             super.init(nibName: nil, bundle: nil)
@@ -84,6 +85,7 @@ class LoginViewController: UIViewController, Subscriber {
     private var notificationObservers = [String: NSObjectProtocol]()
     private let debugLabel = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
     private let shouldDisableBiometrics: Bool
+    private let showsBackButton: Bool
     
     var confirmationCallback: ((_ success: Bool) -> Void)?
     
@@ -170,7 +172,7 @@ class LoginViewController: UIViewController, Subscriber {
             self.faqButtonPressed()
         }
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -189,11 +191,19 @@ class LoginViewController: UIViewController, Subscriber {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         unlockTimer?.invalidate()
+        hideToastMessage()
     }
     
     func setupCloseButton() {
         guard case .confirm = pinViewStyle else { return }
-
+        
+        if !showsBackButton {
+            navigationItem.leftBarButtonItem = nil
+            navigationItem.hidesBackButton = true
+            
+            return
+        }
+        
         let closeButton = UIBarButtonItem(image: Asset.close.image,
                                           style: .plain,
                                           target: self,
@@ -359,10 +369,14 @@ class LoginViewController: UIViewController, Subscriber {
             guard case .confirmation = self.context else {
                 self.dismiss(animated: true, completion: {
                     Store.perform(action: LoginSuccess())
+                    
                     if case .initialLaunch(let loginHandler) = self.context {
                         guard let account = account else { return }
                         loginHandler(account)
                     }
+                    
+                    guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
+                    Store.trigger(name: .handleUserAccount)
                 })
                 return
             }

@@ -29,7 +29,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let sections: [Models.Sections] = [
+        let sections: [Models.Section] = [
             .rateAndTimer,
             .swapCard,
             .accountLimits
@@ -37,7 +37,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
         
-        let sectionRows: [Models.Sections: [Any]] = [
+        let sectionRows: [Models.Section: [Any]] = [
             .rateAndTimer: [
                 exchangeRateViewModel
             ],
@@ -107,8 +107,8 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             let tokenValue = actionResponse.from?.tokenValue ?? 0
             let tokenCode = actionResponse.from?.currency.code.uppercased() ?? ""
             let profile = UserManager.shared.profile
-            let dailyLimit = profile?.swapDailyRemainingLimit ?? 0
-            let lifetimeLimit = profile?.swapLifetimeRemainingLimit ?? 0
+            let dailyLimit = profile?.swapAllowanceDaily ?? 0
+            let lifetimeLimit = profile?.swapAllowanceLifetime ?? 0
             let exchangeLimit = profile?.swapAllowancePerExchange ?? 0
             
             switch (fiatValue, tokenValue) {

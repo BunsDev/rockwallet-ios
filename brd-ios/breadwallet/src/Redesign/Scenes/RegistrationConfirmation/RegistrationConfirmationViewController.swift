@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegistrationConfirmationViewController: BaseTableViewController<RegistrationCoordinator,
+class RegistrationConfirmationViewController: BaseTableViewController<AccountCoordinator,
                                               RegistrationConfirmationInteractor,
                                               RegistrationConfirmationPresenter,
                                               RegistrationConfirmationStore>,
@@ -16,8 +16,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
     
     typealias Models = RegistrationConfirmationModels
     
-    override var isModalDismissableEnabled: Bool { return true }
-
+    override var isModalDismissableEnabled: Bool { return isModalDismissable }
+    var isModalDismissable = true
+    
     // MARK: - Overrides
     
     override func setupVerticalButtons() {
@@ -91,7 +92,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
     override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
         
-        guard let cell = cell as? WrapperTableViewCell<ScrollableButtonsView> else {
+        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
             return cell
         }
         
@@ -110,6 +111,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
     // MARK: - User Interaction
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         interactor?.validate(viewAction: .init(item: text))
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     override func buttonTapped() {
@@ -134,9 +137,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<Registrati
     }
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
-        coordinator?.showOverlay(with: .success) { [weak self] in
+        coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             self?.coordinator?.dismissFlow()
-        }
+        })
     }
     
     func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {

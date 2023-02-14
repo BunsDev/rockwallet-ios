@@ -13,7 +13,7 @@ typealias ScanCompletion = (QRCode?) -> Void
 
 class ScanViewController: UIViewController {
 
-    static func presentCameraUnavailableAlert(fromRoot: UIViewController) {
+    static func presentCameraUnavailableAlert(from vc: UIViewController) {
         let alertController = UIAlertController(title: L10n.Send.cameraUnavailableTitle, message: L10n.Send.cameraunavailableMessage, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: L10n.Button.settings, style: .`default`, handler: { _ in
@@ -21,7 +21,8 @@ class ScanViewController: UIViewController {
                 UIApplication.shared.open(appSettings)
             }
         }))
-        fromRoot.present(alertController, animated: true, completion: nil)
+        
+        vc.present(alertController, animated: true, completion: nil)
     }
 
     static var isCameraAllowed: Bool {
@@ -52,11 +53,15 @@ class ScanViewController: UIViewController {
         self.completion = completion
         self.paymentRequestCurrencyRestriction = currencyRestriction
         self.allowScanningPrivateKeysOnly = forScanningPrivateKeysOnly
+        
         super.init(nibName: nil, bundle: nil)
+        
         modalPresentationStyle = .fullScreen
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         view.backgroundColor = .black
         toolbar.backgroundColor = LightColors.Background.one
         toolbar.distribution = .fillEqually
@@ -92,16 +97,19 @@ class ScanViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         session.stopRunning()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //Animate guide on appear
         UIView.spring(0.8, animations: {
             self.guide.transform = .identity
         }, completion: { _ in })
+        
+        guard !ScanViewController.isCameraAllowed else { return}
+        ScanViewController.presentCameraUnavailableAlert(from: self)
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -215,7 +223,7 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         hasCompleted = true
         
         // Add a small delay so the green guide will be seen
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.short.rawValue, execute: {
             self.dismiss(animated: true, completion: {
                 self.completion(result)
             })

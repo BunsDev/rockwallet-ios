@@ -8,10 +8,11 @@
 //  See the LICENSE file at the project root for license information.
 //
 
+import Lottie
 import UIKit
 
 enum ImageViewModel: ViewModel {
-    case animation(String?)
+    case animation(LottieAnimation?, LottieLoopMode?)
     case imageName(String?)
     case image(UIImage?)
     case photo(UIImage?)
@@ -29,7 +30,16 @@ class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.isHidden = true
         return imageView
+    }()
+    
+    private lazy var animationView: LottieAnimationView = {
+        let view = LottieAnimationView(frame: .zero)
+        view.clipsToBounds = true
+        view.backgroundBehavior = .pauseAndRestore
+        view.isHidden = true
+        return view
     }()
     
     // MARK: - View setup
@@ -39,32 +49,50 @@ class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
         
         content.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
+        
+        content.addSubview(animationView)
+        animationView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         content.setupClearMargins()
     }
     
     // MARK: ViewModelable
-    public override func setup(with viewModel: ImageViewModel?) {
+    public override func setup(with viewModel:
+                               ImageViewModel?) {
         guard let viewModel = viewModel else { return }
         super.setup(with: viewModel)
         
         switch viewModel {
         case .photo(let image):
+            imageView.isHidden = false
             imageView.image = image
             layoutViews(image: image)
             
         case .image(let image):
+            imageView.isHidden = false
             imageView.image = image
             
         case .imageName(let name):
+            imageView.isHidden = false
             imageView.image = .init(named: name ?? "")
             
+        case .animation(let animation, let playMode):
+            animationView.isHidden = false
+            animationView.animation = animation
+            animationView.loopMode = playMode ?? .playOnce
+            animationView.play()
+            
         default:
+            prepareForReuse()
             return
         }
         
         imageView.tintColor = config?.tintColor
+        animationView.tintColor = config?.tintColor
         
         layoutIfNeeded()
     }
@@ -92,5 +120,7 @@ class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
         super.prepareForReuse()
         
         imageView.image = nil
+        imageView.isHidden = true
+        animationView.isHidden = true
     }
 }

@@ -21,7 +21,7 @@ class StartFlowPresenter: Subscriber {
     private let keyMaster: KeyStore
     private var loginViewController: UIViewController?
     private let loginTransitionDelegate = LoginTransitionDelegate()
-    private var createHomeScreen: ((UINavigationController) -> HomeScreenViewController)
+    private var createHomeScreen: ((RootNavigationController) -> HomeScreenViewController)
     private var onboardingCompletionHandler: LoginCompletionHandler?
     private let shouldDisableBiometrics: Bool
     private var startupScreen: StartupScreen? = StartupScreen()
@@ -32,7 +32,7 @@ class StartFlowPresenter: Subscriber {
     init(keyMaster: KeyStore,
          rootViewController: RootNavigationController,
          shouldDisableBiometrics: Bool,
-         createHomeScreen: @escaping (UINavigationController) -> HomeScreenViewController) {
+         createHomeScreen: @escaping (RootNavigationController) -> HomeScreenViewController) {
         self.keyMaster = keyMaster
         self.rootViewController = rootViewController
         self.navigationControllerDelegate = StartNavigationDelegate()
@@ -142,8 +142,8 @@ class StartFlowPresenter: Subscriber {
     }
     
     private func pushHomeScreen() {
-        let homeScreen = self.createHomeScreen(self.rootViewController)
-        self.rootViewController.pushViewController(homeScreen, animated: false)
+        let homeScreen = createHomeScreen(rootViewController)
+        rootViewController.pushViewController(homeScreen, animated: false)
     }
     
     // MARK: - Onboarding
@@ -157,7 +157,7 @@ class StartFlowPresenter: Subscriber {
             EnterPhraseViewController(keyMaster: self.keyMaster,
                                       reason: .setSeed(self.pushPinCreationViewForRecoveredWallet))
         
-        self.navigationController?.pushViewController(recoverWalletViewController, animated: true)
+        navigationController?.pushViewController(recoverWalletViewController, animated: true)
     }
     
     private func enterRecoverCloudBackup() {
@@ -194,7 +194,7 @@ class StartFlowPresenter: Subscriber {
     
     private func handleRecoveredAccount(_ recoveredAccount: Account) {
         var account = recoveredAccount
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + Presets.Delay.long.rawValue) { [weak self] in
             self?.keyMaster.fetchCreationDate(for: account) { updatedAccount in
                 account = updatedAccount
                 DispatchQueue.main.async {
@@ -224,7 +224,7 @@ class StartFlowPresenter: Subscriber {
         group.enter()
         let activity = BRActivityViewController(message: "")
         let pinCreationView = UpdatePinViewController(keyMaster: self.keyMaster,
-                                                      type: .creationNoPhrase,
+                                                      type: .creationWithPhrase,
                                                       showsBackButton: false)
         pinCreationView.setPinSuccess = { _ in
             pinCreationView.present(activity, animated: true)
@@ -248,7 +248,7 @@ class StartFlowPresenter: Subscriber {
     private func enterCreateWalletFlow() {
         let pinCreationViewController = UpdatePinViewController(keyMaster: keyMaster,
                                                                 type: .creationNoPhrase,
-                                                                showsBackButton: false,
+                                                                showsBackButton: true,
                                                                 phrase: nil,
                                                                 eventContext: .onboarding)
         pinCreationViewController.setPinSuccess = { [unowned self] pin in
@@ -298,6 +298,7 @@ class StartFlowPresenter: Subscriber {
                                                        keyMaster: self.keyMaster,
                                                        from: navController,
                                                        context: eventContext,
+                                                       showIntro: true,
                                                        dismissAction: dismissAction,
                                                        modalPresentation: false,
                                                        canExit: false)
@@ -324,29 +325,55 @@ class StartFlowPresenter: Subscriber {
     }
 
     private func presentLoginFlow(for context: LoginViewController.Context) {
+        if let accountPhraseWithoutPin = keyMaster.accountPhraseWithoutPin {
+            loginFlowPinPresenter(viewController: prepareUpdatePinViewController(phrase: accountPhraseWithoutPin))
+        } else {
+            loginFlowPinPresenter(viewController: prepareLoginViewController(context: context))
+        }
+    }
+    
+    private func prepareLoginViewController(context: LoginViewController.Context) -> UIViewController {
         let loginView = LoginViewController(for: context,
                                             keyMaster: keyMaster,
-                                            shouldDisableBiometrics: shouldDisableBiometrics)
+                                            shouldDisableBiometrics: shouldDisableBiometrics,
+                                            showsBackButton: false)
         loginView.transitioningDelegate = loginTransitionDelegate
         loginView.modalPresentationStyle = .overFullScreen
         loginView.modalPresentationCapturesStatusBarAppearance = true
         loginViewController = loginView
         
+        return loginView
+    }
+    
+    private func prepareUpdatePinViewController(phrase: String) -> UIViewController {
+        let updatePin = UpdatePinViewController(keyMaster: self.keyMaster,
+                                                type: .creationWithPhrase,
+                                                showsBackButton: false,
+                                                phrase: phrase)
+        updatePin.transitioningDelegate = loginTransitionDelegate
+        updatePin.modalPresentationStyle = .overFullScreen
+        updatePin.modalPresentationCapturesStatusBarAppearance = true
+        loginViewController = updatePin
+        
+        return updatePin
+    }
+    
+    private func loginFlowPinPresenter(viewController: UIViewController) {
+        rootViewController.navigationItem.hidesBackButton = true
+        
         if let modal = rootViewController.presentedViewController {
             modal.dismiss(animated: false, completion: { [weak self] in
-                guard let self = self else { return }
-                self.rootViewController.present(loginView, animated: false, completion: {
-                    self.popStartupScreen()
+                self?.rootViewController.present(viewController, animated: false, completion: { [weak self] in
+                    self?.popStartupScreen()
                 })
             })
         } else {
-            rootViewController.present(loginView, animated: false, completion: { [weak self] in
-                guard let self = self else { return }
-                self.popStartupScreen()
+            rootViewController.present(viewController, animated: false, completion: { [weak self] in
+                self?.popStartupScreen()
             })
         }
     }
-
+    
     private func dismissLoginFlow() {
         guard let loginViewController = loginViewController, loginViewController.isBeingPresented else {
             self.loginViewController = nil

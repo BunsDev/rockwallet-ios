@@ -39,6 +39,9 @@ struct Trigger {
     let callback: (TriggerName?) -> Void
 }
 
+extension TriggerName: Equatable {}
+
+// Remember to add to triggers to == fuction below
 enum TriggerName {
     case presentFaq(String, Currency?)
     case registerForPushNotificationToken
@@ -62,6 +65,7 @@ enum TriggerName {
     case txMetaDataUpdated(String)
     case promptShareData
     case didApplyKyc
+    case didCreateAccount
     case didWritePaperKey
     case wipeWalletNoPrompt
     case showCurrency(Currency?)
@@ -74,9 +78,10 @@ enum TriggerName {
     case handleGift(URL)
     case reImportGift((any TxViewModel)?)
     case didSelectBaker(Baker?)
-} //NB : remember to add to triggers to == fuction below
-
-extension TriggerName: Equatable {}
+    case promptKyc
+    case promptNoAccount
+    case handleUserAccount
+}
 
 func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
     switch (lhs, rhs) {
@@ -120,6 +125,8 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.didApplyKyc, .didApplyKyc):
         return true
+    case (.didCreateAccount, .didCreateAccount):
+        return true
     case (.txMetaDataUpdated, .txMetaDataUpdated):
         return true
     case (.promptShareData, .promptShareData):
@@ -148,13 +155,18 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.didSelectBaker, .didSelectBaker):
         return true
+    case (.promptKyc, .promptKyc):
+        return true
+    case (.promptNoAccount, .promptNoAccount):
+        return true
+    case (.handleUserAccount, .handleUserAccount):
+        return true
     default:
         return false
     }
 }
 
 class Store {
-
     private static let shared = Store()
     private init() { }
     

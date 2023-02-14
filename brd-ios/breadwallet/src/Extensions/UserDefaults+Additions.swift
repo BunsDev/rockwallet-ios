@@ -50,6 +50,7 @@ private let deviceIdKey = "BR_DEVICE_ID"
 private let savedChartHistoryPeriodKey = "savedHistoryPeriodKey"
 private let balanceKey = "balanceKey"
 private let walletToken = "sessionKey"
+private let walletTokenHash = "sessionKeyHash"
 private let kycSessionKey = "kycSessionKey"
 private let cachedErrors = "cachedErrors"
 private let userEmail = "registrationEmail"
@@ -422,13 +423,19 @@ extension UserDefaults {
         set { defaults.set(newValue, forKey: hasBchConnectedKey) }
     }
     
-    static var kycSessionKeyValue: String? {
+    static var authorizationHeaderToken: String? {
         get { return defaults.string(forKey: kycSessionKey) }
         set { defaults.set(newValue, forKey: kycSessionKey) }
     }
     
-    static var sessionToken: String {
-        return Self.kycSessionKeyValue ?? E.apiToken
+    static var sessionToken: String? {
+        get { return defaults.string(forKey: kycSessionKey) ?? E.apiToken }
+        set { defaults.set(newValue, forKey: kycSessionKey) }
+    }
+    
+    static var sessionTokenHash: String? {
+        get { return defaults.string(forKey: walletTokenHash) }
+        set { defaults.set(newValue, forKey: walletTokenHash) }
     }
     
     static var walletTokenValue: String? {

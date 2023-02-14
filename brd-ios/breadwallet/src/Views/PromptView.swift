@@ -46,29 +46,14 @@ class PromptView: UIView {
     }
     
     private func setup() {
-        if type == .kyc {
-            let infoConfig: InfoViewConfiguration = Presets.InfoView.verification
-            var infoViewModel = UserManager.shared.profile?.status.viewModel ?? VerificationStatus.none.viewModel
-            infoViewModel?.headerTrailing = .init(image: Asset.close.image)
-            
-            kycStatusView.configure(with: infoConfig)
-            kycStatusView.setup(with: infoViewModel)
-            kycStatusView.setupCustomMargins(all: .large)
-            
-            addSubview(kycStatusView)
-            kycStatusView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        } else {
-            addSubviews()
-            setupConstraints()
-            setupStyle()
-            
-            title.numberOfLines = 0
-            
-            title.text = prompt?.title ?? ""
-            body.text = prompt?.body ?? ""
-        }
+        addSubviews()
+        setupConstraints()
+        setupStyle()
+        
+        title.numberOfLines = 0
+        
+        title.text = prompt?.title ?? ""
+        body.text = prompt?.body ?? ""
     }
     
     private func addSubviews() {
@@ -140,8 +125,9 @@ class PromptView: UIView {
         continueButton.setTitleColor(LightColors.Text.two, for: .highlighted)
         continueButton.titleLabel?.font = Fonts.Subtitle.two
         
+        let title = prompt?.type.actionTitle ?? ""
         let attributeString = NSMutableAttributedString(
-            string: L10n.Button.continueAction,
+            string: title,
             attributes: [
                 NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
             ]

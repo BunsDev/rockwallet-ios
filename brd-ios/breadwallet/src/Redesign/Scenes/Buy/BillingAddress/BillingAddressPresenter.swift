@@ -39,7 +39,8 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
             .country: [
                 TextFieldModel(title: L10n.Account.country,
                                value: item.countryFullName,
-                               trailing: .image(Asset.chevronDown.image))
+                               trailing: .image(Asset.chevronDown.image),
+                               isUserInteractionEnabled: false)
             ],
             .stateProvince: [
                 TextFieldModel(title: L10n.Buy.stateProvince,
@@ -61,11 +62,6 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
-    }
-    
-    func presentCountry(actionResponse: BillingAddressModels.SelectCountry.ActionResponse) {
-        guard let countries = actionResponse.countries else { return }
-        viewController?.displayCountry(responseDisplay: .init(countries: countries))
     }
     
     func presentPaymentCards(actionResponse: BillingAddressModels.PaymentCards.ActionResponse) {
