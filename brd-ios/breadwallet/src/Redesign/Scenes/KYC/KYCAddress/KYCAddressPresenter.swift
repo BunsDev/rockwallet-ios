@@ -27,7 +27,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
         
         let trailingModel: ImageViewModel? = item.country == C.countryUS ? .image(Asset.chevronDown.image) : nil
         
-        if item.country == C.countryUS {
+        if item.country == C.countryUS && !E.isProduction {
             sections.insert(.ssn, at: 5)
             sections.insert(.ssnInfo, at: 6)
         }
