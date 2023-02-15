@@ -206,7 +206,6 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    
     func showAccountVerification(flow: ProfileModels.ExchangeFlow? = nil) {
         let nvc = RootNavigationController()
         let coordinator = KYCCoordinator(navigationController: nvc)
