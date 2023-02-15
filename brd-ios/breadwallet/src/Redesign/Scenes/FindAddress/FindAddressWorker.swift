@@ -36,7 +36,7 @@ class FindAddressWorker: BaseApiWorker<FindAddressMapper> {
         return requestData?.getParameters() ?? [:]
     }
     
-    override func getDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy {
+    override func setDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy {
         return .convertFromPascalCase
     }
 }

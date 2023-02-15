@@ -18,7 +18,7 @@ protocol APIWorker {
     func getParameters() -> [String: Any]
     func getHeaders() -> [String: String]
     func getPagination() -> Pagination?
-    func getDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy
+    func setDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy
 }
 /**
  Super class for all workers that makes api calls to API
@@ -51,8 +51,9 @@ class BaseApiWorker<M: Mapper>: APIWorker {
         let url = getUrl()
         let headers = getHeaders()
         var parameters = getParameters()
-        decodingStrategy = getDecodingStrategy()
         getPagination()?.getPagingParameters().forEach { parameters[$0] = $1 }
+        
+        decodingStrategy = setDecodingStrategy()
         
         let request = httpRequestManager.request(method, url: url, headers: headers, parameters: parameters)
         request.run { response in
@@ -75,7 +76,8 @@ class BaseApiWorker<M: Mapper>: APIWorker {
         let url = getUrl()
         let headers = getHeaders()
         let parameters = data.getParameters()
-        decodingStrategy = getDecodingStrategy()
+        
+        decodingStrategy = setDecodingStrategy()
         
         let request = httpRequestManager.request(method, url: url, headers: headers, parameters: parameters)
         request.media = data.getMultipartData()
@@ -157,7 +159,7 @@ class BaseApiWorker<M: Mapper>: APIWorker {
     
     func getPagination() -> Pagination? { return nil }
     
-    func getDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy { return .convertFromSnakeCase }
+    func setDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy { return .convertFromSnakeCase }
 }
 
 class Pagination {
