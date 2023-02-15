@@ -103,8 +103,6 @@ class KYCCoordinator: BaseCoordinator,
 
 extension BaseCoordinator: VeriffSdkDelegate {
     func showExternalKYC() {
-        turnOnSardineMobileIntelligence()
-        
         navigationController.popToRootViewController(animated: false)
         
         UserManager.shared.getVeriffSessionUrl { [weak self] result in
@@ -124,8 +122,6 @@ extension BaseCoordinator: VeriffSdkDelegate {
     }
     
     func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
-        submitSardineMobileIntelligence()
-        
         switch result.status {
         case .done:
             open(scene: Scenes.verificationInProgress) { vc in

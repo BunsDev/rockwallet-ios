@@ -253,7 +253,6 @@
 		7BDB4A112806FA190031F015 /* brd-tokens.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0F2806FA190031F015 /* brd-tokens.tar */; };
 		7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */; };
 		7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */; };
-		7BF5671D298AB02F00696FF3 /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF5671C298AB02F00696FF3 /* MobileIntelligence */; };
 		7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */; };
 		7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */; };
 		7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */; };
@@ -1574,7 +1573,6 @@
 				C4C7299D2922400A00A3CE24 /* LinkKit in Frameworks */,
 				22717B062315D3E300F77F4E /* CloudKit.framework in Frameworks */,
 				223DB21B1DF69F0F0076A151 /* libbz2.framework in Frameworks */,
-				7BF5671D298AB02F00696FF3 /* MobileIntelligence in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3472,7 +3470,6 @@
 				C4C7299C2922400A00A3CE24 /* LinkKit */,
 				7E8F7E4D293F84510058019B /* Lottie */,
 				7BC3F048294C6FBD00947526 /* Veriff */,
-				7BF5671C298AB02F00696FF3 /* MobileIntelligence */,
 			);
 			productName = breadwallet;
 			productReference = 75A2A7901DA5934300A983D8 /* breadwallet.app */;
@@ -3642,7 +3639,6 @@
 				C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
 				7E8F7E4C293F84510058019B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */,
-				7BF5671B298AB02F00696FF3 /* XCRemoteSwiftPackageReference "sardine-ios" */,
 			);
 			productRefGroup = 75A2A7911DA5934300A983D8 /* Products */;
 			projectDirPath = "";
@@ -5878,14 +5874,6 @@
 				version = 4.51.0;
 			};
 		};
-		7BF5671B298AB02F00696FF3 /* XCRemoteSwiftPackageReference "sardine-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rockwalletcode/sardine-ios.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.2;
-			};
-		};
 		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "WalletKitSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/WalletKitSwift.git";
@@ -5943,11 +5931,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */;
 			productName = Veriff;
-		};
-		7BF5671C298AB02F00696FF3 /* MobileIntelligence */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7BF5671B298AB02F00696FF3 /* XCRemoteSwiftPackageReference "sardine-ios" */;
-			productName = MobileIntelligence;
 		};
 		7E0E365828E70D0F00539D99 /* Cosmos */ = {
 			isa = XCSwiftPackageProductDependency;
