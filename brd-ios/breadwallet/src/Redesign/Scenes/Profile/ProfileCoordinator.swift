@@ -87,6 +87,12 @@ extension BaseCoordinator {
         }
     }
     
+    func showVerificationDeclined() {
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure, presentationStyle: .formSheet) { vc in
+            vc?.failure = .documentVerification
+        }
+    }
+    
     // MARK: - Additional Helpers
     
 }
