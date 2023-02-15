@@ -73,8 +73,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         cell.setup { view in
             view.configure(with: Presets.TextField.primary)
             view.setup(with: model)
-            
-            view.isUserInteractionEnabled = false
         }
         
         return cell
