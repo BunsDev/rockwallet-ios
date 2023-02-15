@@ -95,7 +95,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                         self?.coordinator?.showFailure(reason: .documentVerification)
                         
                     case .levelTwo(.resubmit), .levelTwo(.expired):
-                        self.coordinator?.showFailure(reason: .documentVerificationRetry)
+                        self?.coordinator?.showFailure(reason: .documentVerificationRetry)
                         
                     default:
                         self?.coordinator?.showAccountVerification()
