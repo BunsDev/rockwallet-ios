@@ -47,7 +47,7 @@ class FindAddressViewController: ItemSelectionViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? AssetViewModel, let text = model.title, !text.isEmpty else { return }
+        guard let model = sectionRows[section]?[indexPath.row] as? ItemSelectable, let text = model.displayName, !text.isEmpty else { return }
         callback?(text)
         coordinator?.dismissFlow()
     }
