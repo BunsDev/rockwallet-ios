@@ -23,11 +23,11 @@ class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
         modalPresenter?.presentPreferences()
     }
     
-    func showVerificationDeclined() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure, presentationStyle: .formSheet) { vc in
+    func showFailure(reason: FailureReason) {
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure) { vc in
             vc?.navigationItem.hidesBackButton = true
             vc?.isModalDismissable = false
-            vc?.failure = .documentVerification
+            vc?.failure = reason
         }
     }
 }
