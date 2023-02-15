@@ -17,6 +17,7 @@ protocol KYCAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
     func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction)
     func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction)
     func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction)
+    func setAddress(viewAction: KYCAddressModels.Address.ViewAction)
 }
 
 protocol KYCAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {

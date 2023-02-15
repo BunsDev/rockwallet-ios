@@ -72,6 +72,25 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
         presenter?.presentRemovePaymentPopup(actionResponse: .init(last4: viewAction.last4))
     }
     
+    func findAddress(viewAction: ItemSelectionModels.FindAddress.ViewAction) {
+        guard let input = viewAction.input, !input.isEmpty else {
+            presenter?.presentData(actionResponse: .init(item: Models.Item(items: nil, isAddingEnabled: false)))
+            return
+        }
+        
+        let request = FindAddressRequestModel(text: input)
+        FindAddressWorker().execute(requestData: request) { [weak self] result in
+            switch result {
+            case .success(let items):
+                let item = Models.Item(items: items, isAddingEnabled: false)
+                self?.presenter?.presentData(actionResponse: .init(item: item))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }        
+    }
+    
     // MARK: - Aditional helpers
     
     private func fetchCards(completion: ((Result<[PaymentCard]?, Error>) -> Void)?) {
