@@ -31,7 +31,7 @@ extension UIViewController {
         let notification: FEInfoView = (activeWindow.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
         
         notification.didFinish = { [weak self] in
-            self?.hideToastMessage()
+            self?.hideToastMessage(notificationView: notification)
             
             onTapCallback?()
         }
@@ -57,9 +57,9 @@ extension UIViewController {
         }
     }
     
-    func hideToastMessage() {
+    func hideToastMessage(notificationView: FEInfoView? = nil) {
         guard let activeWindow = UIApplication.shared.activeWindow,
-              let view = activeWindow.subviews.first(where: { $0 is FEInfoView }) else { return }
+              let view = notificationView ?? activeWindow.subviews.first(where: { $0 is FEInfoView }) else { return }
         
         UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             view.alpha = 0
