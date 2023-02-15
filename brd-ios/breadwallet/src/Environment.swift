@@ -79,14 +79,6 @@ struct E {
         return token
     }
     
-    static var sardineClientId: String {
-        guard let clientid = Bundle.main.object(forInfoDictionaryKey: "SARDINE_CLIENT_ID") as? String,
-              !clientid.isEmpty else {
-            return fail()
-        }
-        return clientid
-    }
-    
     static var loqateKey: String {
         guard let key = Bundle.main.object(forInfoDictionaryKey: "LOQATE_KEY") as? String, !key.isEmpty else { return fail() }
         return key
