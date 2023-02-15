@@ -23,7 +23,13 @@ class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
         modalPresenter?.presentPreferences()
     }
     
-    func showExport() {}
+    func showVerificationDeclined() {
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure, presentationStyle: .formSheet) { vc in
+            vc?.navigationItem.hidesBackButton = true
+            vc?.isModalDismissable = false
+            vc?.failure = .documentVerification
+        }
+    }
 }
 
 extension BaseCoordinator {
@@ -84,12 +90,6 @@ extension BaseCoordinator {
         } completion: { _ in
             popup.removeFromSuperview()
             blur?.removeFromSuperview()
-        }
-    }
-    
-    func showVerificationDeclined() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure, presentationStyle: .formSheet) { vc in
-            vc?.failure = .documentVerification
         }
     }
     

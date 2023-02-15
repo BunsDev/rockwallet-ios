@@ -44,5 +44,5 @@ protocol ProfileDataPassing {
 protocol ProfileRoutes: CoordinatableRoutes {
     func showSecuirtySettings()
     func showPreferences()
-    func showExport()
+    func showVerificationDeclined()
 }
