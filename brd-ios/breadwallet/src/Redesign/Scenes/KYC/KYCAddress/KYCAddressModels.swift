@@ -59,4 +59,10 @@ enum KYCAddressModels {
             var model: PopupViewModel
         }
     }
+    
+    struct Address {
+        struct ViewAction {
+            var address: String
+        }
+    }
 }

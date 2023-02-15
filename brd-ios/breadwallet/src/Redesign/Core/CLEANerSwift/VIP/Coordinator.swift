@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MobileIntelligence
 
 protocol BaseControllable: UIViewController {
     associatedtype CoordinatorType: CoordinatableRoutes
@@ -98,20 +97,27 @@ class BaseCoordinator: NSObject,
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .swap) { showPopup in
-                guard showPopup else { return }
+            upgradeAccountOrShowPopup { showPopup in
+                guard showPopup, let profile = UserManager.shared.profile else { return }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasSwapAccess == false {
+                if profile.kycAccessRights.hasSwapAccess {
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
+                        vc?.dataStore?.currencies = currencies
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                    }
+                    
+                    return
+                } else if profile.status.isKYCLocationRestricted {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
+                    
                     return
-                }
-
-                self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
-                    vc?.dataStore?.currencies = currencies
-                    vc?.dataStore?.coreSystem = coreSystem
-                    vc?.dataStore?.keyStore = keyStore
+                } else if profile.kycAccessRights.restrictionReason == .kyc {
+                    self?.showAccountVerification(flow: .swap)
+                    
+                    return
                 }
             }
         }
@@ -119,30 +125,51 @@ class BaseCoordinator: NSObject,
     
     func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .buy) { showPopup in
-                guard showPopup else { return }
+            upgradeAccountOrShowPopup { showPopup in
+                guard showPopup, let profile = UserManager.shared.profile else { return }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false, type == .card {
+                if profile.kycAccessRights.hasBuyAccess, type == .card {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                        vc?.dataStore?.paymentMethod = type
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                        vc?.prepareData()
+                    }
+                    
+                    return
+                } else if profile.status.isKYCLocationRestricted {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
+                    
+                    return
+                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .card {
+                    self?.showAccountVerification(flow: .buy)
+                    
                     return
                 }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasAchAccess == false, type == .ach {
+                if profile.kycAccessRights.hasAchAccess == true, type == .ach {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                        vc?.dataStore?.paymentMethod = type
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                        vc?.prepareData()
+                    }
+                    
+                    return
+                } else if profile.status.isKYCLocationRestricted == true, type == .ach {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
                     }
+                    
                     return
-                }
-                
-                self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
-                    vc?.dataStore?.paymentMethod = type
-                    vc?.dataStore?.coreSystem = coreSystem
-                    vc?.dataStore?.keyStore = keyStore
-                    vc?.prepareData()
+                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .ach {
+                    self?.showAccountVerification(flow: .buy)
+                    
+                    return
                 }
             }
         }
@@ -150,15 +177,16 @@ class BaseCoordinator: NSObject,
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .buy) { showPopup in
+            upgradeAccountOrShowPopup { showPopup in
                 guard showPopup else { return }
                 
-                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false {
-                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .sell
-                    }
-                    return
-                }
+                // TODO: Handle when Sell is ready.
+//                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false {
+//                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
+//                        vc?.reason = .sell
+//                    }
+//                    return
+//                }
                 
                 self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.Sell) { vc in
                     vc?.dataStore?.currency = currency
@@ -178,10 +206,10 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showAccountVerification() {
+    func showAccountVerification(flow: ProfileModels.ExchangeFlow? = nil) {
         let nvc = RootNavigationController()
         let coordinator = KYCCoordinator(navigationController: nvc)
-        coordinator.start()
+        coordinator.start(flow: flow)
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         navigationController.present(nvc, animated: true)
@@ -223,8 +251,6 @@ class BaseCoordinator: NSObject,
     /// Determines whether the viewcontroller or navigation stack are being dismissed
     /// SHOULD NEVER BE CALLED MANUALLY
     func goBack() {
-        turnOffSardineMobileIntelligence()
-        
         guard parentCoordinator != nil,
               parentCoordinator?.navigationController != navigationController,
               navigationController.viewControllers.count < 1 else {
@@ -323,7 +349,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    func upgradeAccountOrShowPopup(flow: ProfileModels.ExchangeFlow? = nil, completion: ((Bool) -> Void)?) {
+    func upgradeAccountOrShowPopup(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return
@@ -341,40 +367,13 @@ class BaseCoordinator: NSObject,
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
-            } else if let profile = profile, profile.isMigrated && flow != nil {
-                if profile.kycAccessRights.hasBuyAccess || profile.kycAccessRights.hasSwapAccess || profile.kycAccessRights.hasAchAccess {
-                    completion?(true)
-                    return
-                } else {
-                    let coordinator = KYCCoordinator(navigationController: nvc)
-                    coordinator.start(flow: flow)
-                    coordinator.parentCoordinator = self
-                    childCoordinators.append(coordinator)
-                    navigationController.show(coordinator.navigationController, sender: nil)
-                    
-                    completion?(false)
-                    
-                    return
-                }
-                
-            } else if let profile = profile, profile.isMigrated && flow == nil {
-                completion?(true)
-                return
             } else {
-                let coordinator = KYCCoordinator(navigationController: nvc)
-                coordinator.start(flow: flow)
-                coordinator.parentCoordinator = self
-                childCoordinators.append(coordinator)
-                navigationController.show(coordinator.navigationController, sender: nil)
-                
-                completion?(false)
-                
+                completion?(true)
                 return
             }
             
         case .failure(let error):
-            guard error as? NetworkingError == .sessionExpired
-                    || error as? NetworkingError == .parameterMissing else {
+            guard error as? NetworkingError == .sessionExpired || error as? NetworkingError == .parameterMissing else {
                 completion?(false)
                 return
             }
@@ -382,7 +381,7 @@ class BaseCoordinator: NSObject,
             coordinator = AccountCoordinator(navigationController: RootNavigationController())
             
         default:
-            completion?(true)
+            completion?(false)
             return
         }
         
@@ -504,38 +503,5 @@ class BaseCoordinator: NSObject,
         }
         
         return view
-    }
-}
-
-extension BaseCoordinator {
-    func turnOffSardineMobileIntelligence() {
-        guard self is KYCCoordinator == false else { return }
-        
-        let options = OptionsBuilder()
-            .enableBehaviorBiometrics(with: false)
-            .enableClipboardTracking(with: false)
-            .enableFieldTracking(with: false)
-            .setShouldAutoSubmitOnInit(with: false)
-            .build()
-        MobileIntelligence(withOptions: options)
-    }
-    
-    func turnOnSardineMobileIntelligence() {
-        guard let sessionTokenHash = UserDefaults.sessionTokenHash else { return }
-        
-        let options = OptionsBuilder()
-            .setClientId(with: E.sardineClientId)
-            .setSessionKey(with: sessionTokenHash)
-            .setEnvironment(with: E.isSandbox ? Options.ENV_SANDBOX : Options.ENV_PRODUCTION)
-            .enableBehaviorBiometrics(with: true)
-            .enableClipboardTracking(with: true)
-            .enableFieldTracking(with: true)
-            .setShouldAutoSubmitOnInit(with: true)
-            .build()
-        MobileIntelligence(withOptions: options)
-    }
-    
-    func submitSardineMobileIntelligence() {
-        MobileIntelligence.submitData { _ in }
     }
 }

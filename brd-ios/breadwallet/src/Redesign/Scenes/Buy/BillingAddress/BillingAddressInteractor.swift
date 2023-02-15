@@ -119,7 +119,7 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
                                  billingAddress: address,
                                  phone: nil)
         
-        let checkoutApiService = CheckoutAPIService(publicKey: E.checkoutApiToken, environment: E.isSandbox ? .sandbox : .live)
+        let checkoutApiService = CheckoutAPIService(publicKey: E.checkoutApiToken, environment: E.isDevelopment ? .sandbox : .live)
         checkoutApiService.createToken(.card(card)) { [weak self] result in
             switch result {
             case .success(let token):

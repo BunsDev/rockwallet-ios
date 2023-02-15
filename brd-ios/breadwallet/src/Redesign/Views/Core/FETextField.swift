@@ -336,7 +336,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard E.isDebug || E.isTestFlight else { return true }
         if string.count > 1,
            string.count == UIPasteboard.general.string?.count,
            let didPasteText = didPasteText {

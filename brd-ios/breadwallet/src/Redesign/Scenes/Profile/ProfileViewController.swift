@@ -90,7 +90,16 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                 }
                 
                 view.trailingButtonCallback = { [weak self] in
-                    self?.coordinator?.showAccountVerification()
+                    switch model.status {
+                    case .levelTwo(.declined):
+                        self?.coordinator?.showFailure(reason: .documentVerification)
+                        
+                    case .levelTwo(.resubmit), .levelTwo(.expired):
+                        self?.coordinator?.showFailure(reason: .documentVerificationRetry)
+                        
+                    default:
+                        self?.coordinator?.showAccountVerification()
+                    }
                 }
             }
         }

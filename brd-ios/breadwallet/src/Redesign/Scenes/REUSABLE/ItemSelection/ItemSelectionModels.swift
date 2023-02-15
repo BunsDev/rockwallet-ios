@@ -76,4 +76,10 @@ enum ItemSelectionModels {
             var popupConfig: PopupConfiguration
         }
     }
+    
+    enum FindAddress {
+        struct ViewAction {
+            var input: String?
+        }
+    }
 }

@@ -191,7 +191,6 @@ class LoginViewController: UIViewController, Subscriber {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         unlockTimer?.invalidate()
-        hideToastMessage()
     }
     
     func setupCloseButton() {
@@ -340,6 +339,8 @@ class LoginViewController: UIViewController, Subscriber {
     }
 
     private func authenticationSucceded(forLoginWithAccount account: Account? = nil, pin: String? = nil) {
+        hideToastMessage()
+        
         let label = UILabel(font: Fonts.Body.one)
         label.textColor = LightColors.Text.two
         label.alpha = 0.0

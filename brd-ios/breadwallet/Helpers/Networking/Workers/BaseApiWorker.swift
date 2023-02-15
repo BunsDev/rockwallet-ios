@@ -18,6 +18,7 @@ protocol APIWorker {
     func getParameters() -> [String: Any]
     func getHeaders() -> [String: String]
     func getPagination() -> Pagination?
+    func setDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy
 }
 /**
  Super class for all workers that makes api calls to API
@@ -35,6 +36,7 @@ class BaseApiWorker<M: Mapper>: APIWorker {
     }
     
     var httpRequestManager = HTTPRequestManager()
+    var decodingStrategy = JSONDecoder.KeyDecodingStrategy.convertFromSnakeCase
     
     init() {}
     
@@ -50,6 +52,8 @@ class BaseApiWorker<M: Mapper>: APIWorker {
         let headers = getHeaders()
         var parameters = getParameters()
         getPagination()?.getPagingParameters().forEach { parameters[$0] = $1 }
+        
+        decodingStrategy = setDecodingStrategy()
         
         let request = httpRequestManager.request(method, url: url, headers: headers, parameters: parameters)
         request.run { response in
@@ -72,6 +76,8 @@ class BaseApiWorker<M: Mapper>: APIWorker {
         let url = getUrl()
         let headers = getHeaders()
         let parameters = data.getParameters()
+        
+        decodingStrategy = setDecodingStrategy()
         
         let request = httpRequestManager.request(method, url: url, headers: headers, parameters: parameters)
         request.media = data.getMultipartData()
@@ -113,7 +119,7 @@ class BaseApiWorker<M: Mapper>: APIWorker {
         guard let data = response.data, response.error == nil else {
             return
         }
-        let payload = M.FromModel.parse(from: data, type: M.FromModel.self)
+        let payload = M.FromModel.parse(from: data, decodingStrategy: decodingStrategy, type: M.FromModel.self)
         result = M().getModel(from: payload)
         
         guard let pagination = getPagination() else {
@@ -152,6 +158,8 @@ class BaseApiWorker<M: Mapper>: APIWorker {
     }
     
     func getPagination() -> Pagination? { return nil }
+    
+    func setDecodingStrategy() -> JSONDecoder.KeyDecodingStrategy { return .convertFromSnakeCase }
 }
 
 class Pagination {
