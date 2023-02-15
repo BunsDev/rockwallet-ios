@@ -80,6 +80,16 @@ class KYCCoordinator: BaseCoordinator,
         open(scene: Scenes.KYCBasic)
     }
     
+    func showFindAddress(completion: ((String) -> Void)?) {
+        openModally(coordinator: ItemSelectionCoordinator.self,
+                    scene: Scenes.FindAddress,
+                    presentationStyle: .formSheet) { vc in
+            vc?.callback = { text in
+                completion?(text)
+            }
+        }
+    }
+    
     // MARK: - Aditional helpers
     
     @objc func popFlow(sender: UIBarButtonItem) {
@@ -93,8 +103,6 @@ class KYCCoordinator: BaseCoordinator,
 
 extension BaseCoordinator: VeriffSdkDelegate {
     func showExternalKYC() {
-        turnOnSardineMobileIntelligence()
-        
         navigationController.popToRootViewController(animated: false)
         
         UserManager.shared.getVeriffSessionUrl { [weak self] result in
@@ -114,8 +122,6 @@ extension BaseCoordinator: VeriffSdkDelegate {
     }
     
     func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
-        submitSardineMobileIntelligence()
-        
         switch result.status {
         case .done:
             open(scene: Scenes.verificationInProgress) { vc in

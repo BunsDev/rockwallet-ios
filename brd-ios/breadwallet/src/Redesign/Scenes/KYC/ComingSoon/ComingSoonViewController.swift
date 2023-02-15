@@ -83,6 +83,8 @@ class ComingSoonViewController: BaseInfoViewController {
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: reason?.firstButtonTitle, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 if self?.reason == .swapAndBuyCard || self?.reason == .sell {
                     self?.coordinator?.dismissFlow()
                 } else if self?.reason == .buyAch {
@@ -90,6 +92,8 @@ class ComingSoonViewController: BaseInfoViewController {
                 }
             }),
             .init(title: reason?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 if self?.reason == .swapAndBuyCard {
                     self?.coordinator?.showSupport()
                 } else if self?.reason == .buyAch {

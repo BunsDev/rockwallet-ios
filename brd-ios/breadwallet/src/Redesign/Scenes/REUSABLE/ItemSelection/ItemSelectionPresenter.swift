@@ -19,7 +19,10 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
         guard let item = actionResponse.item as? Models.Item,
               let items = item.items,
               let isAddingEnabled = item.isAddingEnabled
-        else { return }
+        else {
+            viewController?.displayData(responseDisplay: .init(sections: [], sectionRows: [:]))
+            return
+        }
         
         var sections = [Models.Section.items]
         if isAddingEnabled {

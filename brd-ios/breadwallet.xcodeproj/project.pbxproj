@@ -253,7 +253,6 @@
 		7BDB4A112806FA190031F015 /* brd-tokens.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0F2806FA190031F015 /* brd-tokens.tar */; };
 		7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */; };
 		7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */; };
-		7BF5671D298AB02F00696FF3 /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 7BF5671C298AB02F00696FF3 /* MobileIntelligence */; };
 		7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */; };
 		7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */; };
 		7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */; };
@@ -736,6 +735,9 @@
 		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
 		D7F0AF33298D378700474E5C /* verificationLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = D7F0AF32298D378700474E5C /* verificationLoader.json */; };
 		D7F7595E299236E100FB4BFA /* KYCSubmitInfoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */; };
+		D7F75963299A1D2300FB4BFA /* FindAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */; };
+		D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */; };
+		D7F75967299BB55100FB4BFA /* LoqateEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1533,6 +1535,9 @@
 		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
 		D7F0AF32298D378700474E5C /* verificationLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = verificationLoader.json; sourceTree = "<group>"; };
 		D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitInfoWorker.swift; sourceTree = "<group>"; };
+		D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressViewController.swift; sourceTree = "<group>"; };
+		D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressWorker.swift; sourceTree = "<group>"; };
+		D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoqateEndpoints.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1568,7 +1573,6 @@
 				C4C7299D2922400A00A3CE24 /* LinkKit in Frameworks */,
 				22717B062315D3E300F77F4E /* CloudKit.framework in Frameworks */,
 				223DB21B1DF69F0F0076A151 /* libbz2.framework in Frameworks */,
-				7BF5671D298AB02F00696FF3 /* MobileIntelligence in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2012,6 +2016,7 @@
 				7B54E57A27F4A2B0002DD1E4 /* HttpRequest.swift */,
 				7B54E57E27F4A2B0002DD1E4 /* HTTPRequestHelpers.swift */,
 				7B54E58327F4A2B0002DD1E4 /* HttpRequestManager.swift */,
+				D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2283,6 +2288,7 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				D7F75961299A1D1700FB4BFA /* FindAddress */,
 				D7F0AF21298D2D3A00474E5C /* VerificationInProgress */,
 				7B60825B29700B1600C4736B /* SetPassword */,
 				7B3947822970007A007D405E /* ForgotPassword */,
@@ -3383,6 +3389,15 @@
 			path = VerificationInProgress;
 			sourceTree = "<group>";
 		};
+		D7F75961299A1D1700FB4BFA /* FindAddress */ = {
+			isa = PBXGroup;
+			children = (
+				D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */,
+				D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */,
+			);
+			path = FindAddress;
+			sourceTree = "<group>";
+		};
 		E843C10F2188CBDA00F46672 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -3455,7 +3470,6 @@
 				C4C7299C2922400A00A3CE24 /* LinkKit */,
 				7E8F7E4D293F84510058019B /* Lottie */,
 				7BC3F048294C6FBD00947526 /* Veriff */,
-				7BF5671C298AB02F00696FF3 /* MobileIntelligence */,
 			);
 			productName = breadwallet;
 			productReference = 75A2A7901DA5934300A983D8 /* breadwallet.app */;
@@ -3625,7 +3639,6 @@
 				C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
 				7E8F7E4C293F84510058019B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */,
-				7BF5671B298AB02F00696FF3 /* XCRemoteSwiftPackageReference "sardine-ios" */,
 			);
 			productRefGroup = 75A2A7911DA5934300A983D8 /* Products */;
 			projectDirPath = "";
@@ -3818,6 +3831,7 @@
 				7B8CF82028A64B9300D54D14 /* ExchangeFormatter.swift in Sources */,
 				7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */,
 				CEE0EF521EBD14B60018DB36 /* PinTransitioningDelegate.swift in Sources */,
+				D7F75967299BB55100FB4BFA /* LoqateEndpoints.swift in Sources */,
 				754AE0BC1DFE8A46007FD001 /* SecureAllocator.swift in Sources */,
 				7B54E59D27F4A2B0002DD1E4 /* Shadowable.swift in Sources */,
 				7B05888528A2668F00D7C971 /* DeleteCardWorker.swift in Sources */,
@@ -3879,6 +3893,7 @@
 				7B05887828A23D4500D7C971 /* AddCardWorker.swift in Sources */,
 				CEF3E82D1DE528BF007C0A9E /* AlertView.swift in Sources */,
 				7E852748286C551C0058F4C0 /* ServerResponse.swift in Sources */,
+				D7F75963299A1D2300FB4BFA /* FindAddressViewController.swift in Sources */,
 				7CCD9F6C1FEC1FA300175E64 /* TxAmountCell.swift in Sources */,
 				3A6CA703244239FD001833CA /* WalletInitializer.swift in Sources */,
 				3AEA2C9C24D122EA00DA4C3A /* CloudBackupView.swift in Sources */,
@@ -4094,6 +4109,7 @@
 				7E5CB3B02835090E00EC787E /* FEInfoView.swift in Sources */,
 				7B54E5AA27F4A2B0002DD1E4 /* HttpRequestManager.swift in Sources */,
 				CE65C66A207D41BB000C99C4 /* AssetIndex.swift in Sources */,
+				D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */,
 				7EF45F89284768C100D1F7B0 /* ItemSelectionPresenter.swift in Sources */,
 				7E5CB3902835090E00EC787E /* AlertModels.swift in Sources */,
 				CE4CA7BC1EE3649100373F11 /* BRActivityView.swift in Sources */,
@@ -5858,14 +5874,6 @@
 				version = 4.51.0;
 			};
 		};
-		7BF5671B298AB02F00696FF3 /* XCRemoteSwiftPackageReference "sardine-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rockwalletcode/sardine-ios.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.2;
-			};
-		};
 		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "WalletKitSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/WalletKitSwift.git";
@@ -5923,11 +5931,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */;
 			productName = Veriff;
-		};
-		7BF5671C298AB02F00696FF3 /* MobileIntelligence */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7BF5671B298AB02F00696FF3 /* XCRemoteSwiftPackageReference "sardine-ios" */;
-			productName = MobileIntelligence;
 		};
 		7E0E365828E70D0F00539D99 /* Cosmos */ = {
 			isa = XCSwiftPackageProductDependency;

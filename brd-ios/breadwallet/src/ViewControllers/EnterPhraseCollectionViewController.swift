@@ -122,9 +122,7 @@ class EnterPhraseCollectionViewController: UICollectionViewController, UICollect
             let text = text.replacingOccurrences(of: "\n", with: " ")
             let words = text.split(separator: " ").compactMap { String($0) }
             
-            guard E.isDebug || E.isTestFlight,
-                  enterPhraseCell.index == 0, words.count <= 12, let `self` = self
-            else { return }
+            guard enterPhraseCell.index == 0, words.count <= 12, let `self` = self else { return }
             self.displayedPhrase = words
             self.collectionView.reloadData()
         }

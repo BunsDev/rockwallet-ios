@@ -470,7 +470,7 @@ extension UserDefaults {
         
         get {
             // always return false for release builds
-            if E.isSimulator || E.isDebug || E.isTestFlight {
+            if E.isDebug || E.isTestFlight {
                 return defaults.bool(forKey: debugShouldAutoEnterPinKey)
             } else {
                 return false
@@ -486,7 +486,7 @@ extension UserDefaults {
         
         get {
             // always return false for release builds
-            if E.isSimulator || E.isDebug || E.isTestFlight {
+            if E.isDebug || E.isTestFlight {
                 return defaults.bool(forKey: debugShouldSuppressPaperKeyPromptKey)
             } else {
                 return false
@@ -502,7 +502,7 @@ extension UserDefaults {
         
         get {
             // always return false for release builds
-            if E.isSimulator || E.isDebug || E.isTestFlight {
+            if E.isDebug || E.isTestFlight {
                 return defaults.bool(forKey: debugShouldShowPaperKeyPreviewKey)
             } else {
                 return false
@@ -595,7 +595,7 @@ extension UserDefaults {
     
     static var errors: [ErrorStruct]? {
         get {
-            guard E.isTestFlight else { return nil }
+            guard E.isDebug || E.isTestFlight else { return nil }
             
             let decoder = PropertyListDecoder()
             return defaults.array(forKey: cachedErrors)?.compactMap { element in
@@ -604,7 +604,7 @@ extension UserDefaults {
             }
         }
         set {
-            guard E.isTestFlight else { return }
+            guard E.isDebug || E.isTestFlight else { return }
             
             let encoder = PropertyListEncoder()
             let errors = newValue?.compactMap { try? encoder.encode($0) }

@@ -23,7 +23,13 @@ class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
         modalPresenter?.presentPreferences()
     }
     
-    func showExport() {}
+    func showFailure(reason: FailureReason) {
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure) { vc in
+            vc?.navigationItem.hidesBackButton = true
+            vc?.isModalDismissable = false
+            vc?.failure = reason
+        }
+    }
 }
 
 extension BaseCoordinator {

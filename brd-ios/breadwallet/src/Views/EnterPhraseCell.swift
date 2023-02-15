@@ -204,7 +204,6 @@ extension EnterPhraseCell: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard E.isDebug || E.isTestFlight else { return true }
         if string.count == UIPasteboard.general.string?.count,
            let didPasteWords = didPasteWords {
             didPasteWords(string)

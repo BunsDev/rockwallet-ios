@@ -344,6 +344,8 @@ internal enum L10n {
     internal static let documentsReview = L10n.tr("Localizable", "AccountKYCLevelTwo.DocumentsReview", fallback: "We are reviewing your documents and will let you know when your account has been verified.")
     /// Driver’s license
     internal static let drivingLicence = L10n.tr("Localizable", "AccountKYCLevelTwo.DrivingLicence", fallback: "Driver’s license")
+    /// Enter address
+    internal static let enterAddress = L10n.tr("Localizable", "AccountKYCLevelTwo.EnterAddress", fallback: "Enter address")
     /// Face capture instructions text on documents for KYC2
     internal static let faceCaptureInstructions = L10n.tr("Localizable", "AccountKYCLevelTwo.FaceCaptureInstructions", fallback: "Make sure you have captured your entire face in the frame.")
     /// Face is in the frame text for document on KYC2

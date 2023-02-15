@@ -27,9 +27,13 @@ class SwapInfoViewController: BaseInfoViewController {
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: L10n.Swap.backToHome, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 self?.coordinator?.dismissFlow()
             }),
             .init(title: L10n.Swap.details, isUnderlined: true, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 (self?.coordinator as? SwapCoordinator)?.showExchangeDetails(with: self?.dataStore?.itemId, type: .swapTransaction)
             })
         ]

@@ -116,9 +116,15 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section] as? Models.Section {
+        guard let section = sections[indexPath.section] as? Models.Section else { return }
+        switch section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
+            
+        case .address:
+            coordinator?.showFindAddress(completion: { [weak self] address in
+                self?.interactor?.setAddress(viewAction: .init(address: address))
+            })
             
         case .cityAndState:
             interactor?.pickState(viewAction: .init())
