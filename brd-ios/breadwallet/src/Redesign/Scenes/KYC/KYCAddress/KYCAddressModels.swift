@@ -43,13 +43,9 @@ enum KYCAddressModels {
     struct ExternalKYC {
         struct ViewAction {}
         
-        struct ActionResponse {
-            var address: String?
-        }
+        struct ActionResponse {}
         
-        struct ResponseDisplay {
-            var address: String
-        }
+        struct ResponseDisplay {}
     }
     
     enum Submit {
@@ -61,6 +57,12 @@ enum KYCAddressModels {
         struct ActionResponse {}
         struct ResponseDisplay {
             var model: PopupViewModel
+        }
+    }
+    
+    struct Address {
+        struct ViewAction {
+            var address: String
         }
     }
 }

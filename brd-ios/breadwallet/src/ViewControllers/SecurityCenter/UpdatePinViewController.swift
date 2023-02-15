@@ -372,7 +372,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
     private func pushNewStep(_ newStep: Step) {
         step = newStep
         pinPad.clear()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.immediate.rawValue) { [weak self] in
             self?.pinView.fill(0)
         }
     }

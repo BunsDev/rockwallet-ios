@@ -44,10 +44,6 @@ class VerificationInProgressViewController: CheckListViewController {
         interactor?.checkVerificationProgress(viewAction: .init())
     }
     
-    override func setupCloseButton(closeAction: Selector) {
-        // Close button is not shown
-    }
-    
     // Override to change footer bottom constraint, since there are no buttons on this screen
     override func setupSubviews() {
         super.setupSubviews()
@@ -112,6 +108,8 @@ class VerificationInProgressViewController: CheckListViewController {
         case .success:
             coordinator?.open(scene: Scenes.Success) { vc in
                 vc.success = .documentVerification
+                vc.isModalDismissable = false
+                vc.navigationItem.hidesBackButton = true
             }
             
         case .failure(let reason):

@@ -36,7 +36,8 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .mandatory: [LabelViewModel.text(L10n.Account.mandatoryFields)],
             .address: [
                 TextFieldModel(title: "\(L10n.Buy.address)*",
-                               value: item.address)
+                               value: item.address,
+                               isUserInteractionEnabled: false)
             ],
             .country: [
                 TextFieldModel(title: L10n.Account.countryRegion,
@@ -76,8 +77,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
     }
     
     func presentExternalKYC(actionResponses: KYCAddressModels.ExternalKYC.ActionResponse) {
-        guard let address = actionResponses.address else { return }
-        viewController?.displayExternalKYC(responseDisplay: .init(address: address))
+        viewController?.displayExternalKYC(responseDisplay: .init())
     }
     
     func presentSsnInfo(actionResponse: KYCAddressModels.SsnInfo.ActionResponse) {

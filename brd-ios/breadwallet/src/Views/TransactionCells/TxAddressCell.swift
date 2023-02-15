@@ -45,7 +45,7 @@ class TxAddressCell: TxDetailRowCell {
             guard let self = self else { return }
             
             self.addressButton.isEnabled = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.medium.rawValue, execute: {
                 self.addressButton.isEnabled = true
             })
             

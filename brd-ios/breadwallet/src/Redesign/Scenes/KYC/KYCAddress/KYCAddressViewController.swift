@@ -62,6 +62,22 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, textFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? TextFieldModel,
+              let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: Presets.TextField.primary)
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let model = sectionRows[section]?[indexPath.row] as? TextFieldModel,
@@ -90,7 +106,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
             view.setup(with: model)
             
             view.finishedEditing = { [weak self] first, second in
-                self?.interactor?.formUpdated(viewAction: .init(section: section, value: (first, second)))
+                self?.interactor?.updateForm(viewAction: .init(section: section, value: (first, second)))
             }
         }
         
@@ -116,9 +132,15 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section] as? Models.Section {
+        guard let section = sections[indexPath.section] as? Models.Section else { return }
+        switch section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
+            
+        case .address:
+            coordinator?.showFindAddress(completion: { [weak self] address in
+                self?.interactor?.setAddress(viewAction: .init(address: address))
+            })
             
         case .cityAndState:
             interactor?.pickState(viewAction: .init())
@@ -131,24 +153,29 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = sections[indexPath.section]
         
-        interactor?.formUpdated(viewAction: .init(section: section, value: text))
+        interactor?.updateForm(viewAction: .init(section: section, value: text))
         
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
-        guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel,
-              model.enabled != responseDisplay.isValid
-        else { return }
+        guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel else { return }
         
         model.enabled = responseDisplay.isValid
         sectionRows[Models.Section.confirm] = [model]
-        let index = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }) ?? 0
-        tableView.reloadRows(at: [IndexPath(row: 0, section: index)], with: .none)
+        
+        guard let index = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: index)) as? WrapperTableViewCell<FEButton> else {
+            return
+        }
+        
+        cell.setup { view in
+            view.setup(with: model)
+        }
     }
     
     func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay) {
-        coordinator?.showExternalKYC(url: responseDisplay.address)
+        coordinator?.showExternalKYC()
     }
     
     func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay) {

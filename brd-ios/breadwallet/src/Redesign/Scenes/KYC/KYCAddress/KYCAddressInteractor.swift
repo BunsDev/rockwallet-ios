@@ -36,7 +36,13 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         }
     }
     
-    func formUpdated(viewAction: KYCAddressModels.FormUpdated.ViewAction) {
+    func setAddress(viewAction: KYCAddressModels.Address.ViewAction) {
+        dataStore?.address = viewAction.address
+        presenter?.presentData(actionResponse: .init(item: self.dataStore))
+        updateForm(viewAction: .init(section: Models.Section.address, value: viewAction.address))
+    }
+    
+    func updateForm(viewAction: KYCAddressModels.FormUpdated.ViewAction) {
         switch viewAction.section as? Models.Section {
         case .address:
             dataStore?.address = viewAction.value as? String
@@ -82,15 +88,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     }
     
     func startExternalKYC(viewAction: KYCAddressModels.ExternalKYC.ViewAction) {
-        VeriffSessionWorker().execute { [weak self] result in
-            switch result {
-            case .success(let data):
-                self?.presenter?.presentExternalKYC(actionResponses: .init(address: data?.sessionUrl))
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
+        presenter?.presentExternalKYC(actionResponses: .init())
     }
     
     func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction) {

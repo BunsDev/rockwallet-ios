@@ -4,6 +4,8 @@
 <dict>
 	<key>SARDINE_CLIENT_ID</key>
 	<string>$(SARDINE_CLIENT_ID)</string>
+	<key>LOQATE_KEY</key>
+	<string>$(LOQATE_KEY)</string>
 	<key>API_TOKEN</key>
 	<string>$(API_TOKEN)</string>
 	<key>API_URL</key>
@@ -14,13 +16,13 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>RockWallet</string>
-    <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-    <array>
-        <string>A0000002471001</string>
-        <string>A0000002472001</string>
-        <string>00000000000000</string>
-    </array>
-    <key>CFBundleDocumentTypes</key>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<array>
+		<string>A0000002471001</string>
+		<string>A0000002472001</string>
+		<string>00000000000000</string>
+	</array>
+	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFiles</key>
@@ -167,16 +169,16 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-    </dict>
-    <key>NSCameraUsageDescription</key>
-    <string>Used to scan barcodes</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Used for KYC authentication</string>
-    <key>NFCReaderUsageDescription</key>
-    <string>Used for KYC authentication</string>
-    <key>NSFaceIDUsageDescription</key>
-    <string>Used for user authentication</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to scan barcodes</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used for KYC authentication</string>
+	<key>NFCReaderUsageDescription</key>
+	<string>Used for KYC authentication</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Used for user authentication</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Used to determine where you are - never recorded or shared with anyone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Used to scan barcodes</string>

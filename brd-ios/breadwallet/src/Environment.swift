@@ -140,4 +140,9 @@ struct E {
     static func fail() -> String {
         fatalError("Env not configured properly")
     }
+    
+    static var loqateKey: String {
+        guard let key = Bundle.main.object(forInfoDictionaryKey: "LOQATE_KEY") as? String, !key.isEmpty else { return fail() }
+        return key
+    }
 }

@@ -26,6 +26,15 @@ class DoubleHorizontalTextboxView: FEView<DoubleHorizontalTextboxViewConfigurati
     var finishedEditing: ((_ first: String?, _ second: String?) -> Void)?
     var didTriggerDateField: (() -> Void)?
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        first = nil
+        second = nil
+        primaryTextField.value = nil
+        secondaryTextField.value = nil
+    }
+    
     private lazy var stack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical

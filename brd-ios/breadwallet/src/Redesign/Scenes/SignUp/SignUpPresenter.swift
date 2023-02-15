@@ -33,7 +33,7 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
         
         let sectionRows: [Models.Section: [Any]] = [
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
-            .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password)],
+            .password: [TextFieldModel(title: L10n.Account.createPassword, value: item.password)],
             .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password)],
             .notice: [LabelViewModel.text(L10n.Account.passwordRequirements)],
             .termsTickbox: [TickboxItemViewModel(title: .attributedText(prepareTermsTickboxText()), url: termsAndConditionsURL)],

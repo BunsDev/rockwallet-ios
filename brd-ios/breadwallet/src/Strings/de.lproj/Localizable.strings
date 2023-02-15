@@ -71,6 +71,8 @@
 
 "Account.CreateNewPasswordTitle" = "Create new password";
 
+"Account.CreatePassword" = "Create your password";
+
 /* Current limit per day label in profile screen */
 "Account.CurrentLimit" = "Current limit: $1,000/day";
 
@@ -94,7 +96,7 @@
 
 "Account.EnterEmail" = "Enter your e-mail";
 
-"Account.EnterPassword" = "Create your password";
+"Account.EnterPassword" = "Enter your password";
 
 /* $10000 per BTC */
 "Account.exchangeRate" = "%1$@ pro %2$@";
@@ -360,6 +362,8 @@
 "AccountKYCLevelTwo.DocumentsReview" = "We are reviewing your documents and will let you know when your account has been verified.";
 
 "AccountKYCLevelTwo.DrivingLicence" = "Driver’s license";
+
+"AccountKYCLevelTwo.EnterAddress" = "Enter address";
 
 /* Face capture instructions text on documents for KYC2 */
 "AccountKYCLevelTwo.FaceCaptureInstructions" = "Make sure you have captured your entire face in the frame.";

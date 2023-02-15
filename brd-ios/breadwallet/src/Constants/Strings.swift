@@ -87,6 +87,8 @@ internal enum L10n {
     internal static let createNewAccountTitle = L10n.tr("Localizable", "Account.CreateNewAccountTitle", fallback: "Create your account")
     /// Create new password
     internal static let createNewPasswordTitle = L10n.tr("Localizable", "Account.CreateNewPasswordTitle", fallback: "Create new password")
+    /// Create your password
+    internal static let createPassword = L10n.tr("Localizable", "Account.CreatePassword", fallback: "Create your password")
     /// Current limit per day label in profile screen
     internal static let currentLimit = L10n.tr("Localizable", "Account.CurrentLimit", fallback: "Current limit: $1,000/day")
     /// Daily
@@ -105,8 +107,8 @@ internal enum L10n {
     internal static let email = L10n.tr("Localizable", "Account.Email", fallback: "Email")
     /// Enter your e-mail
     internal static let enterEmail = L10n.tr("Localizable", "Account.EnterEmail", fallback: "Enter your e-mail")
-    /// Create your password
-    internal static let enterPassword = L10n.tr("Localizable", "Account.EnterPassword", fallback: "Create your password")
+    /// Enter your password
+    internal static let enterPassword = L10n.tr("Localizable", "Account.EnterPassword", fallback: "Enter your password")
     /// $10000 per BTC
     internal static func exchangeRate(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "Account.exchangeRate", String(describing: p1), String(describing: p2), fallback: "%1$@ per %2$@")
@@ -342,6 +344,8 @@ internal enum L10n {
     internal static let documentsReview = L10n.tr("Localizable", "AccountKYCLevelTwo.DocumentsReview", fallback: "We are reviewing your documents and will let you know when your account has been verified.")
     /// Driver’s license
     internal static let drivingLicence = L10n.tr("Localizable", "AccountKYCLevelTwo.DrivingLicence", fallback: "Driver’s license")
+    /// Enter address
+    internal static let enterAddress = L10n.tr("Localizable", "AccountKYCLevelTwo.EnterAddress", fallback: "Enter address")
     /// Face capture instructions text on documents for KYC2
     internal static let faceCaptureInstructions = L10n.tr("Localizable", "AccountKYCLevelTwo.FaceCaptureInstructions", fallback: "Make sure you have captured your entire face in the frame.")
     /// Face is in the frame text for document on KYC2
