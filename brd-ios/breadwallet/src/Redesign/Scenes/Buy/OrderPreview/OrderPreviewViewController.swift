@@ -186,7 +186,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     func displayTimeOut(responseDisplay: OrderPreviewModels.ExpirationValidations.ResponseDisplay) {
         if responseDisplay.isTimedOut {
-            coordinator?.showTimeout()
+            coordinator?.showTimeout(type: dataStore?.type)
         } else {
             LoadingView.show()
             interactor?.submit(viewAction: .init())
