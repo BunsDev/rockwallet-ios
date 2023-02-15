@@ -526,7 +526,7 @@ extension BaseCoordinator {
         let options = OptionsBuilder()
             .setClientId(with: E.sardineClientId)
             .setSessionKey(with: sessionTokenHash)
-            .setEnvironment(with: E.isSandbox ? Options.ENV_SANDBOX : Options.ENV_PRODUCTION)
+            .setEnvironment(with: E.isDevelopment ? Options.ENV_SANDBOX : Options.ENV_PRODUCTION)
             .enableBehaviorBiometrics(with: true)
             .enableClipboardTracking(with: true)
             .enableFieldTracking(with: true)

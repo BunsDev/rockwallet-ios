@@ -12,48 +12,6 @@ import UIKit
 
 /// Environment Flags
 struct E {
-
-    static let isTestnet: Bool = {
-        #if TESTNET
-            return true
-        #else
-            return false
-        #endif
-    }()
-    
-    static let isTestFlight: Bool = {
-        #if TESTFLIGHT
-        
-            return true
-        #else
-            return false
-        #endif
-    }()
-    
-    static let isSimulator: Bool = {
-        #if targetEnvironment(simulator)
-            return true
-        #else
-            return false
-        #endif
-    }()
-    
-    static let isDebug: Bool = {
-        #if DEBUG
-            return true
-        #else
-            return false
-        #endif
-    }()
-    
-    static let isRunningTests: Bool = {
-        #if DEBUG
-            return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-        #else
-            return false
-        #endif
-    }()
-    
     static var isIPhone5: Bool {
         #if IS_EXTENSION_ENVIRONMENT
         return false
@@ -129,20 +87,64 @@ struct E {
         return clientid
     }
     
-    static var isTest: Bool {
-        return Bundle.main.object(forInfoDictionaryKey: "IS_TEST") as? String == "true"
+    static var loqateKey: String {
+        guard let key = Bundle.main.object(forInfoDictionaryKey: "LOQATE_KEY") as? String, !key.isEmpty else { return fail() }
+        return key
     }
     
-    static var isSandbox: Bool {
-        return Bundle.main.object(forInfoDictionaryKey: "IS_SANDBOX") as? String == "true"
+    static let isTestnet: Bool = {
+        #if TESTNET
+            return true
+        #else
+            return false
+        #endif
+    }()
+    
+    static let isTestFlight: Bool = {
+        return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+    }()
+    
+    static let isSimulator: Bool = {
+        #if targetEnvironment(simulator)
+            return true
+        #else
+            return false
+        #endif
+    }()
+    
+    static let isDebug: Bool = {
+        #if DEBUG
+            return true
+        #else
+            return false
+        #endif
+    }()
+    
+    static let isRunningTests: Bool = {
+        #if DEBUG
+            return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        #else
+            return false
+        #endif
+    }()
+    
+    static var isProduction: Bool {
+        return Bundle.main.object(forInfoDictionaryKey: "IS_PRODUCTION") as? String == "true"
+    }
+    
+    static var isDevelopment: Bool {
+        return Bundle.main.object(forInfoDictionaryKey: "IS_DEVELOPMENT") as? String == "true"
+    }
+    
+    static var isStaging: Bool {
+        return Bundle.main.object(forInfoDictionaryKey: "IS_STAGING") as? String == "true"
+    }
+    
+    static var isLdt: Bool {
+        return Bundle.main.object(forInfoDictionaryKey: "IS_LDT") as? String == "true"
     }
     
     static func fail() -> String {
         fatalError("Env not configured properly")
-    }
-    
-    static var loqateKey: String {
-        guard let key = Bundle.main.object(forInfoDictionaryKey: "LOQATE_KEY") as? String, !key.isEmpty else { return fail() }
-        return key
     }
 }

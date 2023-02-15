@@ -134,5 +134,5 @@ extension BRAPIClient {
 }
 
 private func pushNotificationEnvironment() -> String {
-    return E.isDebug ? "d" : "p" //development or production
+    return E.isProduction ? "p" : "d"
 }

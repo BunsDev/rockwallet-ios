@@ -151,10 +151,14 @@
 	<string>635</string>
 	<key>CHECKOUT_API_TOKEN</key>
 	<string>$(CHECKOUT_API_TOKEN)</string>
-	<key>IS_SANDBOX</key>
-	<string>$(IS_SANDBOX)</string>
-	<key>IS_TEST</key>
-	<string>$(IS_TEST)</string>
+	<key>IS_PRODUCTION</key>
+	<string>$(IS_PRODUCTION)</string>
+	<key>IS_DEVELOPMENT</key>
+	<string>$(IS_DEVELOPMENT)</string>
+	<key>IS_STAGING</key>
+	<string>$(IS_STAGING)</string>
+	<key>IS_LDT</key>
+	<string>$(IS_LDT)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
