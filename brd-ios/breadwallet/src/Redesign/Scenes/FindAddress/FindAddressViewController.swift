@@ -33,17 +33,13 @@ class FindAddressViewController: ItemSelectionViewController {
     
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<AssetView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? AssetViewModel
-        else {
-            return UITableViewCell()
-        }
+        guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = sectionRows[section]?[indexPath.row] as? ItemSelectable
+        else { return UITableViewCell() }
         
         cell.setup { view in
-            view.configure(with: model.isDisabled ? Presets.Asset.disabled : Presets.Asset.enabled)
-            view.setup(with: model)
-            
-            view.content.setupCustomMargins(vertical: .zero, horizontal: .large)
+            view.setup(with: .init(title: model.displayName ?? "", image: model.displayImage))
+            view.setupCustomMargins(vertical: Margins.extraSmall, horizontal: Margins.huge)
         }
         
         return cell

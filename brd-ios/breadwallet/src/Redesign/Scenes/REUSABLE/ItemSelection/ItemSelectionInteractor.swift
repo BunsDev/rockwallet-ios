@@ -82,7 +82,7 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
         FindAddressWorker().execute(requestData: request) { [weak self] result in
             switch result {
             case .success(let items):
-                let item = Models.Item(items: items?.compactMap { AssetViewModel(title: $0.text) }, isAddingEnabled: false)
+                let item = Models.Item(items: items, isAddingEnabled: false)
                 self?.presenter?.presentData(actionResponse: .init(item: item))
                 
             case .failure(let error):
