@@ -14,3 +14,5 @@
 #include ".env"
 
 APP_ICON=AppIcon
+
+IS_PRODUCTION=true
