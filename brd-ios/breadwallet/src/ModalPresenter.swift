@@ -599,7 +599,7 @@ class ModalPresenter: Subscriber {
         
         // MARK: Developer/QA Menu
         
-        if E.isDebug || E.isTestFlight {
+        if E.isDebug || E.isTestFlight || E.isSimulator {
             var developerItems = [MenuItem]()
             
             developerItems.append(MenuItem(title: L10n.Title.fastSync, callback: { [weak self] in
