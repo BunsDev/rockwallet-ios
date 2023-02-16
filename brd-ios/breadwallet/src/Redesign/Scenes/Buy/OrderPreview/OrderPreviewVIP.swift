@@ -75,7 +75,7 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
                           availablePayments: [PaymentCard.PaymentType]?)
     func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?)
     func showTermsAndConditions(url: URL)
-    func showTimeout()
+    func showTimeout(type: PreviewType?)
     func showThreeDSecure(url: URL)
     func showSuccess(paymentReference: String, transactionType: TransactionType, reason: SuccessReason)
     func showFailure(failure: FailureReason, availablePayments: [PaymentCard.PaymentType]?)
