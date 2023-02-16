@@ -15,15 +15,15 @@ extension Scenes {
 }
 
 class TimeoutViewController: BaseInfoViewController {
+    var didTapMainButton: (() -> Void)?
+    
     override var imageName: String? { return Asset.timeoutStatusIcon.name }
     override var titleText: String? { return L10n.PaymentConfirmation.paymentTimeout }
     override var descriptionText: String? { return L10n.PaymentConfirmation.paymentExpired }
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: L10n.PaymentConfirmation.tryAgain, callback: { [weak self] in
-                self?.coordinator?.popToRoot(completion: { [weak self] in
-                    (self?.navigationController?.topViewController as? BuyViewController)?.didTriggerGetData?()
-                })
+                self?.didTapMainButton?()
             })
         ]
     }
