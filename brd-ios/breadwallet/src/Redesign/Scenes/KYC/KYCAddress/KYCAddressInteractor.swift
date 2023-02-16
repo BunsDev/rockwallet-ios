@@ -37,9 +37,22 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     }
     
     func setAddress(viewAction: KYCAddressModels.Address.ViewAction) {
-        dataStore?.address = viewAction.address
-        presenter?.presentData(actionResponse: .init(item: self.dataStore))
-        updateForm(viewAction: .init(section: Models.Section.address, value: viewAction.address))
+        let requst = RetrieveAddressRequestModel(id: viewAction.address.id)
+        RetrieveAddressWorker().execute(requestData: requst) { [weak self] result in
+            switch result {
+            case .success(let items):
+                guard let address = items?.first else { return }
+                self?.dataStore?.address = "\(address.street ?? "") \(address.buildingNumber ?? "")"
+                self?.dataStore?.city = address.city
+                self?.dataStore?.state = address.province
+                self?.dataStore?.postalCode = address.postalCode
+                self?.pickCountry(viewAction: .init(iso2: address.countryIso2, countryFullName: address.countryName))
+                self?.presenter?.presentData(actionResponse: .init(item: self?.dataStore))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     func updateForm(viewAction: KYCAddressModels.FormUpdated.ViewAction) {
@@ -93,6 +106,10 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     
     func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction) {
         presenter?.presentSsnInfo(actionResponse: .init())
+    }
+    
+    func validate(viewAction: KYCAddressModels.Validate.ViewAction) {
+        presenter?.presentForm(actionResponse: .init(isValid: dataStore?.isValid))
     }
 
     // MARK: - Aditional helpers

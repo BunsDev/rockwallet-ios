@@ -158,6 +158,13 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
+    // MARK: Responses
+    
+    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
+        super.displayData(responseDisplay: responseDisplay)
+        interactor?.validate(viewAction: .init())
+    }
+    
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
         guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel else { return }
         
