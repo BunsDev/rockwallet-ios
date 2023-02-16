@@ -77,7 +77,8 @@ open class BRAPIClient: NSObject, URLSessionDelegate, URLSessionTaskDelegate, BR
         }
         print("[BRAPIClient] \(s)")
         
-        UserDefaults.addError(error: .init(description: s, createdAt: Date()))
+        // TODO: Fix the performance issue.
+//        UserDefaults.addError(error: .init(description: s, createdAt: Date()))
     }
     
     var deviceId: String {
