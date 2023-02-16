@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct RetrieveAddressRequestModel: RequestModelData {
+struct RetrievedAddressRequestModel: RequestModelData {
     let id: String?
     
     func getParameters() -> [String: Any] {
@@ -22,9 +22,9 @@ struct RetrieveAddressRequestModel: RequestModelData {
     }
 }
 
-class RetrieveAddressWorker: BaseApiWorker<RetrieveAddressMapper> {
+class RetrieveAddressWorker: BaseApiWorker<RetrievedAddressMapper> {
     override func getUrl() -> String {
-        guard let urlParams = (requestData as? RetrieveAddressRequestModel),
+        guard let urlParams = (requestData as? RetrievedAddressRequestModel),
               let id = urlParams.id else {
             return ""
         }
@@ -41,7 +41,7 @@ class RetrieveAddressWorker: BaseApiWorker<RetrieveAddressMapper> {
     }
 }
 
-struct RetrieveAddressResponseModel: Codable {
+struct RetrievedAddressResponseModel: Codable {
     var id: String?
     var street: String?
     var buildingNumber: String?
@@ -52,8 +52,8 @@ struct RetrieveAddressResponseModel: Codable {
     var province: String?
 }
 
-struct RetrieveAddressResponseData: ModelResponse {
-    var items: [RetrieveAddressResponseModel]?
+struct RetrievedAddressResponseData: ModelResponse {
+    var items: [RetrievedAddressResponseModel]?
 }
 
 struct RetrievedAddress: Model {
@@ -66,7 +66,7 @@ struct RetrievedAddress: Model {
     var countryIso2: String?
     var province: String?
     
-    init(with response: RetrieveAddressResponseModel?) {
+    init(with response: RetrievedAddressResponseModel?) {
         id = response?.id
         street = response?.street
         buildingNumber = response?.buildingNumber
@@ -78,8 +78,8 @@ struct RetrievedAddress: Model {
     }
 }
 
-class RetrieveAddressMapper: ModelMapper<RetrieveAddressResponseData, [RetrievedAddress]> {
-    override func getModel(from response: RetrieveAddressResponseData?) -> [RetrievedAddress]? {
+class RetrievedAddressMapper: ModelMapper<RetrievedAddressResponseData, [RetrievedAddress]> {
+    override func getModel(from response: RetrievedAddressResponseData?) -> [RetrievedAddress]? {
         return response?.items?.compactMap { .init(with: $0) }
     }
 }

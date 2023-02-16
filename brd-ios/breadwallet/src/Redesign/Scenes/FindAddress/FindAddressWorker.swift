@@ -50,7 +50,7 @@ struct FindAddressResponseData: ModelResponse {
     }
 }
 
-struct FindAddress: Model, ItemSelectable {
+struct ResidentialAddress: Model, ItemSelectable {
     var displayName: String? { return text }
     var displayImage: ImageViewModel? { return nil }
     
@@ -58,8 +58,8 @@ struct FindAddress: Model, ItemSelectable {
     var id: String?
 }
 
-class FindAddressMapper: ModelMapper<FindAddressResponseData, [FindAddress]> {
-    override func getModel(from response: FindAddressResponseData?) -> [FindAddress]? {
+class FindAddressMapper: ModelMapper<FindAddressResponseData, [ResidentialAddress]> {
+    override func getModel(from response: FindAddressResponseData?) -> [ResidentialAddress]? {
         return response?.items?.compactMap { .init(text: $0.text, id: $0.id) }
     }
 }

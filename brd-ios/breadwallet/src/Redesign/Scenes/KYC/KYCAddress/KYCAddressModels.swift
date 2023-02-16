@@ -62,7 +62,7 @@ enum KYCAddressModels {
     
     struct Address {
         struct ViewAction {
-            var address: FindAddress
+            var address: ResidentialAddress
         }
     }
     

@@ -17,7 +17,7 @@ extension Scenes {
 class FindAddressViewController: ItemSelectionViewController {
     override var sceneTitle: String? { return L10n.AccountKYCLevelTwo.enterAddress }
     
-    var callback: ((FindAddress) -> Void)?
+    var callback: ((ResidentialAddress) -> Void)?
     
     override func setupSubviews() {
         super.setupSubviews()
@@ -47,7 +47,7 @@ class FindAddressViewController: ItemSelectionViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
-        guard let item = sectionRows[section]?[indexPath.row] as? FindAddress, let text = item.displayName, !text.isEmpty else { return }
+        guard let item = sectionRows[section]?[indexPath.row] as? ResidentialAddress, let text = item.displayName, !text.isEmpty else { return }
         callback?(item)
         coordinator?.dismissFlow()
     }
@@ -63,7 +63,7 @@ class FindAddressViewController: ItemSelectionViewController {
             coordinator?.dismissFlow()
             return
         }
-        callback?(FindAddress(text: text, id: nil))
+        callback?(ResidentialAddress(text: text, id: nil))
         coordinator?.dismissFlow()
     }
 }

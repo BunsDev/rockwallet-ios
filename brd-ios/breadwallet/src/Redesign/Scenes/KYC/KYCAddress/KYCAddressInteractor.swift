@@ -37,7 +37,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     }
     
     func setAddress(viewAction: KYCAddressModels.Address.ViewAction) {
-        let requst = RetrieveAddressRequestModel(id: viewAction.address.id)
+        let requst = RetrievedAddressRequestModel(id: viewAction.address.id)
         RetrieveAddressWorker().execute(requestData: requst) { [weak self] result in
             switch result {
             case .success(let items):

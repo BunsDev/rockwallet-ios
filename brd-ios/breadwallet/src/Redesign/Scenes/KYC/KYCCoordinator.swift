@@ -80,7 +80,7 @@ class KYCCoordinator: BaseCoordinator,
         open(scene: Scenes.KYCBasic)
     }
     
-    func showFindAddress(completion: ((FindAddress) -> Void)?) {
+    func showFindAddress(completion: ((ResidentialAddress) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.FindAddress,
                     presentationStyle: .formSheet) { vc in
