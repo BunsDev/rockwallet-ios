@@ -52,7 +52,7 @@ final class DeleteProfileInfoPresenter: NSObject, Presenter, DeleteProfileInfoAc
                                             closeButton: .init(image: Asset.close.image))
         
         viewController?.displayDeleteProfile(responseDisplay: .init(popupViewModel: popupViewModel,
-                                                                    popupConfig: Presets.Popup.normal))
+                                                                    popupConfig: Presets.Popup.whiteCentered))
     }
     
     func presentToggleTickbox(actionResponse: DeleteProfileInfoModels.Tickbox.ActionResponse) {
