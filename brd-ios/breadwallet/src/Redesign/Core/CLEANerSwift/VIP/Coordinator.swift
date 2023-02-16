@@ -75,24 +75,17 @@ class BaseCoordinator: NSObject,
     }
     
     func handleUserAccount() {
-        if DynamicLinksManager.shared.shouldHandleDynamicLink {
-            dismissFlow()
-        }
-        
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
-        coordinator.start()
-        coordinator.parentCoordinator = self
-        
-        childCoordinators.append(coordinator)
         
         if DynamicLinksManager.shared.code != nil {
-            UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
-            
-            DynamicLinksManager.shared.code = nil
-        } else {
-            navigationController.show(coordinator.navigationController, sender: nil)
+            UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.dismiss(animated: true)
         }
+        
+        coordinator.start()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
