@@ -7,6 +7,9 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:api.dev.rockwallet.net</string>
+		<string>applinks:api.ldt.rockwallet.net</string>
+		<string>applinks:api.stg.rockwallet.net</string>
+		<string>applinks:api.rockwallet.net</string>
 	</array>
 	<key>com.apple.developer.default-data-protection</key>
 	<string>NSFileProtectionComplete</string>
