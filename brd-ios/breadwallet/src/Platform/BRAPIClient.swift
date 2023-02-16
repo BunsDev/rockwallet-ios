@@ -77,6 +77,7 @@ open class BRAPIClient: NSObject, URLSessionDelegate, URLSessionTaskDelegate, BR
         }
         print("[BRAPIClient] \(s)")
         
+        // TODO: Fix the performance issue.
 //        UserDefaults.addError(error: .init(description: s, createdAt: Date()))
     }
     
