@@ -36,8 +36,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .mandatory: [LabelViewModel.text(L10n.Account.mandatoryFields)],
             .address: [
                 TextFieldModel(title: "\(L10n.Buy.address)*",
-                               value: item.address,
-                               isUserInteractionEnabled: false)
+                               value: item.address)
             ],
             .country: [
                 TextFieldModel(title: L10n.Account.countryRegion,

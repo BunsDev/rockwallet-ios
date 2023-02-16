@@ -17,16 +17,16 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     
     typealias Models = SellModels
     
-    var plaidHandler: Handler?
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title
     }
     
-    var didTriggerGetExchangeRate: (() -> Void)?
+    var plaidHandler: Handler?
     
     // MARK: - Overrides
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         interactor?.getExchangeRate(viewAction: .init())
     }
     
@@ -43,7 +43,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
         tableView.register(WrapperTableViewCell<CardSelectionView>.self)
             
         tableView.delaysContentTouches = false
-        
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,6 +122,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     // MARK: - User Interaction
     @objc override func buttonTapped() {
         super.buttonTapped()
+        
         coordinator?.showOrderPreview(type: .sell,
                                       coreSystem: dataStore?.coreSystem,
                                       keyStore: dataStore?.keyStore,

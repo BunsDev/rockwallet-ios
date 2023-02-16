@@ -9,7 +9,6 @@
 import UIKit
 
 class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
-    
     func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {
         ExchangeAuthHelper.showPinInput(on: navigationController,
                                         keyStore: keyStore,
@@ -46,15 +45,22 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
         navigationController.present(navController, animated: true)
     }
     
-    func showTimeout() {
-        // TODO: to mock details, remove when BE rdy
-        showSuccess(paymentReference: "",
-                    transactionType: .sellTransaction,
-                    reason: SuccessReason.sell)
-        
-//        open(scene: Scenes.Timeout) { vc in
-//            vc.navigationItem.hidesBackButton = true
-//        }
+    func showTimeout(type: PreviewType?) {
+        open(scene: Scenes.Timeout) { vc in
+            vc.navigationItem.hidesBackButton = true
+            
+            vc.didTapMainButton = { [weak self] in
+                self?.popToRoot(completion: { [weak self] in
+                    switch type {
+                    case .buy:
+                        (self?.navigationController.topViewController as? BuyViewController)?.didTriggerGetData?()
+                        
+                    default:
+                        break
+                    }
+                })
+            }
+        }
     }
     
     func showThreeDSecure(url: URL) {

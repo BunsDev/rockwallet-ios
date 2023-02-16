@@ -57,5 +57,12 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
         open(scene: Scenes.SignIn)
     }
     
+    func showDeleteProfile(with keyMaster: KeyStore) {
+        open(scene: Scenes.DeleteProfileInfo) { vc in
+            vc.dataStore?.keyMaster = keyMaster
+            vc.prepareData()
+        }
+    }
+    
     // MARK: - Aditional helpers
 }

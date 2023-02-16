@@ -37,9 +37,13 @@ class VerifyAccountViewController: BaseInfoViewController {
     override var buttonViewModels: [ButtonViewModel] {
         return [
             .init(title: L10n.Button.verify, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 self?.coordinator?.showAccountVerification()
             }),
             .init(title: L10n.Button.maybeLater, isUnderlined: true, callback: { [weak self] in
+                self?.shouldDismiss = true
+                
                 self?.coordinator?.dismissFlow()
             })
         ]
