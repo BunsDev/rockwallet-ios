@@ -50,6 +50,8 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
             vc.navigationItem.hidesBackButton = true
             
             vc.dataStore?.code = DynamicLinksManager.shared.code
+            
+            DynamicLinksManager.shared.code = nil
         }
     }
     
