@@ -75,29 +75,22 @@ class BaseCoordinator: NSObject,
     }
     
     func handleUserAccount() {
-        if DynamicLinksManager.shared.shouldHandleDynamicLink {
-            dismissFlow()
-        }
-        
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
-        coordinator.start()
-        coordinator.parentCoordinator = self
-        
-        childCoordinators.append(coordinator)
         
         if DynamicLinksManager.shared.code != nil {
-            UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
-            
-            DynamicLinksManager.shared.code = nil
-        } else {
-            navigationController.show(coordinator.navigationController, sender: nil)
+            UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.dismiss(animated: true)
         }
+        
+        coordinator.start()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup { showPopup in
+            decideFlow { showPopup in
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasSwapAccess {
@@ -125,7 +118,7 @@ class BaseCoordinator: NSObject,
     
     func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup { showPopup in
+            decideFlow { showPopup in
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasBuyAccess, type == .card {
@@ -177,7 +170,7 @@ class BaseCoordinator: NSObject,
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup { showPopup in
+            decideFlow { showPopup in
                 guard showPopup else { return }
                 
                 // TODO: Handle when Sell is ready.
@@ -199,7 +192,7 @@ class BaseCoordinator: NSObject,
     }
     
     func showProfile() {
-        upgradeAccountOrShowPopup { [weak self] showPopup in
+        decideFlow { [weak self] showPopup in
             guard showPopup else { return }
             
             self?.openModally(coordinator: ProfileCoordinator.self, scene: Scenes.Profile)
@@ -217,8 +210,8 @@ class BaseCoordinator: NSObject,
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {
         let nvc = RootNavigationController()
-        let coordinator = DeleteProfileInfoCoordinator(navigationController: nvc)
-        coordinator.start(with: keyMaster)
+        let coordinator = AccountCoordinator(navigationController: nvc)
+        coordinator.showDeleteProfile(with: keyMaster)
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
@@ -268,6 +261,7 @@ class BaseCoordinator: NSObject,
         guard let vc = navigationController.viewControllers.first as? BuyViewController else {
             return
         }
+        vc.didTriggerGetData?()
         navigationController.popToViewController(vc, animated: true)
     }
     
@@ -349,7 +343,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    func upgradeAccountOrShowPopup(completion: ((Bool) -> Void)?) {
+    func decideFlow(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return

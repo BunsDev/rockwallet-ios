@@ -50,11 +50,20 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
             vc.navigationItem.hidesBackButton = true
             
             vc.dataStore?.code = DynamicLinksManager.shared.code
+            
+            DynamicLinksManager.shared.code = nil
         }
     }
     
     func showSignIn() {
         open(scene: Scenes.SignIn)
+    }
+    
+    func showDeleteProfile(with keyMaster: KeyStore) {
+        open(scene: Scenes.DeleteProfileInfo) { vc in
+            vc.dataStore?.keyMaster = keyMaster
+            vc.prepareData()
+        }
     }
     
     // MARK: - Aditional helpers
