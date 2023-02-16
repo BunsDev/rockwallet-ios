@@ -206,7 +206,6 @@
 		7B9434352886A7FA00638703 /* DeleteProfileInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94342E2886A7FA00638703 /* DeleteProfileInfoStore.swift */; };
 		7B9434362886A7FA00638703 /* DeleteProfileInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94342F2886A7FA00638703 /* DeleteProfileInfoPresenter.swift */; };
 		7B9434392886C6A700638703 /* TickboxItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9434382886C6A700638703 /* TickboxItemView.swift */; };
-		7B94343B2886DAF000638703 /* DeleteProfileInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94343A2886DAF000638703 /* DeleteProfileInfoCoordinator.swift */; };
 		7B94343D2887F98E00638703 /* DeleteProfileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94343C2887F98E00638703 /* DeleteProfileWorker.swift */; };
 		7B94EFAA28BD501500F63B62 /* UINavigationController+Completion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94EFA928BD501500F63B62 /* UINavigationController+Completion.swift */; };
 		7B992F2529279598008C2174 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B992F2429279598008C2174 /* Assets.swift */; };
@@ -1038,7 +1037,6 @@
 		7B94342E2886A7FA00638703 /* DeleteProfileInfoStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteProfileInfoStore.swift; sourceTree = "<group>"; };
 		7B94342F2886A7FA00638703 /* DeleteProfileInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteProfileInfoPresenter.swift; sourceTree = "<group>"; };
 		7B9434382886C6A700638703 /* TickboxItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickboxItemView.swift; sourceTree = "<group>"; };
-		7B94343A2886DAF000638703 /* DeleteProfileInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfileInfoCoordinator.swift; sourceTree = "<group>"; };
 		7B94343C2887F98E00638703 /* DeleteProfileWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteProfileWorker.swift; sourceTree = "<group>"; };
 		7B94EFA928BD501500F63B62 /* UINavigationController+Completion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Completion.swift"; sourceTree = "<group>"; };
 		7B992F2429279598008C2174 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Assets.swift; path = src/Constants/Assets.swift; sourceTree = "<group>"; };
@@ -2092,7 +2090,6 @@
 				7B94342B2886A7F900638703 /* DeleteProfileInfoModels.swift */,
 				7B94342D2886A7F900638703 /* DeleteProfileInfoViewController.swift */,
 				7B94342A2886A7F900638703 /* DeleteProfileInfoInteractor.swift */,
-				7B94343A2886DAF000638703 /* DeleteProfileInfoCoordinator.swift */,
 				7B94343C2887F98E00638703 /* DeleteProfileWorker.swift */,
 			);
 			path = DeleteProfile;
@@ -4164,7 +4161,6 @@
 				7EB8FD232897D212000FF75C /* BuyPresenter.swift in Sources */,
 				7EF45F91284777AC00D1F7B0 /* RegistrationConfirmationWorker.swift in Sources */,
 				CEEE92F11EBA7CBA00B7AC9C /* RequestAmountViewController.swift in Sources */,
-				7B94343B2886DAF000638703 /* DeleteProfileInfoCoordinator.swift in Sources */,
 				7BDB49B62805AC780031F015 /* EmailFeedbackManager.swift in Sources */,
 				CE8CD8DF1E2E825100785E02 /* VerifyPinViewController.swift in Sources */,
 				7CA238142011A97C00A4A59D /* TxDetailViewController.swift in Sources */,

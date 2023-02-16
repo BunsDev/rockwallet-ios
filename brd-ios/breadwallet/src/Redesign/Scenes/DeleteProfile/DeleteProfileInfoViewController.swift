@@ -10,7 +10,7 @@
 
 import UIKit
 
-class DeleteProfileInfoViewController: BaseTableViewController<DeleteProfileInfoCoordinator,
+class DeleteProfileInfoViewController: BaseTableViewController<AccountCoordinator,
                                        DeleteProfileInfoInteractor,
                                        DeleteProfileInfoPresenter,
                                        DeleteProfileInfoStore>,
