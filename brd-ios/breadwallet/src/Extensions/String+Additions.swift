@@ -24,7 +24,7 @@ extension String {
     }
     
     var isValidPassword: Bool {
-        return matches(regularExpression: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}")
+        return matches(regularExpression: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\W).{8,}$")
     }
 
     var sanitized: String {
