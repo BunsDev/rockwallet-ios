@@ -111,6 +111,12 @@ class BaseCoordinator: NSObject,
                     self?.showAccountVerification(flow: .swap)
                     
                     return
+                } else {
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .swapAndBuyCard
+                    }
+                    
+                    return
                 }
             }
         }
@@ -130,7 +136,7 @@ class BaseCoordinator: NSObject,
                     }
                     
                     return
-                } else if profile.status.isKYCLocationRestricted {
+                } else if profile.status.isKYCLocationRestricted, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swapAndBuyCard
                     }
@@ -138,6 +144,12 @@ class BaseCoordinator: NSObject,
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc, type == .card {
                     self?.showAccountVerification(flow: .buy)
+                    
+                    return
+                } else if type == .card {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .swapAndBuyCard
+                    }
                     
                     return
                 }
@@ -161,6 +173,14 @@ class BaseCoordinator: NSObject,
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc, type == .ach {
                     self?.showAccountVerification(flow: .buy)
+                    
+                    return
+                } else if type == .ach {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .buyAch
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                    }
                     
                     return
                 }
