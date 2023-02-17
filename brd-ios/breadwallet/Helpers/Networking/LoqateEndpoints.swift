@@ -11,9 +11,10 @@
 import Foundation
 
 enum LoquateEndpoints: String, URLType {
-    static var baseURL: String = "https://api.addressy.com/Capture/Interactive/Find/v1.1/%@"
+    static var baseURL: String = "https://api.addressy.com/Capture/Interactive/%@"
     
-    case base = "json3.ws?Key=%@&Text=%@"
+    case base = "Find/v1.1/json3.ws?Key=%@&Text=%@"
+    case retrieve = "Retrieve/v1.20/json3.ws?Key=%@&Id=%@"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)
