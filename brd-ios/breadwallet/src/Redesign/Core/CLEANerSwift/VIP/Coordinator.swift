@@ -239,7 +239,7 @@ class BaseCoordinator: NSObject,
     }
     
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
-        open(scene: ExchangeDetailsViewController.self) { vc in
+        open(scene: Scenes.ExchangeDetails) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId
             vc.dataStore?.transactionType = type

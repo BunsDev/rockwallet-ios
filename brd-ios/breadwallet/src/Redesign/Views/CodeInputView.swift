@@ -18,10 +18,10 @@ struct CodeInputConfiguration: Configurable {
                                                                        textColor: LightColors.Text.one,
                                                                        textAlignment: .center,
                                                                        numberOfLines: 1))
-    var errorLabel: LabelConfiguration = .init(font: Fonts.Body.three, textColor: LightColors.Error.one)
 }
 
-struct CodeInputViewModel: ViewModel {}
+struct CodeInputViewModel: ViewModel {
+}
 
 class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDisplayable, UITextFieldDelegate {
     static var numberOfFields: Int { return 6 }
@@ -34,7 +34,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
     private lazy var stack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = Margins.extraSmall.rawValue
         view.isUserInteractionEnabled = false
         return view
     }()
@@ -44,13 +43,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         view.distribution = .fillEqually
         view.spacing = Margins.small.rawValue
         view.isUserInteractionEnabled = false
-        return view
-    }()
-    
-    private lazy var errorLabel: FELabel = {
-        let view = FELabel()
-        view.text = L10n.InputView.invalidCode
-        view.isHidden = true
         return view
     }()
     
@@ -70,23 +62,24 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         super.setupSubviews()
         
         content.addSubview(hiddenTextField)
+        hiddenTextField.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
+        }
         
         content.addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().priority(.low)
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
         
         stack.addArrangedSubview(inputStack)
-        stack.addArrangedSubview(errorLabel)
-        
-        for _ in (0..<CodeInputView.numberOfFields) {
-            inputStack.addArrangedSubview(FETextField())
+        inputStack.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
         
-        hiddenTextField.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
-            make.height.equalTo(inputStack.snp.height)
+        for _ in (0..<CodeInputView.numberOfFields) {
+            let field = FETextField()
+            field.setup(with: .init())
+            inputStack.addArrangedSubview(field)
         }
         
         hiddenTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -103,7 +96,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
     override func configure(with config: CodeInputConfiguration?) {
         super.configure(with: config)
         
-        errorLabel.configure(with: config?.errorLabel)
         configure(background: config?.normal)
         
         inputStack.arrangedSubviews.forEach { field in
@@ -156,8 +148,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         UIView.setAnimationsEnabled(withAnimation)
         
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
-            self?.errorLabel.isHidden = state != .error
-            
             self?.layoutIfNeeded()
             self?.contentSizeChanged?()
         }
@@ -166,7 +156,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
     }
     
     func showErrorMessage() {
-        errorLabel.text = L10n.InputView.invalidCode
         animateTo(state: .error)
     }
     

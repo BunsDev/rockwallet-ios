@@ -105,7 +105,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         } else {
             let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
             let tokenValue = actionResponse.from?.tokenValue ?? 0
-            let tokenCode = actionResponse.from?.currency.code.uppercased() ?? ""
             let profile = UserManager.shared.profile
             let dailyLimit = profile?.swapAllowanceDaily ?? 0
             let lifetimeLimit = profile?.swapAllowanceLifetime ?? 0
