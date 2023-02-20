@@ -73,12 +73,21 @@
       }
     },
     {
+      "identity" : "veriff-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Veriff/veriff-ios-spm/",
+      "state" : {
+        "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205",
+        "version" : "4.51.0"
+      }
+    },
+    {
       "identity" : "walletkitcore",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/WalletKitCore.git",
       "state" : {
-        "revision" : "5de182879d45c2b6c154a46f71903e722a5d3025",
-        "version" : "5.0.7"
+        "revision" : "4e3419eedd34487fba3a8002e6d7122961052403",
+        "version" : "5.0.8"
       }
     },
     {
@@ -86,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/WalletKitSwift.git",
       "state" : {
-        "revision" : "0efd4224ac3e6c468f8ab0764596f198ebeb6a8e",
-        "version" : "5.0.7"
+        "revision" : "c96c0a890354e7255a264152735fd8df460b6537",
+        "version" : "5.0.8"
       }
     }
   ],
