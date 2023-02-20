@@ -25,6 +25,12 @@ class KYCCoordinator: BaseCoordinator,
         if let flow = flow {
             open(scene: Scenes.VerifyAccount) { vc in
                 vc.flow = flow
+                vc.didTapContactSupportButton = { [weak self] in
+                    self?.showSupport()
+                }
+                vc.didTapBackToHomeButton = { [weak self] in
+                    self?.dismissFlow()
+                }
             }
             
             return

@@ -8,6 +8,8 @@ extension Scenes {
 
 class VerifyAccountViewController: BaseInfoViewController {
     var flow: ProfileModels.ExchangeFlow?
+    var didTapBackToHomeButton: (() -> Void)?
+    var didTapContactSupportButton: (() -> Void)?
     
     override var imageName: String? { return Asset.verification.name }
     override var titleText: String? { return L10n.Account.verifyAccountTitle }
@@ -16,11 +18,10 @@ class VerifyAccountViewController: BaseInfoViewController {
         return [
             .init(title: L10n.Swap.backToHome, callback: { [weak self] in
                 self?.shouldDismiss = true
-                
-                self?.coordinator?.dismissFlow()
+                self?.didTapBackToHomeButton?()
             }),
             .init(title: L10n.ComingSoon.Buttons.contactSupport, isUnderlined: true, callback: { [weak self] in
-                self?.coordinator?.showSupport()
+                self?.didTapContactSupportButton?()
             })
         ]
     }
