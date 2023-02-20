@@ -14,10 +14,10 @@ class VerifyAccountViewController: BaseInfoViewController {
     override var descriptionText: String? { return L10n.Account.verifyAccountDescription }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: L10n.Button.verify, callback: { [weak self] in
+            .init(title: L10n.Swap.backToHome, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                self?.coordinator?.showAccountVerification()
+                self?.coordinator?.dismissFlow()
             }),
             .init(title: L10n.ComingSoon.Buttons.contactSupport, isUnderlined: true, callback: { [weak self] in
                 self?.coordinator?.showSupport()
