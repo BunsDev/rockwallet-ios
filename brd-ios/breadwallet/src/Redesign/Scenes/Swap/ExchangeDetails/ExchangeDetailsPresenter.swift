@@ -22,7 +22,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         var sections = [AnyHashable]()
         
         switch type {
-        case .swapTransaction:
+        case .swap:
             sections = [
                 Models.Section.header,
                 Models.Section.order,
@@ -34,7 +34,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                 Models.Section.transactionTo
             ]
             
-        case .buyTransaction, .buyAchTransaction, .sellTransaction:
+        case .buy, .buyAch, .sell:
             sections = [
                 Models.Section.header,
                 Models.Section.toCurrency,
@@ -73,12 +73,12 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         var toCurrencyAssetViewModel = AssetViewModel()
         
         switch type {
-        case .swapTransaction:
+        case .swap:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
                                                       title: "\(L10n.TransactionDetails.addressToHeader) \(detail.destination.currency)",
                                                       topRightText: "\(formattedCurrencyAmountDestination) \(detail.destination.currency)")
             
-        case .buyTransaction, .buyAchTransaction, .sellTransaction:
+        case .buy, .buyAch, .sell:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
                                                       title: "\(formattedCurrencyAmountDestination) \(detail.destination.currency)",
                                                       topRightText: nil)
@@ -197,7 +197,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let model: BuyOrderViewModel
         switch type {
-        case .sellTransaction:
+        case .sell:
             model = BuyOrderViewModel(rateValue: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
                                       amount: .init(title: .text("\(L10n.Sell.subtotal)"), value: .text(amountText), infoImage: nil),
                                       cardFee: .init(title: .text(displayFeeTitle),

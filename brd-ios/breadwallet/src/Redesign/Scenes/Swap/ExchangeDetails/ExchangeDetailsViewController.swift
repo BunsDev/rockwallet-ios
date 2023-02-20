@@ -18,13 +18,13 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     
     override var sceneLeftAlignedTitle: String? {
         switch dataStore?.transactionType {
-        case .buyTransaction, .buyAchTransaction:
+        case .buy, .buyAch:
             return L10n.Buy.details
             
-        case .swapTransaction:
+        case .swap:
             return L10n.Swap.details
             
-        case .sellTransaction:
+        case .sell:
             return L10n.Sell.details
             
         default:

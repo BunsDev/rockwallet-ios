@@ -143,7 +143,7 @@ class SuccessViewController: BaseInfoViewController {
         }
     }
     
-    var transactionType: TransactionType = .defaultTransaction
+    var transactionType: TransactionType = .base
     let canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false
     
     override var imageName: String? { return success?.iconName }
@@ -172,7 +172,7 @@ class SuccessViewController: BaseInfoViewController {
                     
                 default:
                     self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
-                                                           type: self?.transactionType ?? .defaultTransaction)
+                                                           type: self?.transactionType ?? .base)
                 }
             }),
             .init(title: success?.thirdButtonTitle, isUnderlined: success?.thirdButtoUnderlined ?? true, callback: { [weak self] in
@@ -185,7 +185,7 @@ class SuccessViewController: BaseInfoViewController {
                                                keyStore: self?.dataStore?.keyStore)
                 default:
                     self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
-                                                           type: self?.transactionType ?? .defaultTransaction)
+                                                           type: self?.transactionType ?? .base)
                 }
             })
         ]
