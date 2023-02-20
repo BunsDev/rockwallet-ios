@@ -50,7 +50,7 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
                       passwordAgain: actionResponse.passwordAgain,
                       isPasswordValid: actionResponse.isPasswordValid,
                       isPasswordEmpty: actionResponse.isPasswordEmpty,
-                      passwordModel: .init(title: L10n.Account.createPassword,
+                      passwordModel: .init(title: L10n.Account.enterPassword,
                                            hint: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
                                            && !actionResponse.isPasswordAgainEmpty ? L10n.Account.passwordDoNotMatch : nil,
                                            trailing: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
