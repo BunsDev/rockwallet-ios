@@ -452,17 +452,6 @@ class BaseCoordinator: NSObject,
                                               onTapCallback: onTapCallback)
     }
     
-    func hideMessage() {
-        guard let superview = UIApplication.shared.activeWindow,
-              let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
-        
-        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
-            view.alpha = 0
-        } completion: { _ in
-            view.removeFromSuperview()
-        }
-    }
-    
     func showUnderConstruction(_ feat: String) {
         showPopup(on: navigationController.topViewController,
                   with: .init(title: .text("Under construction"),
