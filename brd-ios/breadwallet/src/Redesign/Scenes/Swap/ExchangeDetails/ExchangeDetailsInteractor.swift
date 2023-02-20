@@ -60,9 +60,9 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
                                  destination: destination,
                                  rate: 0.99,
                                  timestamp: Int(Date().timeIntervalSince1970),
-                                 type: .sellTransaction)
+                                 type: .sell)
         
-        presenter?.presentData(actionResponse: .init(item: Models.Item(detail: details, type: .sellTransaction)))
+        presenter?.presentData(actionResponse: .init(item: Models.Item(detail: details, type: .sell)))
     }
     
     func copyValue(viewAction: ExchangeDetailsModels.CopyValue.ViewAction) {

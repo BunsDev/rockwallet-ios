@@ -34,7 +34,7 @@ class SwapInfoViewController: BaseInfoViewController {
             .init(title: L10n.Swap.details, isUnderlined: true, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                (self?.coordinator as? SwapCoordinator)?.showExchangeDetails(with: self?.dataStore?.itemId, type: .swapTransaction)
+                (self?.coordinator as? SwapCoordinator)?.showExchangeDetails(with: self?.dataStore?.itemId, type: .swap)
             })
         ]
     }
