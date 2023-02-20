@@ -164,13 +164,14 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textFieldContent.addSubview(trailingView)
         
         textFieldStack.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
+            make.height.greaterThanOrEqualTo(ViewSizes.Common.defaultCommon.rawValue)
             make.leading.equalTo(Margins.large.rawValue)
             make.trailing.equalTo(trailingView.snp.leading).offset(-Margins.minimum.rawValue)
         }
         
         textFieldStack.addArrangedSubview(titleStack)
+        textFieldStack.addArrangedSubview(textField)
+        
         titleStack.addArrangedSubview(leadingView)
         titleStack.addArrangedSubview(titleLabel)
         
@@ -185,8 +186,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
             make.trailing.equalTo(-Margins.large.rawValue)
             make.centerY.equalToSuperview()
         }
-        
-        textFieldStack.addArrangedSubview(textField)
         
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         textField.delegate = delegate ?? self
@@ -257,6 +256,15 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
+        if titleStack.isHidden {
+            textField.snp.makeConstraints { make in
+                make.bottom.leading.trailing.equalToSuperview()
+                make.top.equalToSuperview().inset(titleStack.spacing)
+            }
+        } else {
+            textField.snp.removeConstraints()
+        }
+        
         isUserInteractionEnabled = viewModel.isUserInteractionEnabled
         
         animateTo(state: viewModel.displayState ?? .normal, withAnimation: viewModel.displayStateAnimated == true)
@@ -296,7 +304,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         let hint = viewModel?.hint
         var hideTextField = textField.text?.isEmpty == true
-        let titleStackCurrentState = titleStack.isHidden
         var titleConfig: LabelConfiguration? = config?.titleConfiguration
         let background: BackgroundConfiguration?
         
@@ -319,14 +326,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         UIView.setAnimationsEnabled(withAnimation)
         
-        UIView.transition(with: mainStack,
-                          duration: Presets.Animation.short.rawValue,
-                          options: [.layoutSubviews],
-                          animations: { [weak self] in
-            self?.titleStack.isHidden = titleStackCurrentState
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.textField.isHidden = hideTextField
-            self?.hintLabel.transform = hint.isNilOrEmpty == true ? CGAffineTransform.init(scaleX: 1, y: 0) : .identity
-        })
+        }
         
         hintLabel.setup(with: .text(hint))
         titleLabel.configure(with: titleConfig)
