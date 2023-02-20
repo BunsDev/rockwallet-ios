@@ -125,7 +125,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 
             case _ where fiatValue < minimumValue:
                 // Value below minimum crypto
-                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: tokenCode, reason: .swap)))
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: C.usdCurrencyCode, reason: .swap)))
                 hasError = true
                 
             case _ where fiatValue > dailyLimit:
