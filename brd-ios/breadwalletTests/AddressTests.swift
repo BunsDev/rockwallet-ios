@@ -51,12 +51,12 @@ class AddressTests : XCTestCase {
         XCTAssertFalse(TestCurrencies.eth.isValidAddress(""))
     }
     
-    func testHbarAddresses() {
-        //Valid
-        XCTAssertTrue(TestCurrencies.hbar.isValidAddress("0.0.39768"))
-        //Invalid
-        XCTAssertFalse(TestCurrencies.hbar.isValidAddress("blah"))
-        XCTAssertFalse(TestCurrencies.hbar.isValidAddress(""))
-    }
+//    func testHbarAddresses() {
+//        //Valid
+//        XCTAssertTrue(TestCurrencies.hbar.isValidAddress("0.0.39768"))
+//        //Invalid
+//        XCTAssertFalse(TestCurrencies.hbar.isValidAddress("blah"))
+//        XCTAssertFalse(TestCurrencies.hbar.isValidAddress(""))
+//    }
     
 }

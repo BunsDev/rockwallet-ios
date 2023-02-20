@@ -27,7 +27,7 @@ class WalletConnectionSettingsTests: XCTestCase {
         Backend.connect(authenticator: keyStore)
         client = Backend.apiClient
         system = CoreSystem(keyStore: keyStore)
-        system.create(account: account!, authToken: "", btcWalletCreationCallback: {}, completion: {})
+        system.create(account: account!, btcWalletCreationCallback: {}, completion: {})
     }
 
     override func tearDown() {

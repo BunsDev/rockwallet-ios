@@ -46,7 +46,7 @@ class PayIdTests : XCTestCase {
             self.handleResult(result, expected: "mzVtspCQoEGnEbCUWVrug72yD4ShDTUbw8")
             exp.fulfill()
         }
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
 
     func testEth() {
@@ -57,7 +57,7 @@ class PayIdTests : XCTestCase {
             self.handleResult(result, expected: "0x8fB4CB96F7C15F9C39B3854595733F728E1963Bc")
             exp.fulfill()
         }
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
 
     func testUnsuportedCurrency() {
@@ -73,7 +73,7 @@ class PayIdTests : XCTestCase {
             }
             exp.fulfill()
         }
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
 
     func handleResult(_ result: Result<(String, String?), ResolvableError>, expected: String) {

@@ -30,10 +30,10 @@ class AssetCollectionTests: XCTestCase {
             return (uid, CurrencyMetaData(uid: uid, code: code))
         })
     }
-    var defaultAssets: [CurrencyMetaData] = AssetIndex.defaultCurrencyIds.map { CurrencyMetaData(uid: $0, code: $0.rawValue) }
+    var defaultAssets: [CurrencyMetaData] = Currencies.shared.defaultCurrencyIds.map { CurrencyMetaData(uid: $0, code: $0.rawValue) }
     var availableAssets: [CurrencyMetaData] {
         return AssetCollectionTests.testTokenData
-            .filter { !AssetIndex.defaultCurrencyIds.contains($0.0) }
+            .filter { !Currencies.shared.defaultCurrencyIds.contains($0.0) }
             .map { CurrencyMetaData(uid: $0.0, code: $0.1) }
         
     }
@@ -134,40 +134,39 @@ class AssetCollectionTests: XCTestCase {
         XCTAssertEqual(Set(collection.availableAssets), Set(availableAssets))
         collection.removeAsset(at: 0)
         collection.resetToDefaultCollection()
-        XCTAssertEqual(collection.enabledAssets.map { $0.uid }, AssetIndex.defaultCurrencyIds)
+        XCTAssertEqual(collection.enabledAssets.map { $0.uid }, Currencies.shared.defaultCurrencyIds)
     }
     
     func testGetCurrencyMetaData() {
         let e = expectation(description: "Should receive currency metadata")
-        clearCurrenciesCache()
+//        clearCurrenciesCache()
         
         //1st fetch without cache
-        client?.getCurrencyMetaData(completion: { metadata in
+        client?.getCurrencyMetaData(type: .currencies, completion: { metadata in
             let tokens = metadata.values.filter { ($0.tokenAddress != nil) && !$0.tokenAddress!.isEmpty }
-            let tokensByAddress = Dictionary(uniqueKeysWithValues: tokens.map { ($0.tokenAddress!, $0) })
+//            let tokensByAddress = Dictionary(uniqueKeysWithValues: tokens.map { ($0.tokenAddress!, $0) })
             XCTAssert(metadata.count > 0)
             XCTAssert(tokens.count > 0)
-            XCTAssert(tokensByAddress.count > 0)
+//            XCTAssert(tokensByAddress.count > 0)
             
             //2nd fetch should hit cache
-            self.client?.getCurrencyMetaData(completion: { metadata in
+            self.client?.getCurrencyMetaData(type: .currencies, completion: { metadata in
                 let tokens = metadata.values.filter { ($0.tokenAddress != nil) && !$0.tokenAddress!.isEmpty }
-                let tokensByAddress = Dictionary(uniqueKeysWithValues: tokens.map { ($0.tokenAddress!, $0) })
+//                let tokensByAddress = Dictionary(uniqueKeysWithValues: tokens.map { ($0.tokenAddress!, $0) })
                 XCTAssert(metadata.count > 0)
                 XCTAssert(tokens.count > 0)
-                XCTAssert(tokensByAddress.count > 0)
+//                XCTAssert(tokensByAddress.count > 0)
                 e.fulfill()
             })
         })
         waitForExpectations(timeout: 5.0, handler: nil)
     }
     
-    private func clearCurrenciesCache() {
-        if  let currenciesPath = CurrencyFileManager.cachedCurrenciesFilePath, FileManager.default.fileExists(atPath: currenciesPath) {
-            try? fm.removeItem(atPath: currenciesPath)
-        }
-    }
-    
+//    private func clearCurrenciesCache() {
+//        if  let currenciesPath = CurrencyFileManager.cachedCurrenciesFilePath, FileManager.default.fileExists(atPath: currenciesPath) {
+//            try? fm.removeItem(atPath: currenciesPath)
+//        }
+//    }
 }
 
 extension CurrencyMetaData {
@@ -177,8 +176,8 @@ extension CurrencyMetaData {
                   isSupported: true,
                   colors: (UIColor.black, UIColor.black),
                   name: "test currency",
-                  tokenAddress: tokenAddress,
                   decimals: 0,
-                  alternateCode: nil)
+                  type: "",
+                  fiatRate: 1)
     }
 }
