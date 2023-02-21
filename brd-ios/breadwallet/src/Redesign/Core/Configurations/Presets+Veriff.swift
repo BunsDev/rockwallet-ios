@@ -18,7 +18,7 @@ extension Presets {
         branding.primaryTextColor = LightColors.Text.three
         branding.secondaryTextColor = LightColors.Text.one
         branding.primaryButtonBackgroundColor = LightColors.primary
-        branding.buttonCornerRadius = 100.0 // TODO: ??
+        branding.buttonCornerRadius = CornerRadius.large.rawValue * 5
         branding.bulletPoint = .init(named: "bullet") // TODO: due to naming clash.. refactor in the future?
         branding.font = VeriffSdk.Branding.Font(regularFontName: Fonts.Secondary,
                                                 lightFontName: Fonts.Secondary,
