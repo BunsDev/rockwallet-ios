@@ -93,7 +93,7 @@ class BaseCoordinator: NSObject,
             decideFlow { showPopup in
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
-                if !profile.kycAccessRights.hasSwapAccess {
+                if profile.kycAccessRights.hasSwapAccess {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
                         vc?.dataStore?.currencies = currencies
                         vc?.dataStore?.coreSystem = coreSystem
@@ -101,7 +101,7 @@ class BaseCoordinator: NSObject,
                     }
                     
                     return
-                } else if !profile.status.isKYCLocationRestricted {
+                } else if profile.status.isKYCLocationRestricted {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swap
                     }
