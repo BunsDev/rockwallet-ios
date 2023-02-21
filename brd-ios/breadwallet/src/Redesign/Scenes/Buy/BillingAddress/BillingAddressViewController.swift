@@ -140,7 +140,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: move to cell tap callback
         switch sections[indexPath.section] as? Models.Section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
