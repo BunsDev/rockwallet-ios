@@ -295,7 +295,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         valueChanged?(textField)
     }
     
-    @objc func trailingViewTapped() {
+    @objc private func trailingViewTapped() {
         didTapTrailingView?()
     }
     
