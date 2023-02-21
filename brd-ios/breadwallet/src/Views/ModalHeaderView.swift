@@ -19,7 +19,7 @@ class ModalHeaderView: UIView {
         self.titleLabel.text = title
         
         if let faqInfo = faqInfo {
-            self.faq = UIButton.buildFaqButton(articleId: faqInfo, currency: currency, position: .middle)
+            self.faqButton = .buildHelpBarButton(articleId: faqInfo, currency: currency, position: .middle)
         }
 
         super.init(frame: .zero)
@@ -36,7 +36,7 @@ class ModalHeaderView: UIView {
     
     private let titleLabel = UILabel()
     private let close = UIButton.buildModernCloseButton(position: .middle)
-    private var faq: UIButton?
+    private var faqButton: UIButton?
     private let border = UIView()
     
     private func setupSubviews() {
@@ -66,15 +66,15 @@ class ModalHeaderView: UIView {
     }
 
     private func addFaqButtonIfNeeded() {
-        guard let faq = faq else { return }
+        guard let faqButton = faqButton else { return }
         
-        addSubview(faq)
+        addSubview(faqButton)
         
-        faq.constrain([
-            faq.constraint(.trailing, toView: self),
-            faq.constraint(.centerY, toView: self),
-            faq.constraint(.height, constant: ViewSizes.Common.largeCommon.rawValue),
-            faq.constraint(.width, constant: ViewSizes.Common.largeCommon.rawValue) ])
+        faqButton.constrain([
+            faqButton.constraint(.trailing, toView: self),
+            faqButton.constraint(.centerY, toView: self),
+            faqButton.constraint(.height, constant: ViewSizes.Common.largeCommon.rawValue),
+            faqButton.constraint(.width, constant: ViewSizes.Common.largeCommon.rawValue) ])
     }
 
     private func setColors() {
