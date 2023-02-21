@@ -210,7 +210,7 @@ class BiometricsSettingsViewController: UIViewController, Subscriber {
     }
     
     private func addFaqButton() {
-        let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.enableTouchId, position: .right)
+        let faqButton = UIButton.buildHelpBarButton(articleId: ArticleIds.enableTouchId)
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: faqButton)]
     }
 

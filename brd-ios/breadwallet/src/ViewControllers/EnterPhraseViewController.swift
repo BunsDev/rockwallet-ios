@@ -23,7 +23,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     init(keyMaster: KeyMaster, reason: PhraseEntryReason, showBackButton: Bool = true) {
         self.keyMaster = keyMaster
         self.enterPhrase = EnterPhraseCollectionViewController(keyMaster: keyMaster)
-        self.faq = UIButton.buildFaqButton(articleId: ArticleIds.recoverWallet, position: .right)
+        self.faqButton = .buildHelpBarButton(articleId: ArticleIds.recoverWallet)
         self.reason = reason
         self.showBackButton = showBackButton
         super.init(nibName: nil, bundle: nil)
@@ -38,7 +38,7 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     private let enterPhrase: EnterPhraseCollectionViewController
     private let heading = UILabel.wrapping(font: Fonts.Title.six, color: LightColors.Text.three)
     private let subheading = UILabel.wrapping(font: Fonts.Body.two, color: LightColors.Text.two)
-    private let faq: UIButton
+    private let faqButton: UIButton
     private let scrollView = UIScrollView()
     private let container = UIView()
     var phrase: String?
@@ -243,18 +243,18 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         case .setSeed:
             heading.text = L10n.RecoveryKeyFlow.recoveryYourWallet
             subheading.text = L10n.RecoveryKeyFlow.recoveryYourWalletSubtitle
-            faq.tap = {
+            faqButton.tap = {
                 self.faqButtonPressed()
             }
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faqButton)
             
         case .validateForResettingPin:
             heading.text = L10n.RecoveryKeyFlow.enterRecoveryKey
             subheading.text = L10n.RecoveryKeyFlow.resetPINInstruction
-            faq.tap = {
+            faqButton.tap = {
                 self.faqButtonPressed()
             }
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faqButton)
             
         case .validateForWipingWallet:
             heading.text = L10n.RecoveryKeyFlow.enterRecoveryKey

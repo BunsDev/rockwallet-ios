@@ -60,7 +60,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
     private let keyMaster: KeyMaster
     private let backupKey: String?
     
-    private lazy var faq = UIButton.buildFaqButton(articleId: ArticleIds.setPin, currency: nil, position: .right)
+    private lazy var faqButton = UIButton.buildHelpBarButton(articleId: ArticleIds.setPin, currency: nil, position: .right)
     
     private var shouldShowFAQButton: Bool {
         if type == .recoverBackup { return false }
@@ -119,7 +119,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
         super.viewDidLoad()
         
         if shouldShowFAQButton {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faq)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: faqButton)
         }
         
         header.textAlignment = .center
@@ -217,7 +217,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
             if isCreatingPin {
                 step = .new
                 caption.isHidden = false
-                faq.tap = {
+                faqButton.tap = {
                     self.faqButtonPressed()
                 }
             } else {

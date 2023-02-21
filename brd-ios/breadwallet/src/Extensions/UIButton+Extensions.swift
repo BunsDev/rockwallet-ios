@@ -29,24 +29,17 @@ extension UIButton {
         return button
     }
     
-    // TODO: Unify buildFaqButton and buildHelpBarButton. Find and cleanup all FAQ bar button items.
-    static func buildFaqButton(articleId: String, currency: Currency? = nil, position: NavBarButtonPosition, tapped: (() -> Void)? = nil) -> UIButton {
+    static func buildHelpBarButton(articleId: String? = nil,
+                                   currency: Currency? = nil,
+                                   position: NavBarButtonPosition = .right,
+                                   tapped: (() -> Void)? = nil) -> UIButton {
         let button = UIButton.icon(image: Asset.help.image, accessibilityLabel: L10n.AccessibilityLabels.faq, position: position)
         button.tintColor = LightColors.Text.three
         
         button.tap = {
-            Store.trigger(name: .presentFaq(articleId, currency))
-            tapped?()
-        }
-        
-        return button
-    }
-    
-    static func buildHelpBarButton(tapped: (() -> Void)? = nil) -> UIButton {
-        let button = UIButton.icon(image: Asset.help.image, accessibilityLabel: L10n.AccessibilityLabels.faq, position: .right)
-        button.tintColor = LightColors.Text.three
-        
-        button.tap = {
+            if let articleId = articleId {
+                Store.trigger(name: .presentFaq(articleId, currency))
+            }
             tapped?()
         }
         

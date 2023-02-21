@@ -12,7 +12,7 @@ class ReScanSyncViewController: UIViewController, Subscriber {
     init(system: CoreSystem, wallet: Wallet) {
         self.system = system
         self.wallet = wallet
-        self.faq = .buildFaqButton(articleId: ArticleIds.reScan, currency: wallet.currency, position: .middle)
+        self.faq = .buildHelpBarButton(articleId: ArticleIds.reScan, currency: wallet.currency, position: .middle)
         super.init(nibName: nil, bundle: nil)
     }
 
