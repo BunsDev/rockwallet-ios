@@ -8,43 +8,20 @@ extension Scenes {
 
 class VerifyAccountViewController: BaseInfoViewController {
     var flow: ProfileModels.ExchangeFlow?
+    var didTapBackToHomeButton: (() -> Void)?
+    var didTapContactSupportButton: (() -> Void)?
     
-    override var imageName: String? {
-        switch flow {
-        case .swap:
-            return Asset.ilSetup.name
-            
-        case .buy:
-            return Asset.verification.name
-            
-        default:
-            return ""
-        }
-    }
-    override var titleText: String? { return L10n.Account.messageVerifyAccount }
-    override var descriptionText: String? {
-        switch flow {
-        case .swap:
-            return L10n.Account.verifyIdentity(L10n.HomeScreen.trade.lowercased())
-            
-        case .buy:
-            return L10n.Account.verifyIdentity(L10n.HomeScreen.buy.lowercased())
-            
-        default:
-            return L10n.Account.upgradeVerificationIdentity
-        }
-    }
+    override var imageName: String? { return Asset.verification.name }
+    override var titleText: String? { return L10n.Account.verifyAccountTitle }
+    override var descriptionText: String? { return L10n.Account.verifyAccountDescription }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: L10n.Button.verify, callback: { [weak self] in
+            .init(title: L10n.Swap.backToHome, callback: { [weak self] in
                 self?.shouldDismiss = true
-                
-                self?.coordinator?.showAccountVerification()
+                self?.didTapBackToHomeButton?()
             }),
-            .init(title: L10n.Button.maybeLater, isUnderlined: true, callback: { [weak self] in
-                self?.shouldDismiss = true
-                
-                self?.coordinator?.dismissFlow()
+            .init(title: L10n.ComingSoon.Buttons.contactSupport, isUnderlined: true, callback: { [weak self] in
+                self?.didTapContactSupportButton?()
             })
         ]
     }

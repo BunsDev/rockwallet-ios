@@ -226,8 +226,12 @@ internal enum L10n {
     internal static let verifiedAccountText = L10n.tr("Localizable", "Account.VerifiedAccountText", fallback: "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Your account is verified!
     internal static let verifiedAccountTitle = L10n.tr("Localizable", "Account.VerifiedAccountTitle", fallback: "Your account is verified!")
+    /// Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.
+    internal static let verifyAccountDescription = L10n.tr("Localizable", "Account.VerifyAccountDescription", fallback: "Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.")
     /// Verify account text in popup
     internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
+    /// To start using 'Swap' or 'Buy', your wallet must be verified.
+    internal static let verifyAccountTitle = L10n.tr("Localizable", "Account.VerifyAccountTitle", fallback: "To start using 'Swap' or 'Buy', your wallet must be verified.")
     /// Enter and verify your email address for your account label in registration flow
     internal static let verifyEmail = L10n.tr("Localizable", "Account.VerifyEmail", fallback: "Enter and verify your new email address for your RockWallet account.")
     /// We need to verify your identity before you can %s assets.
