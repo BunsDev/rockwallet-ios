@@ -103,7 +103,7 @@ class BaseCoordinator: NSObject,
                     return
                 } else if profile.status.isKYCLocationRestricted {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swapAndBuyCard
+                        vc?.reason = .swap
                     }
                     
                     return
@@ -113,7 +113,7 @@ class BaseCoordinator: NSObject,
                     return
                 } else {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swapAndBuyCard
+                        vc?.reason = .swap
                     }
                     
                     return
@@ -138,7 +138,7 @@ class BaseCoordinator: NSObject,
                     return
                 } else if profile.status.isKYCLocationRestricted, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swapAndBuyCard
+                        vc?.reason = .buy
                     }
                     
                     return
@@ -148,7 +148,7 @@ class BaseCoordinator: NSObject,
                     return
                 } else if type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swapAndBuyCard
+                        vc?.reason = .buy
                     }
                     
                     return

@@ -945,6 +945,12 @@ internal enum L10n {
     /// 
     /// You can still safely send and receive digital assets to your wallet in the meantime.
     internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
+    /// You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.
+    internal static let buyDescription = L10n.tr("Localizable", "ComingSoon.BuyDescription", fallback: "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.")
+    /// This feature is not available for your account at this time.
+    internal static let swapBuyTitle = L10n.tr("Localizable", "ComingSoon.SwapBuyTitle", fallback: "This feature is not available for your account at this time.")
+    /// You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.
+    internal static let swapDescription = L10n.tr("Localizable", "ComingSoon.SwapDescription", fallback: "You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.")
     /// Coming soon!
     internal static let title = L10n.tr("Localizable", "ComingSoon.title", fallback: "Coming soon!")
     internal enum Buttons {
