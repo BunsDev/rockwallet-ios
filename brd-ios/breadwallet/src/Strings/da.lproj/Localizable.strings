@@ -223,8 +223,12 @@
 
 "Account.VerifiedAccountTitle" = "Your account is verified!";
 
+"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.";
+
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
+
+"Account.VerifyAccountTitle" = "To start using 'Swap' or 'Buy', your wallet must be verified.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
