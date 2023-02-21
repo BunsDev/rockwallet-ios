@@ -354,6 +354,10 @@ extension Currencies {
         return walletState(for: AssetCodes.bsv.value)?.currency
     }
     
+    var xrp: Currency? {
+        return walletState(for: AssetCodes.xrp.value)?.currency
+    }
+    
     func walletState(for code: String) -> WalletState? {
         guard let uid = getUID(from: code),
               currencies.first(where: { $0.uid == uid }) != nil else { return nil }

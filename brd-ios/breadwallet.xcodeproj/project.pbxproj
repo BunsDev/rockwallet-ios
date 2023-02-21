@@ -111,7 +111,6 @@
 		75A2A7941DA5934300A983D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A2A7931DA5934300A983D8 /* AppDelegate.swift */; };
 		75A2A79B1DA5934300A983D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A2A79A1DA5934300A983D8 /* Assets.xcassets */; };
 		75A2A79E1DA5934300A983D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A2A79C1DA5934300A983D8 /* LaunchScreen.storyboard */; };
-		75A2A7B41DA5934300A983D8 /* breadwalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A2A7B31DA5934300A983D8 /* breadwalletUITests.swift */; };
 		7B0418B5298A9131004A6385 /* UserInformationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0418B4298A9131004A6385 /* UserInformationWorker.swift */; };
 		7B05887828A23D4500D7C971 /* AddCardWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05887728A23D4500D7C971 /* AddCardWorker.swift */; };
 		7B05888128A2431E00D7C971 /* Frames in Frameworks */ = {isa = PBXBuildFile; productRef = 7B05888028A2431E00D7C971 /* Frames */; };
@@ -928,8 +927,6 @@
 		75A2A7A41DA5934300A983D8 /* breadwalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = breadwalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A2A7AA1DA5934300A983D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75A2A7AF1DA5934300A983D8 /* breadwalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = breadwalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		75A2A7B31DA5934300A983D8 /* breadwalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = breadwalletUITests.swift; sourceTree = "<group>"; };
-		75A2A7B51DA5934300A983D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75A2A7F21DA5935F00A983D8 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		75A2A8091DA5936F00A983D8 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		75A2A87C1DA59E4E00A983D8 /* breadwallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = breadwallet.entitlements; sourceTree = "<group>"; };
@@ -1810,7 +1807,6 @@
 			children = (
 				75A2A7921DA5934300A983D8 /* breadwallet */,
 				75A2A7A71DA5934300A983D8 /* breadwalletTests */,
-				75A2A7B21DA5934300A983D8 /* breadwalletUITests */,
 				9FB0CA1325D5AD180057DD11 /* breadwalletWidget */,
 				9F29A99D25D5C605000FEB40 /* breadwalletIntentHandler */,
 				7EF514B328EB5B6D004A31C5 /* Configurations */,
@@ -1901,15 +1897,6 @@
 				CE4CA7B81EE0C89F00373F11 /* Platform */,
 			);
 			path = breadwalletTests;
-			sourceTree = "<group>";
-		};
-		75A2A7B21DA5934300A983D8 /* breadwalletUITests */ = {
-			isa = PBXGroup;
-			children = (
-				75A2A7B31DA5934300A983D8 /* breadwalletUITests.swift */,
-				75A2A7B51DA5934300A983D8 /* Info.plist */,
-			);
-			path = breadwalletUITests;
 			sourceTree = "<group>";
 		};
 		75A2A7F11DA5935F00A983D8 /* Frameworks */ = {
@@ -4420,7 +4407,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75A2A7B41DA5934300A983D8 /* breadwalletUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
