@@ -33,7 +33,7 @@ extension UIButton {
                                    currency: Currency? = nil,
                                    position: NavBarButtonPosition = .right,
                                    tapped: (() -> Void)? = nil) -> UIButton {
-        let button = UIButton.icon(image: Asset.help.image, accessibilityLabel: L10n.AccessibilityLabels.faq, position: .right)
+        let button = UIButton.icon(image: Asset.help.image, accessibilityLabel: L10n.AccessibilityLabels.faq, position: position)
         button.tintColor = LightColors.Text.three
         
         button.tap = {
