@@ -1020,6 +1020,12 @@
 
 "ComingSoon.buttons.contactSupport" = "Contacter l'assistance";
 
+"ComingSoon.BuyDescription" = "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.";
+
+"ComingSoon.SwapBuyTitle" = "This feature is not available for your account at this time.";
+
+"ComingSoon.SwapDescription" = "You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.";
+
 "ComingSoon.title" = "À venir !";
 
 /* Amount to Send: ($1.00) */

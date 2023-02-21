@@ -23,7 +23,7 @@ enum Reason: SimpleMessage {
     var title: String {
         switch self {
         case .swap, .buy:
-            return "This feature is not available for your account at this time."
+            return L10n.ComingSoon.swapBuyTitle
             
         case .buyAch, .sell:
             return L10n.Buy.Ach.notAvailableTitle
@@ -33,10 +33,10 @@ enum Reason: SimpleMessage {
     var description: String {
         switch self {
         case .swap:
-            return "You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet."
+            return  L10n.ComingSoon.swapDescription
             
         case .buy:
-            return "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet."
+            return L10n.ComingSoon.buyDescription
             
         case .buyAch:
             return L10n.Buy.Ach.notAvailableBody
