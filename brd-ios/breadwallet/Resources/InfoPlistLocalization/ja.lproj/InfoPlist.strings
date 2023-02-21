@@ -748,7 +748,7 @@
 
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits\n\nIt currently takes 3-5 days to process a purchase with ACH.";
 
-"Buy.achPaymentDurationWarning" = "Currently, ACH payments will take 3-5 days to complete.";
+"Buy.achPaymentDurationWarning" = "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.";
 
 "Buy.achPaymentMethodRelinked" = "ACH payment method was relinked successfully";
 
