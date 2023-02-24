@@ -3621,7 +3621,7 @@
 				7B2C9AFA27D9270B00D5135C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */,
 				7B05887F28A2431E00D7C971 /* XCRemoteSwiftPackageReference "frames-ios" */,
-				7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "WalletKitSwift" */,
+				7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */,
 				7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
 				7E8F7E4C293F84510058019B /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -5860,12 +5860,12 @@
 				version = 4.51.0;
 			};
 		};
-		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "WalletKitSwift" */ = {
+		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rockwalletcode/WalletKitSwift.git";
+			repositoryURL = "https://github.com/rockwalletcode/wallet-kit.git";
 			requirement = {
-				kind = exactVersion;
-				version = 5.0.9;
+				kind = revision;
+				revision = f718077fcf636c99e73f444ad39da69729f6edac;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
@@ -5925,7 +5925,7 @@
 		};
 		7E18DBF228C8C2C600B83E3B /* WalletKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "WalletKitSwift" */;
+			package = 7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */;
 			productName = WalletKit;
 		};
 		7E5CB32C2834E63400EC787E /* SnapKit */ = {

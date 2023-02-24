@@ -560,17 +560,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         
         sendButton.isEnabled = false
         
-        if error as? FeeEstimationError == .InsufficientFunds {
-            _ = handleValidationResult(.insufficientFunds)
-        } else if error as? FeeEstimationError == .InsufficientGas {
-            if amount > balance {
-                _ = handleValidationResult(.insufficientFunds)
-            } else {
-                _ = handleValidationResult(.insufficientGas)
-            }
-        } else {
-            _ = handleValidationResult(.insufficientFunds)
-        }
+        _ = handleValidationResult(.insufficientGas)
+        
     }
     
     internal override func showInsufficientGasError() {
