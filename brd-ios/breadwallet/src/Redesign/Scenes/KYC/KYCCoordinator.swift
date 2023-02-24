@@ -141,7 +141,7 @@ extension BaseCoordinator: VeriffSdkDelegate {
             }
             
         default:
-            parentCoordinator?.childDidFinish(child: self)
+            dismissFlow()
         }
     }
 }
