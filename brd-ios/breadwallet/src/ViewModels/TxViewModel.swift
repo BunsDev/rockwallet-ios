@@ -63,7 +63,7 @@ extension TxViewModel {
         } else if let swap = swap {
             return swap.type
         }
-        return .defaultTransaction
+        return .base
     }
     var direction: TransferDirection {
         if let tx = tx {
@@ -161,7 +161,7 @@ extension TxViewModel {
     
     private func iconDecider(transactionType: TransactionType, status: TransactionStatus, direction: TransferDirection) -> UIImage? {
         switch transactionType {
-        case .buyTransaction, .buyAchTransaction, .sellTransaction:
+        case .buy, .buyAch, .sell:
             switch status {
             case .confirmed, .complete, .manuallySettled, .pending:
                 return direction == .received ? Asset.receive.image : Asset.send.image
@@ -171,7 +171,7 @@ extension TxViewModel {
                 
             }
             
-        case .defaultTransaction:
+        case .base:
             if direction == .received || direction == .recovered {
                 return Asset.receive.image
                 
@@ -180,7 +180,7 @@ extension TxViewModel {
                 
             }
             
-        case .swapTransaction:
+        case .swap:
             return Asset.exchange.image
         
         }
