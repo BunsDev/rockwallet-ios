@@ -26,9 +26,7 @@ class VIPViewController<C: CoordinatableRoutes,
     // MARK: Title and tab bar appearance
     
     var sceneTitle: String? { return nil }
-    var sceneLeftAlignedTitle: String? { return nil } // TODO: Use large titles. Multiple lines of text makes it harder to use large titles.
-    var tabIcon: UIImage? { return nil }
-    var infoIcon: UIImage? { return nil }
+    var sceneLeftAlignedTitle: String? { return nil }
     
     lazy var leftAlignedTitleLabel: UILabel = {
         let view = UILabel()
@@ -36,13 +34,6 @@ class VIPViewController<C: CoordinatableRoutes,
         view.textAlignment = .left
         view.numberOfLines = 0
         view.textColor = LightColors.Text.three
-        return view
-    }()
-    
-    lazy var infoButton: UIButton = {
-        let view = UIButton()
-        view.tintColor = LightColors.Text.one
-        view.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
         return view
     }()
     
@@ -54,6 +45,7 @@ class VIPViewController<C: CoordinatableRoutes,
     
     // MARK: Modal dimissable
     
+    var isRoundedBackgroundEnabled: Bool { return false }
     var isModalDismissableEnabled: Bool { return false }
     var dismissText: String { return "" }
     var closeImage: UIImage? { return nil }
@@ -99,6 +91,8 @@ class VIPViewController<C: CoordinatableRoutes,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = LightColors.Background.one
+        
         setupSubviews()
         localize()
         prepareData()
@@ -137,23 +131,14 @@ class VIPViewController<C: CoordinatableRoutes,
         })
     }
     
-    @objc func infoButtonTapped() {
-        // Override in subclass
-    }
-
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         coordinator?.goBack()
     }
 
     func setupSubviews() {
-        tabBarItem.image = tabIcon
-        
-        guard let icon = infoIcon else { return }
-        infoButton.setBackgroundImage(icon, for: .normal)
     }
 
     func localize() {
-        view.backgroundColor = LightColors.Background.one
         tabBarItem.title = sceneTitle
         title = sceneTitle
         leftAlignedTitleLabel.text = sceneLeftAlignedTitle

@@ -81,7 +81,7 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         }
         
         cell.setup { view in
-            view.configure(with: Presets.Asset.header)
+            view.configure(with: Presets.AssetSelection.header)
             view.setup(with: model)
             view.content.setupCustomMargins(vertical: .medium, horizontal: .large)
         }

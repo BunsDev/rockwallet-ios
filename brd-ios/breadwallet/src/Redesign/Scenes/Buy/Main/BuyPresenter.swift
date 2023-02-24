@@ -73,7 +73,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
-        // TODO: refactor this :S
         switch actionResponse.type {
         case .ach:
             if let paymentCard = actionResponse.card {

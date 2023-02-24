@@ -20,16 +20,3 @@ protocol Controller: BaseResponseDisplays, BaseDataPassing, BaseControllable {
     
     func setupVIP()
 }
-
-// TODO: maybe future update or delete? :D 
-protocol VIPCylce {
-    associatedtype I: Interactor
-    associatedtype P: Presenter
-    associatedtype C: BaseCoordinator
-    associatedtype DS: BaseDataStore
-
-    var interactor: I { get }
-    var presenter: P { get }
-    var coordinator: C { get }
-    var dataStore: DS { get }
-}

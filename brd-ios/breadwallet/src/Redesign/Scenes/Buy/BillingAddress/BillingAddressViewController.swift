@@ -17,6 +17,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
                                     BillingAddressResponseDisplays {
     typealias Models = BillingAddressModels
     
+    override var isRoundedBackgroundEnabled: Bool { return true }
     override var sceneTitle: String? {
         return L10n.Buy.billingAddress
     }
@@ -24,12 +25,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     private var isValid = false
     
     // MARK: - Overrides
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        setRoundedShadowBackground()
-    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell

@@ -15,6 +15,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
                               P: Presenter,
                               DS: BaseDataStore & NSObject>: VIPTableViewController<C, I, P, DS>,
                                                              FetchResponseDisplays {
+    override var isRoundedBackgroundEnabled: Bool { return false }
     override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String { return L10n.Button.skip }
     override var closeImage: UIImage? { return Asset.close.image }
@@ -197,7 +198,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         else { return UIView(frame: .zero) }
         
         view.setup { view in
-            view.configure(with: Presets.Asset.header)
+            view.configure(with: Presets.AssetSelection.header)
         }
         view.setupCustomMargins(vertical: .small, horizontal: .large)
 
