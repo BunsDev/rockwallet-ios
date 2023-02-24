@@ -22,8 +22,6 @@ struct DateViewModel: ViewModel {
 }
 
 class DateView: FEView<DateConfiguration, DateViewModel>, StateDisplayable {
-    
-    var contentSizeChanged: (() -> Void)?
     var didPresentPicker: (() -> Void)?
     var displayState: DisplayState = .normal
     

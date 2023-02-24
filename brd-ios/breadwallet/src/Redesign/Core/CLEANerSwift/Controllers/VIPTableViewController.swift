@@ -77,7 +77,7 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         leftAlignedTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.width.lessThanOrEqualTo(view.snp.width).inset(Margins.large.rawValue)
+            make.width.lessThanOrEqualTo(view.snp.width)
             make.leading.equalToSuperview().inset(isRoundedBackgroundEnabled ? -Margins.large.rawValue : Margins.large.rawValue)
         }
         
