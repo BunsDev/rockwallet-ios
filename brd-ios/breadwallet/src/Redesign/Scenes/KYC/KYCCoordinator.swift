@@ -80,12 +80,12 @@ class KYCCoordinator: BaseCoordinator,
         open(scene: Scenes.KYCBasic)
     }
     
-    func showFindAddress(completion: ((String) -> Void)?) {
+    func showFindAddress(completion: ((ResidentialAddress) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.FindAddress,
                     presentationStyle: .formSheet) { vc in
-            vc?.callback = { text in
-                completion?(text)
+            vc?.callback = { address in
+                completion?(address)
             }
         }
     }
@@ -135,7 +135,7 @@ extension BaseCoordinator: VeriffSdkDelegate {
             }
             
         default:
-            parentCoordinator?.childDidFinish(child: self)
+            dismissFlow()
         }
     }
 }
