@@ -15,20 +15,15 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
                               KYCBasicResponseDisplays {
     typealias Models = KYCBasicModels
     
+    override var isRoundedBackgroundEnabled: Bool { return true }
     override var dismissText: String { return L10n.Button.close }
-    
     override var sceneLeftAlignedTitle: String? {
         return L10n.Account.personalInformation
     }
+    
     private var isValid = false
 
     // MARK: - Overrides
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        setRoundedShadowBackground()
-    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell

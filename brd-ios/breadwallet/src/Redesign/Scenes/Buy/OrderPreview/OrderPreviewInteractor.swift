@@ -94,7 +94,6 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         presenter?.presentToggleTickbox(actionResponse: .init(value: viewAction.value))
     }
     
-    // TODO: add rate refreshing logic!
     // MARK: - Aditional helpers
     
     private func submitBuy() {

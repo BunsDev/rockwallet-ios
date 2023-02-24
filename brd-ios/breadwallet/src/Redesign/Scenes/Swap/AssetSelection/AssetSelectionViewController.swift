@@ -32,7 +32,7 @@ class AssetSelectionViewController: ItemSelectionViewController {
         }
         
         cell.setup { view in
-            view.configure(with: model.isDisabled ? Presets.Asset.disabled : Presets.Asset.enabled)
+            view.configure(with: model.isDisabled ? Presets.AssetSelection.disabled : Presets.AssetSelection.enabled)
             view.setup(with: model)
             
             view.content.setupCustomMargins(vertical: .zero, horizontal: .large)

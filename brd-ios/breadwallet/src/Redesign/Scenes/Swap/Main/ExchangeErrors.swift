@@ -70,7 +70,6 @@ enum ExchangeErrors: FEError {
                 return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
                 
             default:
-                // TODO: Add error messages
                 return ""
                 
             }

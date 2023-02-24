@@ -26,8 +26,6 @@ protocol Coordinatable: CoordinatableRoutes {
 
 class BaseCoordinator: NSObject,
                        Coordinatable {
-
-    // TODO: should eventually die
     weak var modalPresenter: ModalPresenter? {
         get {
             guard let modalPresenter = presenter else {

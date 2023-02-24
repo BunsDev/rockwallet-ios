@@ -9,8 +9,6 @@
 import UIKit
 import MessageUI
 
-// TODO: What is this?
-
 class MessageUIPresenter: NSObject {
 
     weak var presenter: UIViewController?

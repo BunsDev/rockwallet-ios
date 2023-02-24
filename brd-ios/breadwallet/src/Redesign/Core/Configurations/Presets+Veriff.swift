@@ -8,7 +8,7 @@
 //  See the LICENSE file at the project root for license information.
 //
 
-import Foundation
+import UIKit
 import Veriff
 
 extension Presets {
@@ -19,7 +19,7 @@ extension Presets {
         branding.secondaryTextColor = LightColors.Text.one
         branding.primaryButtonBackgroundColor = LightColors.primary
         branding.buttonCornerRadius = CornerRadius.large.rawValue * 5
-        branding.bulletPoint = .init(named: "bullet") // TODO: due to naming clash.. refactor in the future?
+        branding.bulletPoint = Asset.bullet.image
         branding.font = VeriffSdk.Branding.Font(regularFontName: Fonts.Secondary,
                                                 lightFontName: Fonts.Secondary,
                                                 semiBoldFontName: Fonts.Tertiary,

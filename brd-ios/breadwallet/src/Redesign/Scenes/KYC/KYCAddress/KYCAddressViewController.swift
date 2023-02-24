@@ -16,14 +16,9 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     typealias Models = KYCAddressModels
     
+    override var isRoundedBackgroundEnabled: Bool { return true }
     override var sceneLeftAlignedTitle: String? {
         return L10n.Account.residentialAddress
-    }
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        setRoundedShadowBackground()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

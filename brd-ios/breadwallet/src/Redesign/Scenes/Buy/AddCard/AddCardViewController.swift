@@ -17,6 +17,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
                              AddCardResponseDisplays {
     typealias Models = AddCardModels
     
+    override var isRoundedBackgroundEnabled: Bool { return true }
     override var sceneTitle: String? {
         return L10n.Buy.addCard
     }
@@ -29,8 +30,6 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
         super.setupSubviews()
         
         tableView.register(WrapperTableViewCell<BankCardInputDetailsView>.self)
-        
-        setRoundedShadowBackground()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
