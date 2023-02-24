@@ -94,7 +94,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     private lazy var mainStack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = Margins.small.rawValue
         return view
     }()
     
@@ -107,7 +106,6 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         let view = UIStackView()
         view.axis = .vertical
         view.distribution = .fillEqually
-        view.spacing = -Margins.medium.rawValue
         return view
     }()
     
@@ -256,14 +254,8 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
-        if titleStack.isHidden {
-            textField.snp.makeConstraints { make in
-                make.bottom.leading.trailing.equalToSuperview()
-                make.top.equalToSuperview().inset(titleStack.spacing)
-            }
-        } else {
-            textField.snp.removeConstraints()
-        }
+        mainStack.spacing = titleStack.isHidden ? 0 : Margins.small.rawValue
+        textFieldStack.spacing = titleStack.isHidden ? 0 : -Margins.medium.rawValue
         
         isUserInteractionEnabled = viewModel.isUserInteractionEnabled
         

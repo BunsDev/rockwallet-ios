@@ -30,11 +30,6 @@ class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
             vc?.failure = reason
         }
     }
-    
-    func card() {
-        openModally(coordinator: ItemSelectionCoordinator.self, scene: Scenes.AddCard) { vc in
-        }
-    }
 }
 
 extension BaseCoordinator {
