@@ -183,9 +183,6 @@ class Transaction {
                 return .pending
                 
             case .included:
-                guard transfer.confirmation?.error == nil else {
-                    return .invalid
-                }
                 
                 let buyTransaction = transactionType == .buy || transactionType == .buyAch
                 
