@@ -110,9 +110,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             let lifetimeLimit = profile?.swapAllowanceLifetime ?? 0
             let exchangeLimit = profile?.swapAllowancePerExchange ?? 0
             
-            let toFee = actionResponse.toFee?.fiatValue ?? 0
-            let to = (actionResponse.to?.fiatValue ?? 0).round(to: 2)
-            
             switch (fiatValue, tokenValue) {
             case _ where fiatValue <= 0:
                 // Fiat value is below 0
@@ -145,11 +142,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 
             case _ where fiatValue > exchangeLimit:
                 // Over exchange limit
-                presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
-                hasError = true
-                
-            case _ where fiatValue >= minimumValue && to > 0 && toFee > to:
-                // toAmount does not cover widrawal fee
                 presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
                 hasError = true
                 
