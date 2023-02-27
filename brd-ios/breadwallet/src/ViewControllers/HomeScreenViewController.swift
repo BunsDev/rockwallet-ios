@@ -373,6 +373,14 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             PromptPresenter.shared.hidePrompt(.noAccount)
         })
         
+        Store.subscribe(self, name: .promptKyc, callback: { _ in
+            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+        })
+        
+        Store.subscribe(self, name: .promptNoAccount, callback: { _ in
+            self.didTapCreateAccountFromPrompt?()
+        })
+        
         Reachability.addDidChangeCallback({ [weak self] isReachable in
             PromptPresenter.shared.hidePrompt(.noInternet)
             
@@ -386,14 +394,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         }, callback: { _ in
             self.updateTotalAssets()
             self.updateAmountsForWidgets()
-        })
-        
-        Store.subscribe(self, name: .promptKyc, callback: { _ in
-            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
-        })
-        
-        Store.subscribe(self, name: .promptNoAccount, callback: { _ in
-            self.didTapCreateAccountFromPrompt?()
         })
         
         PromptPresenter.shared.trailingButtonCallback = { [weak self] promptType in
