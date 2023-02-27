@@ -66,6 +66,7 @@ struct Profile: Model {
             case kyc
             case country
             case state
+            case manuallyConfigured
         }
     }
     
