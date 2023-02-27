@@ -141,7 +141,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 hasError = true
                 
             case _ where fiatValue > exchangeLimit:
-                // Over exchange limit ???!
+                // Over exchange limit
                 presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
                 hasError = true
                 
@@ -151,13 +151,13 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             }
             
             let toFee = actionResponse.toFee?.fiatValue ?? 0
-            if let to = actionResponse.to?.fiatValue,
+            let to = (actionResponse.to?.fiatValue ?? 0).round(to: 2)
+            if fiatValue >= minimumValue,
                to > 0,
-               to < toFee {
+               toFee > to {
                 // toAmount does not cover widrawal fee
                 presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
             }
-               
         }
         
         let continueEnabled = (!hasError && actionResponse.fromFee != nil)
