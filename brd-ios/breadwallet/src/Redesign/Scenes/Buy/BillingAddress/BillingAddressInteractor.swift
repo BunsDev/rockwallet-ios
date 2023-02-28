@@ -107,7 +107,7 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         let address = Address(addressLine1: street,
                               addressLine2: nil,
                               city: city,
-                              state: dataStore.state,
+                              state: state,
                               zip: zip,
                               country: country)
         
@@ -138,7 +138,7 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
                                       firstName: dataStore.firstName,
                                       lastName: dataStore.lastName,
                                       countryCode: dataStore.country,
-                                      state: dataStore.stateProvince,
+                                      state: dataStore.state,
                                       city: dataStore.city,
                                       zip: dataStore.zipPostal,
                                       address: dataStore.address)
