@@ -50,6 +50,7 @@ struct RetrievedAddressResponseModel: Codable {
     var countryName: String?
     var countryIso2: String?
     var provinceName: String?
+    var provinceCode: String?
 }
 
 struct RetrievedAddressResponseData: ModelResponse {
@@ -65,6 +66,7 @@ struct RetrievedAddress: Model {
     var countryName: String?
     var countryIso2: String?
     var province: String?
+    var provinceCode: String?
     
     init(with response: RetrievedAddressResponseModel?) {
         id = response?.id
@@ -75,6 +77,7 @@ struct RetrievedAddress: Model {
         countryName = response?.countryName
         countryIso2 = response?.countryIso2
         province = response?.provinceName
+        provinceCode = response?.provinceCode
     }
 }
 
