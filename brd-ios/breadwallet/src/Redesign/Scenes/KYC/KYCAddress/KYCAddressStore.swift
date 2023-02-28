@@ -21,6 +21,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var birthDateString: String?
     var address: String?
     var city: String?
+    var state: String?
     var stateFullName: String?
     var stateCode: String?
     var postalCode: String?

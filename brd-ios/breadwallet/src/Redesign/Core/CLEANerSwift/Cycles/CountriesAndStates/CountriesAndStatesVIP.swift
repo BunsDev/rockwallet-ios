@@ -66,8 +66,8 @@ extension Interactor where Self: CountriesAndStatesViewActions,
     
     func pickState(viewAction: CountriesAndStatesModels.SelectState.ViewAction) {
         guard viewAction.code == nil else {
-            dataStore?.state = viewAction.state
-            dataStore?.stateCode = viewAction.code
+            dataStore?.state = viewAction.code
+            dataStore?.stateFullName = viewAction.state
             presenter?.presentData(actionResponse: .init(item: dataStore))
             
             return
