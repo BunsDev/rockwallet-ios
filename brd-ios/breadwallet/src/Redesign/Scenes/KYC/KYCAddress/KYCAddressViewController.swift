@@ -26,6 +26,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         switch sections[indexPath.section] as? Models.Section {
         case .mandatory:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            
         case .country:
             cell = self.tableView(tableView, countryTextFieldCellForRowAt: indexPath)
             
