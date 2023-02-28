@@ -39,11 +39,9 @@ protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
     var birthDateString: String? { get set }
     var address: String? { get set }
     var city: String? { get set }
-    var state: String? { get set }
-    var stateFullName: String? { get set }
+    var state: Place? { get set }
     var postalCode: String? { get set }
-    var country: String? { get set }
-    var countryFullName: String? { get set }
+    var country: Country? { get set }
     
     var isValid: Bool { get }
 }

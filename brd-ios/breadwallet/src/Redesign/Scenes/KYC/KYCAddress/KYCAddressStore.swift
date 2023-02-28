@@ -21,26 +21,24 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var birthDateString: String?
     var address: String?
     var city: String?
-    var state: String?
-    var stateFullName: String?
+    var state: Place?
     var postalCode: String?
-    var country: String?
-    var countryFullName: String?
+    var country: Country?
     var ssn: String?
     
     var isValid: Bool {
         guard address?.isEmpty == false,
               city?.isEmpty == false,
               postalCode?.isEmpty == false,
-              country?.isEmpty == false else {
+              country != nil else {
             return false
         }
         
-        guard country == C.countryUS else {
+        guard country?.iso2 == C.countryUS else {
             return true
         }
         
-        guard state?.isEmpty == false else {
+        guard state != nil else {
             return false
         }
         return true
