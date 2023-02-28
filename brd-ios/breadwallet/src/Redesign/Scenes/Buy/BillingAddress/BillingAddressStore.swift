@@ -17,8 +17,7 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var itemId: String?
     var firstName: String?
     var lastName: String?
-    var country: String?
-    var countryFullName: String?
+    var country: Country?
     var city: String?
     var zipPostal: String?
     var address: String?
@@ -26,8 +25,7 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var paymentstatus: AddCard.Status?
     var countries: [Country] = []
     var states: [Place] = []
-    var state: String?
-    var stateFullName: String?
+    var state: Place?
     
     // From first screen
     var cardNumber: String?
@@ -40,10 +38,8 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var isValid: Bool {
         return FieldValidator.validate(fields: [firstName,
                                                 lastName,
-                                                country,
-                                                state,
                                                 city,
                                                 zipPostal,
-                                                address])
+                                                address]) && state != nil && country != nil
     }
 }

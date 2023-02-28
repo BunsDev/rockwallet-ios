@@ -38,13 +38,13 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
             ],
             .country: [
                 TextFieldModel(title: L10n.Account.country,
-                               value: item.countryFullName,
+                               value: item.country?.name ?? "",
                                trailing: .image(Asset.chevronDown.image),
                                isUserInteractionEnabled: false)
             ],
             .stateProvince: [
                 TextFieldModel(title: L10n.Buy.stateProvince,
-                               value: item.stateFullName)
+                               value: item.state?.name ?? "")
             ],
             .cityAndZipPostal: [
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Buy.city,
