@@ -11,14 +11,19 @@
 import Foundation
 
 struct UserInformationResponseData: ModelResponse {
+    struct UserPlace: ModelResponse {
+        var iso2: String?
+        var name: String?
+    }
+    
     var firstName: String?
     var lastName: String?
     var dateOfBirth: String?
     var address: String?
     var city: String?
     var zip: String?
-    var country: String?
-    var state: String?
+    var country: UserPlace?
+    var state: UserPlace?
     var nologSsn: String?
 }
 
@@ -29,8 +34,8 @@ struct UserInformation: Model {
     var address: String?
     var city: String?
     var zip: String?
-    var country: String?
-    var state: String?
+    var country: Place?
+    var state: Place?
     var nologSsn: String?
 }
 
@@ -42,8 +47,8 @@ class UserInformationWorkerMapper: ModelMapper<UserInformationResponseData, User
                      address: response?.address,
                      city: response?.city,
                      zip: response?.zip,
-                     country: response?.country,
-                     state: response?.state,
+                     country: Place(iso2: response?.country?.iso2 ?? "", name: response?.country?.name ?? ""),
+                     state: Place(iso2: response?.state?.iso2 ?? "", name: response?.state?.name ?? ""),
                      nologSsn: response?.nologSsn)
     }
 }

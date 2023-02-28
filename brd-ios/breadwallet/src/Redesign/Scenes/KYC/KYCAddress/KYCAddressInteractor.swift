@@ -22,10 +22,11 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
             case .success(let profileData):
                 self?.dataStore?.address = profileData?.address
                 self?.dataStore?.city = profileData?.city
-                self?.dataStore?.state = profileData?.state
+                self?.dataStore?.state = profileData?.state?.iso2
+                self?.dataStore?.stateFullName = profileData?.state?.name
                 self?.dataStore?.postalCode = profileData?.zip
-                self?.dataStore?.country = profileData?.country
-                self?.dataStore?.countryFullName = profileData?.country
+                self?.dataStore?.country = profileData?.country?.iso2
+                self?.dataStore?.countryFullName = profileData?.country?.name
                 self?.dataStore?.ssn = profileData?.nologSsn
                 
                 self?.presenter?.presentData(actionResponse: .init(item: self?.dataStore))
@@ -70,6 +71,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
             let item = viewAction.value as? (String?, String?)
             dataStore?.city = item?.0
             dataStore?.state = item?.1
+            dataStore?.stateFullName = item?.1
             
         default:
             return
@@ -78,7 +80,8 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     }
     
     func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction) {
-        let state = dataStore?.country == C.countryUS ? dataStore?.stateCode : dataStore?.state
+        let state = dataStore?.country == C.countryUS ? dataStore?.state : dataStore?.stateFullName
+        
         let data = KYCUserInfoRequestData(firstName: dataStore?.firstName ?? "",
                                           lastName: dataStore?.lastName ?? "",
                                           dateOfBirth: dataStore?.birthDateString ?? "",

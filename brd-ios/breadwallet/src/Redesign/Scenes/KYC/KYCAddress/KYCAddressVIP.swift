@@ -40,7 +40,7 @@ protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
     var address: String? { get set }
     var city: String? { get set }
     var state: String? { get set }
-    var stateCode: String? { get set }
+    var stateFullName: String? { get set }
     var postalCode: String? { get set }
     var country: String? { get set }
     var countryFullName: String? { get set }

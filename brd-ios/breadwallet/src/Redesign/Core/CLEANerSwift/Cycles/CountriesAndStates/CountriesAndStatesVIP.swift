@@ -31,7 +31,7 @@ protocol CountriesAndStatesDataStore: FetchDataStore {
     var countries: [Country] { get set }
     var states: [Place] { get set }
     var state: String? { get set }
-    var stateCode: String? { get set }
+    var stateFullName: String? { get set }
 }
 
 protocol CountriesAndStatesRoutes {

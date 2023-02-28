@@ -59,7 +59,7 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
     }
     
     func stateProvinceSet(viewAction: BillingAddressModels.StateProvince.ViewAction) {
-        dataStore?.stateProvince = viewAction.stateProvince
+        dataStore?.state = viewAction.stateProvince
         
         validate(viewAction: .init())
     }
@@ -92,7 +92,7 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         guard let countryIso = dataStore?.country,
               let street = dataStore?.address,
               let city = dataStore?.city,
-              let state = dataStore?.stateProvince,
+              let state = dataStore?.state,
               let zip = dataStore?.zipPostal,
               let lastName = dataStore?.lastName,
               let firstName = dataStore?.firstName,
@@ -107,7 +107,7 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         let address = Address(addressLine1: street,
                               addressLine2: nil,
                               city: city,
-                              state: state,
+                              state: dataStore.state,
                               zip: zip,
                               country: country)
         

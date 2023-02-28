@@ -19,7 +19,6 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var lastName: String?
     var country: String?
     var countryFullName: String?
-    var stateProvince: String?
     var city: String?
     var zipPostal: String?
     var address: String?
@@ -28,7 +27,7 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var countries: [Country] = []
     var states: [Place] = []
     var state: String?
-    var stateCode: String?
+    var stateFullName: String?
     
     // From first screen
     var cardNumber: String?
@@ -42,7 +41,7 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
         return FieldValidator.validate(fields: [firstName,
                                                 lastName,
                                                 country,
-                                                stateProvince,
+                                                state,
                                                 city,
                                                 zipPostal,
                                                 address])

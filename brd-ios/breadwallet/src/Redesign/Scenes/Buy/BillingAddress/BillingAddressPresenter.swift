@@ -44,7 +44,7 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
             ],
             .stateProvince: [
                 TextFieldModel(title: L10n.Buy.stateProvince,
-                               value: item.stateProvince)
+                               value: item.stateFullName)
             ],
             .cityAndZipPostal: [
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Buy.city,
