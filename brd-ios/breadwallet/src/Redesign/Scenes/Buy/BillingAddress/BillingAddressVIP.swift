@@ -44,7 +44,7 @@ protocol BillingAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
     var lastName: String? { get set }
     var country: String? { get set }
     var countryFullName: String? { get set }
-    var stateProvince: String? { get set }
+    var stateFullName: String? { get set }
     var city: String? { get set }
     var zipPostal: String? { get set }
     var address: String? { get set }
