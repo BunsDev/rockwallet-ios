@@ -279,6 +279,7 @@ internal enum Asset {
   internal static let alert = ImageAsset(name: "alert")
   internal static let arrowDown = ImageAsset(name: "arrow-down")
   internal static let back = ImageAsset(name: "back")
+  internal static let backWhite = ImageAsset(name: "backWhite")
   internal static let badge = ImageAsset(name: "badge")
   internal static let balance = ImageAsset(name: "balance")
   internal static let bank = ImageAsset(name: "bank")
