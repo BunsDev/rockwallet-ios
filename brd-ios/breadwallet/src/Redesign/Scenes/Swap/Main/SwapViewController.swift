@@ -21,7 +21,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
                           SwapStore>,
                           SwapResponseDisplays {
     
-    typealias Models = SwapModels
+    typealias Models = WyreModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.HomeScreen.trade
@@ -182,25 +182,6 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
                                           model: responseDisplay.model,
                                           configuration: responseDisplay.config)
         }
-    }
-    
-    func displayAmount(responseDisplay: SwapModels.Amounts.ResponseDisplay) {
-        // TODO: Extract to VIPBaseViewController
-        LoadingView.hide()
-        
-        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
-        tableView.beginUpdates()
-        
-        guard let section = sections.firstIndex(of: Models.Section.swapCard),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
-        
-        cell.setup { view in
-            view.setup(with: responseDisplay.amounts)
-        }
-        
-        tableView.endUpdates()
     }
     
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {

@@ -10,15 +10,6 @@ import UIKit
 
 enum SellModels {
     typealias Item = Currency
-    enum Section: Sectionable {
-        case rateAndTimer
-        case accountLimits
-        case payoutMethod
-        case swapCard
-        
-        var header: AccessoryType? { return nil }
-        var footer: AccessoryType? { return nil }
-    }
     
     struct Amounts {
         struct ViewAction {
@@ -28,11 +19,6 @@ enum SellModels {
         
         struct ActionResponse {
             var from: Amount?
-        }
-        
-        struct ResponseDisplay {
-            var continueEnabled = false
-            var amounts: MainSwapViewModel
         }
     }
     

@@ -14,7 +14,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
                               I: Interactor,
                               P: Presenter,
                               DS: BaseDataStore & NSObject>: VIPTableViewController<C, I, P, DS>,
-                                                             FetchResponseDisplays {
+                                                             FetchResponseDisplays,
+                                                             WyreResponseDisplays {
     override var isRoundedBackgroundEnabled: Bool { return false }
     override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String { return L10n.Button.skip }
@@ -557,5 +558,23 @@ class BaseTableViewController<C: CoordinatableRoutes,
     /// Override in subclass
     @objc func buttonTapped() {
         view.endEditing(true)
+    }
+    
+    // MARK: Wyre response displays
+    
+    func displayAmount(responseDisplay: WyreModels.Amounts.ResponseDisplay) {
+        LoadingView.hide()
+        
+        tableView.beginUpdates()
+        
+        guard let section = sections.firstIndex(of: WyreModels.Section.swapCard),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
+        
+        cell.wrappedView.setup(with: responseDisplay.amounts)
+        
+        tableView.endUpdates()
+        
+        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
 }
