@@ -92,6 +92,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         view.keyboardType = .decimalPad
         view.delegate = self
         view.addTarget(self, action: #selector(cryptoAmountDidChange(_:)), for: .editingChanged)
+        view.adjustsFontSizeToFitWidth = true
+        view.contentScaleFactor = 0.8
         return view
     }()
     
@@ -145,12 +147,6 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         return view
     }()
     
-    private lazy var cryptoLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = LightColors.Outline.two
-        return view
-    }()
-    
     private lazy var feeAndAmountsStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -195,12 +191,6 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         }
         headerStack.addArrangedSubview(titleLabel)
         
-        fiatAmountField.addSubview(fiatLineView)
-        fiatLineView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.minimum.rawValue)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-        
         mainStack.addArrangedSubview(cryptoStack)
         cryptoStack.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.medium.rawValue)
@@ -222,24 +212,12 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
             make.width.equalTo(ViewSizes.small.rawValue)
         }
         
-        let cryptoSpacer = UIView()
-        cryptoStack.addArrangedSubview(cryptoSpacer)
-        cryptoSpacer.snp.makeConstraints { make in
-            make.width.lessThanOrEqualToSuperview().priority(.required)
-        }
-        
         cryptoStack.addArrangedSubview(cryptoAmountField)
         cryptoAmountField.snp.makeConstraints { make in
             make.width.lessThanOrEqualToSuperview()
         }
         
         cryptoAmountField.setContentHuggingPriority(.required, for: .horizontal)
-        
-        cryptoAmountField.addSubview(cryptoLineView)
-        cryptoLineView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.minimum.rawValue)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
         
         mainStack.addArrangedSubview(fiatStack)
         
@@ -259,18 +237,22 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     @objc func fiatAmountDidChange(_ textField: UITextField) {
         decidePlaceholder()
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-        didChangeFiatAmount?(cleanedText)
+        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
         
+        let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
+        
+        didChangeFiatAmount?(cleanedText)
         didChangeContent?()
     }
     
     @objc func cryptoAmountDidChange(_ textField: UITextField) {
         decidePlaceholder()
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-        didChangeCryptoAmount?(cleanedText)
+        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
         
+        let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
+        
+        didChangeCryptoAmount?(cleanedText)
         didChangeContent?()
     }
     
@@ -360,12 +342,12 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     private func setPlaceholder(for field: UITextField) {
         let isActive = field.isFirstResponder && field.text?.isEmpty == true
         if let textColor = field.textColor,
-           let lineViewColor = fiatLineView.backgroundColor,
            let font = field.font {
-            field.attributedPlaceholder = NSAttributedString(string: ExchangeFormatter.fiat.string(for: 0) ?? "",
-                                                             attributes: [NSAttributedString.Key.foregroundColor: isActive ? lineViewColor : textColor,
-                                                                          NSAttributedString.Key.font: font]
-            )
+            let attributedPlaceholder = ExchangeFormatter.createAmountString(string: ExchangeFormatter.fiat.string(for: 0) ?? "")
+            attributedPlaceholder?.addAttributes([NSAttributedString.Key.foregroundColor: isActive ? LightColors.Outline.two : textColor,
+                                                  NSAttributedString.Key.font: font],
+                                                 range: NSRange(location: 0, length: attributedPlaceholder?.length ?? 0))
+            field.attributedPlaceholder = attributedPlaceholder
         }
     }
     

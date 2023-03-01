@@ -78,8 +78,12 @@ struct ExchangeFormatter {
         let style = NSMutableParagraphStyle()
         style.lineBreakMode = .byTruncatingMiddle
         style.alignment = .right
-        attributedString.addAttribute(.paragraphStyle, value: style,
-                                      range: NSRange(location: 0, length: attributedString.length))
+        
+        attributedString.addAttributes([
+            .paragraphStyle: style,
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .underlineColor: LightColors.Outline.two],
+                                       range: NSRange(location: 0, length: attributedString.length))
         
         return attributedString
     }
