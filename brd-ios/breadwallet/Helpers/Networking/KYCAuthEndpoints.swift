@@ -13,6 +13,7 @@ import Foundation
 enum KYCAuthEndpoints: String, URLType {
     static var baseURL: String = "https://"  + E.apiUrl + "blocksatoshi/one/%@"
     
+    case veriffBiometricVerificationSession = "kyc/session?quote_id=%@&is_biometric=%@"
     case veriffSession = "kyc/session"
     case basic = "kyc/basic"
     case documents = "kyc/documents"

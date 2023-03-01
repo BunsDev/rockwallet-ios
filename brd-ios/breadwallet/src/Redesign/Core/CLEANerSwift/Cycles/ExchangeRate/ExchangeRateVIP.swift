@@ -44,11 +44,11 @@ extension Interactor where Self: ExchangeRateViewActions,
     func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
         guard let fromCurrency = dataStore?.fromCode.uppercased(),
               let toCurrency = dataStore?.toCode.uppercased(),
-              let data = dataStore?.quoteRequestData
-        else { return }
+              let data = dataStore?.quoteRequestData else { return }
         
-        // clear previous rate (in case the request fails, we don't want old values displayed)
+        // Clear previous rate (in case the request fails, we don't want old values displayed)
         dataStore?.quote = nil
+        
         presenter?.presentExchangeRate(actionResponse: .init(quote: dataStore?.quote,
                                                              from: dataStore?.fromCode,
                                                              to: dataStore?.toCode,
@@ -57,6 +57,7 @@ extension Interactor where Self: ExchangeRateViewActions,
                                                              fromBuy: dataStore?.fromBuy))
         
         getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees))
+        
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let quote):

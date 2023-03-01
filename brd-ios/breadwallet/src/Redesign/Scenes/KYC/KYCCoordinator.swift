@@ -127,12 +127,32 @@ extension BaseCoordinator: VeriffSdkDelegate {
         }
     }
     
+    func showExternalKYCForLivenessCheck(livenessCheckData: VeriffSessionRequestData? = nil) {
+        UserManager.shared.getVeriffSessionUrl(livenessCheckData:
+                .init(quoteId: livenessCheckData?.quoteId,
+                      isBiometric: livenessCheckData?.isBiometric)) { [weak self] result in
+            switch result {
+            case .success(let data):
+                guard let navigationController = self?.navigationController else { return }
+                
+                VeriffSdk.shared.delegate = self
+                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
+                                                     configuration: Presets.veriff,
+                                                     presentingFrom: navigationController)
+                
+            default:
+                break
+            }
+        }
+    }
+    
     func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
         switch result.status {
         case .done:
             open(scene: Scenes.verificationInProgress) { vc in
                 vc.navigationItem.hidesBackButton = true
             }
+            
         case .error(let error):
             print(error.localizedDescription)
             

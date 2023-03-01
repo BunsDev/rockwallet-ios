@@ -214,6 +214,10 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         coordinator?.showFailure(failure: responseDisplay.reason, availablePayments: dataStore?.availablePayments)
     }
     
+    func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay) {
+        coordinator?.showExternalKYCForLivenessCheck(livenessCheckData: .init(quoteId: responseDisplay.quoteId, isBiometric: responseDisplay.isBiometric))
+    }
+    
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
         coordinator?.showThreeDSecure(url: responseDisplay.url)
     }

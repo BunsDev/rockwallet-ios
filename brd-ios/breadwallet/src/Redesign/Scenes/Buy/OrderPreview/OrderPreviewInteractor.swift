@@ -137,7 +137,14 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentThreeDSecure(actionResponse: .init(url: redirectUrl))
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard let store = self?.dataStore,
+                      let quoteId = store.quote?.quoteId,
+                      (error as? NetworkingError)?.errorType == .biometricAuthentication else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
             }
         }
     }

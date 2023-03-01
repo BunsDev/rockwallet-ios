@@ -59,6 +59,18 @@ enum OrderPreviewModels {
         }
     }
     
+    struct VeriffLivenessCheck {
+        struct ActionResponse {
+            var quoteId: String?
+            var isBiometric: Bool?
+        }
+        
+        struct ResponseDisplay {
+            var quoteId: String?
+            var isBiometric: Bool?
+        }
+    }
+    
     struct ThreeDSecure {
         struct ActionResponse {
             var url: URL
