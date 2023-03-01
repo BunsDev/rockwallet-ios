@@ -120,13 +120,13 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func addCurrency(_ identifier: CurrencyId) {
-        guard let index = allAssets.firstIndex(where: {$0.uid == identifier }) else { return assertionFailure() }
+        guard let index = allAssets.firstIndex(where: {$0.uid == identifier }) else { return }
         addedCurrencyIndices.append(index)
         addedCurrencyIdentifiers.append(identifier)
     }
     
     private func removeCurrency(_ identifier: CurrencyId) {
-        guard let index = allAssets.firstIndex(where: {$0.uid == identifier }) else { return assertionFailure() }
+        guard let index = allAssets.firstIndex(where: {$0.uid == identifier }) else { return }
         addedCurrencyIndices.removeAll(where: { $0 == index })
         addedCurrencyIdentifiers.removeAll(where: { $0 == identifier })
     }

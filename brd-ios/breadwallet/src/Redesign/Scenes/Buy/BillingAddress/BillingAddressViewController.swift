@@ -20,9 +20,9 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     override var sceneTitle: String? {
         return L10n.Buy.billingAddress
     }
+    
     private var isValid = false
-    private var isPickCountryPressed = false
-
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
@@ -73,11 +73,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
             view.configure(with: .init())
             view.setup(with: model)
             
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            
             view.valueChanged = { [weak self] first, second in
                 self?.interactor?.nameSet(viewAction: .init(first: first, last: second))
             }
@@ -96,11 +91,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: model)
-            
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
             
             view.valueChanged = { [weak self] first, second in
                 self?.interactor?.cityAndZipPostalSet(viewAction: .init(city: first, zipPostal: second))
@@ -121,13 +111,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         cell.setup { view in
             view.configure(with: Presets.TextField.two)
             view.setup(with: model)
-            
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            
-            view.isUserInteractionEnabled = false
         }
         
         return cell
@@ -161,7 +144,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         switch sections[indexPath.section] as? Models.Section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
-            isPickCountryPressed = true
             
         default:
             return
@@ -178,17 +160,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
 
     // MARK: - BillingAddressResponseDisplay
-    
-    func displayCountry(responseDisplay: BillingAddressModels.SelectCountry.ResponseDisplay) {
-        guard isPickCountryPressed else { return }
-        
-        coordinator?.showCountrySelector(countries: responseDisplay.countries) { [weak self] model in
-            self?.interactor?.pickCountry(viewAction: .init(code: model?.code, countryFullName: model?.name))
-        }
-        
-        isPickCountryPressed = false
-    }
-    
     func displayValidate(responseDisplay: BillingAddressModels.Validate.ResponseDisplay) {
         guard let section = sections.firstIndex(of: Models.Section.confirm),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
@@ -216,10 +187,18 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         coordinator?.showThreeDSecure(url: responseDisplay.url)
     }
     
+    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        DispatchQueue.main.async {
+            self.coordinator?.showToastMessage(with: responseDisplay.error,
+                                               model: responseDisplay.model,
+                                               configuration: responseDisplay.config)
+        }
+    }
+    
     // MARK: - Additional Helpers
     
-    override func textFieldDidUpdate(for indexPath: IndexPath, with text: String?, on section: AnyHashable) {
-        super.textFieldDidUpdate(for: indexPath, with: text, on: section)
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
+        let section = sections[indexPath.section]
         
         switch section as? Models.Section {
         case .stateProvince:
@@ -231,5 +210,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         default:
             break
         }
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
     }
 }

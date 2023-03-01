@@ -45,7 +45,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                 TextFieldModel(title: L10n.Receive.emailButton, value: email)
             ],
             .help: [
-                ScrollableButtonsViewModel(buttons: help)
+                HorizontalButtonsViewModel(buttons: help)
             ]
         ]
         

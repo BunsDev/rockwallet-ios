@@ -257,7 +257,7 @@ class AmountViewController: UIViewController {
 
     @objc private func didTapBalance() {
         didTapMax?()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.immediate.rawValue, execute: { [weak self] in
             self?.didTap()
         })
     }
@@ -376,7 +376,7 @@ class AmountViewController: UIViewController {
     }
 
     @objc private func didTap() {
-        UIView.spring(Presets.Animation.duration, animations: {
+        UIView.spring(Presets.Animation.short.rawValue, animations: {
             self.togglePinPad()
             self.view.layoutIfNeeded()
         }, completion: { _ in })

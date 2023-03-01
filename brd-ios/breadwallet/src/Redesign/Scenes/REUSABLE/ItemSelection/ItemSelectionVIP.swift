@@ -15,6 +15,7 @@ extension Scenes {
 protocol ItemSelectionViewActions: BaseViewActions, FetchViewActions {
     func removePaymenetPopup(viewAction: ItemSelectionModels.RemovePaymenetPopup.ViewAction)
     func removePayment(viewAction: ItemSelectionModels.RemovePayment.ViewAction)
+    func findAddress(viewAction: ItemSelectionModels.FindAddress.ViewAction)
 }
 
 protocol ItemSelectionActionResponses: BaseActionResponses, FetchActionResponses {

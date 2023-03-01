@@ -43,6 +43,8 @@ class RequestAmountViewController: UIViewController {
         }
     }
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         addSubviews()
         addConstraints()
         setData()
@@ -155,7 +157,7 @@ class RequestAmountViewController: UIViewController {
             alertView.contentView?.isHidden = true
         }
 
-        UIView.spring(Presets.Animation.duration, animations: {
+        UIView.spring(Presets.Animation.short.rawValue, animations: {
             alertView.toggle()
             self.parent?.view.layoutIfNeeded()
         }, completion: { _ in
@@ -164,7 +166,7 @@ class RequestAmountViewController: UIViewController {
             self.address.isUserInteractionEnabled = true
             alertView.contentView?.isHidden = false
             if shouldShrinkAfter {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.long.rawValue, execute: {
                     if alertView.isExpanded {
                         self.toggle(alertView: alertView)
                     }

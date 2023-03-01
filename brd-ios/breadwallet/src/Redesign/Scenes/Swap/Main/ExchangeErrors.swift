@@ -32,6 +32,7 @@ enum ExchangeErrors: FEError {
     case pendingSwap
     case selectAssets
     case authorizationFailed
+    case highFees
     
     var errorType: ServerResponse.ErrorType? {
         switch self {
@@ -56,10 +57,8 @@ enum ExchangeErrors: FEError {
             case .swap:
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
                 
-            case.plaidConnection, .buyAch:
-                // TODO: Add error messages
+            default:
                 return ""
-                
             }
             
         case .tooHigh(let amount, let currency, let reason):
@@ -70,7 +69,7 @@ enum ExchangeErrors: FEError {
             case .swap:
                 return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
                 
-            case .plaidConnection, .buyAch:
+            default:
                 // TODO: Add error messages
                 return ""
                 
@@ -122,6 +121,8 @@ enum ExchangeErrors: FEError {
         case .authorizationFailed:
             return L10n.ErrorMessages.authorizationFailed
             
+        case .highFees:
+            return L10n.ErrorMessages.highWidrawalFee
         }
     }
 }

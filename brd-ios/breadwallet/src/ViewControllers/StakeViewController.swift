@@ -10,8 +10,6 @@
 
 import UIKit
 
-// swiftlint:disable type_body_length
-
 class StakeViewController: UIViewController, Subscriber, ModalPresentable {
     fileprivate let midContentHeight: CGFloat = 90.0
     fileprivate let bakerContentHeight: CGFloat = 40.0
@@ -175,7 +173,7 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
     
     private func send(address: String) {
         let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
-            guard let self = self else { return assertionFailure() }
+            guard let self = self else { return }
             self.sendingActivity.dismiss(animated: false) {
                 self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
                     self.parent?.view.isFrameChangeBlocked = false
@@ -193,7 +191,7 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
                 switch result {
                 case .success:
                     self.onPublishSuccess?()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                         self.dismiss(animated: true, completion: nil)
                     }
                 case .creationError(let message):

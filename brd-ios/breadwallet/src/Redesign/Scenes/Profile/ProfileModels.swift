@@ -9,7 +9,7 @@
 import UIKit
 
 enum ProfileModels {
-    typealias Item = (title: String?, image: String?, status: VerificationStatus?)
+    typealias Item = ()
     
     enum Section: Sectionable {
         case profile
@@ -26,6 +26,11 @@ enum ProfileModels {
         case preferences
     }
     
+    enum ExchangeFlow {
+        case buy
+        case swap
+    }
+    
     struct Navigate {
         struct ViewAction {
             var index: Int
@@ -40,7 +45,9 @@ enum ProfileModels {
     
     struct VerificationInfo {
         struct ViewAction {}
-        struct ActionResponse {}
+        struct ActionResponse {
+            var status: VerificationStatus?
+        }
         struct ResponseDisplay {
             var model: PopupViewModel
         }

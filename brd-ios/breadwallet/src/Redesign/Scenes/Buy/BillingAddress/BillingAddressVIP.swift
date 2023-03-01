@@ -15,8 +15,7 @@ extension Scenes {
     static let BillingAddress = BillingAddressViewController.self
 }
 
-protocol BillingAddressViewActions: BaseViewActions, FetchViewActions {
-    func pickCountry(viewAction: BillingAddressModels.SelectCountry.ViewAction)
+protocol BillingAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
     func nameSet(viewAction: BillingAddressModels.Name.ViewAction)
     func cityAndZipPostalSet(viewAction: BillingAddressModels.CityAndZipPostal.ViewAction)
     func stateProvinceSet(viewAction: BillingAddressModels.StateProvince.ViewAction)
@@ -26,23 +25,21 @@ protocol BillingAddressViewActions: BaseViewActions, FetchViewActions {
     func submit(viewAction: BillingAddressModels.Submit.ViewAction)
 }
 
-protocol BillingAddressActionResponses: BaseActionResponses, FetchActionResponses {
+protocol BillingAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
     func presentThreeDSecure(actionResponse: BillingAddressModels.ThreeDSecure.ActionResponse)
-    func presentCountry(actionResponse: BillingAddressModels.SelectCountry.ActionResponse)
     func presentPaymentCards(actionResponse: BillingAddressModels.PaymentCards.ActionResponse)
     func presentValidate(actionResponse: BillingAddressModels.Validate.ActionResponse)
     func presentSubmit(actionResponse: BillingAddressModels.Submit.ActionResponse)
 }
 
-protocol BillingAddressResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol BillingAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay)
-    func displayCountry(responseDisplay: BillingAddressModels.SelectCountry.ResponseDisplay)
     func displayPaymentCards(responseDisplay: BillingAddressModels.PaymentCards.ResponseDisplay)
     func displayValidate(responseDisplay: BillingAddressModels.Validate.ResponseDisplay)
     func displaySubmit(responseDisplay: BillingAddressModels.Submit.ResponseDisplay)
 }
 
-protocol BillingAddressDataStore: BaseDataStore, FetchDataStore {
+protocol BillingAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
     var firstName: String? { get set }
     var lastName: String? { get set }
     var country: String? { get set }
@@ -53,13 +50,15 @@ protocol BillingAddressDataStore: BaseDataStore, FetchDataStore {
     var address: String? { get set }
     var paymentReference: String? { get set }
     var paymentstatus: AddCard.Status? { get set }
-    var checkoutToken: CkoCardTokenResponse? { get set }
+    
+    var cardNumber: String? { get set }
+    var expMonth: String? { get set }
+    var expYear: String? { get set }
+    var cvv: String? { get set }
 }
 
 protocol BillingAddressDataPassing {
     var dataStore: BillingAddressDataStore? { get }
 }
 
-protocol BillingAddressRoutes: CoordinatableRoutes {
-    func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?)
-}
+protocol BillingAddressRoutes: CoordinatableRoutes, CountriesAndStatesRoutes {}

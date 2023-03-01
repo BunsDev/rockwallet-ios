@@ -11,11 +11,31 @@
 import UIKit
 import WalletKit
 
+enum PreviewType {
+    // split buy into ach_buy and card_buy
+    case buy
+    case sell
+    
+    var title: String {
+        switch self {
+        case .buy: return L10n.Buy.orderPreview
+        case .sell: return L10n.Sell.orderPreview
+        }
+    }
+    
+    var disclaimer: String {
+        switch self {
+        case .buy: return L10n.Buy.achPaymentDurationWarning
+        case .sell: return L10n.Sell.achDurationWarning
+        }
+    }
+}
+
 enum OrderPreviewModels {
     
-    typealias Item = (to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?, isAchAccount: Bool?)
+    typealias Item = (type: PreviewType?, to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?, isAchAccount: Bool?)
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case achNotification
         case orderInfoCard
         case payment
@@ -103,11 +123,21 @@ enum OrderPreviewModels {
         struct ViewAction {}
         
         struct ActionResponse {
-            var paymentReference: String
+            var paymentReference: String?
+            var previewType: PreviewType?
+            var isAch: Bool?
+            var failed: Bool?
         }
         
         struct ResponseDisplay {
             var paymentReference: String
+            var reason: SuccessReason
+        }
+    }
+    
+    struct Failure {
+        struct ResponseDisplay {
+            var reason: FailureReason
         }
     }
     

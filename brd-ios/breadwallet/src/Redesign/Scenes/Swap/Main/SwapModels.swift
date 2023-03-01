@@ -12,9 +12,9 @@ import UIKit
 import WalletKit
 
 enum SwapModels {
-    typealias Item = (from: Amount?, to: Amount?, quote: Quote?, isKYCLevelTwo: Bool?)
+    typealias Item = (from: Amount?, to: Amount?, quote: Quote?)
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case rateAndTimer
         case accountLimits
         case swapCard
@@ -83,23 +83,6 @@ enum SwapModels {
             var title: String
             var from: [Currency]?
             var to: [Currency]?
-        }
-    }
-    
-    struct Rate {
-        struct ViewAction {
-            var getFees: Bool
-        }
-        
-        struct ActionResponse {
-            var quote: Quote?
-            var from: Currency?
-            var to: Currency?
-        }
-        
-        struct ResponseDisplay {
-            var rateAndTimer: ExchangeRateViewModel
-            var accountLimits: LabelViewModel?
         }
     }
     

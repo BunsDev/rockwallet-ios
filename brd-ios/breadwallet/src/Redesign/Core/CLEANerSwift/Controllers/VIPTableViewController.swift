@@ -13,32 +13,35 @@ class VIPTableViewController<C: CoordinatableRoutes,
                              DS: BaseDataStore & NSObject>: VIPViewController<C, I, P, DS>,
                                                             UITableViewDelegate,
                                                             UITableViewDataSource {
-    override var isModalDismissableEnabled: Bool {
-        return true
-    }
+    override var isModalDismissableEnabled: Bool { return true }
 
     var sections: [AnyHashable] = []
     var sectionRows: [AnyHashable: [Any]] = [:]
 
     // MARK: LazyUI
+    
     lazy var tableView: ContentSizedTableView = {
         var tableView = ContentSizedTableView(frame: .zero, style: .grouped)
+        
         tableView.dataSource = self
         tableView.delegate = self
-
-        // this prevents the top offset on tableViews
+        
+        // This prevents the top offset on tableViews
         let zeroView = UIView(frame: .init(origin: .zero, size: .init(width: 0, height: CGFloat.leastNonzeroMagnitude)))
         tableView.tableHeaderView = zeroView
         tableView.tableFooterView = zeroView
+        
         tableView.estimatedSectionHeaderHeight = CGFloat.leastNormalMagnitude
-        tableView.estimatedRowHeight = CGFloat.leastNormalMagnitude
-        tableView.estimatedSectionFooterHeight = CGFloat.leastNormalMagnitude
-
         tableView.sectionHeaderHeight = UITableView.automaticDimension
+        
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.estimatedSectionFooterHeight = CGFloat.leastNormalMagnitude
         tableView.sectionFooterHeight = UITableView.automaticDimension
-
+        
         tableView.separatorStyle = .none
+        
         return tableView
     }()
     
@@ -57,23 +60,24 @@ class VIPTableViewController<C: CoordinatableRoutes,
         return contentShadowView
     }()
     
-    var topInsetValue: CGFloat = 0
+    var topInsetValue: CGFloat {
+        return sceneLeftAlignedTitle == nil ? 0 : ViewSizes.Common.defaultCommon.rawValue
+    }
     
     // MARK: Lifecycle
     override func setupSubviews() {
         super.setupSubviews()
-        
-        topInsetValue = sceneLeftAlignedTitle == nil ? 0 : Margins.extraHuge.rawValue + 28
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        tableView.addSubview(leftAlignedTitleLabel)
+        tableView.contentInset.top = topInsetValue
+        view.addSubview(leftAlignedTitleLabel)
         leftAlignedTitleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(tableView.snp.top)
-            make.height.greaterThanOrEqualTo(topInsetValue)
+            make.top.equalTo(view.snp.topMargin)
+            make.height.greaterThanOrEqualTo(ViewSizes.Common.defaultCommon.rawValue)
             make.width.lessThanOrEqualTo(tableView.snp.width).inset(Margins.large.rawValue) // TODO: Trailing does not work. Why?
             make.leading.equalToSuperview().inset(Margins.large.rawValue)
         }
@@ -85,14 +89,12 @@ class VIPTableViewController<C: CoordinatableRoutes,
             make.trailing.equalToSuperview().inset(Margins.large.rawValue)
         }
         
-        tableView.contentInset.top = topInsetValue
-        
         view.addSubview(verticalButtons)
         verticalButtons.snp.makeConstraints { make in
             make.leading.bottom.trailing.equalToSuperview()
         }
         
-        view.backgroundColor = LightColors.Background.two
+        view.backgroundColor = LightColors.Background.one
         
         setupVerticalButtons()
     }
@@ -130,10 +132,6 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.clipsToBounds = false
         tableView.layer.masksToBounds = false
-        leftAlignedTitleLabel.snp.updateConstraints { make in
-            make.bottom.equalTo(tableView.snp.top).inset(-small)
-            make.leading.equalToSuperview().inset(-large)
-        }
         
         tableView.verticalScrollIndicatorInsets.right = -huge
         tableView.beginUpdates()

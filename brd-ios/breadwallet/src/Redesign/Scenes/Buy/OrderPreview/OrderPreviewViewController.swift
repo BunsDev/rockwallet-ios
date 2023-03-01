@@ -10,7 +10,7 @@
 
 import UIKit
 
-class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
+class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
                                   OrderPreviewInteractor,
                                   OrderPreviewPresenter,
                                   OrderPreviewStore>,
@@ -18,7 +18,7 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
     typealias Models = OrderPreviewModels
     
     override var sceneTitle: String? {
-        return L10n.Buy.orderPreview
+        return dataStore?.type?.title
     }
 
     // MARK: - Overrides
@@ -32,7 +32,7 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .achNotification:
             cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
             
@@ -100,7 +100,7 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
             view.setup(with: model)
             
             view.didTypeCVV = { [weak self] cvv in
-                self?.interactor?.updateCvv(viewAction: .init(cvv: cvv))
+                self?.interactor?.updateCvv(viewAction: .init(cvv: cvv.text))
             }
             
             view.didTapCvvInfo = { [weak self] in
@@ -186,7 +186,7 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
     
     func displayTimeOut(responseDisplay: OrderPreviewModels.ExpirationValidations.ResponseDisplay) {
         if responseDisplay.isTimedOut {
-            coordinator?.showTimeout()
+            coordinator?.showTimeout(type: dataStore?.type)
         } else {
             LoadingView.show()
             interactor?.submit(viewAction: .init())
@@ -204,25 +204,34 @@ class OrderPreviewViewController: BaseTableViewController<BuyCoordinator,
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay) {
         LoadingView.hide()
         
-        let transactionType: Transaction.TransactionType = dataStore?.isAchAccount ?? false ? .buyAchTransaction : .buyTransaction
-        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference, transactionType: transactionType)
+        let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAchTransaction : .buyTransaction
+        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference,
+                                 transactionType: transactionType,
+                                 reason: responseDisplay.reason)
     }
     
-    func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay) {
+    func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay) {
+        coordinator?.showFailure(failure: responseDisplay.reason, availablePayments: dataStore?.availablePayments)
+    }
+    
+    func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
         coordinator?.showThreeDSecure(url: responseDisplay.url)
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        LoadingView.hide()
+        if responseDisplay.error != nil {
+            LoadingView.hide()
+        }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
-        let failure: FailureReason = dataStore?.isAchAccount ?? false ? .buyAch : .buyCard
-        coordinator?.showFailure(failure: failure)
+        coordinator?.showToastMessage(with: responseDisplay.error,
+                                      model: responseDisplay.model,
+                                      configuration: responseDisplay.config)
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Sections.submit),
+        guard let section = sections.firstIndex(of: Models.Section.submit),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         cell.wrappedView.isEnabled = responseDisplay.continueEnabled

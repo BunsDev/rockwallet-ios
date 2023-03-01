@@ -20,6 +20,7 @@ struct AssetConfiguration: Configurable {
     var imageSize: ViewSizes = .medium
     var imageAlpha: CGFloat = 1.0
     var imageBackground = BackgroundConfiguration(border: BorderConfiguration(borderWidth: 0, cornerRadius: .fullRadius))
+    var titleOnly: Bool?
 }
 
 struct AssetViewModel: ViewModel, ItemSelectable {

@@ -50,10 +50,6 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = .clear
             tintColor = LightColors.Text.three
             
-        case is KYCCameraViewController:
-            backgroundColor = .black
-            tintColor = LightColors.Background.one
-            
         case is OnboardingViewController:
             backgroundColor = .clear
             tintColor = LightColors.Background.two
@@ -62,26 +58,10 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             backgroundColor = LightColors.primary
             tintColor = LightColors.Contrast.two
             
-        case is ShareDataViewController,
-            is DeleteProfileInfoViewController,
-            is BuyViewController,
+        case is BuyViewController,
             is SwapViewController,
-            is AddCardViewController,
-            is ExchangeDetailsViewController,
-            is RegistrationViewController,
-            is RegistrationConfirmationViewController,
-            is AccountVerificationViewController,
-            is ProfileViewController,
-            is KYCBasicViewController,
-            is KYCLevelTwoEntryViewController,
-            is KYCDocumentPickerViewController,
-            is KYCLevelTwoPostValidationViewController,
-            is SimpleWebViewController,
-            is VerifyAccountViewController,
-            is OrderPreviewViewController,
-            is BaseInfoViewController,
-            is ItemSelectionViewController,
-            is BillingAddressViewController:
+            is ExchangeDetailsViewController:
+            
             backgroundColor = LightColors.Background.two
             tintColor = LightColors.Text.three
             
@@ -118,7 +98,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         navigationBar.compactAppearance = scrollAppearance
         
         let tint = tintColor
-        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.navigationBar.tintColor = tint
             self?.navigationItem.titleView?.tintColor = tint
             self?.navigationItem.leftBarButtonItems?.forEach { $0.tintColor = tint }

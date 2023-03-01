@@ -26,23 +26,24 @@ extension UIViewController {
     func showToastMessage(model: InfoViewModel? = nil,
                           configuration: InfoViewConfiguration? = nil,
                           onTapCallback: (() -> Void)? = nil) {
-        guard let superview = UIApplication.shared.activeWindow else { return }
+        guard let activeWindow = UIApplication.shared.activeWindow else { return }
         
-        let notification: FEInfoView = (superview.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
+        let notification: FEInfoView = (activeWindow.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
         
         notification.didFinish = { [weak self] in
-            self?.hideToastMessage()
+            self?.hideToastMessage(notificationView: notification)
+            
             onTapCallback?()
         }
         
         if notification.superview == nil {
             notification.setupCustomMargins(all: .extraLarge)
             notification.configure(with: configuration)
-            superview.addSubview(notification)
+            activeWindow.addSubview(notification)
             notification.alpha = 0
             
             notification.snp.makeConstraints { make in
-                make.top.equalTo(superview.safeAreaLayoutGuide.snp.top)
+                make.top.equalTo(activeWindow.safeAreaLayoutGuide.snp.top)
                 make.leading.equalToSuperview().offset(Margins.medium.rawValue)
                 make.centerX.equalToSuperview()
             }
@@ -51,16 +52,16 @@ extension UIViewController {
         notification.setup(with: model)
         notification.layoutIfNeeded()
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             notification.alpha = 1
         }
     }
     
-    func hideToastMessage() {
-        guard let superview = UIApplication.shared.activeWindow,
-              let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
+    func hideToastMessage(notificationView: FEInfoView? = nil) {
+        guard let activeWindow = UIApplication.shared.activeWindow,
+              let view = notificationView ?? activeWindow.subviews.first(where: { $0 is FEInfoView }) else { return }
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             view.alpha = 0
         } completion: { _ in
             view.removeFromSuperview()
@@ -68,6 +69,7 @@ extension UIViewController {
     }
     
     // MARK: - Info Popup
+    // TODO: Unify / cleanup the logic with BaseCoordinator
     
     func showInfoPopup(with model: PopupViewModel, callbacks: [(() -> Void)] = []) {
         let blurView = UIVisualEffectView()
@@ -92,7 +94,7 @@ extension UIViewController {
         popup.layer.shadowOffset = .zero
         popup.layoutIfNeeded()
         
-        popup.configure(with: Presets.Popup.white)
+        popup.configure(with: model.config ?? Presets.Popup.white)
         popup.setup(with: model)
         
         popup.buttonCallbacks = callbacks
@@ -100,7 +102,7 @@ extension UIViewController {
             self?.hidePopup()
         }
         
-        UIView.animate(withDuration: Presets.Animation.duration,
+        UIView.animate(withDuration: Presets.Animation.short.rawValue,
                        delay: 0,
                        options: .transitionFlipFromBottom) {
             blurView.effect = UIBlurEffect(style: .regular)
@@ -113,7 +115,7 @@ extension UIViewController {
         else { return }
         let blur = view.subviews.first(where: { $0 is UIVisualEffectView })
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             popup.alpha = 0
             blur?.alpha = 0
         } completion: { _ in

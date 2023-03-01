@@ -56,34 +56,24 @@ class RecoveryKeyFlowController {
                                      keyMaster: KeyMaster,
                                      from viewController: UIViewController,
                                      context: EventContext,
+                                     showIntro: Bool,
                                      dismissAction: (() -> Void)?,
                                      modalPresentation: Bool = true,
                                      canExit: Bool = true) {
         
         let isGeneratingKey = UserDefaults.walletRequiresBackup
-        let recoveryKeyMode: EnterRecoveryKeyMode = isGeneratingKey ? .generateKey : .writeKey
         let eventContext = (context == .none) ? (isGeneratingKey ? .generateKey : .writeKey) : context
         
         let recoveryKeyNavController = RecoveryKeyFlowController.makeNavigationController()
-        
         var baseNavigationController: RootNavigationController?
         var modalPresentingViewController: UIViewController?
         
-        // Sort out how we should be presenting the recovery key flow. If it's dipslayed from the home
-        // screen prompt or the security settings menu, it's modal. If it's displayed from the onboarding flow,
-        // we're already in a modal navigation controller so the recovery key flow is pushed.
         if modalPresentation {
             modalPresentingViewController = viewController
         } else if let nc = viewController as? RootNavigationController {
             baseNavigationController = nc
         }
         
-        var exitButtonType: RecoveryKeyIntroExitButtonType = .none
-        if canExit {
-            exitButtonType = modalPresentation ? .closeButton : .backButton
-        }
-        
-        // dismisses the entire recovery key flow
         let dismissFlow = {
             if let dismissAction = dismissAction {
                 dismissAction()
@@ -96,10 +86,9 @@ class RecoveryKeyFlowController {
             }
         }
         
-        // pushes the next view controller in the flow
         let pushNext: ((UIViewController) -> Void) = { (next) in
             if modalPresentation {
-                recoveryKeyNavController.pushViewController(next, animated: true)
+                (baseNavigationController ?? recoveryKeyNavController).pushViewController(next, animated: true)
             } else {
                 baseNavigationController?.pushViewController(next, animated: true)
             }
@@ -109,71 +98,84 @@ class RecoveryKeyFlowController {
         let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { (action, words) in
             switch action {
             case .abort:
-                dismissFlow()
+                guard context != .viewRecoveryPhrase else {
+                    dismissFlow()
+                    return
+                }
+                
+                let navController = context == .onboarding ? viewController : (baseNavigationController ?? recoveryKeyNavController)
+                
+                promptToSetUpRecoveryKeyLater(from: navController) { userWantsToSetUpLater in
+                    guard userWantsToSetUpLater else { return }
+                    dismissFlow()
+                }
+                
             case .confirmKey:
-                
-                let fromOnboarding = (context == .onboarding)
-                let goToWallet = (context == .onboarding) ? dismissFlow : nil
-                
                 pushNext(ConfirmRecoveryKeyViewController(words: words,
                                                           keyMaster: keyMaster,
                                                           eventContext: eventContext,
                                                           confirmed: {
-                                                            pushNext(RecoveryKeyCompleteViewController(fromOnboarding: fromOnboarding, proceedToWallet: goToWallet))
+                    Store.perform(action: Alert.Show(.recoveryPhraseConfirmed(callback: { dismissFlow() })))
                 }))
+                
             default:
                 break
             }
         }
         
-        // the landing page for setting up the recovery key.
-        let introVC = RecoveryKeyIntroViewController(mode: recoveryKeyMode,
-                                                     eventContext: eventContext,
-                                                     exitButtonType: exitButtonType,
-                                                     exitCallback: { (exitAction) in
-            switch exitAction {
-            case .generateKey:
-                self.ensurePinAvailable(pin: pin,
-                                        navigationController: recoveryKeyNavController,
-                                        keyMaster: keyMaster,
-                                        pinResponse: { (responsePin) in
-                                            
-                                            guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
-                                            
-                                            pushNext(WriteRecoveryKeyViewController(keyMaster: keyMaster,
-                                                                                    pin: responsePin,
-                                                                                    mode: recoveryKeyMode,
-                                                                                    eventContext: eventContext,
-                                                                                    dismissAction: dismissAction,
-                                                                                    exitCallback: { (action) in
-                                                                                        let words = phrase.components(separatedBy: " ")
-                                                                                        handleWriteKeyResult(action, words)
-                                            }))
-                })
+        if showIntro {
+            let introVC = RecoveryKeyIntroViewController()
+            introVC.exitAction = .generateKey
+            introVC.exitCallback = { exitAction in
+                switch exitAction {
+                case .generateKey:
+                    self.ensurePinAvailable(pin: pin,
+                                            presentingViewController: recoveryKeyNavController,
+                                            keyMaster: keyMaster,
+                                            pinResponse: { (responsePin) in
+                        guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
+                        let hideActionButtons = context == .viewRecoveryPhrase
+                        pushNext(EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, hideActionButtons, handleWriteKeyResult)))
+                    })
 
-            case .writeKey:
-                break
-                
-            case .abort:
-                
-                // The onboarding flow has its own dismiss action.
-                if let dismissAction = dismissAction {
-                    dismissAction()
-                } else {
-                    modalPresentingViewController?.dismiss(animated: true, completion: nil)
+                default:
+                    break
                 }
-                
-            default:
-                break
             }
-        })
-        
-        if modalPresentation {
-            recoveryKeyNavController.viewControllers = [introVC]
-            modalPresentingViewController?.present(recoveryKeyNavController, animated: true, completion: nil)
+            
+            if modalPresentation {
+                recoveryKeyNavController.viewControllers = [introVC]
+                modalPresentingViewController?.present(recoveryKeyNavController, animated: true, completion: nil)
+            } else {
+                baseNavigationController?.navigationItem.hidesBackButton = true
+                baseNavigationController?.pushViewController(introVC, animated: true)
+            }
         } else {
-            baseNavigationController?.navigationItem.hidesBackButton = true
-            baseNavigationController?.pushViewController(introVC, animated: true)
+            let presentingViewController = modalPresentation ? modalPresentingViewController : baseNavigationController
+            
+            ensurePinAvailable(pin: pin,
+                               presentingViewController: presentingViewController,
+                               keyMaster: keyMaster,
+                               pinResponse: { (responsePin) in
+                guard let phrase = keyMaster.seedPhrase(pin: responsePin) else { return }
+                let hideActionButtons = context == .viewRecoveryPhrase
+                
+                let enterPhraseViewController = EnterPhraseViewController(keyMaster: keyMaster, reason: .display(phrase, hideActionButtons, handleWriteKeyResult),
+                                                                          showBackButton: true)
+                
+                baseNavigationController = RootNavigationController()
+                baseNavigationController?.viewControllers = [enterPhraseViewController]
+                baseNavigationController?.modalPresentationStyle = .fullScreen
+                
+                guard let baseNavigationController = baseNavigationController else { return }
+                
+                if modalPresentation {
+                    modalPresentingViewController?.present(baseNavigationController, animated: true, completion: nil)
+                } else {
+                    baseNavigationController.navigationItem.hidesBackButton = true
+                    baseNavigationController.pushViewController(baseNavigationController, animated: true)
+                }
+            })
         }
     }
     
@@ -187,16 +189,15 @@ class RecoveryKeyFlowController {
             navController.pushViewController(enterPhraseVC, animated: true)
         }
         
-        let introVC = RecoveryKeyIntroViewController(mode: .unlinkWallet,
-                                                     eventContext: .none,
-                                                     exitButtonType: .closeButton,
-                                                     exitCallback: { (action) in
-                                                        if action == .unlinkWallet {
-                                                            enterPhrase()
-                                                        } else if action == .abort {
-                                                            navController.dismiss(animated: true, completion: nil)
-                                                        }
-        })
+        let introVC = UnlinkWalletViewController()
+        introVC.exitAction = .unlinkWallet
+        introVC.exitCallback = { action in
+            if action == .unlinkWallet {
+                enterPhrase()
+            } else if action == .abort {
+                navController.dismiss(animated: true, completion: nil)
+            }
+        }
 
         navController.viewControllers = [introVC]
         viewController.present(navController, animated: true, completion: nil)
@@ -214,7 +215,6 @@ class RecoveryKeyFlowController {
             completion(nextButton, barButton)
         }
         
-        // TODO: Move to Coordinators.
         navigationController.pushViewController(enterPhraseVC, animated: true)
     }
     
@@ -223,10 +223,9 @@ class RecoveryKeyFlowController {
                                   callback: @escaping ((String, UINavigationController) -> Void)) {
     
         let navController = RecoveryKeyFlowController.makeNavigationController()
-        
-        let enterPhraseVC = EnterPhraseViewController(keyMaster: keyMaster, reason: .validateForResettingPin({ (phrase) in
-            Store.perform(action: Alert.Show(.walletRestored(callback: {
-                callback(phrase, navController)
+        let enterPhraseVC = EnterPhraseViewController(keyMaster: keyMaster, reason: .validateForResettingPin({ phrase in
+                Store.perform(action: Alert.Show(.walletRestored(callback: {
+                    callback(phrase, navController)
             })))
         }))
 
@@ -258,7 +257,7 @@ class RecoveryKeyFlowController {
     }
     
     private static func ensurePinAvailable(pin: String?,
-                                           navigationController: UINavigationController,
+                                           presentingViewController: UIViewController?,
                                            keyMaster: KeyMaster,
                                            pinResponse: @escaping (String) -> Void) {
         
@@ -282,6 +281,6 @@ class RecoveryKeyFlowController {
         navigation.modalPresentationStyle = .overFullScreen
         navigation.modalPresentationCapturesStatusBarAppearance = true
         
-        navigationController.present(navigation, animated: true, completion: nil)
+        presentingViewController?.present(navigation, animated: true, completion: nil)
     }
 }

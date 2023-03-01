@@ -30,12 +30,7 @@ class WalletConnectionSettings {
     static func defaultMode(for currency: Currency) -> WalletConnectionMode {
         assert(currency.tokenType == .native)
         switch currency.uid {
-        case Currencies.shared.btc?.uid:
-            return .api_only
-        case Currencies.shared.bch?.uid:
-            return .api_only
-        case Currencies.shared.eth?.uid:
-            return .api_only
+            // Currently we use .api_only mode. Could change in the future
         default:
             return .api_only
         }
@@ -62,7 +57,7 @@ class WalletConnectionSettings {
     func set(mode: WalletConnectionMode, for currency: Currency) {
         assert(currency.tokenType == .native)
         assert(currency.isBitcoin || currency.isEthereum) //TODO:CRYPTO_V2
-        guard system.isModeSupported(mode, for: currency.network) || E.isRunningTests else { return assertionFailure() }
+        guard system.isModeSupported(mode, for: currency.network) || E.isRunningTests else { return }
         walletInfo.connectionModes[currency.uid] = mode.serialization
         guard let wm = currency.wallet?.manager else { return assert(E.isRunningTests) }
         system.setConnectionMode(mode, forWalletManager: wm)
@@ -71,7 +66,7 @@ class WalletConnectionSettings {
 
     private func save() {
         do {
-            guard let newWalletInfo = try kvStore.set(walletInfo) as? WalletInfo else { return assertionFailure() }
+            guard let newWalletInfo = try kvStore.set(walletInfo) as? WalletInfo else { return }
             self.walletInfo = newWalletInfo
         } catch let error {
             print("[KV] error setting wallet info: \(error)")

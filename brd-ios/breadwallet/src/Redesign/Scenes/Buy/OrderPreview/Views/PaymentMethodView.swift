@@ -21,6 +21,7 @@ struct PaymentMethodViewModel: ViewModel {
     var methodTitle: LabelViewModel?
     var logo: ImageViewModel?
     var type: PaymentCard.PaymentType?
+    var previewFor: PreviewType?
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
     var cvvTitle: TitleValueViewModel? = .init(title: .text(L10n.Buy.confirmCVV),
@@ -59,11 +60,10 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     
     private lazy var cvvTextField: FETextField = {
         let view = FETextField()
-        view.hideTitleForState = .filled
         return view
     }()
     
-    var didTypeCVV: ((String?) -> Void)? {
+    var didTypeCVV: ((UITextField) -> Void)? {
         get {
             cvvTextField.valueChanged
         }
@@ -128,7 +128,7 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         super.setup(with: viewModel)
         
         switch viewModel?.type {
-        case .buyAch:
+        case .ach:
             setupForAch()
             
         default:
@@ -152,7 +152,7 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
     }
     
     private func setupForAch() {
-        methodTitleLabel.setup(with: .text(L10n.Buy.transferFromBank))
+        methodTitleLabel.setup(with: .text(viewModel?.previewFor == .sell ? L10n.Sell.widrawToBank : L10n.Buy.transferFromBank))
         cvvTextField.isHidden = true
         cvvTitle.isHidden = true
         

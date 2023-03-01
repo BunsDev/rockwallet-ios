@@ -1,6 +1,6 @@
 //
 //  Coordinator.swift
-//  
+//
 //
 //  Created by Rok Cresnik on 01/12/2021.
 //
@@ -45,8 +45,7 @@ class BaseCoordinator: NSObject,
     var parentCoordinator: Coordinatable?
     var childCoordinators: [Coordinatable] = []
     var navigationController: UINavigationController
-    var isKYCLevelTwo: Bool?
-
+    
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -62,9 +61,9 @@ class BaseCoordinator: NSObject,
         let coordinator: Coordinatable
         
         if let profile = UserManager.shared.profile,
-           profile.email?.isEmpty == false,
+           profile.email.isEmpty == false,
            profile.status == .emailPending {
-            coordinator = RegistrationCoordinator(navigationController: nvc)
+            coordinator = AccountCoordinator(navigationController: nvc)
         } else {
             coordinator = ProfileCoordinator(navigationController: nvc)
         }
@@ -75,97 +74,151 @@ class BaseCoordinator: NSObject,
         navigationController.show(nvc, sender: nil)
     }
     
-    func showRegistration() {
-        guard navigationController.presentedViewController?.children.contains(where: { $0 is RegistrationConfirmationViewController }) == nil else { return }
-        
+    func handleUserAccount() {
         let nvc = RootNavigationController()
-        let coordinator = RegistrationCoordinator(navigationController: nvc)
+        let coordinator = AccountCoordinator(navigationController: nvc)
+        
+        if DynamicLinksManager.shared.code != nil {
+            UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.dismiss(animated: true)
+        }
+        
         coordinator.start()
         coordinator.parentCoordinator = self
-        
         childCoordinators.append(coordinator)
-        navigationController.show(coordinator.navigationController, sender: nil)
+        UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .swap, role: .kyc1) { showPopup in
-                guard showPopup else { return }
+            decideFlow { showPopup in
+                guard showPopup, let profile = UserManager.shared.profile else { return }
                 
-                if UserManager.shared.profile?.canSwap == false {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon)
+                if profile.kycAccessRights.hasSwapAccess {
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
+                        vc?.dataStore?.currencies = currencies
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                    }
+                    
                     return
-                }
-
-                self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
-                    vc?.dataStore?.currencies = currencies
-                    vc?.dataStore?.coreSystem = coreSystem
-                    vc?.dataStore?.keyStore = keyStore
-                    vc?.dataStore?.isKYCLevelTwo = self?.isKYCLevelTwo
+                } else if profile.status.isKYCLocationRestricted {
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .swapAndBuyCard
+                    }
+                    
+                    return
+                } else if profile.kycAccessRights.restrictionReason == .kyc {
+                    self?.showAccountVerification(flow: .swap)
+                    
+                    return
                 }
             }
         }
     }
     
-    func showBuy(coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            upgradeAccountOrShowPopup(flow: .buy, role: .kyc2) { showPopup in
-                guard showPopup else { return }
+            decideFlow { showPopup in
+                guard showPopup, let profile = UserManager.shared.profile else { return }
                 
-                if UserManager.shared.profile?.canBuy == false {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon)
+                if profile.kycAccessRights.hasBuyAccess, type == .card {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                        vc?.dataStore?.paymentMethod = type
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                        vc?.prepareData()
+                    }
+                    
+                    return
+                } else if profile.status.isKYCLocationRestricted {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .swapAndBuyCard
+                    }
+                    
+                    return
+                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .card {
+                    self?.showAccountVerification(flow: .buy)
+                    
                     return
                 }
                 
-                self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                if profile.kycAccessRights.hasAchAccess == true, type == .ach {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                        vc?.dataStore?.paymentMethod = type
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                        vc?.prepareData()
+                    }
+                    
+                    return
+                } else if profile.status.isKYCLocationRestricted == true, type == .ach {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .buyAch
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                    }
+                    
+                    return
+                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .ach {
+                    self?.showAccountVerification(flow: .buy)
+                    
+                    return
+                }
+            }
+        }
+    }
+    
+    func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+            decideFlow { showPopup in
+                guard showPopup else { return }
+                
+                // TODO: Handle when Sell is ready.
+//                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false {
+//                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
+//                        vc?.reason = .sell
+//                    }
+//                    return
+//                }
+                
+                self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.Sell) { vc in
+                    vc?.dataStore?.currency = currency
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    vc?.prepareData()
                 }
             }
         }
     }
     
     func showProfile() {
-        upgradeAccountOrShowPopup { [weak self] _ in
+        decideFlow { [weak self] showPopup in
+            guard showPopup else { return }
+            
             self?.openModally(coordinator: ProfileCoordinator.self, scene: Scenes.Profile)
         }
     }
     
-    func showVerifications() {
-        open(scene: Scenes.AccountVerification) { vc in
-            vc.dataStore?.profile = UserManager.shared.profile
-            vc.prepareData()
-        }
-    }
-    
-    func dismissFlow() {
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
-    }
-    
-    func showAccountVerification() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.AccountVerification) { vc in
-            vc?.dataStore?.profile = UserManager.shared.profile
-            vc?.prepareData()
-        }
+    func showAccountVerification(flow: ProfileModels.ExchangeFlow? = nil) {
+        let nvc = RootNavigationController()
+        let coordinator = KYCCoordinator(navigationController: nvc)
+        coordinator.start(flow: flow)
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        navigationController.present(nvc, animated: true)
     }
     
     func showDeleteProfileInfo(keyMaster: KeyStore) {
         let nvc = RootNavigationController()
-        let coordinator = DeleteProfileInfoCoordinator(navigationController: nvc)
-        coordinator.start(with: keyMaster)
+        let coordinator = AccountCoordinator(navigationController: nvc)
+        coordinator.showDeleteProfile(with: keyMaster)
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
         UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
-        
-        // TODO: Cleanup when everything is moved to Coordinators.
-        // There are problems with showing this vc from both menu and profile menu.
-        // Cannot get it work reliably. Navigation Controllers are messed up.
-        // More hint: deleteAccountCallback inside ModalPresenter.
     }
     
-    func showExchangeDetails(with exchangeId: String?, type: Transaction.TransactionType) {
+    func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
         open(scene: ExchangeDetailsViewController.self) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId
@@ -174,14 +227,18 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func showSupport() {
-        guard let url = URL(string: C.supportLink) else { return }
+    func showInWebView(urlString: String, title: String) {
+        guard let url = URL(string: urlString) else { return }
         let webViewController = SimpleWebViewController(url: url)
-        webViewController.setup(with: .init(title: L10n.MenuButton.support))
+        webViewController.setup(with: .init(title: title))
         let navController = RootNavigationController(rootViewController: webViewController)
         webViewController.setAsNonDismissableModal()
         
         navigationController.present(navController, animated: true)
+    }
+    
+    func showSupport() {
+        showInWebView(urlString: C.supportLink, title: L10n.MenuButton.support)
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
@@ -204,6 +261,16 @@ class BaseCoordinator: NSObject,
         guard let vc = navigationController.viewControllers.first as? BuyViewController else {
             return
         }
+        vc.didTriggerGetData?()
+        navigationController.popToViewController(vc, animated: true)
+    }
+    
+    func showBuyWithDifferentPayment(paymentMethod: PaymentCard.PaymentType?) {
+        guard let vc = navigationController.viewControllers.first as? BuyViewController else {
+            return
+        }
+        vc.updatePaymentMethod()
+        
         navigationController.popToViewController(vc, animated: true)
     }
     
@@ -220,7 +287,12 @@ class BaseCoordinator: NSObject,
         childCoordinators.removeAll(where: { $0 === child })
     }
     
-    // only call from coordinator subclasses
+    func dismissFlow() {
+        navigationController.dismiss(animated: true)
+        parentCoordinator?.childDidFinish(child: self)
+    }
+    
+    /// Only call from coordinator subclasses
     func open<T: BaseControllable>(scene: T.Type,
                                    presentationStyle: UIModalPresentationStyle = .fullScreen,
                                    configure: ((T) -> Void)? = nil) {
@@ -231,7 +303,7 @@ class BaseCoordinator: NSObject,
         navigationController.show(controller, sender: nil)
     }
 
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func set<C: BaseCoordinator,
              VC: BaseControllable>(coordinator: C.Type,
                                    scene: VC.Type,
@@ -248,7 +320,7 @@ class BaseCoordinator: NSObject,
         navigationController.setViewControllers([controller], animated: true)
     }
     
-    // only call from coordinator subclasses
+    /// Only call from coordinator subclasses
     func openModally<C: BaseCoordinator,
                      VC: BaseControllable>(coordinator: C.Type,
                                            scene: VC.Type,
@@ -271,56 +343,39 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     // In which case we show 3rd party popup or continue to Buy/Swap.
-    //TODO: refactor this once the "coming soon" screen is added
-    func upgradeAccountOrShowPopup(flow: ExchangeFlow? = nil, role: CustomerRole? = nil, completion: ((Bool) -> Void)?) {
+    func decideFlow(completion: ((Bool) -> Void)?) {
+        guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
+            completion?(false)
+            return
+        }
+        
         let nvc = RootNavigationController()
         var coordinator: Coordinatable?
         
         switch UserManager.shared.profileResult {
         case .success(let profile):
-            let roles = profile?.roles
             let status = profile?.status
-            isKYCLevelTwo = status == .levelTwo(.levelTwo)
             
-            if roles?.contains(.unverified) == true
-                || roles?.isEmpty == true
-                || status == VerificationStatus.emailPending
-                || status == VerificationStatus.none {
-                coordinator = RegistrationCoordinator(navigationController: nvc)
+            if status == VerificationStatus.emailPending
+                || status == VerificationStatus.none
+                || profile?.isMigrated == false {
+                coordinator = AccountCoordinator(navigationController: nvc)
                 
-            } else if let kycLevel = role,
-                      roles?.contains(kycLevel) == true {
+            } else {
                 completion?(true)
-            } else if role == nil {
-                completion?(true)
-            } else if let role = role {
-                guard profile?.roles.contains(role) == false else {
-                    completion?(true)
-                    return
-                }
-                    
-                let coordinator = KYCCoordinator(navigationController: nvc)
-                coordinator.role = role
-                coordinator.flow = flow
-                coordinator.start()
-                coordinator.parentCoordinator = self
-                childCoordinators.append(coordinator)
-                navigationController.show(coordinator.navigationController, sender: nil)
-                
-                completion?(false)
+                return
             }
             
         case .failure(let error):
-            guard error as? NetworkingError == .sessionExpired
-                    || error as? NetworkingError == .parameterMissing else {
+            guard error as? NetworkingError == .sessionExpired || error as? NetworkingError == .parameterMissing else {
                 completion?(false)
                 return
             }
             
-            coordinator = RegistrationCoordinator(navigationController: RootNavigationController())
+            coordinator = AccountCoordinator(navigationController: RootNavigationController())
             
         default:
-            completion?(true)
+            completion?(false)
             return
         }
         
@@ -337,16 +392,12 @@ class BaseCoordinator: NSObject,
         completion?(false)
     }
     
-    private func checkProfileforRole(role: CustomerRole = .kyc1, completion: ((Bool) -> Void)?) {
-        UserManager.shared.refresh { result in
-            guard case let .success(profile) = result,
-                  profile?.roles.contains(role) == true
-            else {
-                completion?(false)
-                return
-            }
-            completion?(true)
-        }
+    func showBottomSheetAlert(type: AlertType, completion: (() -> Void)? = nil) {
+        guard let activeWindow = UIApplication.shared.activeWindow else { return }
+        
+        AlertPresenter(window: activeWindow).presentAlert(type, completion: {
+            completion?()
+        })
     }
     
     func showToastMessage(with error: Error? = nil,
@@ -363,7 +414,7 @@ class BaseCoordinator: NSObject,
             UserManager.shared.refresh()
             
         case .sessionExpired:
-            openModally(coordinator: RegistrationCoordinator.self, scene: Scenes.Registration) { vc in
+            openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignIn) { vc in
                 vc?.navigationItem.hidesBackButton = true
             }
             
@@ -379,6 +430,17 @@ class BaseCoordinator: NSObject,
         navigationController.showToastMessage(model: model,
                                               configuration: configuration,
                                               onTapCallback: onTapCallback)
+    }
+    
+    func hideMessage() {
+        guard let superview = UIApplication.shared.activeWindow,
+              let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
+        
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
+            view.alpha = 0
+        } completion: { _ in
+            view.removeFromSuperview()
+        }
     }
     
     func showUnderConstruction(_ feat: String) {
@@ -430,7 +492,7 @@ class BaseCoordinator: NSObject,
         view.layoutIfNeeded()
         view.alpha = 0
             
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             view.alpha = 1
         }
         

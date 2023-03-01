@@ -13,69 +13,49 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     weak var viewController: BuyViewController?
     
+    var paymentModel: CardSelectionViewModel?
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
     
     // MARK: - BuyActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        var sections: [Models.Sections] = [
+        guard let item = actionResponse.item as? Models.Item else { return }
+        
+        var sections: [Models.Section] = [
             .rateAndTimer,
             .from,
             .paymentMethod,
             .accountLimits
         ]
         
-        if UserManager.shared.profile?.canUseAch == true {
+        if item.achEnabled == true {
             sections.insert(.segment, at: 0)
         }
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        let paymentSegment = SegmentControlViewModel(selectedIndex: .buyCard)
+        let paymentSegment = SegmentControlViewModel(selectedIndex: item.type)
         
         let paymentMethodViewModel: CardSelectionViewModel
-        switch paymentSegment.selectedIndex {
-        case .buyAch:
+        if paymentSegment.selectedIndex == .ach && item.achEnabled == true {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)
-        default:
+        } else {
             paymentMethodViewModel = CardSelectionViewModel()
         }
         
-        let sectionRows: [Models.Sections: [ViewModel]] =  [
+        let sectionRows: [Models.Section: [ViewModel]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
-            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant),
-                                          shouldShowFiatField: true)],
+            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
                 // dont ask
-                LabelViewModel.text("n\n\n\n\n")
+                LabelViewModel.text("\n\n\n\n")
             ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
-    }
-    
-    func presentExchangeRate(actionResponse: BuyModels.Rate.ActionResponse) {
-        guard let from = actionResponse.from,
-              let to = actionResponse.to,
-              let quote = actionResponse.quote else {
-            return
-        }
-        
-        let text = String(format: "1 %@ = %@ %@", to.uppercased(), RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", from)
-        let minText = ExchangeFormatter.fiat.string(for: quote.minimumValue) ?? ""
-        let maxText = ExchangeFormatter.fiat.string(for: quote.maximumValue) ?? ""
-        let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achLifetimeRemainingLimit) ?? ""
-        let limitText = actionResponse.method == .buyAch ? L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText)
-        exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
-                                                      timer: TimerViewModel(till: quote.timestamp,
-                                                                            repeats: false),
-                                                      showTimer: false)
-        
-        viewController?.displayExchangeRate(responseDisplay: .init(rate: exchangeRateViewModel,
-                                                                   limits: .text(limitText)))
     }
     
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse) {
@@ -91,17 +71,32 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         cryptoModel = .init(amount: actionResponse.amount,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
-                            title: .text(L10n.Swap.iWant),
-                            shouldShowFiatField: true)
+                            title: .text(L10n.Swap.iWant))
         
-        switch actionResponse.paymentMethod {
-        case .buyAch:
+        // TODO: refactor this :S
+        switch actionResponse.type {
+        case .ach:
             if let paymentCard = actionResponse.card {
-                cardModel = .init(title: .text(L10n.Buy.transferFromBank),
-                                  subtitle: nil,
-                                  logo: .image(Asset.bank.image),
-                                  cardNumber: .text(paymentCard.displayName),
-                                  userInteractionEnabled: false)
+                switch actionResponse.card?.status {
+                case .statusOk:
+                    cardModel = .init(title: .text(L10n.Buy.transferFromBank),
+                                      subtitle: nil,
+                                      logo: .image(Asset.bank.image),
+                                      cardNumber: .text(paymentCard.displayName),
+                                      userInteractionEnabled: false)
+                    
+                default:
+                    cardModel = .init(title: .text(L10n.Buy.achPayments),
+                                      subtitle: .text(L10n.Buy.relinkBankAccount),
+                                      userInteractionEnabled: true)
+                    
+                    let model = InfoViewModel(description: .text(L10n.Buy.Ach.accountUnlinked),
+                                              dismissType: .auto)
+                    let config = Presets.InfoView.error
+                    
+                    viewController?.displayMessage(responseDisplay: .init(model: model,
+                                                                          config: config))
+                }
             } else {
                 cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                    subtitle: .text(L10n.Buy.linkBankAccount),
@@ -119,6 +114,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                 cardModel = .init(userInteractionEnabled: true)
             }
         }
+        
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
@@ -131,7 +127,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
         
         let profile = UserManager.shared.profile
-        let lifetimeLimit = profile?.buyLifetimeRemainingLimit ?? 0
+        let lifetimeLimit = profile?.buyAllowanceLifetime ?? 0
         
         switch fiat {
         case _ where fiat <= 0:
@@ -172,27 +168,19 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse) {
-        viewController?.displayOrderPreview(responseDisplay: .init())
+        viewController?.displayOrderPreview(responseDisplay: .init(availablePayments: actionResponse.availablePayments))
     }
     
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse) {
         viewController?.displayNavigateAssetSelector(responseDisplay: .init(title: L10n.Swap.iWant))
     }
     
-    func presentLinkToken(actionResponse: BuyModels.PlaidLinkToken.ActionResponse) {
-        viewController?.displayLinkToken(responseDisplay: .init(linkToken: actionResponse.linkToken))
-    }
-    
-    func presentPublicTokenSuccess(actionResponse: BuyModels.PlaidPublicToken.ActionResponse) {
-        viewController?.displayAchData(actionResponse: .init())
+    func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse) {
+        guard let isRelinking = actionResponse.isRelinking else { return }
         
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Buy.achSuccess)),
+        let description = isRelinking ? L10n.Buy.achPaymentMethodRelinked : L10n.Buy.achSuccess
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(description)),
                                                               config: Presets.InfoView.verification))
-        
-    }
-    
-    func presentFailure(actionResponse: BuyModels.Failure.ActionResponse) {
-        viewController?.displayFailure(responseDisplay: .init())
     }
     
     func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
@@ -209,8 +197,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
     }
     
-    func presentUSDCMessage(actionResponse: BuyModels.AchData.ActionResponse) {
-        let infoMessage = NSMutableAttributedString(string: L10n.Buy.disabledUSDCMessage)
+    func presentDisabledCurrencyMessage(actionResponse: BuyModels.AchData.ActionResponse) {
+        let currencyCode = actionResponse.currencyCode ?? ""
+        let infoMessage = NSMutableAttributedString(string: L10n.Buy.Ach.walletDisabled(currencyCode, L10n.WalletConnectionSettings.link))
         let linkRange = infoMessage.mutableString.range(of: L10n.WalletConnectionSettings.link)
         
         if linkRange.location != NSNotFound {
@@ -221,7 +210,49 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                   dismissType: .tapToDismiss)
         let config = Presets.InfoView.verification
         
-        viewController?.displayManageAssetsMessage(actionResponse: .init(model: model, config: config))
+        viewController?.displayManageAssetsMessage(responseDisplay: .init(model: model, config: config))
+    }
+    
+    func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse) {
+        let message = actionResponse.method == .card ? L10n.Buy.switchedToDebitCard : L10n.Buy.switchedToAch
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(message)),
+                                                              config: Presets.InfoView.verification))
+    }
+    
+    func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse) {
+        let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
+        let profile = UserManager.shared.profile
+        
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
+        let dailyMinLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMin : profile?.achAllowanceDailyMin
+        let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
+        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
+        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
+        
+        let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
+        let dailyMinLimitText = ExchangeFormatter.crypto.string(for: dailyMinLimit) ?? ""
+        let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
+        let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
+        let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
+        
+        let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
+        let wrappedViewModel: LimitsPopupViewModel = .init(perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
+                                                                                 value: .text("$\(perTransactionLimitText) \(C.usdCurrencyCode)")),
+                                                           dailyMin: .init(title: .text(L10n.Buy.dailyMinLimits),
+                                                                           value: .text("$\(dailyMinLimitText) \(C.usdCurrencyCode)")),
+                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
+                                                                           value: .text("$\(dailyMaxLimitText) \(C.usdCurrencyCode)")),
+                                                           weekly: .init(title: .text(L10n.Account.weekly),
+                                                                         value: .text("$\(weeklyLimitText) \(C.usdCurrencyCode)")),
+                                                           monthly: .init(title: .text(L10n.Account.monthly),
+                                                                          value: .text("$\(monthlyLimitText) \(C.usdCurrencyCode)")))
+        
+        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(title: .text(title),
+                                                                           trailing: .init(image: Asset.close.image),
+                                                                           wrappedView: wrappedViewModel,
+                                                                           hideSeparator: true)
+        
+        viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
     }
     
     // MARK: - Additional Helpers

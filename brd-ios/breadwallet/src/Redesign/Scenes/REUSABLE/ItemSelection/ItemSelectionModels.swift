@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ItemSelectable {
+    var displayName: String? { get }
+    var displayImage: ImageViewModel? { get }
+}
+
 enum ItemSelectionModels {
 
     struct Item {
@@ -15,7 +20,7 @@ enum ItemSelectionModels {
         var isAddingEnabled: Bool?
     }
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case addItem
         case items
         
@@ -69,6 +74,12 @@ enum ItemSelectionModels {
         struct ResponseDisplay {
             var popupViewModel: PopupViewModel
             var popupConfig: PopupConfiguration
+        }
+    }
+    
+    enum FindAddress {
+        struct ViewAction {
+            var input: String?
         }
     }
 }

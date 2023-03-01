@@ -127,15 +127,15 @@ class ImportKeyViewController: UIViewController, Subscriber {
         bullet.tintColor = LightColors.Text.two
         message.text = L10n.Import.message
         warning.text = L10n.Import.warning
-
+        
         // Set up the tap handler for the "Scan Private Key" button.
         button.tap = { [weak self] in
-            guard let self = self else { return }
             let scan = ScanViewController(forScanningPrivateKeysOnly: true) { result in
                 guard let result = result else { return }
-                self.handleScanResult(result)
+                self?.handleScanResult(result)
             }
-            self.parent?.present(scan, animated: true, completion: nil)
+            
+            self?.parent?.present(scan, animated: true, completion: nil)
         }
     }
     
@@ -202,7 +202,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
         let feeAmount = Amount(cryptoAmount: fee.fee, currency: wallet.currency)
         let message = String(format: L10n.Import.confirm("%@", "%@"), balanceAmount.fiatDescription, feeAmount.fiatDescription)
         
-        importConfirmationAlert.setup(with: .init(trailing: .init(image: Asset.close.name),
+        importConfirmationAlert.setup(with: .init(trailing: .init(image: Asset.close.image),
                                                   confirm: .init(title: L10n.Button.continueAction),
                                                   cancel: .init(title: L10n.Button.cancel),
                                                   wrappedView: .init(title: .text(L10n.Import.title),
@@ -219,7 +219,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
             make.edges.equalToSuperview()
         }
         
-        UIView.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.importConfirmationAlert.alpha = 1
         }
     }
@@ -275,7 +275,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
         viewModel.tx?.updateGiftStatus(gift: newGift, kvStore: kvStore)
         
         if let hash = newGift.txnHash {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                 Store.trigger(name: .txMetaDataUpdated(hash))
             }
         }
@@ -298,7 +298,42 @@ class ImportKeyViewController: UIViewController, Subscriber {
         case .unexpectedError:
             showErrorMessage(L10n.Alert.somethingWentWrong)
         case .clientError(let error):
-            showErrorMessage(error.localizedDescription)
+            let errorMsg = error.localizedDescription
+
+            do {
+                let regex = try NSRegularExpression(pattern: #"SystemClientError error (\d+)"#)
+                let results = regex.matches(in: errorMsg,
+                                            range: NSRange(errorMsg.startIndex..., in: errorMsg))
+                let resultString: [String] = results.map {
+                    String(errorMsg[Range($0.range, in: errorMsg)!])
+                }
+
+                if resultString.isEmpty != true {
+                    let errorNumber = resultString[0].filter { "0"..."9" ~= $0 }
+                    switch Int(errorNumber) {
+                    case 0:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 1:
+                        showErrorMessage(L10n.Import.Error.failedSubmit)
+                    case 2:
+                        showErrorMessage(L10n.ErrorMessages.networkIssues)
+                    case 3:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 4:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 5:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    case 6:
+                        showErrorMessage(L10n.ApiClient.jsonError)
+                    default:
+                        showErrorMessage(error.localizedDescription)
+                    }
+                } else {
+                    showErrorMessage(error.localizedDescription)
+                }
+            } catch let error {
+                showErrorMessage(error.localizedDescription)
+            }
         }
     }
     

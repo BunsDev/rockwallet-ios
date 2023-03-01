@@ -72,8 +72,8 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
     
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<ScrollableButtonsView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ScrollableButtonsViewModel
+        guard let cell: WrapperTableViewCell<HorizontalButtonsView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = sectionRows[section]?[indexPath.row] as? HorizontalButtonsViewModel
         else {
             return UITableViewCell()
         }
@@ -173,8 +173,8 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
                                 buttons: [
                                     .init(title: "Donate"),
                                     .init(title: "Donate",
-                                          image: Asset.close.name),
-                                    .init(image: Asset.close.name)
+                                          image: Asset.close.image),
+                                    .init(image: Asset.close.image)
                                 ]))
         popup.closeCallback = { [weak self] in
             self?.hideInfo()
@@ -182,7 +182,7 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
         
         popup.buttonCallbacks = [ { print("Donated 10$! Thanks!") } ]
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             popup.alpha = 1
         }
     }
@@ -192,7 +192,7 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
         
         toggleBlur(animated: true)
         
-        UIView.animate(withDuration: Presets.Animation.duration) {
+        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             popup.alpha = 0
         } completion: { _ in
             popup.removeFromSuperview()

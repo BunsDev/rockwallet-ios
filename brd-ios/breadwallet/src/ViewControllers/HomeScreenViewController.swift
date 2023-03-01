@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SnapKit
+import Lottie
 
 class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     private let walletAuthenticator: WalletAuthenticator
@@ -25,6 +27,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = CornerRadius.large.rawValue
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        view.backgroundColor = LightColors.Background.cards
         return view
     }()
     
@@ -32,8 +35,11 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         let view = UITabBar()
         view.delegate = self
         view.isTranslucent = false
-        view.barTintColor = LightColors.Background.cards
-        view.tintColor = LightColors.Text.two
+        let appearance = view.standardAppearance
+        appearance.shadowImage = nil
+        appearance.shadowColor = nil
+        appearance.backgroundColor = LightColors.Background.cards
+        view.standardAppearance = appearance
         view.unselectedItemTintColor = LightColors.Text.two
         return view
     }()
@@ -66,12 +72,19 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         return view
     }()
     
+    private lazy var drawer: RWDrawer = {
+        let view = RWDrawer()
+        return view
+    }()
+    
     var didSelectCurrency: ((Currency) -> Void)?
     var didTapManageWallets: (() -> Void)?
-    var didTapBuy: (() -> Void)?
+    var didTapBuy: ((PaymentCard.PaymentType) -> Void)?
+    var didTapSell: (() -> Void)?
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
+    var didTapCreateAccountFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
     var isInExchangeFlow = false
@@ -96,10 +109,17 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
                                  (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
+                                 // TODO: reenable drawer
+//                                 (L10n.Drawer.title, nil, #selector(buy)),
                                  (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
                                  (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
     
+    let animationView: LottieAnimationView = {
+        let view = LottieAnimationView(animation: Animations.buyAndSell.animation)
+        return view
+    }()
+
     // MARK: - Lifecycle
     
     init(walletAuthenticator: WalletAuthenticator, coreSystem: CoreSystem) {
@@ -123,7 +143,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         isRefreshing = true
         
         UserManager.shared.refresh { [weak self] _ in
-            self?.attemptShowGeneralPrompt()
+            PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: self?.walletAuthenticator, on: self)
         }
         
         Currencies.shared.reloadCurrencies()
@@ -145,7 +165,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        attemptShowGeneralPrompt()
+        PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: walletAuthenticator, on: self)
     }
     
     override func viewDidLoad() {
@@ -178,6 +198,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         subHeaderView.addSubview(logoImageView)
         subHeaderView.addSubview(totalAssetsTitleLabel)
         subHeaderView.addSubview(totalAssetsAmountLabel)
+        
+        let promptContainerScrollView = PromptPresenter.shared.promptContainerScrollView
+        let promptContainerStack = PromptPresenter.shared.promptContainerStack
         
         view.addSubview(promptContainerScrollView)
         promptContainerScrollView.addSubview(promptContainerStack)
@@ -236,11 +259,25 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: 84.0)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: 84)])
         
         tabBar.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(Margins.large.rawValue)
+            make.leading.trailing.equalToSuperview()
         }
+ 
+        // TODO: reenable bottom drawer
+//        view.addSubview(drawer)
+//        drawer.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
+//            make.leading.trailing.bottom.equalToSuperview()
+//        }
+        
+//        view.addSubview(animationView)
+//        animationView.snp.makeConstraints { make in
+//            make.centerX.equalTo(tabBar.snp.centerX)
+//            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
+//        }
     }
     
     private func setInitialData() {
@@ -249,7 +286,30 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         navigationItem.titleView = UIView()
         
         setupToolbar()
+//        setupDrawer()
         updateTotalAssets()
+        setupAnimationView()
+    }
+    
+    func setupDrawer() {
+        drawer.callbacks = [ { [weak self] in
+            self?.didTapDrawerButton(.card)
+        }, { [weak self] in
+            self?.didTapDrawerButton(.ach)
+        }, { [weak self]
+            in self?.didTapDrawerButton()
+        }]
+        drawer.configure(with: DrawerConfiguration())
+        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84))
+    }
+    
+    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+        if let type = type {
+            didTapBuy?(type)
+        } else {
+            didTapSell?()
+        }
+        animationView.play(fromProgress: 1, toProgress: 0)
     }
     
     private func setupToolbar() {
@@ -258,10 +318,19 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         tabBarButtons.forEach { title, image, _ in
             let button = UITabBarItem(title: title, image: image, selectedImage: image)
             button.setTitleTextAttributes([NSAttributedString.Key.font: Fonts.button], for: .normal)
+            var insets = button.imageInsets
+            insets.bottom = Margins.extraSmall.rawValue
+            insets.top = -Margins.extraSmall.rawValue
+            button.imageInsets = insets
             buttons.append(button)
         }
         
         tabBar.items = buttons
+    }
+    
+    private func setupAnimationView() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(buy))
+        animationView.addGestureRecognizer(gesture)
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -289,22 +358,26 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         // Prompts
         Store.subscribe(self, name: .didUpgradePin, callback: { _ in
-            self.hidePrompt(.upgradePin)
+            PromptPresenter.shared.hidePrompt(.upgradePin)
         })
         
         Store.subscribe(self, name: .didWritePaperKey, callback: { _ in
-            self.hidePrompt(.paperKey)
+            PromptPresenter.shared.hidePrompt(.paperKey)
         })
         
         Store.subscribe(self, name: .didApplyKyc, callback: { _ in
-            self.hidePrompt(.kyc)
+            PromptPresenter.shared.hidePrompt(.kyc)
+        })
+        
+        Store.subscribe(self, name: .didCreateAccount, callback: { _ in
+            PromptPresenter.shared.hidePrompt(.noAccount)
         })
         
         Reachability.addDidChangeCallback({ [weak self] isReachable in
-            self?.hidePrompt(.noInternet)
+            PromptPresenter.shared.hidePrompt(.noInternet)
             
             if !isReachable {
-                self?.attemptShowGeneralPrompt()
+                PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: self?.walletAuthenticator, on: self)
             }
         })
         
@@ -314,6 +387,27 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             self.updateTotalAssets()
             self.updateAmountsForWidgets()
         })
+        
+        Store.subscribe(self, name: .promptKyc, callback: { _ in
+            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+        })
+        
+        Store.subscribe(self, name: .promptNoAccount, callback: { _ in
+            self.didTapCreateAccountFromPrompt?()
+        })
+        
+        PromptPresenter.shared.trailingButtonCallback = { [weak self] promptType in
+            switch promptType {
+            case .kyc:
+                self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+                
+            case .noAccount:
+                self?.didTapCreateAccountFromPrompt?()
+                
+            default:
+                break
+            }
+        }
     }
     
     private func updateTotalAssets() {
@@ -353,109 +447,41 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     // MARK: Actions
     
-    @objc private func showHome() {}
+    @objc private func showHome() {
+        drawer.hide()
+    }
+    
+    private func commotTapAction() {
+        guard drawer.isShown else { return }
+        
+        animationView.play(fromProgress: 1, toProgress: 0)
+        drawer.toggle()
+    }
     
     @objc private func buy() {
-        didTapBuy?()
+        didTapBuy?(.card)
+        
+        // TODO: uncomment to reenable drawer
+//        if drawer.isShown {
+//            animationView.play(fromProgress: 1, toProgress: 0)
+//        } else {
+//            animationView.play()
+//        }
+//        drawer.toggle()
     }
     
     @objc private func trade() {
+        commotTapAction()
         didTapTrade?()
     }
     
     @objc private func profile() {
+        commotTapAction()
         didTapProfile?()
     }
     
     @objc private func menu() {
+        commotTapAction()
         didTapMenu?()
-    }
-    
-    // MARK: - Prompt
-    
-    private lazy var promptContainerStack: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.distribution = .fill
-        return view
-    }()
-    
-    private lazy var promptContainerScrollView: UIScrollView = {
-        let view = UIScrollView()
-        return view
-    }()
-    
-    private var generalPromptView: PromptView?
-    
-    private func attemptShowGeneralPrompt() {
-        UserManager.shared.refresh { [weak self] _ in
-            guard let self = self,
-                  let nextPrompt = PromptFactory.nextPrompt(walletAuthenticator: self.walletAuthenticator),
-                  !nextPrompt.didPrompt() else { return }
-            
-            self.generalPromptView = PromptFactory.createPromptView(prompt: nextPrompt, presenter: self)
-            
-            _ = nextPrompt.didPrompt()
-            
-            self.layoutPrompts(self.generalPromptView)
-            
-            self.generalPromptView?.kycStatusView.headerButtonCallback = { [weak self] in
-                self?.hidePrompt(.kyc)
-            }
-            
-            self.generalPromptView?.kycStatusView.trailingButtonCallback = { [weak self] in
-                self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
-            }
-            
-            self.generalPromptView?.dismissButton.tap = { [unowned self] in
-                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type else { return }
-                self.hidePrompt(firstType)
-            }
-            
-            self.generalPromptView?.continueButton.tap = { [unowned self] in
-                if let trigger = nextPrompt.trigger {
-                    Store.trigger(name: trigger)
-                }
-                
-                guard let firstType = (self.promptContainerStack.arrangedSubviews as? [PromptView])?.first?.type else { return }
-                self.hidePrompt(firstType)
-            }
-        }
-    }
-    
-    private func hidePrompt(_ promptType: PromptType) {
-        guard let prompt = (promptContainerStack.arrangedSubviews as? [PromptView])?.first(where: { $0.type == promptType }) else { return }
-        
-        let next = promptContainerStack.arrangedSubviews.dropFirst().first
-        next?.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
-        
-        UIView.animate(withDuration: Presets.Animation.duration, delay: 0, options: .curveLinear) {
-            prompt.transform = .init(translationX: UIScreen.main.bounds.width, y: 0)
-            prompt.isHidden = true
-            
-            next?.isHidden = false
-            next?.transform = .identity
-        } completion: { [weak self] _ in
-            prompt.removeFromSuperview()
-            
-            self?.promptContainerStack.layoutIfNeeded()
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    private func layoutPrompts(_ prompt: PromptView?) {
-        guard let prompt = prompt,
-              (promptContainerStack.arrangedSubviews as? [PromptView])?.contains(where: { $0.type == prompt.type }) == false else { return }
-        
-        prompt.transform = .init(translationX: -UIScreen.main.bounds.width, y: 0)
-        promptContainerStack.insertArrangedSubview(prompt, at: 0)
-        
-        UIView.animate(withDuration: Presets.Animation.duration, delay: 0, options: .curveLinear) { [weak self] in
-            self?.promptContainerStack.arrangedSubviews.dropFirst().forEach({ $0.isHidden = true })
-            prompt.transform = .identity
-        } completion: { [weak self] _ in
-            self?.promptContainerStack.layoutIfNeeded()
-            self?.view.layoutIfNeeded()
-        }
     }
 }

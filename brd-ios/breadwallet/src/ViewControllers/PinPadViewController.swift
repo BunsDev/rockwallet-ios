@@ -32,9 +32,16 @@ class PinPadViewController: UICollectionViewController {
             case .biometrics:
                 switch forStyle {
                 case .clear:
-                    return LAContext.biometricType() == .face ? Asset.cutoutFaceId.image.withRenderingMode(.alwaysTemplate) : Asset.touchIDCutout.image.withRenderingMode(.alwaysTemplate)
+                    guard LAContext.biometricType() == .face else {
+                        return Asset.touchIDCutout.image.withRenderingMode(.alwaysTemplate)
+                    }
+                    return Asset.cutoutFaceId.image.withRenderingMode(.alwaysTemplate)
+                    
                 case .white:
-                    return LAContext.biometricType() == .face ? Asset.faceId.image.withRenderingMode(.alwaysTemplate) : Asset.touchId.image.withRenderingMode(.alwaysTemplate)
+                    guard LAContext.biometricType() == .face else {
+                        return Asset.touchId.image.withRenderingMode(.alwaysTemplate)
+                    }
+                    return Asset.faceId.image.withRenderingMode(.alwaysTemplate)
                 }
                 
             }
@@ -133,7 +140,7 @@ class PinPadViewController: UICollectionViewController {
 #if targetEnvironment(simulator)
         // Only invoke the auto-enter PIN for the login case.
         if UserDefaults.debugShouldAutoEnterPIN && Store.state.isLoginRequired {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.regular.rawValue) {
                 for _ in 0...5 {
                     self.handleInputAtItemIndex(index: 0)
                 }

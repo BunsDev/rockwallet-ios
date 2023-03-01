@@ -64,9 +64,16 @@ class UpdatePinViewController: UIViewController, Subscriber {
     
     private var shouldShowFAQButton: Bool {
         if type == .recoverBackup { return false }
-        // Don't show the FAQ button during onboarding because we don't have the wallet/authentication
-        // initialized yet, and therefore can't open platform content.
-        return eventContext != .onboarding
+        switch type {
+        case .recoverBackup, .creationWithPhrase:
+            return false
+            
+        case .creationNoPhrase:
+            return true
+            
+        default:
+            return eventContext != .onboarding
+        }
     }
     
     private var step: Step = .verify {
@@ -74,22 +81,23 @@ class UpdatePinViewController: UIViewController, Subscriber {
             switch step {
             case .verify:
                 instruction.text = isCreatingPin ? L10n.UpdatePin.createInstruction : L10n.UpdatePin.enterCurrent
-                caption.isHidden = true
+                
             case .new:
                 let instructionText = isCreatingPin ? L10n.UpdatePin.createInstruction : L10n.UpdatePin.enterNew
                 header.text = isCreatingPin ? L10n.UpdatePin.setNewPinTitle : L10n.UpdatePin.createTitle
                 if instruction.text != instructionText {
                     instruction.pushNewText(instructionText)
                 }
-                caption.isHidden = false
+                
             case .confirmNew:
-                caption.isHidden = true
                 if isCreatingPin {
                     header.text = L10n.UpdatePin.createTitleConfirm
                 } else {
                     instruction.pushNewText(L10n.UpdatePin.reEnterNew)
                 }
             }
+            
+            caption.isHidden = step == .verify
         }
     }
     private var currentPin: String?
@@ -216,15 +224,18 @@ class UpdatePinViewController: UIViewController, Subscriber {
                 caption.isHidden = true
             }
         }
-
-        if !showsBackButton {
-            navigationItem.leftBarButtonItem = nil
-            navigationItem.hidesBackButton = true
-        }
+        
         addCloudView()
     }
     
     func setupBackButton() {
+        if !showsBackButton {
+            navigationItem.leftBarButtonItem = nil
+            navigationItem.hidesBackButton = true
+            
+            return
+        }
+        
         let back = UIBarButtonItem(image: Asset.back.image,
                                    style: .plain,
                                    target: self,
@@ -243,11 +254,10 @@ class UpdatePinViewController: UIViewController, Subscriber {
     }
     
     func faqButtonPressed() {
-        let text = L10n.UpdatePin.updatePinPopup
-        
-        let model = PopupViewModel(title: .text(L10n.UpdatePin.whyPIN),
-                                   body: text)
-        
+        let model = PopupViewModel(title: .text(L10n.UpdatePin.Alert.title),
+                                   body: L10n.UpdatePin.Alert.body,
+                                   config: Presets.Popup.whiteCentered,
+                                   closeButton: .init(image: Asset.close.image))
         showInfoPopup(with: model)
     }
 
@@ -362,7 +372,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
     private func pushNewStep(_ newStep: Step) {
         step = newStep
         pinPad.clear()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + Presets.Delay.immediate.rawValue) { [weak self] in
             self?.pinView.fill(0)
         }
     }
@@ -375,7 +385,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
         } else if let currentPin = currentPin {
             success = keyMaster.changePin(newPin: newPin, currentPin: currentPin)
             DispatchQueue.main.async { Store.trigger(name: .didUpgradePin) }
-        } else if type == .creationNoPhrase {
+        } else if type == .creationNoPhrase || type == .creationWithPhrase {
             success = keyMaster.setPin(newPin)
         }
 
@@ -389,9 +399,11 @@ class UpdatePinViewController: UIViewController, Subscriber {
                 } else {
                     let callback = { [weak self] in
                         guard let self = self else { return }
+                        
                         self.setPinSuccess?(newPin)
+                        
                         if self.type != .creationNoPhrase {
-                            self.parent?.dismiss(animated: true, completion: nil)
+                            (self.parent ?? self)?.dismiss(animated: true)
                         }
                     }
                     

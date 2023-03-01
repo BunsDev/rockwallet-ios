@@ -127,22 +127,7 @@ class VIPViewController<C: CoordinatableRoutes,
         coordinator?.goBack()
     }
 
-    func setupCloseButton(closeAction: Selector) {
-        guard navigationItem.leftBarButtonItem?.title != dismissText,
-              navigationItem.rightBarButtonItem?.title != dismissText
-        else { return }
-
-        let closeButton = UIBarButtonItem(title: dismissText,
-                                          style: .plain,
-                                          target: self,
-                                          action: closeAction)
-
-        guard navigationItem.rightBarButtonItem == nil else {
-            navigationItem.setLeftBarButton(closeButton, animated: false)
-            return
-        }
-        navigationItem.setRightBarButton(closeButton, animated: false)
-    }
+    func setupCloseButton(closeAction: Selector) {}
     
     @objc func dismissModal() {
         ExchangeCurrencyHelper.revertIfNeeded(coordinator: coordinator, completion: { [weak self] in
@@ -168,7 +153,7 @@ class VIPViewController<C: CoordinatableRoutes,
     }
 
     func localize() {
-        view.backgroundColor = LightColors.Background.two
+        view.backgroundColor = LightColors.Background.one
         tabBarItem.title = sceneTitle
         title = sceneTitle
         leftAlignedTitleLabel.text = sceneLeftAlignedTitle
@@ -209,7 +194,7 @@ class VIPViewController<C: CoordinatableRoutes,
     func toggleBlur(animated: Bool) {
         guard let blurView = blurView else { return }
         guard blurView.superview == nil else {
-            UIView.animate(withDuration: animated ? Presets.Animation.duration: 0) {
+            UIView.animate(withDuration: animated ? Presets.Animation.short.rawValue: 0) {
                 blurView.alpha = 0
             } completion: { _ in
                 blurView.removeFromSuperview()
@@ -220,7 +205,7 @@ class VIPViewController<C: CoordinatableRoutes,
         blurView.alpha = 0
         blurView.frame = view.bounds
         view.addSubview(blurView)
-        UIView.animate(withDuration: animated ? Presets.Animation.duration: 0) {
+        UIView.animate(withDuration: animated ? Presets.Animation.short.rawValue: 0) {
             blurView.alpha = 1
         }
     }

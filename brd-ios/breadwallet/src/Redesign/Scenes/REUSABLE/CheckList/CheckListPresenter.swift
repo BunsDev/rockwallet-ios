@@ -15,6 +15,10 @@ final class CheckListPresenter: NSObject, Presenter, CheckListActionResponses {
 
     // MARK: - CheckListActionResponses
 
+    func presentVerificationProgress(actionResponse: CheckListModels.VerificationInProgress.ActionResponse) {
+        viewController?.displayVerificationProgress(responseDisplay: .init(status: actionResponse.status))
+    }
+    
     // MARK: - Additional Helpers
 
 }

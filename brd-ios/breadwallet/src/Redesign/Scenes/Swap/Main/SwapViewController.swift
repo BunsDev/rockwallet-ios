@@ -10,6 +10,11 @@
 
 import UIKit
 
+protocol ExchangeButtonsProtocol {
+    
+    func setupVerticalButtons()
+}
+
 class SwapViewController: BaseTableViewController<SwapCoordinator,
                           SwapInteractor,
                           SwapPresenter,
@@ -23,12 +28,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     }
     
     var didTriggerGetExchangeRate: (() -> Void)?
-    
-    lazy var continueButton: FEButton = {
-        let view = FEButton()
-        return view
-    }()
-    
+
     // MARK: - Overrides
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,30 +42,16 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.delaysContentTouches = false
+        tableView.backgroundColor = LightColors.Background.two
         
         didTriggerGetExchangeRate = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
         }
     }
     
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                         enabled: false,
-                                         callback: { [weak self] in
-            self?.buttonTapped()
-        }))
-        
-        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Sections {
+        switch sections[indexPath.section] as? Models.Section {
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -145,15 +131,20 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         return cell
     }
     
-    private func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Sections.rateAndTimer),
+    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
+        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.viewModel?.enabled = false
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-            
             return nil
         }
         
+        return cell
+    }
+    
+    func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
+        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+            return nil
+        }
         return cell
     }
     
@@ -202,34 +193,11 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         tableView.beginUpdates()
         
-        guard let section = sections.firstIndex(of: Models.Sections.swapCard),
+        guard let section = sections.firstIndex(of: Models.Section.swapCard),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
         cell.setup { view in
             view.setup(with: responseDisplay.amounts)
-        }
-        
-        tableView.endUpdates()
-    }
-    
-    func displayExchangeRate(responseDisplay: SwapModels.Rate.ResponseDisplay) {
-        tableView.beginUpdates()
-        
-        if let cell = getRateAndTimerCell() {
-            cell.setup { view in
-                view.setup(with: responseDisplay.rateAndTimer)
-                
-                view.completion = { [weak self] in
-                    self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
-                }
-            }
-        }
-        
-        if let section = sections.firstIndex(of: Models.Sections.accountLimits),
-           let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> {
-            cell.setup { view in
-                view.setup(with: responseDisplay.accountLimits)
-            }
         }
         
         tableView.endUpdates()

@@ -24,6 +24,9 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         case .swapTransaction:
             return L10n.Swap.details
             
+        case .sellTransaction:
+            return L10n.Sell.details
+            
         default:
             return ""
         }
@@ -39,6 +42,7 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         tableView.register(WrapperTableViewCell<AssetView>.self)
         tableView.register(WrapperTableViewCell<OrderView>.self)
         tableView.register(WrapperTableViewCell<BuyOrderView>.self)
+        tableView.backgroundColor = LightColors.Background.two
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

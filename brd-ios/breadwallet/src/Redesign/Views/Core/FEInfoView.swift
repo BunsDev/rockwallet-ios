@@ -27,6 +27,14 @@ struct InfoViewConfiguration: Configurable {
     
     var title: LabelConfiguration?
     var description: LabelConfiguration?
+    
+    var swapLimits: LabelConfiguration? = .init(font: Fonts.Subtitle.three, textColor: LightColors.Text.two)
+    var buyLimits: LabelConfiguration? = .init(font: Fonts.Subtitle.three, textColor: LightColors.Text.two)
+    
+    var swapLimitsValue: TitleValueConfiguration = Presets.TitleValue.bold
+    var buyDailyLimitsView: TitleValueConfiguration = Presets.TitleValue.bold
+    var buyAchDailyLimitsView: TitleValueConfiguration = Presets.TitleValue.bold
+    
     var button: ButtonConfiguration?
     var tickboxItem: TickboxItemConfiguration?
     
@@ -43,10 +51,19 @@ struct InfoViewModel: ViewModel {
     
     var title: LabelViewModel?
     var description: LabelViewModel?
+    
+    var swapLimits: LabelViewModel?
+    var buyLimits: LabelViewModel?
+    
+    var swapLimitsValue: TitleValueViewModel?
+    var buyDailyLimitsView: TitleValueViewModel?
+    var buyAchDailyLimitsView: TitleValueViewModel?
+    
     var button: ButtonViewModel?
     var tickbox: TickboxItemViewModel?
     
     var dismissType: DismissType = .auto
+    var canUseAch: Bool = false
 }
 
 class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
@@ -113,6 +130,36 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         return label
     }()
     
+    private lazy var swapLimitsLabel: FELabel = {
+        let label = FELabel()
+        return label
+    }()
+    
+    private lazy var swapLimitsView: TitleValueView = {
+        let view = TitleValueView()
+        return view
+    }()
+    
+    private lazy var spacerView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private lazy var buyLimitsLabel: FELabel = {
+        let label = FELabel()
+        return label
+    }()
+    
+    private lazy var buyDailyLimitsView: TitleValueView = {
+        let view = TitleValueView()
+        return view
+    }()
+    
+    private lazy var buyAchDailyLimitsView: TitleValueView = {
+        let view = TitleValueView()
+        return view
+    }()
+    
     private lazy var bottomButton: FEButton = {
         let view = FEButton()
         view.addTarget(self, action: #selector(trailingButtonTapped), for: .touchUpInside)
@@ -169,6 +216,27 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
 
         verticalStackView.addArrangedSubview(descriptionLabel)
         
+        verticalStackView.addArrangedSubview(swapLimitsLabel)
+        verticalStackView.addArrangedSubview(swapLimitsView)
+        swapLimitsView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.extraSmall.rawValue)
+        }
+        
+        verticalStackView.addArrangedSubview(spacerView)
+        spacerView.snp.makeConstraints { make in
+            make.width.lessThanOrEqualToSuperview().priority(.low)
+        }
+        
+        verticalStackView.addArrangedSubview(buyLimitsLabel)
+        verticalStackView.addArrangedSubview(buyDailyLimitsView)
+        buyDailyLimitsView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.extraSmall.rawValue)
+        }
+        verticalStackView.addArrangedSubview(buyAchDailyLimitsView)
+        buyAchDailyLimitsView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.extraSmall.rawValue)
+        }
+        
         verticalStackView.addArrangedSubview(buttonsStackView)
         buttonsStackView.snp.makeConstraints { make in
             // TODO: Height is not working. 
@@ -206,6 +274,13 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         
         titleLabel.configure(with: config.title)
         descriptionLabel.configure(with: config.description)
+        
+        swapLimitsLabel.configure(with: config.swapLimits)
+        swapLimitsView.configure(with: config.swapLimitsValue)
+        buyLimitsLabel.configure(with: config.buyLimits)
+        buyDailyLimitsView.configure(with: config.buyDailyLimitsView)
+        buyAchDailyLimitsView.configure(with: config.buyAchDailyLimitsView)
+        
         bottomButton.configure(with: config.button)
         tickboxItemView.configure(with: config.tickboxItem)
         
@@ -237,6 +312,22 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         
         descriptionLabel.setup(with: viewModel.description)
         descriptionLabel.isHidden = viewModel.description == nil
+        
+        swapLimitsLabel.setup(with: viewModel.swapLimits)
+        swapLimitsLabel.isHidden = viewModel.swapLimits == nil
+        spacerView.isHidden = viewModel.swapLimits == nil
+        
+        swapLimitsView.setup(with: viewModel.swapLimitsValue)
+        swapLimitsView.isHidden = viewModel.swapLimitsValue == nil
+        
+        buyLimitsLabel.setup(with: viewModel.buyLimits)
+        buyLimitsLabel.isHidden = viewModel.buyLimits == nil
+        
+        buyDailyLimitsView.setup(with: viewModel.buyDailyLimitsView)
+        buyDailyLimitsView.isHidden = viewModel.buyDailyLimitsView == nil
+        
+        buyAchDailyLimitsView.setup(with: viewModel.buyAchDailyLimitsView)
+        buyAchDailyLimitsView.isHidden = !viewModel.canUseAch
         
         bottomButton.setup(with: viewModel.button)
         buttonsStackView.isHidden = viewModel.button == nil
@@ -293,7 +384,7 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
     }
     
     private func toggleVisibility(isShown: Bool) {
-        Self.animate(withDuration: Presets.Animation.duration) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.alpha = isShown ? 1.0 : 0.0
         }
     }

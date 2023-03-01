@@ -62,7 +62,6 @@ class BankCardInputDetailsView: FEView<BankCardInputDetailsViewConfiguration, Ba
     
     private lazy var expirationTextField: FETextField = {
         let view = FETextField()
-        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -100,8 +99,8 @@ class BankCardInputDetailsView: FEView<BankCardInputDetailsViewConfiguration, Ba
         config.keyboardType = .numberPad
         
         numberTextField.configure(with: config)
-        expirationTextField.configure(with: config)
         cvvTextField.configure(with: config.setSecure(true))
+        expirationTextField.configure(with: config)
     }
     
     override func setup(with viewModel: BankCardInputDetailsViewModel?) {
@@ -112,16 +111,19 @@ class BankCardInputDetailsView: FEView<BankCardInputDetailsViewConfiguration, Ba
         cvv = viewModel?.cvv?.value
         
         numberTextField.setup(with: viewModel?.number)
-        expirationTextField.setup(with: viewModel?.expiration)
         cvvTextField.setup(with: viewModel?.cvv)
         
+        var expiration = viewModel?.expiration
+        expiration?.isUserInteractionEnabled = false
+        expirationTextField.setup(with: expiration)
+        
         numberTextField.valueChanged = { [weak self] in
-            self?.number = $0
+            self?.number = $0.text
             self?.stateChanged()
         }
         
         cvvTextField.valueChanged = { [weak self] in
-            self?.cvv = $0
+            self?.cvv = $0.text
             self?.stateChanged()
         }
         

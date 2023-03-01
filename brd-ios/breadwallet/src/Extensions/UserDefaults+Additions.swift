@@ -50,6 +50,7 @@ private let deviceIdKey = "BR_DEVICE_ID"
 private let savedChartHistoryPeriodKey = "savedHistoryPeriodKey"
 private let balanceKey = "balanceKey"
 private let walletToken = "sessionKey"
+private let walletTokenHash = "sessionKeyHash"
 private let kycSessionKey = "kycSessionKey"
 private let cachedErrors = "cachedErrors"
 private let userEmail = "registrationEmail"
@@ -422,13 +423,19 @@ extension UserDefaults {
         set { defaults.set(newValue, forKey: hasBchConnectedKey) }
     }
     
-    static var kycSessionKeyValue: String? {
+    static var authorizationHeaderToken: String? {
         get { return defaults.string(forKey: kycSessionKey) }
         set { defaults.set(newValue, forKey: kycSessionKey) }
     }
     
-    static var sessionToken: String {
-        return Self.kycSessionKeyValue ?? E.apiToken
+    static var sessionToken: String? {
+        get { return defaults.string(forKey: kycSessionKey) ?? E.apiToken }
+        set { defaults.set(newValue, forKey: kycSessionKey) }
+    }
+    
+    static var sessionTokenHash: String? {
+        get { return defaults.string(forKey: walletTokenHash) }
+        set { defaults.set(newValue, forKey: walletTokenHash) }
     }
     
     static var walletTokenValue: String? {
@@ -463,7 +470,7 @@ extension UserDefaults {
         
         get {
             // always return false for release builds
-            if E.isSimulator || E.isDebug || E.isTestFlight {
+            if E.isDebug || E.isTestFlight {
                 return defaults.bool(forKey: debugShouldAutoEnterPinKey)
             } else {
                 return false
@@ -479,7 +486,7 @@ extension UserDefaults {
         
         get {
             // always return false for release builds
-            if E.isSimulator || E.isDebug || E.isTestFlight {
+            if E.isDebug || E.isTestFlight {
                 return defaults.bool(forKey: debugShouldSuppressPaperKeyPromptKey)
             } else {
                 return false
@@ -495,7 +502,7 @@ extension UserDefaults {
         
         get {
             // always return false for release builds
-            if E.isSimulator || E.isDebug || E.isTestFlight {
+            if E.isDebug || E.isTestFlight {
                 return defaults.bool(forKey: debugShouldShowPaperKeyPreviewKey)
             } else {
                 return false
@@ -588,7 +595,7 @@ extension UserDefaults {
     
     static var errors: [ErrorStruct]? {
         get {
-            guard E.isTestFlight else { return nil }
+            guard E.isDebug || E.isTestFlight else { return nil }
             
             let decoder = PropertyListDecoder()
             return defaults.array(forKey: cachedErrors)?.compactMap { element in
@@ -597,7 +604,7 @@ extension UserDefaults {
             }
         }
         set {
-            guard E.isTestFlight else { return }
+            guard E.isDebug || E.isTestFlight else { return }
             
             let encoder = PropertyListEncoder()
             let errors = newValue?.compactMap { try? encoder.encode($0) }

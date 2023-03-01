@@ -90,7 +90,16 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                 }
                 
                 view.trailingButtonCallback = { [weak self] in
-                    self?.coordinator?.showAccountVerification()
+                    switch model.status {
+                    case .levelTwo(.declined):
+                        self?.coordinator?.showFailure(reason: .documentVerification)
+                        
+                    case .levelTwo(.resubmit), .levelTwo(.expired):
+                        self?.coordinator?.showFailure(reason: .documentVerificationRetry)
+                        
+                    default:
+                        self?.coordinator?.showAccountVerification()
+                    }
                 }
             }
         }
@@ -101,7 +110,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch sections[indexPath.section] as? Models.Section {
         case .navigation:
-            let indexPath = dataStore?.profile?.status == .levelTwo(.levelTwo) ? indexPath.row : indexPath.row + 1
+            let indexPath = UserManager.shared.profile?.status.hasKYCLevelTwo == true ? indexPath.row : indexPath.row + 1
             interactor?.navigate(viewAction: .init(index: indexPath))
             
         default:

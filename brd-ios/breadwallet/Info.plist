@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LOQATE_KEY</key>
+	<string>$(LOQATE_KEY)</string>
 	<key>API_TOKEN</key>
 	<string>$(API_TOKEN)</string>
 	<key>API_URL</key>
@@ -12,6 +14,12 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>RockWallet</string>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<array>
+		<string>A0000002471001</string>
+		<string>A0000002472001</string>
+		<string>00000000000000</string>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -141,10 +149,14 @@
 	<string>635</string>
 	<key>CHECKOUT_API_TOKEN</key>
 	<string>$(CHECKOUT_API_TOKEN)</string>
-	<key>IS_SANDBOX</key>
-	<string>$(IS_SANDBOX)</string>
-	<key>IS_TEST</key>
-	<string>$(IS_TEST)</string>
+	<key>IS_PRODUCTION</key>
+	<string>$(IS_PRODUCTION)</string>
+	<key>IS_DEVELOPMENT</key>
+	<string>$(IS_DEVELOPMENT)</string>
+	<key>IS_STAGING</key>
+	<string>$(IS_STAGING)</string>
+	<key>IS_LDT</key>
+	<string>$(IS_LDT)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -162,6 +174,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Used to scan barcodes</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used for KYC authentication</string>
+	<key>NFCReaderUsageDescription</key>
+	<string>Used for KYC authentication</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Used for user authentication</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

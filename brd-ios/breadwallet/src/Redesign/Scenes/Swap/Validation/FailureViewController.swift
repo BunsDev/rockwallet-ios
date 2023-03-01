@@ -24,9 +24,18 @@ enum FailureReason: SimpleMessage {
     case buyAch
     case swap
     case plaidConnection
+    case sell
+    case documentVerification
+    case documentVerificationRetry
     
     var iconName: String {
-        return "error"
+        switch self {
+        case .documentVerification, .documentVerificationRetry:
+            return Asset.ilVerificationunsuccessfull.name
+            
+        default:
+            return Asset.error.name
+        }
     }
     
     var title: String {
@@ -34,11 +43,14 @@ enum FailureReason: SimpleMessage {
         case .buyCard, .buyAch:
             return L10n.Buy.errorProcessingPayment
             
-        case .swap:
+        case .swap, .sell:
             return L10n.Swap.errorProcessingTransaction
             
         case .plaidConnection:
             return L10n.Buy.plaidErrorTitle
+            
+        case .documentVerification, .documentVerificationRetry:
+            return L10n.Account.idVerificationRejected
         }
     }
     
@@ -55,32 +67,41 @@ enum FailureReason: SimpleMessage {
             
         case .buyAch:
             return L10n.Buy.bankAccountFailureText
+            
+        case .sell:
+            return L10n.Sell.tryAgain
+            
+        case .documentVerification:
+            return L10n.Account.IdVerificationRejected.description
+            
+        case .documentVerificationRetry:
+            return L10n.Account.idVerificationRetry.replacingOccurrences(of: "-", with: "\u{2022}")
         }
     }
     
     var firstButtonTitle: String? {
         switch self {
-        case .buyCard:
-            return L10n.Buy.tryAnotherPayment
-            
         case .swap:
             return L10n.Swap.retry
             
-        case .plaidConnection:
-            return L10n.PaymentConfirmation.tryAgain
+        case .documentVerification:
+            return L10n.Account.contactUs
             
-        case .buyAch:
+        default:
             return L10n.PaymentConfirmation.tryAgain
         }
     }
     
     var secondButtonTitle: String? {
         switch self {
-        case .buyCard, .plaidConnection, .buyAch:
-            return L10n.UpdatePin.contactSupport
-            
         case .swap:
             return L10n.Swap.backToHome
+            
+        case .documentVerification, .documentVerificationRetry:
+            return L10n.Button.tryLater
+            
+        default:
+            return L10n.UpdatePin.contactSupport
         }
     }
 }
@@ -90,6 +111,8 @@ extension Scenes {
 }
 
 class FailureViewController: BaseInfoViewController {
+    var buttonTitle: String?
+    var availablePayments: [PaymentCard.PaymentType]?
     var failure: FailureReason? {
         didSet {
             prepareData()
@@ -99,24 +122,82 @@ class FailureViewController: BaseInfoViewController {
     override var titleText: String? { return failure?.title }
     override var descriptionText: String? { return failure?.description }
     override var buttonViewModels: [ButtonViewModel] {
+        let containsDebit = availablePayments?.contains(.card) == true
+        let containsBankAccount = availablePayments?.contains(.ach) == true
+        if containsDebit || containsBankAccount {
+            buttonTitle = containsDebit ? L10n.PaymentConfirmation.tryWithDebit : L10n.PaymentConfirmation.tryWithAch
+        }
         return [
-            .init(title: failure?.firstButtonTitle) { [weak self] in
-                if self?.failure == .swap {
+            .init(title: buttonTitle != nil ? buttonTitle : failure?.firstButtonTitle) { [weak self] in
+                self?.shouldDismiss = true
+                
+                switch self?.failure {
+                case .swap:
                     self?.coordinator?.showSwap()
-                } else {
-                    self?.coordinator?.showBuy()
+                    
+                case .documentVerification:
+                    self?.coordinator?.showSupport()
+                    
+                case .documentVerificationRetry:
+                    self?.coordinator?.showExternalKYC()
+                    
+                default:
+                    if containsDebit || containsBankAccount {
+                        self?.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .card : .ach)
+                    } else {
+                        self?.coordinator?.showBuy()
+                    }
                 }},
             .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
-                if self?.failure == .buyCard {
+                self?.shouldDismiss = true
+                
+                switch self?.failure {
+                case .buyCard:
                     self?.coordinator?.showSupport()
-                } else if self?.failure == .swap {
+                    
+                case .swap:
                     self?.coordinator?.dismissFlow()
+                    
+                case .documentVerification:
+                    self?.coordinator?.dismissFlow()
+
+                case .documentVerificationRetry:
+                    self?.coordinator?.dismissFlow()
+                    
+                default:
+                    break
                 }
             })
         ]
     }
+    
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
                 Presets.Button.noBorders]
+    }
+    
+    override func tableView(_ tableView: UITableView, descriptionLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Align text to left for retry bullet points text
+        guard failure == .documentVerificationRetry else {
+            return super.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
+        }
+        
+        guard let value = descriptionText,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+
+        cell.setup { view in
+            view.configure(with: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, textAlignment: .left))
+            view.setup(with: .text(value))
+            view.setupCustomMargins(vertical: .extraHuge, horizontal: .extraHuge)
+            view.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.leading.trailing.equalToSuperview().inset(Margins.extraHuge.rawValue)
+            }
+        }
+
+        return cell
     }
 }

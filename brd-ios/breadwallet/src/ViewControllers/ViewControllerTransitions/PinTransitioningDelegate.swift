@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let duration: TimeInterval = 0.4
-
 class PinTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
 
     var shouldShowMaskView = true
@@ -32,7 +30,7 @@ class PresentPinAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private let shouldShowMaskView: Bool
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return duration
+        return Presets.Animation.long.rawValue
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -77,7 +75,7 @@ class PresentPinAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
 class DismissPinAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return duration
+        return Presets.Animation.long.rawValue
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {

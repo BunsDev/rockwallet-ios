@@ -13,9 +13,11 @@ enum BuyModels {
     struct Item {
         var amount: Amount?
         var paymentCard: PaymentCard?
+        var type: PaymentCard.PaymentType?
+        var achEnabled: Bool?
     }
     
-    enum Sections: Sectionable {
+    enum Section: Sectionable {
         case segment
         case rateAndTimer
         case accountLimits
@@ -35,10 +37,9 @@ enum BuyModels {
         struct ActionResponse {
             var amount: Amount?
             var card: PaymentCard?
-            var bankAccount: PaymentCard?
+            var type: PaymentCard.PaymentType?
             var quote: Quote?
             var handleErrors = false
-            var paymentMethod: PaymentCard.PaymentType?
         }
         
         struct ResponseDisplay {
@@ -89,31 +90,16 @@ enum BuyModels {
         typealias ResponseDisplay = LabelViewModel
     }
     
-    struct Rate {
-        struct ViewAction {
-            var from: String?
-            var to: String?
-        }
-        
-        struct ActionResponse {
-            var method: PaymentCard.PaymentType
-            var quote: Quote?
-            var from: String?
-            var to: String?
-        }
-        
-        struct ResponseDisplay {
-            var rate: ExchangeRateViewModel
-            var limits: LabelViewModel?
-        }
-    }
-    
     struct OrderPreview {
         struct ViewAction {}
         
-        struct ActionResponse {}
+        struct ActionResponse {
+            var availablePayments: [PaymentCard.PaymentType]?
+        }
         
-        struct ResponseDisplay {}
+        struct ResponseDisplay {
+            var availablePayments: [PaymentCard.PaymentType]?
+        }
     }
     
     struct AssetSelector {
@@ -126,33 +112,13 @@ enum BuyModels {
         }
     }
     
-    struct PlaidLinkToken {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var linkToken: String
-        }
-        
-        struct ResponseDisplay {
-            var linkToken: String
-        }
-    }
-    
-    struct PlaidPublicToken {
-        struct ViewAction {}
-        
-        struct ActionResponse {}
-        
-        struct ResponseDisplay {}
-    }
-    
-    struct Failure {
-        struct ViewAction {}
-        
-        struct ActionResponse {}
-        
-        struct ResponseDisplay {}
-    }
+//    struct Failure {
+//        struct ViewAction {}
+//        
+//        struct ActionResponse {}
+//        
+//        struct ResponseDisplay {}
+//    }
     
     struct PaymentMethod {
         struct ViewAction {
@@ -167,11 +133,46 @@ enum BuyModels {
     struct AchData {
         struct ViewAction {}
         
-        struct ActionResponse {}
+        struct ActionResponse {
+            var currencyCode: String?
+        }
         
         struct ResponseDisplay {
             var model: InfoViewModel?
             var config: InfoViewConfiguration?
+        }
+    }
+    
+    struct RetryPaymentMethod {
+        struct ViewAction {
+            let method: PaymentCard.PaymentType
+        }
+        
+        struct ActionResponse {
+            let method: PaymentCard.PaymentType
+        }
+        
+        struct ResponseDisplay {}
+    }
+    
+    struct AchSuccess {
+        struct ViewAction {}
+        
+        struct ActionResponse {
+            var isRelinking: Bool?
+        }
+        
+        struct ResponseDisplay {}
+    }
+    
+    struct LimitsInfo {
+        struct ViewAction {}
+        struct ActionResponse {
+            var paymentMethod: PaymentCard.PaymentType?
+        }
+        struct ResponseDisplay {
+            var config: WrapperPopupConfiguration<LimitsPopupConfiguration>
+            var viewModel: WrapperPopupViewModel<LimitsPopupViewModel>
         }
     }
 }
