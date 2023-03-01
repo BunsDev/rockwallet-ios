@@ -1519,6 +1519,10 @@ internal enum L10n {
     internal static let next = L10n.tr("Localizable", "Onboarding.next", fallback: "NEXT")
     /// Onboarding screen restore an existing wallet.
     internal static let restoreWallet = L10n.tr("Localizable", "Onboarding.restoreWallet", fallback: "Restore with Recovery Phrase")
+    /// Restore your wallet
+    internal static let restoreYourWallet = L10n.tr("Localizable", "Onboarding.RestoreYourWallet", fallback: "Restore your wallet")
+    /// You can restore your wallet with your recovery phrase or iCloud.
+    internal static let restoreYourWalletDescription = L10n.tr("Localizable", "Onboarding.RestoreYourWalletDescription", fallback: "You can restore your wallet with your recovery phrase or iCloud.")
     /// Onboarding screen Skip button title that allows the user to exit the onboarding process.
     internal static let skip = L10n.tr("Localizable", "Onboarding.skip", fallback: "Skip")
   }
