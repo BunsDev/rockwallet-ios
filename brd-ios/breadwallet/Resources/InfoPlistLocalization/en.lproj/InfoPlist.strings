@@ -1629,6 +1629,10 @@
 /* Onboarding screen restore an existing wallet. */
 "Onboarding.restoreWallet" = "Restore with Recovery Phrase";
 
+"Onboarding.RestoreYourWallet" = "Restore your wallet";
+
+"Onboarding.RestoreYourWalletDescription" = "You can restore your wallet with your recovery phrase or iCloud.";
+
 /* Onboarding screen Skip button title that allows the user to exit the onboarding process. */
 "Onboarding.skip" = "Skip";
 

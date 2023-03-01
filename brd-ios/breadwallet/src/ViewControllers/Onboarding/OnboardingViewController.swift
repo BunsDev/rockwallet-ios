@@ -116,16 +116,16 @@ class OnboardingViewController: UIViewController {
         return view
     }()
     
-    private let title2: UILabel = {
+    private let restoreWalletTitle: UILabel = {
         let label = UILabel.wrapping(font: Fonts.Title.four, color: LightColors.Contrast.two)
-        label.text = "Restore your wallet"
+        label.text = L10n.Onboarding.restoreYourWallet
         label.textAlignment = .center
         return label
     }()
     
-    private let description2: UILabel = {
+    private let restoreWalletDescription: UILabel = {
         let label = UILabel.wrapping(font: Fonts.Body.one, color: LightColors.Contrast.two)
-        label.text = "You can restore your wallet with your recovery phrase or iCloud."
+        label.text = L10n.Onboarding.restoreYourWalletDescription
         label.textAlignment = .center
         return label
     }()
@@ -143,7 +143,6 @@ class OnboardingViewController: UIViewController {
         view.spacing = Margins.extraExtraHuge.rawValue
         return view
     }()
-    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -408,8 +407,8 @@ class OnboardingViewController: UIViewController {
             stackView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: Margins.extraHuge.rawValue),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.extraExtraHuge.rawValue),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.extraExtraHuge.rawValue)])
-        stackView.addArrangedSubview(title2)
-        stackView.addArrangedSubview(description2)
+        stackView.addArrangedSubview(restoreWalletTitle)
+        stackView.addArrangedSubview(restoreWalletDescription)
         stackView.addArrangedSubview(illustration)
         illustration.constrain([
             illustration.heightAnchor.constraint(equalToConstant: ViewSizes.extraExtraHuge.rawValue),
