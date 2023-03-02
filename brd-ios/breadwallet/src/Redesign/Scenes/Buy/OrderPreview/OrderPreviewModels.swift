@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import Veriff
 import WalletKit
 
 enum PreviewType {
@@ -68,6 +69,18 @@ enum OrderPreviewModels {
         struct ResponseDisplay {
             var quoteId: String?
             var isBiometric: Bool?
+        }
+    }
+    
+    struct BiometricStatusCheck {
+        struct ViewAction {
+            let resetCounter: Bool
+        }
+        
+        struct ActionResponse {
+        }
+        
+        struct ResponseDisplay {
         }
     }
     

@@ -107,47 +107,18 @@ class KYCCoordinator: BaseCoordinator,
     }
 }
 
-extension BaseCoordinator: VeriffSdkDelegate {
-    func showExternalKYC() {
-        navigationController.popToRootViewController(animated: false)
-        
-        UserManager.shared.getVeriffSessionUrl { [weak self] result in
-            switch result {
-            case .success(let data):
-                guard let navigationController = self?.navigationController else { return }
-                
-                VeriffSdk.shared.delegate = self
-                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
-                                                     configuration: Presets.veriff,
-                                                     presentingFrom: navigationController)
-                
-            default:
-                break
-            }
+extension BaseCoordinator {
+    func handleVeriffKYC(result: VeriffSdk.Result? = nil, for veriffType: VeriffKYCManager.VeriffType) {
+        switch veriffType {
+        case .kyc:
+            forKYC(result: result)
+        case .liveness:
+            forLiveness()
         }
     }
     
-    func showExternalKYCForLivenessCheck(livenessCheckData: VeriffSessionRequestData? = nil) {
-        UserManager.shared.getVeriffSessionUrl(livenessCheckData:
-                .init(quoteId: livenessCheckData?.quoteId,
-                      isBiometric: livenessCheckData?.isBiometric)) { [weak self] result in
-            switch result {
-            case .success(let data):
-                guard let navigationController = self?.navigationController else { return }
-                
-                VeriffSdk.shared.delegate = self
-                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
-                                                     configuration: Presets.veriff,
-                                                     presentingFrom: navigationController)
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
-        switch result.status {
+    private func forKYC(result: VeriffSdk.Result?) {
+        switch result?.status {
         case .done:
             open(scene: Scenes.verificationInProgress) { vc in
                 vc.navigationItem.hidesBackButton = true
@@ -163,6 +134,70 @@ extension BaseCoordinator: VeriffSdkDelegate {
         default:
             dismissFlow()
         }
+    }
+    
+    private func forLiveness() {
+        // TODO: What to do...
+    }
+}
+
+class VeriffKYCManager: NSObject, VeriffSdkDelegate {
+    enum VeriffType {
+        case kyc, liveness
+    }
+    
+    private var completion: ((VeriffSdk.Result) -> Void)?
+    
+    private var navigationController: UINavigationController?
+    
+    init(navigationController: UINavigationController?) {
+        self.navigationController = navigationController
+    }
+    
+    func showExternalKYC(completion: ((VeriffSdk.Result) -> Void)?) {
+        self.completion = completion
+        
+        navigationController?.popToRootViewController(animated: false)
+        
+        UserManager.shared.getVeriffSessionUrl { result in
+            switch result {
+            case .success(let data):
+                guard let navigationController = self.navigationController else { return }
+                
+                VeriffSdk.shared.delegate = self
+                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
+                                                     configuration: Presets.veriff,
+                                                     presentingFrom: navigationController)
+                
+            default:
+                break
+            }
+        }
+    }
+    
+    func showExternalKYCForLivenessCheck(livenessCheckData: VeriffSessionRequestData?, completion: ((VeriffSdk.Result) -> Void)?) {
+        self.completion = completion
+        
+        UserManager.shared.getVeriffSessionUrl(livenessCheckData:
+                .init(quoteId: livenessCheckData?.quoteId,
+                      isBiometric: livenessCheckData?.isBiometric)) { result in
+            switch result {
+            case .success(let data):
+                guard let navigationController = self.navigationController else { return }
+                
+                VeriffSdk.shared.delegate = self
+                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
+                                                     configuration: Presets.veriff,
+                                                     presentingFrom: navigationController)
+                
+            default:
+                break
+            }
+        }
+    }
+    
+    func sessionDidEndWithResult(_ result: Veriff.VeriffSdk.Result) {
+        completion?(result)
     }
 }
 

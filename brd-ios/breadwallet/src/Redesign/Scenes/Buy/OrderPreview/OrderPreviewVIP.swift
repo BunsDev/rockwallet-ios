@@ -20,6 +20,7 @@ protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions {
     func showInfoPopup(viewAction: OrderPreviewModels.InfoPopup.ViewAction)
     func updateCvv(viewAction: OrderPreviewModels.CvvValidation.ViewAction)
     func showCvvInfoPopup(viewAction: OrderPreviewModels.CvvInfoPopup.ViewAction)
+    func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction)
     func submit(viewAction: OrderPreviewModels.Submit.ViewAction)
     func toggleTickbox(viewAction: OrderPreviewModels.Tickbox.ViewAction)
 }
@@ -32,6 +33,7 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentCvvInfoPopup(actionResponse: OrderPreviewModels.CvvInfoPopup.ActionResponse)
     func presentThreeDSecure(actionResponse: OrderPreviewModels.ThreeDSecure.ActionResponse)
     func presentVeriffLivenessCheck(actionResponse: OrderPreviewModels.VeriffLivenessCheck.ActionResponse)
+    func presentBiometricStatus(actionResponse: OrderPreviewModels.BiometricStatusCheck.ActionResponse)
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse)
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse)
 }
@@ -44,6 +46,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayCvvInfoPopup(responseDisplay: OrderPreviewModels.CvvInfoPopup.ResponseDisplay)
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay)
     func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay)
+    func displayBiometricStatus(responseDisplay: OrderPreviewModels.BiometricStatusCheck.ResponseDisplay)
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay)
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay)
 }

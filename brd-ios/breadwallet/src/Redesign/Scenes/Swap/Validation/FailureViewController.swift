@@ -111,6 +111,8 @@ extension Scenes {
 }
 
 class FailureViewController: BaseInfoViewController {
+    private var veriffKYCManager: VeriffKYCManager?
+    
     var buttonTitle: String?
     var availablePayments: [PaymentCard.PaymentType]?
     var failure: FailureReason? {
@@ -118,6 +120,7 @@ class FailureViewController: BaseInfoViewController {
             prepareData()
         }
     }
+    
     override var imageName: String? { return failure?.iconName }
     override var titleText: String? { return failure?.title }
     override var descriptionText: String? { return failure?.description }
@@ -139,7 +142,10 @@ class FailureViewController: BaseInfoViewController {
                     self?.coordinator?.showSupport()
                     
                 case .documentVerificationRetry:
-                    self?.coordinator?.showExternalKYC()
+                    self?.veriffKYCManager = VeriffKYCManager(navigationController: self?.coordinator?.navigationController)
+                    self?.veriffKYCManager?.showExternalKYC { [weak self] result in
+                        self?.coordinator?.handleVeriffKYC(result: result, for: .kyc)
+                    }
                     
                 default:
                     if containsDebit || containsBankAccount {

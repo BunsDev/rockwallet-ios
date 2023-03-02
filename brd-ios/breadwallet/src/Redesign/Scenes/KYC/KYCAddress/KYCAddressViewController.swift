@@ -21,6 +21,8 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         return L10n.Account.residentialAddress
     }
     
+    private var veriffKYCManager: VeriffKYCManager?
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -162,7 +164,10 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay) {
-        coordinator?.showExternalKYC()
+        veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
+        veriffKYCManager?.showExternalKYC { [weak self] result in
+            self?.coordinator?.handleVeriffKYC(result: result, for: .kyc)
+        }
     }
     
     func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay) {

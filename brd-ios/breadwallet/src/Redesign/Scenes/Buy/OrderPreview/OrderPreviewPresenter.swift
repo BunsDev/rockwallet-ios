@@ -115,6 +115,10 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         viewController?.displayVeriffLivenessCheck(responseDisplay: .init(quoteId: actionResponse.quoteId, isBiometric: actionResponse.isBiometric))
     }
     
+    func presentBiometricStatus(actionResponse: OrderPreviewModels.BiometricStatusCheck.ActionResponse) {
+        viewController?.displayBiometricStatus(responseDisplay: .init())
+    }
+    
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse) {
         viewController?.displayContinueEnabled(responseDisplay: .init(continueEnabled: actionResponse.isValid))
     }

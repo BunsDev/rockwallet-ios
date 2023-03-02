@@ -21,6 +21,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         return dataStore?.type?.title
     }
 
+    private var veriffKYCManager: VeriffKYCManager?
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
@@ -215,7 +217,24 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay) {
-        coordinator?.showExternalKYCForLivenessCheck(livenessCheckData: .init(quoteId: responseDisplay.quoteId, isBiometric: responseDisplay.isBiometric))
+        veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
+        veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: .init(quoteId: responseDisplay.quoteId,
+                                                                                   isBiometric: responseDisplay.isBiometric)) { [weak self] result in
+            switch result.status {
+            case .done:
+                self?.interactor?.checkBiometricStatus(viewAction: .init(resetCounter: true))
+                
+            case .error(let error):
+                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: error.localizedDescription)))
+                
+            default:
+                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError()))
+            }
+        }
+    }
+    
+    func displayBiometricStatus(responseDisplay: OrderPreviewModels.BiometricStatusCheck.ResponseDisplay) {
+        coordinator?.handleVeriffKYC(for: .liveness)
     }
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
