@@ -109,9 +109,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
                                  (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
-                                 // TODO: reenable drawer
-//                                 (L10n.Drawer.title, nil, #selector(buy)),
-                                 (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
+                                 (L10n.Drawer.title, nil, #selector(buy)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
                                  (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
     
@@ -252,6 +250,12 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
         
+        view.addSubview(drawer)
+        drawer.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
         view.addSubview(tabBarContainerView)
         tabBarContainerView.addSubview(tabBar)
         
@@ -265,19 +269,12 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             make.top.equalToSuperview().offset(Margins.large.rawValue)
             make.leading.trailing.equalToSuperview()
         }
- 
-        // TODO: reenable bottom drawer
-//        view.addSubview(drawer)
-//        drawer.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
-//            make.leading.trailing.bottom.equalToSuperview()
-//        }
         
-//        view.addSubview(animationView)
-//        animationView.snp.makeConstraints { make in
-//            make.centerX.equalTo(tabBar.snp.centerX)
-//            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
-//        }
+        view.addSubview(animationView)
+        animationView.snp.makeConstraints { make in
+            make.centerX.equalTo(tabBar.snp.centerX)
+            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
+        }
     }
     
     private func setInitialData() {
@@ -286,7 +283,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         navigationItem.titleView = UIView()
         
         setupToolbar()
-//        setupDrawer()
+        setupDrawer()
         updateTotalAssets()
         setupAnimationView()
     }
@@ -459,15 +456,12 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     @objc private func buy() {
-        didTapBuy?(.card)
-        
-        // TODO: uncomment to reenable drawer
-//        if drawer.isShown {
-//            animationView.play(fromProgress: 1, toProgress: 0)
-//        } else {
-//            animationView.play()
-//        }
-//        drawer.toggle()
+        if drawer.isShown {
+            animationView.play(fromProgress: 1, toProgress: 0)
+        } else {
+            animationView.play()
+        }
+        drawer.toggle()
     }
     
     @objc private func trade() {
