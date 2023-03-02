@@ -235,7 +235,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
         
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
-        let wrappedViewModel: LimitsPopupViewModel = .init(perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
+        let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
+                                                           perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("$\(perTransactionLimitText) \(C.usdCurrencyCode)")),
                                                            dailyMin: .init(title: .text(L10n.Buy.dailyMinLimits),
                                                                            value: .text("$\(dailyMinLimitText) \(C.usdCurrencyCode)")),
@@ -246,8 +247,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                                            monthly: .init(title: .text(L10n.Account.monthly),
                                                                           value: .text("$\(monthlyLimitText) \(C.usdCurrencyCode)")))
         
-        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(title: .text(title),
-                                                                           trailing: .init(image: Asset.close.image),
+        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(trailing: .init(image: Asset.close.image),
                                                                            wrappedView: wrappedViewModel,
                                                                            hideSeparator: true)
         
