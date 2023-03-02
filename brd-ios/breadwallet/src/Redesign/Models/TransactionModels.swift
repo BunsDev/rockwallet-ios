@@ -1,5 +1,5 @@
 // 
-//  WyreModels.swift
+//  TransactionModels.swift
 //  breadwallet
 //
 //  Created by Dino Gacevic on 01/03/2023.
@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct WyreModels {
+struct TransactionModels {
     enum Section: Sectionable {
         case rateAndTimer
         case accountLimits
@@ -30,6 +30,6 @@ struct WyreModels {
     }
 }
 
-protocol WyreResponseDisplays {
-    func displayAmount(responseDisplay: WyreModels.Amounts.ResponseDisplay)
+protocol TransactionResponseDisplays {
+    func displayAmount(responseDisplay: TransactionModels.Amounts.ResponseDisplay)
 }

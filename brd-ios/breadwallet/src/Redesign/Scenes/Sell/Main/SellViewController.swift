@@ -15,7 +15,7 @@ class SellViewController: BaseTableViewController<SellCoordinator,
                           SellStore>,
                           SellResponseDisplays {
     
-    typealias Models = WyreModels
+    typealias Models = TransactionModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title

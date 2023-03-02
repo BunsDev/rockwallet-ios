@@ -21,7 +21,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
                           SwapStore>,
                           SwapResponseDisplays {
     
-    typealias Models = WyreModels
+    typealias Models = TransactionModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.HomeScreen.trade

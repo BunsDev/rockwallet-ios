@@ -19,14 +19,14 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
 
-        let sections: [WyreModels.Section] = [
+        let sections: [TransactionModels.Section] = [
             .rateAndTimer,
             .swapCard,
             .payoutMethod,
             .accountLimits
         ]
 
-        let sectionRows: [WyreModels.Section: [Any]] = [
+        let sectionRows: [TransactionModels.Section: [Any]] = [
             .rateAndTimer: [
                 ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
             ],
@@ -71,7 +71,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                         title: .text("I receive")),
                               
                              hideSwapButton: true)
-        viewController?.displayAmount(responseDisplay: .init(continueEnabled: true,
+        viewController?.displayAmount(responseDisplay: .init(continueEnabled: actionResponse.continueEnabled,
                                                              amounts: vm))
     }
     // MARK: - Additional Helpers

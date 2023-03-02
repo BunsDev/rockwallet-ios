@@ -30,8 +30,7 @@ protocol SellResponseDisplays: AnyObject,
                                BaseResponseDisplays,
                                FetchResponseDisplays,
                                ExchangeRateResponseDisplays,
-                               AchResponseDisplays,
-                               WyreResponseDisplays {
+                               AchResponseDisplays {
 }
 
 protocol SellDataStore: BaseDataStore, ExchangeDataStore, AchDataStore {

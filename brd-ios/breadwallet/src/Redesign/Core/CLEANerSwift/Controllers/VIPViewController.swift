@@ -21,7 +21,8 @@ class VIPViewController<C: CoordinatableRoutes,
                                                        BaseResponseDisplays,
                                                        ModalDismissable,
                                                        Blurrable,
-                                                       DataPresentable {
+                                                       DataPresentable,
+                                                       TransactionResponseDisplays {
     
     // MARK: Title and tab bar appearance
     
@@ -173,6 +174,10 @@ class VIPViewController<C: CoordinatableRoutes,
         
         return true
     }
+    
+    // MARK: TransactionResponseDisplays
+    
+    func displayAmount(responseDisplay: TransactionModels.Amounts.ResponseDisplay) {}
     
     // MARK: - Blurrable
     

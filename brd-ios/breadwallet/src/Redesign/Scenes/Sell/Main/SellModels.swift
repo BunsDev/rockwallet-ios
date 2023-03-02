@@ -19,6 +19,7 @@ enum SellModels {
         
         struct ActionResponse {
             var from: Amount?
+            var continueEnabled: Bool = false
         }
     }
     
