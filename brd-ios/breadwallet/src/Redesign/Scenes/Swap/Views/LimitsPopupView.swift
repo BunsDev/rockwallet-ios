@@ -11,6 +11,7 @@
 import UIKit
 
 struct LimitsPopupConfiguration: Configurable {
+    var title: LabelConfiguration = LabelConfiguration(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center)
     var perTransaction: TitleValueConfiguration = Presets.TitleValue.common
     var dailyMin: TitleValueConfiguration = Presets.TitleValue.common
     var dailyMax: TitleValueConfiguration = Presets.TitleValue.common
@@ -19,6 +20,7 @@ struct LimitsPopupConfiguration: Configurable {
 }
 
 struct LimitsPopupViewModel: ViewModel {
+    var title: LabelViewModel
     var perTransaction: TitleValueViewModel
     var dailyMin: TitleValueViewModel
     var dailyMax: TitleValueViewModel
@@ -32,6 +34,12 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
         view.axis = .vertical
         view.spacing = Margins.large.rawValue
         return view
+    }()
+    
+    private lazy var titleView: FELabel = {
+        let label = FELabel()
+        label.textAlignment = .center
+        return label
     }()
     
     private lazy var perTransactionView: TitleValueView = {
@@ -78,6 +86,8 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
         mainStack.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        mainStack.addArrangedSubview(titleView)
         
         mainStack.addArrangedSubview(perTransactionView)
         perTransactionView.snp.makeConstraints { make in
@@ -129,6 +139,8 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
     
     override func setup(with viewModel: LimitsPopupViewModel?) {
         super.setup(with: viewModel)
+        
+        titleView.setup(with: viewModel?.title)
         
         perTransactionView.setup(with: viewModel?.perTransaction)
         perTransactionView.isHidden = viewModel?.perTransaction.value == nil

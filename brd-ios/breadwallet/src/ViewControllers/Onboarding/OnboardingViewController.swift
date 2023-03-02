@@ -220,10 +220,10 @@ class OnboardingViewController: UIViewController {
         logoImageView.alpha = 0
         view.addSubview(logoImageView)
         
-        logoImageView.constrain([
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 160)
-        ])
+        logoImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(ViewSizes.extralarge.rawValue * 2)
+        }
     }
     
 //    private func animateIcons(metaData: [CurrencyMetaData]?) {
@@ -403,23 +403,25 @@ class OnboardingViewController: UIViewController {
     
     private func setUpSecondView() {
         view.addSubview(stackView)
-        stackView.constrain([
-            stackView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: Margins.extraHuge.rawValue),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.extraExtraHuge.rawValue),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.extraExtraHuge.rawValue)])
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(backButton.snp.bottom).inset(-Margins.extraHuge.rawValue)
+            make.leading.trailing.equalToSuperview().inset(Margins.extraExtraHuge.rawValue)
+        }
+        
         stackView.addArrangedSubview(restoreWalletTitle)
         stackView.addArrangedSubview(restoreWalletDescription)
+        
         stackView.addArrangedSubview(illustration)
-        illustration.constrain([
-            illustration.heightAnchor.constraint(equalToConstant: ViewSizes.extraExtraHuge.rawValue),
-            illustration.widthAnchor.constraint(equalToConstant: ViewSizes.extraExtraHuge.rawValue)])
+        illustration.snp.makeConstraints { make in
+            make.height.width.equalTo(ViewSizes.extraExtraHuge.rawValue)
+        }
         
         view.addSubview(restoreWithiCloudButton)
-        restoreWithiCloudButton.constrain([
-            restoreWithiCloudButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.large.rawValue),
-            restoreWithiCloudButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Margins.large.rawValue),
-            restoreWithiCloudButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Margins.extraExtraHuge.rawValue),
-            restoreWithiCloudButton.heightAnchor.constraint(equalToConstant: ViewSizes.Common.largeCommon.rawValue)])
+        restoreWithiCloudButton.snp.makeConstraints { make in
+            make.top.equalTo(createWalletButton.snp.bottom).inset(-Margins.small.rawValue)
+            make.leading.trailing.equalToSuperview().inset(Margins.large.rawValue)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
+        }
         
         stackView.isHidden = true
         restoreWithiCloudButton.isHidden = true
@@ -441,21 +443,20 @@ class OnboardingViewController: UIViewController {
                                                                       constant: buttonsHiddenYOffset)
         bottomButtonAnimationConstraint = recoverButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                                                                             constant: buttonsHiddenYOffset)
-        createWalletButton.constrain([
-            createWalletButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: buttonLeftRightMargin),
-            createWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -buttonLeftRightMargin),
-            createWalletButton.heightAnchor.constraint(equalToConstant: buttonHeight),
-            middleButtonAnimationConstraint
-        ])
         
-        recoverButton.constrain([
-            recoverButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            recoverButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: buttonLeftRightMargin),
-            recoverButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -buttonLeftRightMargin),
-            recoverButton.heightAnchor.constraint(equalToConstant: buttonHeight),
-            bottomButtonAnimationConstraint
-        ])
+        createWalletButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(buttonsHiddenYOffset)
+            make.height.equalTo(buttonHeight)
+        }
+        
+        recoverButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(createWalletButton.snp.bottom).inset(-Margins.small.rawValue)
+            make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
+            make.height.equalTo(buttonHeight)
+        }
         
         createWalletButton.tap = { [unowned self] in
             self.createWalletTapped()
@@ -475,19 +476,11 @@ class OnboardingViewController: UIViewController {
         backButton.addTarget(self, action: #selector(backTapped(sender:)), for: .touchUpInside)
         
         view.addSubview(backButton)
-        
-        var topAnchor: NSLayoutYAxisAnchor?
-        var leadingAnchor: NSLayoutXAxisAnchor?
-        
-        topAnchor = view.safeAreaLayoutGuide.topAnchor
-        leadingAnchor = view.safeAreaLayoutGuide.leadingAnchor
-
-        backButton.constrain([
-            backButton.topAnchor.constraint(equalTo: topAnchor!, constant: 30),
-            backButton.leadingAnchor.constraint(equalTo: leadingAnchor!, constant: Margins.large.rawValue),
-            backButton.heightAnchor.constraint(equalToConstant: 24),
-            backButton.widthAnchor.constraint(equalToConstant: 24)
-        ])
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(Margins.small.rawValue)
+            make.leading.equalToSuperview().inset(Margins.large.rawValue)
+            make.height.width.equalTo(ViewSizes.small.rawValue)
+        }
     }
             
     private func animateLandingPage() {
@@ -510,7 +503,7 @@ class OnboardingViewController: UIViewController {
         createWalletButton.alpha = 0
         recoverButton.alpha = 0
         logoImageView.isHidden = true
-        headingLabels[0].isHidden = true
+        headingLabels.first?.isHidden = true
         stackView.isHidden = false
         restoreWithiCloudButton.isHidden = false
         
@@ -519,7 +512,7 @@ class OnboardingViewController: UIViewController {
             self.createWalletButton.alpha = 1
             self.recoverButton.alpha = 1
             self.logoImageView.isHidden = false
-            self.headingLabels[0].isHidden = false
+            self.headingLabels.first?.isHidden = false
             self.stackView.isHidden = true
             self.restoreWithiCloudButton.isHidden = true
         })
@@ -583,7 +576,7 @@ class OnboardingViewController: UIViewController {
         stackView.isHidden = false
         restoreWithiCloudButton.isHidden = false
         logoImageView.isHidden = true
-        headingLabels[0].isHidden = true
+        headingLabels.first?.isHidden = true
         backButton.alpha = 1.0
         recoverButton.alpha = 0.0
         pageIndex = 1
