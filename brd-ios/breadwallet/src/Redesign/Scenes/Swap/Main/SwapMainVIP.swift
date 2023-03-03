@@ -33,7 +33,6 @@ protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, Exchang
 }
 
 protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays {
-    func displayAmount(responseDisplay: SwapModels.Amounts.ResponseDisplay)
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay)
     func displayConfirmation(responseDisplay: SwapModels.ShowConfirmDialog.ResponseDisplay)
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay)

@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		1B1AFFA01FB7EF7C00E61908 /* BiometricsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */; };
 		222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */; };
@@ -731,6 +732,7 @@
 		CEF3E8341DE57166007C0A9E /* AnimatableIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3E8331DE57166007C0A9E /* AnimatableIcon.swift */; };
 		CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */; };
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
+		D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */; };
 		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
 		D7F0AF33298D378700474E5C /* verificationLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = D7F0AF32298D378700474E5C /* verificationLoader.json */; };
 		D7F7595E299236E100FB4BFA /* KYCSubmitInfoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */; };
@@ -827,6 +829,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
 		1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BiometricsSettingsViewController.swift; path = src/ViewControllers/BiometricsSettingsViewController.swift; sourceTree = "<group>"; };
 		222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+KV.swift"; path = "src/Platform/BRAPIClient+KV.swift"; sourceTree = "<group>"; };
@@ -1530,6 +1533,7 @@
 		CEF3E8331DE57166007C0A9E /* AnimatableIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatableIcon.swift; path = src/Views/AnimatedIcons/AnimatableIcon.swift; sourceTree = "<group>"; };
 		CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AmountViewController.swift; path = src/ViewControllers/AmountViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
+		D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeModels.swift; sourceTree = "<group>"; };
 		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
 		D7F0AF32298D378700474E5C /* verificationLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = verificationLoader.json; sourceTree = "<group>"; };
 		D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitInfoWorker.swift; sourceTree = "<group>"; };
@@ -2442,6 +2446,7 @@
 				7E5CB3622835090D00EC787E /* VIPViewController.swift */,
 				7E5CB3632835090D00EC787E /* VIPTableViewController.swift */,
 				7E5CB3612835090D00EC787E /* BaseTableViewController.swift */,
+				0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2540,6 +2545,7 @@
 				7E852747286C551C0058F4C0 /* ServerResponse.swift */,
 				7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */,
 				7EDDB82528C8684900C287CB /* Amount+Init.swift */,
+				D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3922,6 +3928,7 @@
 				7EF45F532845352400D1F7B0 /* KYCBasicVIP.swift in Sources */,
 				CEA05CC31F21B53C00D850F0 /* FeeSelector.swift in Sources */,
 				7BDB4A012806F40D0031F015 /* ExchangeUpdater.swift in Sources */,
+				0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */,
 				7B8FAF01299B898D002EB972 /* TouchSpamPreventer.swift in Sources */,
 				CE20C8F21DBAF71500C8397A /* ApplicationController.swift in Sources */,
 				7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */,
@@ -4114,6 +4121,7 @@
 				3A69885E24591F890084953D /* PayId.swift in Sources */,
 				7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */,
 				7B9434352886A7FA00638703 /* DeleteProfileInfoStore.swift in Sources */,
+				D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */,
 				7BF5D4FB296D4FC900942ADB /* SignUpVIP.swift in Sources */,
 				7B9434362886A7FA00638703 /* DeleteProfileInfoPresenter.swift in Sources */,
 				CEC6AA421DEFC88F00EE5AFD /* ReceiveViewController.swift in Sources */,

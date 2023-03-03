@@ -9,13 +9,13 @@
 import UIKit
 import LinkKit
 
-class SellViewController: BaseTableViewController<SellCoordinator,
+class SellViewController: BaseExchangeTableViewController<SellCoordinator,
                           SellInteractor,
                           SellPresenter,
                           SellStore>,
                           SellResponseDisplays {
     
-    typealias Models = SellModels
+    typealias Models = ExchangeModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title
@@ -134,23 +134,6 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     }
     
     // MARK: - SellResponseDisplay
-    
-    func displayAmount(responseDisplay: Models.Amounts.ResponseDisplay) {
-        // TODO: Extract to VIPBaseViewController
-        LoadingView.hide()
-        
-        tableView.beginUpdates()
-        
-        guard let section = sections.firstIndex(of: Models.Section.swapCard),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
-        
-        cell.wrappedView.setup(with: responseDisplay.amounts)
-        
-        tableView.endUpdates()
-        
-        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
         tableView.beginUpdates()

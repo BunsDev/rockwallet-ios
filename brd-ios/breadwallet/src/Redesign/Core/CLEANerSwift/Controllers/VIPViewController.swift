@@ -74,6 +74,7 @@ class VIPViewController<C: CoordinatableRoutes,
     
     convenience init() {
         self.init(nibName: nil, bundle: nil)
+        
         setupVIP()
     }
 
