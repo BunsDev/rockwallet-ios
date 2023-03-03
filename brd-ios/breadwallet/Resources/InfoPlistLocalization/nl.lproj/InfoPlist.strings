@@ -765,6 +765,8 @@
 /* Address label in billing address view on buy flow */
 "Buy.Address" = "Address";
 
+"Buy.AddYourCard" = "Add your card";
+
 "Buy.bankAccountFailureText" = "Please try again or select a different payment method.";
 
 "Buy.bankAccountSuccessText" = "It currently takes 3-5 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.";

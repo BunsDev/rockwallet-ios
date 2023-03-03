@@ -691,6 +691,8 @@ internal enum L10n {
     internal static let addDebitCreditCard = L10n.tr("Localizable", "Buy.AddDebitCreditCard", fallback: "Add a debit or credit card")
     /// Address label in billing address view on buy flow
     internal static let address = L10n.tr("Localizable", "Buy.Address", fallback: "Address")
+    /// Add your card
+    internal static let addYourCard = L10n.tr("Localizable", "Buy.AddYourCard", fallback: "Add your card")
     /// Please try again or select a different payment method.
     internal static let bankAccountFailureText = L10n.tr("Localizable", "Buy.bankAccountFailureText", fallback: "Please try again or select a different payment method.")
     /// It currently takes 3-5 days to process a purchase with ACH. You will receive a confirmation email when your digital assets are delivered to your wallet.

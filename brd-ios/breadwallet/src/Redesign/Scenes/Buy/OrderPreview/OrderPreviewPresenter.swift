@@ -111,6 +111,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         viewController?.displayThreeDSecure(responseDisplay: .init(url: actionResponse.url))
     }
     
+    func presentVeriffLivenessCheck(actionResponse: OrderPreviewModels.VeriffLivenessCheck.ActionResponse) {
+        viewController?.displayVeriffLivenessCheck(responseDisplay: .init(quoteId: actionResponse.quoteId, isBiometric: actionResponse.isBiometric))
+    }
+    
+    func presentBiometricStatus(actionResponse: OrderPreviewModels.BiometricStatusCheck.ActionResponse) {
+        viewController?.displayBiometricStatus(responseDisplay: .init())
+    }
+    
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse) {
         viewController?.displayContinueEnabled(responseDisplay: .init(continueEnabled: actionResponse.isValid))
     }
