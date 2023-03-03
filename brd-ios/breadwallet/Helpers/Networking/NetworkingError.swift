@@ -25,7 +25,8 @@ enum NetworkingError: FEError {
     case unprocessableEntity
     case serverAtCapacity
     case exchangesUnavailable
-    case biometricAuthentication
+    case biometricAuthenticationRequired
+    case biometricAuthenticationFailed
     
     var errorMessage: String {
         switch self {
@@ -51,7 +52,7 @@ enum NetworkingError: FEError {
         case .exchangesUnavailable:
             return .exchangesUnavailable
             
-        case .biometricAuthentication:
+        case .biometricAuthenticationFailed, .biometricAuthenticationRequired:
             return .biometricAuthentication
             
         default:
@@ -71,12 +72,7 @@ enum NetworkingError: FEError {
             self = .sessionExpired
             
         case 403:
-            if ["biometric authentication required",
-                "biometric authentication failed"].contains(error?.errorMessage ?? "") {
-                self = .biometricAuthentication
-            } else {
-                self = .sessionNotVerified
-            }
+            self = .sessionNotVerified
             
         case 404:
             self = .dataUnavailable
@@ -92,6 +88,12 @@ enum NetworkingError: FEError {
             default:
                 self = .serverAtCapacity
             }
+            
+        case 1001:
+            self = .biometricAuthenticationRequired
+            
+        case 1002:
+            self = .biometricAuthenticationFailed
             
         default:
             return nil

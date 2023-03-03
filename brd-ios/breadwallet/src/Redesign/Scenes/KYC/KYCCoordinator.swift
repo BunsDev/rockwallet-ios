@@ -112,8 +112,10 @@ extension BaseCoordinator {
         switch veriffType {
         case .kyc:
             forKYC(result: result)
+            
         case .liveness:
             forLiveness()
+            
         }
     }
     
@@ -136,9 +138,7 @@ extension BaseCoordinator {
         }
     }
     
-    private func forLiveness() {
-        // TODO: What to do...
-    }
+    private func forLiveness() {}
 }
 
 class VeriffKYCManager: NSObject, VeriffSdkDelegate {
