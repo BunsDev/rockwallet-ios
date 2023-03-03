@@ -687,6 +687,8 @@ internal enum L10n {
     internal static let achSuccess = L10n.tr("Localizable", "Buy.achSuccess", fallback: "ACH payment method was added successfully")
     /// Add card title for buy cryptos
     internal static let addCard = L10n.tr("Localizable", "Buy.AddCard", fallback: "Add card")
+    /// Using a Credit Card may trigger additional fees from your Bank. We recommend using your Debit Card.
+    internal static let addCardPrompt = L10n.tr("Localizable", "Buy.AddCardPrompt", fallback: "Using a Credit Card may trigger additional fees from your Bank. We recommend using your Debit Card.")
     /// Add a debit or credit card label on add card flow
     internal static let addDebitCreditCard = L10n.tr("Localizable", "Buy.AddDebitCreditCard", fallback: "Add a debit or credit card")
     /// Address label in billing address view on buy flow

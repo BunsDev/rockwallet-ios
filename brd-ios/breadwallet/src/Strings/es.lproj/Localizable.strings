@@ -759,6 +759,8 @@
 /* Add card title for buy cryptos */
 "Buy.AddCard" = "Añadir tarjeta";
 
+"Buy.AddCardPrompt" = "Using a Credit Card may trigger additional fees from your Bank. We recommend using your Debit Card.";
+
 /* Add a debit or credit card label on add card flow */
 "Buy.AddDebitCreditCard" = "Asociar una tarjeta de débito o de crédito";
 
