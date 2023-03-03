@@ -14,15 +14,6 @@ import WalletKit
 enum SwapModels {
     typealias Item = (from: Amount?, to: Amount?, quote: Quote?)
     
-    enum Section: Sectionable {
-        case rateAndTimer
-        case accountLimits
-        case swapCard
-        
-        var header: AccessoryType? { return nil }
-        var footer: AccessoryType? { return nil }
-    }
-    
     enum EstimateFeeResult {
         case successFee(TransferFeeBasis)
         case successEthFee(Decimal)
@@ -52,12 +43,6 @@ enum SwapModels {
             var baseBalance: Amount?
             var minimumValue: Decimal?
             var handleErrors = false
-        }
-        
-        struct ResponseDisplay {
-            var continueEnabled = false
-            var amounts: MainSwapViewModel
-            var rate: ExchangeRateViewModel
         }
     }
     

@@ -13,7 +13,11 @@ protocol LinkOAuthHandling {
     var linkHandler: Handler? { get }
 }
 
-class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, BuyPresenter, BuyStore>, BuyResponseDisplays {
+class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
+                         BuyInteractor,
+                         BuyPresenter,
+                         BuyStore>,
+                         BuyResponseDisplays {
     
     typealias Models = BuyModels
     

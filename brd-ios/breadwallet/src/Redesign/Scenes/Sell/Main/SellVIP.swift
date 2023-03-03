@@ -31,7 +31,6 @@ protocol SellResponseDisplays: AnyObject,
                                FetchResponseDisplays,
                                ExchangeRateResponseDisplays,
                                AchResponseDisplays {
-    func displayAmount(responseDisplay: SellModels.Amounts.ResponseDisplay)
 }
 
 protocol SellDataStore: BaseDataStore, ExchangeDataStore, AchDataStore {
