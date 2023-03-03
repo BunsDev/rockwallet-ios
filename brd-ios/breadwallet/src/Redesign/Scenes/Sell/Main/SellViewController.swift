@@ -9,13 +9,13 @@
 import UIKit
 import LinkKit
 
-class SellViewController: BaseTableViewController<SellCoordinator,
+class SellViewController: BaseExchangeTableViewController<SellCoordinator,
                           SellInteractor,
                           SellPresenter,
                           SellStore>,
                           SellResponseDisplays {
     
-    typealias Models = TransactionModels
+    typealias Models = ExchangeModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title

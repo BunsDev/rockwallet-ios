@@ -42,6 +42,7 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
     }
     
     // MARK: - User Interaction
+    
     // MARK: - DemoResponseDisplay
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -51,9 +52,6 @@ class DemoViewController: BaseTableViewController<DemoCoordinator,
         switch section {
         case .button:
             cell = self.tableView(tableView, buttonCellForRowAt: indexPath)
-            
-        case .timer:
-            cell = self.tableView(tableView, timerCellForRowAt: indexPath)
             
         case .asset:
             cell = self.tableView(tableView, assetCellForRowAt: indexPath)

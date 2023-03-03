@@ -464,78 +464,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, timerCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<ExchangeRateView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ExchangeRateViewModel
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
-    func tableView<T: UIView>(_ tableView: UITableView, displayErrorInCell cell: WrapperTableViewCell<T>) {
-        cell.setup { view in
-            guard let view = view as? StateDisplayable else { return }
-            
-            view.animateTo(state: .error, withAnimation: true)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, paymentSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? CardSelectionViewModel
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-            
-            view.didTapSelectCard = { [weak self] in
-                switch (self?.dataStore as? AchDataStore)?.paymentMethod {
-                case .ach:
-                    (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
-                default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true))
-                }
-            }
-        }
-        
-        return cell
-    }
-    
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        switch self {
-        case is SwapViewController,
-            is BuyViewController,
-            is SellViewController:
-            continueButton.configure(with: Presets.Button.primary)
-            continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                             enabled: false,
-                                             callback: { [weak self] in
-                self?.buttonTapped()
-            }))
-            
-            guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-            verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-            verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
-            
-        default:
-            return
-        }
-    }
-    
     // MARK: UserInteractions
     
     /// Override in subclass
@@ -557,23 +485,5 @@ class BaseTableViewController<C: CoordinatableRoutes,
     /// Override in subclass
     @objc func buttonTapped() {
         view.endEditing(true)
-    }
-    
-    // MARK: Wyre response displays
-    
-    override func displayAmount(responseDisplay: TransactionModels.Amounts.ResponseDisplay) {
-        LoadingView.hide()
-        
-        tableView.beginUpdates()
-        
-        guard let section = sections.firstIndex(of: TransactionModels.Section.swapCard),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
-        
-        cell.wrappedView.setup(with: responseDisplay.amounts)
-        
-        tableView.endUpdates()
-        
-        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
 }

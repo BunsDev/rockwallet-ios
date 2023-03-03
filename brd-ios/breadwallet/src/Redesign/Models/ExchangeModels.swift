@@ -1,5 +1,5 @@
 // 
-//  TransactionModels.swift
+//  ExchangeModels.swift
 //  breadwallet
 //
 //  Created by Dino Gacevic on 01/03/2023.
@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct TransactionModels {
+struct ExchangeModels {
     enum Section: Sectionable {
         case rateAndTimer
         case accountLimits
@@ -30,6 +30,6 @@ struct TransactionModels {
     }
 }
 
-protocol TransactionResponseDisplays {
-    func displayAmount(responseDisplay: TransactionModels.Amounts.ResponseDisplay)
+protocol ExchangeResponseDisplays {
+    func displayAmount(responseDisplay: ExchangeModels.Amounts.ResponseDisplay)
 }

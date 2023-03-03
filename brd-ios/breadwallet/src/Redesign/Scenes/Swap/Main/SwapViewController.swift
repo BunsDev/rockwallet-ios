@@ -15,13 +15,13 @@ protocol ExchangeButtonsProtocol {
     func setupVerticalButtons()
 }
 
-class SwapViewController: BaseTableViewController<SwapCoordinator,
+class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
                           SwapInteractor,
                           SwapPresenter,
                           SwapStore>,
                           SwapResponseDisplays {
     
-    typealias Models = TransactionModels
+    typealias Models = ExchangeModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.HomeScreen.trade

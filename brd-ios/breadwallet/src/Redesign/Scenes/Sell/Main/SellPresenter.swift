@@ -19,14 +19,14 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
 
-        let sections: [TransactionModels.Section] = [
+        let sections: [ExchangeModels.Section] = [
             .rateAndTimer,
             .swapCard,
             .payoutMethod,
             .accountLimits
         ]
 
-        let sectionRows: [TransactionModels.Section: [Any]] = [
+        let sectionRows: [ExchangeModels.Section: [Any]] = [
             .rateAndTimer: [
                 ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
             ],
