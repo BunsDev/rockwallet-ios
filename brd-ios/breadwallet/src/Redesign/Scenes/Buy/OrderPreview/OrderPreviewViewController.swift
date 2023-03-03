@@ -20,7 +20,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     override var sceneTitle: String? {
         return dataStore?.type?.title
     }
-
+    
     private var veriffKYCManager: VeriffKYCManager?
     
     // MARK: - Overrides
@@ -30,6 +30,13 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         
         tableView.register(WrapperTableViewCell<BuyOrderView>.self)
         tableView.register(WrapperTableViewCell<PaymentMethodView>.self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        guard let vc = coordinator?.navigationController.viewControllers.first as? BuyViewController else { return }
+        vc.didTriggerGetData?()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

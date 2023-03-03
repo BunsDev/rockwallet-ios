@@ -276,9 +276,8 @@ class BaseCoordinator: NSObject,
     }
     
     func showBuy() {
-        guard let vc = navigationController.viewControllers.first as? BuyViewController else {
-            return
-        }
+        guard let vc = navigationController.viewControllers.first as? BuyViewController else { return }
+        
         vc.didTriggerGetData?()
         navigationController.popToViewController(vc, animated: true)
     }
@@ -293,10 +292,9 @@ class BaseCoordinator: NSObject,
     }
     
     func showSwap() {
-        guard let vc = navigationController.viewControllers.first as? SwapViewController else {
-            return
-        }
-        vc.didTriggerGetExchangeRate?()
+        guard let vc = navigationController.viewControllers.first as? SwapViewController else { return }
+        
+        vc.didTriggerGetData?()
         navigationController.popToViewController(vc, animated: true)
     }
 

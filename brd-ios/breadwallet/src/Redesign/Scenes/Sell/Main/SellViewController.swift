@@ -24,11 +24,6 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     var plaidHandler: Handler?
     
     // MARK: - Overrides
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        interactor?.getExchangeRate(viewAction: .init())
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -39,10 +34,9 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        tableView.register(WrapperTableViewCell<MainSwapView>.self)
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
-            
-        tableView.delaysContentTouches = false
+        didTriggerGetData = { [weak self] in
+            self?.interactor?.getExchangeRate(viewAction: .init())
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

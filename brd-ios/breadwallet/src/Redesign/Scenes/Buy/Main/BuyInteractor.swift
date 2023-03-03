@@ -21,9 +21,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard let currency = dataStore?.toAmount?.currency,
               dataStore?.paymentMethod != nil,
-              dataStore?.supportedCurrencies?.isEmpty != false else { return }
-        
-        getExchangeRate(viewAction: .init())
+              dataStore?.supportedCurrencies?.isEmpty != false else {
+            getExchangeRate(viewAction: .init())
+            return
+        }
         
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {

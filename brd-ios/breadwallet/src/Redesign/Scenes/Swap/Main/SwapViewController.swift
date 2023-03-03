@@ -10,11 +10,6 @@
 
 import UIKit
 
-protocol ExchangeButtonsProtocol {
-    
-    func setupVerticalButtons()
-}
-
 class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
                           SwapInteractor,
                           SwapPresenter,
@@ -27,8 +22,6 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
         return L10n.HomeScreen.trade
     }
     
-    var didTriggerGetExchangeRate: (() -> Void)?
-
     // MARK: - Overrides
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,11 +33,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        tableView.register(WrapperTableViewCell<MainSwapView>.self)
-        tableView.delaysContentTouches = false
-        tableView.backgroundColor = LightColors.Background.two
-        
-        didTriggerGetExchangeRate = { [weak self] in
+        didTriggerGetData = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
         }
     }
