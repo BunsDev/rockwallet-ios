@@ -21,14 +21,15 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard let currency = dataStore?.toAmount?.currency,
               dataStore?.paymentMethod != nil,
-              dataStore?.supportedCurrencies?.isEmpty != false
-        else { return }
+              dataStore?.supportedCurrencies?.isEmpty != false else { return }
+        
+        getExchangeRate(viewAction: .init())
         
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
                 ExchangeManager.shared.reload()
-
+                
                 self?.dataStore?.supportedCurrencies = currencies
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency),
                                                                                      paymentCard: self?.dataStore?.selected,
@@ -108,7 +109,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
                                                        type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote))
         getExchangeRate(viewAction: .init())
-            
     }
     
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction) {

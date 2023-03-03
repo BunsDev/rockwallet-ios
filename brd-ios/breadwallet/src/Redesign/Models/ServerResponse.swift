@@ -13,6 +13,7 @@ import Foundation
 struct ServerResponse: Decodable {
     enum ErrorType: String, Decodable {
         case exchangesUnavailable = "Exchanges unavailable"
+        case biometricAuthentication = "Biometric authentication"
     }
     
     var result: String?

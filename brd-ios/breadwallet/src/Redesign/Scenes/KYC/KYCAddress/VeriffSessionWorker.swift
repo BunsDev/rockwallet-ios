@@ -10,6 +10,15 @@
 
 import Foundation
 
+struct VeriffSessionRequestData: RequestModelData {
+    var quoteId: String?
+    var isBiometric: Bool?
+    
+    func getParameters() -> [String: Any] {
+        return [:]
+    }
+}
+
 struct VeriffSessionResponseData: ModelResponse {
     var url: String?
 }
@@ -26,6 +35,11 @@ class VeriffSessionWorkerMapper: ModelMapper<VeriffSessionResponseData, VeriffSe
 
 class VeriffSessionWorker: BaseApiWorker<VeriffSessionWorkerMapper> {
     override func getUrl() -> String {
-        return KYCAuthEndpoints.veriffSession.url
+        guard let quoteId = (requestData as? VeriffSessionRequestData)?.quoteId,
+              let isBiometric = (requestData as? VeriffSessionRequestData)?.isBiometric else {
+            return KYCAuthEndpoints.veriffSession.url
+        }
+        
+        return APIURLHandler.getUrl(KYCAuthEndpoints.veriffBiometricVerificationSession, parameters: [quoteId, isBiometric.description])
     }
 }
