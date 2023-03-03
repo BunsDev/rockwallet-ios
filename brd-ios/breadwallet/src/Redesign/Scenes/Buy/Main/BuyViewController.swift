@@ -18,13 +18,9 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
                          BuyPresenter,
                          BuyStore>,
                          BuyResponseDisplays {
-    
     typealias Models = BuyModels
     
-    var plaidHandler: Handler?
-    var didTriggerGetData: (() -> Void)?
-    
-    private var supportedCurrencies: [SupportedCurrency]?
+    var plaidHandler: LinkKit.Handler?
     
     // MARK: - Overrides
     
@@ -40,12 +36,6 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     
     override func setupSubviews() {
         super.setupSubviews()
-        
-        tableView.register(WrapperTableViewCell<FESegmentControl>.self)
-        tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
-        tableView.delaysContentTouches = false
-        tableView.backgroundColor = LightColors.Background.two
         
         didTriggerGetData = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
@@ -191,6 +181,8 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
+        var supportedCurrencies: [SupportedCurrency]?
+        
         switch dataStore?.paymentMethod {
         case .ach:
             if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDT }) {

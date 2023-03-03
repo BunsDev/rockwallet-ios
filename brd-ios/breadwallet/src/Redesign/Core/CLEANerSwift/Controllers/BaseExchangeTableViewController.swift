@@ -15,6 +15,19 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                                       P: Presenter,
                                       DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS>,
                                                                      ExchangeResponseDisplays {
+    var didTriggerGetData: (() -> Void)?
+    
+    override func setupSubviews() {
+        super.setupSubviews()
+        
+        tableView.register(WrapperTableViewCell<FESegmentControl>.self)
+        tableView.register(WrapperTableViewCell<MainSwapView>.self)
+        tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
+        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
+        tableView.delaysContentTouches = false
+        tableView.backgroundColor = LightColors.Background.two
+    }
+    
     func tableView(_ tableView: UITableView, timerCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ExchangeRateView> = tableView.dequeueReusableCell(for: indexPath),

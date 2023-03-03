@@ -171,7 +171,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 case .declined:
                     self.presenter?.presentSubmit(actionResponse: .init(paymentReference: nil, failed: true))
                     
-                case .submitted:
+                case .submitted, .started: // Case .started might not be needed in the future.
                     guard self.biometricStatusRetryCounter >= 0 else {
                         self.presenter?.presentError(actionResponse: .init(error: GeneralError()))
                         return
