@@ -15,6 +15,7 @@ enum AddCardModels {
     typealias Item = AddCardStore
     
     enum Section: Sectionable {
+        case notificationPrompt
         case cardDetails
         case confirm
         

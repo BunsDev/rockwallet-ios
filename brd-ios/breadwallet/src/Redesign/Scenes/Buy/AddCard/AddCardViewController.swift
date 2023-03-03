@@ -35,6 +35,9 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
+        case .notificationPrompt:
+            cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
+            
         case .cardDetails:
             cell = self.tableView(tableView, bankCardInputDetailsCellForRowAt: indexPath)
 
@@ -78,6 +81,25 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
             view.didTriggerExpirationField = { [weak self] in
                 guard let self = self, let dataStore = self.dataStore else { return }
                 self.coordinator?.showMonthYearPicker(model: [dataStore.months, dataStore.years])
+            }
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+              let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.setup { view in
+                view.setup(with: model)
+                view.configure(with: Presets.InfoView.verification)
+                view.setupCustomMargins(all: .large)
             }
         }
         

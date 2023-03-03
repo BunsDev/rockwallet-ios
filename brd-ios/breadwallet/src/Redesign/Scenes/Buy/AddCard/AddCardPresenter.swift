@@ -24,9 +24,12 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
         guard let item = actionResponse.item as? Models.Item else { return }
         
         let sections: [Models.Section] = [
+            .notificationPrompt,
             .cardDetails,
             .confirm
         ]
+        
+        let addCardNotificationModel = InfoViewModel(description: .text(L10n.Buy.addCardPrompt), dismissType: .persistent)
         
         bankCardInputDetailsViewModel = BankCardInputDetailsViewModel(number: .init(leading: .image(Asset.card.image),
                                                                                     title: L10n.Buy.cardNumber,
@@ -39,6 +42,9 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
                                                                                  trailing: .image(Asset.help.image.withRenderingMode(.alwaysOriginal))))
         
         let sectionRows: [Models.Section: [Any]] = [
+            .notificationPrompt: [
+                addCardNotificationModel
+            ],
             .cardDetails: [
                 bankCardInputDetailsViewModel
             ],
