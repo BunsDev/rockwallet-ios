@@ -47,8 +47,8 @@ class UserManager: NSObject {
         }
     }
     
-    func getVeriffSessionUrl(completion: @escaping ((Result<VeriffSession?, Error>?) -> Void)) {
-        VeriffSessionWorker().execute { result in
+    func getVeriffSessionUrl(livenessCheckData: VeriffSessionRequestData? = nil, completion: @escaping ((Result<VeriffSession?, Error>?) -> Void)) {
+        VeriffSessionWorker().execute(requestData: livenessCheckData) { result in
             completion(result)
         }
     }

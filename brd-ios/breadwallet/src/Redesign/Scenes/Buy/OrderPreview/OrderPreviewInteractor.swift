@@ -16,6 +16,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     var presenter: OrderPreviewPresenter?
     var dataStore: OrderPreviewStore?
     
+    private var biometricStatusRetryCounter: Int = 0
+    
     // MARK: - OrderPreviewViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
@@ -135,6 +137,51 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 
                 ExchangeManager.shared.reload()
                 self?.presenter?.presentThreeDSecure(actionResponse: .init(url: redirectUrl))
+                
+            case .failure(let error):
+                guard let store = self?.dataStore,
+                      let quoteId = store.quote?.quoteId,
+                      (error as? NetworkingError)?.errorType == .biometricAuthentication else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
+            }
+        }
+    }
+    
+    func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
+        guard let quoteId = dataStore?.quote?.quoteId else { return }
+        
+        if viewAction.resetCounter {
+            biometricStatusRetryCounter = 5
+        }
+        biometricStatusRetryCounter -= 1
+        
+        BiometricStatusWorker().execute(requestData: BiometricStatusRequestData(quoteId: String(quoteId))) { [weak self] result in
+            switch result {
+            case .success(let data):
+                guard let self = self, let status = data?.status else { return }
+                
+                switch status {
+                case .approved:
+                    self.submitBuy()
+                    
+                case .declined:
+                    self.presenter?.presentSubmit(actionResponse: .init(paymentReference: nil, failed: true))
+                    
+                case .submitted:
+                    guard self.biometricStatusRetryCounter >= 0 else {
+                        self.presenter?.presentError(actionResponse: .init(error: GeneralError()))
+                        return
+                    }
+                    
+                    self.checkBiometricStatus(viewAction: .init(resetCounter: false))
+                    
+                default:
+                    self.presenter?.presentError(actionResponse: .init(error: GeneralError()))
+                }
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
