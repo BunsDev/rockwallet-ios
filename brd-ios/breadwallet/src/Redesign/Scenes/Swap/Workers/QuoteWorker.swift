@@ -29,7 +29,7 @@ enum QuoteType {
                 return ""
             }
         case .sell:
-            return "SELL"
+            return "SELL_ACH"
         }
     }
 }
