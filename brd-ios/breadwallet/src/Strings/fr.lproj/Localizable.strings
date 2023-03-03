@@ -765,6 +765,8 @@
 /* Address label in billing address view on buy flow */
 "Buy.Address" = "Adresse";
 
+"Buy.AddYourCard" = "Add your card";
+
 "Buy.bankAccountFailureText" = "Veuillez réessayer ou choisir un autre mode de paiement.";
 
 "Buy.bankAccountSuccessText" = "Actuellement, le traitement d'un achat réalisé avec ACH prend entre 7 et 10 jours. Vous recevrez un e-mail de confirmation lorsque vos actifs numériques seront livrés dans votre portefeuille.";

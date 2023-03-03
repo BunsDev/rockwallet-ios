@@ -765,6 +765,8 @@
 /* Address label in billing address view on buy flow */
 "Buy.Address" = "Dirección";
 
+"Buy.AddYourCard" = "Add your card";
+
 "Buy.bankAccountFailureText" = "Inténtalo de nuevo o utiliza un método de pago diferente.";
 
 "Buy.bankAccountSuccessText" = "Actualmente, el periodo de proceso de compra con ACH es de 7 a 10 días. Recibirás un email de confirmación cuando tus activos digitales se añadan a tu monedero.";
