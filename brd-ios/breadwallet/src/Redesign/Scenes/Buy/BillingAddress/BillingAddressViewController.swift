@@ -163,7 +163,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func displaySubmit(responseDisplay: BillingAddressModels.Submit.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         coordinator?.dismissFlow()
         coordinator?.showOverlay(with: .success) { [weak self] in
             self?.interactor?.getPaymentCards(viewAction: .init())

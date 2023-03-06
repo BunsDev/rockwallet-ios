@@ -50,15 +50,7 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
             vc.navigationItem.hidesBackButton = true
             
             vc.didTapMainButton = { [weak self] in
-                self?.popToRoot(completion: { [weak self] in
-                    switch type {
-                    case .buy:
-                        (self?.navigationController.topViewController as? BuyViewController)?.didTriggerGetData?()
-                        
-                    default:
-                        break
-                    }
-                })
+                self?.popToRoot()
             }
         }
     }

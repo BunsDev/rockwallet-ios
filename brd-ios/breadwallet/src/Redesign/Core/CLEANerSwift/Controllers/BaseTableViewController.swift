@@ -103,7 +103,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
     }
 
     // MARK: UITableViewDataSource

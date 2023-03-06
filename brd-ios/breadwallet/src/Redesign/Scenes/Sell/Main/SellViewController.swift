@@ -38,7 +38,13 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
             self?.interactor?.getExchangeRate(viewAction: .init())
         }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        didTriggerGetData?()
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -86,8 +92,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
+                self?.textFieldDidFinish(for: indexPath, with: nil)
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -130,17 +135,14 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     // MARK: - SellResponseDisplay
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        tableView.beginUpdates()
-        
         guard let section = sections.firstIndex(of: Models.Section.payoutMethod),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
+        tableView.beginUpdates()
         cell.wrappedView.setup(with: responseDisplay.viewModel)
-        
         tableView.endUpdates()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
     }
 }

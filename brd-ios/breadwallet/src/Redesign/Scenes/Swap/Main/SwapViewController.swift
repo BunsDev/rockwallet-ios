@@ -38,6 +38,12 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        didTriggerGetData?()
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -149,7 +155,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
@@ -207,7 +213,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     }
     
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         coordinator?.showSwapInfo(from: responseDisplay.from, to: responseDisplay.to, exchangeId: responseDisplay.exchangeId)
     }
     

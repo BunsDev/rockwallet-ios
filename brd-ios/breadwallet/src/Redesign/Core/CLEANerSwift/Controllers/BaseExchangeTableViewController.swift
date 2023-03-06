@@ -95,15 +95,13 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     // MARK: Exchange response displays
     
     func displayAmount(responseDisplay: ExchangeModels.Amounts.ResponseDisplay) {
-        LoadingView.hide()
-        
-        tableView.beginUpdates()
+        LoadingView.hideIfNeeded()
         
         guard let section = sections.firstIndex(of: ExchangeModels.Section.swapCard),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
+        tableView.beginUpdates()
         cell.wrappedView.setup(with: responseDisplay.amounts)
-        
         tableView.endUpdates()
         
         continueButton.viewModel?.enabled = responseDisplay.continueEnabled

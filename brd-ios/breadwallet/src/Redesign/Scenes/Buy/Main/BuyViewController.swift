@@ -42,6 +42,12 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        didTriggerGetData?()
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -246,7 +252,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
