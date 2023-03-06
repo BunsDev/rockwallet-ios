@@ -51,7 +51,6 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         let view = UIVisualEffectView(effect: blurEffect)
         view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         view.alpha = 0
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
         return view
     }()
     
@@ -59,9 +58,6 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         let view = UIView()
         view.layer.cornerRadius = CornerRadius.large.rawValue
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onDrag(_:)))
-        panGesture.delegate = self
-        view.addGestureRecognizer(panGesture)
         return view
     }()
     
@@ -75,7 +71,6 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     lazy var drawerImage: FEImageView = {
         let view = FEImageView()
         view.setup(with: .image(Asset.dragControl.image))
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
         return view
     }()
     
@@ -125,6 +120,12 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         }
         
         stack.addArrangedSubview(buttonStack)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onDrag(_:)))
+        panGesture.delegate = self
+        drawer.addGestureRecognizer(panGesture)
+        blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
+        drawerImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
     }
     
     override func configure(with config: DrawerConfiguration?) {
