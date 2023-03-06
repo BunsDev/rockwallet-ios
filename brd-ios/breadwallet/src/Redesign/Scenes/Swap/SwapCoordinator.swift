@@ -39,5 +39,11 @@ class SwapCoordinator: BaseCoordinator, SwapRoutes, AssetSelectionDisplayable {
         }
     }
     
+    override func goBack() {
+        (navigationController.children.first(where: { $0 is SwapViewController }) as? SwapViewController)?.didTriggerGetData?()
+        
+        super.goBack()
+    }
+    
     // MARK: - Aditional helpers
 }

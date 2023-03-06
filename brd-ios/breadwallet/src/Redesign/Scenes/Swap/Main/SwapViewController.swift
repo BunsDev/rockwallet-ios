@@ -36,10 +36,6 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
         didTriggerGetData = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         didTriggerGetData?()
     }

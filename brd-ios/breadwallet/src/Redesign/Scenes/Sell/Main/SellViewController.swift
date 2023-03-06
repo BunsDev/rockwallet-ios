@@ -37,10 +37,6 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
         didTriggerGetData = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init())
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         didTriggerGetData?()
     }

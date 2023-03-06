@@ -40,10 +40,6 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         didTriggerGetData = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         didTriggerGetData?()
     }
