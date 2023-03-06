@@ -66,14 +66,27 @@ extension Interactor where Self: CountriesAndStatesViewActions,
     func pickState(viewAction: CountriesAndStatesModels.SelectState.ViewAction) {
         guard viewAction.code == nil else {
             dataStore?.state = .init(iso2: viewAction.code ?? "", name: viewAction.state ?? "")
-            
             presenter?.presentData(actionResponse: .init(item: dataStore))
-            
-            return
+             return
         }
         
         let states = dataStore?.countries.first(where: { $0.iso2 == C.countryUS })?.states
-        presenter?.presentState(actionResponse: .init(states: states))
+        guard states == nil else {
+            presenter?.presentState(actionResponse: .init(states: states))
+            return
+        }
+        
+        CountriesWorker().execute(requestData: CountriesRequestData()) { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.dataStore?.countries = data ?? []
+                let states = self?.dataStore?.countries.first(where: { $0.iso2 == C.countryUS })?.states
+                self?.presenter?.presentState(actionResponse: .init(states: states))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
 }
 
