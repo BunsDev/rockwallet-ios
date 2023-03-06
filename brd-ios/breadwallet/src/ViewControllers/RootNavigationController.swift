@@ -60,6 +60,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
             
         case is BuyViewController,
             is SwapViewController,
+            is SellViewController,
             is ExchangeDetailsViewController:
             
             backgroundColor = LightColors.Background.two
