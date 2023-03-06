@@ -246,7 +246,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }

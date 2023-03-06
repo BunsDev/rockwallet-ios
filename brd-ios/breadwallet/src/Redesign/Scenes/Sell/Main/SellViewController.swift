@@ -38,7 +38,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
             self?.interactor?.getExchangeRate(viewAction: .init())
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -130,17 +130,14 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     // MARK: - SellResponseDisplay
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        tableView.beginUpdates()
-        
         guard let section = sections.firstIndex(of: Models.Section.payoutMethod),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
+        tableView.beginUpdates()
         cell.wrappedView.setup(with: responseDisplay.viewModel)
-        
         tableView.endUpdates()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
     }
 }

@@ -120,9 +120,4 @@ public class NetworkingErrorManager {
         
         return error
     }
-    
-    static func getImageUploadEncodingError() -> FEError? {
-        // TODO: Is this right?
-        return GeneralError(errorMessage: "Image encoding failed.")
-    }
 }

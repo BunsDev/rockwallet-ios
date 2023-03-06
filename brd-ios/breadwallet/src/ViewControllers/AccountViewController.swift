@@ -268,7 +268,7 @@ class AccountViewController: UIViewController, Subscriber {
             
             LoadingView.show()
             navigationController?.pushViewController(viewController: vc, animated: true) {
-                LoadingView.hide()
+                LoadingView.hideIfNeeded()
             }
             
         }

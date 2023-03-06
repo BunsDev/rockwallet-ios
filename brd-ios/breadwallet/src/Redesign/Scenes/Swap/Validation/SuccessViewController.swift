@@ -210,7 +210,7 @@ class SuccessViewController: BaseInfoViewController {
     }
     
     override func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         
         guard let coordinator = coordinator as? KYCCoordinator else { return }
         

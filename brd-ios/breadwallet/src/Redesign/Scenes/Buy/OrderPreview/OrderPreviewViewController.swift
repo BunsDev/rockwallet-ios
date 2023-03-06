@@ -32,13 +32,6 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         tableView.register(WrapperTableViewCell<PaymentMethodView>.self)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        guard let vc = coordinator?.navigationController.viewControllers.first as? BuyViewController else { return }
-        vc.didTriggerGetData?()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -211,7 +204,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         
         let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAch : .buy
         coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference,
@@ -250,7 +243,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }

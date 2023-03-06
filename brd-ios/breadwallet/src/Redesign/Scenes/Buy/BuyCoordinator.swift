@@ -31,7 +31,7 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
             vc.dataStore?.expYear = store.cardExpDateYear
             vc.dataStore?.expMonth = store.cardExpDateMonth
             vc.prepareData()
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
     }
     
@@ -98,6 +98,12 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
     func dismissCardsSelectionFlow(completion: (() -> Void)?) {
         navigationController.dismiss(animated: true, completion: completion)
         parentCoordinator?.childDidFinish(child: self)
+    }
+    
+    override func goBack() {
+        (navigationController.children.first(where: { $0 is BuyViewController }) as? BuyViewController)?.didTriggerGetData?()
+        
+        super.goBack()
     }
     
     // MARK: - Aditional helpers

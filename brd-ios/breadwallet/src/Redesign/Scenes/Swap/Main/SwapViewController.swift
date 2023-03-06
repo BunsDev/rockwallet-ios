@@ -149,7 +149,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
@@ -207,7 +207,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     }
     
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         coordinator?.showSwapInfo(from: responseDisplay.from, to: responseDisplay.to, exchangeId: responseDisplay.exchangeId)
     }
     
