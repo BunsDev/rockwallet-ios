@@ -40,8 +40,6 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         didTriggerGetData = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
-        
-        didTriggerGetData?()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

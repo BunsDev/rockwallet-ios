@@ -37,8 +37,6 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
         didTriggerGetData = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init())
         }
-        
-        didTriggerGetData?()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -88,7 +86,8 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.textFieldDidFinish(for: indexPath, with: nil)
+                self?.tableView.beginUpdates()
+                self?.tableView.endUpdates()
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
