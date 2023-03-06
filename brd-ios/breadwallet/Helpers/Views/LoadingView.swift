@@ -67,7 +67,7 @@ class LoadingView: UIView {
     // MARK: show and hide trigger methods
     static func show(animated: Bool = true) {
         if isShowing {
-            hide(animated: false)
+            hideIfNeeded(animated: false)
         }
         
         guard !isShowing, let topView = topView else {
@@ -98,7 +98,7 @@ class LoadingView: UIView {
         }
     }
     
-    static func hide(animated: Bool = true) {
+    static func hideIfNeeded(animated: Bool = true) {
         guard isShowing, let topView = topView else { return }
         
         isShowing = false

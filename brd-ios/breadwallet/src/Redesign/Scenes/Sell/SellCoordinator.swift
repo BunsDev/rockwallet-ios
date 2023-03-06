@@ -50,15 +50,7 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
             vc.navigationItem.hidesBackButton = true
             
             vc.didTapMainButton = { [weak self] in
-                self?.popToRoot(completion: { [weak self] in
-                    switch type {
-                    case .buy:
-                        (self?.navigationController.topViewController as? BuyViewController)?.didTriggerGetData?()
-                        
-                    default:
-                        break
-                    }
-                })
+                self?.popToRoot()
             }
         }
     }
@@ -91,6 +83,12 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
             vc.failure = failure
             vc.availablePayments = availablePayments
         }
+    }
+    
+    override func goBack() {
+        (navigationController.children.first(where: { $0 is SellViewController }) as? SellViewController)?.didTriggerGetData?()
+        
+        super.goBack()
     }
 }
 

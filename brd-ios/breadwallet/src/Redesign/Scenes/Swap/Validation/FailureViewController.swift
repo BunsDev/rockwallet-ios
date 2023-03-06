@@ -130,13 +130,14 @@ class FailureViewController: BaseInfoViewController {
         if containsDebit || containsBankAccount {
             buttonTitle = containsDebit ? L10n.PaymentConfirmation.tryWithDebit : L10n.PaymentConfirmation.tryWithAch
         }
+        
         return [
             .init(title: buttonTitle != nil ? buttonTitle : failure?.firstButtonTitle) { [weak self] in
                 self?.shouldDismiss = true
                 
                 switch self?.failure {
                 case .swap:
-                    self?.coordinator?.showSwap()
+                    self?.coordinator?.popToRoot()
                     
                 case .documentVerification:
                     self?.coordinator?.showSupport()
@@ -151,23 +152,17 @@ class FailureViewController: BaseInfoViewController {
                     if containsDebit || containsBankAccount {
                         self?.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .card : .ach)
                     } else {
-                        self?.coordinator?.showBuy()
+                        self?.coordinator?.popToRoot()
                     }
                 }},
             .init(title: failure?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
                 switch self?.failure {
-                case .buyCard:
+                case .buyCard, .swap:
                     self?.coordinator?.showSupport()
                     
-                case .swap:
-                    self?.coordinator?.dismissFlow()
-                    
-                case .documentVerification:
-                    self?.coordinator?.dismissFlow()
-
-                case .documentVerificationRetry:
+                case .documentVerification, .documentVerificationRetry:
                     self?.coordinator?.dismissFlow()
                     
                 default:

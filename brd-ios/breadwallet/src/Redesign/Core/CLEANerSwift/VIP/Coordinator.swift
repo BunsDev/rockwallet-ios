@@ -275,13 +275,6 @@ class BaseCoordinator: NSObject,
         navigationController.popToRootViewController(animated: true, completion: completion)
     }
     
-    func showBuy() {
-        guard let vc = navigationController.viewControllers.first as? BuyViewController else { return }
-        
-        vc.didTriggerGetData?()
-        navigationController.popToViewController(vc, animated: true)
-    }
-    
     func showBuyWithDifferentPayment(paymentMethod: PaymentCard.PaymentType?) {
         guard let vc = navigationController.viewControllers.first as? BuyViewController else {
             return
@@ -291,13 +284,6 @@ class BaseCoordinator: NSObject,
         navigationController.popToViewController(vc, animated: true)
     }
     
-    func showSwap() {
-        guard let vc = navigationController.viewControllers.first as? SwapViewController else { return }
-        
-        vc.didTriggerGetData?()
-        navigationController.popToViewController(vc, animated: true)
-    }
-
     /// Remove the child coordinator from the stack after iit finnished its flow
     func childDidFinish(child: Coordinatable) {
         childCoordinators.removeAll(where: { $0 === child })
@@ -358,7 +344,6 @@ class BaseCoordinator: NSObject,
     }
     
     // It prepares the next KYC coordinator OR returns true.
-    // In which case we show 3rd party popup or continue to Buy/Swap.
     func decideFlow(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
@@ -421,7 +406,7 @@ class BaseCoordinator: NSObject,
                           configuration: InfoViewConfiguration? = nil,
                           onTapCallback: (() -> Void)? = nil) {
         hideOverlay()
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         
         let error = error as? NetworkingError
         
