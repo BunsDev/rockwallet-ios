@@ -8,6 +8,7 @@
 //  See the LICENSE file at the project root for license information.
 //
 
+import Combine
 import UIKit
 import SnapKit
 
@@ -34,16 +35,23 @@ struct DrawerViewModel: ViewModel {
     var drawerBottomOffset = 0.0
 }
 
-class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
+class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
     
     var callbacks: [(() -> Void)] = []
     var isShown: Bool { return blurView.alpha == 1 }
+    
+    private var viewTranslation = CGPoint(x: 0, y: 0)
+    private let dismissActionSubject = PassthroughSubject<Void, Never>()
+    var dismissActionPublisher: AnyPublisher<Void, Never> {
+        dismissActionSubject.eraseToAnyPublisher()
+    }
     
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
         view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         view.alpha = 0
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
         return view
     }()
     
@@ -51,6 +59,9 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
         let view = UIView()
         view.layer.cornerRadius = CornerRadius.large.rawValue
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onDrag(_:)))
+        panGesture.delegate = self
+        view.addGestureRecognizer(panGesture)
         return view
     }()
     
@@ -64,6 +75,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
     lazy var drawerImage: FEImageView = {
         let view = FEImageView()
         view.setup(with: .image(Asset.dragControl.image))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
         return view
     }()
     
@@ -171,7 +183,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
             make.leading.trailing.bottom.equalToSuperview()
         }
         
-        Self.animate(withDuration: Presets.Animation.long.rawValue) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.average.rawValue) { [weak self] in
             self?.blurView.alpha = 1
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
@@ -188,12 +200,15 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
             make.leading.trailing.equalToSuperview()
         }
         
-        Self.animate(withDuration: Presets.Animation.long.rawValue) { [weak self] in
+        Self.animate(withDuration: Presets.Animation.average.rawValue) { [weak self] in
             self?.blurView.alpha = 0
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
             self?.layoutIfNeeded()
+        } completion: { [weak self] _ in
+            self?.drawer.transform = .identity
         }
+
     }
     
     func toggle() {
@@ -202,5 +217,43 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel> {
         }
         
         show()
+    }
+    
+    @objc private func outsideTapped(_ sender: UITapGestureRecognizer) {
+        hide()
+        dismissActionSubject.send()
+    }
+    
+    @objc private func onDrag(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            viewTranslation = sender.translation(in: drawer)
+            Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.drawer.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+            })
+            
+        case .ended:
+            if viewTranslation.y > 100 {
+                hide()
+                dismissActionSubject.send()
+            } else {
+                Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.drawer.transform = .identity
+                })
+            }
+            
+        default:
+            break
+        }
+    }
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if let recognizer = gestureRecognizer as? UIPanGestureRecognizer {
+            // prevent dragging upwards
+            let translation = recognizer.translation(in: drawer)
+            return translation.y >= 0
+        }
+        
+        return false
     }
 }

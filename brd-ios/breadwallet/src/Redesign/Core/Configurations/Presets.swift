@@ -241,6 +241,7 @@ extension Presets {
 extension Presets {
     enum Animation: Double {
         case short = 0.25
+        case average = 0.35
         case long = 0.45
     }
 }

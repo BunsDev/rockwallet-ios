@@ -6,6 +6,7 @@
 //  Copyright © 2017-2019 Breadwinner AG. All rights reserved.
 //
 
+import Combine
 import UIKit
 import SnapKit
 import Lottie
@@ -14,6 +15,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     private let walletAuthenticator: WalletAuthenticator
     private let notificationHandler = NotificationHandler()
     private let coreSystem: CoreSystem
+    
+    private var observers: [AnyCancellable] = []
     
     private lazy var assetListTableView: AssetListTableView = {
         let view = AssetListTableView()
@@ -74,6 +77,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private lazy var drawer: RWDrawer = {
         let view = RWDrawer()
+        view.dismissActionPublisher.sink { [weak self] _ in
+            self?.animationView.play(fromProgress: 1, toProgress: 0)
+        }.store(in: &observers)
         return view
     }()
     
@@ -448,7 +454,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         drawer.hide()
     }
     
-    private func commotTapAction() {
+    private func commonTapAction() {
         guard drawer.isShown else { return }
         
         animationView.play(fromProgress: 1, toProgress: 0)
@@ -465,17 +471,17 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     @objc private func trade() {
-        commotTapAction()
+        commonTapAction()
         didTapTrade?()
     }
     
     @objc private func profile() {
-        commotTapAction()
+        commonTapAction()
         didTapProfile?()
     }
     
     @objc private func menu() {
-        commotTapAction()
+        commonTapAction()
         didTapMenu?()
     }
 }
