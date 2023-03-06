@@ -105,14 +105,6 @@ extension String {
         return self.removing(prefix: "0x")
     }
     
-    public func leftPadding(toLength: Int, withPad character: Character) -> String {
-        if count < toLength {
-            return String(repeatElement(character, count: toLength - count)) + self
-        } else {
-            return String(self[index(self.startIndex, offsetBy: count - toLength)...])
-        }
-    }
-    
     func removing(prefix: String) -> String {
         guard self.hasPrefix(prefix) else { return self }
         return String(self.dropFirst(prefix.count))
