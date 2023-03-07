@@ -94,7 +94,6 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleSellTransactions() -> String {
-        // TODO: update texts
         switch status {
         case .invalid, .failed, .refunded:
             return L10n.Transaction.withdrawalFailed
