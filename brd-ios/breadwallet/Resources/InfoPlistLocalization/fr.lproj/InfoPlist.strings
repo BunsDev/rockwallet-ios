@@ -843,6 +843,8 @@
 
 "Buy.fundWithAch" = "Financer avec ACH";
 
+"Buy.IncreaseYourLimits" = "Increase your limits";
+
 "Buy.InvalidExpirationDate" = "La date d'expiration indiquée n'est pas valide !";
 
 "Buy.iWant" = "Je fonce";
@@ -2938,6 +2940,10 @@
 
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "En attente d'être confirmé. Certains marchands exigent une confirmation pour mener à bien une transaction. Temps estimé : 1-2 heures.";
+
+"Transaction.WithdrawalComplete" = "Withdrawn to bank account";
+
+"Transaction.WithdrawalFailed" = "Withdrawal failed";
 
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "compte";
