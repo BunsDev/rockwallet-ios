@@ -45,6 +45,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     var dismissActionPublisher: AnyPublisher<Void, Never> {
         dismissActionSubject.eraseToAnyPublisher()
     }
+    private var drawerInitialY: CGFloat = 0.0
     
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
@@ -226,14 +227,32 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     }
     
     @objc private func onDrag(_ sender: UIPanGestureRecognizer) {
+        guard let draggedView = sender.view else { return }
+        
         switch sender.state {
+        case .began:
+            // Store the original position of the view
+            drawerInitialY = draggedView.frame.origin.y
+            
         case .changed:
-            viewTranslation = sender.translation(in: drawer)
+            let translation = sender.translation(in: draggedView.superview)
+            
+            // Prevent dragging the view higher than the initial frame
+            let newY = max(drawerInitialY + translation.y, drawerInitialY)
+            guard newY > drawerInitialY else {
+                Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.drawer.transform = .identity
+                })
+                return
+            }
+            
+            viewTranslation = translation
             Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.drawer.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
             })
             
         case .ended:
+            // Hide the view if dragged sufficiently, otherwise return to initial state
             if viewTranslation.y > 100 {
                 hide()
                 dismissActionSubject.send()
@@ -250,7 +269,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if let recognizer = gestureRecognizer as? UIPanGestureRecognizer {
-            // prevent dragging upwards
+            // Prevent dragging upwards
             let translation = recognizer.translation(in: drawer)
             return translation.y >= 0
         }
