@@ -755,6 +755,8 @@ internal enum L10n {
     internal static let firstName = L10n.tr("Localizable", "Buy.FirstName", fallback: "First Name")
     /// FUND WITH ACH
     internal static let fundWithAch = L10n.tr("Localizable", "Buy.fundWithAch", fallback: "FUND WITH ACH")
+    /// Increase your limits
+    internal static let increaseYourLimits = L10n.tr("Localizable", "Buy.IncreaseYourLimits", fallback: "Increase your limits")
     /// Entered expiration date is not valid!
     internal static let invalidExpirationDate = L10n.tr("Localizable", "Buy.InvalidExpirationDate", fallback: "Entered expiration date is not valid!")
     /// I want

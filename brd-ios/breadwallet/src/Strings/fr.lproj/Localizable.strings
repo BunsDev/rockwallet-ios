@@ -843,6 +843,8 @@
 
 "Buy.fundWithAch" = "Financer avec ACH";
 
+"Buy.IncreaseYourLimits" = "Increase your limits";
+
 "Buy.InvalidExpirationDate" = "La date d'expiration indiquée n'est pas valide !";
 
 "Buy.iWant" = "Je fonce";

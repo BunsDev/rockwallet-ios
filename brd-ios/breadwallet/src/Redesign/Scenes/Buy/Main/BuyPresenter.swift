@@ -54,8 +54,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                 // dont ask
                 LabelViewModel.text("\n\n\n\n")
             ],
-            .increaseLimits: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: "Increase your limits",
-                                                                                       isUnderlined: true)])]
+            .increaseLimits: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Buy.increaseYourLimits,
+                                                                                   isUnderlined: true)])]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))

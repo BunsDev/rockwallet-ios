@@ -200,7 +200,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     }
     
     private func increaseLimitsTapped() {
-        coordinator?.showInWebView(urlString: C.limits, title: "Increase your limits")
+        coordinator?.showInWebView(urlString: C.limits, title: L10n.Buy.increaseYourLimits)
     }
     
     // MARK: - BuyResponseDisplay

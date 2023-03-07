@@ -843,6 +843,8 @@
 
 "Buy.fundWithAch" = "FUND WITH ACH";
 
+"Buy.IncreaseYourLimits" = "Increase your limits";
+
 "Buy.InvalidExpirationDate" = "Entered expiration date is not valid!";
 
 "Buy.iWant" = "I want";
