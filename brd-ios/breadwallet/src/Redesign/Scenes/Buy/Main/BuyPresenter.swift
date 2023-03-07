@@ -25,7 +25,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .rateAndTimer,
             .from,
             .paymentMethod,
-            .accountLimits
+            .accountLimits,
+            .increaseLimits
         ]
         
         if item.achEnabled == true {
@@ -52,7 +53,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .accountLimits: [
                 // dont ask
                 LabelViewModel.text("\n\n\n\n")
-            ]
+            ],
+            .increaseLimits: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: "Increase your limits",
+                                                                                       isUnderlined: true)])]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))

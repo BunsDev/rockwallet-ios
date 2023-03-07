@@ -23,6 +23,7 @@ enum BuyModels {
         case accountLimits
         case from
         case paymentMethod
+        case increaseLimits
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }

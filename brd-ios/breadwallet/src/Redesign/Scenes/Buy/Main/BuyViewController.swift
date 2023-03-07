@@ -60,6 +60,9 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
+        case .increaseLimits:
+            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            
         default:
             cell = UITableViewCell()
         }
@@ -149,6 +152,24 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+        
+        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+            return cell
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
+            
+            view.callbacks = [
+                increaseLimitsTapped
+            ]
+        }
+        
+        return cell
+    }
+    
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
@@ -176,6 +197,10 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         super.buttonTapped()
         
         interactor?.showOrderPreview(viewAction: .init())
+    }
+    
+    private func increaseLimitsTapped() {
+       // interactor?.showSsnInfo(viewAction: .init())
     }
     
     // MARK: - BuyResponseDisplay
