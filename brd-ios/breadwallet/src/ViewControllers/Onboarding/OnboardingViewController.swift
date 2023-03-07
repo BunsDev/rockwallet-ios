@@ -463,7 +463,9 @@ class OnboardingViewController: UIViewController {
         }
         
         restoreWithiCloudButton.tap = { [unowned self] in
-            self.restoreButtonTapped()
+            if cloudBackupExists {
+                self.restoreButtonTapped()
+            }
         }
     }
     
