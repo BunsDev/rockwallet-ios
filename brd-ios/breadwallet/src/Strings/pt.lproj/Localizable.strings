@@ -2941,6 +2941,10 @@
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "À espera de confirmação. Alguns comerciantes necessitam de confirmação para concluir uma transação. Tempo estimado: 1-2 horas.";
 
+"Transaction.WithdrawalComplete" = "Withdrawn to bank account";
+
+"Transaction.WithdrawalFailed" = "Withdrawal failed";
+
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "conta";
 

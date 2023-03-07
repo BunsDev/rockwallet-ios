@@ -2941,6 +2941,10 @@
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "Bestätigung ausstehend. Einige Händler fordern eine Bestätigung, um Transaktionen abzuschließen. Voraussichtliche Dauer: 1–2 Stunden.";
 
+"Transaction.WithdrawalComplete" = "Withdrawn to bank account";
+
+"Transaction.WithdrawalFailed" = "Withdrawal failed";
+
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "Konto";
 

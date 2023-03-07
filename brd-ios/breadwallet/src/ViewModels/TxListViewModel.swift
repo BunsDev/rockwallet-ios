@@ -94,16 +94,15 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleSellTransactions() -> String {
-        // TODO: update texts
         switch status {
         case .invalid, .failed, .refunded:
-            return "Widrawal failed"
+            return L10n.Transaction.withdrawalFailed
     
         case .complete, .manuallySettled, .confirmed:
-            return "Widrawed to bank account"
+            return L10n.Transaction.withdrawalComplete
             
         default:
-            return "Pending withdraw with ACH"
+            return L10n.Transaction.pendingWithdrawWithAch
         }
     }
     

@@ -2747,6 +2747,10 @@ internal enum L10n {
     }
     /// Waiting to be confirmed string
     internal static let waiting = L10n.tr("Localizable", "Transaction.waiting", fallback: "Waiting to be confirmed. Some merchants require confirmation to complete a transaction. Estimated time: 1-2 hours.")
+    /// Withdrawn to bank account
+    internal static let withdrawalComplete = L10n.tr("Localizable", "Transaction.WithdrawalComplete", fallback: "Withdrawn to bank account")
+    /// Withdrawal failed
+    internal static let withdrawalFailed = L10n.tr("Localizable", "Transaction.WithdrawalFailed", fallback: "Withdrawal failed")
   }
   internal enum TransactionDetails {
     /// e.g. I received money from an account.

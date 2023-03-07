@@ -2941,6 +2941,10 @@
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "Venter på bekræftelse. Nogen forhandlere kræver bekræftelse for at gennemføre en transaktion. Anslået tid: 1-2 timer.";
 
+"Transaction.WithdrawalComplete" = "Withdrawn to bank account";
+
+"Transaction.WithdrawalFailed" = "Withdrawal failed";
+
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "konto";
 

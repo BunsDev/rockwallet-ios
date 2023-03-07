@@ -2941,6 +2941,10 @@
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "承認を待っています。トランザクションの完了には承認が必要となる場合があります。推定時間: 1-2時間。";
 
+"Transaction.WithdrawalComplete" = "Withdrawn to bank account";
+
+"Transaction.WithdrawalFailed" = "Withdrawal failed";
+
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "アカウント";
 

@@ -2941,6 +2941,10 @@
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "확인 대기 중. 일부 판매자는 트랜잭션을 완료하기 위해 확인을 요구합니다. 예상 소요 시간: 1~2시간.";
 
+"Transaction.WithdrawalComplete" = "Withdrawn to bank account";
+
+"Transaction.WithdrawalFailed" = "Withdrawal failed";
+
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "계정";
 
