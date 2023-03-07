@@ -33,9 +33,10 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
                 self?.dataStore?.paymentstatus = data?.status
                 
                 guard self?.dataStore?.paymentstatus?.isSuccesful == true else {
-                    self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: L10n.Buy.paymentFailed)))
+                    self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: data?.errorMessage ?? "")))
                     return
                 }
+                
                 self?.presenter?.presentSubmit(actionResponse: .init())
                 
             case .failure(let error):
