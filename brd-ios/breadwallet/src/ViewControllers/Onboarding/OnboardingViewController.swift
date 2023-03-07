@@ -433,9 +433,6 @@ class OnboardingViewController: UIViewController {
         createWalletButton.title = createWalletButtonText(pageIndex: 0)
         recoverButton.title = recoverButtonText(pageIndex: 0)
         
-        view.addSubview(createWalletButton)
-        view.addSubview(recoverButton)
-        
         let buttonLeftRightMargin: CGFloat = Margins.large.rawValue
         let buttonHeight: CGFloat = ViewSizes.Common.largeCommon.rawValue
 
@@ -444,6 +441,23 @@ class OnboardingViewController: UIViewController {
         bottomButtonAnimationConstraint = recoverButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                                                                             constant: buttonsHiddenYOffset)
         
+        guard cloudBackupExists else {
+            view.addSubview(createWalletButton)
+            createWalletButton.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(Margins.large.rawValue)
+                make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
+                make.height.equalTo(buttonHeight)
+            }
+            
+            createWalletButton.tap = { [unowned self] in
+                self.createWalletTapped()
+            }
+            
+            return
+        }
+        
+        view.addSubview(createWalletButton)
         createWalletButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
@@ -451,6 +465,7 @@ class OnboardingViewController: UIViewController {
             make.height.equalTo(buttonHeight)
         }
         
+        view.addSubview(recoverButton)
         recoverButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(createWalletButton.snp.bottom).inset(-Margins.small.rawValue)
@@ -463,9 +478,7 @@ class OnboardingViewController: UIViewController {
         }
         
         restoreWithiCloudButton.tap = { [unowned self] in
-            if cloudBackupExists {
-                self.restoreButtonTapped()
-            }
+            self.restoreButtonTapped()
         }
     }
     
