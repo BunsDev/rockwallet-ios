@@ -200,7 +200,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     }
     
     private func increaseLimitsTapped() {
-       // interactor?.showSsnInfo(viewAction: .init())
+        coordinator?.showInWebView(urlString: C.limits, title: "Increase your limits")
     }
     
     // MARK: - BuyResponseDisplay
