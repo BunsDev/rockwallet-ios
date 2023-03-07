@@ -671,11 +671,11 @@ internal enum L10n {
     internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
     }
-    /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits
+    /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More info
     /// 
     /// It currently takes 3-5 days to process a purchase with ACH.
     internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More limits\n\nIt currently takes 3-5 days to process a purchase with ACH.")
+      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More info\n\nIt currently takes 3-5 days to process a purchase with ACH.")
     }
     /// ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.")
@@ -709,7 +709,7 @@ internal enum L10n {
     internal static let buyLimit = L10n.tr("Localizable", "Buy.BuyLimit", fallback: "Buy limits")
     /// Buy min and max limit text
     internal static func buyLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  More limits")
+      return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  More info")
     }
     /// BUY WITH CARD
     internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARD")
