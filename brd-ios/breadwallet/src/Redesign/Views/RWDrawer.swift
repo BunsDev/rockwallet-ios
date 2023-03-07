@@ -231,13 +231,13 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         
         switch sender.state {
         case .began:
-            // store the original position of the view
+            // Store the original position of the view
             drawerInitialY = draggedView.frame.origin.y
             
         case .changed:
             let translation = sender.translation(in: draggedView.superview)
             
-            // prevent dragging the view higher than the initial frame
+            // Prevent dragging the view higher than the initial frame
             let newY = max(drawerInitialY + translation.y, drawerInitialY)
             guard newY > drawerInitialY else {
                 Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -252,7 +252,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
             })
             
         case .ended:
-            // hide the view if dragged sufficiently, otherwise return to initial state
+            // Hide the view if dragged sufficiently, otherwise return to initial state
             if viewTranslation.y > 100 {
                 hide()
                 dismissActionSubject.send()
@@ -269,7 +269,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if let recognizer = gestureRecognizer as? UIPanGestureRecognizer {
-            // prevent dragging upwards
+            // Prevent dragging upwards
             let translation = recognizer.translation(in: drawer)
             return translation.y >= 0
         }
