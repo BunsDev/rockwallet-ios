@@ -251,7 +251,7 @@ class AccountViewController: UIViewController, Subscriber {
         let transaction = transactions[selectedIndex]
         
         switch transaction.transactionType {
-        case .defaultTransaction:
+        case .base:
             guard let tx = transactions[selectedIndex].tx else { return }
             let transactionDetails = TxDetailViewController(transaction: tx, delegate: self)
             transactionDetails.modalPresentationStyle = .overCurrentContext

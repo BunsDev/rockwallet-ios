@@ -102,7 +102,7 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                           destination: destinationData,
                           rate: response?.rate ?? 0,
                           timestamp: Int(response?.timestamp ?? 0),
-                          type: TransactionType(rawValue: response?.type ?? "") ?? .defaultTransaction)
+                          type: TransactionType(rawValue: response?.type ?? "") ?? .base)
     }
 }
 

@@ -32,11 +32,14 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             sections.insert(.ssnInfo, at: 6)
         }
         
+        let state = item.stateFullName?.isEmpty == true ? item.state : item.stateFullName
+        
         let sectionRows: [Models.Section: [Any]] = [
             .mandatory: [LabelViewModel.text(L10n.Account.mandatoryFields)],
             .address: [
                 TextFieldModel(title: "\(L10n.Buy.address)*",
-                               value: item.address)
+                               value: item.address,
+                               isUserInteractionEnabled: false)
             ],
             .country: [
                 TextFieldModel(title: L10n.Account.countryRegion,
@@ -48,7 +51,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,
                                                                 value: item.city),
                                                  secondary: .init(title: L10n.Buy.stateProvince,
-                                                                  value: item.state,
+                                                                  value: state,
                                                                   trailing: trailingModel,
                                                                   isUserInteractionEnabled: item.country != C.countryUS))
             ],
