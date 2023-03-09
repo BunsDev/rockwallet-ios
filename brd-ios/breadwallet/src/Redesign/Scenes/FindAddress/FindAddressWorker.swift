@@ -47,6 +47,7 @@ struct FindAddressResponseData: ModelResponse {
     struct FindAddressResponseModel: Codable {
         var id: String?
         var text: String?
+        var type: String?
     }
 }
 
@@ -60,6 +61,8 @@ struct ResidentialAddress: Model, ItemSelectable {
 
 class FindAddressMapper: ModelMapper<FindAddressResponseData, [ResidentialAddress]> {
     override func getModel(from response: FindAddressResponseData?) -> [ResidentialAddress]? {
-        return response?.items?.compactMap { .init(text: $0.text, id: $0.id) }
+        guard let filteredItems = response?.items?.filter({ $0.type == "Address" }) else { return nil }
+        let items = filteredItems.compactMap { ResidentialAddress(text: $0.text, id: $0.id) }
+        return items
     }
 }
