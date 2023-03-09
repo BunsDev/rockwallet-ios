@@ -191,6 +191,8 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     }
     
     func displayConfirmation(responseDisplay: SwapModels.ShowConfirmDialog.ResponseDisplay) {
+        getRateAndTimerCell()?.wrappedView.invalidate()
+        
         let _: WrapperPopupView<SwapConfirmationView>? = coordinator?.showPopup(with: responseDisplay.config,
                                                                                 viewModel: responseDisplay.viewModel,
                                                                                 confirmedCallback: { [weak self] in
@@ -203,6 +205,8 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
                     self?.coordinator?.dismissFlow()
                 }
             }
+        }, cancelCallback: { [weak self] in
+            self?.didTriggerGetData?()
         })
     }
     

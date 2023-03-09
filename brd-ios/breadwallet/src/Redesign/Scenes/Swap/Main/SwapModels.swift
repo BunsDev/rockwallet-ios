@@ -42,6 +42,7 @@ enum SwapModels {
             
             var baseBalance: Amount?
             var minimumValue: Decimal?
+            var minimumUsd: Decimal?
             var handleErrors = false
         }
     }
