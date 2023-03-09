@@ -156,7 +156,8 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                            fromFee: dataStore?.fromFeeAmount,
                                                            toFee: dataStore?.toFeeAmount,
                                                            baseBalance: dataStore?.from?.currency.state?.balance,
-                                                           minimumValue: dataStore?.quote?.minimumUsd,
+                                                           minimumValue: dataStore?.quote?.minimumValue,
+                                                           minimumUsd: dataStore?.quote?.minimumUsd,
                                                            handleErrors: viewAction.handleErrors))
             return
         }
@@ -171,7 +172,8 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                        fromFee: dataStore?.fromFeeAmount,
                                                        toFee: dataStore?.toFeeAmount,
                                                        baseBalance: dataStore?.from?.currency.state?.balance,
-                                                       minimumValue: dataStore?.quote?.minimumUsd,
+                                                       minimumValue: dataStore?.quote?.minimumValue,
+                                                       minimumUsd: dataStore?.quote?.minimumUsd,
                                                        handleErrors: viewAction.handleErrors))
     }
     
@@ -280,9 +282,11 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                    destination: address)
         
         // We need to make sure the swap from amount is still less than the balance
-        if let balance = sender?.wallet.currency.state?.balance {
+        if let balance = sender?.wallet.currency.state?.balance,
+           let minimumValue = dataStore?.quote?.minimumValue,
+           let minimumUsd = dataStore?.quote?.minimumUsd {
             let amount = dataStore?.from ?? Amount(decimalAmount: 0, isFiat: false, currency: dataStore?.from?.currency ?? balance.currency)
-            if amount > balance {
+            if amount > balance || amount.tokenValue < minimumValue || amount.fiatValue < minimumUsd {
                 let error = ExchangeErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
                 self.presenter?.presentError(actionResponse: .init(error: error))
                 return
