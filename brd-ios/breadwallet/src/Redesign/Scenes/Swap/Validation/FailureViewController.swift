@@ -160,10 +160,10 @@ class FailureViewController: BaseInfoViewController {
                 
                 switch self?.failure {
                 case .buyCard, .swap:
-                    self?.coordinator?.showSupport()
-                    
-                case .documentVerification, .documentVerificationRetry:
                     self?.coordinator?.dismissFlow()
+
+                case .documentVerification, .documentVerificationRetry:
+                    self?.coordinator?.showSupport()
                     
                 default:
                     break

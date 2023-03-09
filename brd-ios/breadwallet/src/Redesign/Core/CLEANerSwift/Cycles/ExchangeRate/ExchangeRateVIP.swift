@@ -56,11 +56,11 @@ extension Interactor where Self: ExchangeRateViewActions,
                                                              showTimer: dataStore?.showTimer,
                                                              fromBuy: dataStore?.fromBuy))
         
-        getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees))
-        
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let quote):
+                self?.getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees))
+                
                 self?.dataStore?.quote = quote
                 self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
                                                                            from: fromCurrency,

@@ -76,7 +76,6 @@ struct Profile: Model {
     var swapAllowanceDaily: Decimal {
         return limits.first(where: { $0.interval == .daily && $0.exchangeType == .swap })?.limit ?? 0
     }
-    
     var swapAllowancePerExchange: Decimal {
         return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .swap })?.limit ?? 0
     }

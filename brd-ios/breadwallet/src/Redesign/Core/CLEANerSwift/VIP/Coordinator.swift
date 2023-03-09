@@ -464,13 +464,15 @@ class BaseCoordinator: NSObject,
     
     func showPopup<V: ViewProtocol & UIView>(with config: WrapperPopupConfiguration<V.C>?,
                                              viewModel: WrapperPopupViewModel<V.VM>,
-                                             confirmedCallback: @escaping (() -> Void)) -> WrapperPopupView<V>? {
+                                             confirmedCallback: @escaping (() -> Void),
+                                             cancelCallback: (() -> Void)? = nil) -> WrapperPopupView<V>? {
         guard let superview = navigationController.view else { return nil }
         
         let view = WrapperPopupView<V>()
         view.configure(with: config)
         view.setup(with: viewModel)
         view.confirmCallback = confirmedCallback
+        view.cancelCallback = cancelCallback
         
         superview.addSubview(view)
         superview.bringSubviewToFront(view)

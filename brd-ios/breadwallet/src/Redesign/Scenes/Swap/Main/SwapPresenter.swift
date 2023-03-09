@@ -90,8 +90,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let minimumValue = actionResponse.minimumValue ?? 0
-        
         var hasError: Bool = actionResponse.from?.fiatValue == 0
         if actionResponse.baseBalance == nil
             || actionResponse.from?.currency.code == actionResponse.to?.currency.code {
@@ -105,6 +103,9 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         } else {
             let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
             let tokenValue = actionResponse.from?.tokenValue ?? 0
+            let minimumValue = actionResponse.minimumValue ?? 0
+            let minimumUsd = actionResponse.minimumUsd ?? 0
+            
             let profile = UserManager.shared.profile
             let dailyLimit = profile?.swapAllowanceDaily ?? 0
             let lifetimeLimit = profile?.swapAllowanceLifetime ?? 0
@@ -122,7 +123,12 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
-            case _ where fiatValue < minimumValue:
+            case _ where fiatValue < minimumUsd:
+                // Value below minimum fiat
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumUsd, currency: actionResponse.from?.currency.code ?? "", reason: .swap)))
+                hasError = true
+                
+            case _ where tokenValue < minimumValue:
                 // Value below minimum crypto
                 presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: C.usdCurrencyCode, reason: .swap)))
                 hasError = true
