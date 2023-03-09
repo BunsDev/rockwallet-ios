@@ -35,6 +35,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         let paymentSegment = SegmentControlViewModel(selectedIndex: item.type)
+        let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
+        limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
         let paymentMethodViewModel: CardSelectionViewModel
         if paymentSegment.selectedIndex == .ach && item.achEnabled == true {
@@ -54,8 +56,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                 // dont ask
                 LabelViewModel.text("\n\n\n\n")
             ],
-            .increaseLimits: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Buy.increaseYourLimits,
-                                                                                   isUnderlined: true)])]
+            .increaseLimits: [LabelViewModel.attributedText(limitsString)]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
