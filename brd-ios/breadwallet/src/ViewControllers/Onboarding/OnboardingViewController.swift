@@ -357,11 +357,7 @@ class OnboardingViewController: UIViewController {
     }
 
     private func recoverButtonText(pageIndex: Int) -> String {
-        //no middle button if no backup detected
-        if pageIndex == 0 && cloudBackupExists {
-            return L10n.CloudBackup.recoverButton
-        }
-        return ""
+        return L10n.CloudBackup.recoverButton
     }
     
     private func restoreButtonText(pageIndex: Int) -> String {
@@ -416,11 +412,8 @@ class OnboardingViewController: UIViewController {
             make.height.width.equalTo(ViewSizes.extraExtraHuge.rawValue)
         }
         
-        view.addSubview(restoreWithiCloudButton)
-        restoreWithiCloudButton.snp.makeConstraints { make in
-            make.top.equalTo(createWalletButton.snp.bottom).inset(-Margins.small.rawValue)
-            make.leading.trailing.equalToSuperview().inset(Margins.large.rawValue)
-            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
+        if !cloudBackupExists {
+            restoreWithiCloudButton.removeFromSuperview()
         }
         
         stackView.isHidden = true
@@ -435,19 +428,17 @@ class OnboardingViewController: UIViewController {
         
         let buttonLeftRightMargin: CGFloat = Margins.large.rawValue
         let buttonHeight: CGFloat = ViewSizes.Common.largeCommon.rawValue
-
-        middleButtonAnimationConstraint = createWalletButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                                      constant: buttonsHiddenYOffset)
-        bottomButtonAnimationConstraint = recoverButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                                            constant: buttonsHiddenYOffset)
         
-        let createWalletBottomMargin = cloudBackupExists ? buttonsHiddenYOffset : Margins.large.rawValue
+        middleButtonAnimationConstraint = createWalletButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                                                     constant: buttonsHiddenYOffset)
+        bottomButtonAnimationConstraint = recoverButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                                                constant: buttonsHiddenYOffset)
         
         view.addSubview(createWalletButton)
         createWalletButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(createWalletBottomMargin)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(buttonsHiddenYOffset)
             make.height.equalTo(buttonHeight)
         }
         
@@ -459,16 +450,24 @@ class OnboardingViewController: UIViewController {
             make.height.equalTo(buttonHeight)
         }
         
+        view.addSubview(restoreWithiCloudButton)
+        restoreWithiCloudButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(createWalletButton.snp.bottom).inset(-Margins.small.rawValue)
+            make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
+            make.height.equalTo(buttonHeight)
+        }
+        
         createWalletButton.tap = { [unowned self] in
             self.createWalletTapped()
         }
         
-        restoreWithiCloudButton.tap = { [unowned self] in
+        recoverButton.tap = { [unowned self] in
             self.restoreButtonTapped()
         }
         
-        if !cloudBackupExists {
-            recoverButton.removeFromSuperview()
+        restoreWithiCloudButton.tap = { [unowned self] in
+            self.restoreButtonTapped()
         }
     }
     
@@ -520,6 +519,10 @@ class OnboardingViewController: UIViewController {
             self.headingLabels.first?.isHidden = false
             self.stackView.isHidden = true
             self.restoreWithiCloudButton.isHidden = true
+            
+            self.createWalletButton.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(self.buttonsHiddenYOffset)
+            }
         })
 
         // slide-up animation for the top button
@@ -586,6 +589,12 @@ class OnboardingViewController: UIViewController {
         recoverButton.alpha = 0.0
         pageIndex = 1
         createWalletButton.title = createWalletButtonText(pageIndex: pageIndex)
+        
+        if !cloudBackupExists {
+            createWalletButton.snp.updateConstraints { make in
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(Margins.large.rawValue)
+            }
+        }
     }
     
     private func createWalletTapped() {
@@ -605,13 +614,7 @@ class OnboardingViewController: UIViewController {
             restoreWithPhraseButtonTapped()
             return
         }
-        
-        if cloudBackupExists {
-            exitWith(action: .restoreCloudBackup)
-        } else {
-            // 'Restore wallet'
-            exitWith(action: .restoreWallet)
-        }
+        exitWith(action: .restoreCloudBackup)
     }
     
     private func showAlert(message: String, button: String, completion: @escaping () -> Void) {
