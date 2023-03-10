@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Frames
 
 protocol Presenter: NSObject, BaseActionResponses {
     associatedtype ResponseDisplays: BaseResponseDisplays
@@ -29,6 +30,10 @@ extension Presenter {
             let message = error.errorMessage
             let model = InfoViewModel(description: .text(message), dismissType: .auto)
             
+            let config = Presets.InfoView.error
+            responseDisplay = .init(model: model, config: config)
+        } else if error is TokenRequestError {
+            let model = InfoViewModel(description: .text(L10n.ErrorMessages.authorizationFailed), dismissType: .auto)
             let config = Presets.InfoView.error
             responseDisplay = .init(model: model, config: config)
         } else {
