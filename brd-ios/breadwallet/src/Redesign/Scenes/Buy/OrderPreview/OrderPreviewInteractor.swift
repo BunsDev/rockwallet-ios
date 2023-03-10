@@ -214,11 +214,11 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
         let data = AchRequestData(quoteId: dataStore?.quote?.quoteId,
-                                   depositQuantity: formattedDepositQuantity,
-                                   withdrawalQuantity: toTokenValue,
-                                   destination: address,
-                                   accountId: dataStore?.card?.id,
-                                   nologCvv: dataStore?.cvv?.description)
+                                  depositQuantity: formattedDepositQuantity,
+                                  withdrawalQuantity: toTokenValue,
+                                  destination: address,
+                                  accountId: dataStore?.card?.id,
+                                  nologCvv: dataStore?.cvv?.description)
         
         AchWorker().execute(requestData: data) { [weak self] result in
             switch result {
@@ -234,7 +234,14 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentThreeDSecure(actionResponse: .init(url: redirectUrl))
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard let store = self?.dataStore,
+                      let quoteId = store.quote?.quoteId,
+                      (error as? NetworkingError)?.errorType == .biometricAuthentication else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
             }
         }
     }
