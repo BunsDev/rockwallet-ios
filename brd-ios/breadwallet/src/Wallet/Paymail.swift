@@ -21,7 +21,7 @@ enum ResolvableError: Error {
 protocol Resolvable {
     init?(address: String)
     var type: ResolvableType { get }
-    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<(String, String?), ResolvableError>) -> Void)
+    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<(String), ResolvableError>) -> Void)
 }
 
 enum ResolvableType {
@@ -51,15 +51,15 @@ struct ResolvedAddress {
 
 enum ResolvableFactory {
     static func resolver(_ address: String) -> Resolvable? {
-        if let fio = Fio(address: address) {
-            return fio
+        if let paymail = Paymail(address: address) {
+            return paymail
         }
         
         return nil
     }
 }
 
-private class Fio: Resolvable {
+private class Paymail: Resolvable {
     
     private let address: String
     
@@ -70,7 +70,7 @@ private class Fio: Resolvable {
         guard isValidAddress(address) else { return nil }
     }
     
-    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<(String, String?), ResolvableError>) -> Void) {
+    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<(String), ResolvableError>) -> Void) {
         guard currency.isBitcoinSV else {
             callback(.failure(.currencyNotSupported))
             
@@ -80,10 +80,10 @@ private class Fio: Resolvable {
         PaymailDestinationWorker().execute(requestData: PaymailDestinationRequestData(address: address)) { result in
             switch result {
             case .success(let data):
-                callback(.success((data?.output ?? "", "")))
+                callback(.success((data?.output ?? "")))
                 
             case .failure(let error):
-                callback(.failure(.currencyNotSupported))
+                callback(.failure(.invalidPaymail))
             }
         }
     }
@@ -92,31 +92,5 @@ private class Fio: Resolvable {
         let pattern = ".+\\@.+"
         let range = address.range(of: pattern, options: .regularExpression)
         return range != nil
-    }
-    
-    private struct FioResponse: Codable {
-        let public_address: String
-        
-        func address() -> String {
-            let components = public_address.components(separatedBy: "?dt=")
-            if !components.isEmpty {
-                return components[0]
-            } else {
-                return ""
-            }
-        }
-        
-        func tag() -> String? {
-            let components = public_address.components(separatedBy: "?dt=")
-            if components.count == 2 {
-                return components[1]
-            } else {
-                return nil
-            }
-        }
-    }
-    
-    private struct FioError: Codable {
-        let message: String
     }
 }

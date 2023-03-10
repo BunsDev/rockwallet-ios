@@ -436,14 +436,14 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         handleRequest(request)
     }
     
-    private func handleResolvableResponse(_ response: Result<(String, String?), ResolvableError>,
+    private func handleResolvableResponse(_ response: Result<(String), ResolvableError>,
                                           type: ResolvableType,
                                           id: String) {
         switch response {
         case .success(let addressDetails):
-            let outputScript = addressDetails.0
+            let outputScript = addressDetails
             let address = sender.wallet.getAddressFromScript(output: outputScript)
-            let tag = addressDetails.1
+            let tag: String? = nil
             
             self.outputScript = outputScript
             
@@ -463,7 +463,6 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             if tag != nil {
                 self.hideDestinationTag()
             }
-            
             if let destinationTag = tag {
                 attributeCell?.setContent(destinationTag)
             }
