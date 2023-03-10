@@ -61,7 +61,7 @@
 		3A65DE812447E9AF0025C56E /* AccountInitializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A65DE802447E9AF0025C56E /* AccountInitializationTests.swift */; };
 		3A6785FB257019220065F835 /* RedeemTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6785FA257019220065F835 /* RedeemTransitioningDelegate.swift */; };
 		3A69884F24591F4A0084953D /* PayIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69884E24591F4A0084953D /* PayIdTests.swift */; };
-		3A69885E24591F890084953D /* PayId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69885D24591F890084953D /* PayId.swift */; };
+		3A69885E24591F890084953D /* Paymail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69885D24591F890084953D /* Paymail.swift */; };
 		3A6C13FF257D463300EA0689 /* GiftHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6C13FE257D463300EA0689 /* GiftHeaderView.swift */; };
 		3A6C1406257D594A00EA0689 /* ShareGiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6C1405257D594A00EA0689 /* ShareGiftViewController.swift */; };
 		3A6CA703244239FD001833CA /* WalletInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6CA702244239FD001833CA /* WalletInitializer.swift */; };
@@ -875,7 +875,7 @@
 		3A65DE802447E9AF0025C56E /* AccountInitializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInitializationTests.swift; sourceTree = "<group>"; };
 		3A6785FA257019220065F835 /* RedeemTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RedeemTransitioningDelegate.swift; path = src/Views/RedeemTransitioningDelegate.swift; sourceTree = "<group>"; };
 		3A69884E24591F4A0084953D /* PayIdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayIdTests.swift; sourceTree = "<group>"; };
-		3A69885D24591F890084953D /* PayId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayId.swift; sourceTree = "<group>"; };
+		3A69885D24591F890084953D /* Paymail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paymail.swift; sourceTree = "<group>"; };
 		3A6C13FE257D463300EA0689 /* GiftHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GiftHeaderView.swift; path = src/Gifting/GiftHeaderView.swift; sourceTree = "<group>"; };
 		3A6C1405257D594A00EA0689 /* ShareGiftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShareGiftViewController.swift; path = src/Gifting/ShareGiftViewController.swift; sourceTree = "<group>"; };
 		3A6CA702244239FD001833CA /* WalletInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInitializer.swift; sourceTree = "<group>"; };
@@ -3262,7 +3262,7 @@
 				7B88C4842837B8710089CFBE /* Currency+Shared.swift */,
 				7C72D13522662BB40091B185 /* Wallet.swift */,
 				3A6CA702244239FD001833CA /* WalletInitializer.swift */,
-				3A69885D24591F890084953D /* PayId.swift */,
+				3A69885D24591F890084953D /* Paymail.swift */,
 			);
 			name = Wallet;
 			path = src/Wallet;
@@ -4125,7 +4125,7 @@
 				7BF5D4ED296BFC8D00942ADB /* SignInStore.swift in Sources */,
 				7ECCA9912873079100F99368 /* QuoteWorker.swift in Sources */,
 				7EDDB82628C8684900C287CB /* Amount+Init.swift in Sources */,
-				3A69885E24591F890084953D /* PayId.swift in Sources */,
+				3A69885E24591F890084953D /* Paymail.swift in Sources */,
 				7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */,
 				7B9434352886A7FA00638703 /* DeleteProfileInfoStore.swift in Sources */,
 				D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */,

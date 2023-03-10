@@ -239,7 +239,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         
         addressCell.didReceiveResolvedAddress = { [weak self] result, type in
             DispatchQueue.main.async {
-                self?.handleResolvableResponse(result, type: type, id: self?.addressCell.address ?? "", shouldShowError: true)
+                self?.handleResolvableResponse(result, type: type, id: self?.addressCell.address ?? "")
             }
         }
         
@@ -422,7 +422,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             self.addressCell.showResolvingSpinner()
             resolver.fetchAddress(forCurrency: currency) { response in
                 DispatchQueue.main.async {
-                    self.handleResolvableResponse(response, type: resolver.type, id: pasteboard, shouldShowError: true)
+                    self.handleResolvableResponse(response, type: resolver.type, id: pasteboard)
                 }
             }
             return
@@ -438,26 +438,24 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     
     private func handleResolvableResponse(_ response: Result<(String, String?), ResolvableError>,
                                           type: ResolvableType,
-                                          id: String,
-                                          shouldShowError: Bool) {
+                                          id: String) {
         switch response {
         case .success(let addressDetails):
             let outputScript = addressDetails.0
             let address = sender.wallet.getAddressFromScript(output: outputScript)
             let tag = addressDetails.1
             
-            self.outputScript = address
+            self.outputScript = outputScript
             
             guard currency.isValidAddress(address) else {
                 let message = L10n.Send.invalidAddressMessage(currency.name)
                 showAlert(title: L10n.Send.invalidAddressTitle, message: message)
-                resetPayId()
+                resetPaymail()
                 return
             }
             
-            //Here we have a valid address from PayID
-            //After this event, the addresscell should be in an un-editable state similar
-            //to when a payment request is recieved
+            // Here we have a valid address from Paymail
+            // After this event, the addresscell should be in an un-editable state similar to when a payment request is recieved
             self.resolvedAddress = ResolvedAddress(humanReadableAddress: id,
                                                    cryptoAddress: address,
                                                    label: type.label,
@@ -465,24 +463,15 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             if tag != nil {
                 self.hideDestinationTag()
             }
-            addressCell.showResolveableState(type: type, address: address)
-            addressCell.hideActionButtons()
+            
             if let destinationTag = tag {
                 attributeCell?.setContent(destinationTag)
             }
+            
+            addressCell.showResolveableState(type: type, address: address)
+            addressCell.hideActionButtons()
+            
         case .failure:
-            if shouldShowError {
-                switch type {
-                case .fio:
-                    showErrorMessage(L10n.Send.fioInvalid)
-                case .payId:
-                    showErrorMessage(L10n.Send.payIdInvalid)
-                case .uDomains:
-                    showErrorMessage(L10n.UDomains.invalid)
-                default:
-                    showErrorMessage(L10n.UDomains.invalid)
-                }
-            }
             addressCell.hideResolveableState()
         }
     }
@@ -496,7 +485,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         })
     }
     
-    private func resetPayId() {
+    private func resetPaymail() {
         resolvedAddress = nil
         addressCell.hideResolveableState()
         addressCell.setContent("")
