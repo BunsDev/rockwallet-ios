@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit.git",
       "state" : {
-        "revision" : "23b010e97af8816457d8343343f59bce87db1abf",
-        "version" : "5.0.12"
+        "branch" : "clpeterson/feature/paymail",
+        "revision" : "24cb8f074c5f1d6b890a60f65f74894b0f512570"
       }
     },
     {
@@ -95,8 +95,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit-core.git",
       "state" : {
-        "revision" : "5eb0ae17434bc5df824696f759643d6fd6900cfb",
-        "version" : "5.0.11"
+        "revision" : "d56bf6145dc4b0d931da4ea8936ce9d331c958a0"
       }
     }
   ],

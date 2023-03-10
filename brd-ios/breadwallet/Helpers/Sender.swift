@@ -136,7 +136,8 @@ class Sender: Subscriber {
         return .ok
     }
 
-    func createTransaction(address: String,
+    func createTransaction(outputScript: String? = nil,
+                           address: String,
                            amount: Amount,
                            feeBasis: TransferFeeBasis,
                            comment: String?,
@@ -146,7 +147,12 @@ class Sender: Subscriber {
         assert(transfer == nil)
         let result = validate(address: address, amount: amount, feeBasis: feeBasis)
         guard case .ok = result else { return result }
-        switch wallet.createTransfer(to: address, amount: amount, feeBasis: feeBasis, attribute: attribute, exchangeId: exchangeId) {
+        switch wallet.createTransfer(outputScript: outputScript,
+                                     to: address,
+                                     amount: amount,
+                                     feeBasis: feeBasis,
+                                     attribute: attribute,
+                                     exchangeId: exchangeId) {
         case .success(let transfer):
             self.comment = comment
             self.gift = gift

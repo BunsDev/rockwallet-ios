@@ -91,6 +91,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
     }
     
+    private var outputScript: String?
     private var resolvedAddress: ResolvedAddress?
     
     private var currentFeeBasis: TransferFeeBasis?
@@ -441,8 +442,12 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                                           shouldShowError: Bool) {
         switch response {
         case .success(let addressDetails):
-            let address = addressDetails.0
+            let outputScript = addressDetails.0
+            let address = sender.wallet.getAddressFromScript(output: outputScript)
             let tag = addressDetails.1
+            
+            self.outputScript = address
+            
             guard currency.isValidAddress(address) else {
                 let message = L10n.Send.invalidAddressMessage(currency.name)
                 showAlert(title: L10n.Send.invalidAddressTitle, message: message)
@@ -548,7 +553,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             attributeText = attribute
         }
         
-        return handleValidationResult(sender.createTransaction(address: address,
+        return handleValidationResult(sender.createTransaction(outputScript: outputScript,
+                                                               address: address,
                                                                amount: amount,
                                                                feeBasis: feeBasis,
                                                                comment: memoCell.textView.text,
@@ -801,7 +807,7 @@ extension SendViewController {
         copyKeyboardChangeAnimation(notification: notification)
     }
     
-    //TODO - maybe put this in ModalPresentable?
+    // TODO: maybe put this in ModalPresentable?
     private func copyKeyboardChangeAnimation(notification: Notification) {
         guard let info = KeyboardNotificationInfo(notification.userInfo) else { return }
         UIView.animate(withDuration: info.animationDuration, delay: 0, options: info.animationOptions, animations: {

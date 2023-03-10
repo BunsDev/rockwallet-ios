@@ -8,6 +8,8 @@
 //  See the LICENSE file at the project root for license information.
 //
 
+// REMOVE
+
 import Foundation
 import Cosmos
 
@@ -98,35 +100,21 @@ private class Fio: Resolvable {
     }
     
     func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<(String, String?), ResolvableError>) -> Void) {
-        let url = URL(string: "https://api.fio.services/v1/chain/get_pub_address")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        let body = [
-            "fio_address": address,
-            "chain_code": currency.network.currency.code.uppercased(),
-            "token_code": currency.code.uppercased()
-        ]
-        
-        let data = try? JSONEncoder().encode(body)
-        request.httpBody = data
-  
-        URLSession.shared.dataTask(with: request, completionHandler: { data, _, _ in
-            guard let data = data else { callback(.failure(.badResponse)); return }
-            print("[fio] data: \(String(data: data, encoding: .utf8)!)")
+        guard currency.isBitcoinSV else {
+            callback(.failure(.currencyNotSupported))
             
-            if (try? JSONDecoder().decode(FioError.self, from: data)) != nil {
-                callback(.failure(.currencyNotSupported))
-                return
-            }
-            
-            do {
-                let response = try JSONDecoder().decode(FioResponse.self, from: data)
-                callback(.success((response.address(), response.tag())))
-            } catch _ {
+            return
+        }
+        
+        PaymailDestinationWorker().execute(requestData: PaymailDestinationRequestData(address: address)) { result in
+            switch result {
+            case .success(let data):
+                callback(.success((data?.output ?? "", "")))
+                
+            case .failure(let error):
                 callback(.failure(.currencyNotSupported))
             }
-        }).resume()
+        }
     }
     
     private func isValidAddress(_ address: String) -> Bool {

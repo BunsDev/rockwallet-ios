@@ -23,6 +23,8 @@
 /* Begin PBXBuildFile section */
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
+		0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */; };
+		0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */; };
 		1B1AFFA01FB7EF7C00E61908 /* BiometricsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */; };
 		222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */; };
 		223DB2191DF691260076A151 /* BRSocketHelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 223DB2171DF691260076A151 /* BRSocketHelpers.c */; };
@@ -831,6 +833,8 @@
 /* Begin PBXFileReference section */
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
+		0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksatoshiEndpoints.swift; sourceTree = "<group>"; };
+		0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailDestinationWorker.swift; sourceTree = "<group>"; };
 		1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BiometricsSettingsViewController.swift; path = src/ViewControllers/BiometricsSettingsViewController.swift; sourceTree = "<group>"; };
 		222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+KV.swift"; path = "src/Platform/BRAPIClient+KV.swift"; sourceTree = "<group>"; };
 		223DB2171DF691260076A151 /* BRSocketHelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BRSocketHelpers.c; path = src/Platform/BRSocketHelpers.c; sourceTree = "<group>"; };
@@ -2003,6 +2007,8 @@
 				7B23D63629923D3D00AC341F /* KYCAuthEndpoints.swift */,
 				7ECCA98E2873059300F99368 /* ExchangeEndpoints.swift */,
 				7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */,
+				0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */,
+				0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */,
 				7B54E57727F4A2B0002DD1E4 /* NetworkingError.swift */,
 				7B54E57827F4A2B0002DD1E4 /* APIURLHandler.swift */,
 				7B54E57927F4A2B0002DD1E4 /* Decodable+Extensions.swift */,
@@ -3877,6 +3883,7 @@
 				CE6DCC251E6001E50044257B /* UIControl+Callback.swift in Sources */,
 				CE0822641FCD1BD100EF371D /* HomeScreenViewController.swift in Sources */,
 				7ED83AFA284F40EB00261565 /* CheckListViewController.swift in Sources */,
+				0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */,
 				7BB22E49285B8D60003E37AC /* ContentSizedTableView.swift in Sources */,
 				223DB2191DF691260076A151 /* BRSocketHelpers.c in Sources */,
 				C491ABF828A6395D00E79954 /* OrderPreviewStore.swift in Sources */,
@@ -4187,6 +4194,7 @@
 				CE4DFB2C1E9BE5880014009E /* ReScanSyncViewController.swift in Sources */,
 				7ECCA9642875A77300617067 /* OrderView.swift in Sources */,
 				7B39478C297000ED007D405E /* ForgotPasswordStore.swift in Sources */,
+				0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */,
 				7BB3B7D929558D5F006FF250 /* GradientView.swift in Sources */,
 				7E5CB3A22835090E00EC787E /* Marginable.swift in Sources */,
 				7C9724661FF07B9A004248C4 /* StatusPip.swift in Sources */,
@@ -5876,8 +5884,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/wallet-kit.git";
 			requirement = {
-				kind = exactVersion;
-				version = 5.0.12;
+				branch = clpeterson/feature/paymail;
+				kind = branch;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
