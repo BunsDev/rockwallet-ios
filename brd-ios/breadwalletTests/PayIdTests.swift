@@ -35,7 +35,7 @@ class PayIdTests : XCTestCase {
     func assertIsPayId(address: String) {
         let payID = ResolvableFactory.resolver(address)
         XCTAssertNotNil(payID, "Resolver should not be nil for \(address)")
-//        XCTAssertTrue(payID!.type == .payId, "Resolver should not be type Payid for \(address)")
+        XCTAssertTrue(payID!.type == .paymail, "Resolver should not be type Payid for \(address)")
     }
 
     func testBTC() {
