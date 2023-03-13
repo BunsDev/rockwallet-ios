@@ -11,8 +11,6 @@ import UIKit
 enum BuyModels {
     
     struct Item {
-        var amount: Amount?
-        var paymentCard: PaymentCard?
         var type: PaymentCard.PaymentType?
         var achEnabled: Bool?
     }

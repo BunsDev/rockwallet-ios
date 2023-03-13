@@ -34,7 +34,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
         super.setupSubviews()
         
         didTriggerExchangeRate = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
+            self?.interactor?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
         }
     }
     
