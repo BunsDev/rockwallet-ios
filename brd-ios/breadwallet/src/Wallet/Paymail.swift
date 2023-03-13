@@ -64,15 +64,18 @@ private class Paymail: Resolvable {
     }
     
     func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<String?, Error>) -> Void) {
-        guard currency.isBitcoinSV else { return  }
+        guard currency.isBitcoinSV else {
+            callback(.failure(GeneralError(errorMessage: ""))) // TODO: Do we need to show error in this case?
+            return
+        }
         
         PaymailDestinationWorker().execute(requestData: PaymailDestinationRequestData(address: address)) { result in
             switch result {
             case .success(let data):
                 callback(.success((data?.output ?? "")))
                 
-            case .failure(let error):
-                callback(.failure(error))
+            case .failure:
+                callback(.failure(GeneralError(errorMessage: L10n.ErrorMessages.invalidPaymailBSVAddress)))
             }
         }
     }

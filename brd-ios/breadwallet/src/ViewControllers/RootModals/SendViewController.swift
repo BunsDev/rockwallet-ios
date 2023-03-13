@@ -472,8 +472,12 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             addressCell.showResolveableState(type: type, address: address)
             addressCell.hideActionButtons()
             
-        case .failure:
-            showErrorMessage(L10n.ErrorMessages.invalidPaymailBSVAddress)
+        case .failure(let error):
+            if let error = error as? FEError, !error.errorMessage.isEmpty {
+                showErrorMessage(error.errorMessage)
+            } else {
+                resetPaymail()
+            }
             
             addressCell.hideResolveableState()
         }
