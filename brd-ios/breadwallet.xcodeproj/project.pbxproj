@@ -5884,8 +5884,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/wallet-kit.git";
 			requirement = {
-				branch = clpeterson/feature/paymail;
-				kind = branch;
+				kind = exactVersion;
+				version = 5.0.13;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
