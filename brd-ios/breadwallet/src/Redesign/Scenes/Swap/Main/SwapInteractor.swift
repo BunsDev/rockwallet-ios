@@ -208,10 +208,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     
     func assetSelected(viewAction: SwapModels.SelectedAsset.ViewAction) {
         guard let from = dataStore?.from?.currency,
-                let to = dataStore?.to?.currency else {
-            // nothing to swap ¯\_(ツ)_/¯
-            return
-        }
+              let to = dataStore?.to?.currency else { return }
         
         if let asset = viewAction.from,
            let from = dataStore?.currencies.first(where: { $0.code == asset }) {
@@ -224,13 +221,15 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             dataStore?.to = .zero(to)
             dataStore?.from = .zero(from)
         }
-
+        
         dataStore?.values = .init()
         dataStore?.quote = nil
         dataStore?.fromRate = nil
         dataStore?.toRate = nil
         dataStore?.fromFee = nil
         
+        presenter?.presentExchangeRate(actionResponse: .init())
+
         getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
             self?.presenter?.presentError(actionResponse: .init(error: nil))
         })

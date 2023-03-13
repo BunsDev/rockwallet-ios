@@ -112,10 +112,6 @@ extension Controller where Self: ExchangeRateResponseDisplays,
             cell.wrappedView.completion = { [weak self] in
                 self?.interactor?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
             }
-        } else {
-            var vm = continueButton.viewModel
-            vm?.enabled = false
-            continueButton.setup(with: vm)
         }
         
         if let cell = getAccountLimitsCell(), let accountLimits = responseDisplay.accountLimits {
@@ -125,5 +121,9 @@ extension Controller where Self: ExchangeRateResponseDisplays,
             tableView.endUpdates()
             UIView.setAnimationsEnabled(true)
         }
+        
+        var vm = continueButton.viewModel
+        vm?.enabled = responseDisplay.rateAndTimer?.exchangeRate != nil
+        continueButton.setup(with: vm)
     }
 }
