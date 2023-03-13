@@ -69,17 +69,17 @@ class PayIdTests : XCTestCase {
             case .success(_):
                 XCTFail("BCH should not return a payID")
             case .failure(let error):
-                XCTAssert(error == .currencyNotSupported, "Should return currency not supported error")
+                XCTAssertEqual(error.localizedDescription, "Should return currency not supported error")
             }
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
 
-    func handleResult(_ result: Result<(String, String?), ResolvableError>, expected: String) {
+    func handleResult(_ result: Result<String?, Error>, expected: String) {
         switch result {
         case .success(let address):
-            XCTAssertTrue(address.0 == expected)
+            XCTAssertTrue(address == expected)
         case .failure(let error):
             XCTFail("message: \(error)")
         }
