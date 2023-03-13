@@ -48,11 +48,10 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.dataStore?.from = .zero(from)
                 self?.dataStore?.to = .zero(to)
                 
-                let item = Models.Item(from: self?.dataStore?.from,
-                                       to: self?.dataStore?.to,
-                                       quote: self?.dataStore?.quote)
-                self?.presenter?.presentData(actionResponse: .init(item: item))
-                self?.getExchangeRate(viewAction: .init(getFees: false))
+                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(from: self?.dataStore?.from,
+                                                                                     to: self?.dataStore?.to)))
+                
+                self?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
@@ -89,14 +88,14 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
         }
+        
         CoinGeckoClient().load(resource)
         _ = generateSender()
     }
     
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction) {
         guard let from = dataStore?.from?.currency,
-                let to = dataStore?.to?.currency
-        else { return }
+              let to = dataStore?.to?.currency else { return }
         
         dataStore?.from = .zero(to)
         dataStore?.to = .zero(from)
@@ -106,10 +105,9 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         dataStore?.toRate = nil
         dataStore?.fromFee = nil
         
-        // Remove error
-        presenter?.presentError(actionResponse: .init(error: nil))
-        
-        getExchangeRate(viewAction: .init(getFees: false))
+        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+            self?.presenter?.presentError(actionResponse: .init(error: nil))
+        })
     }
     
     func setAmount(viewAction: SwapModels.Amounts.ViewAction) {
@@ -233,10 +231,9 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         dataStore?.toRate = nil
         dataStore?.fromFee = nil
         
-        getExchangeRate(viewAction: .init(getFees: false))
-        
-        // TODO: Hide error if pressent
-        presenter?.presentError(actionResponse: .init())
+        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+            self?.presenter?.presentError(actionResponse: .init(error: nil))
+        })
     }
     
     func selectAsset(viewAction: SwapModels.Assets.ViewAction) {

@@ -12,7 +12,7 @@ import UIKit
 import WalletKit
 
 enum SwapModels {
-    typealias Item = (from: Amount?, to: Amount?, quote: Quote?)
+    typealias Item = (from: Amount?, to: Amount?)
     
     enum EstimateFeeResult {
         case successFee(TransferFeeBasis)
