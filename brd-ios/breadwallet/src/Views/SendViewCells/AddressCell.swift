@@ -23,7 +23,7 @@ class AddressCell: UIView {
     var textDidChange: ((String?) -> Void)?
     var didBeginEditing: (() -> Void)?
     var didReceivePaymentRequest: ((PaymentRequest) -> Void)?
-    var didReceiveResolvedAddress: ((Result<(String), ResolvableError>, ResolvableType) -> Void)?
+    var didReceiveResolvedAddress: ((Result<String?, Error>, ResolvableType) -> Void)?
     
     func setContent(_ content: String?) {
         contentLabel.text = content

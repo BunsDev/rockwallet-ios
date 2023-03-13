@@ -9,19 +9,13 @@
 //
 
 import Foundation
-import Cosmos
-
-enum ResolvableError: Error {
-    case invalidPaymail
-    case badResponse
-    case currencyNotSupported
-    case invalidAddress
-}
 
 protocol Resolvable {
     init?(address: String)
+    
     var type: ResolvableType { get }
-    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<(String), ResolvableError>) -> Void)
+    
+    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<String?, Error>) -> Void)
 }
 
 enum ResolvableType {
@@ -37,7 +31,7 @@ enum ResolvableType {
     var iconName: String? {
         switch self {
         case .paymail:
-            return "PaymailIcon"
+            return nil
         }
     }
 }
@@ -60,7 +54,6 @@ enum ResolvableFactory {
 }
 
 private class Paymail: Resolvable {
-    
     private let address: String
     
     let type: ResolvableType = .paymail
@@ -70,12 +63,8 @@ private class Paymail: Resolvable {
         guard isValidAddress(address) else { return nil }
     }
     
-    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<(String), ResolvableError>) -> Void) {
-        guard currency.isBitcoinSV else {
-            callback(.failure(.currencyNotSupported))
-            
-            return
-        }
+    func fetchAddress(forCurrency currency: Currency, callback: @escaping (Result<String?, Error>) -> Void) {
+        guard currency.isBitcoinSV else { return  }
         
         PaymailDestinationWorker().execute(requestData: PaymailDestinationRequestData(address: address)) { result in
             switch result {
@@ -83,7 +72,7 @@ private class Paymail: Resolvable {
                 callback(.success((data?.output ?? "")))
                 
             case .failure(let error):
-                callback(.failure(.invalidPaymail))
+                callback(.failure(error))
             }
         }
     }

@@ -436,11 +436,13 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         handleRequest(request)
     }
     
-    private func handleResolvableResponse(_ response: Result<(String), ResolvableError>,
+    private func handleResolvableResponse(_ response: Result<String?, Error>,
                                           type: ResolvableType,
                                           id: String) {
         switch response {
         case .success(let addressDetails):
+            guard let addressDetails else { return }
+            
             let outputScript = addressDetails
             let address = sender.wallet.getAddressFromScript(output: outputScript)
             let tag: String? = nil
@@ -470,7 +472,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             addressCell.showResolveableState(type: type, address: address)
             addressCell.hideActionButtons()
             
-        case .failure:
+        case .failure(let errorMessage):
+            showErrorMessage((errorMessage as? FEError)?.errorMessage ?? "")
+            
             addressCell.hideResolveableState()
         }
     }
@@ -615,9 +619,11 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                 }
             })
             return false
+            
         case .invalidRequest(let errorMessage):
             showAlert(title: L10n.PaymentProtocol.Errors.badPaymentRequest, message: errorMessage)
             return false
+            
         case .usedAddress:
             showError(title: L10n.Send.UsedAddress.title,
                       message: "\(L10n.Send.UsedAddress.firstLine)\n\n\(L10n.Send.UsedAddress.secondLIne)",
@@ -626,8 +632,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             })
             return false
             
-            // allow sending without exchange rates available (the tx metadata will not be set)
-        case .ok, .noExchangeRate:
+        case .ok, .noExchangeRate: // Allow sending without exchange rates available (the tx metadata will not be set)
             return true
         }
         
@@ -685,18 +690,23 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         case .local:
             addressCell.setContent(request.toAddress?.description)
             addressCell.isEditable = true
+            
             if let amount = request.amount {
                 amountView.forceUpdateAmount(amount: amount)
             }
+            
             if request.label != nil {
                 memoCell.content = request.label
             }
+            
             if request.destinationTag != nil {
                 attributeCell?.setContent(request.destinationTag)
             }
+            
         case .remote:
             let loadingView = BRActivityViewController(message: L10n.Send.loadingRequest)
-            present(loadingView, animated: true, completion: nil)
+            present(loadingView, animated: true)
+            
             request.fetchRemoteRequest(completion: { [weak self] request in
                 DispatchQueue.main.async {
                     loadingView.dismiss(animated: true, completion: {
