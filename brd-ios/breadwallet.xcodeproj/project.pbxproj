@@ -1617,6 +1617,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0495723D29BF19F80078BFE7 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Send;
+			sourceTree = "<group>";
+		};
 		22A9A9311DF61930000F0016 /* Platform */ = {
 			isa = PBXGroup;
 			children = (
@@ -2008,7 +2015,6 @@
 				7ECCA98E2873059300F99368 /* ExchangeEndpoints.swift */,
 				7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */,
 				0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */,
-				0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */,
 				7B54E57727F4A2B0002DD1E4 /* NetworkingError.swift */,
 				7B54E57827F4A2B0002DD1E4 /* APIURLHandler.swift */,
 				7B54E57927F4A2B0002DD1E4 /* Decodable+Extensions.swift */,
@@ -2180,6 +2186,7 @@
 			isa = PBXGroup;
 			children = (
 				CE0822631FCD1BD100EF371D /* HomeScreenViewController.swift */,
+				0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -3322,6 +3329,7 @@
 		CEC6AA3E1DEFC85700EE5AFD /* RootModals */ = {
 			isa = PBXGroup;
 			children = (
+				0495723D29BF19F80078BFE7 /* Send */,
 				CEC6AA431DEFCDE900EE5AFD /* ModalViewController.swift */,
 				CEC6AA3F1DEFC87300EE5AFD /* SendViewController.swift */,
 				7B6052BB299E5518002C00C2 /* BaseSendViewController.swift */,
