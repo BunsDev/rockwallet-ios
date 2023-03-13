@@ -136,8 +136,7 @@ class VIPViewController<C: CoordinatableRoutes,
         coordinator?.goBack()
     }
 
-    func setupSubviews() {
-    }
+    func setupSubviews() {}
 
     func localize() {
         tabBarItem.title = sceneTitle

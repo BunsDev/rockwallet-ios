@@ -33,7 +33,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        didTriggerGetData = { [weak self] in
+        didTriggerExchangeRate = { [weak self] in
             self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
         }
     }
