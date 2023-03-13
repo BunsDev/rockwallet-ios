@@ -37,7 +37,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        didTriggerGetData = { [weak self] in
+        didTriggerExchangeRate = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
     }
