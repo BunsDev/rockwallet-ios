@@ -126,20 +126,6 @@ class Currency: SharedCurrency, CurrencyWithIcon, ItemSelectable {
         return nil
     }
     
-    func doesMatchPayId(_ details: PayIdAddress) -> Bool {
-        let environment = (E.isTestnet || E.isRunningTests) ? "testnet" : "mainnet"
-        guard details.environment.lowercased() == environment else { return false }
-        guard let id = payId else { return false }
-        return details.paymentNetwork.lowercased() == id.lowercased()
-    }
-    
-    var payId: String? {
-        if isBitcoin { return C.BTC.lowercased() }
-        if isEthereum { return C.ETH.lowercased() }
-        if isXRP { return "xrpl" }
-        return nil
-    }
-    
     var attributeDefinition: AttributeDefinition? {
         if isXRP {
             return AttributeDefinition(key: "DestinationTag",

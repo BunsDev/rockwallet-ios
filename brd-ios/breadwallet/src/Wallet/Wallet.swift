@@ -163,7 +163,10 @@ class Wallet {
     }
 
     // MARK: Addresses
-
+    func getAddressFromScript(output: String) -> String {
+        return core.getAddressFromScript(outputScript: output)
+    }
+    
     /// Address to use as target for incoming transfers
     var receiveAddress: String {
         return core.target.sanitizedDescription
@@ -208,8 +211,9 @@ class Wallet {
     }
 
     // MARK: Sending
-
-    func createTransfer(to address: String,
+    
+    func createTransfer(outputScript: String? = nil,
+                        to address: String,
                         amount: Amount,
                         feeBasis: TransferFeeBasis,
                         attribute: String? = nil,
@@ -217,12 +221,31 @@ class Wallet {
         guard let target = Address.create(string: address, network: core.manager.network) else {
             return .failure(.invalidAddress)
         }
-        guard let transfer = core.createTransfer(target: target,
-                                                 amount: amount.cryptoAmount,
-                                                 estimatedFeeBasis: feeBasis,
-                                                 attributes: attributes(forAttribute: attribute), exchangeId: exchangeId) else {
-            return .failure(.invalidAmountOrFee)
+        
+        let transfer: Transfer
+        
+        if let outputScript {
+            guard let createdTransfer = core
+                .createTransfer(outputScript: outputScript,
+                                amount: amount.cryptoAmount,
+                                estimatedFeeBasis: feeBasis,
+                                attributes: attributes(forAttribute: attribute), exchangeId: exchangeId) else {
+                return .failure(.invalidAmountOrFee)
+            }
+            
+            transfer = createdTransfer
+        } else {
+            guard let createdTransfer = core
+                .createTransfer(target: target,
+                                amount: amount.cryptoAmount,
+                                estimatedFeeBasis: feeBasis,
+                                attributes: attributes(forAttribute: attribute), exchangeId: exchangeId) else {
+                return .failure(.invalidAmountOrFee)
+            }
+            
+            transfer = createdTransfer
         }
+        
         return .success(transfer)
     }
     
