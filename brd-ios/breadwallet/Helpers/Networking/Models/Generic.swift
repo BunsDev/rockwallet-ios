@@ -17,14 +17,3 @@ class ModelMapper<T: ModelResponse, U: Any>: Mapper {
         return nil
     }
 }
-
-enum GenericModels {
-    enum Error {
-        struct Response {
-            let error: FEError?
-        }
-        struct ViewModel {
-            let error: String
-        }
-    }
-}

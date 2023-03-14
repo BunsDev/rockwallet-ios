@@ -15,7 +15,6 @@ struct AddCardResponseData: ModelResponse {
     var paymentReference: String?
     var redirectUrl: String?
     var responseCode: String?
-    var errorMessage: String?
 }
 
 struct AddCard: Model {
@@ -55,7 +54,7 @@ struct AddCard: Model {
     var paymentReference: String
     var redirectUrl: String?
     var responseCode: String?
-    var errorMessage: String?
+    var errorMessage: String
 }
 
 class AddCardMapper: ModelMapper<AddCardResponseData, AddCard> {
@@ -81,7 +80,7 @@ class AddCardMapper: ModelMapper<AddCardResponseData, AddCard> {
                        paymentReference: response?.paymentReference ?? "",
                        redirectUrl: response?.redirectUrl,
                        responseCode: response?.responseCode,
-                       errorMessage: response?.errorMessage ?? customErrorMessage)
+                       errorMessage: customErrorMessage)
     }
 }
 
