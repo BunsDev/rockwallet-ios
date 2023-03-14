@@ -41,8 +41,9 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     
     var filters: [TransactionFilter] = [] {
         didSet {
-            transactions = filters.reduce(transactions, { $0.filter($1) })
-            updateTransactions()
+            guard let transfers = wallet?.transfers else { return }
+            transactions = filters.reduce(transfers.sorted(by: { $0.timestamp > $1.timestamp }), { $0.filter($1) })
+            prepareData()
         }
     }
     

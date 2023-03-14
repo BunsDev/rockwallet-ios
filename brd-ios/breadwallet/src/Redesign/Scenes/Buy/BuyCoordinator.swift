@@ -99,12 +99,6 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
         parentCoordinator?.childDidFinish(child: self)
     }
     
-    override func goBack() {
-        (navigationController.children.first(where: { $0 is BuyViewController }) as? BuyViewController)?.didTriggerGetData?()
-        
-        super.goBack()
-    }
-    
     // MARK: - Aditional helpers
 }
 
