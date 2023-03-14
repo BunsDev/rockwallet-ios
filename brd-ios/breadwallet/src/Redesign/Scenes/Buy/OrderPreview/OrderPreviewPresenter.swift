@@ -141,12 +141,30 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
         guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
-            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
+            var customAchErrorMessage: String = ""
+            if actionResponse.isAch == true {
+                switch actionResponse.responseCode {
+                case "30046":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountClosed
+                    
+                case "30R16":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountFrozen
+                    
+                case "20051":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.insufficientFunds
+                    
+                default:
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.errorWhileProcessing
+                }
+            }
+            
+            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
+            
             return
         }
-        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         
+        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     

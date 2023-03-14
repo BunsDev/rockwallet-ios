@@ -15,6 +15,7 @@ struct AddCardResponseData: ModelResponse {
     var paymentReference: String?
     var redirectUrl: String?
     var responseCode: String?
+    var errorMessage: String?
 }
 
 struct AddCard: Model {
@@ -54,33 +55,16 @@ struct AddCard: Model {
     var paymentReference: String
     var redirectUrl: String?
     var responseCode: String?
-    var errorMessage: String
+    var errorMessage: String?
 }
 
 class AddCardMapper: ModelMapper<AddCardResponseData, AddCard> {
     override func getModel(from response: AddCardResponseData?) -> AddCard {
-        var customErrorMessage: String {
-            switch response?.responseCode {
-            case "30046":
-                return L10n.ErrorMessages.Ach.accountClosed
-                
-            case "30R16":
-                return L10n.ErrorMessages.Ach.accountFrozen
-                
-            case "20051":
-                return L10n.ErrorMessages.Ach.insufficientFunds
-                
-            default:
-                return L10n.ErrorMessages.Ach.errorWhileProcessing
-                
-            }
-        }
-        
         return AddCard(status: AddCard.Status(rawValue: response?.status ?? "") ?? .none,
                        paymentReference: response?.paymentReference ?? "",
                        redirectUrl: response?.redirectUrl,
                        responseCode: response?.responseCode,
-                       errorMessage: customErrorMessage)
+                       errorMessage: response?.errorMessage)
     }
 }
 

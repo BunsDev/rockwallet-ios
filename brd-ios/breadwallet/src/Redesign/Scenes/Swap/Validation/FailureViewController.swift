@@ -11,7 +11,7 @@
 import UIKit
 
 // Currently not used, but if we need to, we can expand the VC with this protocol instead of enum directly
-protocol SimpleMessage {
+protocol SimpleMessage: Equatable {
     var iconName: String { get }
     var title: String { get }
     var description: String { get }
@@ -21,7 +21,7 @@ protocol SimpleMessage {
 
 enum FailureReason: SimpleMessage {
     case buyCard
-    case buyAch
+    case buyAch(String)
     case swap
     case plaidConnection
     case sell
@@ -65,8 +65,8 @@ enum FailureReason: SimpleMessage {
         case .plaidConnection:
             return L10n.Buy.plaidErrorDescription
             
-        case .buyAch:
-            return L10n.Buy.bankAccountFailureText
+        case .buyAch(let message):
+            return message
             
         case .sell:
             return L10n.Sell.tryAgain
