@@ -15,7 +15,22 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                                       P: Presenter,
                                       DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS>,
                                                                      ExchangeResponseDisplays {
-    var didTriggerGetData: (() -> Void)?
+    var didTriggerExchangeRate: (() -> Void)?
+    
+    private var didDisplayData = false
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard didDisplayData else { return }
+        didTriggerExchangeRate?()
+    }
+    
+    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
+        super.displayData(responseDisplay: responseDisplay)
+        
+        didDisplayData = true
+    }
     
     override func setupSubviews() {
         super.setupSubviews()

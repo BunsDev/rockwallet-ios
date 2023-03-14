@@ -37,7 +37,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        didTriggerGetData = { [weak self] in
+        didTriggerExchangeRate = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
     }
@@ -61,7 +61,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
         case .increaseLimits:
-            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            cell = self.tableView(tableView, increaseLimitsCellForRowAt: indexPath)
             
         default:
             cell = UITableViewCell()
@@ -152,19 +152,23 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
-        
-        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
-            return cell
+    func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
+            view.configure(with: .init(font: Fonts.Body.three,
+                                       textColor: LightColors.Text.two,
+                                       isUserInteractionEnabled: true))
+            view.setup(with: model)
             
-            view.callbacks = [
-                increaseLimitsTapped
-            ]
+            view.didTapLink = { [weak self] in
+                self?.increaseLimitsTapped()
+            }
         }
         
         return cell

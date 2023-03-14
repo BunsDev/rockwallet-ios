@@ -1193,6 +1193,8 @@
 
 "ErrorMessages.highWidrawalFee" = "Minimum buy/swap amount for this pair is temporarily higher due to higher withdrawal network fees. Try other pairs or try again later.";
 
+"ErrorMessages.InvalidPaymailBSVAddress" = "The Paymail address cannot be found. Please use the BSV address.";
+
 "ErrorMessages.Kyc.Underage" = "Debes tener al menos 18 años para completar la verificación de Nivel 1 y Nivel 2.";
 
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */

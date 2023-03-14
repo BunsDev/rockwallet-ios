@@ -91,6 +91,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
     }
     
+    private var outputScript: String?
     private var resolvedAddress: ResolvedAddress?
     
     private var currentFeeBasis: TransferFeeBasis?
@@ -238,7 +239,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         
         addressCell.didReceiveResolvedAddress = { [weak self] result, type in
             DispatchQueue.main.async {
-                self?.handleResolvableResponse(result, type: type, id: self?.addressCell.address ?? "", shouldShowError: true)
+                self?.handleResolvableResponse(result, type: type, id: self?.addressCell.address ?? "")
             }
         }
         
@@ -421,7 +422,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             self.addressCell.showResolvingSpinner()
             resolver.fetchAddress(forCurrency: currency) { response in
                 DispatchQueue.main.async {
-                    self.handleResolvableResponse(response, type: resolver.type, id: pasteboard, shouldShowError: true)
+                    self.handleResolvableResponse(response, type: resolver.type, id: pasteboard)
                 }
             }
             return
@@ -435,24 +436,28 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         handleRequest(request)
     }
     
-    private func handleResolvableResponse(_ response: Result<(String, String?), ResolvableError>,
+    private func handleResolvableResponse(_ response: Result<String?, Error>,
                                           type: ResolvableType,
-                                          id: String,
-                                          shouldShowError: Bool) {
+                                          id: String) {
         switch response {
         case .success(let addressDetails):
-            let address = addressDetails.0
-            let tag = addressDetails.1
+            guard let addressDetails else { return }
+            
+            let outputScript = addressDetails
+            let address = sender.wallet.getAddressFromScript(output: outputScript)
+            let tag: String? = nil
+            
+            self.outputScript = outputScript
+            
             guard currency.isValidAddress(address) else {
                 let message = L10n.Send.invalidAddressMessage(currency.name)
                 showAlert(title: L10n.Send.invalidAddressTitle, message: message)
-                resetPayId()
+                resetPaymail()
                 return
             }
             
-            //Here we have a valid address from PayID
-            //After this event, the addresscell should be in an un-editable state similar
-            //to when a payment request is recieved
+            // Here we have a valid address from Paymail
+            // After this event, the addresscell should be in an un-editable state similar to when a payment request is recieved
             self.resolvedAddress = ResolvedAddress(humanReadableAddress: id,
                                                    cryptoAddress: address,
                                                    label: type.label,
@@ -460,24 +465,20 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             if tag != nil {
                 self.hideDestinationTag()
             }
-            addressCell.showResolveableState(type: type, address: address)
-            addressCell.hideActionButtons()
             if let destinationTag = tag {
                 attributeCell?.setContent(destinationTag)
             }
-        case .failure:
-            if shouldShowError {
-                switch type {
-                case .fio:
-                    showErrorMessage(L10n.Send.fioInvalid)
-                case .payId:
-                    showErrorMessage(L10n.Send.payIdInvalid)
-                case .uDomains:
-                    showErrorMessage(L10n.UDomains.invalid)
-                default:
-                    showErrorMessage(L10n.UDomains.invalid)
-                }
+            
+            addressCell.showResolveableState(type: type, address: address)
+            addressCell.hideActionButtons()
+            
+        case .failure(let error):
+            if let error = error as? FEError, !error.errorMessage.isEmpty {
+                showErrorMessage(error.errorMessage)
+            } else {
+                resetPaymail()
             }
+            
             addressCell.hideResolveableState()
         }
     }
@@ -491,7 +492,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         })
     }
     
-    private func resetPayId() {
+    private func resetPaymail() {
         resolvedAddress = nil
         addressCell.hideResolveableState()
         addressCell.setContent("")
@@ -548,7 +549,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             attributeText = attribute
         }
         
-        return handleValidationResult(sender.createTransaction(address: address,
+        return handleValidationResult(sender.createTransaction(outputScript: outputScript,
+                                                               address: address,
                                                                amount: amount,
                                                                feeBasis: feeBasis,
                                                                comment: memoCell.textView.text,
@@ -621,9 +623,11 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                 }
             })
             return false
+            
         case .invalidRequest(let errorMessage):
             showAlert(title: L10n.PaymentProtocol.Errors.badPaymentRequest, message: errorMessage)
             return false
+            
         case .usedAddress:
             showError(title: L10n.Send.UsedAddress.title,
                       message: "\(L10n.Send.UsedAddress.firstLine)\n\n\(L10n.Send.UsedAddress.secondLIne)",
@@ -632,8 +636,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             })
             return false
             
-            // allow sending without exchange rates available (the tx metadata will not be set)
-        case .ok, .noExchangeRate:
+        case .ok, .noExchangeRate: // Allow sending without exchange rates available (the tx metadata will not be set)
             return true
         }
         
@@ -691,18 +694,23 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         case .local:
             addressCell.setContent(request.toAddress?.description)
             addressCell.isEditable = true
+            
             if let amount = request.amount {
                 amountView.forceUpdateAmount(amount: amount)
             }
+            
             if request.label != nil {
                 memoCell.content = request.label
             }
+            
             if request.destinationTag != nil {
                 attributeCell?.setContent(request.destinationTag)
             }
+            
         case .remote:
             let loadingView = BRActivityViewController(message: L10n.Send.loadingRequest)
-            present(loadingView, animated: true, completion: nil)
+            present(loadingView, animated: true)
+            
             request.fetchRemoteRequest(completion: { [weak self] request in
                 DispatchQueue.main.async {
                     loadingView.dismiss(animated: true, completion: {
@@ -801,7 +809,7 @@ extension SendViewController {
         copyKeyboardChangeAnimation(notification: notification)
     }
     
-    //TODO - maybe put this in ModalPresentable?
+    // TODO: maybe put this in ModalPresentable?
     private func copyKeyboardChangeAnimation(notification: Notification) {
         guard let info = KeyboardNotificationInfo(notification.userInfo) else { return }
         UIView.animate(withDuration: info.animationDuration, delay: 0, options: info.animationOptions, animations: {
