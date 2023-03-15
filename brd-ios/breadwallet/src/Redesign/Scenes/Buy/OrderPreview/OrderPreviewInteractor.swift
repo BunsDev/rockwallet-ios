@@ -152,40 +152,13 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     }
     
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
-        guard let quoteId = dataStore?.quote?.quoteId else { return }
-        
-        if viewAction.resetCounter {
-            biometricStatusRetryCounter = 5
-        }
-        biometricStatusRetryCounter -= 1
-        
-        BiometricStatusWorker().execute(requestData: BiometricStatusRequestData(quoteId: String(quoteId))) { [weak self] result in
-            switch result {
-            case .success(let data):
-                guard let self = self, let status = data?.status else { return }
-                
-                switch status {
-                case .approved:
-                    self.submitBuy()
-                    
-                case .declined:
-                    self.presenter?.presentSubmit(actionResponse: .init(paymentReference: nil, failed: true))
-                    
-                case .submitted, .started: // Case .started might not be needed in the future.
-                    guard self.biometricStatusRetryCounter >= 0 else {
-                        self.presenter?.presentError(actionResponse: .init(error: GeneralError()))
-                        return
-                    }
-                    
-                    self.checkBiometricStatus(viewAction: .init(resetCounter: false))
-                    
-                default:
-                    self.presenter?.presentError(actionResponse: .init(error: GeneralError()))
-                }
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+        BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: viewAction.resetCounter) { error in
+            guard error == nil else {
+                self.presenter?.presentError(actionResponse: .init(error: error))
+                return
             }
+            
+            self.submitBuy()
         }
     }
     
