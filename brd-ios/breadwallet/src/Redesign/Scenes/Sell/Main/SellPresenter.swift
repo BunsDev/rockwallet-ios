@@ -41,7 +41,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                             formattedTokenString: .init(string: ""),
                                             title: .text("I receive"),
                                             selectionDisabled: true),
-                                 hideSwapButton: true)
+                                  hideSwitchPlacesButton: true)
             ],
             .payoutMethod: [
                 paymentModel ?? CardSelectionViewModel(userInteractionEnabled: true)
@@ -70,7 +70,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                         formattedTokenString: toFormattedFiatString,
                                         title: .text("I receive")),
                               
-                             hideSwapButton: true)
+                             hideSwitchPlacesButton: true)
         viewController?.displayAmount(responseDisplay: .init(continueEnabled: actionResponse.continueEnabled,
                                                              amounts: vm))
     }
