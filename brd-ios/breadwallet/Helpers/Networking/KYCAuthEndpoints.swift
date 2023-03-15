@@ -13,11 +13,11 @@ import Foundation
 enum KYCAuthEndpoints: String, URLType {
     static var baseURL: String = "https://"  + E.apiUrl + "blocksatoshi/one/%@"
     
-    // TODO: Find better names for the two bio auth endpoints
     case veriffBiometricVerificationSession = "kyc/session?quote_id=%@&is_biometric=%@&biometric_type=%@" // veriff liveness check for buy
     case veriffBiometricVerificationSessionLimits = "kyc/session?is_biometric=%@&biometric_type=%@" // bio auth for limits
     case veriffSession = "kyc/session"
-    case longPollBiometricStatus = "kyc/long-poll-biometric-status"
+    case longPollBiometricStatus = "kyc/long-poll-biometric-status?quote_id=%@"
+    case longPollBiometricStatusLimits = "kyc/long-poll-biometric-status?biometric_type=%@"
     case basic = "kyc/basic"
     case documents = "kyc/documents"
     case upload = "kyc/upload"

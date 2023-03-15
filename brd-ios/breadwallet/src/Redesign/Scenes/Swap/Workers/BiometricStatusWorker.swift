@@ -44,12 +44,11 @@ class BiometricStatusWorkerMapper: ModelMapper<BiometricStatusResponseData, Biom
 
 class BiometricStatusWorker: BaseApiWorker<BiometricStatusWorkerMapper> {
     override func getUrl() -> String {
-        let baseUrl = APIURLHandler.getUrl(KYCAuthEndpoints.longPollBiometricStatus)
         
         guard let quoteId = (requestData as? BiometricStatusRequestData)?.quoteId else {
-            return baseUrl.appending(String(format: "?biometric_type=%@", BiometricType.pendingLimits.rawValue))
+            return APIURLHandler.getUrl(KYCAuthEndpoints.longPollBiometricStatusLimits, parameters: [BiometricType.pendingLimits.rawValue])
         }
         
-        return baseUrl.appending(String(format: "?quote_id=%@", quoteId))
+        return APIURLHandler.getUrl(KYCAuthEndpoints.longPollBiometricStatus, parameters: [quoteId])
     }
 }
