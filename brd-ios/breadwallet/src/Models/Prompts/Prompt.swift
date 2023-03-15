@@ -19,11 +19,12 @@ enum PromptType: Int {
     case paperKey
     case noPasscode
     case biometrics
+    case limitsAuthentication
     
     var order: Int { return rawValue }
     
     static var defaultTypes: [PromptType] = {
-        return [.noInternet, .noAccount, .kyc, .upgradePin, .paperKey, .noPasscode, .biometrics]
+        return [.noInternet, .noAccount, .kyc, .upgradePin, .paperKey, .noPasscode, .biometrics, .limitsAuthentication]
     }()
     
     var title: String {
@@ -35,6 +36,7 @@ enum PromptType: Int {
         case .noPasscode: return L10n.Prompts.NoPasscode.title
         case .kyc: return L10n.VerifyAccount.button
         case .noAccount: return L10n.Account.createNewAccountTitle
+        case .limitsAuthentication: return "Finish setting up your new Buy limits."
         default: return ""
         }
     }
@@ -48,6 +50,7 @@ enum PromptType: Int {
         case .upgradePin: return "upgradePinPrompt"
         case .noPasscode: return "noPasscodePrompt"
         case .noAccount: return "noAccountPrompt"
+        case .limitsAuthentication: return "limitsAuthenticationPrompt"
         default: return ""
         }
     }
@@ -61,6 +64,7 @@ enum PromptType: Int {
         case .noPasscode: return L10n.Prompts.NoPasscode.body
         case .kyc: return L10n.Prompts.VerifyAccount.body
         case .noAccount: return L10n.Prompts.CreateAccount.body
+        case .limitsAuthentication: return "Just one more small step, and you'll be able to enjoy your new limits."
         default: return ""
         }
     }
@@ -70,6 +74,7 @@ enum PromptType: Int {
         case .biometrics, .paperKey, .upgradePin, .noPasscode: return L10n.Button.continueAction
         case .kyc: return L10n.VerifyAccount.button
         case .noAccount: return L10n.Account.createNewAccountTitle
+        case .limitsAuthentication: return L10n.Button.continueAction
         default: return ""
         }
     }
@@ -96,6 +101,7 @@ enum PromptType: Int {
         case .upgradePin: return .promptUpgradePin
         case .kyc: return .promptKyc
         case .noAccount: return .promptNoAccount
+        case .limitsAuthentication: return .promptLimitsAuthentication
         default: return nil
         }
     }
@@ -221,6 +227,10 @@ extension Prompt {
             
         case .noPasscode:
             return !LAContext.isPasscodeEnabled
+            
+        case .limitsAuthentication:
+            guard let hasPendingLimits = UserManager.shared.profile?.hasPendingLimits else { return false }
+            return hasPendingLimits
             
         default:
             return false

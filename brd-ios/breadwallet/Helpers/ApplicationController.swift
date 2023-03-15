@@ -52,6 +52,7 @@ class ApplicationController: Subscriber {
     private var appRatingManager = AppRatingManager()
     private var backgroundTaskID: UIBackgroundTaskIdentifier = .invalid
     private var shouldDisableBiometrics = false
+    private var veriffKYCManager: VeriffKYCManager?
     
     private var isReachable = true {
         didSet {
@@ -447,6 +448,23 @@ class ApplicationController: Subscriber {
             self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
         }
         
+        homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
+            veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
+            let requestData = VeriffSessionRequestData(quoteId: nil, isBiometric: true, biometricType: .pendingLimits)
+            veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: requestData) { [weak self] result in
+                switch result.status {
+                case .done:
+                    // TODO: Add waiting screen
+                    BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: true) { error in
+                        self?.handleBiometricStatus(approved: error == nil)
+                    }
+                    
+                default:
+                    self?.handleBiometricStatus(approved: false)
+                }
+            }
+        }
+        
         homeScreen.didTapMenu = { [unowned self] in
             self.modalPresenter?.presentMenu()
         }
@@ -456,6 +474,23 @@ class ApplicationController: Subscriber {
             let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: self.coreSystem)
             let nc = RootNavigationController(rootViewController: vc)
             navigationController.present(nc, animated: true, completion: nil)
+        }
+    }
+    
+    private func handleBiometricStatus(approved: Bool) {
+        guard approved else {
+            coordinator?.open(scene: Scenes.Failure) { vc in
+                vc.failure = .limitsAuthentication
+                vc.navigationItem.hidesBackButton = true
+                vc.navigationItem.rightBarButtonItem = nil
+            }
+            return
+        }
+        
+        coordinator?.open(scene: Scenes.Success) { vc in
+            vc.success = .limitsAuthentication
+            vc.navigationItem.hidesBackButton = true
+            vc.navigationItem.rightBarButtonItem = nil
         }
     }
     

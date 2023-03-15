@@ -15,6 +15,7 @@ enum SuccessReason: SimpleMessage {
     case buyAch
     case sell
     case documentVerification
+    case limitsAuthentication
     
     var iconName: String {
         switch self {
@@ -39,6 +40,9 @@ enum SuccessReason: SimpleMessage {
             
         case .documentVerification:
             return L10n.Account.idVerificationApproved
+            
+        case .limitsAuthentication:
+            return "Your verification was successful!"
         }
     }
     
@@ -55,12 +59,15 @@ enum SuccessReason: SimpleMessage {
             
         case .documentVerification:
             return L10n.Account.startUsingWallet
+            
+        case .limitsAuthentication:
+            return "Your account has been successfully verified, and your limits have been updated."
         }
     }
     
     var firstButtonTitle: String? {
         switch self {
-        case .documentVerification:
+        case .documentVerification, .limitsAuthentication:
             return L10n.Button.buyDigitalAssets
             
         default:
@@ -75,6 +82,9 @@ enum SuccessReason: SimpleMessage {
             
         case .documentVerification:
             return L10n.Button.receiveDigitalAssets
+            
+        case .limitsAuthentication:
+            return "Back to home"
             
         default:
             return L10n.Buy.details
@@ -170,6 +180,9 @@ class SuccessViewController: BaseInfoViewController {
                     LoadingView.show()
                     self?.interactor?.getAssetSelectionData(viewModel: .init())
                     
+                case .limitsAuthentication:
+                    self?.dismiss(animated: true)
+                    
                 default:
                     self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
                                                            type: self?.transactionType ?? .base)
@@ -207,6 +220,11 @@ class SuccessViewController: BaseInfoViewController {
         }
         
         return buttons
+    }
+    
+    override func setupCloseButton(closeAction: Selector) {
+        guard success != .limitsAuthentication else { return }
+        super.setupCloseButton(closeAction: closeAction)
     }
     
     override func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) {

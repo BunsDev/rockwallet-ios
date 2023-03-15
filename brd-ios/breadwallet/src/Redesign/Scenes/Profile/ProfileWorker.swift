@@ -17,6 +17,7 @@ struct ProfileResponseData: ModelResponse {
     let kycAccessRights: AccessRights?
     let kycFailureReason: String?
     let isRegistered: Bool?
+    let hasPendingLimits: Bool?
     
     struct AccessRights: Codable {
         let hasSwapAccess: Bool
@@ -55,6 +56,7 @@ struct Profile: Model {
     let limits: [ProfileResponseData.ExchangeLimit]
     let kycAccessRights: AccessRights
     let isMigrated: Bool
+    let hasPendingLimits: Bool
     
     struct AccessRights {
         let hasSwapAccess: Bool
@@ -138,7 +140,8 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                                               hasBuyAccess: response.kycAccessRights?.hasBuyAccess ?? false,
                                               hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false,
                                               restrictionReason: .init(rawValue: response.kycAccessRights?.restrictionReason ?? "")),
-                       isMigrated: response.isRegistered ?? false)
+                       isMigrated: response.isRegistered ?? false,
+                       hasPendingLimits: response.hasPendingLimits ?? false)
     }
 }
 

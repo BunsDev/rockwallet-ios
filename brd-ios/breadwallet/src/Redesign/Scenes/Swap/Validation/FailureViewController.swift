@@ -27,6 +27,7 @@ enum FailureReason: SimpleMessage {
     case sell
     case documentVerification
     case documentVerificationRetry
+    case limitsAuthentication
     
     var iconName: String {
         switch self {
@@ -51,6 +52,9 @@ enum FailureReason: SimpleMessage {
             
         case .documentVerification, .documentVerificationRetry:
             return L10n.Account.idVerificationRejected
+            
+        case .limitsAuthentication:
+            return "We're sorry, your verification was unsuccessful"
         }
     }
     
@@ -76,6 +80,15 @@ enum FailureReason: SimpleMessage {
             
         case .documentVerificationRetry:
             return L10n.Account.idVerificationRetry.replacingOccurrences(of: "-", with: "\u{2022}")
+            
+        case .limitsAuthentication:
+            return """
+            Please try your verification again,
+            while keeping the following in mind:
+            
+            Please ensure the area is well-lit
+            Please ensure you are centered in the frame
+            """
         }
     }
     
@@ -97,7 +110,7 @@ enum FailureReason: SimpleMessage {
         case .swap:
             return L10n.Swap.backToHome
             
-        case .documentVerification, .documentVerificationRetry:
+        case .documentVerification, .documentVerificationRetry, .limitsAuthentication:
             return L10n.Button.tryLater
             
         default:
@@ -165,11 +178,19 @@ class FailureViewController: BaseInfoViewController {
                 case .documentVerification, .documentVerificationRetry:
                     self?.coordinator?.showSupport()
                     
+                case .limitsAuthentication:
+                    self?.dismiss(animated: true)
+                    
                 default:
                     break
                 }
             })
         ]
+    }
+    
+    override func setupCloseButton(closeAction: Selector) {
+        guard failure != .limitsAuthentication else { return }
+        super.setupCloseButton(closeAction: closeAction)
     }
     
     override var buttonConfigurations: [ButtonConfiguration] {

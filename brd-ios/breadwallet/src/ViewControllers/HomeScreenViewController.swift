@@ -91,6 +91,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
     var didTapCreateAccountFromPrompt: (() -> Void)?
+    var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
     var isInExchangeFlow = false
@@ -382,6 +383,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         Store.subscribe(self, name: .promptNoAccount, callback: { _ in
             self.didTapCreateAccountFromPrompt?()
+        })
+        
+        Store.subscribe(self, name: .promptLimitsAuthentication, callback: { _ in
+            self.didTapLimitsAuthenticationFromPrompt?()
         })
         
         Reachability.addDidChangeCallback({ [weak self] isReachable in

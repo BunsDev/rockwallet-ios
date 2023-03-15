@@ -219,7 +219,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay) {
         veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
         veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: .init(quoteId: responseDisplay.quoteId,
-                                                                                   isBiometric: responseDisplay.isBiometric)) { [weak self] result in
+                                                                                   isBiometric: responseDisplay.isBiometric,
+                                                                                   biometricType: .buy)) { [weak self] result in
             switch result.status {
             case .done:
                 self?.interactor?.checkBiometricStatus(viewAction: .init(resetCounter: true))
