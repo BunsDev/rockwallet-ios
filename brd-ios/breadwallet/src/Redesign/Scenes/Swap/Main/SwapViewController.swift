@@ -161,7 +161,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
         
         switch error {
         case .noQuote:
-            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()))
+            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
         case .failed:
             coordinator?.showFailure()
