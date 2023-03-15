@@ -36,13 +36,13 @@ struct BiometricStatus: Model {
     var status: BiometricStatusCases = .notStarted
 }
 
-class BiometricStatusWorkerMapper: ModelMapper<BiometricStatusResponseData, BiometricStatus> {
+class BiometricStatusMapper: ModelMapper<BiometricStatusResponseData, BiometricStatus> {
     override func getModel(from response: BiometricStatusResponseData?) -> BiometricStatus? {
         return .init(status: BiometricStatusCases(rawValue: response?.status ?? "") ?? .notStarted)
     }
 }
 
-class BiometricStatusWorker: BaseApiWorker<BiometricStatusWorkerMapper> {
+class BiometricStatusWorker: BaseApiWorker<BiometricStatusMapper> {
     override func getUrl() -> String {
         
         guard let quoteId = (requestData as? BiometricStatusRequestData)?.quoteId else {
