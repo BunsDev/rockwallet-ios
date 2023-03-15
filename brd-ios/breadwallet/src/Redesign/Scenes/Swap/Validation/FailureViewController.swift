@@ -161,6 +161,22 @@ class FailureViewController: BaseInfoViewController {
                         self?.coordinator?.handleVeriffKYC(result: result, for: .kyc)
                     }
                     
+                case .limitsAuthentication:
+                    LoadingView.show()
+                    self?.veriffKYCManager = VeriffKYCManager(navigationController: self?.coordinator?.navigationController)
+                    let requestData = VeriffSessionRequestData(quoteId: nil, isBiometric: true, biometricType: .pendingLimits)
+                    self?.veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: requestData) { [weak self] result in
+                        switch result.status {
+                        case .done:
+                            BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: true) { error in
+                                self?.handleBiometricStatus(approved: error == nil)
+                            }
+                            
+                        default:
+                            self?.handleBiometricStatus(approved: false)
+                        }
+                    }
+                    
                 default:
                     if containsDebit || containsBankAccount {
                         self?.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .card : .ach)
@@ -179,7 +195,7 @@ class FailureViewController: BaseInfoViewController {
                     self?.coordinator?.showSupport()
                     
                 case .limitsAuthentication:
-                    self?.dismiss(animated: true)
+                    self?.coordinator?.popToRoot()
                     
                 default:
                     break
@@ -188,9 +204,22 @@ class FailureViewController: BaseInfoViewController {
         ]
     }
     
-    override func setupCloseButton(closeAction: Selector) {
-        guard failure != .limitsAuthentication else { return }
-        super.setupCloseButton(closeAction: closeAction)
+    private func handleBiometricStatus(approved: Bool) {
+        LoadingView.hideIfNeeded()
+        guard approved else {
+            coordinator?.open(scene: Scenes.Failure) { vc in
+                vc.failure = .limitsAuthentication
+                vc.navigationItem.hidesBackButton = true
+                vc.navigationItem.rightBarButtonItem = nil
+            }
+            return
+        }
+        
+        coordinator?.open(scene: Scenes.Success) { vc in
+            vc.success = .limitsAuthentication
+            vc.navigationItem.hidesBackButton = true
+            vc.navigationItem.rightBarButtonItem = nil
+        }
     }
     
     override var buttonConfigurations: [ButtonConfiguration] {

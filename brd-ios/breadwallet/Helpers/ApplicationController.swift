@@ -449,6 +449,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
+            LoadingView.show()
             veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
             let requestData = VeriffSessionRequestData(quoteId: nil, isBiometric: true, biometricType: .pendingLimits)
             veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: requestData) { [weak self] result in
@@ -478,19 +479,20 @@ class ApplicationController: Subscriber {
     }
     
     private func handleBiometricStatus(approved: Bool) {
+        LoadingView.hideIfNeeded()
         guard approved else {
             coordinator?.open(scene: Scenes.Failure) { vc in
                 vc.failure = .limitsAuthentication
+                vc.isModalDismissable = false
                 vc.navigationItem.hidesBackButton = true
-                vc.navigationItem.rightBarButtonItem = nil
             }
             return
         }
         
         coordinator?.open(scene: Scenes.Success) { vc in
             vc.success = .limitsAuthentication
+            vc.isModalDismissable = false
             vc.navigationItem.hidesBackButton = true
-            vc.navigationItem.rightBarButtonItem = nil
         }
     }
     

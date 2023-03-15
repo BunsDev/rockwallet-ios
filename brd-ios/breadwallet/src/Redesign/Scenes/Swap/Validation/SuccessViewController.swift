@@ -165,7 +165,7 @@ class SuccessViewController: BaseInfoViewController {
                 self?.shouldDismiss = true
                 
                 switch self?.success {
-                case .documentVerification:
+                case .documentVerification, .limitsAuthentication:
                     self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem,
                                                keyStore: self?.dataStore?.keyStore)
                 default:
@@ -181,7 +181,7 @@ class SuccessViewController: BaseInfoViewController {
                     self?.interactor?.getAssetSelectionData(viewModel: .init())
                     
                 case .limitsAuthentication:
-                    self?.dismiss(animated: true)
+                    self?.coordinator?.popToRoot()
                     
                 default:
                     self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
@@ -220,11 +220,6 @@ class SuccessViewController: BaseInfoViewController {
         }
         
         return buttons
-    }
-    
-    override func setupCloseButton(closeAction: Selector) {
-        guard success != .limitsAuthentication else { return }
-        super.setupCloseButton(closeAction: closeAction)
     }
     
     override func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) {
