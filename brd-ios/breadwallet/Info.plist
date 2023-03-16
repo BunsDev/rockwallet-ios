@@ -220,6 +220,8 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>SARDINE_CLIENT_ID</key>
+	<string>$(SARDINE_CLIENT_ID)</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
