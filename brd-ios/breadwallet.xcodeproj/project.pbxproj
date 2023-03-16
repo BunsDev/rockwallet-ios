@@ -5918,8 +5918,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/veriff-ios-spm.git";
 			requirement = {
-				kind = exactVersion;
-				version = 4.51.0;
+				branch = current;
+				kind = branch;
 			};
 		};
 		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */ = {
