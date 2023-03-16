@@ -158,6 +158,9 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                 }
             }
             
+            // TODO: For now, we are hard coding this error. Remove this line when needed.
+            customAchErrorMessage = L10n.Buy.bankAccountFailureText
+            
             let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             
