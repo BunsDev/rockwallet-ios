@@ -99,6 +99,12 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         } else if ExchangeManager.shared.canSwap(actionResponse.from?.currency) == false {
             presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
             hasError = true
+        } else if let feeAmount = fromFee,
+                  let feeWallet = feeAmount.currency.wallet,
+                  feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
+            let error = ExchangeErrors.balanceTooLow(balance: feeAmount.tokenValue, currency: feeAmount.currency.code)
+            presentError(actionResponse: .init(error: error))
+            hasError = true
         } else {
             let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
             let tokenValue = actionResponse.from?.tokenValue ?? 0
