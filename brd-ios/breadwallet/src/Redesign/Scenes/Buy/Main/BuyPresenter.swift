@@ -227,13 +227,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let profile = UserManager.shared.profile
         
         let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
-        let dailyMinLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMin : profile?.achAllowanceDailyMin
         let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
-        let dailyMinLimitText = ExchangeFormatter.crypto.string(for: dailyMinLimit) ?? ""
         let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
         let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
@@ -242,8 +240,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("$\(perTransactionLimitText) \(C.usdCurrencyCode)")),
-                                                           dailyMin: .init(title: .text(L10n.Buy.dailyMinLimits),
-                                                                           value: .text("$\(dailyMinLimitText) \(C.usdCurrencyCode)")),
                                                            dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
                                                                            value: .text("$\(dailyMaxLimitText) \(C.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
