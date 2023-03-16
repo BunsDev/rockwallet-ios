@@ -54,7 +54,7 @@ enum FailureReason: SimpleMessage {
             return L10n.Account.idVerificationRejected
             
         case .limitsAuthentication:
-            return "We're sorry, your verification was unsuccessful"
+            return L10n.Account.verificationUnsuccessful
         }
     }
     
@@ -82,13 +82,7 @@ enum FailureReason: SimpleMessage {
             return L10n.Account.idVerificationRetry.replacingOccurrences(of: "-", with: "\u{2022}")
             
         case .limitsAuthentication:
-            return """
-            Please try your verification again,
-            while keeping the following in mind:
-            
-            Please ensure the area is well-lit
-            Please ensure you are centered in the frame
-            """
+            return L10n.Account.VerificationUnsuccessful.description.replacingOccurrences(of: "-", with: "\u{2022}")
         }
     }
     

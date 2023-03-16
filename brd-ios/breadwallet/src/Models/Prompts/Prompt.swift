@@ -36,7 +36,7 @@ enum PromptType: Int {
         case .noPasscode: return L10n.Prompts.NoPasscode.title
         case .kyc: return L10n.VerifyAccount.button
         case .noAccount: return L10n.Account.createNewAccountTitle
-        case .limitsAuthentication: return "Finish setting up your new Buy limits."
+        case .limitsAuthentication: return L10n.Prompts.LimitsAuthentication.title
         default: return ""
         }
     }
@@ -64,7 +64,7 @@ enum PromptType: Int {
         case .noPasscode: return L10n.Prompts.NoPasscode.body
         case .kyc: return L10n.Prompts.VerifyAccount.body
         case .noAccount: return L10n.Prompts.CreateAccount.body
-        case .limitsAuthentication: return "Just one more small step, and you'll be able to enjoy your new limits."
+        case .limitsAuthentication: return L10n.Prompts.LimitsAuthentication.body
         default: return ""
         }
     }

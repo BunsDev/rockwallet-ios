@@ -42,7 +42,7 @@ enum SuccessReason: SimpleMessage {
             return L10n.Account.idVerificationApproved
             
         case .limitsAuthentication:
-            return "Your verification was successful!"
+            return L10n.Account.verificationSuccessful
         }
     }
     
@@ -61,7 +61,7 @@ enum SuccessReason: SimpleMessage {
             return L10n.Account.startUsingWallet
             
         case .limitsAuthentication:
-            return "Your account has been successfully verified, and your limits have been updated."
+            return L10n.Account.VerificationSuccessful.description
         }
     }
     
