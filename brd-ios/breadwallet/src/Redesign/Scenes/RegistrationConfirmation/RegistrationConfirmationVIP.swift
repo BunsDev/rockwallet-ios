@@ -19,14 +19,12 @@ protocol RegistrationConfirmationViewActions: BaseViewActions, FetchViewActions 
 }
 
 protocol RegistrationConfirmationActionResponses: BaseActionResponses, FetchActionResponses {
-    func presentValidate(actionResponse: RegistrationConfirmationModels.Validate.ActionResponse)
     func presentConfirm(actionResponse: RegistrationConfirmationModels.Confirm.ActionResponse)
     func presentResend(actionResponse: RegistrationConfirmationModels.Resend.ActionResponse)
     func presentError(actionResponse: RegistrationConfirmationModels.Error.ActionResponse)
 }
 
 protocol RegistrationConfirmationResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
-    func displayValidate(responseDisplay: RegistrationConfirmationModels.Validate.ResponseDisplay)
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay)
     func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay)
 }
