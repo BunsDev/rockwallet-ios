@@ -84,12 +84,6 @@ class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
             vc.availablePayments = availablePayments
         }
     }
-    
-    override func goBack() {
-        (navigationController.children.first(where: { $0 is SellViewController }) as? SellViewController)?.didTriggerGetData?()
-        
-        super.goBack()
-    }
 }
 
 class SellCoordinator: ExchangeCoordinator, SellRoutes {

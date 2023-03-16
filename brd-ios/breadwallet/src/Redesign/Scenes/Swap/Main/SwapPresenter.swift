@@ -23,8 +23,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
               let from = item.from?.currency,
-              let to = item.to?.currency
-        else {
+              let to = item.to?.currency else {
             viewController?.displayError(responseDisplay: .init())
             return
         }

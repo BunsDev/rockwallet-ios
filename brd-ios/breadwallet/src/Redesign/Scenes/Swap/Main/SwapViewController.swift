@@ -33,8 +33,8 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        didTriggerGetData = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
+        didTriggerExchangeRate = { [weak self] in
+            self?.interactor?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
         }
     }
     
@@ -161,7 +161,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
         
         switch error {
         case .noQuote:
-            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()))
+            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
         case .failed:
             coordinator?.showFailure()
