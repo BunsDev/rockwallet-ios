@@ -9,8 +9,6 @@
 //
 
 import UIKit
-import Veriff
-import WalletKit
 
 enum PreviewType {
     // split buy into ach_buy and card_buy

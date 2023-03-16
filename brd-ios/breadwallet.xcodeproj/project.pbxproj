@@ -23,6 +23,11 @@
 /* Begin PBXBuildFile section */
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
+		044D098229C3352400C510DC /* Frames in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098129C3352400C510DC /* Frames */; };
+		044D098829C335BB00C510DC /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098729C335BB00C510DC /* Lottie */; };
+		044D098B29C335DA00C510DC /* LinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098A29C335DA00C510DC /* LinkKit */; };
+		044D098F29C3399000C510DC /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098E29C3399000C510DC /* IQKeyboardManagerSwift */; };
+		044D099629C352EA00C510DC /* Veriff in Frameworks */ = {isa = PBXBuildFile; productRef = 044D099529C352EA00C510DC /* Veriff */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */; };
 		0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */; };
@@ -118,7 +123,6 @@
 		75A2A79E1DA5934300A983D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A2A79C1DA5934300A983D8 /* LaunchScreen.storyboard */; };
 		7B0418B5298A9131004A6385 /* UserInformationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0418B4298A9131004A6385 /* UserInformationWorker.swift */; };
 		7B05887828A23D4500D7C971 /* AddCardWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05887728A23D4500D7C971 /* AddCardWorker.swift */; };
-		7B05888128A2431E00D7C971 /* Frames in Frameworks */ = {isa = PBXBuildFile; productRef = 7B05888028A2431E00D7C971 /* Frames */; };
 		7B05888328A254F900D7C971 /* PaymentStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05888228A254F900D7C971 /* PaymentStatusWorker.swift */; };
 		7B05888528A2668F00D7C971 /* DeleteCardWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05888428A2668F00D7C971 /* DeleteCardWorker.swift */; };
 		7B05888728A2698A00D7C971 /* PaymentCardsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B05888628A2698A00D7C971 /* PaymentCardsWorker.swift */; };
@@ -140,7 +144,6 @@
 		7B2BF28829659D850037E731 /* RecoveryKeyIntroStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28229659D850037E731 /* RecoveryKeyIntroStore.swift */; };
 		7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28329659D850037E731 /* RecoveryKeyIntroViewController.swift */; };
 		7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28429659D850037E731 /* RecoveryKeyIntroModels.swift */; };
-		7B2C9AFC27D9270B00D5135C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2C9AFB27D9270B00D5135C /* IQKeyboardManagerSwift */; };
 		7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E5047289800BB008CACD8 /* FieldValidator.swift */; };
 		7B2E5052289A5F02008CACD8 /* AddCardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E504C289A5F02008CACD8 /* AddCardStore.swift */; };
 		7B2E5053289A5F02008CACD8 /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E504D289A5F02008CACD8 /* AddCardViewController.swift */; };
@@ -234,7 +237,6 @@
 		7BBBF4DF287421CF00E4D36B /* SwapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBBF4D9287421CF00E4D36B /* SwapStore.swift */; };
 		7BBBF4E0287421CF00E4D36B /* SwapMainVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBBF4DA287421CF00E4D36B /* SwapMainVIP.swift */; };
 		7BC3F046294C6F8300947526 /* VeriffSessionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC3F045294C6F8300947526 /* VeriffSessionWorker.swift */; };
-		7BC3F049294C6FBD00947526 /* Veriff in Frameworks */ = {isa = PBXBuildFile; productRef = 7BC3F048294C6FBD00947526 /* Veriff */; };
 		7BC49D1B282E69A3000BF284 /* ManageAssetsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC49D1A282E69A3000BF284 /* ManageAssetsButton.swift */; };
 		7BD88B5028D92A7A003A766B /* ExchangeAuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */; };
 		7BDB49B62805AC780031F015 /* EmailFeedbackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDB49B52805AC780031F015 /* EmailFeedbackManager.swift */; };
@@ -422,7 +424,6 @@
 		7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E41293F6AE50058019B /* SellVIP.swift */; };
 		7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E42293F6AE50058019B /* SellViewController.swift */; };
 		7E8F7E4A293F6AE50058019B /* SellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E43293F6AE50058019B /* SellInteractor.swift */; };
-		7E8F7E4E293F84510058019B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7E8F7E4D293F84510058019B /* Lottie */; };
 		7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */; };
 		7EA9F7B329683A91000F45B6 /* CountriesAndStatesVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9F7B229683A91000F45B6 /* CountriesAndStatesVIP.swift */; };
 		7EA9F7B529683A9D000F45B6 /* CountriesAndStatesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */; };
@@ -488,7 +489,6 @@
 		7EE91A5D2968310100331B1F /* KYCAddressVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A562968310100331B1F /* KYCAddressVIP.swift */; };
 		7EE91A5E2968310100331B1F /* KYCAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A572968310100331B1F /* KYCAddressViewController.swift */; };
 		7EE91A5F2968310100331B1F /* KYCAddressInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE91A582968310100331B1F /* KYCAddressInteractor.swift */; };
-		7EEBAE8A28E7099400686CA3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7EEBAE8928E7099400686CA3 /* SnapKit */; };
 		7EF2188028630E2F006ABCC1 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2187F28630E2F006ABCC1 /* UserManager.swift */; };
 		7EF2998A27E3B8C400A2238A /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2998827E3B8C400A2238A /* ApiClient.swift */; };
 		7EF2998B27E3B8C400A2238A /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF2998927E3B8C400A2238A /* Resources.swift */; };
@@ -602,7 +602,6 @@
 		C491AC0028A6432500E79954 /* BuyOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABFF28A6432500E79954 /* BuyOrderView.swift */; };
 		C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */; };
 		C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */; };
-		C4C7299D2922400A00A3CE24 /* LinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = C4C7299C2922400A00A3CE24 /* LinkKit */; };
 		C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */; };
 		C4C729A129225F3A00A3CE24 /* PlaidPublicToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */; };
 		C4F82DF1297AB53B00DE71BF /* LimitsPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F82DF0297AB53B00DE71BF /* LimitsPopupView.swift */; };
@@ -1565,22 +1564,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044D099629C352EA00C510DC /* Veriff in Frameworks */,
 				7E0E365928E70D0F00539D99 /* Cosmos in Frameworks */,
 				3ABD8D1B24E1CF1500EC4C91 /* SwiftUI.framework in Frameworks */,
+				044D098229C3352400C510DC /* Frames in Frameworks */,
 				7CBC6B2E21751ECA00899AFB /* iAd.framework in Frameworks */,
+				044D098F29C3399000C510DC /* IQKeyboardManagerSwift in Frameworks */,
 				22A9A9661DF61FEE000F0016 /* WebKit.framework in Frameworks */,
-				7EEBAE8A28E7099400686CA3 /* SnapKit in Frameworks */,
 				7E5CB32D2834E63400EC787E /* SnapKit in Frameworks */,
-				7E8F7E4E293F84510058019B /* Lottie in Frameworks */,
 				22A9A9641DF61FE7000F0016 /* Security.framework in Frameworks */,
+				044D098B29C335DA00C510DC /* LinkKit in Frameworks */,
 				22A9A9621DF61FE0000F0016 /* SystemConfiguration.framework in Frameworks */,
 				22A9A9601DF61FD8000F0016 /* CoreLocation.framework in Frameworks */,
+				044D098829C335BB00C510DC /* Lottie in Frameworks */,
 				22A9A95E1DF61FD0000F0016 /* PushKit.framework in Frameworks */,
-				7BC3F049294C6FBD00947526 /* Veriff in Frameworks */,
-				7B2C9AFC27D9270B00D5135C /* IQKeyboardManagerSwift in Frameworks */,
-				7B05888128A2431E00D7C971 /* Frames in Frameworks */,
 				7E18DBF328C8C2C600B83E3B /* WalletKit in Frameworks */,
-				C4C7299D2922400A00A3CE24 /* LinkKit in Frameworks */,
 				22717B062315D3E300F77F4E /* CloudKit.framework in Frameworks */,
 				223DB21B1DF69F0F0076A151 /* libbz2.framework in Frameworks */,
 				044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */,
@@ -3476,16 +3474,15 @@
 			);
 			name = breadwallet;
 			packageProductDependencies = (
-				7B2C9AFB27D9270B00D5135C /* IQKeyboardManagerSwift */,
 				7E5CB32C2834E63400EC787E /* SnapKit */,
-				7B05888028A2431E00D7C971 /* Frames */,
 				7E18DBF228C8C2C600B83E3B /* WalletKit */,
-				7EEBAE8928E7099400686CA3 /* SnapKit */,
 				7E0E365828E70D0F00539D99 /* Cosmos */,
-				C4C7299C2922400A00A3CE24 /* LinkKit */,
-				7E8F7E4D293F84510058019B /* Lottie */,
-				7BC3F048294C6FBD00947526 /* Veriff */,
 				044D097A29C30E8D00C510DC /* MobileIntelligence */,
+				044D098129C3352400C510DC /* Frames */,
+				044D098729C335BB00C510DC /* Lottie */,
+				044D098A29C335DA00C510DC /* LinkKit */,
+				044D098E29C3399000C510DC /* IQKeyboardManagerSwift */,
+				044D099529C352EA00C510DC /* Veriff */,
 			);
 			productName = breadwallet;
 			productReference = 75A2A7901DA5934300A983D8 /* breadwallet.app */;
@@ -3647,15 +3644,15 @@
 			);
 			mainGroup = 75A2A7871DA5934300A983D8;
 			packageReferences = (
-				7B2C9AFA27D9270B00D5135C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */,
-				7B05887F28A2431E00D7C971 /* XCRemoteSwiftPackageReference "frames-ios" */,
 				7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */,
-				7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
-				7E8F7E4C293F84510058019B /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */,
 				044D097929C30E8C00C510DC /* XCRemoteSwiftPackageReference "sardine-ios" */,
+				044D098029C3352400C510DC /* XCRemoteSwiftPackageReference "frames-ios" */,
+				044D098629C335BB00C510DC /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				044D098929C335DA00C510DC /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
+				044D098C29C335F800C510DC /* XCRemoteSwiftPackageReference "SnapKit" */,
+				044D098D29C3399000C510DC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				044D099429C352EA00C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */,
 			);
 			productRefGroup = 75A2A7911DA5934300A983D8 /* Products */;
 			projectDirPath = "";
@@ -5880,25 +5877,49 @@
 				version = 1.0.2;
 			};
 		};
-		7B05887F28A2431E00D7C971 /* XCRemoteSwiftPackageReference "frames-ios" */ = {
+		044D098029C3352400C510DC /* XCRemoteSwiftPackageReference "frames-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/checkout/frames-ios.git";
+			repositoryURL = "https://github.com/rockwalletcode/frames-ios.git";
 			requirement = {
 				kind = exactVersion;
-				version = 4.0.3;
+				version = 4.0.4;
 			};
 		};
-		7B2C9AFA27D9270B00D5135C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+		044D098629C335BB00C510DC /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			repositoryURL = "https://github.com/rockwalletcode/lottie-ios.git";
 			requirement = {
 				kind = exactVersion;
-				version = 6.5.9;
+				version = 3.5.0;
 			};
 		};
-		7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */ = {
+		044D098929C335DA00C510DC /* XCRemoteSwiftPackageReference "plaid-link-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Veriff/veriff-ios-spm/";
+			repositoryURL = "https://github.com/rockwalletcode/plaid-link-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.2.0;
+			};
+		};
+		044D098C29C335F800C510DC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rockwalletcode/SnapKit.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.6.0;
+			};
+		};
+		044D098D29C3399000C510DC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rockwalletcode/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.11;
+			};
+		};
+		044D099429C352EA00C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rockwalletcode/veriff-ios-spm.git";
 			requirement = {
 				kind = exactVersion;
 				version = 4.51.0;
@@ -5920,30 +5941,6 @@
 				version = 5.0.2;
 			};
 		};
-		7E8F7E4C293F84510058019B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
-			requirement = {
-				kind = exactVersion;
-				version = 3.5.0;
-			};
-		};
-		7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = exactVersion;
-				version = 5.6.0;
-			};
-		};
-		C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/plaid/plaid-link-ios";
-			requirement = {
-				kind = exactVersion;
-				version = 4.0.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -5952,19 +5949,29 @@
 			package = 044D097929C30E8C00C510DC /* XCRemoteSwiftPackageReference "sardine-ios" */;
 			productName = MobileIntelligence;
 		};
-		7B05888028A2431E00D7C971 /* Frames */ = {
+		044D098129C3352400C510DC /* Frames */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7B05887F28A2431E00D7C971 /* XCRemoteSwiftPackageReference "frames-ios" */;
+			package = 044D098029C3352400C510DC /* XCRemoteSwiftPackageReference "frames-ios" */;
 			productName = Frames;
 		};
-		7B2C9AFB27D9270B00D5135C /* IQKeyboardManagerSwift */ = {
+		044D098729C335BB00C510DC /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7B2C9AFA27D9270B00D5135C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			package = 044D098629C335BB00C510DC /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		044D098A29C335DA00C510DC /* LinkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 044D098929C335DA00C510DC /* XCRemoteSwiftPackageReference "plaid-link-ios" */;
+			productName = LinkKit;
+		};
+		044D098E29C3399000C510DC /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 044D098D29C3399000C510DC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
 		};
-		7BC3F048294C6FBD00947526 /* Veriff */ = {
+		044D099529C352EA00C510DC /* Veriff */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7BC3F047294C6FBD00947526 /* XCRemoteSwiftPackageReference "veriff-ios-spm" */;
+			package = 044D099429C352EA00C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */;
 			productName = Veriff;
 		};
 		7E0E365828E70D0F00539D99 /* Cosmos */ = {
@@ -5981,21 +5988,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */;
 			productName = SnapKit;
-		};
-		7E8F7E4D293F84510058019B /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7E8F7E4C293F84510058019B /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
-		7EEBAE8928E7099400686CA3 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7EEBAE8828E7099400686CA3 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		C4C7299C2922400A00A3CE24 /* LinkKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C4C7299B2922400A00A3CE24 /* XCRemoteSwiftPackageReference "plaid-link-ios" */;
-			productName = LinkKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
