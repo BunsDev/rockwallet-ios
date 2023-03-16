@@ -99,12 +99,6 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
-    override func buttonTapped() {
-        super.buttonTapped()
-        
-        interactor?.confirm(viewAction: .init())
-    }
-    
     private func resendCodeTapped() {
         interactor?.resend(viewAction: .init())
     }
