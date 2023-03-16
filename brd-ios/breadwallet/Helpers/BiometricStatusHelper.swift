@@ -16,7 +16,6 @@ class BiometricStatusHelper {
     private var biometricStatusRetryCounter: Int = 0
     
     func checkBiometricStatus(resetCounter: Bool, completion: ((Error?) -> Void)?) {
-        
         if resetCounter {
             biometricStatusRetryCounter = 5
         }
