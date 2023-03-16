@@ -21,28 +21,28 @@
     {
       "identity" : "frames-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/checkout/frames-ios.git",
+      "location" : "https://github.com/rockwalletcode/frames-ios.git",
       "state" : {
-        "revision" : "431a2bcc1792bfdc30906d8277e28b802285122d",
-        "version" : "4.0.3"
+        "revision" : "68e08aa650dff07d28cc0a3edac937510b1ff5e8",
+        "version" : "4.0.4"
       }
     },
     {
       "identity" : "iqkeyboardmanager",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
+      "location" : "https://github.com/rockwalletcode/IQKeyboardManager.git",
       "state" : {
-        "revision" : "474f849accae40fe61b5302d9b057dd48ee073ba",
-        "version" : "6.5.9"
+        "revision" : "0ea3febb36cfcec2afb5841fd8809a9c0fa545b3",
+        "version" : "6.5.11"
       }
     },
     {
       "identity" : "lottie-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/airbnb/lottie-ios.git",
+      "location" : "https://github.com/rockwalletcode/lottie-ios.git",
       "state" : {
-        "revision" : "b4bd0604ded9574807f41b4004b57dd1226a30a4",
-        "version" : "3.5.0"
+        "revision" : "57fd1ec26f5cb00a8e5082f2b22ef300bda66ed5",
+        "version" : "4.0.0"
       }
     },
     {
@@ -50,17 +50,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/marmelroy/PhoneNumberKit.git",
       "state" : {
-        "revision" : "ade48cc2d09c3180ac6e179577633b8c2660a8bf",
-        "version" : "3.5.0"
+        "revision" : "434a7432cceca19829bc6e34bdcfc0b0ee4c6801",
+        "version" : "3.5.7"
       }
     },
     {
       "identity" : "plaid-link-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/plaid/plaid-link-ios",
+      "location" : "https://github.com/rockwalletcode/plaid-link-ios.git",
       "state" : {
-        "revision" : "8c0ca813013037e79b0a2ffb08d989b368473711",
-        "version" : "4.0.1"
+        "revision" : "e0c37ef66c511a29023986c35d14c99506edacde",
+        "version" : "4.2.0"
       }
     },
     {
@@ -75,7 +75,7 @@
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "location" : "https://github.com/rockwalletcode/SnapKit.git",
       "state" : {
         "revision" : "f222cbdf325885926566172f6f5f06af95473158",
         "version" : "5.6.0"
@@ -84,7 +84,7 @@
     {
       "identity" : "veriff-ios-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Veriff/veriff-ios-spm/",
+      "location" : "https://github.com/rockwalletcode/veriff-ios-spm",
       "state" : {
         "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205",
         "version" : "4.51.0"

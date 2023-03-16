@@ -25,7 +25,7 @@ struct ExchangeModels {
         struct ResponseDisplay {
             var continueEnabled = false
             var amounts: MainSwapViewModel
-            var rate: ExchangeRateViewModel? = nil
+            var rate: ExchangeRateViewModel?
         }
     }
 }
