@@ -52,10 +52,6 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentValidate(actionResponse: RegistrationConfirmationModels.Validate.ActionResponse) {
-        viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
-    }
-    
     func presentConfirm(actionResponse: RegistrationConfirmationModels.Confirm.ActionResponse) {
         viewController?.displayConfirm(responseDisplay: .init())
     }
