@@ -152,6 +152,7 @@ enum OrderPreviewModels {
             var previewType: PreviewType?
             var isAch: Bool?
             var failed: Bool?
+            var responseCode: String?
         }
         
         struct ResponseDisplay {
