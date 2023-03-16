@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/lottie-ios.git",
       "state" : {
-        "revision" : "57fd1ec26f5cb00a8e5082f2b22ef300bda66ed5",
-        "version" : "4.0.0"
+        "revision" : "b4bd0604ded9574807f41b4004b57dd1226a30a4",
+        "version" : "3.5.0"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/veriff-ios-spm.git",
       "state" : {
-        "branch" : "current",
-        "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205"
+        "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205",
+        "version" : "4.51.0"
       }
     },
     {

@@ -5887,7 +5887,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/lottie-ios.git";
 			requirement = {
 				kind = exactVersion;
-				version = 4.0.0;
+				version = 3.5.0;
 			};
 		};
 		044D098929C335DA00C510DC /* XCRemoteSwiftPackageReference "plaid-link-ios" */ = {
@@ -5918,8 +5918,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/veriff-ios-spm.git";
 			requirement = {
-				branch = current;
-				kind = branch;
+				kind = exactVersion;
+				version = 4.51.0;
 			};
 		};
 		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */ = {
