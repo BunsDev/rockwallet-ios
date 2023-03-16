@@ -58,7 +58,11 @@ extension Interactor where Self: ExchangeRateViewActions,
                                                                            limits: self?.dataStore?.limits,
                                                                            showTimer: self?.dataStore?.showTimer,
                                                                            fromBuy: self?.dataStore?.fromBuy), completion: {
-                    self?.getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees), completion: completion)
+                    if self?.dataStore?.fromBuy == true {
+                        completion?()
+                    } else {
+                        self?.getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees), completion: completion)
+                    }
                 })
                 
             case .failure(let error):

@@ -134,7 +134,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentNavigateAssetSelector(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
@@ -196,4 +195,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func showLimitsInfo(viewAction: BuyModels.LimitsInfo.ViewAction) {
         presenter?.presentLimitsInfo(actionResponse: .init(paymentMethod: dataStore?.paymentMethod))
     }
+    
+    // MARK: - Aditional helpers
 }
