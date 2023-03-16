@@ -84,7 +84,7 @@ enum SuccessReason: SimpleMessage {
             return L10n.Button.receiveDigitalAssets
             
         case .limitsAuthentication:
-            return "Back to home"
+            return L10n.Swap.backToHome
             
         default:
             return L10n.Buy.details
