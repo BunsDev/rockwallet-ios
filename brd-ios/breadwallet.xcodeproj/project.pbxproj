@@ -27,7 +27,6 @@
 		044D098829C335BB00C510DC /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098729C335BB00C510DC /* Lottie */; };
 		044D098B29C335DA00C510DC /* LinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098A29C335DA00C510DC /* LinkKit */; };
 		044D098F29C3399000C510DC /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098E29C3399000C510DC /* IQKeyboardManagerSwift */; };
-		044D099229C3404600C510DC /* Veriff in Frameworks */ = {isa = PBXBuildFile; productRef = 044D099129C3404600C510DC /* Veriff */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */; };
 		0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */; };
@@ -1564,7 +1563,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				044D099229C3404600C510DC /* Veriff in Frameworks */,
 				7E0E365928E70D0F00539D99 /* Cosmos in Frameworks */,
 				3ABD8D1B24E1CF1500EC4C91 /* SwiftUI.framework in Frameworks */,
 				044D098229C3352400C510DC /* Frames in Frameworks */,
@@ -3482,7 +3480,6 @@
 				044D098729C335BB00C510DC /* Lottie */,
 				044D098A29C335DA00C510DC /* LinkKit */,
 				044D098E29C3399000C510DC /* IQKeyboardManagerSwift */,
-				044D099129C3404600C510DC /* Veriff */,
 			);
 			productName = breadwallet;
 			productReference = 75A2A7901DA5934300A983D8 /* breadwallet.app */;
@@ -3652,7 +3649,7 @@
 				044D098929C335DA00C510DC /* XCRemoteSwiftPackageReference "plaid-link-ios" */,
 				044D098C29C335F800C510DC /* XCRemoteSwiftPackageReference "SnapKit" */,
 				044D098D29C3399000C510DC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
-				044D099029C3404600C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */,
+				044D099329C3433400C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */,
 			);
 			productRefGroup = 75A2A7911DA5934300A983D8 /* Products */;
 			projectDirPath = "";
@@ -5917,7 +5914,7 @@
 				version = 6.5.11;
 			};
 		};
-		044D099029C3404600C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */ = {
+		044D099329C3433400C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/veriff-ios-spm.git";
 			requirement = {
@@ -5968,11 +5965,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 044D098D29C3399000C510DC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
-		};
-		044D099129C3404600C510DC /* Veriff */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 044D099029C3404600C510DC /* XCRemoteSwiftPackageReference "veriff-ios-spm" */;
-			productName = Veriff;
 		};
 		7E0E365828E70D0F00539D99 /* Cosmos */ = {
 			isa = XCSwiftPackageProductDependency;
