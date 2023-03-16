@@ -20,22 +20,6 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     var isModalDismissable = true
     
     // MARK: - Overrides
-    
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                         enabled: false,
-                                         callback: { [weak self] in
-            self?.buttonTapped()
-        }))
-        
-        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
-    }
-    
     override func setupSubviews() {
         super.setupSubviews()
         
@@ -130,11 +114,6 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     }
 
     // MARK: - RegistrationConfirmationResponseDisplay
-    
-    func displayValidate(responseDisplay: RegistrationConfirmationModels.Validate.ResponseDisplay) {
-        continueButton.viewModel?.enabled = responseDisplay.isValid
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
