@@ -15,6 +15,7 @@ enum SuccessReason: SimpleMessage {
     case buyAch
     case sell
     case documentVerification
+    case limitsAuthentication
     
     var iconName: String {
         switch self {
@@ -39,6 +40,9 @@ enum SuccessReason: SimpleMessage {
             
         case .documentVerification:
             return L10n.Account.idVerificationApproved
+            
+        case .limitsAuthentication:
+            return L10n.Account.verificationSuccessful
         }
     }
     
@@ -55,12 +59,15 @@ enum SuccessReason: SimpleMessage {
             
         case .documentVerification:
             return L10n.Account.startUsingWallet
+            
+        case .limitsAuthentication:
+            return L10n.Account.VerificationSuccessful.description
         }
     }
     
     var firstButtonTitle: String? {
         switch self {
-        case .documentVerification:
+        case .documentVerification, .limitsAuthentication:
             return L10n.Button.buyDigitalAssets
             
         default:
@@ -75,6 +82,9 @@ enum SuccessReason: SimpleMessage {
             
         case .documentVerification:
             return L10n.Button.receiveDigitalAssets
+            
+        case .limitsAuthentication:
+            return L10n.Swap.backToHome
             
         default:
             return L10n.Buy.details
@@ -155,7 +165,7 @@ class SuccessViewController: BaseInfoViewController {
                 self?.shouldDismiss = true
                 
                 switch self?.success {
-                case .documentVerification:
+                case .documentVerification, .limitsAuthentication:
                     self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem,
                                                keyStore: self?.dataStore?.keyStore)
                 default:
@@ -169,6 +179,9 @@ class SuccessViewController: BaseInfoViewController {
                 case .documentVerification:
                     LoadingView.show()
                     self?.interactor?.getAssetSelectionData(viewModel: .init())
+                    
+                case .limitsAuthentication:
+                    self?.coordinator?.popToRoot()
                     
                 default:
                     self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
