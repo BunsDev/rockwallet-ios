@@ -64,6 +64,15 @@
       }
     },
     {
+      "identity" : "sardine-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rockwalletcode/sardine-ios.git",
+      "state" : {
+        "revision" : "77f943e9a7c2b0b855ecd6d9b4907315bf2942d8",
+        "version" : "1.0.2"
+      }
+    },
+    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit.git",
