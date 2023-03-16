@@ -233,10 +233,11 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
         scrollView.delegate = self
         view.backgroundColor = LightColors.Background.one
         nextButton.setup(with: .init(title: L10n.Button.continueAction))
-        skipButton.setup(with: .init(title: "SKIP AND SAVE LATER"))
+        skipButton.setup(with: .init(title: L10n.Onboarding.skipPhrase))
         
         enterPhrase.didFinishPhraseEntry = { [weak self] phrase in
             self?.phrase = phrase
+            self?.validatePhrase(phrase)
         }
 
         switch reason {
@@ -345,7 +346,9 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
                 return
             }
             
-            didToggleNextButton?(nextButton, navigationItem.rightBarButtonItem)
+            Store.perform(action: Alert.Show(.walletRestored(callback: {
+                self.didToggleNextButton?(self.nextButton, self.navigationItem.rightBarButtonItem)
+            })))
             
             return callback()
             

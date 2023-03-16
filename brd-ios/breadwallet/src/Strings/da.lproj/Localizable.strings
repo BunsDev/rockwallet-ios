@@ -1652,6 +1652,8 @@
 /* Onboarding screen Skip button title that allows the user to exit the onboarding process. */
 "Onboarding.skip" = "Spring over";
 
+"Onboarding.SkipPhrase" = "SKIP AND SAVE LATER";
+
 /* Onboarding screen Page 4 title */
 "OnboardingPageFour.title" = "Begynd at investere i dag for så lidt som 50 dollars!";
 
