@@ -23,12 +23,16 @@ class KYCCoordinator: BaseCoordinator,
     }
     
     func start(flow: ProfileModels.ExchangeFlow?) {
+        turnOnSardineMobileIntelligence()
+        
         if let flow = flow {
             open(scene: Scenes.VerifyAccount) { vc in
                 vc.flow = flow
+                
                 vc.didTapContactSupportButton = { [weak self] in
                     self?.showSupport()
                 }
+                
                 vc.didTapBackToHomeButton = { [weak self] in
                     self?.dismissFlow()
                 }
@@ -99,12 +103,10 @@ class KYCCoordinator: BaseCoordinator,
     
     // MARK: - Aditional helpers
     
-    @objc func popFlow(sender: UIBarButtonItem) {
-        if navigationController.children.count == 1 {
-            dismissFlow()
-        }
+    override func goBack() {
+        super.goBack()
         
-        navigationController.popToRootViewController(animated: true)
+        turnOffSardineMobileIntelligence()
     }
 }
 
@@ -144,8 +146,6 @@ extension BaseCoordinator {
 
 extension BaseCoordinator {
     func turnOffSardineMobileIntelligence() {
-        guard self is KYCCoordinator == false else { return }
-
         let options = OptionsBuilder()
             .enableBehaviorBiometrics(with: false)
             .enableClipboardTracking(with: false)
@@ -154,24 +154,20 @@ extension BaseCoordinator {
             .build()
         MobileIntelligence(withOptions: options)
     }
-
+    
     func turnOnSardineMobileIntelligence() {
         guard let sessionTokenHash = UserDefaults.sessionTokenHash else { return }
-
+        
         let options = OptionsBuilder()
             .setClientId(with: E.sardineClientId)
             .setSessionKey(with: sessionTokenHash)
-            .setEnvironment(with: E.isDevelopment ? Options.ENV_SANDBOX : Options.ENV_PRODUCTION)
+            .setEnvironment(with: E.isProduction ? Options.ENV_PRODUCTION : Options.ENV_SANDBOX)
             .enableBehaviorBiometrics(with: true)
             .enableClipboardTracking(with: true)
             .enableFieldTracking(with: true)
             .setShouldAutoSubmitOnInit(with: true)
             .build()
         MobileIntelligence(withOptions: options)
-    }
-
-    func submitSardineMobileIntelligence() {
-        MobileIntelligence.submitData { _ in }
     }
 }
 
@@ -231,6 +227,8 @@ class VeriffKYCManager: NSObject, VeriffSdkDelegate {
     }
     
     func sessionDidEndWithResult(_ result: Veriff.VeriffSdk.Result) {
+        MobileIntelligence.submitData { _ in }
+        
         completion?(result)
     }
 }
