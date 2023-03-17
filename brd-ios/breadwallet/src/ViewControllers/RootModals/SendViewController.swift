@@ -302,12 +302,17 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     self?.currentFeeBasis = fee
                     self?.sendButton.isEnabled = true
                     
+                    guard let feeCurrency = self?.sender.wallet.feeCurrency else { return }
+                    guard let feeCurrencyWalletBalance = feeCurrency.wallet?.balance else { return }
+                    let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
+                    if feeCurrency.isEthereum {
+                        if feeAmount > feeCurrencyWalletBalance {
+                            self?.showInsufficientGasError()
+                        }
+                    }
+                    
                     if self?.isSendingMax != true {
                         guard let balance = self?.balance else { return }
-                        guard let feeCurrency = self?.sender.wallet.feeCurrency else {
-                            return
-                        }
-                        let feeAmount = Amount(cryptoAmount: fee.fee, currency: feeCurrency)
 
                         if amount.currency == feeAmount.currency {
                             if amount + feeAmount > balance {
@@ -380,7 +385,11 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         let balanceAmount = Amount(amount: maximum ?? balance, rate: rate, minimumFractionDigits: 0)
         var feeOutput = ""
         if let amount = amount, !amount.isZero, let feeBasis = currentFeeBasis {
-            let fee = Amount(cryptoAmount: feeBasis.fee, currency: sender.wallet.feeCurrency)
+            var feeUpdated = feeBasis.fee
+            if amount.currency.isEthereum && feeBasis.fee > balanceAmount.cryptoAmount {
+                feeUpdated = (feeBasis.fee - amount.cryptoAmount) ?? feeBasis.fee
+            }
+            let fee = Amount(cryptoAmount: feeUpdated, currency: sender.wallet.feeCurrency)
             let feeAmount = Amount(amount: fee,
                                    rate: (amountView.selectedRate != nil) ? sender.wallet.feeCurrency.state?.currentRate : nil,
                                    maximumFractionDigits: Amount.highPrecisionDigits)
