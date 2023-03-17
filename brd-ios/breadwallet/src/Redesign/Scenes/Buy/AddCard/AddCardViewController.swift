@@ -66,7 +66,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
             view.setup(with: model)
             
             view.contentSizeChanged = { [weak self] in
-                self?.textFieldDidFinish(for: indexPath, with: nil)
+                self?.invalidateTableViewIntrinsicContentSize()
             }
             
             view.valueChanged = { [weak self] number, cvv in
