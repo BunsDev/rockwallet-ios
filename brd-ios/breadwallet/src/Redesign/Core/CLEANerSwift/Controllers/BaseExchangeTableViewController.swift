@@ -115,9 +115,9 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         guard let section = sections.firstIndex(of: ExchangeModels.Section.swapCard),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
-        tableView.beginUpdates()
         cell.wrappedView.setup(with: responseDisplay.amounts)
-        tableView.endUpdates()
+        
+        textFieldDidFinish(for: IndexPath(), with: nil)
         
         continueButton.viewModel?.enabled = responseDisplay.continueEnabled
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)

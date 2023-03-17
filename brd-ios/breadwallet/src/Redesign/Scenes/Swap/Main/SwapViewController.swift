@@ -110,8 +110,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
+                self?.textFieldDidFinish(for: indexPath, with: nil)
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
