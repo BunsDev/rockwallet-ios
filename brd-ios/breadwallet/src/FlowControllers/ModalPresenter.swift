@@ -938,12 +938,12 @@ class ModalPresenter: Subscriber {
         let pushAccountView = {
             guard let nc = self.topViewController?.navigationController as? RootNavigationController,
                   nc.viewControllers.count == 1 else { return }
-            let accountViewController = AccountViewController(currency: currency, wallet: self.system.wallet(for: currency))
+            let accountViewController = AssetDetailsViewController(currency: currency, wallet: self.system.wallet(for: currency))
             nc.pushViewController(accountViewController, animated: animated)
             completion?()
         }
         
-        if let accountVC = topViewController as? AccountViewController {
+        if let accountVC = topViewController as? AssetDetailsViewController {
             if accountVC.currency == currency {
                 completion?()
             } else {
@@ -968,7 +968,7 @@ class ModalPresenter: Subscriber {
     
     private func handleScanQrURL() {
         guard !Store.state.isLoginRequired else { presentLoginScan(); return }
-        if topViewController is AccountViewController || topViewController is LoginViewController {
+        if topViewController is AssetDetailsViewController || topViewController is LoginViewController {
             presentLoginScan()
         } else {
             if let presented = UIApplication.shared.activeWindow?.rootViewController?.presentedViewController {
