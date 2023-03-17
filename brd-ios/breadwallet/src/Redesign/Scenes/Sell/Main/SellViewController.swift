@@ -86,8 +86,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
+                self?.invalidateTableViewIntrinsicContentSize()
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -133,9 +132,9 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
         guard let section = sections.firstIndex(of: Models.Section.payoutMethod),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
-        tableView.beginUpdates()
         cell.wrappedView.setup(with: responseDisplay.viewModel)
-        tableView.endUpdates()
+        
+        textFieldDidFinish(for: IndexPath(), with: nil)
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
