@@ -210,7 +210,8 @@ class VeriffKYCManager: NSObject, VeriffSdkDelegate {
         
         UserManager.shared.getVeriffSessionUrl(livenessCheckData:
                 .init(quoteId: livenessCheckData?.quoteId,
-                      isBiometric: livenessCheckData?.isBiometric)) { result in
+                      isBiometric: livenessCheckData?.isBiometric,
+                      biometricType: livenessCheckData?.biometricType)) { result in
             switch result {
             case .success(let data):
                 guard let navigationController = self.navigationController else { return }

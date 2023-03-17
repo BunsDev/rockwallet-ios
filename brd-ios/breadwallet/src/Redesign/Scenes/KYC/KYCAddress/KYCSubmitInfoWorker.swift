@@ -22,7 +22,7 @@ struct KYCUserInfoRequestData: RequestModelData {
     let nologSSN: String?
     
     func getParameters() -> [String: Any] {
-        var params = [
+        let params = [
             "first_name": firstName,
             "last_name": lastName,
             "date_of_birth": dateOfBirth,

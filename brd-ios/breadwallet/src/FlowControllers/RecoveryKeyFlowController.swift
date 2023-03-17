@@ -98,12 +98,12 @@ class RecoveryKeyFlowController {
         let handleWriteKeyResult: ((ExitRecoveryKeyAction, [String]) -> Void) = { (action, words) in
             switch action {
             case .abort:
+                let navController = context == .onboarding ? viewController : (baseNavigationController ?? recoveryKeyNavController)
+                
                 guard context != .viewRecoveryPhrase else {
-                    dismissFlow()
+                    navController.dismiss(animated: true)
                     return
                 }
-                
-                let navController = context == .onboarding ? viewController : (baseNavigationController ?? recoveryKeyNavController)
                 
                 promptToSetUpRecoveryKeyLater(from: navController) { userWantsToSetUpLater in
                     guard userWantsToSetUpLater else { return }
