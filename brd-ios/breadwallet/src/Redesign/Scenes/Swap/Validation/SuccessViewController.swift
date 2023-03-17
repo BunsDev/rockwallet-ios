@@ -233,7 +233,7 @@ class SuccessViewController: BaseInfoViewController {
             guard let model = selectedCurrency as? AssetViewModel,
                     let currency = Store.state.currencies.first(where: { $0.code == model.subtitle }) else { return }
             let wallet = Store.state.wallets[currency.uid]?.wallet
-            let accountViewController = AccountViewController(currency: currency, wallet: wallet)
+            let accountViewController = AssetDetailsViewController(currency: currency, wallet: wallet)
             coordinator.navigationController.pushViewController(accountViewController, animated: true)
         }
     }
