@@ -9,8 +9,10 @@
 import UIKit
 import LinkKit
 
+typealias PlaidLinkKitHandler = Handler
+
 protocol LinkOAuthHandling {
-    var linkHandler: Handler? { get }
+    var plaidHandler: PlaidLinkKitHandler? { get }
 }
 
 class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
