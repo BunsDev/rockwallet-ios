@@ -21,7 +21,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
         return L10n.Sell.title
     }
     
-    var plaidHandler: Handler?
+    var plaidHandler: PlaidLinkKitHandler?
     
     // MARK: - Overrides
     
@@ -134,7 +134,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
         
         cell.wrappedView.setup(with: responseDisplay.viewModel)
         
-        textFieldDidFinish(for: IndexPath(), with: nil)
+        invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
