@@ -468,18 +468,22 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     /// Override in subclass
     func textFieldDidBegin(for indexPath: IndexPath, with text: String?) {
+        invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass
     func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        DispatchQueue.main.async {
-            self.tableView.isScrollEnabled = false
-            self.tableView.isScrollEnabled = true
-        }
+        invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass
     func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
+        invalidateTableViewIntrinsicContentSize()
+    }
+    
+    // TODO: Experimental. Might need a code cleanup.
+    func invalidateTableViewIntrinsicContentSize() {
+        tableView.visibleCells.forEach({ $0.invalidateIntrinsicContentSize() })
     }
     
     /// Override in subclass

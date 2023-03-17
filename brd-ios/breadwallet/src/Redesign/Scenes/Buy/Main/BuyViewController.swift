@@ -9,8 +9,10 @@
 import UIKit
 import LinkKit
 
+typealias PlaidLinkKitHandler = Handler
+
 protocol LinkOAuthHandling {
-    var linkHandler: Handler? { get }
+    var plaidHandler: PlaidLinkKitHandler? { get }
 }
 
 class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
@@ -252,10 +254,10 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
             return
         }
         
-        tableView.beginUpdates()
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
-        tableView.endUpdates()
+        
+        invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
