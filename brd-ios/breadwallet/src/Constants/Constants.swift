@@ -30,8 +30,7 @@ public enum Screen: String {
 }
 
 /// Constants
-typealias Constant = C
-struct C {
+struct Constant {
     static let brdLogoTopMargin: CGFloat = E.isIPhoneX ? Margins.custom(9) + 35.0 : Margins.custom(9) + 20.0
     static let secondsInDay: TimeInterval = 86400
     static let secondsInMinute: TimeInterval = 60
@@ -82,7 +81,6 @@ struct C {
     static let BCH = "BCH"
     static let ETH = "ETH"
     static let BSV = "BSV"
-    static let USDC = "USDC"
     static let USDT = "USDT"
     
     static var backendHost: String {

@@ -11,8 +11,8 @@ import WalletKit
 
 class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
-    // ExchangeRateDaatStore
-    var fromCode: String { return C.usdCurrencyCode }
+    // MARK: - ExchangeRateDataStore
+    var fromCode: String { return Constant.usdCurrencyCode }
     var toCode: String { toAmount?.currency.code ?? "" }
     var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {
@@ -32,10 +32,12 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         didSet {
             let selectedCurrency: Currency
             if paymentMethod == .ach {
-                guard let currency = Store.state.currencies.first(where: { $0.code == C.USDT }) else { return }
+                guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
                 selectedCurrency = currency
             } else {
-                guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first  else { return  }
+                guard let currency = Store.state.currencies.first(where: {
+                    $0.code.lowercased() == Constant.BTC.lowercased()
+                }) ?? Store.state.currencies.first  else { return  }
                 selectedCurrency = currency
             }
             

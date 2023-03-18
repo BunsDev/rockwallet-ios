@@ -30,7 +30,7 @@ struct TxListViewModel: TxViewModel, Hashable {
                               negative: (tx.direction == .sent)).description
             return text
         } else if let swap = swap {
-            if swap.source.currency == C.usdCurrencyCode,
+            if swap.source.currency == Constant.usdCurrencyCode,
                swap.status == .pending {
             }
             

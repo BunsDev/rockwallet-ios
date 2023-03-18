@@ -36,7 +36,7 @@ class CountriesMapper: ModelMapper<CountriesResponseData, [Country]> {
     override func getModel(from response: CountriesResponseData?) -> [Country]? {
         var countries = response?.countries.compactMap({ return Country(iso2: $0.iso2, name: $0.localizedName, states: $0.states) })
         
-        if let firstIndexUS = countries?.firstIndex(where: { $0.iso2 == C.countryUS }), let us = countries?[firstIndexUS] {
+        if let firstIndexUS = countries?.firstIndex(where: { $0.iso2 == Constant.countryUS }), let us = countries?[firstIndexUS] {
             countries?.remove(at: firstIndexUS)
             countries?.insert(us, at: 0)
         }

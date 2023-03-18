@@ -360,6 +360,5 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         fiatAmountField.alpha = value
         fiatCurrencyLabel.alpha = value
         cryptoAmountField.alpha = value
-        feeAndAmountsStackView.alpha = value
     }
 }

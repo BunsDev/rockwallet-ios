@@ -38,10 +38,10 @@ struct State {
     
     var shouldShowBuyNotificationForDefaultCurrency: Bool {
         switch defaultCurrencyCode {
-        // Currencies eligible for Coinify.
-        case C.euroCurrencyCode,
-             C.britishPoundCurrencyCode,
-             C.danishKroneCurrencyCode:
+            // Currencies eligible for Coinify.
+        case Constant.euroCurrencyCode,
+            Constant.britishPoundCurrencyCode,
+            Constant.danishKroneCurrencyCode:
             return true
         default:
             return false

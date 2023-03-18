@@ -70,7 +70,7 @@ extension Interactor where Self: CountriesAndStatesViewActions,
              return
         }
         
-        let states = dataStore?.countries.first(where: { $0.iso2 == C.countryUS })?.states
+        let states = dataStore?.countries.first(where: { $0.iso2 == Constant.countryUS })?.states
         guard states == nil else {
             presenter?.presentState(actionResponse: .init(states: states))
             return
@@ -80,7 +80,7 @@ extension Interactor where Self: CountriesAndStatesViewActions,
             switch result {
             case .success(let data):
                 self?.dataStore?.countries = data ?? []
-                let states = self?.dataStore?.countries.first(where: { $0.iso2 == C.countryUS })?.states
+                let states = self?.dataStore?.countries.first(where: { $0.iso2 == Constant.countryUS })?.states
                 self?.presenter?.presentState(actionResponse: .init(states: states))
                 
             case .failure(let error):
