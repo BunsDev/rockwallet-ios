@@ -26,6 +26,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         let stack = UIStackView()
         stack.backgroundColor = .clear
         stack.axis = .vertical
+        stack.distribution = .equalCentering
         return stack
     }()
     
@@ -90,28 +91,27 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         
         content.addSubview(containerStackView)
         containerStackView.snp.makeConstraints { make in
-            make.leading.equalTo(content.snp.leadingMargin)
-            make.trailing.equalTo(content.snp.trailingMargin)
-            make.top.equalTo(content.snp.topMargin)
-            make.bottom.equalTo(content.snp.bottomMargin)
+            make.edges.equalTo(content.snp.margins)
         }
         
         containerStackView.addArrangedSubview(baseSwapCurrencyView)
         containerStackView.addArrangedSubview(dividerWithButtonView)
         containerStackView.addArrangedSubview(termSwapCurrencyView)
         
+        dividerWithButtonView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue).priority(.low)
+        }
+        
         dividerWithButtonView.addSubview(lineView)
         lineView.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.minimum.rawValue)
             make.leading.trailing.equalToSuperview()
-            make.center.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
         
         dividerWithButtonView.addSubview(switchPlacesButton)
         switchPlacesButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.height.equalTo(ViewSizes.medium.rawValue)
-            make.top.equalToSuperview()
         }
         
         getAmounts()

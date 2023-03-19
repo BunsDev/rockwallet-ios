@@ -168,7 +168,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         content.addSubview(mainStack)
         content.setupCustomMargins(all: .extraLarge)
         mainStack.snp.makeConstraints { make in
-            make.edges.equalTo(content.snp.margins)
+            make.topMargin.leadingMargin.trailingMargin.equalTo(content)
+            make.bottom.equalToSuperview().inset(Margins.extraLarge.rawValue).priority(.low)
         }
         
         mainStack.addArrangedSubview(feeAndAmountsStackView)
