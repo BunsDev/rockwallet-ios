@@ -11,24 +11,21 @@
 import UIKit
 
 protocol DrawerPresentable {
-    var drawerBottomOffset: CGFloat? { get }
-    func setupDrawer(config: DrawerConfiguration, viewModel: DrawerViewModel, actionsSetup: ((RWDrawer) -> Void)?)
+    func setupDrawer(config: DrawerConfiguration, viewModel: DrawerViewModel, callbacks: [(() -> Void)], dismissSetup: ((RWDrawer) -> Void)?)
     func toggleDrawer()
     func hideDrawer()
+    var drawerIsShown: Bool { get }
 }
 
 extension UIViewController: DrawerPresentable {
-    var drawerBottomOffset: CGFloat? { return 0 }
-    func setupDrawer(config: DrawerConfiguration, viewModel: DrawerViewModel, actionsSetup: ((RWDrawer) -> Void)?) {
+    var drawerIsShown: Bool {
+        guard let drawer = view.subviews.first(where: { $0 is RWDrawer }) as? RWDrawer else { return false }
+        return drawer.isShown
+    }
+    
+    func setupDrawer(config: DrawerConfiguration, viewModel: DrawerViewModel, callbacks: [(() -> Void)], dismissSetup: ((RWDrawer) -> Void)?) {
         let drawer = RWDrawer()
-        drawer.callbacks = [ { [weak self] in
-            print(1)
-//            self?.didTapDrawerButton(.card)
-        }, { [weak self] in
-            print(2)
-//            self?.didTapDrawerButton(.ach)
-        }]
-        actionsSetup?(drawer)
+        drawer.callbacks = callbacks
         drawer.configure(with: config)
         drawer.setup(with: viewModel)
         view.addSubview(drawer)
@@ -38,10 +35,7 @@ extension UIViewController: DrawerPresentable {
             make.leading.trailing.bottom.equalToSuperview()
         }
         
-        actionsSetup?(drawer)
-        //        view.dismissActionPublisher.sink { [weak self] _ in
-        //            self?.animationView.play(fromProgress: 1, toProgress: 0)
-        //        }.store(in: &observers)
+        dismissSetup?(drawer)
     }
     
     func toggleDrawer() {

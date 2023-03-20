@@ -9,27 +9,6 @@
 import Combine
 import UIKit
 
-//struct AssetDetailsDrawerConfiguration: DrawerConfiguration {
-//    var titleConfig = LabelConfiguration(font: Fonts.Subtitle.one,
-//                                         textColor: LightColors.secondary,
-//                                         textAlignment: .center)
-//    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.two)
-//    var buttons = [
-//        Presets.Button.primary,
-//        Presets.Button.secondary
-//    ]
-//}
-//
-//struct AssetDetailsDrawerViewModel: DrawerViewModel {
-//    var title: String? = L10n.Drawer.title
-//    var drawerImage: ImageViewModel? = .image(Asset.dragControl.image)
-//    var buttons: [ButtonViewModel] = [
-//        .init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
-//        .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)
-//    ]
-//    var drawerBottomOffset = 0.0
-//}
-
 class AssetDetailsViewController: UIViewController, Subscriber {
     
     // MARK: - Public
@@ -133,13 +112,13 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         addTransactionsView()
         addSubscriptions()
         setInitialData()
-        setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel) { drawer in
-            drawer.callbacks = [{ [weak self] in
-                self?.didTapDrawerButton(.card)
-            }, { [weak self] in
-                self?.didTapDrawerButton()
-            }]
-        }
+        
+        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
+            self?.didTapDrawerButton(.card)
+        }, { [weak self] in
+            self?.didTapDrawerButton()
+        }]
+        setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel, callbacks: drawerCallbacks, dismissSetup: nil)
         view.bringSubviewToFront(footerView) // Put bottom toolbar in front of drawer
         
         transactionsTableView?.didScrollToYOffset = { [weak self] offset in
