@@ -139,7 +139,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             
         case _ where fiat < minimumAmount:
             // Value below minimum Fiat
-            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: C.usdCurrencyCode, reason: .buyCard)))
+            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard)))
             
         case _ where fiat > lifetimeLimit,
             _ where minimumAmount > lifetimeLimit:
@@ -150,7 +150,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         case _ where fiat > maximumAmount,
             _ where minimumAmount > maximumAmount:
             // Over exchange limit
-            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: C.usdCurrencyCode, reason: .buyCard)))
+            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard)))
             
         default:
             // Remove error
@@ -239,13 +239,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
-                                                                                 value: .text("$\(perTransactionLimitText) \(C.usdCurrencyCode)")),
+                                                                                 value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
                                                            dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
-                                                                           value: .text("$\(dailyMaxLimitText) \(C.usdCurrencyCode)")),
+                                                                           value: .text("$\(dailyMaxLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
-                                                                         value: .text("$\(weeklyLimitText) \(C.usdCurrencyCode)")),
+                                                                         value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
                                                            monthly: .init(title: .text(L10n.Account.monthly),
-                                                                          value: .text("$\(monthlyLimitText) \(C.usdCurrencyCode)")))
+                                                                          value: .text("$\(monthlyLimitText) \(Constant.usdCurrencyCode)")))
         
         let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(trailing: .init(image: Asset.close.image),
                                                                            wrappedView: wrappedViewModel,

@@ -109,7 +109,7 @@ struct PaymentRequest {
                     if newValue.components(separatedBy: CharacterSet.decimalDigits).joined().last == "," {
                         newValue = newValue.replacingOccurrences(of: ",", with: ".")
                     }
-                    amount = Amount(tokenString: newValue, currency: currency, locale: Locale(identifier: C.usLocaleCode))
+                    amount = Amount(tokenString: newValue, currency: currency, locale: Locale(identifier: Constant.usLocaleCode))
                 case "label", "memo":
                     label = value
                 case "message":

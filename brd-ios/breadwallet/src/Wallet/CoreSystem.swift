@@ -77,7 +77,7 @@ class CoreSystem: Subscriber {
         print("[SYS] create | account timestamp: \(account.timestamp)")
         assert(self.system == nil)
         
-        systemClient = BlocksetSystemClient(bdbBaseURL: "https://\(C.bdbHost)",
+        systemClient = BlocksetSystemClient(bdbBaseURL: "https://\(Constant.bdbHost)",
                                             bdbDataTaskFunc: { session, request, completion -> URLSessionDataTask in
             var req = request
             req.decorate()
@@ -85,7 +85,7 @@ class CoreSystem: Subscriber {
             
             //TODO:CRYPTO does not handle 401, other headers, redirects
             return session.dataTask(with: req, completionHandler: completion)
-        }, apiBaseURL: "https://\(C.backendHost)", apiDataTaskFunc: { _, req, completion -> URLSessionDataTask in
+        }, apiBaseURL: "https://\(Constant.backendHost)", apiDataTaskFunc: { _, req, completion -> URLSessionDataTask in
             return Backend.apiClient.dataTaskWithRequest(req,
                                                          authenticated: Backend.isConnected,
                                                          retryCount: 0,
@@ -93,7 +93,7 @@ class CoreSystem: Subscriber {
                                                          handler: completion)
         })
         
-        try? FileManager.default.createDirectory(atPath: C.coreDataDirURL.path, withIntermediateDirectories: true, attributes: nil)
+        try? FileManager.default.createDirectory(atPath: Constant.coreDataDirURL.path, withIntermediateDirectories: true, attributes: nil)
         
         getCurrencyMetaData(kvStore: kvStore, client: systemClient, account: account, completion: completion)
     }
@@ -110,12 +110,12 @@ class CoreSystem: Subscriber {
                                                 listener: self,
                                                 account: account,
                                                 onMainnet: !E.isTestnet,
-                                                path: C.coreDataDirURL.path,
+                                                path: Constant.coreDataDirURL.path,
                                                 listenerQueue: self.listenerQueue)
                 }
                 
                 if let system = self.system {
-                    System.wipeAll(atPath: C.coreDataDirURL.path, except: [system])
+                    System.wipeAll(atPath: Constant.coreDataDirURL.path, except: [system])
                 }
                 
                 self.system?.configure()
@@ -808,7 +808,7 @@ extension WalletManager {
     var customPeer: NetworkPeer? {
         guard network.currency.uid == Currencies.shared.btc?.uid,
               let address = UserDefaults.customNodeIP else { return nil }
-        let port = UInt16(UserDefaults.customNodePort ?? C.standardPort)
+        let port = UInt16(UserDefaults.customNodePort ?? Constant.standardPort)
         return network.createPeer(address: address, port: port, publicKey: nil)
     }
     
