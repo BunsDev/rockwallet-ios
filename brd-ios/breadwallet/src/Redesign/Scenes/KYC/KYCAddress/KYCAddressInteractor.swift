@@ -83,7 +83,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
     }
     
     func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction) {
-        let state = dataStore?.country?.iso2 == C.countryUS ? dataStore?.state?.iso2 : dataStore?.state?.name
+        let state = dataStore?.country?.iso2 == Constant.countryUS ? dataStore?.state?.iso2 : dataStore?.state?.name
         
         let data = KYCUserInfoRequestData(firstName: dataStore?.firstName ?? "",
                                           lastName: dataStore?.lastName ?? "",

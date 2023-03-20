@@ -34,7 +34,7 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
             return false
         }
         
-        guard country?.iso2 == C.countryUS else {
+        guard country?.iso2 == Constant.countryUS else {
             return true
         }
         

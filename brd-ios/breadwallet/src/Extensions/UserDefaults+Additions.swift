@@ -161,8 +161,8 @@ extension UserDefaults {
 
     static var defaultCurrencyCode: String {
         get {
-            let code = defaults.string(forKey: defaultCurrencyCodeKey) ?? C.usdCurrencyCode
-            guard CurrencyFileManager.isFiatCodeAvailable(code) else { return C.usdCurrencyCode }
+            let code = defaults.string(forKey: defaultCurrencyCodeKey) ?? Constant.usdCurrencyCode
+            guard CurrencyFileManager.isFiatCodeAvailable(code) else { return Constant.usdCurrencyCode }
             return code
         }
         set { defaults.set(newValue, forKey: defaultCurrencyCodeKey) }

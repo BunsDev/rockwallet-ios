@@ -256,7 +256,7 @@ class BaseCoordinator: NSObject,
     }
     
     func showSupport() {
-        showInWebView(urlString: C.supportLink, title: L10n.MenuButton.support)
+        showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
@@ -309,7 +309,6 @@ class BaseCoordinator: NSObject,
     func set<C: BaseCoordinator,
              VC: BaseControllable>(coordinator: C.Type,
                                    scene: VC.Type,
-                                   presentationStyle: UIModalPresentationStyle = .fullScreen,
                                    configure: ((VC?) -> Void)? = nil) {
         let controller = VC()
         let coordinator = C(navigationController: navigationController)

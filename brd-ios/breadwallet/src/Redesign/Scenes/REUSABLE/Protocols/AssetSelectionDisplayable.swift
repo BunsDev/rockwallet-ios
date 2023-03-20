@@ -27,7 +27,7 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
                                       $0.code.uppercased())
             let bottomRightText = String(format: "%@ %@",
                                          ExchangeFormatter.fiat.string(for: $0.state?.balance?.fiatValue) ?? "",
-                                         C.usdCurrencyCode)
+                                         Constant.usdCurrencyCode)
             
             return AssetViewModel(icon: $0.imageSquareBackground,
                                   title: $0.name,

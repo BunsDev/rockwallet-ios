@@ -18,7 +18,6 @@ struct MainSwapConfiguration: Configurable {
 struct MainSwapViewModel: ViewModel {
     var from: SwapCurrencyViewModel?
     var to: SwapCurrencyViewModel?
-    var hideSwitchPlacesButton = false // TODO: Is this needed?
 }
 
 class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
@@ -26,6 +25,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         let stack = UIStackView()
         stack.backgroundColor = .clear
         stack.axis = .vertical
+        stack.distribution = .equalSpacing
         return stack
     }()
     
@@ -90,28 +90,27 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         
         content.addSubview(containerStackView)
         containerStackView.snp.makeConstraints { make in
-            make.leading.equalTo(content.snp.leadingMargin)
-            make.trailing.equalTo(content.snp.trailingMargin)
-            make.top.equalTo(content.snp.topMargin)
-            make.bottom.equalTo(content.snp.bottomMargin)
+            make.edges.equalTo(content.snp.margins)
         }
         
         containerStackView.addArrangedSubview(baseSwapCurrencyView)
         containerStackView.addArrangedSubview(dividerWithButtonView)
         containerStackView.addArrangedSubview(termSwapCurrencyView)
         
+        dividerWithButtonView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue).priority(.low)
+        }
+        
         dividerWithButtonView.addSubview(lineView)
         lineView.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.minimum.rawValue)
             make.leading.trailing.equalToSuperview()
-            make.center.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
         
         dividerWithButtonView.addSubview(switchPlacesButton)
         switchPlacesButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.height.equalTo(ViewSizes.medium.rawValue)
-            make.top.equalToSuperview()
         }
         
         getAmounts()
@@ -166,7 +165,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         termSwapCurrencyView.didChangeContent = contentSizeChanged
         termSwapCurrencyView.didFinish = didFinish
         
-        switchPlacesButton.isHidden = viewModel.hideSwitchPlacesButton
+        switchPlacesButton.isHidden = viewModel.to?.selectionDisabled == true && viewModel.from?.selectionDisabled == true
         setToggleSwitchPlacesButtonState(viewModel.from?.formattedFiatString != nil)
         
         contentSizeChanged?()
@@ -186,30 +185,17 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         didTapToAssetsSelection?()
     }
     
-    @objc private func switchPlacesButtonTapped(_ sender: UIButton?) {
-        if !baseSwapCurrencyView.isFeeAndAmountsStackViewHidden || !termSwapCurrencyView.isFeeAndAmountsStackViewHidden {
-            UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
-                self?.baseSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
-                self?.termSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
-            } completion: { [weak self] _ in
-                self?.contentSizeChanged?()
-                self?.animateSwitchPlaces()
-            }
-        } else {
-            contentSizeChanged?()
-            animateSwitchPlaces()
-        }
-    }
-    
-    func setToggleSwitchPlacesButtonState(_ value: Bool) {
+    private func setToggleSwitchPlacesButtonState(_ value: Bool) {
+        guard !switchPlacesButton.isHidden else { return }
+        
         UIView.transition(with: switchPlacesButton,
                           duration: Presets.Animation.short.rawValue) { [weak self] in
-            self?.switchPlacesButton.alpha = value ? 1.0 : 0.5
+            self?.switchPlacesButton.alpha = value ? 1.0 : 0.7
             self?.switchPlacesButton.isEnabled = value
         }
     }
     
-    func animateSwitchPlaces() {
+    @objc private func switchPlacesButtonTapped(_ sender: UIButton?) {
         setToggleSwitchPlacesButtonState(false)
         
         let isNormal = switchPlacesButton.transform == .identity
@@ -217,27 +203,32 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         let bottomFrame = isNormal ? termSwapCurrencyView.selectorStackView : baseSwapCurrencyView.selectorStackView
         
         let convertedFrame = termSwapCurrencyView.selectorStackView.convert(baseSwapCurrencyView.selectorStackView.bounds, from: baseSwapCurrencyView.selectorStackView)
-        let verticalDistance = convertedFrame.minY - termSwapCurrencyView.selectorStackView.bounds.maxY + baseSwapCurrencyView.selectorStackView.frame.height
+        let verticalDistance = convertedFrame.minY - termSwapCurrencyView.selectorStackView.bounds.maxY + baseSwapCurrencyView.selectorStackView.bounds.maxY
         
         UIView.animate(withDuration: Presets.Animation.short.rawValue,
                        delay: 0.0,
                        options: .curveLinear) { [weak self] in
-            topFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ?  -verticalDistance : verticalDistance)
-            bottomFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ? verticalDistance : -verticalDistance)
-            self?.switchPlacesButton.transform = isNormal ? CGAffineTransform(rotationAngle: .pi) : .identity
+            self?.baseSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
+            self?.termSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
             
             self?.baseSwapCurrencyView.setAlphaToLabels(alpha: 0.2)
             self?.termSwapCurrencyView.setAlphaToLabels(alpha: 0.2)
-            self?.baseSwapCurrencyView.resetTextFieldValues()
-            self?.termSwapCurrencyView.resetTextFieldValues()
-        }
-        
-        UIView.animate(withDuration: Presets.Animation.short.rawValue,
-                       delay: Presets.Animation.short.rawValue) { [weak self] in
-            self?.baseSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
-            self?.termSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
         } completion: { [weak self] _ in
-            self?.didFinish?(true)
+            UIView.animate(withDuration: Presets.Animation.short.rawValue,
+                           delay: 0.0,
+                           options: .curveLinear) { [weak self] in
+                topFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ?  -verticalDistance : verticalDistance)
+                bottomFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ? verticalDistance : -verticalDistance)
+                self?.switchPlacesButton.transform = isNormal ? CGAffineTransform(rotationAngle: .pi) : .identity
+                
+                self?.baseSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
+                self?.termSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
+                
+                self?.baseSwapCurrencyView.resetTextFieldValues()
+                self?.termSwapCurrencyView.resetTextFieldValues()
+            } completion: { [weak self] _ in
+                self?.didFinish?(true)
+            }
         }
     }
 }
