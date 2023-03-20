@@ -240,7 +240,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     
     private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
         guard let type else {
-            let token = Store.state.currencies.first(where: { $0.code == C.USDT })
+            guard let token = Store.state.currencies.first(where: { $0.code == C.USDT }) else { return }
             coordinator?.showSell(for: token, coreSystem: coreSystem, keyStore: keyStore)
             return
         }
