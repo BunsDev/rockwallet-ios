@@ -9,29 +9,38 @@
 import Combine
 import UIKit
 
+enum AssetDetailsFooterAction {
+    case send, receive, buySell, swap
+}
+
 class AssetDetailsFooterView: UIView, Subscriber {
     
     static let height: CGFloat = 72.0
-
-    private let sendActionSubject = PassthroughSubject<Void, Never>()
-    var sendActionPublisher: AnyPublisher<Void, Never> {
-        sendActionSubject.eraseToAnyPublisher()
+    
+    private let actionSubject = PassthroughSubject<AssetDetailsFooterAction, Never>()
+    var actionPublisher: AnyPublisher<AssetDetailsFooterAction, Never> {
+        actionSubject.eraseToAnyPublisher()
     }
     
-    private let receiveActionSubject = PassthroughSubject<Void, Never>()
-    var receiveActionPublisher: AnyPublisher<Void, Never> {
-        receiveActionSubject.eraseToAnyPublisher()
-    }
-    
-    private let buySellActionSubject = PassthroughSubject<Void, Never>()
-    var buySellActionPublisher: AnyPublisher<Void, Never> {
-        buySellActionSubject.eraseToAnyPublisher()
-    }
-    
-    private let swapActionSubject = PassthroughSubject<Void, Never>()
-    var swapActionPublisher: AnyPublisher<Void, Never> {
-        swapActionSubject.eraseToAnyPublisher()
-    }
+//    private let sendActionSubject = PassthroughSubject<Void, Never>()
+//    var sendActionPublisher: AnyPublisher<Void, Never> {
+//        sendActionSubject.eraseToAnyPublisher()
+//    }
+//
+//    private let receiveActionSubject = PassthroughSubject<Void, Never>()
+//    var receiveActionPublisher: AnyPublisher<Void, Never> {
+//        receiveActionSubject.eraseToAnyPublisher()
+//    }
+//
+//    private let buySellActionSubject = PassthroughSubject<Void, Never>()
+//    var buySellActionPublisher: AnyPublisher<Void, Never> {
+//        buySellActionSubject.eraseToAnyPublisher()
+//    }
+//
+//    private let swapActionSubject = PassthroughSubject<Void, Never>()
+//    var swapActionPublisher: AnyPublisher<Void, Never> {
+//        swapActionSubject.eraseToAnyPublisher()
+//    }
     
     private var hasSetup = false
     private let currency: Currency
@@ -81,7 +90,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
             make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
             make.leading.equalToSuperview().offset(Margins.huge.rawValue)
             make.trailing.equalToSuperview().offset(-Margins.huge.rawValue)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(Margins.extraHuge.rawValue)
         }
         
         buttons.forEach { button in
@@ -91,10 +100,10 @@ class AssetDetailsFooterView: UIView, Subscriber {
         }
     }
 
-    @objc private func send(_ sender: UIButton) { sendActionSubject.send() }
-    @objc private func receive(_ sender: UIButton) { receiveActionSubject.send() }
-    @objc private func buySell(_ sender: UIButton) { buySellActionSubject.send() }
-    @objc private func swap(_ sender: UIButton) { swapActionSubject.send() }
+    @objc private func send(_ sender: UIButton) { actionSubject.send(.send) }
+    @objc private func receive(_ sender: UIButton) { actionSubject.send(.receive) }
+    @objc private func buySell(_ sender: UIButton) { actionSubject.send(.buySell) }
+    @objc private func swap(_ sender: UIButton) { actionSubject.send(.swap) }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding")

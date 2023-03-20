@@ -743,7 +743,7 @@
 		D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */; };
 		D7F75967299BB55100FB4BFA /* LoqateEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */; };
 		D7F75969299D1F9900FB4BFA /* RetrieveAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */; };
-		D7F8EA3629C4707B008DD7C7 /* DrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3529C4707B008DD7C7 /* DrawerController.swift */; };
+		D7F8EA3829C4857B008DD7C7 /* DrawerPresntable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1548,7 +1548,7 @@
 		D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressWorker.swift; sourceTree = "<group>"; };
 		D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoqateEndpoints.swift; sourceTree = "<group>"; };
 		D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAddressWorker.swift; sourceTree = "<group>"; };
-		D7F8EA3529C4707B008DD7C7 /* DrawerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerController.swift; sourceTree = "<group>"; };
+		D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPresntable.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2382,7 +2382,7 @@
 				7E5CB3482835090D00EC787E /* UIColor+init.swift */,
 				7E5CB3492835090D00EC787E /* NSLayoutConstraint+priority.swift */,
 				7B67708D29053CDF006FB72A /* Shadow+Background+Extensions.swift */,
-				D7F8EA3529C4707B008DD7C7 /* DrawerController.swift */,
+				D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3920,6 +3920,7 @@
 				7B2E5057289A5F02008CACD8 /* AddCardModels.swift in Sources */,
 				7E5CB39D2835090E00EC787E /* Alertable.swift in Sources */,
 				7E5CB3892835090E00EC787E /* Margins+Sizes.swift in Sources */,
+				D7F8EA3829C4857B008DD7C7 /* DrawerPresntable.swift in Sources */,
 				7EB838482849DD8200C7CC05 /* FELink.swift in Sources */,
 				CEBF32F01DDCD30600348FC6 /* AssetDetailsViewController.swift in Sources */,
 				7B94EFAA28BD501500F63B62 /* UINavigationController+Completion.swift in Sources */,
@@ -4252,7 +4253,6 @@
 				3A188FF82582835600957819 /* Sharing.swift in Sources */,
 				22A9A94B1DF61945000F0016 /* BRCoding.swift in Sources */,
 				045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */,
-				D7F8EA3629C4707B008DD7C7 /* DrawerController.swift in Sources */,
 				3AEA2CAB24D3219200DA4C3A /* SelectBackupView.swift in Sources */,
 				7E2E1A2B284E097900E56E69 /* KYCCoordinator.swift in Sources */,
 				7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */,

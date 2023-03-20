@@ -9,6 +9,27 @@
 import Combine
 import UIKit
 
+//struct AssetDetailsDrawerConfiguration: DrawerConfiguration {
+//    var titleConfig = LabelConfiguration(font: Fonts.Subtitle.one,
+//                                         textColor: LightColors.secondary,
+//                                         textAlignment: .center)
+//    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.two)
+//    var buttons = [
+//        Presets.Button.primary,
+//        Presets.Button.secondary
+//    ]
+//}
+//
+//struct AssetDetailsDrawerViewModel: DrawerViewModel {
+//    var title: String? = L10n.Drawer.title
+//    var drawerImage: ImageViewModel? = .image(Asset.dragControl.image)
+//    var buttons: [ButtonViewModel] = [
+//        .init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+//        .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)
+//    ]
+//    var drawerBottomOffset = 0.0
+//}
+
 class AssetDetailsViewController: UIViewController, Subscriber {
     
     // MARK: - Public
@@ -34,23 +55,25 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             self.didSelectTransaction(transactions: transactions, selectedIndex: index)
         })
         
-        footerView.sendActionPublisher.sink { [unowned self] _ in
-            Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency)))
-        }.store(in: &observers)
-        
-        footerView.receiveActionPublisher.sink { [unowned self] _ in
-            Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
-        }.store(in: &observers)
-        
-        footerView.buySellActionPublisher.sink { [unowned self] _ in
-            // TODO: Show drawer
-        }.store(in: &observers)
-        
-        footerView.swapActionPublisher.sink { [unowned self] _ in
-            guard let coreSystem, let keyStore else { return }
-            self.coordinator?.showSwap(currencies: Store.state.currencies,
-                                       coreSystem: coreSystem,
-                                       keyStore: keyStore)
+        footerView.actionPublisher.sink { [unowned self] action in
+            if action != .buySell { hideDrawer() }
+            
+            switch action {
+            case .send:
+                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency)))
+                
+            case .receive:
+                Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
+                
+            case .buySell:
+                toggleDrawer()
+                
+            case .swap:
+                guard let coreSystem, let keyStore else { return }
+                self.coordinator?.showSwap(currencies: Store.state.currencies,
+                                           coreSystem: coreSystem,
+                                           keyStore: keyStore)
+            }
         }.store(in: &observers)
     }
     
@@ -95,6 +118,12 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         }
     }
     
+    private let drawerConfiguration = DrawerConfiguration(buttons: [Presets.Button.primary,
+                                                                    Presets.Button.secondary])
+    private let drawerViewModel = DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+                                                            .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)],
+                                                  drawerBottomOffset: 84)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,6 +133,10 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         addTransactionsView()
         addSubscriptions()
         setInitialData()
+        setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel) { drawer in
+            // TODO: setup actions
+        }
+        view.bringSubviewToFront(footerView) // Put bottom toolbar in front of drawer
         
         transactionsTableView?.didScrollToYOffset = { [weak self] offset in
             self?.headerView.setOffset(offset)
@@ -172,7 +205,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         searchHeaderview.constrain(toSuperviewEdges: nil)
         
         footerView.constrain([
-            footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
     }
