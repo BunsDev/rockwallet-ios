@@ -15,13 +15,13 @@ class BiometricStatusHelper {
     
     private var biometricStatusRetryCounter: Int = 0
     
-    func checkBiometricStatus(resetCounter: Bool, completion: ((Error?) -> Void)?) {
+    func checkBiometricStatus(requestData: BiometricStatusRequestData? = .init(quoteId: nil), resetCounter: Bool, completion: ((Error?) -> Void)?) {
         if resetCounter {
             biometricStatusRetryCounter = 5
         }
         biometricStatusRetryCounter -= 1
         
-        BiometricStatusWorker().execute(requestData: BiometricStatusRequestData(quoteId: nil)) { [weak self] result in
+        BiometricStatusWorker().execute(requestData: requestData) { [weak self] result in
             switch result {
             case .success(let data):
                 guard let self = self, let status = data?.status else { return }
@@ -36,8 +36,8 @@ class BiometricStatusHelper {
                         return
                     }
                     
-                    self.checkBiometricStatus(resetCounter: false, completion: completion)
-                    
+                    self.checkBiometricStatus(requestData: requestData, resetCounter: false, completion: completion)
+
                 default:
                     completion?(GeneralError())
                 }
