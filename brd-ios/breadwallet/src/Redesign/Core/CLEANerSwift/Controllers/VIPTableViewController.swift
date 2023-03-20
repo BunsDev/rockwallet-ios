@@ -162,8 +162,4 @@ class VIPTableViewController<C: CoordinatableRoutes,
     func tableView(_ tableView: UITableView, didSelectHeaderIn section: Int) {}
 
     func tableView(_ tableView: UITableView, didSelectFooterIn section: Int) {}
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.invalidateIntrinsicContentSize()
-    }
 }
