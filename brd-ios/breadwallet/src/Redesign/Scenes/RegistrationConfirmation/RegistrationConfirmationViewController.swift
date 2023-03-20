@@ -13,13 +13,13 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
                                               RegistrationConfirmationPresenter,
                                               RegistrationConfirmationStore>,
                                               RegistrationConfirmationResponseDisplays {
-    
     typealias Models = RegistrationConfirmationModels
     
     override var isModalDismissableEnabled: Bool { return isModalDismissable }
     var isModalDismissable = true
     
     // MARK: - Overrides
+    
     override func setupSubviews() {
         super.setupSubviews()
         

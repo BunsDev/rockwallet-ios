@@ -21,11 +21,6 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
         return L10n.Account.createNewPasswordTitle
     }
     
-    lazy var createAccountButton: FEButton = {
-        let view = FEButton()
-        return view
-    }()
-    
     // MARK: - Overrides
     
     override func setupVerticalButtons() {

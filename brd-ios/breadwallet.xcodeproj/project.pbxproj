@@ -28,6 +28,13 @@
 		044D098B29C335DA00C510DC /* LinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098A29C335DA00C510DC /* LinkKit */; };
 		044D098F29C3399000C510DC /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098E29C3399000C510DC /* IQKeyboardManagerSwift */; };
 		044D099629C352EA00C510DC /* Veriff in Frameworks */ = {isa = PBXBuildFile; productRef = 044D099529C352EA00C510DC /* Veriff */; };
+		044D099E29C8525E00C510DC /* VerifyPhoneNumberModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */; };
+		044D099F29C8525E00C510DC /* VerifyPhoneNumberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099929C8525D00C510DC /* VerifyPhoneNumberPresenter.swift */; };
+		044D09A029C8525E00C510DC /* VerifyPhoneNumberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */; };
+		044D09A129C8525E00C510DC /* VerifyPhoneNumberStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099B29C8525E00C510DC /* VerifyPhoneNumberStore.swift */; };
+		044D09A229C8525E00C510DC /* VerifyPhoneNumberVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099C29C8525E00C510DC /* VerifyPhoneNumberVIP.swift */; };
+		044D09A329C8525E00C510DC /* VerifyPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */; };
+		044D09A529C8561A00C510DC /* PhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D09A429C8561A00C510DC /* PhoneNumberView.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */; };
 		0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */; };
@@ -833,6 +840,13 @@
 
 /* Begin PBXFileReference section */
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
+		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
+		044D099929C8525D00C510DC /* VerifyPhoneNumberPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberPresenter.swift; sourceTree = "<group>"; };
+		044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberInteractor.swift; sourceTree = "<group>"; };
+		044D099B29C8525E00C510DC /* VerifyPhoneNumberStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberStore.swift; sourceTree = "<group>"; };
+		044D099C29C8525E00C510DC /* VerifyPhoneNumberVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberVIP.swift; sourceTree = "<group>"; };
+		044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberViewController.swift; sourceTree = "<group>"; };
+		044D09A429C8561A00C510DC /* PhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberView.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
 		0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksatoshiEndpoints.swift; sourceTree = "<group>"; };
 		0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailDestinationWorker.swift; sourceTree = "<group>"; };
@@ -1619,6 +1633,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		044D099729C8515700C510DC /* VerifyPhoneNumber */ = {
+			isa = PBXGroup;
+			children = (
+				044D099929C8525D00C510DC /* VerifyPhoneNumberPresenter.swift */,
+				044D099B29C8525E00C510DC /* VerifyPhoneNumberStore.swift */,
+				044D099C29C8525E00C510DC /* VerifyPhoneNumberVIP.swift */,
+				044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */,
+				044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */,
+				044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */,
+			);
+			path = VerifyPhoneNumber;
+			sourceTree = "<group>";
+		};
 		0495723D29BF19F80078BFE7 /* Send */ = {
 			isa = PBXGroup;
 			children = (
@@ -2302,6 +2329,7 @@
 				7B3947822970007A007D405E /* ForgotPassword */,
 				7BF5D4F0296D4F9C00942ADB /* SignUp */,
 				7BF5D4E3296BF6CE00942ADB /* SignIn */,
+				044D099729C8515700C510DC /* VerifyPhoneNumber */,
 				7EBC6AFD2848ABAB000A301F /* RegistrationConfirmation */,
 				7B9434292886A7CA00638703 /* DeleteProfile */,
 				7E8E978F283F4817008606B0 /* Profile */,
@@ -2508,6 +2536,7 @@
 				7ED83AEF284F40EA00261565 /* ChecklistItemView.swift */,
 				7B9434382886C6A700638703 /* TickboxItemView.swift */,
 				7EBC6B0C2848B81A000A301F /* CodeInputView.swift */,
+				044D09A429C8561A00C510DC /* PhoneNumberView.swift */,
 				7E0968B7284A29CE006B4FC2 /* TransparentView.swift */,
 				7EC0F8B928881C680037145C /* TitleValueView.swift */,
 				7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */,
@@ -3895,6 +3924,7 @@
 				CE6DCC251E6001E50044257B /* UIControl+Callback.swift in Sources */,
 				CE0822641FCD1BD100EF371D /* HomeScreenViewController.swift in Sources */,
 				7ED83AFA284F40EB00261565 /* CheckListViewController.swift in Sources */,
+				044D09A129C8525E00C510DC /* VerifyPhoneNumberStore.swift in Sources */,
 				0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */,
 				7BB22E49285B8D60003E37AC /* ContentSizedTableView.swift in Sources */,
 				223DB2191DF691260076A151 /* BRSocketHelpers.c in Sources */,
@@ -3939,6 +3969,7 @@
 				C46C2902287EBF4F0035C843 /* BaseInfoViewController.swift in Sources */,
 				CE5E6C961EB8CCF500A476DB /* SimpleWebViewController.swift in Sources */,
 				7E5CB3A42835090E00EC787E /* StateDisplayable.swift in Sources */,
+				044D09A529C8561A00C510DC /* PhoneNumberView.swift in Sources */,
 				CE4B6C1A1E219CA600CF935B /* RescanCoordinator.swift in Sources */,
 				9F0EA16C25E2904400D4225E /* WidgetDataShareService.swift in Sources */,
 				9FC529D02604FAA300855473 /* BreadwalletWidget.intentdefinition in Sources */,
@@ -4021,6 +4052,7 @@
 				7E5CB3852835090E00EC787E /* BackgroundConfiguration.swift in Sources */,
 				CE92F9F41DED59E80046B516 /* UIView+AnimationAdditions.swift in Sources */,
 				CEDB0B0522D4354C00331FFC /* LineLoadingView.swift in Sources */,
+				044D09A229C8525E00C510DC /* VerifyPhoneNumberVIP.swift in Sources */,
 				7E42ACCC293F485800E1FC26 /* PlaidErrorWorker.swift in Sources */,
 				7EF45F332844D26E00D1F7B0 /* VerificationView.swift in Sources */,
 				7E87B32D285346E00097671F /* UIImage+Compress.swift in Sources */,
@@ -4125,6 +4157,7 @@
 				CECCE5A91E0378FB00D99448 /* PinPadViewController.swift in Sources */,
 				7E5CB3B02835090E00EC787E /* FEInfoView.swift in Sources */,
 				7B54E5AA27F4A2B0002DD1E4 /* HttpRequestManager.swift in Sources */,
+				044D09A029C8525E00C510DC /* VerifyPhoneNumberInteractor.swift in Sources */,
 				CE65C66A207D41BB000C99C4 /* AssetIndex.swift in Sources */,
 				D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */,
 				7EF45F89284768C100D1F7B0 /* ItemSelectionPresenter.swift in Sources */,
@@ -4355,6 +4388,7 @@
 				7ECCA99B28744CD600F99368 /* ExchangeRateView.swift in Sources */,
 				7EC0F8B8288813EE0037145C /* SwapConfirmationView.swift in Sources */,
 				7B6052C0299E5563002C00C2 /* Environment.swift in Sources */,
+				044D09A329C8525E00C510DC /* VerifyPhoneNumberViewController.swift in Sources */,
 				7B62ACF928B381BE00CE81E7 /* TimeoutViewController.swift in Sources */,
 				4F3AB12325D53F5D00B378DC /* BakingBadRequest.swift in Sources */,
 				7E8E9797283F4830008606B0 /* ProfileCoordinator.swift in Sources */,
@@ -4366,6 +4400,7 @@
 				7E8E979A283F4830008606B0 /* ProfileModels.swift in Sources */,
 				7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */,
 				CE6DCC271E6108D50044257B /* EnterPhraseCell.swift in Sources */,
+				044D099E29C8525E00C510DC /* VerifyPhoneNumberModels.swift in Sources */,
 				7B2E5054289A5F02008CACD8 /* AddCardInteractor.swift in Sources */,
 				CE760EDD1E561DF900EFAC2B /* UpdatePinViewController.swift in Sources */,
 				22A9A9481DF61945000F0016 /* BRBitID.swift in Sources */,
@@ -4384,6 +4419,7 @@
 				713CD8872240117A004657D4 /* RecoveryKeyFlowController.swift in Sources */,
 				CE47A8E01F7DA54000FF35BA /* UIScreen+Additions.swift in Sources */,
 				7C9BC58D231764030011732F /* WalletConnectionSettingsViewController.swift in Sources */,
+				044D099F29C8525E00C510DC /* VerifyPhoneNumberPresenter.swift in Sources */,
 				CEB909F51E5FE63D001804DC /* EnterPhraseViewController.swift in Sources */,
 				7BBBF4DD287421CF00E4D36B /* SwapViewController.swift in Sources */,
 				C46C28FF287EBF4F0035C843 /* BaseInfoPresenter.swift in Sources */,

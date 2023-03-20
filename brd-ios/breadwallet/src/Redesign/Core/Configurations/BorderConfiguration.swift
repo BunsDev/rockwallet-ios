@@ -14,4 +14,5 @@ struct BorderConfiguration: BorderConfigurable {
     var tintColor: UIColor = .clear
     var borderWidth: CGFloat
     var cornerRadius: CornerRadius
+    var maskedCorners: CACornerMask?
 }

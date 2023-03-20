@@ -21,11 +21,6 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
         return L10n.Account.resetPasswordTitle
     }
     
-    lazy var createAccountButton: FEButton = {
-        let view = FEButton()
-        return view
-    }()
-    
     // MARK: - Overrides
     
     override func setupVerticalButtons() {
