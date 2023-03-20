@@ -134,7 +134,11 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         addSubscriptions()
         setInitialData()
         setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel) { drawer in
-            // TODO: setup actions
+            drawer.callbacks = [{ [weak self] in
+                self?.didTapDrawerButton(.card)
+            }, { [weak self] in
+                self?.didTapDrawerButton()
+            }]
         }
         view.bringSubviewToFront(footerView) // Put bottom toolbar in front of drawer
         
@@ -232,6 +236,16 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         headerView.setHostContentOffset = { [weak self] offset in
             self?.transactionsTableView?.tableView.contentOffset.y = offset
         }
+    }
+    
+    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+        guard let type else {
+            let token = Store.state.currencies.first(where: { $0.code == C.USDT })
+            coordinator?.showSell(for: token, coreSystem: coreSystem, keyStore: keyStore)
+            return
+        }
+        
+        coordinator?.showBuy(type: type, coreSystem: coreSystem, keyStore: keyStore)
     }
     
     private func createAccount() {

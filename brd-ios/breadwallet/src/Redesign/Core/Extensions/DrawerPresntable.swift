@@ -28,6 +28,7 @@ extension UIViewController: DrawerPresentable {
             print(2)
 //            self?.didTapDrawerButton(.ach)
         }]
+        actionsSetup?(drawer)
         drawer.configure(with: config)
         drawer.setup(with: viewModel)
         view.addSubview(drawer)
