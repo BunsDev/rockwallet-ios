@@ -26,7 +26,6 @@ struct CodeInputViewModel: ViewModel {
 class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDisplayable, UITextFieldDelegate {
     static var numberOfFields: Int { return 6 }
     
-    var contentSizeChanged: (() -> Void)?
     var valueChanged: ((String?) -> Void)?
     
     var displayState: DisplayState = .normal
@@ -149,7 +148,6 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.layoutIfNeeded()
-            self?.contentSizeChanged?()
         }
         
         UIView.setAnimationsEnabled(true)
