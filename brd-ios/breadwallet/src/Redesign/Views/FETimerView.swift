@@ -45,12 +45,6 @@ class FETimerView: FEView<TimerConfiguration, TimerViewModel> {
     private var timer: Timer?
     private var triggerDate: Date?
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        stack.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-    }
-    
     override func setupSubviews() {
         super.setupSubviews()
         

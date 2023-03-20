@@ -26,7 +26,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         let stack = UIStackView()
         stack.backgroundColor = .clear
         stack.axis = .vertical
-        stack.distribution = .equalCentering
+        stack.distribution = .equalSpacing
         return stack
     }()
     
