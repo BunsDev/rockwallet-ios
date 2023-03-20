@@ -22,26 +22,6 @@ class AssetDetailsFooterView: UIView, Subscriber {
         actionSubject.eraseToAnyPublisher()
     }
     
-//    private let sendActionSubject = PassthroughSubject<Void, Never>()
-//    var sendActionPublisher: AnyPublisher<Void, Never> {
-//        sendActionSubject.eraseToAnyPublisher()
-//    }
-//
-//    private let receiveActionSubject = PassthroughSubject<Void, Never>()
-//    var receiveActionPublisher: AnyPublisher<Void, Never> {
-//        receiveActionSubject.eraseToAnyPublisher()
-//    }
-//
-//    private let buySellActionSubject = PassthroughSubject<Void, Never>()
-//    var buySellActionPublisher: AnyPublisher<Void, Never> {
-//        buySellActionSubject.eraseToAnyPublisher()
-//    }
-//
-//    private let swapActionSubject = PassthroughSubject<Void, Never>()
-//    var swapActionPublisher: AnyPublisher<Void, Never> {
-//        swapActionSubject.eraseToAnyPublisher()
-//    }
-    
     private var hasSetup = false
     private let currency: Currency
     
