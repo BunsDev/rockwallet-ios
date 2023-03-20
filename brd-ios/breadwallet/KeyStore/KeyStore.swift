@@ -176,12 +176,12 @@ class KeyStore {
 
         // pre-fetch client token
         if !E.isRunningTests, try keychainItem(key: KeychainKey.bdbClientToken) as String? == nil {
-            KeyStore.fetchCloudKitToken(id: C.bdbClientTokenRecordId, keyChainID: KeychainKey.bdbClientToken, completion: { _ in })
+            KeyStore.fetchCloudKitToken(id: Constant.bdbClientTokenRecordId, keyChainID: KeychainKey.bdbClientToken, completion: { _ in })
         }
         
         // pre-fetch api key
         if try keychainItem(key: KeychainKey.fixerAPIToken) as String? == nil {
-            KeyStore.fetchCloudKitToken(id: C.fixerAPITokenRecordId, keyChainID: KeychainKey.fixerAPIToken, completion: { _ in })
+            KeyStore.fetchCloudKitToken(id: Constant.fixerAPITokenRecordId, keyChainID: KeychainKey.fixerAPIToken, completion: { _ in })
         }
     }
     
@@ -230,7 +230,7 @@ extension KeyStore: WalletAuthenticator {
     }
 
     var creationTime: Date {
-        var creationTime = C.bip39CreationTime
+        var creationTime = Constant.bip39CreationTime
         if let creationTimeData: Data = try? keychainItem(key: KeychainKey.creationTime),
             creationTimeData.count == MemoryLayout<TimeInterval>.stride {
             creationTimeData.withUnsafeBytes { creationTime = $0.load(as: TimeInterval.self) }
@@ -439,7 +439,7 @@ extension KeyStore: WalletAuthenticator {
             print("[KEYSTORE] keychain error: \(error.localizedDescription)")
             assertionFailure()
         }
-        KeyStore.fetchCloudKitToken(id: C.fixerAPITokenRecordId, keyChainID: KeychainKey.fixerAPIToken, completion: completion)
+        KeyStore.fetchCloudKitToken(id: Constant.fixerAPITokenRecordId, keyChainID: KeychainKey.fixerAPIToken, completion: completion)
     }
 
     private func getClientToken(completion: @escaping (String?) -> Void) {
@@ -452,7 +452,7 @@ extension KeyStore: WalletAuthenticator {
             print("[KEYSTORE] keychain error: \(error.localizedDescription)")
             assertionFailure()
         }
-        KeyStore.fetchCloudKitToken(id: C.bdbClientTokenRecordId, keyChainID: KeychainKey.bdbClientToken, completion: completion)
+        KeyStore.fetchCloudKitToken(id: Constant.bdbClientTokenRecordId, keyChainID: KeychainKey.bdbClientToken, completion: completion)
     }
     
     private static func fetchCloudKitToken(id: String, keyChainID: String, completion: @escaping (String?) -> Void) {
@@ -966,7 +966,7 @@ struct NoAuthWalletAuthenticator: WalletAuthenticator {
     var apiUserAccount: [AnyHashable: Any]?
     
     var noWallet: Bool { return true }
-    var creationTime: Date { return Date(timeIntervalSinceReferenceDate: C.bip39CreationTime) }
+    var creationTime: Date { return Date(timeIntervalSinceReferenceDate: Constant.bip39CreationTime) }
     var apiAuthKey: Key? { return nil }
     var userAccount: [AnyHashable: Any]?
 

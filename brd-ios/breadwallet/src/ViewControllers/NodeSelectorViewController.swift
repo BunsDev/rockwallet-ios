@@ -91,7 +91,7 @@ class NodeSelectorViewController: UIViewController {
         }
         
         if let ip = UserDefaults.customNodeIP {
-            node.text = "\(ip):\(UserDefaults.customNodePort ?? C.standardPort)"
+            node.text = "\(ip):\(UserDefaults.customNodePort ?? Constant.standardPort)"
         } else {
             node.text = L10n.NodeSelector.automatic
         }

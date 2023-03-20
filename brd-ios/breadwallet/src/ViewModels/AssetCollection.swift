@@ -199,8 +199,8 @@ class AssetCollection: Subscriber {
         let tokensByAddress = Dictionary(uniqueKeysWithValues: tokens.map { ($0.tokenAddress!.lowercased(), $0) })
         
         func migrate(oldKey: String) -> CurrencyId? {
-            if oldKey.hasPrefix(C.erc20Prefix) {
-                let address = String(oldKey.dropFirst(C.erc20Prefix.count))
+            if oldKey.hasPrefix(Constant.erc20Prefix) {
+                let address = String(oldKey.dropFirst(Constant.erc20Prefix.count))
                 return tokensByAddress[address.lowercased()]?.uid
             } else {
                 var newKey: CurrencyId?

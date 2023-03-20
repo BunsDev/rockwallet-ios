@@ -22,7 +22,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
                               maximumUsd: 200)
     
     var fromCode: String { currency?.code ?? "" }
-    var toCode: String { C.usdCurrencyCode }
+    var toCode: String { Constant.usdCurrencyCode }
     var fromBuy = false
     var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {

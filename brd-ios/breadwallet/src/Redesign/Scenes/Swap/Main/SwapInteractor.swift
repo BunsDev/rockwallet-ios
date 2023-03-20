@@ -66,7 +66,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         }
         
         let coinGeckoIds = [baseCurrency, termCurrency]
-        let vsCurrency = C.usdCurrencyCode.lowercased()
+        let vsCurrency = Constant.usdCurrencyCode.lowercased()
         let resource = Resources.simplePrice(ids: coinGeckoIds,
                                              vsCurrency: vsCurrency,
                                              options: [.change]) { [weak self] (result: Result<[SimplePrice], CoinGeckoError>) in
@@ -267,7 +267,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
               let to = dataStore?.to?.tokenValue else { return }
         
         let formatter = ExchangeFormatter.crypto
-        formatter.locale = Locale(identifier: C.usLocaleCode)
+        formatter.locale = Locale(identifier: Constant.usLocaleCode)
         formatter.usesGroupingSeparator = false
         
         let fromTokenValue = formatter.string(for: from) ?? ""
@@ -408,13 +408,13 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             error = ExchangeErrors.noFees
             
         case .outputTooSmall(let amount):
-            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: C.usdCurrencyCode, reason: .swap)
+            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: Constant.usdCurrencyCode, reason: .swap)
             
         case .invalidRequest(let string):
             error = GeneralError(errorMessage: string)
             
         case .paymentTooSmall(let amount):
-            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: C.usdCurrencyCode, reason: .swap)
+            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: Constant.usdCurrencyCode, reason: .swap)
             
         case .usedAddress:
             error = GeneralError(errorMessage: "Used address")

@@ -306,7 +306,7 @@ class GiftViewController: BaseSendViewController {
                 guard let self = self else { return }
                 let feeCurrency = self.sender.wallet.feeCurrency
                 let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
-                let rate = Rate(code: "USD", name: "USD", rate: rate.price, reciprocalCode: C.BTC)
+                let rate = Rate(code: "USD", name: "USD", rate: rate.price, reciprocalCode: Constant.BTC)
                 let displayAmount = Amount(amount: amount,
                                           rate: rate,
                                           maximumFractionDigits: Amount.highPrecisionDigits)

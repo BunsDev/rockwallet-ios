@@ -8,7 +8,7 @@
 
 import UIKit
 
-private extension C {
+private extension Constant {
     static let statusRowHeight: CGFloat = 48.0
     static let compactContainerHeight: CGFloat = 300
     static let expandedContainerHeight: CGFloat = 408
@@ -46,7 +46,8 @@ class TxDetailViewController: UIViewController, Subscriber {
     private var isExpanded: Bool = false
     
     private var compactContainerHeight: CGFloat {
-        return (viewModel.status == .complete || viewModel.status == .invalid) ? C.compactContainerHeight : C.compactContainerHeight + C.statusRowHeight
+        let statement = viewModel.status == .complete || viewModel.status == .invalid
+        return statement ? Constant.compactContainerHeight : Constant.compactContainerHeight + Constant.statusRowHeight
     }
     
     private var expandedContainerHeight: CGFloat {
@@ -135,7 +136,7 @@ class TxDetailViewController: UIViewController, Subscriber {
             tableView.bottomAnchor.constraint(equalTo: footer.topAnchor)
             ])
         
-        footer.constrainBottomCorners(height: C.detailsButtonHeight)
+        footer.constrainBottomCorners(height: Constant.detailsButtonHeight)
         separator.constrain([
             separator.leadingAnchor.constraint(equalTo: footer.leadingAnchor),
             separator.topAnchor.constraint(equalTo: footer.topAnchor, constant: 1.0),
