@@ -196,7 +196,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let from = item.from ?? 0
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
         let networkFee = item.networkFee?.fiatValue ?? 0
-        let fiatCurrency = (quote.fromFee?.currency ?? C.usdCurrencyCode).uppercased()
+        let fiatCurrency = (quote.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
         
         let currencyFormat = "%@ %@"
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)

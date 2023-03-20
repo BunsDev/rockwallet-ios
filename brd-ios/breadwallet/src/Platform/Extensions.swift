@@ -294,7 +294,7 @@ public extension Date {
     
     fileprivate static func RFC1123DateFormatter() -> DateFormatter {
         return cachedThreadLocalObjectWithKey("RFC1123DateFormatter") {
-            let locale = Locale(identifier: C.usLocaleCode)
+            let locale = Locale(identifier: Constant.usLocaleCode)
             let timeZone = TimeZone(identifier: "GMT")
             let dateFormatter = DateFormatter()
             dateFormatter.locale = locale //need locale for some iOS 9 verision, will not select correct default locale
@@ -306,7 +306,7 @@ public extension Date {
     
     fileprivate static func RFC850DateFormatter() -> DateFormatter {
         return cachedThreadLocalObjectWithKey("RFC850DateFormatter") {
-            let locale = Locale(identifier: C.usLocaleCode)
+            let locale = Locale(identifier: Constant.usLocaleCode)
             let timeZone = TimeZone(identifier: "GMT")
             let dateFormatter = DateFormatter()
             dateFormatter.locale = locale //need locale for some iOS 9 verision, will not select correct default locale
@@ -318,7 +318,7 @@ public extension Date {
     
     fileprivate static func asctimeDateFormatter() -> DateFormatter {
         return cachedThreadLocalObjectWithKey("asctimeDateFormatter") {
-            let locale = Locale(identifier: C.usLocaleCode)
+            let locale = Locale(identifier: Constant.usLocaleCode)
             let timeZone = TimeZone(identifier: "GMT")
             let dateFormatter = DateFormatter()
             dateFormatter.locale = locale //need locale for some iOS 9 verision, will not select correct default locale

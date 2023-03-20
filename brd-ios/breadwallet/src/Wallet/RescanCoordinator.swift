@@ -13,7 +13,7 @@ import WalletKit
 struct RescanCoordinator {
     
     // 24-hours until incremental rescan is reset
-    private static let incrementalRescanInterval: TimeInterval = C.secondsInDay
+    private static let incrementalRescanInterval: TimeInterval = Constant.secondsInDay
     
     static func initiateRescan(system: CoreSystem, wallet: Wallet) {
         guard let primaryWallet = wallet.networkPrimaryWallet else { return }

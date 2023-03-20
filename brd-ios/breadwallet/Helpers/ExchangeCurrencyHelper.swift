@@ -12,7 +12,7 @@ import Foundation
 
 struct ExchangeCurrencyHelper {
     static func setUSDifNeeded(completion: (() -> Void)) {
-        guard Store.state.defaultCurrencyCode != C.usdCurrencyCode else {
+        guard Store.state.defaultCurrencyCode != Constant.usdCurrencyCode else {
             completion()
             
             return
@@ -20,7 +20,7 @@ struct ExchangeCurrencyHelper {
         
         UserDefaults.temporaryDefaultCurrencyCode = Store.state.defaultCurrencyCode
         
-        Store.perform(action: DefaultCurrency.SetDefault(C.usdCurrencyCode))
+        Store.perform(action: DefaultCurrency.SetDefault(Constant.usdCurrencyCode))
         
         completion()
     }

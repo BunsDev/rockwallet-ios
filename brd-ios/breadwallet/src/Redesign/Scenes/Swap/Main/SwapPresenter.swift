@@ -99,6 +99,12 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         } else if ExchangeManager.shared.canSwap(actionResponse.from?.currency) == false {
             presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
             hasError = true
+        } else if let feeAmount = fromFee,
+                  let feeWallet = feeAmount.currency.wallet,
+                  feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
+            let error = ExchangeErrors.balanceTooLow(balance: feeAmount.tokenValue, currency: feeAmount.currency.code)
+            presentError(actionResponse: .init(error: error))
+            hasError = true
         } else {
             let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
             let tokenValue = actionResponse.from?.tokenValue ?? 0
@@ -129,7 +135,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 
             case _ where tokenValue < minimumValue:
                 // Value below minimum crypto
-                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: C.usdCurrencyCode, reason: .swap)))
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: Constant.usdCurrencyCode, reason: .swap)))
                 hasError = true
                 
             case _ where fiatValue > dailyLimit:
@@ -195,7 +201,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         let fromText = String(format: "%@ %@ (%@ %@)", ExchangeFormatter.crypto.string(for: from.tokenValue.doubleValue) ?? "",
                               from.currency.code,
                               ExchangeFormatter.fiat.string(for: from.fiatValue.doubleValue) ?? "",
-                              C.usdCurrencyCode)
+                              Constant.usdCurrencyCode)
         let toText = String(format: "%@ %@",
                             ExchangeFormatter.crypto.string(for: to.tokenValue.doubleValue) ?? "",
                             to.currency.code)

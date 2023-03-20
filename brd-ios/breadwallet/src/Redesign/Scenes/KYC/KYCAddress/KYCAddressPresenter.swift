@@ -25,9 +25,9 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .confirm
         ]
         
-        let trailingModel: ImageViewModel? = item.country?.iso2 == C.countryUS ? .image(Asset.chevronDown.image) : nil
+        let trailingModel: ImageViewModel? = item.country?.iso2 == Constant.countryUS ? .image(Asset.chevronDown.image) : nil
         
-        if item.country?.iso2 == C.countryUS && !E.isProduction {
+        if item.country?.iso2 == Constant.countryUS && !E.isProduction {
             let confirmIndex = sections.firstIndex(of: .confirm) ?? 0
             sections.insert(contentsOf: [.ssn, .ssnInfo], at: confirmIndex)
         }
@@ -53,7 +53,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                                                  secondary: .init(title: L10n.Buy.stateProvince,
                                                                   value: state,
                                                                   trailing: trailingModel,
-                                                                  isUserInteractionEnabled: item.country?.iso2 != C.countryUS))
+                                                                  isUserInteractionEnabled: item.country?.iso2 != Constant.countryUS))
             ],
             .postalCode: [
                 TextFieldModel(title: L10n.Account.postalCode,

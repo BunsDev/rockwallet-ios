@@ -20,22 +20,22 @@ enum FeeLevel: Int {
         if currency.uid == Currencies.shared.btc?.uid {
             switch self {
             case .economy:
-                return Int(C.secondsInMinute) * 60 * 7 * 1000 //7 hrs
+                return Int(Constant.secondsInMinute) * 60 * 7 * 1000 //7 hrs
             case .regular:
-                return Int(C.secondsInMinute) * 30 * 1000 //30 mins
+                return Int(Constant.secondsInMinute) * 30 * 1000 //30 mins
             case .priority:
-                return Int(C.secondsInMinute) * 10 * 1000 //10 mins
+                return Int(Constant.secondsInMinute) * 10 * 1000 //10 mins
             }
         }
         
         if currency.isEthereumCompatible {
             switch self {
             case .economy:
-                return Int(C.secondsInMinute) * 60 * 1000 // 60 min
+                return Int(Constant.secondsInMinute) * 60 * 1000 // 60 min
             case .regular:
-                return Int(C.secondsInMinute) * 20 * 1000 // 20 min
+                return Int(Constant.secondsInMinute) * 20 * 1000 // 20 min
             case .priority:
-                return Int(C.secondsInMinute) * 1 * 1000 // 1 min
+                return Int(Constant.secondsInMinute) * 1 * 1000 // 1 min
             }
         }
         
@@ -43,7 +43,7 @@ enum FeeLevel: Int {
             return 60000
         }
         
-        return Int(C.secondsInMinute) * 3 * 1000 // 3 mins
+        return Int(Constant.secondsInMinute) * 3 * 1000 // 3 mins
     }
 }
 
