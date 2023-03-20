@@ -661,6 +661,9 @@ extension CoreSystem: SystemListener {
                 manager.connect(using: manager.customPeer)
             }
             
+        case .receiveAddressSync(let manager):
+            manager.receiveAddressSync()
+            
         case .changed:
             break
             
