@@ -32,11 +32,10 @@ struct DrawerViewModel: ViewModel {
         .init(title: L10n.Buy.fundWithAch, image: Asset.bank.image),
         .init(title: L10n.Button.sell, image: Asset.sell.image)
     ]
-    var drawerBottomOffset = ViewSizes.bottomToolbarHeight.rawValue
+    var drawerBottomOffset = ViewSizes.bottomToolbarHeight.rawValue + Margins.extraHuge.rawValue - (UIApplication.shared.activeWindow?.safeAreaInsets.bottom ?? 0)
 }
 
 class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
-    
     var callbacks: [(() -> Void)] = []
     var isShown: Bool { return blurView.alpha == 1 }
     
