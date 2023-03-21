@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import PhoneNumberKit
 
 final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberActionResponses {
     typealias Models = VerifyPhoneNumberModels
@@ -23,18 +22,13 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
             .phoneNumber
         ]
         
-        let phoneNumberKit = PhoneNumberKit()
-        phoneNumberKit.allCountries().forEach({
-            print(phoneNumberKit.countryCode(for: $0))
-        })
-        
         let sectionRows: [Models.Section: [Any]] = [
             .instructions: [
-                LabelViewModel.text("We take security seriously. Providing a valid phone number lets us send you verification codes and account alerts to keep your wallet safe.")
+                LabelViewModel.text(L10n.VerifyPhoneNumber.instructions)
             ],
             .phoneNumber: [
                 PhoneNumberViewModel(areaCode: .init(leading: .image("🇺🇸".textToImage()), title: "+1"),
-                                     phoneNumber: .init(placeholder: "Phone number"))
+                                     phoneNumber: .init(placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))
             ]
         ]
         
@@ -46,7 +40,11 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
         
         viewController?.displaySetAreaCode(responseDisplay: .init(areaCode:
                 .init(areaCode: .init(leading: .image(areaCode.flag.textToImage()), title: areaCode.prefix),
-                      phoneNumber: .init(placeholder: "Phone number"))))
+                      phoneNumber: .init(value: "4346346346346".removeWhitespaces(), placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))))
+    }
+    
+    func presentValidate(actionResponse: VerifyPhoneNumberModels.Validate.ActionResponse) {
+        viewController?.displayValidate(responseDisplay: .init(isValid: actionResponse.isValid))
     }
     
     func presentConfirm(actionResponse: VerifyPhoneNumberModels.Confirm.ActionResponse) {

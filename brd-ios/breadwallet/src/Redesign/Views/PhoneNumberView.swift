@@ -20,7 +20,7 @@ struct PhoneNumberViewModel: ViewModel {
 
 class PhoneNumberView: FEView<PhoneNumberConfiguration, PhoneNumberViewModel> {
     var didPresentPicker: (() -> Void)?
-    var displayState: DisplayState = .normal
+    var didChangePhoneNumber: ((String?) -> Void)?
     
     private lazy var areaCodeTextfield: FETextField = {
         let view = FETextField()
@@ -48,6 +48,10 @@ class PhoneNumberView: FEView<PhoneNumberConfiguration, PhoneNumberViewModel> {
             make.top.bottom.equalTo(areaCodeTextfield)
             make.trailing.equalToSuperview()
             make.leading.equalTo(areaCodeTextfield.snp.trailing).inset(Margins.minimum.rawValue)
+        }
+        
+        phoneNumberTextField.valueChanged = { [weak self] field in
+            self?.didChangePhoneNumber?(field.text)
         }
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(triggerPresentPicker)))

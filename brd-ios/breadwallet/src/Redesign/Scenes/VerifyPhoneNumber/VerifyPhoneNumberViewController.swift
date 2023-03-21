@@ -89,17 +89,16 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
             view.didPresentPicker = { [weak self] in
                 self?.coordinator?.showAreaCodePicker(model: .init())
             }
+            
+            view.didChangePhoneNumber = { [weak self] phoneNumber in
+                self?.interactor?.setPhoneNumber(viewAction: .init(phoneNumber: phoneNumber))
+            }
         }
         
         return cell
     }
     
     // MARK: - User Interaction
-    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        interactor?.validate(viewAction: .init(item: text))
-        
-        super.textFieldDidFinish(for: indexPath, with: text)
-    }
     
     // MARK: - VerifyPhoneNumberResponseDisplay
     
@@ -111,6 +110,13 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
         cell.setup { view in
             view.setup(with: responseDisplay.areaCode)
         }
+    }
+    
+    func displayValidate(responseDisplay: VerifyPhoneNumberModels.Validate.ResponseDisplay) {
+        let isValid = responseDisplay.isValid
+        
+        continueButton.viewModel?.enabled = isValid
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay) {

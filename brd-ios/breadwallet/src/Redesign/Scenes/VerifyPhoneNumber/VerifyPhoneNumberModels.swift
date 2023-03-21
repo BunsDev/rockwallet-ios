@@ -23,9 +23,7 @@ enum VerifyPhoneNumberModels {
     }
     
     struct Validate {
-        struct ViewAction {
-            var item: Item
-        }
+        struct ViewAction {}
         
         struct ActionResponse {
             var isValid: Bool
@@ -45,6 +43,12 @@ enum VerifyPhoneNumberModels {
         }
         struct ResponseDisplay {
             var areaCode: PhoneNumberViewModel
+        }
+    }
+    
+    struct SetPhoneNumber {
+        struct ViewAction {
+            var phoneNumber: String?
         }
     }
     

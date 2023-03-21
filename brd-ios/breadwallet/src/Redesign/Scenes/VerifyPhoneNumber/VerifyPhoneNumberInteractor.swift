@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import PhoneNumberKit
 
 class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewActions {
     typealias Models = VerifyPhoneNumberModels
@@ -23,11 +24,25 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
     }
     
     func setAreaCode(viewAction: VerifyPhoneNumberModels.SetAreaCode.ViewAction) {
+        dataStore?.areaCode = viewAction.areaCode.prefix
+        
         presenter?.presentSetAreaCode(actionResponse: .init(areaCode: viewAction.areaCode))
+        
+        validate(viewAction: .init())
+    }
+    
+    func setPhoneNumber(viewAction: VerifyPhoneNumberModels.SetPhoneNumber.ViewAction) {
+        dataStore?.phoneNumber = viewAction.phoneNumber
+        
+        validate(viewAction: .init())
     }
     
     func validate(viewAction: VerifyPhoneNumberModels.Validate.ViewAction) {
+        let phoneNumberKit = PhoneNumberKit()
         
+        let isValid = phoneNumberKit.isValidPhoneNumber((dataStore?.areaCode ?? "") + (dataStore?.phoneNumber ?? ""))
+        
+        presenter?.presentValidate(actionResponse: .init(isValid: isValid))
     }
     
     func confirm(viewAction: VerifyPhoneNumberModels.Confirm.ViewAction) {
