@@ -43,7 +43,8 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
             return AssetViewModel(icon: $0.imageSquareBackground,
                                   title: $0.name,
                                   subtitle: $0.code.uppercased(),
-                                  isDisabled: true)
+                                  isDisabled: true,
+                                  isSelectedSameAsset: true)
         }
         
         data?.append(contentsOf: disabledData ?? [])

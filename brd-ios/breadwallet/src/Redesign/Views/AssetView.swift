@@ -30,6 +30,7 @@ struct AssetViewModel: ViewModel, ItemSelectable {
     var topRightText: String?
     var bottomRightText: String?
     var isDisabled = false
+    var isSelectedSameAsset = false
     
     var displayName: String? {
         return title
