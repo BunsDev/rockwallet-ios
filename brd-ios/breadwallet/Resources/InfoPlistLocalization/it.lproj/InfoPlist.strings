@@ -2625,6 +2625,8 @@
 
 "Swap.AmountPurchased.android" = "Amount purchased:";
 
+"Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
+
 /* Back to Home button */
 "Swap.BackToHome" = "Back to Home";
 
@@ -2679,6 +2681,8 @@
 "Swap.RequestTimedOut" = "Your swap request timed out. Please try again.";
 
 "Swap.retry" = "Retry";
+
+"Swap.SameAssetMessage" = "It’s not possible to select the same asset for both sending and receiving. Please select a different asset for either sending or receiving.";
 
 /* Select assets title in swap flow */
 "Swap.SelectAssets" = "Select assets";
@@ -3270,6 +3274,10 @@
 "VerifyAccount.VerifyMyIdentity" = "Verify my identity";
 
 "VerifyAccount.VerifyYourIdentity" = "Verify your identity";
+
+"VerifyPhoneNumber.instructions" = "We take security seriously. Providing a valid phone number lets us send you verification codes and account alerts to keep your wallet safe.";
+
+"VerifyPhoneNumber.phoneNumber.title" = "Phone number";
 
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "Per favore inserisci il tuo PIN per autorizzare questa transazione.";
