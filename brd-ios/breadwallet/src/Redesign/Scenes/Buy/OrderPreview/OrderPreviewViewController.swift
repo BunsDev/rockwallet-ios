@@ -234,8 +234,12 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         }
     }
     
-    func displayBiometricStatus(responseDisplay: OrderPreviewModels.BiometricStatusCheck.ResponseDisplay) {
-        coordinator?.handleVeriffKYC(for: .liveness)
+    func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay) {
+        coordinator?.open(scene: Scenes.Failure) { vc in
+            vc.failure = .buyCard
+            vc.isModalDismissable = false
+            vc.navigationItem.hidesBackButton = true
+        }
     }
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
