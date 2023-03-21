@@ -19,7 +19,11 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
     // MARK: - VerifyPhoneNumberViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: UserDefaults.email))
+        presenter?.presentData(actionResponse: .init(item: nil))
+    }
+    
+    func setAreaCode(viewAction: VerifyPhoneNumberModels.SetAreaCode.ViewAction) {
+        presenter?.presentSetAreaCode(actionResponse: .init(areaCode: viewAction.areaCode))
     }
     
     func validate(viewAction: VerifyPhoneNumberModels.Validate.ViewAction) {
@@ -34,18 +38,6 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
 //                UserManager.shared.refresh()
 //
 //                self?.presenter?.presentConfirm(actionResponse: .init())
-//
-//            case .failure(let error):
-//                self?.presenter?.presentError(actionResponse: .init(error: error))
-//            }
-//        }
-    }
-    
-    func resend(viewAction: VerifyPhoneNumberModels.Resend.ViewAction) {
-//        ResendConfirmationWorker().execute { [weak self] result in
-//            switch result {
-//            case .success:
-//                self?.presenter?.presentResend(actionResponse: .init())
 //
 //            case .failure(let error):
 //                self?.presenter?.presentError(actionResponse: .init(error: error))

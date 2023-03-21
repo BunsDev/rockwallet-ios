@@ -27,25 +27,30 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
         phoneNumberKit.allCountries().forEach({
             print(phoneNumberKit.countryCode(for: $0))
         })
+        
         let sectionRows: [Models.Section: [Any]] = [
             .instructions: [
                 LabelViewModel.text("We take security seriously. Providing a valid phone number lets us send you verification codes and account alerts to keep your wallet safe.")
             ],
             .phoneNumber: [
-                PhoneNumberViewModel(areaCode: .init(leading: .imageName("VISA"), title: "+1"), phoneNumber: .init(placeholder: "Phone number"))
+                PhoneNumberViewModel(areaCode: .init(leading: .image("🇺🇸".textToImage()), title: "+1"),
+                                     phoneNumber: .init(placeholder: "Phone number"))
             ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentConfirm(actionResponse: VerifyPhoneNumberModels.Confirm.ActionResponse) {
-        viewController?.displayConfirm(responseDisplay: .init())
+    func presentSetAreaCode(actionResponse: VerifyPhoneNumberModels.SetAreaCode.ActionResponse) {
+        let areaCode = actionResponse.areaCode
+        
+        viewController?.displaySetAreaCode(responseDisplay: .init(areaCode:
+                .init(areaCode: .init(leading: .image(areaCode.flag.textToImage()), title: areaCode.prefix),
+                      phoneNumber: .init(placeholder: "Phone number"))))
     }
     
-    func presentResend(actionResponse: VerifyPhoneNumberModels.Resend.ActionResponse) {
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.AccountCreation.codeSent)),
-                                                              config: Presets.InfoView.verification))
+    func presentConfirm(actionResponse: VerifyPhoneNumberModels.Confirm.ActionResponse) {
+        viewController?.displayConfirm(responseDisplay: .init())
     }
     
     // MARK: - Additional Helpers

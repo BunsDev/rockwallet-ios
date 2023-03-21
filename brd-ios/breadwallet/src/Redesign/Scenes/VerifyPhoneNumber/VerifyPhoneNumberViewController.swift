@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import PhoneNumberKit
 
 class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinator,
                                        VerifyPhoneNumberInteractor,
@@ -21,12 +22,22 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
         return "Verify your phone number"
     }
     
+    var didSelectAreaCode: ((CountryCodePickerViewController.Country) -> Void)?
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
         super.setupSubviews()
         
         tableView.register(WrapperTableViewCell<PhoneNumberView>.self)
+    }
+    
+    override func prepareData() {
+        super.prepareData()
+        
+        didSelectAreaCode = { [weak self] country in
+            self?.interactor?.setAreaCode(viewAction: .init(areaCode: country))
+        }
     }
     
     override func setupVerticalButtons() {
@@ -75,9 +86,9 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
             view.configure(with: .init())
             view.setup(with: model)
             
-//            view.valueChanged = { [weak self] text in
-//                self?.textFieldDidFinish(for: indexPath, with: text)
-//            }
+            view.didPresentPicker = { [weak self] in
+                self?.coordinator?.showAreaCodePicker(model: .init())
+            }
         }
         
         return cell
@@ -90,15 +101,17 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
-    private func resendCodeTapped() {
-        interactor?.resend(viewAction: .init())
-    }
-    
-    private func changeEmailTapped() {
-        coordinator?.showChangeEmail()
-    }
-    
     // MARK: - VerifyPhoneNumberResponseDisplay
+    
+    func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay) {
+        guard let section = sections.firstIndex(of: Models.Section.phoneNumber),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<PhoneNumberView>
+        else { return }
+        
+        cell.setup { view in
+            view.setup(with: responseDisplay.areaCode)
+        }
+    }
     
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in

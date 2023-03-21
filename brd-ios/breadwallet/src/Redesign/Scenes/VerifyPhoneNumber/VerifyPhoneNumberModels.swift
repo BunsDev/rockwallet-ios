@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import PhoneNumberKit
 
 enum VerifyPhoneNumberModels {
     typealias Item = Any?
@@ -35,13 +36,19 @@ enum VerifyPhoneNumberModels {
         }
     }
     
-    struct Confirm {
-        struct ViewAction {}
-        struct ActionResponse {}
-        struct ResponseDisplay {}
+    struct SetAreaCode {
+        struct ViewAction {
+            var areaCode: CountryCodePickerViewController.Country
+        }
+        struct ActionResponse {
+            var areaCode: CountryCodePickerViewController.Country
+        }
+        struct ResponseDisplay {
+            var areaCode: PhoneNumberViewModel
+        }
     }
     
-    struct Resend {
+    struct Confirm {
         struct ViewAction {}
         struct ActionResponse {}
         struct ResponseDisplay {}

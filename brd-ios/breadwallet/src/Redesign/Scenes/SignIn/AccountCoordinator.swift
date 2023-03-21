@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PhoneNumberKit
 
 class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
     // MARK: - RegistrationRoutes
@@ -67,4 +68,21 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     }
     
     // MARK: - Aditional helpers
+}
+
+extension AccountCoordinator: CountryCodePickerDelegate {
+    func showAreaCodePicker(model: PhoneNumberViewModel) {
+        let phoneNumberKit = PhoneNumberKit()
+        let vc = CountryCodePickerViewController(phoneNumberKit: phoneNumberKit)
+        vc.delegate = self
+        navigationController.present(vc, animated: true)
+    }
+    
+    func countryCodePickerViewControllerDidPickCountry(_ country: CountryCodePickerViewController.Country) {
+        let verifyPhoneNumberVC = navigationController.topViewController as? VerifyPhoneNumberViewController
+        
+        navigationController.presentedViewController?.dismiss(animated: true)
+        
+        verifyPhoneNumberVC?.didSelectAreaCode?(country)
+    }
 }

@@ -16,16 +16,17 @@ extension Scenes {
 
 protocol VerifyPhoneNumberViewActions: BaseViewActions, FetchViewActions {
     func validate(viewAction: VerifyPhoneNumberModels.Validate.ViewAction)
+    func setAreaCode(viewAction: VerifyPhoneNumberModels.SetAreaCode.ViewAction)
     func confirm(viewAction: VerifyPhoneNumberModels.Confirm.ViewAction)
-    func resend(viewAction: VerifyPhoneNumberModels.Resend.ViewAction)
 }
 
 protocol VerifyPhoneNumberActionResponses: BaseActionResponses, FetchActionResponses {
+    func presentSetAreaCode(actionResponse: VerifyPhoneNumberModels.SetAreaCode.ActionResponse)
     func presentConfirm(actionResponse: VerifyPhoneNumberModels.Confirm.ActionResponse)
-    func presentResend(actionResponse: VerifyPhoneNumberModels.Resend.ActionResponse)
 }
 
 protocol VerifyPhoneNumberResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+    func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay)
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay)
 }
 

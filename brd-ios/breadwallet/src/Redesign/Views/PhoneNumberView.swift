@@ -18,7 +18,7 @@ struct PhoneNumberViewModel: ViewModel {
     var phoneNumber: TextFieldModel?
 }
 
-class PhoneNumberView: FEView<PhoneNumberConfiguration, PhoneNumberViewModel>, StateDisplayable {
+class PhoneNumberView: FEView<PhoneNumberConfiguration, PhoneNumberViewModel> {
     var didPresentPicker: (() -> Void)?
     var displayState: DisplayState = .normal
     
@@ -74,29 +74,9 @@ class PhoneNumberView: FEView<PhoneNumberConfiguration, PhoneNumberViewModel>, S
         
         areaCodeTextfield.setup(with: areaCode)
         phoneNumberTextField.setup(with: viewModel?.phoneNumber)
-        
-        animateTo(state: .normal)
     }
     
     @objc private func triggerPresentPicker() {
         didPresentPicker?()
-        
-        animateTo(state: .selected)
-    }
-    
-    func animateTo(state: DisplayState, withAnimation: Bool = true) {
-        let background: BackgroundConfiguration?
-        
-        switch state {
-        case .normal:
-            background = Presets.TextField.primary.backgroundConfiguration
-            
-        default:
-            background = Presets.TextField.primary.selectedBackgroundConfiguration
-        }
-        
-        displayState = state
-        
-        areaCodeTextfield.configure(background: background)
     }
 }
