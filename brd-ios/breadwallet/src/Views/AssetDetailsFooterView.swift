@@ -51,15 +51,13 @@ class AssetDetailsFooterView: UIView, Subscriber {
         let buttons = [
             (Asset.send.image, #selector(send(_:))),
             (Asset.receive.image, #selector(receive(_:))),
-            (Asset.buy.image, #selector(buySell(_:))),
+            (Asset.buySell.image, #selector(buySell(_:))),
             (Asset.trade.image, #selector(swap(_:)))
         ].compactMap { (image, selector) -> BRDButton in
-//            let button = BRDButton(title: title, type: .secondary)
             let button = BRDButton(title: nil, type: .secondary, image: image)
             button.addTarget(self, action: selector, for: .touchUpInside)
             return button
         }
-//        buttons.first?.isEnabled = currency.wallet?.balance.isZero != true
         let buttonsView = UIStackView(arrangedSubviews: buttons)
         buttonsView.spacing = Margins.small.rawValue
         buttonsView.distribution = .equalSpacing

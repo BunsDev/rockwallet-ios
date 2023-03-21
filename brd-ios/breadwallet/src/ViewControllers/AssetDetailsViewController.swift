@@ -97,11 +97,60 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         }
     }
     
-    private let drawerConfiguration = DrawerConfiguration(buttons: [Presets.Button.primary,
-                                                                    Presets.Button.secondary])
-    private let drawerViewModel = DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
-                                                            .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)],
-                                                  drawerBottomOffset: 84)
+    private lazy var drawerConfiguration: DrawerConfiguration = {
+        switch currency.code {
+        case C.USDT:
+            return DrawerConfiguration()
+            
+        case C.USDC:
+            return DrawerConfiguration(buttons: [Presets.Button.primary,
+                                                 Presets.Button.secondary])
+            
+        default:
+            return DrawerConfiguration(buttons: [Presets.Button.primary])
+        }
+    }()
+    
+    private lazy var drawerViewModel: DrawerViewModel = {
+        switch currency.code {
+        case C.USDT:
+            return DrawerViewModel(drawerBottomOffset: 84)
+            
+        case C.USDC:
+            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+                                             .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)],
+                                   drawerBottomOffset: 84)
+            
+        default:
+            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image)], drawerBottomOffset: 84)
+        }
+    }()
+    
+    private lazy var drawerCallbacks: [(() -> Void)] = {
+        switch currency.code {
+        case C.USDT:
+            return [ { [weak self] in
+                self?.didTapDrawerButton(.card)
+            }, { [weak self] in
+                self?.didTapDrawerButton(.ach)
+            }, { [weak self]
+                in self?.didTapDrawerButton()
+            }]
+            
+        case C.USDC:
+            return [ { [weak self] in
+                self?.didTapDrawerButton(.card)
+            }, { [weak self] in
+                self?.didTapDrawerButton()
+            }]
+            
+        default:
+            return [ { [weak self] in
+                self?.didTapDrawerButton(.card)
+            }]
+            
+        }
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,11 +162,6 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         addSubscriptions()
         setInitialData()
         
-        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
-            self?.didTapDrawerButton(.card)
-        }, { [weak self] in
-            self?.didTapDrawerButton()
-        }]
         setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel, callbacks: drawerCallbacks, dismissSetup: nil)
         view.bringSubviewToFront(footerView) // Put bottom toolbar in front of drawer
         
