@@ -225,11 +225,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
             case .done:
                 self?.interactor?.checkBiometricStatus(viewAction: .init(resetCounter: true))
                 
-            case .error(let error):
-                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: error.localizedDescription)))
-                
             default:
-                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError()))
+                self?.displayBiometricStatusFailed(responseDisplay: .init())
             }
         }
     }
