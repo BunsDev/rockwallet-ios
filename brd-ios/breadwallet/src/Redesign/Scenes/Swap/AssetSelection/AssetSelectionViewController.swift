@@ -46,8 +46,7 @@ class AssetSelectionViewController: ItemSelectionViewController {
         guard let model = sectionRows[section]?[indexPath.row] as? AssetViewModel else { return }
         
         if model.isDisabled {
-            let message = model.isSelectedSameAsset ? L10n.Swap.sameAssetMessage : L10n.Swap.assetSelectionMessage
-            coordinator?.showToastMessage(model: InfoViewModel(description: .text(message), dismissType: .auto),
+            coordinator?.showToastMessage(model: InfoViewModel(description: .text(model.isDisabledReason), dismissType: .auto),
                                           configuration: Presets.InfoView.warning)
         } else {
             itemSelected?(model)
