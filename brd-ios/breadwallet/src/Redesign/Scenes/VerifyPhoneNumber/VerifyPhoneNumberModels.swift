@@ -40,9 +40,11 @@ enum VerifyPhoneNumberModels {
         }
         struct ActionResponse {
             var areaCode: CountryCodePickerViewController.Country
+            var phoneNumber: String?
         }
         struct ResponseDisplay {
             var areaCode: PhoneNumberViewModel
+            var phoneNumber: String?
         }
     }
     

@@ -40,7 +40,7 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
         
         viewController?.displaySetAreaCode(responseDisplay: .init(areaCode:
                 .init(areaCode: .init(leading: .image(areaCode.flag.textToImage()), title: areaCode.prefix),
-                      phoneNumber: .init(value: "4346346346346".removeWhitespaces(), placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))))
+                      phoneNumber: .init(value: actionResponse.phoneNumber, placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))))
     }
     
     func presentValidate(actionResponse: VerifyPhoneNumberModels.Validate.ActionResponse) {

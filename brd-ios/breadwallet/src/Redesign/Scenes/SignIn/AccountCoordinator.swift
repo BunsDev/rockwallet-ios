@@ -75,7 +75,6 @@ extension AccountCoordinator: CountryCodePickerDelegate {
         let phoneNumberKit = PhoneNumberKit()
         let vc = CountryCodePickerViewController(phoneNumberKit: phoneNumberKit)
         vc.delegate = self
-        vc
         navigationController.present(vc, animated: true)
     }
     

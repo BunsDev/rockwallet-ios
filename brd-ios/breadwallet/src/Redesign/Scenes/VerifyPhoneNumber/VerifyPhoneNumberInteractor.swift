@@ -17,6 +17,8 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
     var presenter: VerifyPhoneNumberPresenter?
     var dataStore: VerifyPhoneNumberStore?
     
+    private var debounceTimer: Timer?
+    
     // MARK: - VerifyPhoneNumberViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
@@ -24,28 +26,28 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
     }
     
     func setAreaCode(viewAction: VerifyPhoneNumberModels.SetAreaCode.ViewAction) {
-        dataStore?.areaCode = viewAction.areaCode.prefix
+        dataStore?.areaCode = viewAction.areaCode.prefix.removeWhitespaces()
         
-        presenter?.presentSetAreaCode(actionResponse: .init(areaCode: viewAction.areaCode))
+        presenter?.presentSetAreaCode(actionResponse: .init(areaCode: viewAction.areaCode, phoneNumber: dataStore?.phoneNumber))
         
         validate(viewAction: .init())
     }
     
     func setPhoneNumber(viewAction: VerifyPhoneNumberModels.SetPhoneNumber.ViewAction) {
-        dataStore?.phoneNumber = viewAction.phoneNumber
+        dataStore?.phoneNumber = viewAction.phoneNumber?.removeWhitespaces()
         
         validate(viewAction: .init())
     }
     
     func validate(viewAction: VerifyPhoneNumberModels.Validate.ViewAction) {
         let phoneNumberKit = PhoneNumberKit()
-        
         let isValid = phoneNumberKit.isValidPhoneNumber((dataStore?.areaCode ?? "") + (dataStore?.phoneNumber ?? ""))
         
-        // TODO: How should this work?
-//        if !isValid {
-//            presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: "Please enter a valid phone number")))
-//        }
+        debounceTimer?.invalidate()
+        debounceTimer = Timer.scheduledTimer(withTimeInterval: Presets.Delay.long.rawValue, repeats: false) { [weak self] _ in
+            guard !isValid && self?.dataStore?.phoneNumber.isNilOrEmpty == false else { return }
+            self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: "Please enter a valid phone number")))
+        }
         
         presenter?.presentValidate(actionResponse: .init(isValid: isValid))
     }
