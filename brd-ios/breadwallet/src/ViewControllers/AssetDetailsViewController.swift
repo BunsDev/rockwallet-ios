@@ -114,15 +114,14 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     private lazy var drawerViewModel: DrawerViewModel = {
         switch currency.code {
         case Constant.USDT:
-            return DrawerViewModel(drawerBottomOffset: 84)
+            return DrawerViewModel()
             
         case Constant.USDC:
             return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
-                                             .init(title: L10n.Button.sell, image: Asset.sell.image)],
-                                   drawerBottomOffset: 84)
+                                             .init(title: L10n.Button.sell, image: Asset.sell.image)])
             
         default:
-            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image)], drawerBottomOffset: 84)
+            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image)])
         }
     }()
     
@@ -263,7 +262,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     
     private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
         guard let type else {
-            guard let token = Store.state.currencies.first(where: { $0.code == C.USDT }) else { return }
+            guard let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
             coordinator?.showSell(for: token, coreSystem: coreSystem, keyStore: keyStore)
             return
         }

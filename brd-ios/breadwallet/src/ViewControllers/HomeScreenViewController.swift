@@ -250,7 +250,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         })
         
         let drawerConfig = DrawerConfiguration()
-        let drawerViewModel = DrawerViewModel(drawerBottomOffset: 84)
+        let drawerViewModel = DrawerViewModel()
         let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
             self?.didTapDrawerButton(.card)
         }, { [weak self] in
@@ -271,7 +271,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: 84)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: ViewSizes.bottomToolbarHeight)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)
