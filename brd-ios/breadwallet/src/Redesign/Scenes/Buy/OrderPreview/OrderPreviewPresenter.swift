@@ -115,8 +115,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         viewController?.displayVeriffLivenessCheck(responseDisplay: .init(quoteId: actionResponse.quoteId, isBiometric: actionResponse.isBiometric))
     }
     
-    func presentBiometricStatus(actionResponse: OrderPreviewModels.BiometricStatusCheck.ActionResponse) {
-        viewController?.displayBiometricStatus(responseDisplay: .init())
+    func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse) {
+        viewController?.displayBiometricStatusFailed(responseDisplay: .init())
     }
     
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse) {
@@ -141,12 +141,33 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
         guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
-            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
+            var customAchErrorMessage: String = ""
+            if actionResponse.isAch == true {
+                switch actionResponse.responseCode {
+                case "30046":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountClosed
+                    
+                case "30R16":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountFrozen
+                    
+                case "20051":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.insufficientFunds
+                    
+                default:
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.errorWhileProcessing
+                }
+            }
+            
+            // TODO: For now, we are hard coding this error. Remove this line when needed.
+            customAchErrorMessage = L10n.Buy.bankAccountFailureText
+            
+            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
+            
             return
         }
-        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         
+        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     

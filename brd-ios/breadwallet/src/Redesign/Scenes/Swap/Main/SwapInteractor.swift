@@ -202,6 +202,9 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                self?.dataStore?.quote != nil {
                 // All good
                 self?.setAmountSuccess()
+                if self?.dataStore?.quote?.isMinimumImpactedByWithdrawal == true {
+                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.highFees))
+                }
             } else if self?.dataStore?.quote?.fromFee?.fee != nil,
                       from.currency.isEthereum {
                 // Not enough ETH for Swap + Fee

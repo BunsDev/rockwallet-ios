@@ -9,8 +9,10 @@
 import UIKit
 import LinkKit
 
+typealias PlaidLinkKitHandler = Handler
+
 protocol LinkOAuthHandling {
-    var linkHandler: Handler? { get }
+    var plaidHandler: PlaidLinkKitHandler? { get }
 }
 
 class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
@@ -104,6 +106,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
                 }
             }
         }
+        
         cell.setupCustomMargins(vertical: .large, horizontal: .large)
         
         return cell
@@ -251,12 +254,10 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
             return
         }
         
-        UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
         tableView.endUpdates()
-        UIView.setAnimationsEnabled(true)
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)

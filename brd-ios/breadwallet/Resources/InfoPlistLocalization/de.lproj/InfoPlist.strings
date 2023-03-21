@@ -214,6 +214,14 @@
 /* Why is the verification declined label in profile screen */
 "Account.VerificationDeclined" = "Why is my verification declined?";
 
+"Account.VerificationSuccessful" = "Your verification was successful!";
+
+"Account.VerificationSuccessful.description" = "Your account has been successfully verified, and your limits have been updated.";
+
+"Account.VerificationUnsuccessful" = "We're sorry, your verification was unsuccessful";
+
+"Account.VerificationUnsuccessful.description" = "Please try your verification again, while keeping the following in mind:\n\n- Please ensure the area is well-lit\n- Please ensure you are centered in the frame";
+
 "Account.Verified" = "Verified";
 
 /* Verified account message on profile screen */
@@ -1644,6 +1652,8 @@
 /* Onboarding screen Skip button title that allows the user to exit the onboarding process. */
 "Onboarding.skip" = "Diesen Bereich verlassen";
 
+"Onboarding.SkipPhrase" = "SKIP AND SAVE LATER";
+
 /* Onboarding screen Page 4 title */
 "OnboardingPageFour.title" = "Beginnen Sie noch heute mit einer Einlage von nur US$ 50!";
 
@@ -1739,6 +1749,10 @@
 
 /* Enable face ID prompt title */
 "Prompts.FaceId.title" = "Face ID aktivieren";
+
+"Prompts.LimitsAuthentication.body" = "Just one more small step, and you'll be able to enjoy your new limits.";
+
+"Prompts.LimitsAuthentication.title" = "Finish setting up your new Buy limits.";
 
 /* No passcode set warning body */
 "Prompts.NoPasscode.body" = "Ein Gerät-Passcode wird benötigt, um Ihr Wallet zu schützen. Gehen Sie zu den Einstellungen und aktivieren Sie den Passcode.";

@@ -13,7 +13,6 @@ import UIKit
 struct LimitsPopupConfiguration: Configurable {
     var title: LabelConfiguration = LabelConfiguration(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center)
     var perTransaction: TitleValueConfiguration = Presets.TitleValue.common
-    var dailyMin: TitleValueConfiguration = Presets.TitleValue.common
     var dailyMax: TitleValueConfiguration = Presets.TitleValue.common
     var weekly: TitleValueConfiguration = Presets.TitleValue.common
     var monthly: TitleValueConfiguration = Presets.TitleValue.common
@@ -22,7 +21,6 @@ struct LimitsPopupConfiguration: Configurable {
 struct LimitsPopupViewModel: ViewModel {
     var title: LabelViewModel
     var perTransaction: TitleValueViewModel
-    var dailyMin: TitleValueViewModel
     var dailyMax: TitleValueViewModel
     var weekly: TitleValueViewModel
     var monthly: TitleValueViewModel
@@ -43,11 +41,6 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
     }()
     
     private lazy var perTransactionView: TitleValueView = {
-        let view = TitleValueView()
-        return view
-    }()
-    
-    private lazy var dailyMinView: TitleValueView = {
         let view = TitleValueView()
         return view
     }()
@@ -100,11 +93,6 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
             make.leading.trailing.equalToSuperview()
         }
         
-        mainStack.addArrangedSubview(dailyMinView)
-        dailyMinView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-        }
-        
         mainStack.addArrangedSubview(dailyMaxView)
         dailyMaxView.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.extraSmall.rawValue)
@@ -131,7 +119,6 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
         super.configure(with: config)
         
         perTransactionView.configure(with: config?.perTransaction)
-        dailyMinView.configure(with: config?.dailyMin)
         dailyMaxView.configure(with: config?.dailyMax)
         weeklyView.configure(with: config?.weekly)
         monthlyView.configure(with: config?.monthly)
@@ -144,9 +131,6 @@ class LimitsPopupView: FEView<LimitsPopupConfiguration, LimitsPopupViewModel> {
         
         perTransactionView.setup(with: viewModel?.perTransaction)
         perTransactionView.isHidden = viewModel?.perTransaction.value == nil
-        
-        dailyMinView.setup(with: viewModel?.dailyMin)
-        dailyMinView.isHidden = viewModel?.dailyMin.value == nil
         
         dailyMaxView.setup(with: viewModel?.dailyMax)
         dailyMaxView.isHidden = viewModel?.dailyMax.value == nil

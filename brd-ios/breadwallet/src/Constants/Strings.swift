@@ -214,6 +214,10 @@ internal enum L10n {
     internal static let verification = L10n.tr("Localizable", "Account.Verification", fallback: "You need to be at least 18 years old to complete Level 1 verification")
     /// Why is the verification declined label in profile screen
     internal static let verificationDeclined = L10n.tr("Localizable", "Account.VerificationDeclined", fallback: "Why is my verification declined?")
+    /// Your verification was successful!
+    internal static let verificationSuccessful = L10n.tr("Localizable", "Account.VerificationSuccessful", fallback: "Your verification was successful!")
+    /// We're sorry, your verification was unsuccessful
+    internal static let verificationUnsuccessful = L10n.tr("Localizable", "Account.VerificationUnsuccessful", fallback: "We're sorry, your verification was unsuccessful")
     /// Verified
     internal static let verified = L10n.tr("Localizable", "Account.Verified", fallback: "Verified")
     /// Verified account message on profile screen
@@ -256,6 +260,17 @@ internal enum L10n {
     internal static let whyVerify = L10n.tr("Localizable", "Account.WhyVerify", fallback: "Why should I verify my identity?")
     /// Write your name as it appears on your ID label in create account
     internal static let writeYourName = L10n.tr("Localizable", "Account.WriteYourName", fallback: "Write your name as it appears on your ID")
+    internal enum VerificationSuccessful {
+      /// Your account has been successfully verified, and your limits have been updated.
+      internal static let description = L10n.tr("Localizable", "Account.VerificationSuccessful.description", fallback: "Your account has been successfully verified, and your limits have been updated.")
+    }
+    internal enum VerificationUnsuccessful {
+      /// Please try your verification again, while keeping the following in mind:
+      /// 
+      /// - Please ensure the area is well-lit
+      /// - Please ensure you are centered in the frame
+      internal static let description = L10n.tr("Localizable", "Account.VerificationUnsuccessful.description", fallback: "Please try your verification again, while keeping the following in mind:\n\n- Please ensure the area is well-lit\n- Please ensure you are centered in the frame")
+    }
     internal enum IdVerificationRejected {
       /// Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.
       internal static let description = L10n.tr("Localizable", "Account.idVerificationRejected.description", fallback: "Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.")
@@ -1533,6 +1548,8 @@ internal enum L10n {
     internal static let restoreYourWalletDescription = L10n.tr("Localizable", "Onboarding.RestoreYourWalletDescription", fallback: "You can restore your wallet with your recovery phrase or iCloud.")
     /// Onboarding screen Skip button title that allows the user to exit the onboarding process.
     internal static let skip = L10n.tr("Localizable", "Onboarding.skip", fallback: "Skip")
+    /// SKIP AND SAVE LATER
+    internal static let skipPhrase = L10n.tr("Localizable", "Onboarding.SkipPhrase", fallback: "SKIP AND SAVE LATER")
   }
   internal enum OnboardingPageFour {
     /// Onboarding screen Page 4 title
@@ -1632,6 +1649,12 @@ internal enum L10n {
       internal static let body = L10n.tr("Localizable", "Prompts.FaceId.body", fallback: "Tap continue to enable Face ID")
       /// Enable face ID prompt title
       internal static let title = L10n.tr("Localizable", "Prompts.FaceId.title", fallback: "Enable Face ID")
+    }
+    internal enum LimitsAuthentication {
+      /// Just one more small step, and you'll be able to enjoy your new limits.
+      internal static let body = L10n.tr("Localizable", "Prompts.LimitsAuthentication.body", fallback: "Just one more small step, and you'll be able to enjoy your new limits.")
+      /// Finish setting up your new Buy limits.
+      internal static let title = L10n.tr("Localizable", "Prompts.LimitsAuthentication.title", fallback: "Finish setting up your new Buy limits.")
     }
     internal enum NoPasscode {
       /// No passcode set warning body

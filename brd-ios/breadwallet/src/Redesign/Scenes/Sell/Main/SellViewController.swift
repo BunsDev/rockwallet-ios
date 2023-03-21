@@ -21,7 +21,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
         return L10n.Sell.title
     }
     
-    var plaidHandler: Handler?
+    var plaidHandler: PlaidLinkKitHandler?
     
     // MARK: - Overrides
     
