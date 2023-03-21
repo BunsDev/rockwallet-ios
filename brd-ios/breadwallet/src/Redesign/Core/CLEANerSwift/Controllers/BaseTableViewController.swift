@@ -481,9 +481,15 @@ class BaseTableViewController<C: CoordinatableRoutes,
         invalidateTableViewIntrinsicContentSize()
     }
     
-    // TODO: Experimental. Might need a code cleanup.
     func invalidateTableViewIntrinsicContentSize() {
-        tableView.visibleCells.forEach({ $0.invalidateIntrinsicContentSize() })
+        if #unavailable(iOS 16.0) {
+            DispatchQueue.main.async {
+                self.tableView.isScrollEnabled = false
+                self.tableView.isScrollEnabled = true
+            }
+        } else {
+            tableView.visibleCells.forEach({ $0.invalidateIntrinsicContentSize() })
+        }
     }
     
     /// Override in subclass
