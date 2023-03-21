@@ -99,10 +99,10 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     
     private lazy var drawerConfiguration: DrawerConfiguration = {
         switch currency.code {
-        case C.USDT:
+        case Constant.USDT:
             return DrawerConfiguration()
             
-        case C.USDC:
+        case Constant.USDC:
             return DrawerConfiguration(buttons: [Presets.Button.primary,
                                                  Presets.Button.secondary])
             
@@ -113,10 +113,10 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     
     private lazy var drawerViewModel: DrawerViewModel = {
         switch currency.code {
-        case C.USDT:
+        case Constant.USDT:
             return DrawerViewModel(drawerBottomOffset: 84)
             
-        case C.USDC:
+        case Constant.USDC:
             return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
                                              .init(title: L10n.Button.sell, image: Asset.sell.image)],
                                    drawerBottomOffset: 84)
@@ -128,7 +128,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     
     private lazy var drawerCallbacks: [(() -> Void)] = {
         switch currency.code {
-        case C.USDT:
+        case Constant.USDT:
             return [ { [weak self] in
                 self?.didTapDrawerButton(.card)
             }, { [weak self] in
@@ -137,7 +137,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
                 in self?.didTapDrawerButton()
             }]
             
-        case C.USDC:
+        case Constant.USDC:
             return [ { [weak self] in
                 self?.didTapDrawerButton(.card)
             }, { [weak self] in
