@@ -225,17 +225,18 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
             case .done:
                 self?.interactor?.checkBiometricStatus(viewAction: .init(resetCounter: true))
                 
-            case .error(let error):
-                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: error.localizedDescription)))
-                
             default:
-                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError()))
+                self?.displayBiometricStatusFailed(responseDisplay: .init())
             }
         }
     }
     
-    func displayBiometricStatus(responseDisplay: OrderPreviewModels.BiometricStatusCheck.ResponseDisplay) {
-        coordinator?.handleVeriffKYC(for: .liveness)
+    func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay) {
+        coordinator?.open(scene: Scenes.Failure) { vc in
+            vc.failure = .buyCard
+            vc.isModalDismissable = false
+            vc.navigationItem.hidesBackButton = true
+        }
     }
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {

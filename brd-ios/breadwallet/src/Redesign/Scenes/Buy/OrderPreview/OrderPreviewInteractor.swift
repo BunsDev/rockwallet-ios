@@ -155,13 +155,17 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
         let requestData = BiometricStatusRequestData(quoteId: dataStore?.quote?.quoteId.description)
-        BiometricStatusHelper.shared.checkBiometricStatus(requestData: requestData, resetCounter: viewAction.resetCounter) { error in
+        BiometricStatusHelper.shared.checkBiometricStatus(requestData: requestData, resetCounter: viewAction.resetCounter) { [weak self] error in
             guard error == nil else {
-                self.presenter?.presentError(actionResponse: .init(error: error))
+                self?.presenter?.presentBiometricStatusFailed(actionResponse: .init())
                 return
             }
             
-            self.submitBuy()
+            guard self?.dataStore?.isAchAccount == true else {
+                self?.submitBuy()
+                return
+            }
+            self?.submitAchBuy()
         }
     }
     
