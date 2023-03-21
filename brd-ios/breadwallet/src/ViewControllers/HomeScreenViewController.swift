@@ -271,7 +271,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: ViewSizes.bottomToolbarHeight)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: ViewSizes.bottomToolbarHeight.rawValue)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)

@@ -32,7 +32,7 @@ struct DrawerViewModel: ViewModel {
         .init(title: L10n.Buy.fundWithAch, image: Asset.bank.image),
         .init(title: L10n.Button.sell, image: Asset.sell.image)
     ]
-    var drawerBottomOffset = ViewSizes.bottomToolbarHeight
+    var drawerBottomOffset = ViewSizes.bottomToolbarHeight.rawValue
 }
 
 class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
