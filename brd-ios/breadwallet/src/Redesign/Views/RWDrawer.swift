@@ -30,7 +30,7 @@ struct DrawerViewModel: ViewModel {
     var buttons: [ButtonViewModel] = [
         .init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
         .init(title: L10n.Buy.fundWithAch, image: Asset.bank.image),
-        .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)
+        .init(title: L10n.Button.sell, image: Asset.sell.image)
     ]
     var drawerBottomOffset = 0.0
 }
