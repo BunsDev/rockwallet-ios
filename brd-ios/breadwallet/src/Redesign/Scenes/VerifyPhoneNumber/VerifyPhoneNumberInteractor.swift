@@ -42,6 +42,11 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
         
         let isValid = phoneNumberKit.isValidPhoneNumber((dataStore?.areaCode ?? "") + (dataStore?.phoneNumber ?? ""))
         
+        // TODO: How should this work?
+//        if !isValid {
+//            presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: "Please enter a valid phone number")))
+//        }
+        
         presenter?.presentValidate(actionResponse: .init(isValid: isValid))
     }
     
