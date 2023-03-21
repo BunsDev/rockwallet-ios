@@ -90,7 +90,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     }
     
     func showTermsAndConditions(viewAction: OrderPreviewModels.TermsAndConditions.ViewAction) {
-        guard let url = URL(string: C.termsAndConditions) else { return }
+        guard let url = URL(string: Constant.termsAndConditions) else { return }
         presenter?.presentTermsAndConditions(actionResponse: .init(url: url))
     }
     
@@ -104,17 +104,16 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         guard let currency = dataStore?.to?.currency,
               let address = currency.wallet?.defaultReceiveAddress,
               let to = dataStore?.to?.tokenValue,
-              let from = dataStore?.from
-        else { return }
+              let from = dataStore?.from else { return }
         
         let cryptoFormatter = ExchangeFormatter.crypto
-        cryptoFormatter.locale = Locale(identifier: C.usLocaleCode)
+        cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
         
         let toTokenValue = cryptoFormatter.string(for: to) ?? ""
         
         let fiatFormatter = ExchangeFormatter.fiat
-        fiatFormatter.locale = Locale(identifier: C.usLocaleCode)
+        fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
         
         let depositQuantity = from + (dataStore?.networkFee?.fiatValue ?? 0) + from * (dataStore?.quote?.buyFee ?? 1) / 100
@@ -154,7 +153,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     }
     
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
-        BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: viewAction.resetCounter) { error in
+        let requestData = BiometricStatusRequestData(quoteId: dataStore?.quote?.quoteId.description)
+        BiometricStatusHelper.shared.checkBiometricStatus(requestData: requestData, resetCounter: viewAction.resetCounter) { error in
             guard error == nil else {
                 self.presenter?.presentError(actionResponse: .init(error: error))
                 return
@@ -172,13 +172,13 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         else { return }
         
         let cryptoFormatter = ExchangeFormatter.crypto
-        cryptoFormatter.locale = Locale(identifier: C.usLocaleCode)
+        cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
         
         let toTokenValue = cryptoFormatter.string(for: to) ?? ""
         
         let fiatFormatter = ExchangeFormatter.fiat
-        fiatFormatter.locale = Locale(identifier: C.usLocaleCode)
+        fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
         
         let fromAmount = from * (1 + (dataStore?.quote?.buyFee ?? 0) / 100)

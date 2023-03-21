@@ -249,7 +249,7 @@ class ApplicationController: Subscriber {
     private func setupDefaults() {
         if UserDefaults.standard.object(forKey: shouldRequireLoginTimeoutKey) == nil {
             // Default 3 min timeout.
-            UserDefaults.standard.set(C.secondsInMinute*3.0, forKey: shouldRequireLoginTimeoutKey)
+            UserDefaults.standard.set(Constant.secondsInMinute*3.0, forKey: shouldRequireLoginTimeoutKey)
         }
     }
     
@@ -410,10 +410,11 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapSell = { [weak self] in
             guard let self = self,
-                  let token = Store.state.currencies.first(where: { $0.code == C.USDT })
+                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT })
             else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
+            
             self.coordinator?.showSell(for: token,
                                        coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)

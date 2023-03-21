@@ -352,6 +352,10 @@ extension Wallet {
         publishEvent(.blockUpdated(height: 0))
     }
     
+    func requestReceiveAddressSync() {
+         core.system.requestReceiveAddressSync(manager: core.manager)
+    }
+    
     func handleWalletEvent(_ event: WalletEvent) {
         print("[SYS] \(currency.code) wallet event: \(event)")
         switch event {

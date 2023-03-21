@@ -20,7 +20,7 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
-        guard let termsAndConditionsURL = URL(string: C.termsAndConditions) else { return }
+        guard let termsAndConditionsURL = URL(string: Constant.termsAndConditions) else { return }
         
         let sections: [Models.Section] =  [
             .email,

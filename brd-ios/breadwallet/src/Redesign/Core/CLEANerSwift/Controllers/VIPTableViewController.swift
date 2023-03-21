@@ -88,11 +88,10 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.heightUpdated = { height in
             self.contentShadowView.snp.remakeConstraints { make in
-                make.leading.equalTo(Margins.large.rawValue)
-                make.trailing.equalTo(-Margins.large.rawValue)
+                make.leading.equalToSuperview().inset(Margins.large.rawValue)
+                make.trailing.equalToSuperview().inset(Margins.large.rawValue)
                 make.top.equalTo(self.tableView.snp.top).inset(self.tableView.contentInset.top)
-                make.height.equalTo(height + Margins.extraLarge.rawValue)
-                make.width.equalTo(self.tableView.snp.width).offset(Margins.extraHuge.rawValue)
+                make.height.equalTo(height + Margins.large.rawValue)
             }
         }
         
@@ -106,8 +105,7 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.verticalScrollIndicatorInsets.right = isRoundedBackgroundEnabled ? -Margins.huge.rawValue : 0
         
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        tableView.reloadData()
         
         setupVerticalButtons()
     }

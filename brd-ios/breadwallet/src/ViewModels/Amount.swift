@@ -302,7 +302,7 @@ extension Decimal {
 extension String {
     func usDecimalString(fromLocale inputLocale: Locale) -> String {
         let expectedFormat = ExchangeFormatter.current
-        expectedFormat.locale = Locale(identifier: C.usLocaleCode)
+        expectedFormat.locale = Locale(identifier: Constant.usLocaleCode)
         
         // createUInt256ParseDecimal expects en_us formatted string
         let inputFormat = NumberFormatter()

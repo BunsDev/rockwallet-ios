@@ -201,7 +201,7 @@ class ModalPresenter: Subscriber {
     }
     
     func presentFaq(articleId: String? = nil, currency: Currency? = nil) {
-        guard let url = URL(string: C.supportLink) else { return }
+        guard let url = URL(string: Constant.supportLink) else { return }
         let webViewController = SimpleWebViewController(url: url)
         webViewController.setup(with: .init(title: L10n.MenuButton.support))
         let navController = RootNavigationController(rootViewController: webViewController)
@@ -561,7 +561,7 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }
                 
-                let feedback = EmailFeedbackManager.Feedback(recipients: C.feedbackEmail, subject: L10n.Title.rockwalletFeedback, body: "")
+                let feedback = EmailFeedbackManager.Feedback(recipients: Constant.feedbackEmail, subject: L10n.Title.rockwalletFeedback, body: "")
                 if let feedbackManager = EmailFeedbackManager(feedback: feedback, on: topVc) {
                     self?.feedbackManager = feedbackManager
                     
@@ -703,7 +703,7 @@ class ModalPresenter: Subscriber {
                              alert.addAction(UIAlertAction(title: L10n.Title.save, style: .default) { (_) in
                                  guard let newHost = alert.textFields?.first?.text, !newHost.isEmpty else {
                                      UserDefaults.debugBackendHost = nil
-                                     Backend.apiClient.host = C.backendHost
+                                     Backend.apiClient.host = Constant.backendHost
                                      (menuNav.topViewController as? MenuViewController)?.reloadMenu()
                                      return
                                  }

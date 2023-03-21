@@ -254,7 +254,7 @@ class LoginViewController: UIViewController, Subscriber {
             debugLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Margins.large.rawValue)
         ])
         topControlTop = logo.topAnchor.constraint(equalTo: view.topAnchor,
-                                                  constant: ViewSizes.medium.rawValue * 2 + C.brdLogoTopMargin)
+                                                  constant: ViewSizes.medium.rawValue * 2 + Constant.brdLogoTopMargin)
         logo.constrain([
             logo.bottomAnchor.constraint(equalTo: pinView.topAnchor, constant: -Margins.extraHuge.rawValue),
             logo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -439,7 +439,7 @@ class LoginViewController: UIViewController, Subscriber {
         let disabledUntilDate = Date(timeIntervalSince1970: disabledUntil)
         let unlockInterval = disabledUntil - Date().timeIntervalSince1970
         let df = DateFormatter()
-        df.setLocalizedDateFormatFromTemplate(unlockInterval > C.secondsInDay ? "h:mm:ss a MMM d, yyy" : "h:mm:ss a")
+        df.setLocalizedDateFormatFromTemplate(unlockInterval > Constant.secondsInDay ? "h:mm:ss a MMM d, yyy" : "h:mm:ss a")
 
         disabledView.setTimeLabel(string: L10n.UnlockScreen.disabled(df.string(from: disabledUntilDate)))
 
@@ -472,7 +472,7 @@ class LoginViewController: UIViewController, Subscriber {
         let unlockInterval = disabledUntil - Date().timeIntervalSince1970
         
         //If unlock time is greater than 4 hours allow wiping
-        guard unlockInterval > (C.secondsInMinute * 60 * 4.0) else { return }
+        guard unlockInterval > (Constant.secondsInMinute * 60 * 4.0) else { return }
         let alertView = UIAlertController(title: "",
                                           message: L10n.UnlockScreen.wipePrompt, preferredStyle: .alert)
         alertView.addAction(UIAlertAction(title: L10n.Button.cancel, style: .default, handler: nil))

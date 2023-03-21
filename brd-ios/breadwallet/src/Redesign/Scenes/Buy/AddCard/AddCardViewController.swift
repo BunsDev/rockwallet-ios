@@ -65,11 +65,6 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
             view.configure(with: .init())
             view.setup(with: model)
             
-            view.contentSizeChanged = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            
             view.valueChanged = { [weak self] number, cvv in
                 self?.interactor?.cardInfoSet(viewAction: .init(number: number, cvv: cvv))
             }

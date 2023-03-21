@@ -14,7 +14,7 @@ import WalletKit
 struct UserSignature {
     func getHeaders(nonce: String?, token: String?) -> [String: String] {
         let formatter = DateFormatter()
-        formatter.locale = .init(identifier: C.countryUS)
+        formatter.locale = .init(identifier: Constant.countryUS)
         formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
         let dateString = formatter.string(from: Date())
         

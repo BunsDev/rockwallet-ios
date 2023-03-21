@@ -9,8 +9,10 @@
 import UIKit
 import LinkKit
 
+typealias PlaidLinkKitHandler = Handler
+
 protocol LinkOAuthHandling {
-    var linkHandler: Handler? { get }
+    var plaidHandler: PlaidLinkKitHandler? { get }
 }
 
 class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
@@ -123,7 +125,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
                 self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
-                guard (Store.state.currencies.first(where: { $0.code == C.USDT }) == nil) else { return }
+                guard (Store.state.currencies.first(where: { $0.code == Constant.USDT }) == nil) else { return }
                 view.setup(with: SegmentControlViewModel(selectedIndex: .card))
             }
         }
@@ -205,7 +207,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     }
     
     private func increaseLimitsTapped() {
-        coordinator?.showInWebView(urlString: C.limits, title: L10n.Buy.increaseYourLimits)
+        coordinator?.showInWebView(urlString: Constant.limits, title: L10n.Buy.increaseYourLimits)
     }
     
     // MARK: - BuyResponseDisplay
@@ -215,7 +217,7 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
         
         switch dataStore?.paymentMethod {
         case .ach:
-            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDT }) {
+            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == Constant.USDT }) {
                 supportedCurrencies = [usdCurrency]
             }
         default:
@@ -252,10 +254,10 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
             return
         }
         
-        tableView.beginUpdates()
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
-        tableView.endUpdates()
+        
+        invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
