@@ -2625,6 +2625,8 @@
 
 "Swap.AmountPurchased.android" = "Amount purchased:";
 
+"Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
+
 /* Back to Home button */
 "Swap.BackToHome" = "Back to Home";
 
@@ -2679,6 +2681,8 @@
 "Swap.RequestTimedOut" = "Your swap request timed out. Please try again.";
 
 "Swap.retry" = "Retry";
+
+"Swap.SameAssetMessage" = "It’s not possible to select the same asset for both sending and receiving. Please select a different asset for either sending or receiving.";
 
 /* Select assets title in swap flow */
 "Swap.SelectAssets" = "Select assets";

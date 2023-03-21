@@ -456,7 +456,6 @@ class ApplicationController: Subscriber {
             veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: requestData) { [weak self] result in
                 switch result.status {
                 case .done:
-                    // TODO: Add waiting screen
                     BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: true) { error in
                         self?.handleBiometricStatus(approved: error == nil)
                     }

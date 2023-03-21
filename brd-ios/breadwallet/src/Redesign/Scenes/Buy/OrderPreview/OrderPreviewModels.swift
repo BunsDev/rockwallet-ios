@@ -74,7 +74,9 @@ enum OrderPreviewModels {
         struct ViewAction {
             let resetCounter: Bool
         }
-        
+    }
+    
+    struct BiometricStatusFailed {
         struct ActionResponse {
         }
         
