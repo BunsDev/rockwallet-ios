@@ -1,5 +1,5 @@
 //
-//  AccountHeaderView.swift
+//  AssetDetailsHeaderView.swift
 //  breadwallet
 //
 //  Created by Adrian Corscadden on 2016-11-16.
@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-class AccountHeaderView: UIView, GradientDrawable, Subscriber {
+class AssetDetailsHeaderView: UIView, GradientDrawable, Subscriber {
     // MARK: - Views
     
     private lazy var intrinsicSizeView: UIView = {
@@ -94,7 +94,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     var setHostContentOffset: ((CGFloat) -> Void)?
     static let headerViewMinHeight: CGFloat = 180.0
     static var headerViewMaxHeight: CGFloat {
-        return Self.shouldShowMarketData ? 375.0 + AccountHeaderView.marketDataHeight : 375.0
+        return Self.shouldShowMarketData ? 375.0 + AssetDetailsHeaderView.marketDataHeight : 375.0
     }
     
     static var shouldShowMarketData: Bool {
@@ -163,7 +163,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     }
     
     private func addConstraints() {
-        headerHeight = intrinsicSizeView.heightAnchor.constraint(equalToConstant: AccountHeaderView.headerViewMaxHeight)
+        headerHeight = intrinsicSizeView.heightAnchor.constraint(equalToConstant: AssetDetailsHeaderView.headerViewMaxHeight)
         intrinsicSizeView.constrain(toSuperviewEdges: nil)
         intrinsicSizeView.constrain([headerHeight])
         currencyName.snp.makeConstraints { make in
@@ -206,7 +206,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
             marketView.constrain([
                 marketView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.large.rawValue),
                 marketView.bottomAnchor.constraint(equalTo: balanceCell.topAnchor),
-                marketView.heightAnchor.constraint(equalToConstant: AccountHeaderView.marketDataHeight),
+                marketView.heightAnchor.constraint(equalToConstant: AssetDetailsHeaderView.marketDataHeight),
                 marketView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Margins.large.rawValue) ])
         }
         
@@ -343,10 +343,10 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
         guard let headerHeight = headerHeight else { return }
         let newHeaderViewHeight: CGFloat = headerHeight.constant - offset
         
-        if newHeaderViewHeight > AccountHeaderView.headerViewMaxHeight {
-            headerHeight.constant = AccountHeaderView.headerViewMaxHeight
-        } else if newHeaderViewHeight < AccountHeaderView.headerViewMinHeight {
-            headerHeight.constant = AccountHeaderView.headerViewMinHeight
+        if newHeaderViewHeight > AssetDetailsHeaderView.headerViewMaxHeight {
+            headerHeight.constant = AssetDetailsHeaderView.headerViewMaxHeight
+        } else if newHeaderViewHeight < AssetDetailsHeaderView.headerViewMinHeight {
+            headerHeight.constant = AssetDetailsHeaderView.headerViewMinHeight
         } else {
             headerHeight.constant = newHeaderViewHeight
             setHostContentOffset?(0)
@@ -362,8 +362,8 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
         guard delistedTokenView == nil, !shouldLockExpandingChart else { return } //Disable expanding/collapsing header when delistedTokenView is shown
         guard headerHeight?.isActive == true else { return }
         guard let currentHeight = headerHeight?.constant else { return }
-        let range = AccountHeaderView.headerViewMaxHeight - AccountHeaderView.headerViewMinHeight
-        let mid = AccountHeaderView.headerViewMinHeight + (range/2.0)
+        let range = AssetDetailsHeaderView.headerViewMaxHeight - AssetDetailsHeaderView.headerViewMinHeight
+        let mid = AssetDetailsHeaderView.headerViewMinHeight + (range/2.0)
         if currentHeight > mid {
             expandHeader()
         } else {
@@ -372,7 +372,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     }
     
     private func expandHeader() {
-        headerHeight?.constant = AccountHeaderView.headerViewMaxHeight
+        headerHeight?.constant = AssetDetailsHeaderView.headerViewMaxHeight
         UIView.animate(withDuration: Presets.Animation.short.rawValue, animations: {
             self.superview?.superview?.layoutIfNeeded()
         }, completion: { _ in
@@ -383,7 +383,7 @@ class AccountHeaderView: UIView, GradientDrawable, Subscriber {
     //Needs to be public so that it can be hidden
     //when the rewards view is expanded on the iPhone5
     func collapseHeader(animated: Bool = true) {
-        headerHeight?.constant = AccountHeaderView.headerViewMinHeight
+        headerHeight?.constant = AssetDetailsHeaderView.headerViewMinHeight
         if animated {
            UIView.animate(withDuration: Presets.Animation.short.rawValue, animations: {
                self.superview?.superview?.layoutIfNeeded()

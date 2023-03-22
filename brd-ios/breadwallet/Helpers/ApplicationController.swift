@@ -391,8 +391,11 @@ class ApplicationController: Subscriber {
                                        navigationController: UINavigationController) {
         homeScreen.didSelectCurrency = { [unowned self] currency in
             let wallet = self.coreSystem.wallet(for: currency)
-            let accountViewController = AccountViewController(currency: currency, wallet: wallet)
-            navigationController.pushViewController(accountViewController, animated: true)
+            let assetDetailsViewController = AssetDetailsViewController(currency: currency, wallet: wallet)
+            assetDetailsViewController.coordinator = self.coordinator
+            assetDetailsViewController.keyStore = self.keyStore
+            assetDetailsViewController.coreSystem = self.coreSystem
+            navigationController.pushViewController(assetDetailsViewController, animated: true)
         }
         
         homeScreen.didTapBuy = { [weak self] type in
@@ -456,7 +459,6 @@ class ApplicationController: Subscriber {
             veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: requestData) { [weak self] result in
                 switch result.status {
                 case .done:
-                    // TODO: Add waiting screen
                     BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: true) { error in
                         self?.handleBiometricStatus(approved: error == nil)
                     }
