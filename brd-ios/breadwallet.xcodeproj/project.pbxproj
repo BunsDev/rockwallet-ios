@@ -686,9 +686,9 @@
 		CEB909FA1E5FF242001804DC /* RecoverWalletIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB909F91E5FF242001804DC /* RecoverWalletIntroViewController.swift */; };
 		CEBF292E1EF99E55005C330A /* LightWeightAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF292D1EF99E55005C330A /* LightWeightAlert.swift */; };
 		CEBF32EE1DDBC30000348FC6 /* BRDButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32ED1DDBC30000348FC6 /* BRDButton.swift */; };
-		CEBF32F01DDCD30600348FC6 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32EF1DDCD30600348FC6 /* AccountViewController.swift */; };
-		CEBF32F21DDCE10D00348FC6 /* AccountHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32F11DDCE10D00348FC6 /* AccountHeaderView.swift */; };
-		CEBF32F41DDCE12900348FC6 /* AccountFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32F31DDCE12900348FC6 /* AccountFooterView.swift */; };
+		CEBF32F01DDCD30600348FC6 /* AssetDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32EF1DDCD30600348FC6 /* AssetDetailsViewController.swift */; };
+		CEBF32F21DDCE10D00348FC6 /* AssetDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32F11DDCE10D00348FC6 /* AssetDetailsHeaderView.swift */; };
+		CEBF32F41DDCE12900348FC6 /* AssetDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32F31DDCE12900348FC6 /* AssetDetailsFooterView.swift */; };
 		CEBF32F61DDCEAF900348FC6 /* TransactionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF32F51DDCEAF900348FC6 /* TransactionsTableViewController.swift */; };
 		CEC4CF091F0C84AB00E5C82E /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4CF081F0C84AB00E5C82E /* UIViewController+Alerts.swift */; };
 		CEC6AA3B1DEE4EB000EE5AFD /* CGRect+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6AA3A1DEE4EB000EE5AFD /* CGRect+Additions.swift */; };
@@ -734,6 +734,7 @@
 		CEF3E8341DE57166007C0A9E /* AnimatableIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3E8331DE57166007C0A9E /* AnimatableIcon.swift */; };
 		CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */; };
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
+		D712BC9C29C9F2BA00C2F09E /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */; };
 		D7EA320929C0805B00D9FD4F /* BiometricStatusHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */; };
 		D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */; };
 		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
@@ -743,6 +744,7 @@
 		D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */; };
 		D7F75967299BB55100FB4BFA /* LoqateEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */; };
 		D7F75969299D1F9900FB4BFA /* RetrieveAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */; };
+		D7F8EA3829C4857B008DD7C7 /* DrawerPresntable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1489,9 +1491,9 @@
 		CEB909F91E5FF242001804DC /* RecoverWalletIntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecoverWalletIntroViewController.swift; path = src/ViewControllers/RecoverWalletIntroViewController.swift; sourceTree = "<group>"; };
 		CEBF292D1EF99E55005C330A /* LightWeightAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightWeightAlert.swift; path = src/Views/LightWeightAlert.swift; sourceTree = "<group>"; };
 		CEBF32ED1DDBC30000348FC6 /* BRDButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BRDButton.swift; path = src/Views/BRDButton.swift; sourceTree = "<group>"; };
-		CEBF32EF1DDCD30600348FC6 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = src/ViewControllers/AccountViewController.swift; sourceTree = "<group>"; };
-		CEBF32F11DDCE10D00348FC6 /* AccountHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountHeaderView.swift; path = src/Views/AccountHeaderView.swift; sourceTree = "<group>"; };
-		CEBF32F31DDCE12900348FC6 /* AccountFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountFooterView.swift; path = src/Views/AccountFooterView.swift; sourceTree = "<group>"; };
+		CEBF32EF1DDCD30600348FC6 /* AssetDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetDetailsViewController.swift; path = src/ViewControllers/AssetDetailsViewController.swift; sourceTree = "<group>"; };
+		CEBF32F11DDCE10D00348FC6 /* AssetDetailsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetDetailsHeaderView.swift; path = src/Views/AssetDetailsHeaderView.swift; sourceTree = "<group>"; };
+		CEBF32F31DDCE12900348FC6 /* AssetDetailsFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetDetailsFooterView.swift; path = src/Views/AssetDetailsFooterView.swift; sourceTree = "<group>"; };
 		CEBF32F51DDCEAF900348FC6 /* TransactionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionsTableViewController.swift; path = src/ViewControllers/TransactionsTableViewController.swift; sourceTree = "<group>"; };
 		CEC4CF081F0C84AB00E5C82E /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Alerts.swift"; path = "src/Extensions/UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		CEC6AA3A1DEE4EB000EE5AFD /* CGRect+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGRect+Additions.swift"; path = "src/Extensions/CGRect+Additions.swift"; sourceTree = "<group>"; };
@@ -1538,6 +1540,7 @@
 		CEF3E8331DE57166007C0A9E /* AnimatableIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimatableIcon.swift; path = src/Views/AnimatedIcons/AnimatableIcon.swift; sourceTree = "<group>"; };
 		CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AmountViewController.swift; path = src/ViewControllers/AmountViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
+		D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusHelper.swift; sourceTree = "<group>"; };
 		D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeModels.swift; sourceTree = "<group>"; };
 		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
@@ -1547,6 +1550,7 @@
 		D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressWorker.swift; sourceTree = "<group>"; };
 		D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoqateEndpoints.swift; sourceTree = "<group>"; };
 		D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAddressWorker.swift; sourceTree = "<group>"; };
+		D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPresntable.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2380,6 +2384,8 @@
 				7E5CB3482835090D00EC787E /* UIColor+init.swift */,
 				7E5CB3492835090D00EC787E /* NSLayoutConstraint+priority.swift */,
 				7B67708D29053CDF006FB72A /* Shadow+Background+Extensions.swift */,
+				D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */,
+				D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3049,7 +3055,7 @@
 				CEC6AA3E1DEFC85700EE5AFD /* RootModals */,
 				CE6D0F951DE8B6B600BD4BCF /* ViewControllerTransitions */,
 				CE760ED71E55F9E000EFAC2B /* SecurityCenter */,
-				CEBF32EF1DDCD30600348FC6 /* AccountViewController.swift */,
+				CEBF32EF1DDCD30600348FC6 /* AssetDetailsViewController.swift */,
 				CE274A601FD7C902000A4E62 /* RootNavigationController.swift */,
 				CE3840E71FD590BD00437C31 /* AssetListTableView.swift */,
 				CEBF32F51DDCEAF900348FC6 /* TransactionsTableViewController.swift */,
@@ -3133,8 +3139,8 @@
 			children = (
 				7BDB4A062806F4720031F015 /* LinkStatusCircle.swift */,
 				CEEC708D1E954AAB00EF788E /* AboutHeaderView.swift */,
-				CEBF32F31DDCE12900348FC6 /* AccountFooterView.swift */,
-				CEBF32F11DDCE10D00348FC6 /* AccountHeaderView.swift */,
+				CEBF32F31DDCE12900348FC6 /* AssetDetailsFooterView.swift */,
+				CEBF32F11DDCE10D00348FC6 /* AssetDetailsHeaderView.swift */,
 				CEF3E82C1DE528BF007C0A9E /* AlertView.swift */,
 				CE41327522CACA05002391E6 /* BalanceCell.swift */,
 				CEE20C2E1EA3E5820086F724 /* BlinkingView.swift */,
@@ -3917,8 +3923,9 @@
 				7B2E5057289A5F02008CACD8 /* AddCardModels.swift in Sources */,
 				7E5CB39D2835090E00EC787E /* Alertable.swift in Sources */,
 				7E5CB3892835090E00EC787E /* Margins+Sizes.swift in Sources */,
+				D7F8EA3829C4857B008DD7C7 /* DrawerPresntable.swift in Sources */,
 				7EB838482849DD8200C7CC05 /* FELink.swift in Sources */,
-				CEBF32F01DDCD30600348FC6 /* AccountViewController.swift in Sources */,
+				CEBF32F01DDCD30600348FC6 /* AssetDetailsViewController.swift in Sources */,
 				7B94EFAA28BD501500F63B62 /* UINavigationController+Completion.swift in Sources */,
 				CEE1F5631DF13E5A00D733AD /* ModalHeaderView.swift in Sources */,
 				7E5CB39E2835090E00EC787E /* BaseTableViewController.swift in Sources */,
@@ -4147,6 +4154,7 @@
 				CEC6AA421DEFC88F00EE5AFD /* ReceiveViewController.swift in Sources */,
 				7C9BC58F231765190011732F /* WalletConnectionSettings.swift in Sources */,
 				7B9434322886A7FA00638703 /* DeleteProfileInfoModels.swift in Sources */,
+				D712BC9C29C9F2BA00C2F09E /* UIDevice+Extensions.swift in Sources */,
 				7B05888728A2698A00D7C971 /* PaymentCardsWorker.swift in Sources */,
 				CE3D4C591EF743EF0016B1C8 /* GuardProtected.swift in Sources */,
 				7E8E979B283F4830008606B0 /* ProfileVIP.swift in Sources */,
@@ -4280,7 +4288,7 @@
 				7B2E5056289A5F02008CACD8 /* AddCardPresenter.swift in Sources */,
 				7B39478B297000ED007D405E /* ForgotPasswordPresenter.swift in Sources */,
 				CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */,
-				CEBF32F21DDCE10D00348FC6 /* AccountHeaderView.swift in Sources */,
+				CEBF32F21DDCE10D00348FC6 /* AssetDetailsHeaderView.swift in Sources */,
 				CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */,
 				7B2E5053289A5F02008CACD8 /* AddCardViewController.swift in Sources */,
 				71C44E90225D135E00EF4459 /* ConfirmRecoveryKeyViewController.swift in Sources */,
@@ -4371,7 +4379,7 @@
 				22A9A9481DF61945000F0016 /* BRBitID.swift in Sources */,
 				CE0BC980215ACBE100E68B2B /* TokenImageNoBackground.swift in Sources */,
 				7C0F3DC42124A81100531E54 /* Backend.swift in Sources */,
-				CEBF32F41DDCE12900348FC6 /* AccountFooterView.swift in Sources */,
+				CEBF32F41DDCE12900348FC6 /* AssetDetailsFooterView.swift in Sources */,
 				7EC21A1D28991A6500FED711 /* BillingAddressStore.swift in Sources */,
 				710B036421F8C208007E8A2A /* AppRatingManager.swift in Sources */,
 				7B88C4852837B8710089CFBE /* Currency+Shared.swift in Sources */,

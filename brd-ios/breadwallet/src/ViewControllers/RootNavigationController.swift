@@ -45,7 +45,7 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         }
         
         switch viewController {
-        case is AccountViewController,
+        case is AssetDetailsViewController,
             is HomeScreenViewController,
             is SimpleWebViewController:
             backgroundColor = .clear

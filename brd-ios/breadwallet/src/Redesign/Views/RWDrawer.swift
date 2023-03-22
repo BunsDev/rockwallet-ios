@@ -30,13 +30,13 @@ struct DrawerViewModel: ViewModel {
     var buttons: [ButtonViewModel] = [
         .init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
         .init(title: L10n.Buy.fundWithAch, image: Asset.bank.image),
-        .init(title: L10n.Drawer.Button.buyWithSell, image: Asset.withdrawal.image)
+        .init(title: L10n.Button.sell, image: Asset.sell.image)
     ]
-    var drawerBottomOffset = 0.0
+    var additionalBottomOffset: CGFloat = UIDevice.current.hasNotch ? 0 : Margins.large.rawValue
+    var drawerBottomOffset = ViewSizes.bottomToolbarHeight.rawValue
 }
 
 class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
-    
     var callbacks: [(() -> Void)] = []
     var isShown: Bool { return blurView.alpha == 1 }
     
@@ -167,7 +167,8 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         buttonStack.isHidden = viewModel.buttons.isEmpty
         
         stack.snp.updateConstraints { make in
-            make.bottom.equalToSuperview().inset(viewModel.drawerBottomOffset)
+            let bottomOffset = viewModel.drawerBottomOffset + viewModel.additionalBottomOffset
+            make.bottom.equalToSuperview().inset(bottomOffset)
         }
         
         content.layoutIfNeeded()

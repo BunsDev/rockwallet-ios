@@ -1,24 +1,29 @@
 //
-//  AccountViewController.swift
+//  AssetDetailsViewController.swift
 //  breadwallet
 //
 //  Created by Adrian Corscadden on 2016-11-16.
 //  Copyright © 2016-2019 Breadwinner AG. All rights reserved.
 //
 
+import Combine
 import UIKit
 
-class AccountViewController: UIViewController, Subscriber {
+class AssetDetailsViewController: UIViewController, Subscriber {
     
     // MARK: - Public
     
     var currency: Currency
+    var coreSystem: CoreSystem?
+    var keyStore: KeyStore?
+    
+    weak var coordinator: BaseCoordinator?
     
     init(currency: Currency, wallet: Wallet?) {
         self.wallet = wallet
         self.currency = currency
-        self.headerView = AccountHeaderView(currency: currency)
-        self.footerView = AccountFooterView(currency: currency)
+        self.headerView = AssetDetailsHeaderView(currency: currency)
+        self.footerView = AssetDetailsFooterView(currency: currency)
         self.searchHeaderview = SearchHeaderView()
         
         super.init(nibName: nil, bundle: nil)
@@ -29,10 +34,26 @@ class AccountViewController: UIViewController, Subscriber {
             self.didSelectTransaction(transactions: transactions, selectedIndex: index)
         })
         
-        footerView.sendCallback = { [unowned self] in
-            Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency))) }
-        footerView.receiveCallback = { [unowned self] in
-            Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency))) }
+        footerView.actionPublisher.sink { [unowned self] action in
+            if action != .buySell { hideDrawer() }
+            
+            switch action {
+            case .send:
+                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency)))
+                
+            case .receive:
+                Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
+                
+            case .buySell:
+                toggleDrawer()
+                
+            case .swap:
+                guard let coreSystem, let keyStore else { return }
+                self.coordinator?.showSwap(currencies: Store.state.currencies,
+                                           coreSystem: coreSystem,
+                                           keyStore: keyStore)
+            }
+        }.store(in: &observers)
     }
     
     deinit {
@@ -41,8 +62,8 @@ class AccountViewController: UIViewController, Subscriber {
     
     // MARK: - Private
     
-    private let headerView: AccountHeaderView
-    private let footerView: AccountFooterView
+    private let headerView: AssetDetailsHeaderView
+    private let footerView: AssetDetailsFooterView
     private var footerHeightConstraint: NSLayoutConstraint?
     private let transitionDelegate = ModalTransitionDelegate(type: .transactionDetail)
     private var transactionsTableView: TransactionsTableViewController?
@@ -60,6 +81,8 @@ class AccountViewController: UIViewController, Subscriber {
         }
     }
     
+    private var observers: [AnyCancellable] = []
+    
     private var wallet: Wallet? {
         didSet {
             if wallet != nil {
@@ -74,6 +97,49 @@ class AccountViewController: UIViewController, Subscriber {
         }
     }
     
+    private lazy var drawerConfiguration: DrawerConfiguration = {
+        switch currency.code {
+        case Constant.USDT:
+            return DrawerConfiguration()
+            
+        default:
+            return DrawerConfiguration(buttons: [Presets.Button.primary,
+                                                 Presets.Button.secondary])
+        }
+    }()
+    
+    private lazy var drawerViewModel: DrawerViewModel = {
+        switch currency.code {
+        case Constant.USDT:
+            return DrawerViewModel()
+            
+        default:
+            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+                                             .init(title: L10n.Button.sell, image: Asset.sell.image)])
+        }
+    }()
+    
+    private lazy var drawerCallbacks: [(() -> Void)] = {
+        switch currency.code {
+        case Constant.USDT:
+            return [ { [weak self] in
+                self?.didTapDrawerButton(.card)
+            }, { [weak self] in
+                self?.didTapDrawerButton(.ach)
+            }, { [weak self]
+                in self?.didTapDrawerButton()
+            }]
+            
+        default:
+            return [ { [weak self] in
+                self?.didTapDrawerButton(.card)
+            }, { [weak self] in
+                self?.didTapDrawerButton()
+            }]
+            
+        }
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,6 +149,9 @@ class AccountViewController: UIViewController, Subscriber {
         addTransactionsView()
         addSubscriptions()
         setInitialData()
+        
+        setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel, callbacks: drawerCallbacks, dismissSetup: nil)
+        view.bringSubviewToFront(footerView) // Put bottom toolbar in front of drawer
         
         transactionsTableView?.didScrollToYOffset = { [weak self] offset in
             self?.headerView.setOffset(offset)
@@ -117,7 +186,7 @@ class AccountViewController: UIViewController, Subscriber {
     
     override func viewSafeAreaInsetsDidChange() {
         
-        footerHeightConstraint?.constant = AccountFooterView.height + view.safeAreaInsets.bottom
+        footerHeightConstraint?.constant = AssetDetailsFooterView.height + view.safeAreaInsets.bottom
     }
     
     // MARK: -
@@ -151,7 +220,7 @@ class AccountViewController: UIViewController, Subscriber {
         searchHeaderview.constrain(toSuperviewEdges: nil)
         
         footerView.constrain([
-            footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
     }
@@ -178,6 +247,16 @@ class AccountViewController: UIViewController, Subscriber {
         headerView.setHostContentOffset = { [weak self] offset in
             self?.transactionsTableView?.tableView.contentOffset.y = offset
         }
+    }
+    
+    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+        guard let type else {
+            guard let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
+            coordinator?.showSell(for: token, coreSystem: coreSystem, keyStore: keyStore)
+            return
+        }
+        
+        coordinator?.showBuy(type: type, coreSystem: coreSystem, keyStore: keyStore)
     }
     
     private func createAccount() {
@@ -213,7 +292,7 @@ class AccountViewController: UIViewController, Subscriber {
     
     private func addTransactionsView() {
         if let transactionsTableView = transactionsTableView {
-            transactionsTableView.tableView.contentInset.bottom = AccountFooterView.height
+            transactionsTableView.tableView.contentInset.bottom = AssetDetailsFooterView.height
             transactionsTableView.view.backgroundColor = LightColors.Background.two
             view.backgroundColor = LightColors.Background.one
             
@@ -325,7 +404,7 @@ class AccountViewController: UIViewController, Subscriber {
 }
 
 // MARK: TxDetailDelegate
-extension AccountViewController: TxDetaiViewControllerDelegate {
+extension AssetDetailsViewController: TxDetaiViewControllerDelegate {
     func txDetailDidDismiss(detailViewController: TxDetailViewController) {
         if isSearching {
             // Restore the search keyboard that we hid when the transaction details were displayed

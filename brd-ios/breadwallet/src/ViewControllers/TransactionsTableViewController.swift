@@ -143,7 +143,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         tableView.addSubview(emptyMessage)
         emptyMessage.constrain([
             emptyMessage.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptyMessage.topAnchor.constraint(equalTo: tableView.topAnchor, constant: E.isIPhone5 ? 50.0 : AccountHeaderView.headerViewMinHeight),
+            emptyMessage.topAnchor.constraint(equalTo: tableView.topAnchor, constant: E.isIPhone5 ? 50.0 : AssetDetailsHeaderView.headerViewMinHeight),
             emptyMessage.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -Margins.large.rawValue)
         ])
     }
