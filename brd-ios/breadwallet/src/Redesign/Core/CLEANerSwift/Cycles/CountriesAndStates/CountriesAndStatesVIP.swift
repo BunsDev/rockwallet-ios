@@ -61,12 +61,9 @@ extension Interactor where Self: CountriesAndStatesViewActions,
                 let phoneNumberKit = PhoneNumberKit()
                 let countries = data ?? []
                 
-                self?.dataStore?.countries.indices.forEach {
-                    self?.dataStore?.countries[$0].areaCode = String(phoneNumberKit.countryCode(for: countries[$0].iso2) ?? 0)
-                }
-                
-                self?.dataStore?.countries.indices.forEach {
-                    self?.dataStore?.countries[$0].name = countries[$0].areaCode ?? "" + " " + countries[$0].name
+                self?.dataStore?.countries.indices.forEach { index in
+                    self?.dataStore?.countries[index].areaCode = String(phoneNumberKit.countryCode(for: countries[index].iso2) ?? 0)
+                    self?.dataStore?.countries[index].name = countries[index].areaCode ?? "" + " " + countries[index].name
                 }
                 
                 self?.presenter?.presentCountry(actionResponse: .init(countries: self?.dataStore?.countries))
