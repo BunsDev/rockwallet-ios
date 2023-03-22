@@ -2432,6 +2432,8 @@ internal enum L10n {
     internal static let addItem = L10n.tr("Localizable", "Swap.AddItem", fallback: "Add item!")
     /// Amount purchased label in detail swap screen
     internal static let amountPurchased = L10n.tr("Localizable", "Swap.AmountPurchased", fallback: "Amount purchased")
+    /// Sorry, we currently don’t support trading of this asset.
+    internal static let assetSelectionMessage = L10n.tr("Localizable", "Swap.AssetSelectionMessage", fallback: "Sorry, we currently don’t support trading of this asset.")
     /// Back to Home button
     internal static let backToHome = L10n.tr("Localizable", "Swap.BackToHome", fallback: "Back to Home")
     /// Balance text on swap
@@ -2470,6 +2472,8 @@ internal enum L10n {
     internal static let requestTimedOut = L10n.tr("Localizable", "Swap.RequestTimedOut", fallback: "Your swap request timed out. Please try again.")
     /// Retry
     internal static let retry = L10n.tr("Localizable", "Swap.retry", fallback: "Retry")
+    /// It’s not possible to select the same asset for both sending and receiving. Please select a different asset for either sending or receiving.
+    internal static let sameAssetMessage = L10n.tr("Localizable", "Swap.SameAssetMessage", fallback: "It’s not possible to select the same asset for both sending and receiving. Please select a different asset for either sending or receiving.")
     /// Select assets title in swap flow
     internal static let selectAssets = L10n.tr("Localizable", "Swap.SelectAssets", fallback: "Select assets")
     /// Sending fee label on swap screen
