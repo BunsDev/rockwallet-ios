@@ -2701,7 +2701,7 @@
 /* Swap min and max limit text */
 "Swap.SwapLimits" = "Currently, minimum for Swap is %s USD and maximum is %s USD/day.";
 
-"Swap.Swapping" = "Swapping %1$@ to %2$@";
+"Swap.Swapping" = "Swapping %1$s to %2$s";
 
 /* Swap status message on swap flow */
 "Swap.SwapStatus" = "Your %s is estimated to arrive in 30 minutes. You can continue to use your wallet. We'll let you know when your swap has finished.";
@@ -2714,14 +2714,14 @@
 /* Total label in swap details screen */
 "Swap.Total" = "Total:";
 
-"Swap.transactionFrom" = "From %1$@";
+"Swap.transactionFrom" = "From %1$s";
 
 /* Transaction ID label in swap details screen */
 "Swap.TransactionID" = "RockWallet Transaction ID";
 
 "Swap.transactionInEthereumNetwork" = "It seems that your transaction takes place in the Ethereum network, please keep in mind that network fees will be charged in ETH";
 
-"Swap.transactionTo" = "To %1$@";
+"Swap.transactionTo" = "To %1$s";
 
 "Swap.youReceive" = "You'll receive";
 
@@ -3274,6 +3274,10 @@
 "VerifyAccount.VerifyMyIdentity" = "Verify my identity";
 
 "VerifyAccount.VerifyYourIdentity" = "Verify your identity";
+
+"VerifyPhoneNumber.instructions" = "We take security seriously. Providing a valid phone number lets us send you verification codes and account alerts to keep your wallet safe.";
+
+"VerifyPhoneNumber.phoneNumber.title" = "Phone number";
 
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "Indtast venligst din PIN for at godkende denne transaktion.";

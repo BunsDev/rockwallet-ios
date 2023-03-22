@@ -3275,6 +3275,10 @@
 
 "VerifyAccount.VerifyYourIdentity" = "Verify your identity";
 
+"VerifyPhoneNumber.instructions" = "We take security seriously. Providing a valid phone number lets us send you verification codes and account alerts to keep your wallet safe.";
+
+"VerifyPhoneNumber.phoneNumber.title" = "Phone number";
+
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "Introduce tu PIN para autorizar esta transacción.";
 
