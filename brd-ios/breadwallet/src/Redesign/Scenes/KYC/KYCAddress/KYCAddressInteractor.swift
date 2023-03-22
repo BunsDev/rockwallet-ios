@@ -50,7 +50,7 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
                 self?.dataStore?.address = "\(address.street ?? "") \(address.buildingNumber ?? "")"
                 self?.dataStore?.city = address.city
                 self?.dataStore?.postalCode = address.postalCode
-                self?.pickCountry(viewAction: .init(withAreaCodes: false, iso2: address.countryIso2, countryFullName: address.countryName))
+                self?.pickCountry(viewAction: .init(iso2: address.countryIso2, countryFullName: address.countryName))
                 self?.pickState(viewAction: .init(code: address.provinceCode, state: address.province))
                 self?.presenter?.presentData(actionResponse: .init(item: self?.dataStore))
                 

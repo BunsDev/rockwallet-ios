@@ -33,7 +33,7 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
     
     func validate(viewAction: VerifyPhoneNumberModels.Validate.ViewAction) {
         let phoneNumberKit = PhoneNumberKit()
-        let isValid = phoneNumberKit.isValidPhoneNumber((dataStore?.areaCode ?? "") + (dataStore?.phoneNumber ?? ""))
+        let isValid = phoneNumberKit.isValidPhoneNumber((dataStore?.country?.areaCode ?? "") + (dataStore?.phoneNumber ?? ""))
         
         debounceTimer?.invalidate()
         debounceTimer = Timer.scheduledTimer(withTimeInterval: Presets.Delay.long.rawValue, repeats: false) { [weak self] _ in

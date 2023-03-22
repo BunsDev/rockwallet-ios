@@ -33,7 +33,6 @@ protocol VerifyPhoneNumberResponseDisplays: AnyObject, BaseResponseDisplays, Cou
 }
 
 protocol VerifyPhoneNumberDataStore: BaseDataStore, CountriesAndStatesDataStore {
-    var areaCode: String? { get set }
     var phoneNumber: String? { get set }
 }
 

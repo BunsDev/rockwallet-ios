@@ -77,7 +77,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoor
             view.setup(with: model)
             
             view.didPresentPicker = { [weak self] in
-                self?.interactor?.pickCountry(viewAction: .init(withAreaCodes: true))
+                self?.interactor?.pickCountry(viewAction: .init())
             }
             
             view.didChangePhoneNumber = { [weak self] phoneNumber in

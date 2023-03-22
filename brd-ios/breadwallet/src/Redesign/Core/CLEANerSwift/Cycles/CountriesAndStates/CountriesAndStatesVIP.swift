@@ -58,17 +58,15 @@ extension Interactor where Self: CountriesAndStatesViewActions,
                 
                 self?.dataStore?.countries = data ?? []
                 
-                if viewAction.withAreaCodes {
-                    let phoneNumberKit = PhoneNumberKit()
-                    let countries = self?.dataStore?.countries ?? []
-                    
-                    self?.dataStore?.countries.indices.forEach {
-                        self?.dataStore?.countries[$0].areaCode = String(phoneNumberKit.countryCode(for: countries[$0].iso2) ?? 0)
-                    }
-                    
-                    self?.dataStore?.countries.indices.forEach {
-                        self?.dataStore?.countries[$0].name = countries[$0].areaCode ?? "" + " " + countries[$0].name
-                    }
+                let phoneNumberKit = PhoneNumberKit()
+                let countries = data ?? []
+                
+                self?.dataStore?.countries.indices.forEach {
+                    self?.dataStore?.countries[$0].areaCode = String(phoneNumberKit.countryCode(for: countries[$0].iso2) ?? 0)
+                }
+                
+                self?.dataStore?.countries.indices.forEach {
+                    self?.dataStore?.countries[$0].name = countries[$0].areaCode ?? "" + " " + countries[$0].name
                 }
                 
                 self?.presenter?.presentCountry(actionResponse: .init(countries: self?.dataStore?.countries))
@@ -125,7 +123,7 @@ extension Controller where Self: CountriesAndStatesResponseDisplays,
                            Self.Coordinator: CountriesAndStatesRoutes {
     func displayCountry(responseDisplay: CountriesAndStatesModels.SelectCountry.ResponseDisplay) {
         coordinator?.showCountrySelector(countries: responseDisplay.countries) { [weak self] model in
-            self?.interactor?.pickCountry(viewAction: .init(withAreaCodes: model?.areaCode != nil, areaCode: model?.areaCode, iso2: model?.iso2, countryFullName: model?.name))
+            self?.interactor?.pickCountry(viewAction: .init(areaCode: model?.areaCode, iso2: model?.iso2, countryFullName: model?.name))
         }
     }
     

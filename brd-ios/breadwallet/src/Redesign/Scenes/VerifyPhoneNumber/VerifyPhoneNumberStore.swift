@@ -19,7 +19,6 @@ class VerifyPhoneNumberStore: NSObject, BaseDataStore, VerifyPhoneNumberDataStor
     // MARK: - VerifyPhoneNumberDataStore
     
     var itemId: String?
-    var areaCode: String?
     var phoneNumber: String?
     
     // MARK: - Aditional helpers

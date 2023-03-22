@@ -23,7 +23,8 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
            let areaCode = item.country?.areaCode {
             presentSetAreaCode(actionResponse: .init(areaCode: .init(iso2: iso2,
                                                                      name: name,
-                                                                     areaCode: areaCode)))
+                                                                     areaCode: areaCode),
+                                                     phoneNumber: viewController?.dataStore?.phoneNumber))
             return
         }
         
@@ -37,7 +38,7 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
                 LabelViewModel.text(L10n.VerifyPhoneNumber.instructions)
             ],
             .phoneNumber: [
-                PhoneNumberViewModel(areaCode: .init(leading: .imageName("US"), title: "+1"),
+                PhoneNumberViewModel(areaCode: .init(leading: .imageName(Constant.countryUS), title: "+1"),
                                      phoneNumber: .init(placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))
             ]
         ]
@@ -47,8 +48,10 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
     
     func presentSetAreaCode(actionResponse: VerifyPhoneNumberModels.SetAreaCode.ActionResponse) {
         viewController?.displaySetAreaCode(responseDisplay: .init(areaCode:
-                .init(areaCode: .init(leading: .imageName(actionResponse.areaCode.iso2), title: "+" + (actionResponse.areaCode.areaCode ?? "")),
-                      phoneNumber: .init(value: actionResponse.phoneNumber, placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))))
+                .init(areaCode: .init(leading: .imageName(actionResponse.areaCode.iso2),
+                                      title: "+" + (actionResponse.areaCode.areaCode ?? "")),
+                      phoneNumber: .init(value: actionResponse.phoneNumber,
+                                         placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))))
     }
     
     func presentValidate(actionResponse: VerifyPhoneNumberModels.Validate.ActionResponse) {

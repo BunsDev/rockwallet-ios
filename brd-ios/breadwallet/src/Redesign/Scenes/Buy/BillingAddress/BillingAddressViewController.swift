@@ -138,7 +138,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch sections[indexPath.section] as? Models.Section {
         case .country:
-            interactor?.pickCountry(viewAction: .init(withAreaCodes: false))
+            interactor?.pickCountry(viewAction: .init())
             
         default:
             return
