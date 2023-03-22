@@ -62,13 +62,15 @@ class AssetDetailsFooterView: UIView, Subscriber {
         buttonsView.spacing = Margins.small.rawValue
         buttonsView.distribution = .equalSpacing
         
+        let bottomMargin: Margins = UIDevice.current.hasNotch ? .extraHuge : .medium
+        
         addSubview(buttonsView)
         buttonsView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.medium.rawValue)
             make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
             make.leading.equalToSuperview().offset(Margins.huge.rawValue)
             make.trailing.equalToSuperview().offset(-Margins.huge.rawValue)
-            make.bottom.equalToSuperview().inset(Margins.extraHuge.rawValue)
+            make.bottom.equalToSuperview().inset(bottomMargin.rawValue)
         }
         
         buttons.forEach { button in

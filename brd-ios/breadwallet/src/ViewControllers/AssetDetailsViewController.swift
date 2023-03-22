@@ -102,12 +102,9 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         case Constant.USDT:
             return DrawerConfiguration()
             
-        case Constant.USDC:
+        default:
             return DrawerConfiguration(buttons: [Presets.Button.primary,
                                                  Presets.Button.secondary])
-            
-        default:
-            return DrawerConfiguration(buttons: [Presets.Button.primary])
         }
     }()
     
@@ -116,12 +113,9 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         case Constant.USDT:
             return DrawerViewModel()
             
-        case Constant.USDC:
+        default:
             return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
                                              .init(title: L10n.Button.sell, image: Asset.sell.image)])
-            
-        default:
-            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image)])
         }
     }()
     
@@ -136,16 +130,11 @@ class AssetDetailsViewController: UIViewController, Subscriber {
                 in self?.didTapDrawerButton()
             }]
             
-        case Constant.USDC:
+        default:
             return [ { [weak self] in
                 self?.didTapDrawerButton(.card)
             }, { [weak self] in
                 self?.didTapDrawerButton()
-            }]
-            
-        default:
-            return [ { [weak self] in
-                self?.didTapDrawerButton(.card)
             }]
             
         }
