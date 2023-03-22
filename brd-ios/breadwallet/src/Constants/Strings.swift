@@ -3058,6 +3058,8 @@ internal enum L10n {
   internal enum VerifyPhoneNumber {
     /// We take security seriously. Providing a valid phone number lets us send you verification codes and account alerts to keep your wallet safe.
     internal static let instructions = L10n.tr("Localizable", "VerifyPhoneNumber.instructions", fallback: "We take security seriously. Providing a valid phone number lets us send you verification codes and account alerts to keep your wallet safe.")
+    /// Verify your phone number
+    internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.title", fallback: "Verify your phone number")
     internal enum PhoneNumber {
       /// Phone number
       internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.phoneNumber.title", fallback: "Phone number")

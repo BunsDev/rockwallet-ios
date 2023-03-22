@@ -19,7 +19,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoor
     typealias Models = VerifyPhoneNumberModels
     
     override var sceneLeftAlignedTitle: String? {
-        return "Verify your phone number"
+        return L10n.VerifyPhoneNumber.title
     }
     
     // MARK: - Overrides
