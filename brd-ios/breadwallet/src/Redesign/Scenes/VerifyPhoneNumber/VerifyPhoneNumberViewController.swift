@@ -99,6 +99,8 @@ class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoor
         
         cell.setup { view in
             view.setup(with: responseDisplay.areaCode)
+            
+            self.interactor?.validate(viewAction: .init())
         }
     }
     
