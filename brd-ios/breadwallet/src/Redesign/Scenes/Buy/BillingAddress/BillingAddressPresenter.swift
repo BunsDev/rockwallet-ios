@@ -20,6 +20,7 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
     // MARK: - Additional Helpers
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
+        
         let sections: [Models.Section] = [
             .name,
             .country,

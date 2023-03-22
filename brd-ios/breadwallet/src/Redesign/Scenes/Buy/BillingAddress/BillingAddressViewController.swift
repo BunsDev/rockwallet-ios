@@ -120,6 +120,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         }
         
         model.enabled = isValid
+        
         cell.setup { view in
             view.configure(with: Presets.Button.primary)
             view.setup(with: model)

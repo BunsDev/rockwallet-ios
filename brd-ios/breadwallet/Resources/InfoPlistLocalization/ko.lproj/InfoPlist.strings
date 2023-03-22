@@ -3279,6 +3279,8 @@
 
 "VerifyPhoneNumber.phoneNumber.title" = "Phone number";
 
+"VerifyPhoneNumber.title" = "Verify your phone number";
+
 /* Verify PIN for transaction view body */
 "VerifyPin.authorize" = "PIN을 입력하여 이 거래를 승인하십시오.";
 

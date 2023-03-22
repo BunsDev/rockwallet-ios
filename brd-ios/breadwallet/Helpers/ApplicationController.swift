@@ -120,7 +120,7 @@ class ApplicationController: Subscriber {
     private func decideFlow() {
 //         Override point for direct VC opening (Dev helper)
 //        guardProtected {
-//            self.coordinator?.openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCAddress) { vc in
+//            self.coordinator?.openModally(coordinator: ItemSelectionCoordinator.self, scene: Scenes.VerifyPhoneNumber) { vc in
 //                // configure
 //            }
 //        }

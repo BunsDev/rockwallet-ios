@@ -319,7 +319,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         UIView.setAnimationsEnabled(withAnimation)
         
         UIView.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
-            self?.textField.isHidden = hideTextField
+            if self?.viewModel?.placeholder == nil {
+                self?.textField.isHidden = hideTextField
+            }
         }
         
         hintLabel.setup(with: .text(hint))
