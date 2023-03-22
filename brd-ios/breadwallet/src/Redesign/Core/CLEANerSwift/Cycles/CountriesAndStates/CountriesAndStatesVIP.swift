@@ -9,6 +9,7 @@
 //
 
 import Foundation
+import PhoneNumberKit
 
 protocol CountriesAndStatesViewActions: FetchViewActions {
     func pickCountry(viewAction: CountriesAndStatesModels.SelectCountry.ViewAction)
@@ -43,7 +44,7 @@ extension Interactor where Self: CountriesAndStatesViewActions,
     
     func pickCountry(viewAction: CountriesAndStatesModels.SelectCountry.ViewAction) {
         guard viewAction.iso2 == nil else {
-            dataStore?.country = .init(iso2: viewAction.iso2 ?? "", name: viewAction.countryFullName ?? "")
+            dataStore?.country = .init(iso2: viewAction.iso2 ?? "", name: viewAction.countryFullName ?? "", areaCode: viewAction.areaCode)
             dataStore?.state = nil
             
             presenter?.presentData(actionResponse: .init(item: dataStore))
@@ -54,8 +55,23 @@ extension Interactor where Self: CountriesAndStatesViewActions,
         CountriesWorker().execute(requestData: CountriesRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
+                
                 self?.dataStore?.countries = data ?? []
-                self?.presenter?.presentCountry(actionResponse: .init(countries: data))
+                
+                if viewAction.withAreaCodes {
+                    let phoneNumberKit = PhoneNumberKit()
+                    let countries = self?.dataStore?.countries ?? []
+                    
+                    self?.dataStore?.countries.indices.forEach {
+                        self?.dataStore?.countries[$0].areaCode = String(phoneNumberKit.countryCode(for: countries[$0].iso2) ?? 0)
+                    }
+                    
+                    self?.dataStore?.countries.indices.forEach {
+                        self?.dataStore?.countries[$0].name = countries[$0].areaCode ?? "" + " " + countries[$0].name
+                    }
+                }
+                
+                self?.presenter?.presentCountry(actionResponse: .init(countries: self?.dataStore?.countries))
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -107,10 +123,9 @@ extension Presenter where Self: CountriesAndStatesActionResponses,
 extension Controller where Self: CountriesAndStatesResponseDisplays,
                            Self.ViewActions: CountriesAndStatesViewActions,
                            Self.Coordinator: CountriesAndStatesRoutes {
-    
     func displayCountry(responseDisplay: CountriesAndStatesModels.SelectCountry.ResponseDisplay) {
         coordinator?.showCountrySelector(countries: responseDisplay.countries) { [weak self] model in
-            self?.interactor?.pickCountry(viewAction: .init(iso2: model?.iso2, countryFullName: model?.name))
+            self?.interactor?.pickCountry(viewAction: .init(withAreaCodes: model?.areaCode != nil, areaCode: model?.areaCode, iso2: model?.iso2, countryFullName: model?.name))
         }
     }
     

@@ -17,6 +17,16 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
     
     // MARK: - VerifyPhoneNumberActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        if let item = actionResponse.item as? Models.Item,
+           let iso2 = item.country?.iso2,
+           let name = item.country?.name,
+           let areaCode = item.country?.areaCode {
+            presentSetAreaCode(actionResponse: .init(areaCode: .init(iso2: iso2,
+                                                                     name: name,
+                                                                     areaCode: areaCode)))
+            return
+        }
+        
         let sections: [Models.Section] = [
             .instructions,
             .phoneNumber
@@ -27,7 +37,7 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
                 LabelViewModel.text(L10n.VerifyPhoneNumber.instructions)
             ],
             .phoneNumber: [
-                PhoneNumberViewModel(areaCode: .init(leading: .image("🇺🇸".textToImage()), title: "+1"),
+                PhoneNumberViewModel(areaCode: .init(leading: .imageName("US"), title: "+1"),
                                      phoneNumber: .init(placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))
             ]
         ]
@@ -36,10 +46,8 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
     }
     
     func presentSetAreaCode(actionResponse: VerifyPhoneNumberModels.SetAreaCode.ActionResponse) {
-        let areaCode = actionResponse.areaCode
-        
         viewController?.displaySetAreaCode(responseDisplay: .init(areaCode:
-                .init(areaCode: .init(leading: .image(areaCode.flag.textToImage()), title: areaCode.prefix),
+                .init(areaCode: .init(leading: .imageName(actionResponse.areaCode.iso2), title: "+" + (actionResponse.areaCode.areaCode ?? "")),
                       phoneNumber: .init(value: actionResponse.phoneNumber, placeholder: L10n.VerifyPhoneNumber.PhoneNumber.title))))
     }
     

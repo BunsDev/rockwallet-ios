@@ -25,6 +25,7 @@ struct Place: ModelResponse, ItemSelectable {
 struct Country: Model, ItemSelectable {
     var iso2: String
     var name: String
+    var areaCode: String?
     
     var states: [Place]?
     

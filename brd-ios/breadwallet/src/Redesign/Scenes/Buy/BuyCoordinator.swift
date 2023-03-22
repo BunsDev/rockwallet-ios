@@ -66,6 +66,7 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
                     scene: Scenes.ItemSelection,
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = countries
+            vc?.dataStore?.sceneTitle = L10n.Account.selectCountry
             vc?.itemSelected = { item in
                 selected?(item as? Country)
             }

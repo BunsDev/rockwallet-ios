@@ -9,10 +9,9 @@
 //
 
 import UIKit
-import PhoneNumberKit
 
 enum VerifyPhoneNumberModels {
-    typealias Item = Any?
+    typealias Item = VerifyPhoneNumberDataStore
     
     enum Section: Sectionable {
         case instructions
@@ -35,11 +34,8 @@ enum VerifyPhoneNumberModels {
     }
     
     struct SetAreaCode {
-        struct ViewAction {
-            var areaCode: CountryCodePickerViewController.Country
-        }
         struct ActionResponse {
-            var areaCode: CountryCodePickerViewController.Country
+            var areaCode: Country
             var phoneNumber: String?
         }
         struct ResponseDisplay {

@@ -13,6 +13,8 @@ import Foundation
 enum CountriesAndStatesModels {
     struct SelectCountry {
         struct ViewAction {
+            var withAreaCodes: Bool
+            var areaCode: String?
             var iso2: String?
             var countryFullName: String?
         }

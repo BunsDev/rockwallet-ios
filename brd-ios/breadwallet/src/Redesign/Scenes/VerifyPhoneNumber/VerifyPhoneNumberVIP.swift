@@ -14,26 +14,25 @@ extension Scenes {
     static let VerifyPhoneNumber = VerifyPhoneNumberViewController.self
 }
 
-protocol VerifyPhoneNumberViewActions: BaseViewActions, FetchViewActions {
+protocol VerifyPhoneNumberViewActions: BaseViewActions, CountriesAndStatesViewActions {
     func validate(viewAction: VerifyPhoneNumberModels.Validate.ViewAction)
-    func setAreaCode(viewAction: VerifyPhoneNumberModels.SetAreaCode.ViewAction)
     func setPhoneNumber(viewAction: VerifyPhoneNumberModels.SetPhoneNumber.ViewAction)
     func confirm(viewAction: VerifyPhoneNumberModels.Confirm.ViewAction)
 }
 
-protocol VerifyPhoneNumberActionResponses: BaseActionResponses, FetchActionResponses {
+protocol VerifyPhoneNumberActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
     func presentValidate(actionResponse: VerifyPhoneNumberModels.Validate.ActionResponse)
     func presentSetAreaCode(actionResponse: VerifyPhoneNumberModels.SetAreaCode.ActionResponse)
     func presentConfirm(actionResponse: VerifyPhoneNumberModels.Confirm.ActionResponse)
 }
 
-protocol VerifyPhoneNumberResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol VerifyPhoneNumberResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayValidate(responseDisplay: VerifyPhoneNumberModels.Validate.ResponseDisplay)
     func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay)
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay)
 }
 
-protocol VerifyPhoneNumberDataStore: BaseDataStore, FetchDataStore {
+protocol VerifyPhoneNumberDataStore: BaseDataStore, CountriesAndStatesDataStore {
     var areaCode: String? { get set }
     var phoneNumber: String? { get set }
 }
@@ -42,5 +41,5 @@ protocol VerifyPhoneNumberDataPassing {
     var dataStore: VerifyPhoneNumberDataStore? { get }
 }
 
-protocol VerifyPhoneNumberRoutes: CoordinatableRoutes {
+protocol VerifyPhoneNumberRoutes: CountriesAndStatesRoutes {
 }

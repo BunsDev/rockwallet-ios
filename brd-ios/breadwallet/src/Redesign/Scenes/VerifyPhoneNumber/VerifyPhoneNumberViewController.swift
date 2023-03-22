@@ -11,7 +11,7 @@
 import UIKit
 import PhoneNumberKit
 
-class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinator,
+class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoordinator,
                                        VerifyPhoneNumberInteractor,
                                        VerifyPhoneNumberPresenter,
                                        VerifyPhoneNumberStore>,
@@ -22,22 +22,12 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
         return "Verify your phone number"
     }
     
-    var didSelectAreaCode: ((CountryCodePickerViewController.Country) -> Void)?
-    
     // MARK: - Overrides
     
     override func setupSubviews() {
         super.setupSubviews()
         
         tableView.register(WrapperTableViewCell<PhoneNumberView>.self)
-    }
-    
-    override func prepareData() {
-        super.prepareData()
-        
-        didSelectAreaCode = { [weak self] country in
-            self?.interactor?.setAreaCode(viewAction: .init(areaCode: country))
-        }
     }
     
     override func setupVerticalButtons() {
@@ -87,7 +77,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
             view.setup(with: model)
             
             view.didPresentPicker = { [weak self] in
-                self?.coordinator?.showAreaCodePicker(model: .init())
+                self?.interactor?.pickCountry(viewAction: .init(withAreaCodes: true))
             }
             
             view.didChangePhoneNumber = { [weak self] phoneNumber in

@@ -117,7 +117,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         guard let section = sections[indexPath.section] as? Models.Section else { return }
         switch section {
         case .country:
-            interactor?.pickCountry(viewAction: .init())
+            interactor?.pickCountry(viewAction: .init(withAreaCodes: false))
             
         case .address:
             coordinator?.showFindAddress(completion: { [weak self] address in

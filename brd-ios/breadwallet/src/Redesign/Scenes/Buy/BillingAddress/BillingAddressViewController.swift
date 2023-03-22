@@ -120,6 +120,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         }
         
         model.enabled = isValid
+        
         cell.setup { view in
             view.configure(with: Presets.Button.primary)
             view.setup(with: model)
@@ -137,7 +138,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch sections[indexPath.section] as? Models.Section {
         case .country:
-            interactor?.pickCountry(viewAction: .init())
+            interactor?.pickCountry(viewAction: .init(withAreaCodes: false))
             
         default:
             return

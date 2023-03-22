@@ -25,14 +25,6 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
         presenter?.presentData(actionResponse: .init(item: nil))
     }
     
-    func setAreaCode(viewAction: VerifyPhoneNumberModels.SetAreaCode.ViewAction) {
-        dataStore?.areaCode = viewAction.areaCode.prefix.removeWhitespaces()
-        
-        presenter?.presentSetAreaCode(actionResponse: .init(areaCode: viewAction.areaCode, phoneNumber: dataStore?.phoneNumber))
-        
-        validate(viewAction: .init())
-    }
-    
     func setPhoneNumber(viewAction: VerifyPhoneNumberModels.SetPhoneNumber.ViewAction) {
         dataStore?.phoneNumber = viewAction.phoneNumber?.removeWhitespaces()
         
