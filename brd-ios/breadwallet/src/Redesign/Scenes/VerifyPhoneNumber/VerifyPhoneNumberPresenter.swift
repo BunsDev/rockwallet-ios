@@ -47,7 +47,7 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
     }
     
     func presentSetAreaCode(actionResponse: VerifyPhoneNumberModels.SetAreaCode.ActionResponse) {
-        viewController?.displaySetAreaCode(responseDisplay: .init(areaCode:
+        viewController?.displaySetAreaCode(responseDisplay: .init(model:
                 .init(areaCode: .init(leading: .imageName(actionResponse.areaCode.iso2),
                                       title: "+" + (actionResponse.areaCode.areaCode ?? "")),
                       phoneNumber: .init(value: actionResponse.phoneNumber,

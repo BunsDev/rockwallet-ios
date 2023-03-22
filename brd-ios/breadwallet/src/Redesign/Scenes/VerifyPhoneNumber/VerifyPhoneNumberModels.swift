@@ -39,7 +39,7 @@ enum VerifyPhoneNumberModels {
             var phoneNumber: String?
         }
         struct ResponseDisplay {
-            var areaCode: PhoneNumberViewModel
+            var model: PhoneNumberViewModel
         }
     }
     
