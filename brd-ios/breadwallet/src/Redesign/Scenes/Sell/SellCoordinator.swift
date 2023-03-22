@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExchangeCoordinator: AccountCoordinator, OrderPreviewRoutes {
+class ExchangeCoordinator: BaseCoordinator, OrderPreviewRoutes {
     func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {
         ExchangeAuthHelper.showPinInput(on: navigationController,
                                         keyStore: keyStore,
