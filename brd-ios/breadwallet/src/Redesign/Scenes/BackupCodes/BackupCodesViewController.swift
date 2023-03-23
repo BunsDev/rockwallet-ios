@@ -18,7 +18,7 @@ class BackupCodesViewController: BaseTableViewController<BackupCodesCoordinator,
     // MARK: - Overrides
     
     override var sceneLeftAlignedTitle: String? {
-        return "Backup codes"
+        return L10n.BackupCodes.title
     }
     
     override func setupVerticalButtons() {

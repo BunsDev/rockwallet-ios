@@ -26,17 +26,15 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
             .getNewCodes
         ]
         
-        let getCodesButton: [ButtonViewModel] = [ButtonViewModel(title: "Get new codes",
+        let getCodesButton: [ButtonViewModel] = [ButtonViewModel(title: L10n.BackupCodes.getNewCodes,
                                                                  isUnderlined: true)]
         
         let sectionRows: [Models.Section: [Any]] = [
             .instructions: [
-                LabelViewModel.text("""
-Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method
-""")
+                LabelViewModel.text(L10n.BackupCodes.instructions)
             ],
             .description: [
-                LabelViewModel.text("You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.")
+                LabelViewModel.text(L10n.BackupCodes.description)
             ],
             .getNewCodes: [
                 MultipleButtonsViewModel(buttons: getCodesButton)]
