@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
+		0441E14D29CC68F2003D870E /* FEButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14C29CC68F2003D870E /* FEButton+Extensions.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
 		044D098229C3352400C510DC /* Frames in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098129C3352400C510DC /* Frames */; };
 		044D098829C335BB00C510DC /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098729C335BB00C510DC /* Lottie */; };
@@ -842,6 +843,7 @@
 
 /* Begin PBXFileReference section */
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
+		0441E14C29CC68F2003D870E /* FEButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FEButton+Extensions.swift"; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
 		044D099929C8525D00C510DC /* VerifyPhoneNumberPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberPresenter.swift; sourceTree = "<group>"; };
 		044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberInteractor.swift; sourceTree = "<group>"; };
@@ -3123,6 +3125,7 @@
 				CE9057171DFF0FA8006BA848 /* String+Additions.swift */,
 				7C377EC120F6C29E00E8CF1C /* UIAlertController+Additions.swift */,
 				CE20C9161DBE6F2A00C8397A /* UIButton+Extensions.swift */,
+				0441E14C29CC68F2003D870E /* FEButton+Extensions.swift */,
 				CE6DCC241E6001E50044257B /* UIControl+Callback.swift */,
 				CE25BF901DF9ADE700BC67B6 /* UIImage+Utils.swift */,
 				CEAA9E941DC1659F0066731D /* UILabel+Extensions.swift */,
@@ -4120,6 +4123,7 @@
 				7E5CB3982835090E00EC787E /* Controller.swift in Sources */,
 				7EC21A1C28991A6500FED711 /* BillingAddressInteractor.swift in Sources */,
 				3A6FD42F24E4570900068ECE /* KeyStore+CloudBackup.swift in Sources */,
+				0441E14D29CC68F2003D870E /* FEButton+Extensions.swift in Sources */,
 				7BC3F046294C6F8300947526 /* VeriffSessionWorker.swift in Sources */,
 				C46C2901287EBF4F0035C843 /* BaseInfoVIP.swift in Sources */,
 				7E5CB3872835090E00EC787E /* BorderConfiguration.swift in Sources */,

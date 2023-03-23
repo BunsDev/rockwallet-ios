@@ -30,6 +30,8 @@ protocol RegistrationConfirmationResponseDisplays: AnyObject, BaseResponseDispla
 }
 
 protocol RegistrationConfirmationDataStore: BaseDataStore, FetchDataStore {
+    var confirmationType: RegistrationConfirmationModels.ConfirmationType { get set }
+    var code: String? { get set }
 }
 
 protocol RegistrationConfirmationDataPassing {

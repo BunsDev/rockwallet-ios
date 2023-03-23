@@ -215,7 +215,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     }
     
     func displayNext(responseDisplay: SignUpModels.Next.ResponseDisplay) {
-        coordinator?.showRegistrationConfirmation(isModalDismissable: false)
+        coordinator?.showRegistrationConfirmation(isModalDismissable: false, confirmationType: .account)
     }
     
     // MARK: - Additional Helpers

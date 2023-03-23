@@ -17,11 +17,14 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     // MARK: - RegistrationConfirmationViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: UserDefaults.email))
+        guard let confirmationType = dataStore?.confirmationType else { return }
+        
+        presenter?.presentData(actionResponse: .init(item: Models.Item(email: UserDefaults.email,
+                                                                       confirmationType: confirmationType)))
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {
-        let code = viewAction.item ?? ""
+        let code = viewAction.code ?? ""
         
         dataStore?.code = code
         

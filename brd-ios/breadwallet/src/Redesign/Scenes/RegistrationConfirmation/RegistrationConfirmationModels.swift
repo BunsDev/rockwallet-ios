@@ -9,7 +9,7 @@
 import UIKit
 
 enum RegistrationConfirmationModels {
-    typealias Item = String?
+    typealias Item = (email: String?, confirmationType: RegistrationConfirmationModels.ConfirmationType)
     
     enum Section: Sectionable {
         case image
@@ -22,9 +22,14 @@ enum RegistrationConfirmationModels {
         var footer: AccessoryType? { return nil }
     }
     
+    enum ConfirmationType {
+        case account
+        case twoStep
+    }
+    
     struct Validate {
         struct ViewAction {
-            var item: Item
+            var code: String?
         }
         
         struct ActionResponse {

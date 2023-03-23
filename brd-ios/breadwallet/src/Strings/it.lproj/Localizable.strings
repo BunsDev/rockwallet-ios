@@ -3279,6 +3279,12 @@
 
 "VerifyPhoneNumber.phoneNumber.title" = "Phone number";
 
+"VerifyPhoneNumber.sms.changeNumber" = "Change my phone number";
+
+"VerifyPhoneNumber.sms.instructions" = "Enter the security code we’ve sent to";
+
+"VerifyPhoneNumber.sms.title" = "We’ve sent you an SMS";
+
 "VerifyPhoneNumber.title" = "Verify your phone number";
 
 /* Verify PIN for transaction view body */
