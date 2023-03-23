@@ -10,7 +10,7 @@
 
 import UIKit
 
-struct HorizontalButtonsConfiguration: Configurable {
+struct MultipleButtonsConfiguration: Configurable {
     var background: BackgroundConfiguration?
     var buttons: [ButtonConfiguration] = []
     var isRightAligned = false
@@ -21,7 +21,7 @@ struct MultipleButtonsViewModel: ViewModel {
     var buttons: [ButtonViewModel] = []
 }
 
-class MultipleButtonsView: FEView<HorizontalButtonsConfiguration, MultipleButtonsViewModel> {
+class MultipleButtonsView: FEView<MultipleButtonsConfiguration, MultipleButtonsViewModel> {
     var callbacks: [(() -> Void)] = []
     
     private lazy var stack: UIStackView = {
@@ -42,7 +42,7 @@ class MultipleButtonsView: FEView<HorizontalButtonsConfiguration, MultipleButton
         }
     }
     
-    override func configure(with config: HorizontalButtonsConfiguration?) {
+    override func configure(with config: MultipleButtonsConfiguration?) {
         super.configure(with: config)
         
         configure(background: config?.background)
