@@ -32,8 +32,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .image })
         }
         
-        let title = confirmationType == .twoStep ? "We’ve sent you an SMS" : L10n.AccountCreation.verifyEmail
-        let instructions = confirmationType == .twoStep ? "Enter the security code we’ve sent to:" : "\(L10n.AccountCreation.enterCode)\(": \n")\(email ?? "")"
+        let title = confirmationType == .twoStep ? L10n.VerifyPhoneNumber.Sms.title : L10n.AccountCreation.verifyEmail
+        let instructions = confirmationType == .twoStep ? "\(L10n.VerifyPhoneNumber.Sms.instructions)\(": \n")\(email ?? "")" : "\(L10n.AccountCreation.enterCode)\(": \n")\(email ?? "")"
         var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
                                                        isUnderlined: true,
                                                        shouldTemporarilyDisableAfterTap: confirmationType == .twoStep)]
@@ -43,7 +43,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         }
         
         if confirmationType == .twoStep {
-            help.append(ButtonViewModel(title: "Change my phone number", isUnderlined: true))
+            help.append(ButtonViewModel(title: L10n.VerifyPhoneNumber.Sms.changeNumber, isUnderlined: true))
         }
         
         let sectionRows: [Models.Section: [Any]] = [
