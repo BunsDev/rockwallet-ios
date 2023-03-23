@@ -45,7 +45,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
         case .ssnInfo:
-            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
             
         case .confirm:
             cell = self.tableView(tableView, buttonCellForRowAt: indexPath)
@@ -95,10 +95,10 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
         
-        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
             return cell
         }
         

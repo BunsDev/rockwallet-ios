@@ -3064,6 +3064,14 @@ internal enum L10n {
       /// Phone number
       internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.phoneNumber.title", fallback: "Phone number")
     }
+    internal enum Sms {
+      /// Change my phone number
+      internal static let changeNumber = L10n.tr("Localizable", "VerifyPhoneNumber.sms.changeNumber", fallback: "Change my phone number")
+      /// Enter the security code we’ve sent to
+      internal static let instructions = L10n.tr("Localizable", "VerifyPhoneNumber.sms.instructions", fallback: "Enter the security code we’ve sent to")
+      /// We’ve sent you an SMS
+      internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.sms.title", fallback: "We’ve sent you an SMS")
+    }
   }
   internal enum VerifyPin {
     /// Verify PIN for transaction view body

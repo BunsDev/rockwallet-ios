@@ -253,6 +253,7 @@ extension Presets {
         case regular = 1.0
         case medium = 1.5
         case long = 2.0
+        case buttonState = 25.0
         case repeatingAction = 30.0
     }
 }

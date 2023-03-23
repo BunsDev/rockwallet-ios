@@ -78,7 +78,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<ProfileView>.self)
         tableView.register(WrapperTableViewCell<DoubleHorizontalTextboxView>.self) // TODO: Add validators
         tableView.register(WrapperTableViewCell<FEImageView>.self)
-        tableView.register(WrapperTableViewCell<HorizontalButtonsView>.self)
+        tableView.register(WrapperTableViewCell<MultipleButtonsView>.self)
         tableView.register(WrapperTableViewCell<ChecklistItemView>.self)
         tableView.register(WrapperTableViewCell<TickboxItemView>.self)
         tableView.register(WrapperTableViewCell<FESegmentControl>.self)
@@ -321,10 +321,10 @@ class BaseTableViewController<C: CoordinatableRoutes,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? HorizontalButtonsViewModel,
-              let cell: WrapperTableViewCell<HorizontalButtonsView> = tableView.dequeueReusableCell(for: indexPath)
+        guard let model = sectionRows[section]?[indexPath.row] as? MultipleButtonsViewModel,
+              let cell: WrapperTableViewCell<MultipleButtonsView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }

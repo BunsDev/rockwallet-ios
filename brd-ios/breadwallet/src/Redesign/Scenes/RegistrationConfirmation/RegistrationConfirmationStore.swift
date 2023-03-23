@@ -12,6 +12,8 @@ class RegistrationConfirmationStore: NSObject, BaseDataStore, RegistrationConfir
     // MARK: - RegistrationConfirmationDataStore
     
     var itemId: String?
+    
+    var confirmationType: RegistrationConfirmationModels.ConfirmationType = .account
     var code: String?
     
     // MARK: - Aditional helpers
