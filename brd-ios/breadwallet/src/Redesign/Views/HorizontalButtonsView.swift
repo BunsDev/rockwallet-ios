@@ -1,5 +1,5 @@
 // 
-//  HorizontalButtonsView.swift
+//  MultipleButtonsView.swift
 //  breadwallet
 //
 //  Created by Rok on 03/06/2022.
@@ -14,19 +14,18 @@ struct HorizontalButtonsConfiguration: Configurable {
     var background: BackgroundConfiguration?
     var buttons: [ButtonConfiguration] = []
     var isRightAligned = false
-    var isDoubleButtonStack = false
+    var axis: NSLayoutConstraint.Axis = .vertical
 }
 
-struct HorizontalButtonsViewModel: ViewModel {
+struct MultipleButtonsViewModel: ViewModel {
     var buttons: [ButtonViewModel] = []
 }
 
-class HorizontalButtonsView: FEView<HorizontalButtonsConfiguration, HorizontalButtonsViewModel> {
+class MultipleButtonsView: FEView<HorizontalButtonsConfiguration, MultipleButtonsViewModel> {
     var callbacks: [(() -> Void)] = []
     
     private lazy var stack: UIStackView = {
         let view = UIStackView()
-        view.axis = .horizontal
         return view
     }()
     
@@ -40,7 +39,6 @@ class HorizontalButtonsView: FEView<HorizontalButtonsConfiguration, HorizontalBu
         content.addSubview(stack)
         stack.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
         }
     }
     
@@ -76,16 +74,15 @@ class HorizontalButtonsView: FEView<HorizontalButtonsConfiguration, HorizontalBu
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         }
         
-        if config.isDoubleButtonStack {
-            stack.distribution = .fillProportionally
-            stack.spacing = Margins.medium.rawValue
+        stack.axis = config.axis
+        stack.distribution = .fill
+        stack.spacing = config.axis == .horizontal ? Margins.huge.rawValue : Margins.small.rawValue
+        
+        if config.axis == .vertical {
+            stack.alignment = .leading
         } else {
-            stack.distribution = .fill
-            stack.spacing = Margins.huge.rawValue
-            
             let spacer = UIView()
             stack.insertArrangedSubview(spacer, at: config.isRightAligned ? 0 : stack.arrangedSubviews.endIndex)
-            
             spacer.snp.makeConstraints { make in
                 make.width.greaterThanOrEqualToSuperview().priority(.low)
             }

@@ -63,7 +63,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                 TextFieldModel(title: L10n.Account.socialSecurityNumber,
                                value: item.ssn)
             ],
-            .ssnInfo: [HorizontalButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.infoLinkSSN,
+            .ssnInfo: [MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.infoLinkSSN,
                                                                             isUnderlined: true)])
             ],
             .confirm: [

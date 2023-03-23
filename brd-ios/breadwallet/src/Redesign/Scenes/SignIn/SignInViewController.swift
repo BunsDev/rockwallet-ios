@@ -100,7 +100,7 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
             }
             
         case .forgotPassword:
-            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -112,10 +112,10 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
         
-        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
             return cell
         }
         

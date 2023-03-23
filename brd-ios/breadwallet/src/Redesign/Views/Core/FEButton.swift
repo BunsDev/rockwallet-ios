@@ -38,6 +38,7 @@ struct ButtonViewModel: ViewModel {
     var isUnderlined = false
     var image: UIImage?
     var enabled = true
+    var shouldTemporarilyDisableAfterTap = false
     var callback: (() -> Void)?
 }
 
@@ -149,6 +150,10 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
     }
     
     @objc private func buttonTapped() {
+        if viewModel?.shouldTemporarilyDisableAfterTap == true {
+            toggleButtonStateWithTimer()
+        }
+        
         viewModel?.callback?()
     }
     
@@ -157,6 +162,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         let shadow = config?.shadowConfiguration
         
         isUserInteractionEnabled = true
+        
         switch state {
         case .normal:
             background = config?.normalConfiguration
@@ -175,9 +181,11 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         displayState = state
         
         UIView.setAnimationsEnabled(withAnimation)
+        
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.updateLayout(background: background, shadow: shadow)
         }
+        
         UIView.setAnimationsEnabled(true)
     }
     
