@@ -295,7 +295,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         setupAnimationView()
     }
     
-    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {        
         if let type = type {
             didTapBuy?(type)
         } else {

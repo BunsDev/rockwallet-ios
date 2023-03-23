@@ -29,6 +29,7 @@ enum ProfileModels {
     enum ExchangeFlow {
         case buy
         case swap
+        case sell
     }
     
     struct Navigate {

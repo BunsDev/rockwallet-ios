@@ -48,6 +48,11 @@ class AssetDetailsViewController: UIViewController, Subscriber {
                 toggleDrawer()
                 
             case .swap:
+                guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+                    self.coordinator?.handleUnverifiedUser(flow: .swap)
+                    return
+                }
+                
                 guard let coreSystem, let keyStore else { return }
                 self.coordinator?.showSwap(currencies: Store.state.currencies,
                                            coreSystem: coreSystem,
@@ -250,6 +255,28 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     }
     
     private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+        guard UserManager.shared.profile?.status.isKYCLocationRestricted == false else {
+            var reason: Reason?
+            switch type {
+            case .ach:
+                reason = .buyAch
+                
+            case .card:
+                reason = .buy
+                
+            default:
+                reason = .sell
+            }
+            
+            coordinator?.handleRestrictedUser(reason: reason)
+            return
+        }
+        
+        guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+            coordinator?.handleUnverifiedUser(flow: type != nil ? .buy : .sell)
+            return
+        }
+        
         guard let type else {
             guard let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
             coordinator?.showSell(for: token, coreSystem: coreSystem, keyStore: keyStore)
@@ -409,6 +436,28 @@ extension AssetDetailsViewController: TxDetaiViewControllerDelegate {
         if isSearching {
             // Restore the search keyboard that we hid when the transaction details were displayed
             searchHeaderview.becomeFirstResponder()
+        }
+    }
+}
+
+extension BaseCoordinator {
+    func handleUnverifiedUser(flow: ProfileModels.ExchangeFlow?) {
+        open(scene: Scenes.VerifyAccount) { [weak self] vc in
+            vc.flow = flow
+            
+            vc.didTapContactSupportButton = {
+                self?.showSupport()
+            }
+            
+            vc.didTapVerifyButton = {
+                self?.showAccountVerification()
+            }
+        }
+    }
+    
+    func handleRestrictedUser(reason: Reason?) {
+        open(scene: Scenes.ComingSoon) { vc in
+            vc.reason = reason
         }
     }
 }

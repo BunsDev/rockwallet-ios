@@ -90,7 +90,7 @@ class ComingSoonViewController: BaseInfoViewController {
                 self?.shouldDismiss = true
                 
                 if self?.reason == .swap || self?.reason == .buy || self?.reason == .sell {
-                    self?.coordinator?.dismissFlow()
+                    self?.navigationController?.popViewController(animated: true)
                 } else if self?.reason == .buyAch {
                     self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem, keyStore: self?.dataStore?.keyStore)
                 }
@@ -101,7 +101,7 @@ class ComingSoonViewController: BaseInfoViewController {
                 if self?.reason == .swap || self?.reason == .buy {
                     self?.coordinator?.showSupport()
                 } else if self?.reason == .buyAch {
-                    self?.coordinator?.dismissFlow()
+                    self?.navigationController?.popViewController(animated: true)
                 }
             })
         ]

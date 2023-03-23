@@ -399,7 +399,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapBuy = { [weak self] type in
-            guard let self = self else { return }
+            guard let self = self, self.canUserTrade(flow: .buy, reason: type == .card ? .buy : .buyAch) else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -410,7 +410,8 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapSell = { [weak self] in
             guard let self = self,
-                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT })
+                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }),
+                  self.canUserTrade(flow: .sell, reason: .sell)
             else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
@@ -421,7 +422,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapTrade = { [weak self] in
-            guard let self = self else { return }
+            guard let self = self, self.canUserTrade(flow: .swap, reason: nil) else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -497,6 +498,20 @@ class ApplicationController: Subscriber {
             vc.isModalDismissable = false
             vc.navigationItem.hidesBackButton = true
         }
+    }
+    
+    private func canUserTrade(flow: ProfileModels.ExchangeFlow?, reason: Reason?) -> Bool {
+        guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+            self.coordinator?.handleUnverifiedUser(flow: flow)
+            return false
+        }
+        
+        if let reason, UserManager.shared.profile?.status.isKYCLocationRestricted == true {
+            self.coordinator?.handleRestrictedUser(reason: reason)
+            return false
+        }
+            
+        return true
     }
     
     /// Creates an instance of the home screen. This may be invoked from StartFlowPresenter.presentOnboardingFlow().
