@@ -31,7 +31,7 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
             .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password)],
             .forgotPassword: [MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.forgotPassword,
-                                                                                   isUnderlined: true)])]
+                                                                                 isUnderlined: true)])]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))

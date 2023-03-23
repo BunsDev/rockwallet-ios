@@ -64,8 +64,8 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                                value: item.ssn)
             ],
             .ssnInfo: [MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.infoLinkSSN,
-                                                                            isUnderlined: true)])
-            ],
+                                                                          isUnderlined: true)])
+                      ],
             .confirm: [
                 ButtonViewModel(title: L10n.Button.confirm, enabled: item.isValid)
             ]
