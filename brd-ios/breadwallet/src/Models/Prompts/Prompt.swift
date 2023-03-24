@@ -218,8 +218,8 @@ extension Prompt {
             
             return !hasKYC
             
-        case .twoStep:
-            return UserManager.shared.profile != nil && !UserManager.shared.hasTwoStepAuth
+//        case .twoStep:
+//            return UserManager.shared.profile != nil && !UserManager.shared.hasTwoStepAuth
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }
