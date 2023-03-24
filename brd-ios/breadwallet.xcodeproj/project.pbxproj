@@ -23,6 +23,8 @@
 /* Begin PBXBuildFile section */
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
 		0441E14D29CC68F2003D870E /* FEButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14C29CC68F2003D870E /* FEButton+Extensions.swift */; };
+		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
+		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
 		044D098229C3352400C510DC /* Frames in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098129C3352400C510DC /* Frames */; };
 		044D098829C335BB00C510DC /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098729C335BB00C510DC /* Lottie */; };
@@ -844,6 +846,8 @@
 /* Begin PBXFileReference section */
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
 		0441E14C29CC68F2003D870E /* FEButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FEButton+Extensions.swift"; sourceTree = "<group>"; };
+		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
+		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
 		044D099929C8525D00C510DC /* VerifyPhoneNumberPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberPresenter.swift; sourceTree = "<group>"; };
 		044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberInteractor.swift; sourceTree = "<group>"; };
@@ -1648,6 +1652,7 @@
 				044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */,
 				044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */,
 				044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */,
+				0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */,
 			);
 			path = VerifyPhoneNumber;
 			sourceTree = "<group>";
@@ -2046,6 +2051,7 @@
 				7B54E57F27F4A2B0002DD1E4 /* Workers */,
 				7B54E57B27F4A2B0002DD1E4 /* Models */,
 				7B54E57627F4A2B0002DD1E4 /* KYCEndpoints.swift */,
+				0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */,
 				7B23D63629923D3D00AC341F /* KYCAuthEndpoints.swift */,
 				7ECCA98E2873059300F99368 /* ExchangeEndpoints.swift */,
 				7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */,
@@ -3957,6 +3963,7 @@
 				7E5CB39D2835090E00EC787E /* Alertable.swift in Sources */,
 				7E5CB3892835090E00EC787E /* Margins+Sizes.swift in Sources */,
 				D7F8EA3829C4857B008DD7C7 /* DrawerPresntable.swift in Sources */,
+				0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */,
 				7EB838482849DD8200C7CC05 /* FELink.swift in Sources */,
 				CEBF32F01DDCD30600348FC6 /* AssetDetailsViewController.swift in Sources */,
 				7B94EFAA28BD501500F63B62 /* UINavigationController+Completion.swift in Sources */,
@@ -4077,6 +4084,7 @@
 				7B2E5055289A5F02008CACD8 /* AddCardVIP.swift in Sources */,
 				3A6C13FF257D463300EA0689 /* GiftHeaderView.swift in Sources */,
 				7B62ACFB28B3BDA000CE81E7 /* String+Chunk.swift in Sources */,
+				0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */,
 				CEC6AA441DEFCDE900EE5AFD /* ModalViewController.swift in Sources */,
 				7ECCA99728742E1700F99368 /* UIApplication+ActiveWindow.swift in Sources */,
 				CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */,

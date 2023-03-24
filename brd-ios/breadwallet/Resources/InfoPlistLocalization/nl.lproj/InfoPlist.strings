@@ -574,6 +574,14 @@
 /* ATM Cash Locatios View Title */
 "ATMMapView.title" = "ATM Cash Locations Map";
 
+"BackupCodes.description" = "You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.";
+
+"BackupCodes.getNewCodes" = "Get new codes";
+
+"BackupCodes.instructions" = "Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method";
+
+"BackupCodes.Title" = "Backup codes";
+
 /* Send BCH view body. */
 "BCH.body" = "Voer hieronder een BCH adres in. Alle BCH die op het moment van de fork  (%1$@) in in je wallet zitten, zullen worden gestuurd.";
 
@@ -1810,6 +1818,10 @@
 
 /* Button on fingerprint prompt so the user can enter their PIN instead */
 "Prompts.TouchId.usePin.android" = "PIN";
+
+"Prompts.TwoStep.body" = "Secure your wallet with two factor authentication.";
+
+"Prompts.TwoStep.title" = "Enable 2FA";
 
 /* Upgrade PIN prompt body. */
 "Prompts.UpgradePin.body" = "RockWallet is geüpgrade naar een 6-cijferige PIN. Tik hier om te upgraden.";

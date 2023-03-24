@@ -66,6 +66,7 @@ enum TriggerName {
     case promptShareData
     case didApplyKyc
     case didCreateAccount
+    case didSetTwoStep
     case didWritePaperKey
     case wipeWalletNoPrompt
     case showCurrency(Currency?)
@@ -82,6 +83,7 @@ enum TriggerName {
     case promptNoAccount
     case handleUserAccount
     case promptLimitsAuthentication
+    case promptTwoStep
 }
 
 func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
@@ -149,6 +151,8 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
     case (.didSyncKVStore, .didSyncKVStore):
         return true
     case (.createAccount, .createAccount):
+        return true
+    case (.promptTwoStep, .promptTwoStep):
         return true
     case (.handleGift, .handleGift):
         return true

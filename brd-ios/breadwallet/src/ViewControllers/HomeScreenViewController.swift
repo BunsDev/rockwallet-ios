@@ -365,12 +365,20 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             PromptPresenter.shared.hidePrompt(.noAccount)
         })
         
+        Store.subscribe(self, name: .didSetTwoStep, callback: { _ in
+            PromptPresenter.shared.hidePrompt(.twoStep)
+        })
+        
         Store.subscribe(self, name: .promptKyc, callback: { _ in
             self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
         })
         
         Store.subscribe(self, name: .promptNoAccount, callback: { _ in
             self.didTapCreateAccountFromPrompt?()
+        })
+        
+        Store.subscribe(self, name: .promptTwoStep, callback: { _ in
+            // TODO: Do this to do
         })
         
         Store.subscribe(self, name: .promptLimitsAuthentication, callback: { _ in
