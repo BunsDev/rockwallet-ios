@@ -37,7 +37,7 @@ enum PromptType: Int {
         case .upgradePin: return L10n.Prompts.UpgradePin.title
         case .noPasscode: return L10n.Prompts.NoPasscode.title
         case .kyc: return L10n.VerifyAccount.button
-        case .twoStep: return "Enable 2FA"
+        case .twoStep: return L10n.Prompts.TwoStep.title
         case .noAccount: return L10n.Account.createNewAccountTitle
         case .limitsAuthentication: return L10n.Prompts.LimitsAuthentication.title
         default: return ""
@@ -67,7 +67,7 @@ enum PromptType: Int {
         case .upgradePin: return L10n.Prompts.UpgradePin.body
         case .noPasscode: return L10n.Prompts.NoPasscode.body
         case .kyc: return L10n.Prompts.VerifyAccount.body
-        case .twoStep: return "Secure your wallet with two factor authentication."
+        case .twoStep: return L10n.Prompts.TwoStep.body
         case .noAccount: return L10n.Prompts.CreateAccount.body
         case .limitsAuthentication: return L10n.Prompts.LimitsAuthentication.body
         default: return ""
