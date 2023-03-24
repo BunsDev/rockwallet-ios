@@ -15,6 +15,7 @@ enum PromptType: Int {
     case noInternet
     case noAccount
     case kyc
+    case twoStep
     case upgradePin
     case paperKey
     case noPasscode
@@ -24,7 +25,8 @@ enum PromptType: Int {
     var order: Int { return rawValue }
     
     static var defaultTypes: [PromptType] = {
-        return [.noInternet, .noAccount, .kyc, .upgradePin, .paperKey, .noPasscode, .biometrics, .limitsAuthentication]
+        return [.noInternet, .noAccount, .kyc, .twoStep, .upgradePin,
+                .paperKey, .noPasscode, .biometrics, .limitsAuthentication]
     }()
     
     var title: String {
@@ -35,6 +37,7 @@ enum PromptType: Int {
         case .upgradePin: return L10n.Prompts.UpgradePin.title
         case .noPasscode: return L10n.Prompts.NoPasscode.title
         case .kyc: return L10n.VerifyAccount.button
+        case .twoStep: return "Enable 2FA"
         case .noAccount: return L10n.Account.createNewAccountTitle
         case .limitsAuthentication: return L10n.Prompts.LimitsAuthentication.title
         default: return ""
@@ -50,6 +53,7 @@ enum PromptType: Int {
         case .upgradePin: return "upgradePinPrompt"
         case .noPasscode: return "noPasscodePrompt"
         case .noAccount: return "noAccountPrompt"
+        case .twoStep: return "twoStepPrompt"
         case .limitsAuthentication: return "limitsAuthenticationPrompt"
         default: return ""
         }
@@ -63,6 +67,7 @@ enum PromptType: Int {
         case .upgradePin: return L10n.Prompts.UpgradePin.body
         case .noPasscode: return L10n.Prompts.NoPasscode.body
         case .kyc: return L10n.Prompts.VerifyAccount.body
+        case .twoStep: return "Secure your wallet with two factor authentication."
         case .noAccount: return L10n.Prompts.CreateAccount.body
         case .limitsAuthentication: return L10n.Prompts.LimitsAuthentication.body
         default: return ""
@@ -71,10 +76,9 @@ enum PromptType: Int {
     
     var actionTitle: String {
         switch self {
-        case .biometrics, .paperKey, .upgradePin, .noPasscode: return L10n.Button.continueAction
+        case .biometrics, .paperKey, .upgradePin, .noPasscode, .limitsAuthentication, .twoStep: return L10n.Button.continueAction
         case .kyc: return L10n.VerifyAccount.button
         case .noAccount: return L10n.Account.createNewAccountTitle
-        case .limitsAuthentication: return L10n.Button.continueAction
         default: return ""
         }
     }
@@ -102,6 +106,7 @@ enum PromptType: Int {
         case .kyc: return .promptKyc
         case .noAccount: return .promptNoAccount
         case .limitsAuthentication: return .promptLimitsAuthentication
+        case .twoStep: return .promptTwoStep
         default: return nil
         }
     }
@@ -212,6 +217,9 @@ extension Prompt {
             guard let hasKYC = UserManager.shared.profile?.status.hasKYC else { return false }
             
             return !hasKYC
+            
+        case .twoStep:
+            return UserManager.shared.profile != nil && !UserManager.shared.hasTwoStepAuth
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }
