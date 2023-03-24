@@ -1819,6 +1819,10 @@
 /* Button on fingerprint prompt so the user can enter their PIN instead */
 "Prompts.TouchId.usePin.android" = "PIN";
 
+"Prompts.TwoStep.body" = "Secure your wallet with two factor authentication.";
+
+"Prompts.TwoStep.title" = "Enable 2FA";
+
 /* Upgrade PIN prompt body. */
 "Prompts.UpgradePin.body" = "RockWallet is geüpgrade naar een 6-cijferige PIN. Tik hier om te upgraden.";
 

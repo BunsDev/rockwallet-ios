@@ -29,12 +29,24 @@ class KYCCoordinator: BaseCoordinator,
             open(scene: Scenes.VerifyAccount) { vc in
                 vc.flow = flow
                 
-                vc.didTapContactSupportButton = { [weak self] in
-                    self?.showSupport()
+                vc.didTapMainButton = { [weak self] in
+                    switch flow {
+                    case .buy, .swap:
+                        self?.dismissFlow()
+                        
+                    default:
+                        self?.showAccountVerification()
+                    }
                 }
                 
-                vc.didTapBackToHomeButton = { [weak self] in
-                    self?.dismissFlow()
+                vc.didTapSecondayButton = { [weak self] in
+                    switch flow {
+                    case .buy, .swap:
+                        self?.showSupport()
+                        
+                    default:
+                        self?.dismissFlow()
+                    }
                 }
             }
             

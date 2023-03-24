@@ -1819,6 +1819,10 @@
 /* Button on fingerprint prompt so the user can enter their PIN instead */
 "Prompts.TouchId.usePin.android" = "PIN";
 
+"Prompts.TwoStep.body" = "Secure your wallet with two factor authentication.";
+
+"Prompts.TwoStep.title" = "Enable 2FA";
+
 /* Upgrade PIN prompt body. */
 "Prompts.UpgradePin.body" = "6자리 PIN을 사용하도록 브레드가 업그레이드되었습니다. 업그레이드하려면 여기를 탭하세요.";
 

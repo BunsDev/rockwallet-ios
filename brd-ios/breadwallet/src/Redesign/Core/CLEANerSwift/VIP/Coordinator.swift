@@ -489,4 +489,36 @@ class BaseCoordinator: NSObject,
         
         return view
     }
+    
+    func handleUnverifiedUser(flow: ProfileModels.ExchangeFlow?) {
+        open(scene: Scenes.VerifyAccount) { [weak self] vc in
+            vc.flow = flow
+            
+            vc.didTapMainButton = {
+                switch flow {
+                case .buy, .swap:
+                    vc.navigationController?.popViewController(animated: true)
+                    
+                default:
+                    self?.showAccountVerification()
+                }
+            }
+            
+            vc.didTapSecondayButton = {
+                switch flow {
+                case .buy, .swap:
+                    self?.showSupport()
+                    
+                default:
+                    vc.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+    }
+    
+    func handleRestrictedUser(reason: Reason?) {
+        open(scene: Scenes.ComingSoon) { vc in
+            vc.reason = reason
+        }
+    }
 }

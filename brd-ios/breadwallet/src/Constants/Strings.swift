@@ -1732,6 +1732,12 @@ internal enum L10n {
         internal static let android = L10n.tr("Localizable", "Prompts.TouchId.usePin.android", fallback: "PIN")
       }
     }
+    internal enum TwoStep {
+      /// Secure your wallet with two factor authentication.
+      internal static let body = L10n.tr("Localizable", "Prompts.TwoStep.body", fallback: "Secure your wallet with two factor authentication.")
+      /// Enable 2FA
+      internal static let title = L10n.tr("Localizable", "Prompts.TwoStep.title", fallback: "Enable 2FA")
+    }
     internal enum UpgradePin {
       /// Upgrade PIN prompt body.
       internal static let body = L10n.tr("Localizable", "Prompts.UpgradePin.body", fallback: "RockWallet has upgraded to using a 6-digit PIN. Tap Continue to upgrade.")
