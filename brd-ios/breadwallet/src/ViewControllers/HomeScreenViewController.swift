@@ -444,12 +444,16 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     // MARK: Actions
     
     @objc private func showHome() {
-        animationView.play(fromProgress: 1, toProgress: 0)
+        if drawerIsShown {
+            animationView.play(fromProgress: 1, toProgress: 0)
+        }
         hideDrawer()
     }
     
     private func commonTapAction() {
-        animationView.play(fromProgress: 1, toProgress: 0)
+        if drawerIsShown {
+            animationView.play(fromProgress: 1, toProgress: 0)
+        }
         hideDrawer()
     }
     
