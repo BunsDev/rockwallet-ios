@@ -267,8 +267,20 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
-                Store.trigger(name: .handleUserAccount)
+                guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
+                switch deeplink {
+                case .setPassword:
+                    Store.trigger(name: .handleUserAccount)
+                    
+                case .home:
+                    Store.trigger(name: .showHome)
+                    
+                case .profile:
+                    Store.trigger(name: .showProfile)
+                    
+                case .swap:
+                    Store.trigger(name: .showSwap)
+                }
             }
         }
     }
@@ -367,6 +379,18 @@ class ApplicationController: Subscriber {
             self.coordinator?.handleUserAccount()
         })
         
+        Store.subscribe(self, name: .showHome, callback : { _ in
+            self.coordinator?.popToRoot()
+        })
+        
+        Store.subscribe(self, name: .showProfile, callback : { _ in
+            self.coordinator?.showProfile()
+        })
+        
+        Store.subscribe(self, name: .showSwap, callback : { _ in
+            self.coordinator?.showSwap(currencies: Store.state.currencies, coreSystem: self.coreSystem, keyStore: self.keyStore)
+        })
+        
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
@@ -384,6 +408,21 @@ class ApplicationController: Subscriber {
             default:
                 return
             }
+        }
+        
+        guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
+        switch deeplink {
+        case .home:
+            Store.trigger(name: .showHome)
+            
+        case .profile:
+            Store.trigger(name: .showProfile)
+            
+        case .swap:
+            Store.trigger(name: .showSwap)
+            
+        default:
+            return
         }
     }
     

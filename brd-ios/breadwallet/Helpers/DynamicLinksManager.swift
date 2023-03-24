@@ -14,7 +14,7 @@ class DynamicLinksManager {
     static var shared = DynamicLinksManager()
     
     var shouldHandleDynamicLink: Bool {
-        return DynamicLinksManager.shared.code != nil
+        return DynamicLinksManager.shared.dynamicLinkType != nil
     }
     
     enum DynamicLinkType: String {
