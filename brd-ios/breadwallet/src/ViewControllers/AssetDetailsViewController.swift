@@ -439,25 +439,3 @@ extension AssetDetailsViewController: TxDetaiViewControllerDelegate {
         }
     }
 }
-
-extension BaseCoordinator {
-    func handleUnverifiedUser(flow: ProfileModels.ExchangeFlow?) {
-        open(scene: Scenes.VerifyAccount) { [weak self] vc in
-            vc.flow = flow
-            
-            vc.didTapContactSupportButton = {
-                self?.showSupport()
-            }
-            
-            vc.didTapVerifyButton = {
-                self?.showAccountVerification()
-            }
-        }
-    }
-    
-    func handleRestrictedUser(reason: Reason?) {
-        open(scene: Scenes.ComingSoon) { vc in
-            vc.reason = reason
-        }
-    }
-}

@@ -22,6 +22,15 @@ enum Kyc2: String, Equatable {
     case kycWithoutSsn = "KYC_WITHOUT_SSN"
 }
 
+enum TradeRestrictionReason {
+    case verification, location
+}
+
+struct TradeStatus {
+    var canTrade: Bool
+    var restrictionReason: TradeRestrictionReason?
+}
+
 enum VerificationStatus: Equatable {
     case none
     case emailPending
@@ -52,6 +61,19 @@ enum VerificationStatus: Equatable {
             
         default:
             return false
+        }
+    }
+    
+    var tradeStatus: TradeStatus {
+        switch (hasKYCLevelTwo, isKYCLocationRestricted) {
+        case (true, false):
+            return .init(canTrade: true, restrictionReason: nil)
+            
+        case (true, true):
+            return .init(canTrade: false, restrictionReason: .location)
+            
+        case (false, _):
+            return .init(canTrade: false, restrictionReason: .verification)
         }
     }
     

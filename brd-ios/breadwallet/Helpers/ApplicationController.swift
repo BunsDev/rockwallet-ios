@@ -399,7 +399,10 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapBuy = { [weak self] type in
-            guard let self = self, self.canUserTrade(flow: .buy, reason: type == .card ? .buy : .buyAch) else { return }
+            guard let self = self, UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
+                return
+            }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -411,8 +414,10 @@ class ApplicationController: Subscriber {
         homeScreen.didTapSell = { [weak self] in
             guard let self = self,
                   let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }),
-                  self.canUserTrade(flow: .sell, reason: .sell)
-            else { return }
+                  UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+                return
+            }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -422,7 +427,11 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapTrade = { [weak self] in
-            guard let self = self, self.canUserTrade(flow: .swap, reason: nil) else { return }
+            // User can still swap even if location restricted
+            guard let self = self, UserManager.shared.profile?.status.tradeStatus.restrictionReason != .verification else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
+                return
+            }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -500,18 +509,15 @@ class ApplicationController: Subscriber {
         }
     }
     
-    private func canUserTrade(flow: ProfileModels.ExchangeFlow?, reason: Reason?) -> Bool {
-        guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+    private func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: Reason?) {
+        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
+        switch restrictionReason {
+        case .verification:
             self.coordinator?.handleUnverifiedUser(flow: flow)
-            return false
-        }
-        
-        if let reason, UserManager.shared.profile?.status.isKYCLocationRestricted == true {
-            self.coordinator?.handleRestrictedUser(reason: reason)
-            return false
-        }
             
-        return true
+        case .location:
+            self.coordinator?.handleRestrictedUser(reason: reason)
+        }
     }
     
     /// Creates an instance of the home screen. This may be invoked from StartFlowPresenter.presentOnboardingFlow().
