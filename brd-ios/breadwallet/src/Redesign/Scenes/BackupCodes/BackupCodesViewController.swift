@@ -21,6 +21,12 @@ class BackupCodesViewController: BaseTableViewController<BackupCodesCoordinator,
         return L10n.BackupCodes.title
     }
     
+    override func setupSubviews() {
+        super.setupSubviews()
+        
+        tableView.register(WrapperTableViewCell<BackupCodesView>.self)
+    }
+    
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
         
@@ -41,6 +47,9 @@ class BackupCodesViewController: BaseTableViewController<BackupCodesCoordinator,
         switch sections[indexPath.section] as? Models.Section {
         case .instructions, .description:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
+            
+        case .backupCodes:
+            cell = self.tableView(tableView, backupCodesCellForRowAt: indexPath)
         
         case .getNewCodes:
             cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
@@ -73,11 +82,27 @@ class BackupCodesViewController: BaseTableViewController<BackupCodesCoordinator,
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, backupCodesCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let cell: WrapperTableViewCell<BackupCodesView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = sectionRows[section]?[indexPath.row] as? BackupCodesViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
 
     // MARK: - User Interaction
     
     private func getCodesTapped() {
-        
+        // TODO: Add action to get new codes from BE
     }
 
     // MARK: - BackupCodesResponseDisplay

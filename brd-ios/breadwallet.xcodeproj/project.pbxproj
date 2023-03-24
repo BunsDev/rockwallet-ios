@@ -602,6 +602,7 @@
 		C46C2901287EBF4F0035C843 /* BaseInfoVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28FA287EBF4F0035C843 /* BaseInfoVIP.swift */; };
 		C46C2902287EBF4F0035C843 /* BaseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28FB287EBF4F0035C843 /* BaseInfoViewController.swift */; };
 		C46C2903287EBF4F0035C843 /* BaseInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28FC287EBF4F0035C843 /* BaseInfoInteractor.swift */; };
+		C47671AA29CD9AF4008A2F94 /* BackupCodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */; };
 		C4842F1529939F4100915BA4 /* UnlinkWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4842F1429939F4100915BA4 /* UnlinkWalletViewController.swift */; };
 		C491ABF828A6395D00E79954 /* OrderPreviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF128A6395C00E79954 /* OrderPreviewStore.swift */; };
 		C491ABF928A6395D00E79954 /* OrderPreviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF228A6395C00E79954 /* OrderPreviewPresenter.swift */; };
@@ -1414,6 +1415,7 @@
 		C46C28FA287EBF4F0035C843 /* BaseInfoVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoVIP.swift; sourceTree = "<group>"; };
 		C46C28FB287EBF4F0035C843 /* BaseInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoViewController.swift; sourceTree = "<group>"; };
 		C46C28FC287EBF4F0035C843 /* BaseInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoInteractor.swift; sourceTree = "<group>"; };
+		C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesView.swift; sourceTree = "<group>"; };
 		C4842F1429939F4100915BA4 /* UnlinkWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlinkWalletViewController.swift; sourceTree = "<group>"; };
 		C491ABF128A6395C00E79954 /* OrderPreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewStore.swift; sourceTree = "<group>"; };
 		C491ABF228A6395C00E79954 /* OrderPreviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewPresenter.swift; sourceTree = "<group>"; };
@@ -2702,6 +2704,7 @@
 				7ECCA9942874266200F99368 /* FESegmentControl.swift */,
 				7EB838472849DD8200C7CC05 /* FELink.swift */,
 				7E5CB37B2835090E00EC787E /* FEButton.swift */,
+				C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -3958,6 +3961,7 @@
 				7EB8FD212897D212000FF75C /* BuyCoordinator.swift in Sources */,
 				7EF45F8C284768C100D1F7B0 /* ItemSelectionModels.swift in Sources */,
 				CE20C8F61DBAF77D00C8397A /* UIViewController+Extensions.swift in Sources */,
+				C47671AA29CD9AF4008A2F94 /* BackupCodesView.swift in Sources */,
 				7BDB4A092806F4A60031F015 /* HistoryFetcher.swift in Sources */,
 				7E0968B8284A29CE006B4FC2 /* TransparentView.swift in Sources */,
 				7E8F7E45293F6AE50058019B /* SellStore.swift in Sources */,

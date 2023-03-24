@@ -22,22 +22,30 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
         
         let sections: [Models.Section] = [
             .instructions,
+            .backupCodes,
             .description,
             .getNewCodes
         ]
         
-        let getCodesButton: [ButtonViewModel] = [ButtonViewModel(title: L10n.BackupCodes.getNewCodes,
-                                                                 isUnderlined: true)]
+        let backupCodes: [LabelViewModel] = [LabelViewModel.text("123 456"),
+                                              LabelViewModel.text("695 456"),
+                                              LabelViewModel.text("123 789"),
+                                              LabelViewModel.text("789 456"),
+                                              LabelViewModel.text("654 456")] // TODO: Update with BE codes
         
         let sectionRows: [Models.Section: [Any]] = [
             .instructions: [
                 LabelViewModel.text(L10n.BackupCodes.instructions)
             ],
+            .backupCodes: [
+                BackupCodesViewModel(backupCodes: backupCodes)
+            ],
             .description: [
                 LabelViewModel.text(L10n.BackupCodes.description)
             ],
             .getNewCodes: [
-                MultipleButtonsViewModel(buttons: getCodesButton)]
+                MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.BackupCodes.getNewCodes,
+                                                                   isUnderlined: true)])]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
