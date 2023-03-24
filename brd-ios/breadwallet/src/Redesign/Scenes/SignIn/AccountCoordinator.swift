@@ -18,15 +18,16 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
         }
         
         if UserManager.shared.profile?.status == .emailPending {
-            showRegistrationConfirmation(isModalDismissable: true)
+            showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
             return
         }
         
         showSignUp()
     }
     
-    func showRegistrationConfirmation(isModalDismissable: Bool) {
+    func showRegistrationConfirmation(isModalDismissable: Bool, confirmationType: RegistrationConfirmationModels.ConfirmationType) {
         open(scene: Scenes.RegistrationConfirmation) { vc in
+            vc.dataStore?.confirmationType = confirmationType
             vc.isModalDismissable = isModalDismissable
         }
     }

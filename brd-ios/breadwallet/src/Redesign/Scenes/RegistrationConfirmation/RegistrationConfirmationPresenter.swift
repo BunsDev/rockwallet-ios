@@ -15,9 +15,12 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
 
     // MARK: - RegistrationConfirmationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let email = actionResponse.item as? String
+        guard let item = actionResponse.item as? Models.Item else { return }
         
-        let sections: [Models.Section] = [
+        let email = item.email
+        let confirmationType = item.confirmationType
+        
+        var sections: [Models.Section] = [
             .image,
             .title,
             .instructions,
@@ -25,10 +28,22 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             .help
         ]
         
-        var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode, isUnderlined: true)]
+        if confirmationType == .twoStep {
+            sections = sections.filter({ $0 != .image })
+        }
+        
+        let title = confirmationType == .twoStep ? L10n.VerifyPhoneNumber.Sms.title : L10n.AccountCreation.verifyEmail
+        let instructions = confirmationType == .twoStep ? "\(L10n.VerifyPhoneNumber.Sms.instructions)\(": \n")\(email ?? "")" : "\(L10n.AccountCreation.enterCode)\(": \n")\(email ?? "")"
+        var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
+                                                       isUnderlined: true,
+                                                       shouldTemporarilyDisableAfterTap: confirmationType == .twoStep)]
         
         if UserManager.shared.profile?.status == .emailPending {
             help.append(ButtonViewModel(title: L10n.AccountCreation.changeEmail, isUnderlined: true))
+        }
+        
+        if confirmationType == .twoStep {
+            help.append(ButtonViewModel(title: L10n.VerifyPhoneNumber.Sms.changeNumber, isUnderlined: true))
         }
         
         let sectionRows: [Models.Section: [Any]] = [
@@ -36,16 +51,16 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                 ImageViewModel.image(Asset.email.image)
             ],
             .title: [
-                LabelViewModel.text(L10n.AccountCreation.verifyEmail)
+                LabelViewModel.text(title)
             ],
             .instructions: [
-                LabelViewModel.text("\(L10n.AccountCreation.enterCode)\(": \n")\(email ?? "")")
+                LabelViewModel.text(instructions)
             ],
             .input: [
-                TextFieldModel(title: L10n.Receive.emailButton, value: email)
+                TextFieldModel()
             ],
             .help: [
-                HorizontalButtonsViewModel(buttons: help)
+                MultipleButtonsViewModel(buttons: help)
             ]
         ]
         

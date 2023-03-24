@@ -571,6 +571,16 @@ internal enum L10n {
     /// Tx Hash button header
     internal static let txHashHeader = L10n.tr("Localizable", "BCH.txHashHeader", fallback: "BCH Transaction ID")
   }
+  internal enum BackupCodes {
+    /// You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.
+    internal static let description = L10n.tr("Localizable", "BackupCodes.description", fallback: "You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.")
+    /// Get new codes
+    internal static let getNewCodes = L10n.tr("Localizable", "BackupCodes.getNewCodes", fallback: "Get new codes")
+    /// Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method
+    internal static let instructions = L10n.tr("Localizable", "BackupCodes.instructions", fallback: "Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method")
+    /// Backup codes
+    internal static let title = L10n.tr("Localizable", "BackupCodes.Title", fallback: "Backup codes")
+  }
   internal enum BitID {
     /// Approve button label
     internal static let approve = L10n.tr("Localizable", "BitID.approve", fallback: "Approve")
@@ -1721,6 +1731,12 @@ internal enum L10n {
         /// Button on fingerprint prompt so the user can enter their PIN instead
         internal static let android = L10n.tr("Localizable", "Prompts.TouchId.usePin.android", fallback: "PIN")
       }
+    }
+    internal enum TwoStep {
+      /// Secure your wallet with two factor authentication.
+      internal static let body = L10n.tr("Localizable", "Prompts.TwoStep.body", fallback: "Secure your wallet with two factor authentication.")
+      /// Enable 2FA
+      internal static let title = L10n.tr("Localizable", "Prompts.TwoStep.title", fallback: "Enable 2FA")
     }
     internal enum UpgradePin {
       /// Upgrade PIN prompt body.
@@ -3063,6 +3079,14 @@ internal enum L10n {
     internal enum PhoneNumber {
       /// Phone number
       internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.phoneNumber.title", fallback: "Phone number")
+    }
+    internal enum Sms {
+      /// Change my phone number
+      internal static let changeNumber = L10n.tr("Localizable", "VerifyPhoneNumber.sms.changeNumber", fallback: "Change my phone number")
+      /// Enter the security code we’ve sent to
+      internal static let instructions = L10n.tr("Localizable", "VerifyPhoneNumber.sms.instructions", fallback: "Enter the security code we’ve sent to")
+      /// We’ve sent you an SMS
+      internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.sms.title", fallback: "We’ve sent you an SMS")
     }
   }
   internal enum VerifyPin {

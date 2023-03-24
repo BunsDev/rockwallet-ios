@@ -43,7 +43,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             cell = self.tableView(tableView, codeInputCellForRowAt: indexPath)
             
         case .help:
-            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -73,15 +73,16 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
         
-        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
             return cell
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: self.dataStore?.confirmationType == .twoStep ? .vertical : .horizontal))
             
             view.callbacks = [
                 resendCodeTapped,
@@ -94,7 +95,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
 
     // MARK: - User Interaction
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        interactor?.validate(viewAction: .init(item: text))
+        interactor?.validate(viewAction: .init(code: text))
         
         super.textFieldDidFinish(for: indexPath, with: text)
     }

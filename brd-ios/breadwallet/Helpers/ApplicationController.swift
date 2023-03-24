@@ -438,7 +438,10 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapBuy = { [weak self] type in
-            guard let self = self else { return }
+            guard let self = self, UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
+                return
+            }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -449,8 +452,11 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapSell = { [weak self] in
             guard let self = self,
-                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT })
-            else { return }
+                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }),
+                  UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+                return
+            }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -460,7 +466,11 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapTrade = { [weak self] in
-            guard let self = self else { return }
+            // User can still swap even if location restricted
+            guard let self = self, UserManager.shared.profile?.status.tradeStatus.restrictionReason != .verification else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
+                return
+            }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -535,6 +545,17 @@ class ApplicationController: Subscriber {
             vc.success = .limitsAuthentication
             vc.isModalDismissable = false
             vc.navigationItem.hidesBackButton = true
+        }
+    }
+    
+    private func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: Reason?) {
+        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
+        switch restrictionReason {
+        case .verification:
+            self.coordinator?.handleUnverifiedUser(flow: flow)
+            
+        case .location:
+            self.coordinator?.handleRestrictedUser(reason: reason)
         }
     }
     
