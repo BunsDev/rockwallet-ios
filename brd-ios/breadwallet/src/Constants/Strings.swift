@@ -2941,6 +2941,48 @@ internal enum L10n {
     /// (this transaction was) Sent to this address:
     internal static let to = L10n.tr("Localizable", "TransactionDirection.to", fallback: "Sent to this Address")
   }
+  internal enum TwoStep {
+    /// 
+    internal static let additionalMethodsTitle = L10n.tr("Localizable", "TwoStep.additionalMethodsTitle", fallback: "")
+    /// Change Phone Number
+    internal static let changePhoneNumberTitle = L10n.tr("Localizable", "TwoStep.changePhoneNumberTitle", fallback: "Change Phone Number")
+    /// 
+    internal static let getBackupCodesTitle = L10n.tr("Localizable", "TwoStep.getBackupCodesTitle", fallback: "")
+    /// Two Factor Authentication in enabled with the phone number ending in
+    internal static let mainInstructions = L10n.tr("Localizable", "TwoStep.mainInstructions", fallback: "Two Factor Authentication in enabled with the phone number ending in")
+    /// Two factor authentication
+    internal static let mainTitle = L10n.tr("Localizable", "TwoStep.mainTitle", fallback: "Two factor authentication")
+    internal enum Methods {
+      /// Get your backup codes
+      internal static let additionalGetBackupCodesAction = L10n.tr("Localizable", "TwoStep.methods.additionalGetBackupCodesAction", fallback: "Get your backup codes")
+      /// Additional methods
+      internal static let additionalTitle = L10n.tr("Localizable", "TwoStep.methods.additionalTitle", fallback: "Additional methods")
+      internal enum AuthApp {
+        /// Authentication app
+        internal static let title = L10n.tr("Localizable", "TwoStep.methods.authApp.title", fallback: "Authentication app")
+      }
+      internal enum Phone {
+        /// Change Phone Number
+        internal static let subtitle = L10n.tr("Localizable", "TwoStep.methods.phone.subtitle", fallback: "Change Phone Number")
+        /// Phone number
+        internal static let title = L10n.tr("Localizable", "TwoStep.methods.phone.title", fallback: "Phone number")
+      }
+    }
+    internal enum Settings {
+      /// ACH Withdrawal
+      internal static let achWithdrawal = L10n.tr("Localizable", "TwoStep.settings.achWithdrawal", fallback: "ACH Withdrawal")
+      /// Buy transactions
+      internal static let buyTransactions = L10n.tr("Localizable", "TwoStep.settings.buyTransactions", fallback: "Buy transactions")
+      /// Every 90 days
+      internal static let everyNinetyDays = L10n.tr("Localizable", "TwoStep.settings.everyNinetyDays", fallback: "Every 90 days")
+      /// Sending funds
+      internal static let funds = L10n.tr("Localizable", "TwoStep.settings.funds", fallback: "Sending funds")
+      /// Recover/Changing password
+      internal static let recoverChangePassword = L10n.tr("Localizable", "TwoStep.settings.recoverChangePassword", fallback: "Recover/Changing password")
+      /// Sign in into new device
+      internal static let signInNewDevice = L10n.tr("Localizable", "TwoStep.settings.signInNewDevice", fallback: "Sign in into new device")
+    }
+  }
   internal enum UDomains {
     /// Invalid address.
     internal static let invalid = L10n.tr("Localizable", "UDomains.invalid", fallback: "Invalid address.")
