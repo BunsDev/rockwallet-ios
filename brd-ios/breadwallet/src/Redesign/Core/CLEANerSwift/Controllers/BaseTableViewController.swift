@@ -85,6 +85,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<ExchangeRateView>.self)
         tableView.register(WrapperTableViewCell<DateView>.self)
         tableView.register(WrapperTableViewCell<TitleValueView>.self)
+        tableView.register(WrapperTableViewCell<IconTitleSubtitleToggleView>.self)
     }
 
     override func prepareData() {
@@ -250,6 +251,22 @@ class BaseTableViewController<C: CoordinatableRoutes,
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Title.five, textColor: LightColors.Text.three))
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, iconTitleSubtitleToggleViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? IconTitleSubtitleToggleViewModel,
+              let cell: WrapperTableViewCell<IconTitleSubtitleToggleView> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
             view.setup(with: model)
         }
         

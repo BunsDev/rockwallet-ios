@@ -112,7 +112,7 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
         switch sections[indexPath.section] as? Models.Section {
         case .title:
             cell =  self.tableView(tableView, labelCellForRowAt: indexPath)
-            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.six, textColor: LightColors.Text.three))
+            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.five, textColor: LightColors.Text.three))
             
         case .checkmarks:
             cell = self.tableView(tableView, checkmarkCellForRowAt: indexPath)

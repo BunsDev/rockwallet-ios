@@ -217,7 +217,8 @@ extension Prompt {
             guard let hasKYC = UserManager.shared.profile?.status.hasKYC else { return false }
             
             return !hasKYC
-            
+        
+        // TODO: ENABLE 2FA
 //        case .twoStep:
 //            return UserManager.shared.profile != nil && !UserManager.shared.hasTwoStepAuth
             
