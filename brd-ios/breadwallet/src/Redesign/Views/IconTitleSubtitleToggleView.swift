@@ -103,11 +103,12 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
             make.width.lessThanOrEqualToSuperview()
         }
         
-//        content.addSubview(lineView)
-//        lineView.snp.makeConstraints { make in
-//            make.height.equalTo(ViewSizes.minimum.rawValue)
-//            make.leading.trailing.bottom.equalToSuperview()
-//        }
+        content.addSubview(lineView)
+        lineView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.minimum.rawValue)
+            make.leading.equalToSuperview().offset(-Margins.medium.rawValue)
+            make.trailing.bottom.equalToSuperview().offset(Margins.medium.rawValue)
+        }
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         addGestureRecognizer(tapGestureRecognizer)
