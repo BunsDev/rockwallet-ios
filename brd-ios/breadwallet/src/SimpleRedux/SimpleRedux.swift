@@ -171,7 +171,6 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.handleDeeplink, .handleDeeplink):
         return true
-        return true
     default:
         return false
     }
