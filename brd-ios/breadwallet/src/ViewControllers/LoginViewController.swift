@@ -381,14 +381,8 @@ class LoginViewController: UIViewController, Subscriber {
                     case .setPassword:
                         Store.trigger(name: .handleUserAccount)
                         
-                    case .home:
-                        Store.trigger(name: .showHome)
-                        
-                    case .profile:
-                        Store.trigger(name: .showProfile)
-                        
-                    case .swap:
-                        Store.trigger(name: .showSwap)
+                    default:
+                        Store.trigger(name: .handleDeeplink)
                     }
                 })
                 return

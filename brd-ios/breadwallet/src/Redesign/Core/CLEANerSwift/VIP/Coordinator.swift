@@ -344,7 +344,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     func decideFlow(completion: ((Bool) -> Void)?) {
-        guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
+        guard DynamicLinksManager.shared.dynamicLinkType == nil else {
             completion?(false)
             return
         }
@@ -519,6 +519,30 @@ class BaseCoordinator: NSObject,
     func handleRestrictedUser(reason: Reason?) {
         open(scene: Scenes.ComingSoon) { vc in
             vc.reason = reason
+        }
+    }
+    
+    func handleDeeplink(coreSystem: CoreSystem, keyStore: KeyStore) {
+        guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
+        DynamicLinksManager.shared.dynamicLinkType = nil
+        switch deeplink {
+        case .home:
+            popToRoot()
+            dismissFlow()
+            
+        case .profile:
+            showProfile()
+            
+        case .swap:
+            guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+                self.handleUnverifiedUser(flow: .swap)
+                return
+            }
+            
+            showSwap(currencies: Store.state.currencies, coreSystem: coreSystem, keyStore: keyStore)
+            
+        default:
+            return
         }
     }
 }

@@ -272,14 +272,8 @@ class ApplicationController: Subscriber {
                 case .setPassword:
                     Store.trigger(name: .handleUserAccount)
                     
-                case .home:
-                    Store.trigger(name: .showHome)
-                    
-                case .profile:
-                    Store.trigger(name: .showProfile)
-                    
-                case .swap:
-                    Store.trigger(name: .showSwap)
+                default:
+                    Store.trigger(name: .handleDeeplink)
                 }
             }
         }
@@ -379,17 +373,9 @@ class ApplicationController: Subscriber {
             self.coordinator?.handleUserAccount()
         })
         
-        Store.subscribe(self, name: .showHome, callback : { _ in
-            self.coordinator?.popToRoot()
-        })
-        
-        Store.subscribe(self, name: .showProfile, callback : { _ in
-            self.coordinator?.showProfile()
-        })
-        
-        Store.subscribe(self, name: .showSwap, callback : { _ in
-            self.coordinator?.showSwap(currencies: Store.state.currencies, coreSystem: self.coreSystem, keyStore: self.keyStore)
-        })
+        Store.subscribe(self, name: .handleDeeplink) { _ in
+            self.coordinator?.handleDeeplink(coreSystem: self.coreSystem, keyStore: self.keyStore)
+        }
         
         UserManager.shared.refresh { [weak self] result in
             switch result {
@@ -410,20 +396,8 @@ class ApplicationController: Subscriber {
             }
         }
         
-        guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
-        switch deeplink {
-        case .home:
-            Store.trigger(name: .showHome)
-            
-        case .profile:
-            Store.trigger(name: .showProfile)
-            
-        case .swap:
-            Store.trigger(name: .showSwap)
-            
-        default:
-            return
-        }
+        guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
+        coordinator?.handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
     }
     
     private func addHomeScreenHandlers(homeScreen: HomeScreenViewController,
