@@ -61,6 +61,6 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     // MARK: - Additional Helpers
     
     @objc private func methodsTapped(_ sender: Any) {
-        
+        // TODO: Finalize
     }
 }
