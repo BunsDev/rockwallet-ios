@@ -376,14 +376,8 @@ class LoginViewController: UIViewController, Subscriber {
                         loginHandler(account)
                     }
                     
-                    guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
-                    switch deeplink {
-                    case .setPassword:
-                        Store.trigger(name: .handleUserAccount)
-                        
-                    default:
-                        Store.trigger(name: .handleDeeplink)
-                    }
+                    guard DynamicLinksManager.shared.dynamicLinkType != nil else { return }
+                    Store.trigger(name: .handleDeeplink)
                 })
                 return
             }

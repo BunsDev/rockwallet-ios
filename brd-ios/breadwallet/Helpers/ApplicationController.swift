@@ -267,14 +267,8 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
-                switch deeplink {
-                case .setPassword:
-                    Store.trigger(name: .handleUserAccount)
-                    
-                default:
-                    Store.trigger(name: .handleDeeplink)
-                }
+                guard DynamicLinksManager.shared.dynamicLinkType != nil else { return }
+                Store.trigger(name: .handleDeeplink)
             }
         }
     }
@@ -369,10 +363,6 @@ class ApplicationController: Subscriber {
     }
     
     private func afterLoginFlow() {
-        Store.subscribe(self, name: .handleUserAccount, callback: { _ in
-            self.coordinator?.handleUserAccount()
-        })
-        
         Store.subscribe(self, name: .handleDeeplink) { _ in
             self.coordinator?.handleDeeplink(coreSystem: self.coreSystem, keyStore: self.keyStore)
         }
@@ -382,14 +372,10 @@ class ApplicationController: Subscriber {
             case .success(let profile):
                 guard profile?.isMigrated == false else { return }
                 
-                Store.trigger(name: .handleUserAccount)
-                
             case .failure(let error):
                 self?.coordinator?.showToastMessage(with: error)
                 
                 guard self?.isReachable == true else { return }
-                
-                Store.trigger(name: .handleUserAccount)
                 
             default:
                 return

@@ -541,8 +541,8 @@ class BaseCoordinator: NSObject,
             
             showSwap(currencies: Store.state.currencies, coreSystem: coreSystem, keyStore: keyStore)
             
-        default:
-            return
+        case .setPassword:
+            handleUserAccount()
         }
     }
 }
