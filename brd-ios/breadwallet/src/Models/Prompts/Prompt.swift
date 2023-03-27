@@ -217,9 +217,10 @@ extension Prompt {
             guard let hasKYC = UserManager.shared.profile?.status.hasKYC else { return false }
             
             return !hasKYC
-            
-//        case .twoStep:
-//            return UserManager.shared.profile != nil && !UserManager.shared.hasTwoStepAuth
+        
+        // TODO: ENABLE 2FA
+        case .twoStep:
+            return UserManager.shared.profile != nil && !UserManager.shared.hasTwoStepAuth
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }

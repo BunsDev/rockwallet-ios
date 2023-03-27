@@ -378,7 +378,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         })
         
         Store.subscribe(self, name: .promptTwoStep, callback: { _ in
-            // TODO: Do this to do
+            // TODO: ENABLE 2FA
         })
         
         Store.subscribe(self, name: .promptLimitsAuthentication, callback: { _ in
