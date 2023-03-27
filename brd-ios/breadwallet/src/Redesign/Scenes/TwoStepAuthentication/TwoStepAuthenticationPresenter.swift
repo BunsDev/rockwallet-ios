@@ -27,10 +27,10 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
             .settings
         ]
         
-        let changeNumberString = NSAttributedString(string: "Change Phone Number",
+        let changeNumberString = NSAttributedString(string: L10n.TwoStep.Methods.Phone.subtitle,
                                                     attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
         
-        let methodsText = NSMutableAttributedString(string: "Additional methods" + " ")
+        let methodsText = NSMutableAttributedString(string: L10n.TwoStep.additionalMethodsTitle + " ")
         methodsText.addAttribute(NSAttributedString.Key.font,
                                  value: Fonts.Body.two,
                                  range: NSRange(location: 0, length: methodsText.length))
@@ -38,7 +38,7 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                                  value: LightColors.Text.two,
                                  range: NSRange(location: 0, length: methodsText.length))
         
-        let interactableText = NSMutableAttributedString(string: "Get your backup codes")
+        let interactableText = NSMutableAttributedString(string: L10n.TwoStep.getBackupCodesTitle)
         interactableText.addAttribute(NSAttributedString.Key.font,
                                       value: Fonts.Subtitle.two,
                                       range: NSRange(location: 0, length: interactableText.length))
@@ -57,35 +57,35 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         let sectionRows: [Models.Section: [Any]] = [
             .instructions: [
-                LabelViewModel.text("Select you preferred authentication method")
+                LabelViewModel.text(L10n.TwoStep.mainInstructions + " " + "")
             ],
             .methods: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.phone.image),
-                                                 title: .text("Phone number XX-XXXX-9400"),
+                                                 title: .text(L10n.TwoStep.Methods.Phone.title + " " + "000000000"),
                                                  subtitle: .attributedText(changeNumberString),
                                                  checkmark: .image(Asset.radiobutton.image)),
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.pad.image),
-                                                 title: .text("Authentication app"),
+                                                 title: .text(L10n.TwoStep.Methods.AuthApp.title),
                                                  checkmark: .image(Asset.radiobuttonSelected.image))
             ],
             .additionalMethods: [
                 LabelViewModel.attributedText(methodsText)
             ],
             .settingsTitle: [
-                LabelViewModel.text("Settings")
+                LabelViewModel.text(L10n.Button.settings)
             ],
             .settings: [
-                IconTitleSubtitleToggleViewModel(title: .text("Authentication app"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Settings.signInNewDevice),
                                                  checkmark: .image(Asset.check.image)),
-                IconTitleSubtitleToggleViewModel(title: .text("Recover/Changing password"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Settings.recoverChangePassword),
                                                  checkmark: .image(Asset.check.image)),
-                IconTitleSubtitleToggleViewModel(title: .text("Every 90 days"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Settings.everyNinetyDays),
                                                  checkmark: .image(Asset.check.image)),
-                IconTitleSubtitleToggleViewModel(title: .text("Sending funds"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Settings.funds),
                                                  checkmarkToggle: true),
-                IconTitleSubtitleToggleViewModel(title: .text("ACH Withdrawal"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Settings.achWithdrawal),
                                                  checkmarkToggle: true),
-                IconTitleSubtitleToggleViewModel(title: .text("Buy transactions"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Settings.buyTransactions),
                                                  checkmarkToggle: true)
             ]
         ]

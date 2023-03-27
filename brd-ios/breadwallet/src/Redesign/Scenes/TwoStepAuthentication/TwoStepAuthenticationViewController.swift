@@ -17,7 +17,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                                            TwoStepAuthenticationResponseDisplays {
     typealias Models = TwoStepAuthenticationModels
     
-    override var sceneLeftAlignedTitle: String? { return "Two factor authentication" }
+    override var sceneLeftAlignedTitle: String? { return L10n.TwoStep.mainTitle }
     
     // MARK: - Overrides
     
