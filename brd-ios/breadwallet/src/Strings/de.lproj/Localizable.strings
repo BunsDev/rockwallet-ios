@@ -3136,6 +3136,38 @@
 /* (this transaction was) Sent to this address: */
 "TransactionDirection.to" = "An diese Adresse versandt";
 
+"TwoStep.additionalMethodsTitle" = "";
+
+"TwoStep.changePhoneNumberTitle" = "Change Phone Number";
+
+"TwoStep.getBackupCodesTitle" = "";
+
+"TwoStep.mainInstructions" = "Two Factor Authentication in enabled with the phone number ending in";
+
+"TwoStep.mainTitle" = "Two factor authentication";
+
+"TwoStep.methods.additionalGetBackupCodesAction" = "Get your backup codes";
+
+"TwoStep.methods.additionalTitle" = "Additional methods";
+
+"TwoStep.methods.authApp.title" = "Authentication app";
+
+"TwoStep.methods.phone.subtitle" = "Change Phone Number";
+
+"TwoStep.methods.phone.title" = "Phone number";
+
+"TwoStep.settings.achWithdrawal" = "ACH Withdrawal";
+
+"TwoStep.settings.buyTransactions" = "Buy transactions";
+
+"TwoStep.settings.everyNinetyDays" = "Every 90 days";
+
+"TwoStep.settings.funds" = "Sending funds";
+
+"TwoStep.settings.recoverChangePassword" = "Recover/Changing password";
+
+"TwoStep.settings.signInNewDevice" = "Sign in into new device";
+
 "UDomains.invalid" = "Invalid address.";
 
 /* Disabled until date */
