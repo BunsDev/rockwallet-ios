@@ -157,6 +157,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         isInExchangeFlow = false
         ExchangeCurrencyHelper.revertIfNeeded()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Home())
     }
     
     override func viewDidAppear(_ animated: Bool) {

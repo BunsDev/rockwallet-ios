@@ -21,6 +21,12 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     
     // MARK: - Overrides
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.TwoFactorAuth())
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {

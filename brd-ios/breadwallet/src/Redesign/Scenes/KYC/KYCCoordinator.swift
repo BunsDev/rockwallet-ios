@@ -206,6 +206,8 @@ class VeriffKYCManager: NSObject, VeriffSdkDelegate {
             case .success(let data):
                 guard let navigationController = self.navigationController else { return }
                 
+                GoogleAnalytics.logEvent(GoogleAnalytics.OpenVeriffBioAuthSdk(sessionUrl: data?.sessionUrl ?? ""))
+                
                 VeriffSdk.shared.delegate = self
                 VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
                                                      configuration: Presets.veriff,
@@ -241,6 +243,8 @@ class VeriffKYCManager: NSObject, VeriffSdkDelegate {
     
     func sessionDidEndWithResult(_ result: Veriff.VeriffSdk.Result) {
         MobileIntelligence.submitData { _ in }
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.BioAuthCompleted(type: ""))
         
         completion?(result)
     }

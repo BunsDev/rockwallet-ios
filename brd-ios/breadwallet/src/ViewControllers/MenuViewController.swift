@@ -76,6 +76,8 @@ class MenuViewController: UITableViewController, Subscriber {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         visibleItems[indexPath.row].callback()
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Menu(settingsOption: visibleItems[indexPath.row].title))
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

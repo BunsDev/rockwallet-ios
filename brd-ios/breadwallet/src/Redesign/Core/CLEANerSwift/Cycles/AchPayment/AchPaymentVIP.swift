@@ -97,6 +97,8 @@ extension Interactor where Self: AchViewActions,
             PlaidEventWorker().execute(requestData: PlaidEventRequestData(event: data))
         }
         
+        GoogleAnalytics.logEvent(GoogleAnalytics.OpenPlaid(configuration: String(describing: linkConfiguration)))
+        
         let result = Plaid.create(linkConfiguration)
         switch result {
         case .failure(let error):

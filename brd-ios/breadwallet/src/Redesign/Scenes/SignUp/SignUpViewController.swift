@@ -28,6 +28,13 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - Overrides
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Registration())
+        GoogleAnalytics.logEvent(GoogleAnalytics.PinResetCompleted())
+    }
+    
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
         

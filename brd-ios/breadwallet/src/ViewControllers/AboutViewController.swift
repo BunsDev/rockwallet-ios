@@ -71,6 +71,8 @@ class AboutViewController: UIViewController {
         setActions()
         
         view.backgroundColor = LightColors.Background.one
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.About())
     }
 
     private func addSubviews() {

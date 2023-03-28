@@ -15,6 +15,14 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                              ProfileResponseDisplays {
     typealias Models = ProfileModels
     
+    // MARK: - Overrides
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Profile())
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -22,8 +30,6 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func prepareData() {}
-    
-    // MARK: - Overrides
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section] as? Models.Section

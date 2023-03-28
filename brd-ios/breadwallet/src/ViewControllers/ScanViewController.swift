@@ -93,6 +93,8 @@ class ScanViewController: UIViewController {
         
         cameraRoll.tap = importCameraRoll
         addCameraPreview()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Scanner())
     }
     
     override func viewWillDisappear(_ animated: Bool) {

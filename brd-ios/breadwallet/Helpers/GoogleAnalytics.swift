@@ -17,9 +17,10 @@ protocol GoogleAnalyticsLogData {
     var data: [String: String] { get set }
 }
 
+// swiftlint:disable type_body_length
 struct GoogleAnalytics {
-    struct Home: GoogleAnalyticsLogData {
-        var name = "GT-RW-Home"
+    struct Home: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Home"
         var data: [String: String]
         
         init() {
@@ -27,18 +28,18 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Send: GoogleAnalyticsLogData {
-        var name = "GT-RW-Send"
+    struct Send: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Send"
         var data: [String: String]
         
         init(currencyId: String, cryptoRequestUrl: String) {
             data = ["currencyId": currencyId,
-                    "cryptoRequestUrl": currencyId]
+                    "cryptoRequestUrl": currencyId] // TODO: What is this?
         }
     }
     
-    struct Receive: GoogleAnalyticsLogData {
-        var name = "GT-RW-Receive"
+    struct Receive: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Receive"
         var data: [String: String]
         
         init(currencyCode: String) {
@@ -46,8 +47,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Registration: GoogleAnalyticsLogData {
-        var name = "GT-RW-Registration"
+    struct Registration: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Registration"
         var data: [String: String]
         
         init() {
@@ -56,7 +57,7 @@ struct GoogleAnalytics {
     }
     
     struct Transaction: GoogleAnalyticsLogData {
-        var name = "GT-RW-Transaction"
+        var name = "GT_RW_Transaction"
         var data: [String: String]
         
         init(currencyId: String, txHash: String) {
@@ -66,7 +67,7 @@ struct GoogleAnalytics {
     }
     
     struct TransactionData: GoogleAnalyticsLogData {
-        var name = "GT-RW-Transaction"
+        var name = "GT_RW_Transaction"
         var data: [String: String]
         
         init(transactionData: String) {
@@ -75,7 +76,7 @@ struct GoogleAnalytics {
     }
     
     struct Back: GoogleAnalyticsLogData {
-        var name = "GT-RW-Back"
+        var name = "GT_RW_Back"
         var data: [String: String]
         
         init() {
@@ -84,7 +85,7 @@ struct GoogleAnalytics {
     }
     
     struct BackTo: GoogleAnalyticsLogData {
-        var name = "GT-RW-Back-To"
+        var name = "GT_RW_Back_To"
         var data: [String: String]
         
         init(transactionData: String) {
@@ -93,7 +94,7 @@ struct GoogleAnalytics {
     }
     
     struct BackGoToKyc: GoogleAnalyticsLogData {
-        var name = "GT-RW-Back-GoToKyc"
+        var name = "GT_RW_Back_GoToKyc"
         var data: [String: String]
         
         init(transactionData: String) {
@@ -102,7 +103,7 @@ struct GoogleAnalytics {
     }
     
     struct TwoFactorAuth: GoogleAnalyticsLogData {
-        var name = "GT-RW-Transaction"
+        var name = "GT-RW-Two-Factor-Auth"
         var data: [String: String]
         
         init() {
@@ -111,7 +112,7 @@ struct GoogleAnalytics {
     }
     
     struct VerifyEmail: GoogleAnalyticsLogData {
-        var name = "GT-RW-Verify-Email"
+        var name = "GT_RW_Verify_Email"
         var data: [String: String]
         
         init(transactionData: String) {
@@ -119,8 +120,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct OpenVeriffBioAuthSdk: GoogleAnalyticsLogData {
-        var name = "GT-RW-Open-Veriff-Bio-Auth-Sdk"
+    struct OpenVeriffBioAuthSdk: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Open_Veriff_Bio_Auth_Sdk"
         var data: [String: String]
         
         init(sessionUrl: String) {
@@ -128,8 +129,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Feedback: GoogleAnalyticsLogData {
-        var name = "GT-RW-Feedback"
+    struct Feedback: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Feedback"
         var data: [String: String]
         
         init() {
@@ -137,8 +138,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Scanner: GoogleAnalyticsLogData {
-        var name = "GT-RW-Scanner"
+    struct Scanner: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Scanner"
         var data: [String: String]
         
         init() {
@@ -147,7 +148,7 @@ struct GoogleAnalytics {
     }
     
     struct LogcatViewer: GoogleAnalyticsLogData {
-        var name = "GT-RW-Logcat-Viewer"
+        var name = "GT_RW_Logcat_Viewer"
         var data: [String: String]
         
         init() {
@@ -156,7 +157,7 @@ struct GoogleAnalytics {
     }
     
     struct MetadataViewer: GoogleAnalyticsLogData {
-        var name = "GT-RW-Metadata-Viewer"
+        var name = "GT_RW_Metadata_Viewer"
         var data: [String: String]
         
         init() {
@@ -164,8 +165,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct NoInternetScreen: GoogleAnalyticsLogData {
-        var name = "GT-RW-No-Internet-Screen"
+    struct NoInternetScreen: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_No_Internet_Screen"
         var data: [String: String]
         
         init() {
@@ -174,7 +175,7 @@ struct GoogleAnalytics {
     }
     
     struct VerifyProfile: GoogleAnalyticsLogData {
-        var name = "GT-RW-Open-Verify-Profile"
+        var name = "GT_RW_Open_Verify_Profile"
         var data: [String: String]
         
         init(type: String) {
@@ -183,7 +184,7 @@ struct GoogleAnalytics {
     }
     
     struct DeepLink: GoogleAnalyticsLogData {
-        var name = "GT-RW-Open-Deep-Link"
+        var name = "GT_RW_Open_Deep_Link"
         var data: [String: String]
         
         init(url: String, authenticated: String, link: String) {
@@ -192,7 +193,7 @@ struct GoogleAnalytics {
     }
     
     struct GoToInAppMessage: GoogleAnalyticsLogData {
-        var name = "GT-RW-Go-To-In-App-Message"
+        var name = "GT_RW_Go_To_In_App_Message"
         var data: [String: String]
         
         init(inAppMessage: String) {
@@ -201,7 +202,7 @@ struct GoogleAnalytics {
     }
     
     struct Wallet: GoogleAnalyticsLogData {
-        var name = "GT-RW-Wallet"
+        var name = "GT_RW_Wallet"
         var data: [String: String]
         
         init(currencyCode: String) {
@@ -210,7 +211,7 @@ struct GoogleAnalytics {
     }
     
     struct SupportPage: GoogleAnalyticsLogData {
-        var name = "GT-RW-Support-Page"
+        var name = "GT_RW_Support_Page"
         var data: [String: String]
         
         init(articleId: String, currencyCode: String) {
@@ -219,7 +220,7 @@ struct GoogleAnalytics {
     }
     
     struct GenericDialog: GoogleAnalyticsLogData {
-        var name = "GT-RW-Generic-Dialog"
+        var name = "GT_RW_Generic_Dialog"
         var data: [String: String]
         
         init(args: String) {
@@ -227,8 +228,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct OpenPlaid: GoogleAnalyticsLogData {
-        var name = "GT-RW-Open-Plaid"
+    struct OpenPlaid: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Open_Plaid"
         var data: [String: String]
         
         init(configuration: String) {
@@ -237,7 +238,7 @@ struct GoogleAnalytics {
     }
     
     struct SupportDialog: GoogleAnalyticsLogData {
-        var name = "GT-RW-Support-Dialog"
+        var name = "GT_RW_Support_Dialog"
         var data: [String: String]
         
         init(topic: String) {
@@ -246,7 +247,7 @@ struct GoogleAnalytics {
     }
     
     struct ContactSupport: GoogleAnalyticsLogData {
-        var name = "GT-RW-Conact-Support"
+        var name = "GT_RW_Conact_Support"
         var data: [String: String]
         
         init() {
@@ -254,8 +255,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct KycComingSoon: GoogleAnalyticsLogData {
-        var name = "GT-RW-Kyc-Coming-Soon"
+    struct KycComingSoon: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Kyc_Coming_Soon"
         var data: [String: String]
         
         init(type: String) {
@@ -263,35 +264,36 @@ struct GoogleAnalytics {
         }
     }
     
-    struct BioAuthCompleted: GoogleAnalyticsLogData {
-        var name = "GT-RW-Bio-Auth-Completed"
+    struct BioAuthCompleted: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Bio_Auth_Completed"
         var data: [String: String]
         
         init(type: String) {
-            data = ["type": type]
+            data = ["type": type] // TODO: What is this?
         }
     }
     
-    struct SetPin: GoogleAnalyticsLogData {
-        var name = "GT-RW-Set-Pin"
+    struct SetPin: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Set_Pin"
         var data: [String: String]
         
         init(onboarding: String, skipWriteDownKey: String) {
-            data = ["onboarding": onboarding, "skipWriteDownKey": skipWriteDownKey]
+            data = ["onboarding": onboarding,
+                    "skipWriteDownKey": skipWriteDownKey] // TODO: What is this?
         }
     }
     
-    struct GoToRecoveryKey: GoogleAnalyticsLogData {
-        var name = "GT-RW-Recovery-Key"
+    struct GoToRecoveryKey: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Recovery_Key"
         var data: [String: String]
         
         init(mode: String) {
-            data = ["mode": mode]
+            data = ["mode": mode] // TODO: What is this?
         }
     }
     
     struct BrdLogin: GoogleAnalyticsLogData {
-        var name = "GT-RW-Brd-Login"
+        var name = "GT_RW_Brd_Login"
         var data: [String: String]
         
         init() {
@@ -300,7 +302,7 @@ struct GoogleAnalytics {
     }
     
     struct Authentication: GoogleAnalyticsLogData {
-        var name = "GT-RW-Bio-Authentication"
+        var name = "GT_RW_Bio_Authentication"
         var data: [String: String]
         
         init(mode: String) {
@@ -308,8 +310,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct PinReset: GoogleAnalyticsLogData {
-        var name = "GT-RW-Pin-Reset"
+    struct PinReset: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Pin_Reset"
         var data: [String: String]
         
         init() {
@@ -317,8 +319,8 @@ struct GoogleAnalytics {
         }
     }
 
-    struct PinResetCompleted: GoogleAnalyticsLogData {
-        var name = "GT-RW-Pin-Reset-Completed"
+    struct PinResetCompleted: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Pin_Reset_Completed"
         var data: [String: String]
         
         init() {
@@ -326,8 +328,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct CreateAccount: GoogleAnalyticsLogData {
-        var name = "GT-RW-Create-Account"
+    struct CreateAccount: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Create_Account" // Same as PinResetCompleted?
         var data: [String: String]
         
         init() {
@@ -335,8 +337,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Buy: GoogleAnalyticsLogData {
-        var name = "GT-RW-Buy"
+    struct Buy: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Buy"
         var data: [String: String]
         
         init(type: String) {
@@ -344,8 +346,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Sell: GoogleAnalyticsLogData {
-        var name = "GT-RW-Create-Sell"
+    struct Sell: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Create_Sell"
         var data: [String: String]
         
         init() {
@@ -354,7 +356,7 @@ struct GoogleAnalytics {
     }
     
     struct Profile: GoogleAnalyticsLogData {
-        var name = "GT-RW-Create-Profile"
+        var name = "GT_RW_Create_Profile"
         var data: [String: String]
         
         init() {
@@ -362,8 +364,8 @@ struct GoogleAnalytics {
         }
     }
 
-    struct AddWallet: GoogleAnalyticsLogData {
-        var name = "GT-RW-Add-Wallet"
+    struct AddWallet: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Add_Wallet"
         var data: [String: String]
         
         init() {
@@ -372,7 +374,7 @@ struct GoogleAnalytics {
     }
 
     struct NativeApiExplorer: GoogleAnalyticsLogData {
-        var name = "GT-RW-Add-Wallet"
+        var name = "GT_RW_Add_Wallet"
         var data: [String: String]
         
         init() {
@@ -380,17 +382,18 @@ struct GoogleAnalytics {
         }
     }
     
-    struct WriteDownKey: GoogleAnalyticsLogData {
-        var name = "GT-RW-On-Write-Down-Key"
+    struct WriteDownKey: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_On_Write_Down_Key"
         var data: [String: String]
         
         init(onComplete: String, requestAuth: String) {
-            data = ["onComplete": onComplete, "requestAuth": requestAuth]
+            data = ["onComplete": onComplete, // TODO: What is this?
+                    "requestAuth": requestAuth] // TODO: What is this?
         }
     }
     
     struct PaperKey: GoogleAnalyticsLogData {
-        var name = "GT-RW-Paper-Key"
+        var name = "GT_RW_Paper_Key"
         var data: [String: String]
         
         init() {
@@ -399,7 +402,7 @@ struct GoogleAnalytics {
     }
     
     struct PaperKeyProve: GoogleAnalyticsLogData {
-        var name = "GT-RW-Paper-Key-Prove"
+        var name = "GT_RW_Paper_Key_Prove"
         var data: [String: String]
         
         init() {
@@ -408,7 +411,7 @@ struct GoogleAnalytics {
     }
     
     struct PaperKeyProveCompleted: GoogleAnalyticsLogData {
-        var name = "GT-RW-Paper-Key-Prove-Completed"
+        var name = "GT_RW_Paper_Key_Prove_Completed"
         var data: [String: String]
         
         init() {
@@ -416,8 +419,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Menu: GoogleAnalyticsLogData {
-        var name = "GT-RW-Menu"
+    struct Menu: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Menu"
         var data: [String: String]
         
         init(settingsOption: String) {
@@ -426,7 +429,7 @@ struct GoogleAnalytics {
     }
     
     struct TransactionComplete: GoogleAnalyticsLogData {
-        var name = "GT-RW-Transaction-Complete"
+        var name = "GT_RW_Transaction_Complete"
         var data: [String: String]
         
         init() {
@@ -434,8 +437,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct About: GoogleAnalyticsLogData {
-        var name = "GT-RW-About"
+    struct About: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_About"
         var data: [String: String]
         
         init() {
@@ -443,8 +446,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct DisplayCurrency: GoogleAnalyticsLogData {
-        var name = "GT-RW-About"
+    struct DisplayCurrency: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_About"
         var data: [String: String]
         
         init() {
@@ -453,7 +456,7 @@ struct GoogleAnalytics {
     }
     
     struct NotificationsSettings: GoogleAnalyticsLogData {
-        var name = "GT-RW-About"
+        var name = "GT_RW_About"
         var data: [String: String]
         
         init() {
@@ -462,7 +465,7 @@ struct GoogleAnalytics {
     }
     
     struct ShareDataSettings: GoogleAnalyticsLogData {
-        var name = "GT-RW-About"
+        var name = "GT_RW_About"
         var data: [String: String]
         
         init() {
@@ -471,7 +474,7 @@ struct GoogleAnalytics {
     }
     
     struct FingerprintSettings: GoogleAnalyticsLogData {
-        var name = "GT-RW-About"
+        var name = "GT_RW_About"
         var data: [String: String]
         
         init() {
@@ -480,7 +483,7 @@ struct GoogleAnalytics {
     }
     
     struct WipeWallet: GoogleAnalyticsLogData {
-        var name = "GT-RW-About"
+        var name = "GT_RW_About"
         var data: [String: String]
         
         init() {
@@ -489,7 +492,7 @@ struct GoogleAnalytics {
     }
     
     struct OnBoarding: GoogleAnalyticsLogData {
-        var name = "GT-RW-About"
+        var name = "GT_RW_About"
         var data: [String: String]
         
         init() {
@@ -497,17 +500,17 @@ struct GoogleAnalytics {
         }
     }
     
-    struct ImportWallet: GoogleAnalyticsLogData {
-        var name = "GT-RW-Import-Wallet"
+    struct ImportWallet: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Import_Wallet"
         var data: [String: String]
         
         init(scanned: String) {
-            data = ["scanned": scanned]
+            data = ["scanned": scanned] // TODO: What is this?
         }
     }
     
     struct BitcoinNodeSelector: GoogleAnalyticsLogData {
-        var name = "GT-RW-Bitcoin-Node-Selector"
+        var name = "GT_RW_Bitcoin_Node_Selector"
         var data: [String: String]
         
         init() {
@@ -516,7 +519,7 @@ struct GoogleAnalytics {
     }
     
     struct LegacyAddress: GoogleAnalyticsLogData {
-        var name = "GT-RW-Legacy-Address"
+        var name = "GT_RW_Legacy_Address"
         var data: [String: String]
         
         init() {
@@ -525,7 +528,7 @@ struct GoogleAnalytics {
     }
     
     struct SyncBlockchain: GoogleAnalyticsLogData {
-        var name = "GT-RW-Sync-Blockchain"
+        var name = "GT_RW_Sync_Blockchain"
         var data: [String: String]
         
         init(currencyCode: String) {
@@ -534,7 +537,7 @@ struct GoogleAnalytics {
     }
     
     struct FastSync: GoogleAnalyticsLogData {
-        var name = "GT-RW-FastSync"
+        var name = "GT_RW_FastSync"
         var data: [String: String]
         
         init(currencyCode: String) {
@@ -543,7 +546,7 @@ struct GoogleAnalytics {
     }
     
     struct ATMMap: GoogleAnalyticsLogData {
-        var name = "GT-RW-ATM-Map"
+        var name = "GT_RW_ATM_Map"
         var data: [String: String]
         
         init(url: String, mapJson: String) {
@@ -552,7 +555,7 @@ struct GoogleAnalytics {
     }
     
     struct Signal: GoogleAnalyticsLogData {
-        var name = "GT-RW-Signal"
+        var name = "GT_RW_Signal"
         var data: [String: String]
         
         init() {
@@ -561,7 +564,7 @@ struct GoogleAnalytics {
     }
 
     struct Staking: GoogleAnalyticsLogData {
-        var name = "GT-RW-Staking"
+        var name = "GT_RW_Staking"
         var data: [String: String]
         
         init(currencyId: String) {
@@ -570,7 +573,7 @@ struct GoogleAnalytics {
     }
     
     struct CreateGift: GoogleAnalyticsLogData {
-        var name = "GT-RW-Create-Gift"
+        var name = "GT_RW_Create_Gift"
         var data: [String: String]
         
         init(currencyId: String) {
@@ -579,7 +582,7 @@ struct GoogleAnalytics {
     }
     
     struct ShareGift: GoogleAnalyticsLogData {
-        var name = "GT-RW-Share-Gift"
+        var name = "GT_RW_Share_Gift"
         var data: [String: String]
         
         init(giftUrl: String, txHash: String, recipientName: String, giftAmount: String, giftAmountFiat: String, pricePerUnit: String, replaceTop: String) {
@@ -594,7 +597,7 @@ struct GoogleAnalytics {
     }
     
     struct SelectBakerScreen: GoogleAnalyticsLogData {
-        var name = "GT-RW-Select-Baker-Screen"
+        var name = "GT_RW_Select_Baker_Screen"
         var data: [String: String]
         
         init(bakers: String) {
@@ -603,7 +606,9 @@ struct GoogleAnalytics {
     }
     
     static func logEvent(_ log: GoogleAnalyticsLogData) {
-        Analytics.logEvent(log.name, parameters: log.data)
+        let data = log.data.merging(GoogleAnalytics.getUserinfo(), uniquingKeysWith: { (first, _) in first })
+        
+        Analytics.logEvent(log.name, parameters: data)
     }
     
     static func getUserinfo() -> [String: String] {
@@ -619,6 +624,6 @@ struct GoogleAnalytics {
         info["kyc_access_rights"] = String(describing: profile.kycAccessRights)
         info["has_pending_limits"] = profile.hasPendingLimits.description
         
-        return [:]
+        return info
     }
 }
