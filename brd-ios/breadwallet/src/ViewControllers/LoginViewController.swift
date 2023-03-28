@@ -375,9 +375,6 @@ class LoginViewController: UIViewController, Subscriber {
                         guard let account = account else { return }
                         loginHandler(account)
                     }
-                    
-                    guard DynamicLinksManager.shared.dynamicLinkType != nil else { return }
-                    Store.trigger(name: .handleDeeplink)
                 })
                 return
             }

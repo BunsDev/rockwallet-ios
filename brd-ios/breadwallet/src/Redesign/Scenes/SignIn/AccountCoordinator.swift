@@ -53,7 +53,6 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
             vc.dataStore?.code = DynamicLinksManager.shared.code
             
             DynamicLinksManager.shared.code = nil
-            DynamicLinksManager.shared.dynamicLinkType = nil
         }
     }
     

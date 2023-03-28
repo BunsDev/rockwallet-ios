@@ -76,10 +76,6 @@ class BaseCoordinator: NSObject,
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         
-        if DynamicLinksManager.shared.code != nil {
-            UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.dismiss(animated: true)
-        }
-        
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
@@ -522,13 +518,29 @@ class BaseCoordinator: NSObject,
         }
     }
     
-    func handleDeeplink(coreSystem: CoreSystem, keyStore: KeyStore) {
+    func prepareForDeeplinkHandling(coreSystem: CoreSystem, keyStore: KeyStore) {
+        guard !childCoordinators.isEmpty else {
+            handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
+            return
+        }
+        
+        childCoordinators.forEach { child in
+            child.navigationController.dismiss(animated: false) { [weak self] in
+                self?.childDidFinish(child: child)
+                guard self?.childCoordinators.isEmpty == true else { return }
+                self?.handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
+            }
+        }
+    }
+    
+    private func handleDeeplink(coreSystem: CoreSystem, keyStore: KeyStore) {
+        popToRoot()
+        
         guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
         DynamicLinksManager.shared.dynamicLinkType = nil
         switch deeplink {
         case .home:
-            popToRoot()
-            dismissFlow()
+            return
             
         case .profile:
             showProfile()

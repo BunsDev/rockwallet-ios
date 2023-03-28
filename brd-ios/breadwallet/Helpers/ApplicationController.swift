@@ -364,7 +364,7 @@ class ApplicationController: Subscriber {
     
     private func afterLoginFlow() {
         Store.subscribe(self, name: .handleDeeplink) { _ in
-            self.coordinator?.handleDeeplink(coreSystem: self.coreSystem, keyStore: self.keyStore)
+            self.coordinator?.prepareForDeeplinkHandling(coreSystem: self.coreSystem, keyStore: self.keyStore)
         }
         
         UserManager.shared.refresh { [weak self] result in
@@ -383,7 +383,7 @@ class ApplicationController: Subscriber {
         }
         
         guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
-        coordinator?.handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
+        Store.trigger(name: .handleDeeplink)
     }
     
     private func addHomeScreenHandlers(homeScreen: HomeScreenViewController,
