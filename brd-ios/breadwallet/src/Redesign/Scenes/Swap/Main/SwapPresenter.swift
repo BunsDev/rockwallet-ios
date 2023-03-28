@@ -102,7 +102,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         } else if let feeAmount = fromFee,
                   let feeWallet = feeAmount.currency.wallet,
                   feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
-            let error = ExchangeErrors.balanceTooLow(balance: feeAmount.tokenValue, currency: feeAmount.currency.code)
+            let error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
             presentError(actionResponse: .init(error: error))
             hasError = true
         } else {
