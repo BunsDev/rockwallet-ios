@@ -76,10 +76,6 @@ class BaseCoordinator: NSObject,
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         
-        if DynamicLinksManager.shared.code != nil {
-            UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.dismiss(animated: true)
-        }
-        
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
@@ -344,7 +340,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     func decideFlow(completion: ((Bool) -> Void)?) {
-        guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
+        guard DynamicLinksManager.shared.dynamicLinkType == nil else {
             completion?(false)
             return
         }
@@ -519,6 +515,46 @@ class BaseCoordinator: NSObject,
     func handleRestrictedUser(reason: Reason?) {
         open(scene: Scenes.ComingSoon) { vc in
             vc.reason = reason
+        }
+    }
+    
+    func prepareForDeeplinkHandling(coreSystem: CoreSystem, keyStore: KeyStore) {
+        guard !childCoordinators.isEmpty else {
+            handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
+            return
+        }
+        
+        childCoordinators.forEach { child in
+            child.navigationController.dismiss(animated: false) { [weak self] in
+                self?.childDidFinish(child: child)
+                guard self?.childCoordinators.isEmpty == true else { return }
+                self?.handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
+            }
+        }
+    }
+    
+    private func handleDeeplink(coreSystem: CoreSystem, keyStore: KeyStore) {
+        popToRoot()
+        
+        guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
+        DynamicLinksManager.shared.dynamicLinkType = nil
+        switch deeplink {
+        case .home:
+            return
+            
+        case .profile:
+            showProfile()
+            
+        case .swap:
+            guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+                self.handleUnverifiedUser(flow: .swap)
+                return
+            }
+            
+            showSwap(currencies: Store.state.currencies, coreSystem: coreSystem, keyStore: keyStore)
+            
+        case .setPassword:
+            handleUserAccount()
         }
     }
 }

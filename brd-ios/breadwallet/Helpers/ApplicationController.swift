@@ -267,8 +267,8 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
-                Store.trigger(name: .handleUserAccount)
+                guard DynamicLinksManager.shared.dynamicLinkType != nil else { return }
+                Store.trigger(name: .handleDeeplink)
             }
         }
     }
@@ -363,28 +363,27 @@ class ApplicationController: Subscriber {
     }
     
     private func afterLoginFlow() {
-        Store.subscribe(self, name: .handleUserAccount, callback: { _ in
-            self.coordinator?.handleUserAccount()
-        })
+        Store.subscribe(self, name: .handleDeeplink) { _ in
+            self.coordinator?.prepareForDeeplinkHandling(coreSystem: self.coreSystem, keyStore: self.keyStore)
+        }
         
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
                 guard profile?.isMigrated == false else { return }
                 
-                Store.trigger(name: .handleUserAccount)
-                
             case .failure(let error):
                 self?.coordinator?.showToastMessage(with: error)
                 
                 guard self?.isReachable == true else { return }
                 
-                Store.trigger(name: .handleUserAccount)
-                
             default:
                 return
             }
         }
+        
+        guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
+        Store.trigger(name: .handleDeeplink)
     }
     
     private func addHomeScreenHandlers(homeScreen: HomeScreenViewController,

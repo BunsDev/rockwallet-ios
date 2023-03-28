@@ -81,8 +81,8 @@ enum TriggerName {
     case didSelectBaker(Baker?)
     case promptKyc
     case promptNoAccount
-    case handleUserAccount
     case promptLimitsAuthentication
+    case handleDeeplink
     case promptTwoStep
 }
 
@@ -164,9 +164,9 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.promptNoAccount, .promptNoAccount):
         return true
-    case (.handleUserAccount, .handleUserAccount):
-        return true
     case (.promptLimitsAuthentication, .promptLimitsAuthentication):
+        return true
+    case (.handleDeeplink, .handleDeeplink):
         return true
     default:
         return false
