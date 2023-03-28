@@ -47,6 +47,7 @@
 		044D09A529C8561A00C510DC /* PhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D09A429C8561A00C510DC /* PhoneNumberView.swift */; };
 		0453B0BC29D22BF100BBE246 /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 0453B0BB29D22BF100BBE246 /* GoogleTagManager */; };
 		0453B0BE29D22CC700BBE246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0453B0BD29D22CC700BBE246 /* GoogleService-Info.plist */; };
+		0453B0C029D2DEB100BBE246 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */; };
 		0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */; };
@@ -880,6 +881,7 @@
 		044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		044D09A429C8561A00C510DC /* PhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberView.swift; sourceTree = "<group>"; };
 		0453B0BD29D22CC700BBE246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Resources/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
 		0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksatoshiEndpoints.swift; sourceTree = "<group>"; };
 		0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailDestinationWorker.swift; sourceTree = "<group>"; };
@@ -2689,6 +2691,7 @@
 				CE8CD8DC1E2D9EF200785E02 /* Sender.swift */,
 				7B54E57327F4A2B0002DD1E4 /* Shadowable.swift */,
 				7B8FAF00299B898D002EB972 /* TouchSpamPreventer.swift */,
+				0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */,
 				7B62ACFA28B3BDA000CE81E7 /* String+Chunk.swift */,
 				7ECCA99628742E1700F99368 /* UIApplication+ActiveWindow.swift */,
 				7E87B32C285346E00097671F /* UIImage+Compress.swift */,
@@ -4175,6 +4178,7 @@
 				7CBD578F2107EB560042C388 /* PairedWalletData.swift in Sources */,
 				7EF2998B27E3B8C400A2238A /* Resources.swift in Sources */,
 				7E5CB38C2835090E00EC787E /* Borderable.swift in Sources */,
+				0453B0C029D2DEB100BBE246 /* GoogleAnalytics.swift in Sources */,
 				7ED83AF5284F40EB00261565 /* CheckListVIP.swift in Sources */,
 				7EF45F592845353100D1F7B0 /* DoubleHorizontalTextboxView.swift in Sources */,
 				CEAA9E951DC1659F0066731D /* UILabel+Extensions.swift in Sources */,

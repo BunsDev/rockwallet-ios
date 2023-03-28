@@ -12,6 +12,7 @@ import Foundation
 
 struct ProfileResponseData: ModelResponse {
     let email: String?
+    var country: UserInformationResponseData.UserPlace?
     let kycStatus: String?
     let exchangeLimits: [ExchangeLimit]?
     let kycAccessRights: AccessRights?
@@ -52,10 +53,12 @@ struct ProfileResponseData: ModelResponse {
 
 struct Profile: Model {
     let email: String
+    var country: Place?
     let status: VerificationStatus
     let limits: [ProfileResponseData.ExchangeLimit]
     let kycAccessRights: AccessRights
     let isMigrated: Bool
+    let kycFailureReason: String?
     let hasPendingLimits: Bool
     
     struct AccessRights {
@@ -134,6 +137,7 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
         guard let response = response else { return nil }
         
         return Profile(email: response.email ?? "",
+                       country: Place(iso2: response.country?.iso2 ?? "", name: response.country?.name ?? ""),
                        status: VerificationStatus(rawValue: response.kycStatus),
                        limits: response.exchangeLimits ?? [],
                        kycAccessRights: .init(hasSwapAccess: response.kycAccessRights?.hasSwapAccess ?? false,
@@ -141,6 +145,7 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                                               hasAchAccess: response.kycAccessRights?.hasAchAccess ?? false,
                                               restrictionReason: .init(rawValue: response.kycAccessRights?.restrictionReason ?? "")),
                        isMigrated: response.isRegistered ?? false,
+                       kycFailureReason: response.kycFailureReason,
                        hasPendingLimits: response.hasPendingLimits ?? false)
     }
 }
