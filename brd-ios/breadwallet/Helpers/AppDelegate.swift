@@ -8,6 +8,8 @@
 
 import UIKit
 import LocalAuthentication
+import Firebase
+import FirebaseAnalytics
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -21,6 +23,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIView.swizzleSetFrame()
         applicationController.launch(application: application, options: launchOptions)
+        
+        
+        
+        
+        FirebaseApp.configure()
+        
+        Analytics.logEvent("GT_RW_Send", parameters: [
+            "currencyId": "mamedoff",
+            "cryptoRequestUrl": "mamedoff"
+        ])
+
+
         
         return true
     }
