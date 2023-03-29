@@ -70,8 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // The Plaid Link SDK ignores unexpected URLs passed to `resumeAfterTermination(from:)` as
         // per Apple’s recommendations, so there is no need to filter out unrelated URLs.
-        // Doing so may prevent a valid URL from being passed to `resumeAfterTermination(from:)` and
-        // OAuth may not continue as expected.
+        // Doing so may prevent a valid URL from being passed to `resumeAfterTermination(from:)` and OAuth may not continue as expected.
         guard let linkOAuthHandler = window?.rootViewController as? LinkOAuthHandling,
               let handler = linkOAuthHandler.plaidHandler else { return false }
         // Continue the Link flow

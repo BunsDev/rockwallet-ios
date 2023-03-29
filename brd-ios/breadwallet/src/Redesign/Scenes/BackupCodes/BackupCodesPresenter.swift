@@ -16,8 +16,6 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
     // MARK: - BackupCodesActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        if let item = actionResponse.item as? Models.Item { return }
-        
         let sections: [Models.Section] = [
             .instructions,
             .backupCodes,

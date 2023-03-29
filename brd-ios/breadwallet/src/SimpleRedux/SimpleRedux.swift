@@ -281,3 +281,5 @@ class Store {
     private var subscriptions: [Int: [Subscription]] = [:]
     private var triggers: [Int: [Trigger]] = [:]
 }
+
+// swiftlint:enable legacy_hashing

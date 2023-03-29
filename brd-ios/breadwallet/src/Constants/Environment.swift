@@ -148,3 +148,5 @@ struct E {
         fatalError("Env not configured properly")
     }
 }
+
+// swiftlint:enable type_name

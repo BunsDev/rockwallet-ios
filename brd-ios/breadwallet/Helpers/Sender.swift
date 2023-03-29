@@ -268,7 +268,7 @@ class Sender: Subscriber {
     }
 
     private func waitForSubmission(of transfer: Transfer, completion: @escaping SendCompletion) {
-        GoogleAnalytics.logEvent(GoogleAnalytics.Transaction(currencyId: String(describing:  transfer.wallet.currency.uid), txHash: transfer.hash?.description ?? ""))
+        GoogleAnalytics.logEvent(GoogleAnalytics.Transaction(currencyId: String(describing: transfer.wallet.currency.uid), txHash: transfer.hash?.description ?? ""))
         
         let handleSuccess: (_ originatingTx: Transfer?) -> Void = { originatingTx in
             DispatchQueue.main.async {
