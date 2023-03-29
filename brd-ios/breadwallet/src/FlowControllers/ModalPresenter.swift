@@ -1094,13 +1094,13 @@ class ModalPresenter: Subscriber {
             
             // TODO: ENABLE 2FA
             // Two-Factor Authentication (2FA)
-            MenuItem(title: "Two-Factor Authentication (2FA)") { [weak self] in
+//            MenuItem(title: "Two-Factor Authentication (2FA)") { [weak self] in
 //                guard let self = self else { return }
 //                let biometricsSettings = TwoStepAuthenticationViewController()
 //                let nc = RootNavigationController(rootViewController: biometricsSettings)
 //                biometricsSettings.addCloseNavigationItem()
 //                self.topViewController?.present(nc, animated: true)
-            },
+//            },
             
             // Paper key
             MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in

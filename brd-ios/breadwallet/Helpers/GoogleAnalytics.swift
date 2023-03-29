@@ -627,3 +627,4 @@ struct GoogleAnalytics {
         return info
     }
 }
+// swiftlint:enable type_body_length
