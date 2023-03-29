@@ -45,20 +45,30 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             case .receive:
                 Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
                 
-                // TODO: Uncomment for drawer
-//            case .buySell:
+            // TODO: Replace buy with buySell for drawer
+            case .buy:
+                guard UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
+                    self.coordinator?.handleUnverifiedUser(flow: .buy)
+                    return
+                }
+                                
+                self.coordinator?.showBuy(type: .card,
+                                          coreSystem: self.coreSystem,
+                                          keyStore: self.keyStore)
+                
+                // TODO: Uncomment to re-enable drawer
 //                toggleDrawer()
-//
-//            case .swap:
-//                guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
-//                    self.coordinator?.handleUnverifiedUser(flow: .swap)
-//                    return
-//                }
-//
-//                guard let coreSystem, let keyStore else { return }
-//                self.coordinator?.showSwap(currencies: Store.state.currencies,
-//                                           coreSystem: coreSystem,
-//                                           keyStore: keyStore)
+
+            case .swap:
+                guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+                    self.coordinator?.handleUnverifiedUser(flow: .swap)
+                    return
+                }
+
+                guard let coreSystem, let keyStore else { return }
+                self.coordinator?.showSwap(currencies: Store.state.currencies,
+                                           coreSystem: coreSystem,
+                                           keyStore: keyStore)
             }
         }.store(in: &observers)
     }
@@ -104,48 +114,49 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         }
     }
     
-    private lazy var drawerConfiguration: DrawerConfiguration = {
-        switch currency.code {
-        case Constant.USDT:
-            return DrawerConfiguration()
-            
-        default:
-            return DrawerConfiguration(buttons: [Presets.Button.primary,
-                                                 Presets.Button.secondary])
-        }
-    }()
-    
-    private lazy var drawerViewModel: DrawerViewModel = {
-        switch currency.code {
-        case Constant.USDT:
-            return DrawerViewModel()
-            
-        default:
-            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
-                                             .init(title: L10n.Button.sell, image: Asset.sell.image)])
-        }
-    }()
-    
-    private lazy var drawerCallbacks: [(() -> Void)] = {
-        switch currency.code {
-        case Constant.USDT:
-            return [ { [weak self] in
-                self?.didTapDrawerButton(.card)
-            }, { [weak self] in
-                self?.didTapDrawerButton(.ach)
-            }, { [weak self]
-                in self?.didTapDrawerButton()
-            }]
-            
-        default:
-            return [ { [weak self] in
-                self?.didTapDrawerButton(.card)
-            }, { [weak self] in
-                self?.didTapDrawerButton()
-            }]
-            
-        }
-    }()
+    // TODO: Uncomment to re-enable drawer
+//    private lazy var drawerConfiguration: DrawerConfiguration = {
+//        switch currency.code {
+//        case Constant.USDT:
+//            return DrawerConfiguration()
+//
+//        default:
+//            return DrawerConfiguration(buttons: [Presets.Button.primary,
+//                                                 Presets.Button.secondary])
+//        }
+//    }()
+//
+//    private lazy var drawerViewModel: DrawerViewModel = {
+//        switch currency.code {
+//        case Constant.USDT:
+//            return DrawerViewModel()
+//
+//        default:
+//            return DrawerViewModel(buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+//                                             .init(title: L10n.Button.sell, image: Asset.sell.image)])
+//        }
+//    }()
+//
+//    private lazy var drawerCallbacks: [(() -> Void)] = {
+//        switch currency.code {
+//        case Constant.USDT:
+//            return [ { [weak self] in
+//                self?.didTapDrawerButton(.card)
+//            }, { [weak self] in
+//                self?.didTapDrawerButton(.ach)
+//            }, { [weak self]
+//                in self?.didTapDrawerButton()
+//            }]
+//
+//        default:
+//            return [ { [weak self] in
+//                self?.didTapDrawerButton(.card)
+//            }, { [weak self] in
+//                self?.didTapDrawerButton()
+//            }]
+//
+//        }
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,8 +168,9 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         addSubscriptions()
         setInitialData()
         
-        setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel, callbacks: drawerCallbacks, dismissSetup: nil)
-        view.bringSubviewToFront(footerView) // Put bottom toolbar in front of drawer
+        // TODO: Uncomment to re-enable drawer
+//        setupDrawer(config: drawerConfiguration, viewModel: drawerViewModel, callbacks: drawerCallbacks, dismissSetup: nil)
+//        view.bringSubviewToFront(footerView) // Put bottom toolbar in front of drawer
         
         transactionsTableView?.didScrollToYOffset = { [weak self] offset in
             self?.headerView.setOffset(offset)
@@ -256,37 +268,38 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         }
     }
     
-    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
-        guard UserManager.shared.profile?.status.isKYCLocationRestricted == false else {
-            var reason: Reason?
-            switch type {
-            case .ach:
-                reason = .buyAch
-                
-            case .card:
-                reason = .buy
-                
-            default:
-                reason = .sell
-            }
-            
-            coordinator?.handleRestrictedUser(reason: reason)
-            return
-        }
-        
-        guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
-            coordinator?.handleUnverifiedUser(flow: type != nil ? .buy : .sell)
-            return
-        }
-        
-        guard let type else {
-            guard let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
-            coordinator?.showSell(for: token, coreSystem: coreSystem, keyStore: keyStore)
-            return
-        }
-        
-        coordinator?.showBuy(type: type, coreSystem: coreSystem, keyStore: keyStore)
-    }
+    // TODO: Uncomment to re-enable drawer
+//    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+//        guard UserManager.shared.profile?.status.isKYCLocationRestricted == false else {
+//            var reason: Reason?
+//            switch type {
+//            case .ach:
+//                reason = .buyAch
+//
+//            case .card:
+//                reason = .buy
+//
+//            default:
+//                reason = .sell
+//            }
+//
+//            coordinator?.handleRestrictedUser(reason: reason)
+//            return
+//        }
+//
+//        guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+//            coordinator?.handleUnverifiedUser(flow: type != nil ? .buy : .sell)
+//            return
+//        }
+//
+//        guard let type else {
+//            guard let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
+//            coordinator?.showSell(for: token, coreSystem: coreSystem, keyStore: keyStore)
+//            return
+//        }
+//
+//        coordinator?.showBuy(type: type, coreSystem: coreSystem, keyStore: keyStore)
+//    }
     
     private func createAccount() {
         let activity = BRActivityViewController(message: L10n.AccountCreation.creating)
