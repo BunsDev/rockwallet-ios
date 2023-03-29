@@ -10,7 +10,6 @@
 
 import AVFoundation
 import UIKit
-import MobileIntelligence
 import Veriff
 
 class KYCCoordinator: BaseCoordinator,
@@ -23,8 +22,6 @@ class KYCCoordinator: BaseCoordinator,
     }
     
     func start(flow: ProfileModels.ExchangeFlow?) {
-        turnOnSardineMobileIntelligence()
-        
         if let flow = flow {
             open(scene: Scenes.VerifyAccount) { vc in
                 vc.flow = flow
@@ -102,12 +99,6 @@ class KYCCoordinator: BaseCoordinator,
     }
     
     // MARK: - Aditional helpers
-    
-    override func goBack() {
-        super.goBack()
-        
-        turnOffSardineMobileIntelligence()
-    }
 }
 
 extension BaseCoordinator {
@@ -142,96 +133,6 @@ extension BaseCoordinator {
     }
     
     private func forLiveness() {}
-}
-
-extension BaseCoordinator {
-    func turnOffSardineMobileIntelligence() {
-        let options = OptionsBuilder()
-            .enableBehaviorBiometrics(with: false)
-            .enableClipboardTracking(with: false)
-            .enableFieldTracking(with: false)
-            .setShouldAutoSubmitOnInit(with: false)
-            .build()
-        MobileIntelligence(withOptions: options)
-    }
-    
-    func turnOnSardineMobileIntelligence() {
-        guard let sessionTokenHash = UserDefaults.sessionTokenHash else { return }
-        
-        let options = OptionsBuilder()
-            .setClientId(with: E.sardineClientId)
-            .setSessionKey(with: sessionTokenHash)
-            .setEnvironment(with: E.isProduction ? Options.ENV_PRODUCTION : Options.ENV_SANDBOX)
-            .enableBehaviorBiometrics(with: true)
-            .enableClipboardTracking(with: true)
-            .enableFieldTracking(with: true)
-            .setShouldAutoSubmitOnInit(with: true)
-            .build()
-        MobileIntelligence(withOptions: options)
-    }
-}
-
-class VeriffKYCManager: NSObject, VeriffSdkDelegate {
-    enum VeriffType {
-        case kyc, liveness
-    }
-    
-    private var completion: ((VeriffSdk.Result) -> Void)?
-    
-    private var navigationController: UINavigationController?
-    
-    init(navigationController: UINavigationController?) {
-        self.navigationController = navigationController
-    }
-    
-    func showExternalKYC(completion: ((VeriffSdk.Result) -> Void)?) {
-        self.completion = completion
-        
-        navigationController?.popToRootViewController(animated: false)
-        
-        UserManager.shared.getVeriffSessionUrl { result in
-            switch result {
-            case .success(let data):
-                guard let navigationController = self.navigationController else { return }
-                
-                VeriffSdk.shared.delegate = self
-                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
-                                                     configuration: Presets.veriff,
-                                                     presentingFrom: navigationController)
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    func showExternalKYCForLivenessCheck(livenessCheckData: VeriffSessionRequestData?, completion: ((VeriffSdk.Result) -> Void)?) {
-        self.completion = completion
-        
-        UserManager.shared.getVeriffSessionUrl(livenessCheckData:
-                .init(quoteId: livenessCheckData?.quoteId,
-                      isBiometric: livenessCheckData?.isBiometric,
-                      biometricType: livenessCheckData?.biometricType)) { result in
-            switch result {
-            case .success(let data):
-                guard let navigationController = self.navigationController else { return }
-                
-                VeriffSdk.shared.delegate = self
-                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
-                                                     configuration: Presets.veriff,
-                                                     presentingFrom: navigationController)
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    func sessionDidEndWithResult(_ result: Veriff.VeriffSdk.Result) {
-        MobileIntelligence.submitData { _ in }
-        
-        completion?(result)
-    }
 }
 
 extension KYCCoordinator {
