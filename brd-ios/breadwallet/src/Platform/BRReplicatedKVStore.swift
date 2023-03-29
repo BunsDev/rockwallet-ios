@@ -829,3 +829,4 @@ extension BRReplicatedKVStore {
         return object
     }
 }
+// swiftlint:enable type_body_length

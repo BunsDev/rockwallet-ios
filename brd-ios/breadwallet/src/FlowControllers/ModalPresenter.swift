@@ -1138,3 +1138,6 @@ class ModalPresenter: Subscriber {
         return securityItems
     }
 }
+
+// swiftlint:enable type_body_length
+// swiftlint:enable cyclomatic_complexity

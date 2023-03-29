@@ -14,6 +14,8 @@ import IQKeyboardManagerSwift
 import WidgetKit
 #endif
 
+// swiftlint:disable type_body_length
+
 class ApplicationController: Subscriber {
     let window = UIWindow()
     var coordinator: BaseCoordinator?
@@ -637,3 +639,5 @@ extension ApplicationController {
         }
     }
 }
+
+// swiftlint:enable type_body_length
