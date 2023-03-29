@@ -108,7 +108,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
                                  (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
-                                 (L10n.Drawer.title, nil, #selector(buy)),
+                                 // TODO: uncomment for drawer
+//                                 (L10n.Drawer.title, nil, #selector(buy)),
+                                 (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
                                  (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
     
@@ -251,20 +253,21 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
         
-        let drawerConfig = DrawerConfiguration()
-        let drawerViewModel = DrawerViewModel()
-        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
-            self?.didTapDrawerButton(.card)
-        }, { [weak self] in
-            self?.didTapDrawerButton(.ach)
-        }, { [weak self]
-            in self?.didTapDrawerButton()
-        }]
-        setupDrawer(config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
-            drawer.dismissActionPublisher.sink { [weak self] _ in
-                self?.animationView.play(fromProgress: 1, toProgress: 0)
-            }.store(in: &self.observers)
-        }
+        // TODO: Uncomment for drawer
+//        let drawerConfig = DrawerConfiguration()
+//        let drawerViewModel = DrawerViewModel()
+//        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
+//            self?.didTapDrawerButton(.card)
+//        }, { [weak self] in
+//            self?.didTapDrawerButton(.ach)
+//        }, { [weak self]
+//            in self?.didTapDrawerButton()
+//        }]
+//        setupDrawer(config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
+//            drawer.dismissActionPublisher.sink { [weak self] _ in
+//                self?.animationView.play(fromProgress: 1, toProgress: 0)
+//            }.store(in: &self.observers)
+//        }
         
         view.addSubview(tabBarContainerView)
         tabBarContainerView.addSubview(tabBar)
@@ -280,11 +283,12 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             make.leading.trailing.equalToSuperview()
         }
         
-        view.addSubview(animationView)
-        animationView.snp.makeConstraints { make in
-            make.centerX.equalTo(tabBar.snp.centerX)
-            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
-        }
+        // TODO: Uncomment for drawer
+//        view.addSubview(animationView)
+//        animationView.snp.makeConstraints { make in
+//            make.centerX.equalTo(tabBar.snp.centerX)
+//            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
+//        }
     }
     
     private func setInitialData() {
@@ -468,12 +472,13 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     @objc private func buy() {
-        if drawerIsShown {
-            animationView.play(fromProgress: 1, toProgress: 0)
-        } else {
-            animationView.play()
-        }
-        toggleDrawer()
+        didTapBuy?(.card)
+//        if drawerIsShown {
+//            animationView.play(fromProgress: 1, toProgress: 0)
+//        } else {
+//            animationView.play()
+//        }
+//        toggleDrawer()
     }
     
     @objc private func trade() {
