@@ -561,6 +561,8 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }
                 
+                GoogleAnalytics.logEvent(GoogleAnalytics.Feedback())
+                
                 let feedback = EmailFeedbackManager.Feedback(recipients: Constant.feedbackEmail, subject: L10n.Title.rockwalletFeedback, body: "")
                 if let feedbackManager = EmailFeedbackManager(feedback: feedback, on: topVc) {
                     self?.feedbackManager = feedbackManager

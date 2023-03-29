@@ -379,14 +379,19 @@ class UpdatePinViewController: UIViewController, Subscriber {
 
     private func didSetNewPin() {
         guard let newPin = newPin else { return }
+        
         var success = false
         if let seedPhrase = phrase {
             success = keyMaster.resetPin(newPin: newPin, seedPhrase: seedPhrase)
+            
+            GoogleAnalytics.logEvent(GoogleAnalytics.PinReset())
         } else if let currentPin = currentPin {
             success = keyMaster.changePin(newPin: newPin, currentPin: currentPin)
             DispatchQueue.main.async { Store.trigger(name: .didUpgradePin) }
         } else if type == .creationNoPhrase || type == .creationWithPhrase {
             success = keyMaster.setPin(newPin)
+            
+            GoogleAnalytics.logEvent(GoogleAnalytics.SetPin(onboarding: (eventContext == .onboarding).description, skipWriteDownKey: ""))
         }
 
         DispatchQueue.main.async {
@@ -395,6 +400,8 @@ class UpdatePinViewController: UIViewController, Subscriber {
                     self.resetFromDisabledWillSucceed?()
                     Store.perform(action: Alert.Show(.pinSet(callback: { [weak self] in
                         self?.presentResetPinSuccess(newPin: newPin)
+                        
+                        GoogleAnalytics.logEvent(GoogleAnalytics.PinResetCompleted())
                     })))
                 } else {
                     let callback = { [weak self] in

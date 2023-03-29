@@ -25,6 +25,12 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     
     // MARK: - Overrides
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Sell())
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

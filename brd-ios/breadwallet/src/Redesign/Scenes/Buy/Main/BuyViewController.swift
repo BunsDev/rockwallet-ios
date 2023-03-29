@@ -26,6 +26,12 @@ class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
     
     // MARK: - Overrides
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Buy(type: dataStore?.paymentMethod?.rawValue ?? ""))
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

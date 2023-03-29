@@ -67,6 +67,7 @@ class ImportKeyViewController: UIViewController, Subscriber {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if let code = initialQRCode {
             handleScanResult(code)
             
@@ -76,6 +77,8 @@ class ImportKeyViewController: UIViewController, Subscriber {
             // is dismissed.
             initialQRCode = nil
         }
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.ImportWallet(scanned: ""))
     }
     
     deinit {

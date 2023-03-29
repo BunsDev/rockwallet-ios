@@ -181,6 +181,8 @@ class AssetListTableView: UITableViewController, Subscriber {
             (currency.isHBAR && Store.state.requiresCreation(currency)) else { return }
         
         didSelectCurrency?(currency)
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.DisplayCurrency())
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

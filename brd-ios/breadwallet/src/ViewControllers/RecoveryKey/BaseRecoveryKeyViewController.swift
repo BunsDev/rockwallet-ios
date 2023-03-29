@@ -39,6 +39,12 @@ class BaseRecoveryKeyViewController: UIViewController {
         return .lightContent
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.GoToRecoveryKey(mode: ""))
+    }
+    
     func constrainContinueButton(_ button: FEButton) {
         button.constrain([
             button.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: Margins.large.rawValue),

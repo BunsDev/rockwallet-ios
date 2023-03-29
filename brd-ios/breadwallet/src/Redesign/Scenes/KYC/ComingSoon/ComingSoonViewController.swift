@@ -75,11 +75,18 @@ extension Scenes {
 }
 
 class ComingSoonViewController: BaseInfoViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.KycComingSoon(type: String(describing: reason)))
+    }
+    
     var reason: Reason? {
         didSet {
             prepareData()
         }
     }
+    
     override var imageName: String? { return reason?.iconName }
     override var titleText: String? { return reason?.title }
     override var descriptionText: String? { return reason?.description }

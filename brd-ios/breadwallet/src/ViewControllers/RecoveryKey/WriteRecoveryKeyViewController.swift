@@ -210,6 +210,8 @@ class WriteRecoveryKeyViewController: BaseRecoveryKeyViewController {
                 }
             }
         }
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.WriteDownKey(onComplete: "", requestAuth: ""))
     }
 
     override func viewWillAppear(_ animated: Bool) {

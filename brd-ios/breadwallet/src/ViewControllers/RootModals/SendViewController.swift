@@ -186,6 +186,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         
         addAddressChangeListener()
         sender.updateNetworkFees()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Send(currencyId: String(describing: currency.uid), cryptoRequestUrl: ""))
     }
     
     override func viewDidAppear(_ animated: Bool) {

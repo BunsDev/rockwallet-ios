@@ -206,6 +206,8 @@ extension Prompt {
     func shouldPrompt(walletAuthenticator: WalletAuthenticator?) -> Bool {
         switch type {
         case .noInternet:
+            GoogleAnalytics.logEvent(GoogleAnalytics.NoInternetScreen())
+            
             return !Reachability.isReachable
             
         case .noAccount:

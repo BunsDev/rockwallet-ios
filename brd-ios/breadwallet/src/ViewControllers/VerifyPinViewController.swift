@@ -71,6 +71,8 @@ class VerifyPinViewController: UIViewController, ContentBoxPresenter {
     private let walletAuthenticator: WalletAuthenticator
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         addSubviews()
         addConstraints()
         setupSubviews()

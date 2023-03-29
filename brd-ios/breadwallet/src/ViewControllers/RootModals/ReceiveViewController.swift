@@ -66,6 +66,8 @@ class ReceiveViewController: UIViewController, Subscriber {
 //                self.setReceiveAddress()
 //            })
 //        }
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Receive(currencyCode: String(describing: currency.code)))
     }
 
     private func addSubviews() {
