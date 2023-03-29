@@ -10,7 +10,8 @@ import Combine
 import UIKit
 
 enum AssetDetailsFooterAction {
-    case send, receive, buySell, swap
+    case send, receive//, buySell, swap
+    // TODO: Uncomment for drawer
 }
 
 class AssetDetailsFooterView: UIView, Subscriber {
@@ -50,9 +51,10 @@ class AssetDetailsFooterView: UIView, Subscriber {
     private func setupToolbarButtons() {
         let buttons = [
             (Asset.send.image, #selector(send(_:))),
-            (Asset.receive.image, #selector(receive(_:))),
-            (Asset.buySell.image, #selector(buySell(_:))),
-            (Asset.trade.image, #selector(swap(_:)))
+            (Asset.receive.image, #selector(receive(_:)))
+            // TODO: Uncomment for drawer
+//            (Asset.buySell.image, #selector(buySell(_:))),
+//            (Asset.trade.image, #selector(swap(_:)))
         ].compactMap { (image, selector) -> BRDButton in
             let button = BRDButton(title: nil, type: .secondary, image: image)
             button.addTarget(self, action: selector, for: .touchUpInside)
@@ -60,7 +62,9 @@ class AssetDetailsFooterView: UIView, Subscriber {
         }
         let buttonsView = UIStackView(arrangedSubviews: buttons)
         buttonsView.spacing = Margins.small.rawValue
-        buttonsView.distribution = .equalSpacing
+        buttonsView.distribution = .fillEqually
+        // TODO: Uncomment for drawer
+//        buttonsView.distribution = .equalSpacing
         
         let bottomMargin: Margins = UIDevice.current.hasNotch ? .extraHuge : .medium
         
@@ -73,17 +77,19 @@ class AssetDetailsFooterView: UIView, Subscriber {
             make.bottom.equalToSuperview().inset(bottomMargin.rawValue)
         }
         
-        buttons.forEach { button in
-            button.snp.makeConstraints { make in
-                make.width.equalTo(button.snp.height).priority(.required)
-            }
-        }
+        // TODO: Uncomment for drawer
+//        buttons.forEach { button in
+//            button.snp.makeConstraints { make in
+//                make.width.equalTo(button.snp.height).priority(.required)
+//            }
+//        }
     }
 
     @objc private func send(_ sender: UIButton) { actionSubject.send(.send) }
     @objc private func receive(_ sender: UIButton) { actionSubject.send(.receive) }
-    @objc private func buySell(_ sender: UIButton) { actionSubject.send(.buySell) }
-    @objc private func swap(_ sender: UIButton) { actionSubject.send(.swap) }
+    // TODO: Uncomment for drawer
+//    @objc private func buySell(_ sender: UIButton) { actionSubject.send(.buySell) }
+//    @objc private func swap(_ sender: UIButton) { actionSubject.send(.swap) }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding")

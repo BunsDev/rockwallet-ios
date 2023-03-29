@@ -35,7 +35,8 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         })
         
         footerView.actionPublisher.sink { [unowned self] action in
-            if action != .buySell { hideDrawer() }
+            // TODO: Uncomment for drawer
+//            if action != .buySell { hideDrawer() }
             
             switch action {
             case .send:
@@ -44,19 +45,20 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             case .receive:
                 Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
                 
-            case .buySell:
-                toggleDrawer()
-                
-            case .swap:
-                guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
-                    self.coordinator?.handleUnverifiedUser(flow: .swap)
-                    return
-                }
-                
-                guard let coreSystem, let keyStore else { return }
-                self.coordinator?.showSwap(currencies: Store.state.currencies,
-                                           coreSystem: coreSystem,
-                                           keyStore: keyStore)
+                // TODO: Uncomment for drawer
+//            case .buySell:
+//                toggleDrawer()
+//
+//            case .swap:
+//                guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+//                    self.coordinator?.handleUnverifiedUser(flow: .swap)
+//                    return
+//                }
+//
+//                guard let coreSystem, let keyStore else { return }
+//                self.coordinator?.showSwap(currencies: Store.state.currencies,
+//                                           coreSystem: coreSystem,
+//                                           keyStore: keyStore)
             }
         }.store(in: &observers)
     }
