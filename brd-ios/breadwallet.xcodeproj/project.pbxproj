@@ -28,9 +28,12 @@
 		044D098B29C335DA00C510DC /* LinkKit in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098A29C335DA00C510DC /* LinkKit */; };
 		044D098F29C3399000C510DC /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098E29C3399000C510DC /* IQKeyboardManagerSwift */; };
 		044D099629C352EA00C510DC /* Veriff in Frameworks */ = {isa = PBXBuildFile; productRef = 044D099529C352EA00C510DC /* Veriff */; };
+		0453B0C329D3731900BBE246 /* SardineEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0C229D3731900BBE246 /* SardineEndpoints.swift */; };
+		0453B0C529D373B500BBE246 /* SardineSessionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0C429D373B500BBE246 /* SardineSessionWorker.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */; };
 		0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */; };
+		049F49C629D4251A0059F876 /* VeriffKYCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049F49C529D4251A0059F876 /* VeriffKYCManager.swift */; };
 		1B1AFFA01FB7EF7C00E61908 /* BiometricsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */; };
 		222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */; };
 		223DB2191DF691260076A151 /* BRSocketHelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 223DB2171DF691260076A151 /* BRSocketHelpers.c */; };
@@ -833,9 +836,12 @@
 
 /* Begin PBXFileReference section */
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
+		0453B0C229D3731900BBE246 /* SardineEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SardineEndpoints.swift; sourceTree = "<group>"; };
+		0453B0C429D373B500BBE246 /* SardineSessionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SardineSessionWorker.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
 		0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksatoshiEndpoints.swift; sourceTree = "<group>"; };
 		0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailDestinationWorker.swift; sourceTree = "<group>"; };
+		049F49C529D4251A0059F876 /* VeriffKYCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VeriffKYCManager.swift; sourceTree = "<group>"; };
 		1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BiometricsSettingsViewController.swift; path = src/ViewControllers/BiometricsSettingsViewController.swift; sourceTree = "<group>"; };
 		222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+KV.swift"; path = "src/Platform/BRAPIClient+KV.swift"; sourceTree = "<group>"; };
 		223DB2171DF691260076A151 /* BRSocketHelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BRSocketHelpers.c; path = src/Platform/BRSocketHelpers.c; sourceTree = "<group>"; };
@@ -1619,6 +1625,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0453B0C129D372EA00BBE246 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				7B54E57627F4A2B0002DD1E4 /* KYCEndpoints.swift */,
+				7B23D63629923D3D00AC341F /* KYCAuthEndpoints.swift */,
+				7ECCA98E2873059300F99368 /* ExchangeEndpoints.swift */,
+				7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */,
+				0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */,
+				0453B0C229D3731900BBE246 /* SardineEndpoints.swift */,
+				0453B0C429D373B500BBE246 /* SardineSessionWorker.swift */,
+				D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
 		0495723D29BF19F80078BFE7 /* Send */ = {
 			isa = PBXGroup;
 			children = (
@@ -2012,18 +2033,13 @@
 			children = (
 				7B54E57F27F4A2B0002DD1E4 /* Workers */,
 				7B54E57B27F4A2B0002DD1E4 /* Models */,
-				7B54E57627F4A2B0002DD1E4 /* KYCEndpoints.swift */,
-				7B23D63629923D3D00AC341F /* KYCAuthEndpoints.swift */,
-				7ECCA98E2873059300F99368 /* ExchangeEndpoints.swift */,
-				7B0AE7FC29753D6C0079C7E1 /* WalletEndpoints.swift */,
-				0470D12F29BB2E6200BB182D /* BlocksatoshiEndpoints.swift */,
+				0453B0C129D372EA00BBE246 /* Endpoints */,
 				7B54E57727F4A2B0002DD1E4 /* NetworkingError.swift */,
 				7B54E57827F4A2B0002DD1E4 /* APIURLHandler.swift */,
 				7B54E57927F4A2B0002DD1E4 /* Decodable+Extensions.swift */,
 				7B54E57A27F4A2B0002DD1E4 /* HttpRequest.swift */,
 				7B54E57E27F4A2B0002DD1E4 /* HTTPRequestHelpers.swift */,
 				7B54E58327F4A2B0002DD1E4 /* HttpRequestManager.swift */,
-				D7F75966299BB55100FB4BFA /* LoqateEndpoints.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2582,6 +2598,7 @@
 				7BDB49B52805AC780031F015 /* EmailFeedbackManager.swift */,
 				7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */,
 				7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */,
+				049F49C529D4251A0059F876 /* VeriffKYCManager.swift */,
 				7B8CF81F28A64B9300D54D14 /* ExchangeFormatter.swift */,
 				7B2E5047289800BB008CACD8 /* FieldValidator.swift */,
 				3A4972C42602E0ED0002C3EC /* IosBRDAuthProvider.swift */,
@@ -3896,6 +3913,7 @@
 				CE0822641FCD1BD100EF371D /* HomeScreenViewController.swift in Sources */,
 				7ED83AFA284F40EB00261565 /* CheckListViewController.swift in Sources */,
 				0470D13029BB2E6200BB182D /* BlocksatoshiEndpoints.swift in Sources */,
+				0453B0C529D373B500BBE246 /* SardineSessionWorker.swift in Sources */,
 				7BB22E49285B8D60003E37AC /* ContentSizedTableView.swift in Sources */,
 				223DB2191DF691260076A151 /* BRSocketHelpers.c in Sources */,
 				C491ABF828A6395D00E79954 /* OrderPreviewStore.swift in Sources */,
@@ -3951,6 +3969,7 @@
 				7B8FAF01299B898D002EB972 /* TouchSpamPreventer.swift in Sources */,
 				CE20C8F21DBAF71500C8397A /* ApplicationController.swift in Sources */,
 				7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */,
+				049F49C629D4251A0059F876 /* VeriffKYCManager.swift in Sources */,
 				7B54E5A527F4A2B0002DD1E4 /* Generic.swift in Sources */,
 				C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */,
 				7B54E59B27F4A2B0002DD1E4 /* AlertHelper.swift in Sources */,
@@ -4213,6 +4232,7 @@
 				7C9724661FF07B9A004248C4 /* StatusPip.swift in Sources */,
 				C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */,
 				7EF45F542845352400D1F7B0 /* KYCBasicModels.swift in Sources */,
+				0453B0C329D3731900BBE246 /* SardineEndpoints.swift in Sources */,
 				7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */,
 				D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */,
 				7ECCA99D28745E0400F99368 /* AssetView.swift in Sources */,
