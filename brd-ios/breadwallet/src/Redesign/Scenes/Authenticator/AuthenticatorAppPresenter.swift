@@ -28,13 +28,14 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         
         let sectionRows: [Models.Section: [Any]] = [
             .instructions: [
-                LabelViewModel.text("Open your authenticator app and scan this QR code.")
+                LabelViewModel.text(L10n.Authentication.instructions)
             ],
             .qrCode: [
                 ImageViewModel.photo(generateQRCode(from: code))
             ],
             .enterCodeManually: [
-                EnterCodeViewModel(title: .text("Unable to scan code?"), description: .text("Enter the following code manually"))
+                EnterCodeViewModel(title: .text(L10n.Authentication.unableToScanCode),
+                                   description: .text(L10n.Authentication.enterCodeManually))
             ],
             .copyCode: [
                 OrderViewModel(title: "",
@@ -42,7 +43,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
                                isCopyable: true)
             ],
             .description: [
-                LabelViewModel.text("Once RockWallet is registered, you’ll start seeing 6-digit verification codes in the app.")
+                LabelViewModel.text(L10n.Authentication.description)
             ]
         ]
         

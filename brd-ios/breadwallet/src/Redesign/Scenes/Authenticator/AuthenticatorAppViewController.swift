@@ -20,7 +20,7 @@ class AuthenticatorAppViewController: BaseTableViewController<AuthenticatorAppCo
     // MARK: - Overrides
     
     override var sceneLeftAlignedTitle: String? {
-        return "Authenticator app"
+        return L10n.Authentication.title
     }
 
     override func setupSubviews() {
