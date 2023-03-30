@@ -20,6 +20,12 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     
     // MARK: - Overrides
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.VerifyProfile(type: String(describing: dataStore?.confirmationType)))
+    }
+    
     override func setupSubviews() {
         super.setupSubviews()
         

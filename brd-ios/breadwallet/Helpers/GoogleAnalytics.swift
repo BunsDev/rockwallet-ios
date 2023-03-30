@@ -19,6 +19,8 @@ protocol GoogleAnalyticsLogData {
 
 // swiftlint:disable type_body_length
 struct GoogleAnalytics {
+    static var shared = GoogleAnalytics()
+    
     struct Home: GoogleAnalyticsLogData { // Added.
         var name = "GT_RW_Home"
         var data: [String: String]
@@ -34,7 +36,7 @@ struct GoogleAnalytics {
         
         init(currencyId: String, cryptoRequestUrl: String) {
             data = ["currencyId": currencyId,
-                    "cryptoRequestUrl": currencyId] // TODO: What is this?
+                    "cryptoRequestUrl": currencyId]
         }
     }
     
@@ -56,7 +58,7 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Transaction: GoogleAnalyticsLogData {
+    struct Transaction: GoogleAnalyticsLogData { // Added.
         var name = "GT_RW_Transaction"
         var data: [String: String]
         
@@ -67,11 +69,11 @@ struct GoogleAnalytics {
     }
     
     struct TransactionData: GoogleAnalyticsLogData {
-        var name = "GT_RW_Transaction"
+        var name = "GT_RW_View_Exchange_Transaction"
         var data: [String: String]
         
-        init(transactionData: String) {
-            data = ["transactionData": transactionData]
+        init(target: String) {
+            data = ["target": target]
         }
     }
     
@@ -79,8 +81,8 @@ struct GoogleAnalytics {
         var name = "GT_RW_Back"
         var data: [String: String]
         
-        init() {
-            data = [:]
+        init(mode: String) {
+            data = ["mode": mode]
         }
     }
     
@@ -89,7 +91,7 @@ struct GoogleAnalytics {
         var data: [String: String]
         
         init(transactionData: String) {
-            data = ["transactionData": transactionData]
+            data = ["target": transactionData]
         }
     }
     
@@ -115,8 +117,8 @@ struct GoogleAnalytics {
         var name = "GT_RW_Verify_Email"
         var data: [String: String]
         
-        init(transactionData: String) {
-            data = ["transactionData": transactionData]
+        init() {
+            data = [:]
         }
     }
     
@@ -174,7 +176,7 @@ struct GoogleAnalytics {
         }
     }
     
-    struct VerifyProfile: GoogleAnalyticsLogData {
+    struct VerifyProfile: GoogleAnalyticsLogData { // Added.
         var name = "GT_RW_Open_Verify_Profile"
         var data: [String: String]
         
@@ -201,7 +203,7 @@ struct GoogleAnalytics {
         }
     }
     
-    struct Wallet: GoogleAnalyticsLogData {
+    struct Wallet: GoogleAnalyticsLogData { // Added.
         var name = "GT_RW_Wallet"
         var data: [String: String]
         
@@ -215,7 +217,8 @@ struct GoogleAnalytics {
         var data: [String: String]
         
         init(articleId: String, currencyCode: String) {
-            data = ["articleId": articleId, "currencyCode": currencyCode]
+            data = ["articleId": articleId,
+                    "currencyCode": currencyCode]
         }
     }
     
@@ -246,8 +249,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct ContactSupport: GoogleAnalyticsLogData {
-        var name = "GT_RW_Conact_Support"
+    struct ContactSupport: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Contact_Support"
         var data: [String: String]
         
         init() {
@@ -264,7 +267,7 @@ struct GoogleAnalytics {
         }
     }
     
-    struct BioAuthCompleted: GoogleAnalyticsLogData { // Added.
+    struct BioAuthCompleted: GoogleAnalyticsLogData {
         var name = "GT_RW_Bio_Auth_Completed"
         var data: [String: String]
         
@@ -329,7 +332,7 @@ struct GoogleAnalytics {
     }
     
     struct CreateAccount: GoogleAnalyticsLogData { // Added.
-        var name = "GT_RW_Create_Account" // Same as PinResetCompleted?
+        var name = "GT_RW_Create_Account"
         var data: [String: String]
         
         init() {
@@ -447,7 +450,7 @@ struct GoogleAnalytics {
     }
     
     struct DisplayCurrency: GoogleAnalyticsLogData { // Added.
-        var name = "GT_RW_About"
+        var name = "GT_RW_Display_Currency"
         var data: [String: String]
         
         init() {
@@ -456,7 +459,7 @@ struct GoogleAnalytics {
     }
     
     struct NotificationsSettings: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_Notification_Settings"
         var data: [String: String]
         
         init() {
@@ -465,7 +468,7 @@ struct GoogleAnalytics {
     }
     
     struct ShareDataSettings: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_Share_Data_Settings"
         var data: [String: String]
         
         init() {
@@ -474,7 +477,7 @@ struct GoogleAnalytics {
     }
     
     struct FingerprintSettings: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_Fingerprint_Settings"
         var data: [String: String]
         
         init() {
@@ -482,8 +485,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct WipeWallet: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+    struct WipeWallet: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_Wipe_Wallet"
         var data: [String: String]
         
         init() {
@@ -491,8 +494,8 @@ struct GoogleAnalytics {
         }
     }
     
-    struct OnBoarding: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+    struct OnBoarding: GoogleAnalyticsLogData { // Added.
+        var name = "GT_RW_OnBoarding"
         var data: [String: String]
         
         init() {
@@ -505,7 +508,7 @@ struct GoogleAnalytics {
         var data: [String: String]
         
         init(scanned: String) {
-            data = ["scanned": scanned] // TODO: What is this?
+            data = ["scanned": scanned]
         }
     }
     
@@ -607,23 +610,12 @@ struct GoogleAnalytics {
     
     static func logEvent(_ log: GoogleAnalyticsLogData) {
         let data = log.data.merging(GoogleAnalytics.getUserinfo(), uniquingKeysWith: { (first, _) in first })
-        
         Analytics.logEvent(log.name, parameters: data)
     }
     
-    static func getUserinfo() -> [String: String] {
-        guard let profile = UserManager.shared.profile else { return [:] }
-        
+    private static func getUserinfo() -> [String: String] {
         var info = [String: String]()
-        info["email"] = profile.email
-        info["country"] = profile.country?.iso2
-        info["kyc_status"] = profile.status.value
-        info["kyc_failure_reason"] = profile.kycFailureReason
-        info["exchange_limits"] = String(describing: profile.limits)
-        info["is_registered"] = profile.isMigrated.description
-        info["kyc_access_rights"] = String(describing: profile.kycAccessRights)
-        info["has_pending_limits"] = profile.hasPendingLimits.description
-        
+        info["X_Device_ID"] = UserDefaults.deviceID
         return info
     }
 }

@@ -371,6 +371,8 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         
         let transaction = transactions[selectedIndex]
         
+        GoogleAnalytics.logEvent(GoogleAnalytics.Wallet(currencyCode: transaction.currency?.code ?? ""))
+
         switch transaction.transactionType {
         case .base:
             guard let tx = transactions[selectedIndex].tx else { return }
