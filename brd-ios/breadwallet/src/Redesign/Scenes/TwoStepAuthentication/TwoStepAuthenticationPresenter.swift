@@ -17,8 +17,6 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
     
     // MARK: - TwoStepAuthenticationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        if let item = actionResponse.item as? Models.Item { return }
-        
         let sections: [Models.Section] = [
             .instructions,
             .methods,

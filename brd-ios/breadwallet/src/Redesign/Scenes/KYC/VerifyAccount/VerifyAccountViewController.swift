@@ -16,6 +16,7 @@ class VerifyAccountViewController: BaseInfoViewController {
     override var imageName: String? { return Asset.verification.name }
     override var titleText: String? { return L10n.Account.verifyAccountTitle }
     override var descriptionText: String? { return L10n.Account.verifyAccountDescription }
+    override var isModalDismissableEnabled: Bool { return false }
     
     override var buttonViewModels: [ButtonViewModel] {
         switch flow {
@@ -51,6 +52,4 @@ class VerifyAccountViewController: BaseInfoViewController {
         return [Presets.Button.primary,
                 Presets.Button.noBorders]
     }
-    
-    override func setupCloseButton(closeAction: Selector) {}
 }

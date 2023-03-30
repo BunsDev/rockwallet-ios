@@ -845,3 +845,5 @@ extension SendViewController: ModalDisplayable {
         return "\(L10n.Send.title) \(currency.name)"
     }
 }
+
+// swiftlint:enable type_body_length
