@@ -21,4 +21,11 @@ enum AuthenticatorAppModels {
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
     }
+    
+    struct CopyValue {
+        struct ViewAction {
+            var value: String?
+        }
+        struct ActionResponse {}
+    }
 }

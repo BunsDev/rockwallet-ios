@@ -52,7 +52,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
 
     // MARK: - AuthenticatorAppActionResponses
     
-    func presentCopyValue(actionResponse: ExchangeDetailsModels.CopyValue.ActionResponse) {
+    func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse) {
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
                                                               config: Presets.InfoView.verification))
     }

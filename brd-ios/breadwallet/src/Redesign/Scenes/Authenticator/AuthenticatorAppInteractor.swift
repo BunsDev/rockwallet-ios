@@ -22,7 +22,7 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
         presenter?.presentData(actionResponse: .init(item: nil))
     }
     
-    func copyValue(viewAction: ExchangeDetailsModels.CopyValue.ViewAction) {
+    func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction) {
         let value = viewAction.value?.filter { !$0.isWhitespace } ?? ""
         UIPasteboard.general.string = value
         

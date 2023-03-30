@@ -15,9 +15,11 @@ extension Scenes {
 }
 
 protocol AuthenticatorAppViewActions: BaseViewActions, FetchViewActions {
+    func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction)
 }
 
 protocol AuthenticatorAppActionResponses: BaseActionResponses, FetchActionResponses {
+    func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse)
 }
 
 protocol AuthenticatorAppResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
