@@ -49,14 +49,15 @@ enum CoinGeckoError: Error {
 }
 
 class CoinGeckoClient {
-    
-    private let baseURL = "https://api.coingecko.com/api/v3"
-    
     func load<T: Codable>(_ resource: Resource<T>) {
         let completion = resource.completion
         var path = resource.endpoint.rawValue
         path = resource.pathParam == nil ? path : String(format: path, resource.pathParam!)
-        var url = URL(string: "\(baseURL)\(path)")!
+        
+        let baseURL = resource.endpoint == .simplePrice ? "https://\(E.apiUrl)blocksatoshi/blocksatoshi" : "https://api.coingecko.com/api/v3"
+        
+        guard var url = URL(string: "\(baseURL)\(path)") else { return }
+        
         if let params = resource.params {
             var comps = URLComponents(url: url, resolvingAgainstBaseURL: true)!
             comps.queryItems = comps.queryItems ?? []
@@ -65,6 +66,12 @@ class CoinGeckoClient {
         }
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        if resource.endpoint == .simplePrice {
+            let token = UserDefaults.standard.string(forKey: "kycSessionKey") ?? E.apiToken
+            request.setValue(token, forHTTPHeaderField: "Authorization")
+        }
+        
         URLSession.shared.dataTask(with: request) { data, _, _ in
             guard let data = data else { completion(.failure(.noData)); return }
             do {
