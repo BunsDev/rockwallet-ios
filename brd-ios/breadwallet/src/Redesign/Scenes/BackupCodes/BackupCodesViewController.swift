@@ -101,6 +101,12 @@ class BackupCodesViewController: BaseTableViewController<BackupCodesCoordinator,
 
     // MARK: - User Interaction
     
+    override func buttonTapped() {
+        super.buttonTapped()
+        
+        // TODO: Add continue action
+    }
+    
     private func getCodesTapped() {
         // TODO: Add action to get new codes from BE
     }
