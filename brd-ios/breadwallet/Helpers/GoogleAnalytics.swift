@@ -67,11 +67,11 @@ struct GoogleAnalytics {
     }
     
     struct TransactionData: GoogleAnalyticsLogData {
-        var name = "GT_RW_Transaction"
+        var name = "GT_RW_View_Exchange_Transaction"
         var data: [String: String]
         
-        init(transactionData: String) {
-            data = ["transactionData": transactionData]
+        init(target: String) {
+            data = ["target": target]
         }
     }
     
@@ -79,8 +79,8 @@ struct GoogleAnalytics {
         var name = "GT_RW_Back"
         var data: [String: String]
         
-        init() {
-            data = [:]
+        init(mode: String) {
+            data = ["mode": mode]
         }
     }
     
@@ -115,8 +115,8 @@ struct GoogleAnalytics {
         var name = "GT_RW_Verify_Email"
         var data: [String: String]
         
-        init(transactionData: String) {
-            data = ["transactionData": transactionData]
+        init(email: String) {
+            data = ["email": email]
         }
     }
     
@@ -247,7 +247,7 @@ struct GoogleAnalytics {
     }
     
     struct ContactSupport: GoogleAnalyticsLogData {
-        var name = "GT_RW_Conact_Support"
+        var name = "GT_RW_Contact_Support"
         var data: [String: String]
         
         init() {
@@ -447,7 +447,7 @@ struct GoogleAnalytics {
     }
     
     struct DisplayCurrency: GoogleAnalyticsLogData { // Added.
-        var name = "GT_RW_About"
+        var name = "GT_RW_Display_Currency"
         var data: [String: String]
         
         init() {
@@ -456,7 +456,7 @@ struct GoogleAnalytics {
     }
     
     struct NotificationsSettings: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_Notification_Settings"
         var data: [String: String]
         
         init() {
@@ -465,7 +465,7 @@ struct GoogleAnalytics {
     }
     
     struct ShareDataSettings: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_Share_Data_Settings"
         var data: [String: String]
         
         init() {
@@ -474,7 +474,7 @@ struct GoogleAnalytics {
     }
     
     struct FingerprintSettings: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_Fingerprint_Settings"
         var data: [String: String]
         
         init() {
@@ -483,7 +483,7 @@ struct GoogleAnalytics {
     }
     
     struct WipeWallet: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_Wipe_Wallet"
         var data: [String: String]
         
         init() {
@@ -492,7 +492,7 @@ struct GoogleAnalytics {
     }
     
     struct OnBoarding: GoogleAnalyticsLogData {
-        var name = "GT_RW_About"
+        var name = "GT_RW_OnBoarding"
         var data: [String: String]
         
         init() {
