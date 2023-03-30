@@ -574,6 +574,16 @@
 /* ATM Cash Locatios View Title */
 "ATMMapView.title" = "ATM Cash Locations Map";
 
+"Authentication.description" = "Once RockWallet is registered, you’ll start seeing 6-digit verification codes in the app.";
+
+"Authentication.enterCodeManually" = "Enter the following code manually";
+
+"Authentication.instructions" = "Open your authenticator app and scan this QR code.";
+
+"Authentication.title" = "Authenticator app";
+
+"Authentication.unableToScanCode" = "Unable to scan code?";
+
 "BackupCodes.description" = "You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.";
 
 "BackupCodes.getNewCodes" = "Get new codes";

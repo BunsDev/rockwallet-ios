@@ -609,6 +609,7 @@
 		A243978083345DAFD36DA7A4 /* MarketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24399A172C828ECD708E17D /* MarketInfo.swift */; };
 		A2439D019C08106D6E14D70A /* MarketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24399A172C828ECD708E17D /* MarketInfo.swift */; };
 		A2439D7BB746E6CFC3F9B64A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2439F5D8263945E73EFF4A3 /* CacheService.swift */; };
+		C41816A729D5708B002D31F8 /* EnterCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41816A629D5708B002D31F8 /* EnterCodeView.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
 		C46C28FE287EBF4F0035C843 /* BaseInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */; };
 		C46C28FF287EBF4F0035C843 /* BaseInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */; };
@@ -629,6 +630,13 @@
 		C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */; };
 		C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */; };
 		C4C729A129225F3A00A3CE24 /* PlaidPublicToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */; };
+		C4CCFCE629D43DB600E38B3A /* AuthenticatorAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCDF29D43DB600E38B3A /* AuthenticatorAppCoordinator.swift */; };
+		C4CCFCE729D43DB600E38B3A /* AuthenticatorAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */; };
+		C4CCFCE829D43DB600E38B3A /* AuthenticatorAppPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE129D43DB600E38B3A /* AuthenticatorAppPresenter.swift */; };
+		C4CCFCE929D43DB600E38B3A /* AuthenticatorAppModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */; };
+		C4CCFCEA29D43DB600E38B3A /* AuthenticatorAppVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE329D43DB600E38B3A /* AuthenticatorAppVIP.swift */; };
+		C4CCFCEB29D43DB600E38B3A /* AuthenticatorAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE429D43DB600E38B3A /* AuthenticatorAppViewController.swift */; };
+		C4CCFCEC29D43DB600E38B3A /* AuthenticatorAppInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE529D43DB600E38B3A /* AuthenticatorAppInteractor.swift */; };
 		C4F4629F29CC86FF00083512 /* BackupCodesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F4629829CC86FF00083512 /* BackupCodesCoordinator.swift */; };
 		C4F462A029CC86FF00083512 /* BackupCodesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F4629929CC86FF00083512 /* BackupCodesStore.swift */; };
 		C4F462A129CC86FF00083512 /* BackupCodesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F4629A29CC86FF00083512 /* BackupCodesPresenter.swift */; };
@@ -1434,6 +1442,7 @@
 		A243988A5DA12A405BFEB9F6 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		A24399A172C828ECD708E17D /* MarketInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketInfo.swift; sourceTree = "<group>"; };
 		A2439F5D8263945E73EFF4A3 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
+		C41816A629D5708B002D31F8 /* EnterCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeView.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
 		C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoStore.swift; sourceTree = "<group>"; };
 		C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoPresenter.swift; sourceTree = "<group>"; };
@@ -1454,6 +1463,13 @@
 		C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesWorker.swift; sourceTree = "<group>"; };
 		C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidLinkToken.swift; sourceTree = "<group>"; };
 		C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidPublicToken.swift; sourceTree = "<group>"; };
+		C4CCFCDF29D43DB600E38B3A /* AuthenticatorAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppCoordinator.swift; sourceTree = "<group>"; };
+		C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppStore.swift; sourceTree = "<group>"; };
+		C4CCFCE129D43DB600E38B3A /* AuthenticatorAppPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppPresenter.swift; sourceTree = "<group>"; };
+		C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppModels.swift; sourceTree = "<group>"; };
+		C4CCFCE329D43DB600E38B3A /* AuthenticatorAppVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppVIP.swift; sourceTree = "<group>"; };
+		C4CCFCE429D43DB600E38B3A /* AuthenticatorAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppViewController.swift; sourceTree = "<group>"; };
+		C4CCFCE529D43DB600E38B3A /* AuthenticatorAppInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppInteractor.swift; sourceTree = "<group>"; };
 		C4F4629829CC86FF00083512 /* BackupCodesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesCoordinator.swift; sourceTree = "<group>"; };
 		C4F4629929CC86FF00083512 /* BackupCodesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesStore.swift; sourceTree = "<group>"; };
 		C4F4629A29CC86FF00083512 /* BackupCodesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesPresenter.swift; sourceTree = "<group>"; };
@@ -2400,6 +2416,7 @@
 		7E5CB32F2835090D00EC787E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				C4CCFCDE29D43D6100E38B3A /* Authenticator */,
 				04185DB729D1794000AECBFA /* TwoStepAuthentication */,
 				D7F75961299A1D1700FB4BFA /* FindAddress */,
 				D7F0AF21298D2D3A00474E5C /* VerificationInProgress */,
@@ -3141,6 +3158,21 @@
 				7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C4CCFCDE29D43D6100E38B3A /* Authenticator */ = {
+			isa = PBXGroup;
+			children = (
+				C4CCFCDF29D43DB600E38B3A /* AuthenticatorAppCoordinator.swift */,
+				C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */,
+				C4CCFCE129D43DB600E38B3A /* AuthenticatorAppPresenter.swift */,
+				C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */,
+				C4CCFCE329D43DB600E38B3A /* AuthenticatorAppVIP.swift */,
+				C4CCFCE429D43DB600E38B3A /* AuthenticatorAppViewController.swift */,
+				C4CCFCE529D43DB600E38B3A /* AuthenticatorAppInteractor.swift */,
+				C41816A629D5708B002D31F8 /* EnterCodeView.swift */,
+			);
+			path = Authenticator;
 			sourceTree = "<group>";
 		};
 		C4F4629729CC86D100083512 /* BackupCodes */ = {
@@ -4016,6 +4048,7 @@
 				7B39478E297000ED007D405E /* ForgotPasswordModels.swift in Sources */,
 				7EB8FD212897D212000FF75C /* BuyCoordinator.swift in Sources */,
 				7EF45F8C284768C100D1F7B0 /* ItemSelectionModels.swift in Sources */,
+				C4CCFCEC29D43DB600E38B3A /* AuthenticatorAppInteractor.swift in Sources */,
 				CE20C8F61DBAF77D00C8397A /* UIViewController+Extensions.swift in Sources */,
 				C47671AA29CD9AF4008A2F94 /* BackupCodesView.swift in Sources */,
 				7BDB4A092806F4A60031F015 /* HistoryFetcher.swift in Sources */,
@@ -4024,6 +4057,7 @@
 				71C44E92225F95B100EF4459 /* RecoveryKeyCompleteViewController.swift in Sources */,
 				7EB8FD262897D212000FF75C /* BuyViewController.swift in Sources */,
 				7BBBF4DF287421CF00E4D36B /* SwapStore.swift in Sources */,
+				C4CCFCE629D43DB600E38B3A /* AuthenticatorAppCoordinator.swift in Sources */,
 				7BDB4A0B2806F5260031F015 /* RedeemGiftViewController.swift in Sources */,
 				CE6DCC251E6001E50044257B /* UIControl+Callback.swift in Sources */,
 				CE0822641FCD1BD100EF371D /* HomeScreenViewController.swift in Sources */,
@@ -4102,6 +4136,7 @@
 				7E5CB3822835090E00EC787E /* DemoModels.swift in Sources */,
 				7E5CB37D2835090E00EC787E /* DemoCoordinator.swift in Sources */,
 				C491ABF928A6395D00E79954 /* OrderPreviewPresenter.swift in Sources */,
+				C4CCFCEA29D43DB600E38B3A /* AuthenticatorAppVIP.swift in Sources */,
 				CEBF32F61DDCEAF900348FC6 /* TransactionsTableViewController.swift in Sources */,
 				7BB3B7DD29558D97006FF250 /* UITableView+Extensions.swift in Sources */,
 				3ADE270C248F35B80023B770 /* ResolvedAddressLabel.swift in Sources */,
@@ -4122,6 +4157,7 @@
 				7B6052C2299E55A7002C00C2 /* BackupSynchronizer.swift in Sources */,
 				7B60826429700B9E00C4736B /* SetPasswordPresenter.swift in Sources */,
 				CECCE5B01E04AD7600D99448 /* DescriptionSendCell.swift in Sources */,
+				C4CCFCE729D43DB600E38B3A /* AuthenticatorAppStore.swift in Sources */,
 				7E5CB38F2835090E00EC787E /* NSLayoutConstraint+priority.swift in Sources */,
 				C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */,
 				7B54E5A127F4A2B0002DD1E4 /* APIURLHandler.swift in Sources */,
@@ -4212,6 +4248,7 @@
 				7C35E717200ADF450064808F /* Transaction.swift in Sources */,
 				7E75AD492943297E00E54DEF /* ExchangeRateModels.swift in Sources */,
 				7E5CB3AE2835090E00EC787E /* FEView.swift in Sources */,
+				C4CCFCEB29D43DB600E38B3A /* AuthenticatorAppViewController.swift in Sources */,
 				C4F462A129CC86FF00083512 /* BackupCodesPresenter.swift in Sources */,
 				CEB909F71E5FE654001804DC /* EnterPhraseCollectionViewController.swift in Sources */,
 				7B78631C287427680092F35B /* MainSwapView.swift in Sources */,
@@ -4317,6 +4354,7 @@
 				7BDB49E42806CB980031F015 /* ImageStorageService.swift in Sources */,
 				7E5CB38A2835090E00EC787E /* CornerRadius.swift in Sources */,
 				7ED83AF9284F40EB00261565 /* CheckListModels.swift in Sources */,
+				C4CCFCE829D43DB600E38B3A /* AuthenticatorAppPresenter.swift in Sources */,
 				7CB593E122F8C8FE005A230A /* AuthenticationClient.swift in Sources */,
 				4F3AB12425D53F5D00B378DC /* Baker.swift in Sources */,
 				7EBC6B072848ABC5000A301F /* RegistrationConfirmationPresenter.swift in Sources */,
@@ -4333,6 +4371,7 @@
 				7ED427F428755CB200AA19A8 /* ExchangeDetailsInteractor.swift in Sources */,
 				7EE91A5B2968310100331B1F /* KYCAddressPresenter.swift in Sources */,
 				7E5CB3A52835090E00EC787E /* SubviewConfigurable.swift in Sources */,
+				C41816A729D5708B002D31F8 /* EnterCodeView.swift in Sources */,
 				7ED427F128755CB200AA19A8 /* ExchangeDetailsModels.swift in Sources */,
 				C491ABFD28A6395D00E79954 /* OrderPreviewInteractor.swift in Sources */,
 				7EB8FD232897D212000FF75C /* BuyPresenter.swift in Sources */,
@@ -4358,6 +4397,7 @@
 				7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */,
 				7ECCA9992874342C00F99368 /* FETimerView.swift in Sources */,
 				7EF45F502845352400D1F7B0 /* KYCBasicPresenter.swift in Sources */,
+				C4CCFCE929D43DB600E38B3A /* AuthenticatorAppModels.swift in Sources */,
 				7B9434332886A7FA00638703 /* DeleteProfileInfoVIP.swift in Sources */,
 				CE8CD8DD1E2D9EF200785E02 /* Sender.swift in Sources */,
 				3AFAD94825698A74005853E8 /* Gift.swift in Sources */,

@@ -545,6 +545,18 @@ internal enum L10n {
     /// API Token error message
     internal static let tokenError = L10n.tr("Localizable", "ApiClient.tokenError", fallback: "Unable to retrieve API token")
   }
+  internal enum Authentication {
+    /// Once RockWallet is registered, you’ll start seeing 6-digit verification codes in the app.
+    internal static let description = L10n.tr("Localizable", "Authentication.description", fallback: "Once RockWallet is registered, you’ll start seeing 6-digit verification codes in the app.")
+    /// Enter the following code manually
+    internal static let enterCodeManually = L10n.tr("Localizable", "Authentication.enterCodeManually", fallback: "Enter the following code manually")
+    /// Open your authenticator app and scan this QR code.
+    internal static let instructions = L10n.tr("Localizable", "Authentication.instructions", fallback: "Open your authenticator app and scan this QR code.")
+    /// Authenticator app
+    internal static let title = L10n.tr("Localizable", "Authentication.title", fallback: "Authenticator app")
+    /// Unable to scan code?
+    internal static let unableToScanCode = L10n.tr("Localizable", "Authentication.unableToScanCode", fallback: "Unable to scan code?")
+  }
   internal enum Bch {
     /// Send BCH view body.
     internal static func body(_ p1: UnsafePointer<CChar>) -> String {
