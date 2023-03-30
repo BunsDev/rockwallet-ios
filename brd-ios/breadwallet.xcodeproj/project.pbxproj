@@ -630,7 +630,6 @@
 		C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */; };
 		C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */; };
 		C4C729A129225F3A00A3CE24 /* PlaidPublicToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */; };
-		C4CCFCE629D43DB600E38B3A /* AuthenticatorAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCDF29D43DB600E38B3A /* AuthenticatorAppCoordinator.swift */; };
 		C4CCFCE729D43DB600E38B3A /* AuthenticatorAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */; };
 		C4CCFCE829D43DB600E38B3A /* AuthenticatorAppPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE129D43DB600E38B3A /* AuthenticatorAppPresenter.swift */; };
 		C4CCFCE929D43DB600E38B3A /* AuthenticatorAppModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */; };
@@ -1463,7 +1462,6 @@
 		C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesWorker.swift; sourceTree = "<group>"; };
 		C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidLinkToken.swift; sourceTree = "<group>"; };
 		C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidPublicToken.swift; sourceTree = "<group>"; };
-		C4CCFCDF29D43DB600E38B3A /* AuthenticatorAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppCoordinator.swift; sourceTree = "<group>"; };
 		C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppStore.swift; sourceTree = "<group>"; };
 		C4CCFCE129D43DB600E38B3A /* AuthenticatorAppPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppPresenter.swift; sourceTree = "<group>"; };
 		C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppModels.swift; sourceTree = "<group>"; };
@@ -3163,11 +3161,10 @@
 		C4CCFCDE29D43D6100E38B3A /* Authenticator */ = {
 			isa = PBXGroup;
 			children = (
-				C4CCFCDF29D43DB600E38B3A /* AuthenticatorAppCoordinator.swift */,
-				C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */,
 				C4CCFCE129D43DB600E38B3A /* AuthenticatorAppPresenter.swift */,
-				C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */,
+				C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */,
 				C4CCFCE329D43DB600E38B3A /* AuthenticatorAppVIP.swift */,
+				C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */,
 				C4CCFCE429D43DB600E38B3A /* AuthenticatorAppViewController.swift */,
 				C4CCFCE529D43DB600E38B3A /* AuthenticatorAppInteractor.swift */,
 				C41816A629D5708B002D31F8 /* EnterCodeView.swift */,
@@ -4057,7 +4054,6 @@
 				71C44E92225F95B100EF4459 /* RecoveryKeyCompleteViewController.swift in Sources */,
 				7EB8FD262897D212000FF75C /* BuyViewController.swift in Sources */,
 				7BBBF4DF287421CF00E4D36B /* SwapStore.swift in Sources */,
-				C4CCFCE629D43DB600E38B3A /* AuthenticatorAppCoordinator.swift in Sources */,
 				7BDB4A0B2806F5260031F015 /* RedeemGiftViewController.swift in Sources */,
 				CE6DCC251E6001E50044257B /* UIControl+Callback.swift in Sources */,
 				CE0822641FCD1BD100EF371D /* HomeScreenViewController.swift in Sources */,
