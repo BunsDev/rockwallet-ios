@@ -587,6 +587,8 @@ class ModalPresenter: Subscriber {
             
             // Support
             MenuItem(title: L10n.MenuButton.support, icon: MenuItem.Icon.support) { [weak self] in
+                GoogleAnalytics.logEvent(GoogleAnalytics.ContactSupport())
+                
                 self?.presentFaq()
             },
             // About
@@ -1075,6 +1077,8 @@ class ModalPresenter: Subscriber {
                 RecoveryKeyFlowController.presentUnlinkWalletFlow(from: vc,
                                                                   keyMaster: self.keyStore,
                                                                   phraseEntryReason: .validateForWipingWallet({ [weak self] in
+                    GoogleAnalytics.logEvent(GoogleAnalytics.WipeWallet())
+                    
                     self?.wipeWallet()
                 }))
             },

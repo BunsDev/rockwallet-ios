@@ -10,6 +10,7 @@ import UIKit
 import WalletKit
 import UserNotifications
 import IQKeyboardManagerSwift
+import Firebase
 #if canImport(WidgetKit)
 import WidgetKit
 #endif
@@ -80,6 +81,8 @@ class ApplicationController: Subscriber {
     /// didFinishLaunchingWithOptions
     func launch(application: UIApplication, options: [UIApplication.LaunchOptionsKey: Any]?) {
         handleLaunchOptions(options)
+        
+        FirebaseApp.configure()
         
         UNUserNotificationCenter.current().delegate = notificationHandler
 
@@ -165,6 +168,8 @@ class ApplicationController: Subscriber {
     
     private func enterOnboarding() {
         guardProtected {
+            GoogleAnalytics.logEvent(GoogleAnalytics.OnBoarding())
+            
             guard let startFlowController = self.startFlowController, self.keyStore.noWallet else { return }
             startFlowController.startOnboarding { [unowned self] account in
                 self.setupSystem(with: account)

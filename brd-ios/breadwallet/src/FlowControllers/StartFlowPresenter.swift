@@ -25,6 +25,7 @@ class StartFlowPresenter: Subscriber {
     private var onboardingCompletionHandler: LoginCompletionHandler?
     private let shouldDisableBiometrics: Bool
     private var startupScreen: StartupScreen? = StartupScreen()
+    
     var didFinish: (() -> Void)?
     
     // MARK: - Public

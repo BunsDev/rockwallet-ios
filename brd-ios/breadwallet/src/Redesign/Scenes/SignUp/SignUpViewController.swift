@@ -32,7 +32,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
         super.viewDidLoad()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Registration())
-        GoogleAnalytics.logEvent(GoogleAnalytics.PinResetCompleted())
+        GoogleAnalytics.logEvent(GoogleAnalytics.CreateAccount())
     }
     
     override func setupVerticalButtons() {
