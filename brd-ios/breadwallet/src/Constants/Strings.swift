@@ -548,6 +548,10 @@ internal enum L10n {
   internal enum Authentication {
     /// Once RockWallet is registered, you’ll start seeing 6-digit verification codes in the app.
     internal static let description = L10n.tr("Localizable", "Authentication.description", fallback: "Once RockWallet is registered, you’ll start seeing 6-digit verification codes in the app.")
+    /// Enter the 6-digit code
+    internal static let enterCode = L10n.tr("Localizable", "Authentication.enterCode", fallback: "Enter the 6-digit code")
+    /// Enter the 6-digit code from your authenticator app
+    internal static let enterCodeDescription = L10n.tr("Localizable", "Authentication.enterCodeDescription", fallback: "Enter the 6-digit code from your authenticator app")
     /// Enter the following code manually
     internal static let enterCodeManually = L10n.tr("Localizable", "Authentication.enterCodeManually", fallback: "Enter the following code manually")
     /// Open your authenticator app and scan this QR code.
