@@ -45,18 +45,22 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
     }
     
     func confirm(viewAction: VerifyPhoneNumberModels.Confirm.ViewAction) {
-//        let data = VerifyPhoneNumberRequestData(code: dataStore?.code)
-//        VerifyPhoneNumberWorker().execute(requestData: data) { [weak self] result in
-//            switch result {
-//            case .success:
-//                UserManager.shared.refresh()
-//
-//                self?.presenter?.presentConfirm(actionResponse: .init())
-//
-//            case .failure(let error):
-//                self?.presenter?.presentError(actionResponse: .init(error: error))
-//            }
-//        }
+        let phoneNumber = (dataStore?.country?.areaCode ?? "") + (dataStore?.phoneNumber ?? "")
+        
+        let data = SetTwoStepPhoneRequestData(phone: phoneNumber)
+        SetTwoStepPhoneWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success:
+                UserManager.shared.refresh()
+                
+                UserDefaults.phoneNumber = phoneNumber
+                
+                self?.presenter?.presentConfirm(actionResponse: .init())
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     // MARK: - Aditional helpers

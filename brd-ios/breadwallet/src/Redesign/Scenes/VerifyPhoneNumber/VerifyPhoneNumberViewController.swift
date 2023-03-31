@@ -90,6 +90,12 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     
     // MARK: - User Interaction
     
+    override func buttonTapped() {
+        super.buttonTapped()
+        
+        interactor?.confirm(viewAction: .init())
+    }
+    
     // MARK: - VerifyPhoneNumberResponseDisplay
     
     func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay) {
@@ -113,7 +119,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.dismissFlow()
+            self?.coordinator?.showRegistrationConfirmation(isModalDismissable: false, confirmationType: .twoStep)
         })
     }
     

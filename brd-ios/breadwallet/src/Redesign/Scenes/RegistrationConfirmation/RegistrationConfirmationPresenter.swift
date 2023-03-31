@@ -17,7 +17,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
         
-        let email = item.email
+        let email = "\(": \n")\(item.email ?? "")"
+        let phoneNumber = "\(": \n")\(item.phoneNumber ?? "")"
         let confirmationType = item.confirmationType
         
         var sections: [Models.Section] = [
@@ -33,7 +34,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         }
         
         let title = confirmationType == .twoStep ? L10n.VerifyPhoneNumber.Sms.title : L10n.AccountCreation.verifyEmail
-        let instructions = confirmationType == .twoStep ? "\(L10n.VerifyPhoneNumber.Sms.instructions)\(": \n")\(email ?? "")" : "\(L10n.AccountCreation.enterCode)\(": \n")\(email ?? "")"
+        let instructions = confirmationType == .twoStep ? "\(L10n.VerifyPhoneNumber.Sms.instructions)\(phoneNumber)" : "\(L10n.AccountCreation.enterCode)\(email)"
         var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
                                                        isUnderlined: true,
                                                        shouldTemporarilyDisableAfterTap: confirmationType == .twoStep)]
