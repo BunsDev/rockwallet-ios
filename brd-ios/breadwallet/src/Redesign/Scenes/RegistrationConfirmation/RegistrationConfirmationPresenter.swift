@@ -29,12 +29,28 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             .help
         ]
         
-        if confirmationType == .twoStep {
+        if confirmationType == .twoStep || confirmationType == .authenticationCode {
             sections = sections.filter({ $0 != .image })
         }
         
-        let title = confirmationType == .twoStep ? L10n.VerifyPhoneNumber.Sms.title : L10n.AccountCreation.verifyEmail
-        let instructions = confirmationType == .twoStep ? "\(L10n.VerifyPhoneNumber.Sms.instructions)\(phoneNumber)" : "\(L10n.AccountCreation.enterCode)\(email)"
+        if confirmationType == .authenticationCode {
+            sections = sections.filter({ $0 != .help })
+        }
+        
+        var title: String?
+        var instructions: String?
+        switch confirmationType {
+        case .account:
+            title = L10n.AccountCreation.verifyEmail
+            instructions = "\(L10n.AccountCreation.enterCode)\(email)"
+        case .twoStep:
+            title = L10n.VerifyPhoneNumber.Sms.title
+            instructions = "\(L10n.VerifyPhoneNumber.Sms.instructions)\(phoneNumber)"
+        case .authenticationCode:
+            title = L10n.Authentication.enterCode
+            instructions = L10n.Authentication.enterCodeDescription
+        }
+        
         var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
                                                        isUnderlined: true,
                                                        shouldTemporarilyDisableAfterTap: confirmationType == .twoStep)]

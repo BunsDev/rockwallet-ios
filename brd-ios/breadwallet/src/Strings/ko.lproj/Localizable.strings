@@ -576,6 +576,10 @@
 
 "Authentication.description" = "Once RockWallet is registered, you’ll start seeing 6-digit verification codes in the app.";
 
+"Authentication.enterCode" = "Enter the 6-digit code";
+
+"Authentication.enterCodeDescription" = "Enter the 6-digit code from your authenticator app";
+
 "Authentication.enterCodeManually" = "Enter the following code manually";
 
 "Authentication.instructions" = "Open your authenticator app and scan this QR code.";
