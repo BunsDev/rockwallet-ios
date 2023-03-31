@@ -11,20 +11,22 @@
 import UIKit
 
 protocol ExchangeRateViewActions {
-    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction)
-    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
+    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
+    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
 }
 
 protocol ExchangeRateActionResponses {
-    func presentExchangeRate(actionResponse: ExchangeRateModels.ExchangeRate.ActionResponse)
+    func presentExchangeRate(actionResponse: ExchangeRateModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
 }
 
 protocol ExchangeRateResponseDisplays {
     var tableView: ContentSizedTableView { get set }
     var continueButton: FEButton { get set }
+    
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>?
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>?
-    func displayExchangeRate(responseDisplay: ExchangeRateModels.ExchangeRate.ResponseDisplay)
+    
+    func displayExchangeRate(responseDisplay: ExchangeRateModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?)
 }
 
 protocol ExchangeDataStore: NSObject {
@@ -40,35 +42,34 @@ protocol ExchangeDataStore: NSObject {
 extension Interactor where Self: ExchangeRateViewActions,
                            Self.DataStore: ExchangeDataStore,
                            Self.ActionResponses: ExchangeRateActionResponses {
-    
-    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction) {
+    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction, completion: (() -> Void)?) {
         guard let fromCurrency = dataStore?.fromCode.uppercased(),
               let toCurrency = dataStore?.toCode.uppercased(),
-              let data = dataStore?.quoteRequestData
-        else { return }
+              let data = dataStore?.quoteRequestData else { return }
         
-        // clear previous rate (in case the request fails, we don't want old values displayed)
-        dataStore?.quote = nil
-        presenter?.presentExchangeRate(actionResponse: .init(quote: dataStore?.quote,
-                                                             from: dataStore?.fromCode,
-                                                             to: dataStore?.toCode,
-                                                             limits: dataStore?.limits,
-                                                             showTimer: dataStore?.showTimer,
-                                                             fromBuy: dataStore?.fromBuy))
-        
-        getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees))
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let quote):
                 self?.dataStore?.quote = quote
+                
                 self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
                                                                            from: fromCurrency,
                                                                            to: toCurrency,
                                                                            limits: self?.dataStore?.limits,
                                                                            showTimer: self?.dataStore?.showTimer,
-                                                                           fromBuy: self?.dataStore?.fromBuy))
+                                                                           fromBuy: self?.dataStore?.fromBuy), completion: {
+                    if self?.dataStore?.fromBuy == true {
+                        completion?()
+                    } else {
+                        self?.getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees), completion: completion)
+                    }
+                })
                 
             case .failure(let error):
+                self?.dataStore?.quote = nil
+                
+                completion?()
+                
                 guard let error = error as? NetworkingError,
                       error == .accessDenied else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.quoteFail))
@@ -78,12 +79,12 @@ extension Interactor where Self: ExchangeRateViewActions,
         }
     }
     
-    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction) {}
+    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}
 }
 
 extension Presenter where Self: ExchangeRateActionResponses,
                           Self.ResponseDisplays: ExchangeRateResponseDisplays {
-    func presentExchangeRate(actionResponse: ExchangeRateModels.ExchangeRate.ActionResponse) {
+    func presentExchangeRate(actionResponse: ExchangeRateModels.ExchangeRate.ActionResponse, completion: (() -> Void)?) {
         var exchangeRateViewModel: ExchangeRateViewModel
         if let from = actionResponse.from,
            let to = actionResponse.to,
@@ -105,32 +106,31 @@ extension Presenter where Self: ExchangeRateActionResponses,
         }
         
         viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: exchangeRateViewModel,
-                                                                   accountLimits: .attributedText(actionResponse.limits)))
+                                                                   accountLimits: .attributedText(actionResponse.limits)),
+                                            completion: completion)
     }
 }
 
 extension Controller where Self: ExchangeRateResponseDisplays,
                            Self.ViewActions: ExchangeRateViewActions {
-    
-    func displayExchangeRate(responseDisplay: ExchangeRateModels.ExchangeRate.ResponseDisplay) {
-        if let cell = getRateAndTimerCell() {
-            cell.wrappedView.setup(with: responseDisplay.rateAndTimer)
-            cell.wrappedView.completion = { [weak self] in
-                self?.interactor?.getExchangeRate(viewAction: .init())
-            }
-        } else {
-            var vm = continueButton.viewModel
-            vm?.enabled = false
-            continueButton.setup(with: vm)
+    func displayExchangeRate(responseDisplay: ExchangeRateModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?) {
+        if let cell = getRateAndTimerCell(), let rateAndTimer = responseDisplay.rateAndTimer {
+            cell.wrappedView.invalidate()
             
+            cell.wrappedView.setup(with: rateAndTimer)
+            cell.wrappedView.completion = { [weak self] in
+                self?.interactor?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
+            }
         }
         
-        if let cell = getAccountLimitsCell() {
-            UIView.setAnimationsEnabled(false)
-            tableView.beginUpdates()
-            cell.wrappedView.setup(with: responseDisplay.accountLimits)
-            tableView.endUpdates()
-            UIView.setAnimationsEnabled(true)
+        if let cell = getAccountLimitsCell(), let accountLimits = responseDisplay.accountLimits {
+            cell.wrappedView.setup(with: accountLimits)
         }
+        
+        var vm = continueButton.viewModel
+        vm?.enabled = responseDisplay.rateAndTimer?.exchangeRate != nil
+        continueButton.setup(with: vm)
+        
+        completion?()
     }
 }

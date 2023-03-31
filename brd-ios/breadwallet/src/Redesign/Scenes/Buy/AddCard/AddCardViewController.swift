@@ -17,6 +17,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
                              AddCardResponseDisplays {
     typealias Models = AddCardModels
     
+    override var isRoundedBackgroundEnabled: Bool { return true }
     override var sceneTitle: String? {
         return L10n.Buy.addCard
     }
@@ -29,13 +30,14 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
         super.setupSubviews()
         
         tableView.register(WrapperTableViewCell<BankCardInputDetailsView>.self)
-        
-        setRoundedShadowBackground()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
+        case .notificationPrompt:
+            cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
+            
         case .cardDetails:
             cell = self.tableView(tableView, bankCardInputDetailsCellForRowAt: indexPath)
 
@@ -63,7 +65,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
             view.configure(with: .init())
             view.setup(with: model)
             
-            view.contentSizeChanged = {
+            view.contentSizeChanged = { [weak self] in
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
@@ -79,6 +81,25 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
             view.didTriggerExpirationField = { [weak self] in
                 guard let self = self, let dataStore = self.dataStore else { return }
                 self.coordinator?.showMonthYearPicker(model: [dataStore.months, dataStore.years])
+            }
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+              let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.setup { view in
+                view.setup(with: model)
+                view.configure(with: Presets.InfoView.verification)
+                view.setupCustomMargins(all: .large)
             }
         }
         
@@ -136,7 +157,6 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     
     func displaySubmit(responseDisplay: AddCardModels.Submit.ResponseDisplay) {
         guard let store = dataStore else { return }
-        LoadingView.show()
         
         coordinator?.showBillingAddress(store)
     }

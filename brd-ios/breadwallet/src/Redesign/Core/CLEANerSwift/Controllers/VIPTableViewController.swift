@@ -13,8 +13,6 @@ class VIPTableViewController<C: CoordinatableRoutes,
                              DS: BaseDataStore & NSObject>: VIPViewController<C, I, P, DS>,
                                                             UITableViewDelegate,
                                                             UITableViewDataSource {
-    override var isModalDismissableEnabled: Bool { return true }
-
     var sections: [AnyHashable] = []
     var sectionRows: [AnyHashable: [Any]] = [:]
 
@@ -48,6 +46,7 @@ class VIPTableViewController<C: CoordinatableRoutes,
     lazy var contentShadowView: UIView = {
         var contentShadowView = UIView()
         contentShadowView.backgroundColor = LightColors.Background.one
+        contentShadowView.isUserInteractionEnabled = false
         contentShadowView.clipsToBounds = true
         contentShadowView.layer.cornerRadius = CornerRadius.common.rawValue
         contentShadowView.layer.shadowRadius = contentShadowView.layer.cornerRadius * 3
@@ -60,82 +59,73 @@ class VIPTableViewController<C: CoordinatableRoutes,
         return contentShadowView
     }()
     
-    var topInsetValue: CGFloat {
-        return sceneLeftAlignedTitle == nil ? 0 : ViewSizes.Common.defaultCommon.rawValue
-    }
-    
     // MARK: Lifecycle
     override func setupSubviews() {
         super.setupSubviews()
         
+        view.backgroundColor = LightColors.Background.one
+        
         view.addSubview(tableView)
+        tableView.addSubview(leftAlignedTitleLabel)
+        
+        view.addSubview(contentShadowView)
+        
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.verticalEdges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(self.isRoundedBackgroundEnabled ? Margins.extraHuge.rawValue : 0)
         }
         
-        tableView.contentInset.top = topInsetValue
-        view.addSubview(leftAlignedTitleLabel)
         leftAlignedTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.topMargin)
-            make.height.greaterThanOrEqualTo(ViewSizes.Common.defaultCommon.rawValue)
-            make.width.lessThanOrEqualTo(tableView.snp.width).inset(Margins.large.rawValue) // TODO: Trailing does not work. Why?
-            make.leading.equalToSuperview().inset(Margins.large.rawValue)
-        }
-        
-        tableView.addSubview(infoButton)
-        infoButton.snp.makeConstraints { make in
-            make.bottom.equalTo(tableView.snp.top).inset(-Margins.large.rawValue)
-            make.leading.equalTo(leftAlignedTitleLabel.snp.trailing).inset(-Margins.medium.rawValue)
-            make.trailing.equalToSuperview().inset(Margins.large.rawValue)
+            make.top.equalToSuperview()
+            make.width.lessThanOrEqualTo(view.snp.width)
+            make.leading.equalToSuperview().inset(isRoundedBackgroundEnabled ? -Margins.large.rawValue : Margins.large.rawValue)
         }
         
         view.addSubview(verticalButtons)
         verticalButtons.snp.makeConstraints { make in
-            make.leading.bottom.trailing.equalToSuperview()
+            make.bottom.leading.trailing.equalToSuperview()
         }
         
-        view.backgroundColor = LightColors.Background.one
+        tableView.heightUpdated = { height in
+            self.contentShadowView.snp.remakeConstraints { make in
+                make.leading.equalTo(Margins.large.rawValue)
+                make.trailing.equalTo(-Margins.large.rawValue)
+                make.top.equalTo(self.tableView.snp.top).inset(self.tableView.contentInset.top)
+                make.height.equalTo(height + Margins.extraLarge.rawValue)
+                make.width.equalTo(self.tableView.snp.width).offset(Margins.extraHuge.rawValue)
+            }
+        }
+        
+        contentShadowView.layer.zPosition = tableView.layer.zPosition - 1
+        contentShadowView.alpha = isRoundedBackgroundEnabled ? 1 : 0
+        
+        tableView.contentInset.top = isRoundedBackgroundEnabled ? Margins.small.rawValue : 0
+        
+        tableView.clipsToBounds = !isRoundedBackgroundEnabled
+        tableView.layer.masksToBounds = !isRoundedBackgroundEnabled
+        
+        tableView.verticalScrollIndicatorInsets.right = isRoundedBackgroundEnabled ? -Margins.huge.rawValue : 0
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
         
         setupVerticalButtons()
     }
     
     func setupVerticalButtons() {}
     
-    func setRoundedShadowBackground() {
-        let small = Margins.small.rawValue
-        let large = Margins.large.rawValue
-        let extraLarge = Margins.extraLarge.rawValue
-        let huge = Margins.huge.rawValue
-        let extraHuge = Margins.extraHuge.rawValue
-
-        view.addSubview(contentShadowView)
-        tableView.heightUpdated = { height in
-            self.contentShadowView.snp.remakeConstraints { make in
-                make.leading.equalTo(large)
-                make.trailing.equalTo(-large)
-                make.top.equalTo(self.tableView.snp.top).inset(self.topInsetValue)
-                make.height.equalTo(height + extraLarge)
-                make.width.equalTo(self.tableView.snp.width).offset(extraHuge)
-            }
-        }
-        contentShadowView.layer.zPosition = tableView.layer.zPosition - 1
-        contentShadowView.isUserInteractionEnabled = false
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
-        tableView.snp.updateConstraints { make in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: self.topInsetValue,
-                                                             left: extraHuge,
-                                                             bottom: 0,
-                                                             right: extraHuge))
+        tableView.contentInset.top = isRoundedBackgroundEnabled ? Margins.small.rawValue + leftAlignedTitleLabel.frame.height : leftAlignedTitleLabel.frame.height
+        
+        leftAlignedTitleLabel.snp.updateConstraints { make in
+            make.top.equalToSuperview().inset(-tableView.contentInset.top)
         }
         
-        tableView.contentInset.top += small
-        
-        tableView.clipsToBounds = false
-        tableView.layer.masksToBounds = false
-        
-        tableView.verticalScrollIndicatorInsets.right = -huge
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        contentShadowView.snp.updateConstraints { make in
+            make.top.equalTo(self.tableView.snp.top).inset(tableView.contentInset.top)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

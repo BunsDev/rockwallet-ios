@@ -25,6 +25,14 @@ class KYCCoordinator: BaseCoordinator,
         if let flow = flow {
             open(scene: Scenes.VerifyAccount) { vc in
                 vc.flow = flow
+                
+                vc.didTapContactSupportButton = { [weak self] in
+                    self?.showSupport()
+                }
+                
+                vc.didTapBackToHomeButton = { [weak self] in
+                    self?.dismissFlow()
+                }
             }
             
             return
@@ -80,53 +88,38 @@ class KYCCoordinator: BaseCoordinator,
         open(scene: Scenes.KYCBasic)
     }
     
-    func showFindAddress(completion: ((String) -> Void)?) {
+    func showFindAddress(completion: ((ResidentialAddress) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.FindAddress,
                     presentationStyle: .formSheet) { vc in
-            vc?.callback = { text in
-                completion?(text)
+            vc?.callback = { address in
+                completion?(address)
             }
         }
     }
     
     // MARK: - Aditional helpers
-    
-    @objc func popFlow(sender: UIBarButtonItem) {
-        if navigationController.children.count == 1 {
-            dismissFlow()
-        }
-        
-        navigationController.popToRootViewController(animated: true)
-    }
 }
 
-extension BaseCoordinator: VeriffSdkDelegate {
-    func showExternalKYC() {
-        navigationController.popToRootViewController(animated: false)
-        
-        UserManager.shared.getVeriffSessionUrl { [weak self] result in
-            switch result {
-            case .success(let data):
-                guard let navigationController = self?.navigationController else { return }
-                
-                VeriffSdk.shared.delegate = self
-                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
-                                                     configuration: Presets.veriff,
-                                                     presentingFrom: navigationController)
-                
-            default:
-                break
-            }
+extension BaseCoordinator {
+    func handleVeriffKYC(result: VeriffSdk.Result? = nil, for veriffType: VeriffKYCManager.VeriffType) {
+        switch veriffType {
+        case .kyc:
+            forKYC(result: result)
+            
+        case .liveness:
+            forLiveness()
+            
         }
     }
     
-    func sessionDidEndWithResult(_ result: VeriffSdk.Result) {
-        switch result.status {
+    private func forKYC(result: VeriffSdk.Result?) {
+        switch result?.status {
         case .done:
             open(scene: Scenes.verificationInProgress) { vc in
                 vc.navigationItem.hidesBackButton = true
             }
+            
         case .error(let error):
             print(error.localizedDescription)
             
@@ -135,9 +128,11 @@ extension BaseCoordinator: VeriffSdkDelegate {
             }
             
         default:
-            parentCoordinator?.childDidFinish(child: self)
+            dismissFlow()
         }
     }
+    
+    private func forLiveness() {}
 }
 
 extension KYCCoordinator {

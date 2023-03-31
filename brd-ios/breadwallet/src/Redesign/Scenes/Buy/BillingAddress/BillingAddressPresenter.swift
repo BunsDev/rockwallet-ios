@@ -38,13 +38,13 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
             ],
             .country: [
                 TextFieldModel(title: L10n.Account.country,
-                               value: item.countryFullName,
+                               value: item.country?.name ?? "",
                                trailing: .image(Asset.chevronDown.image),
                                isUserInteractionEnabled: false)
             ],
             .stateProvince: [
                 TextFieldModel(title: L10n.Buy.stateProvince,
-                               value: item.stateProvince)
+                               value: item.state?.name ?? "")
             ],
             .cityAndZipPostal: [
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Buy.city,
@@ -78,11 +78,5 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
     
     func presentSubmit(actionResponse: BillingAddressModels.Submit.ActionResponse) {
         viewController?.displaySubmit(responseDisplay: .init())
-    }
-    
-    func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
-        let model = InfoViewModel(description: .text(L10n.Buy.paymentFailed), dismissType: .auto)
-        let config = Presets.InfoView.error
-        viewController?.displayMessage(responseDisplay: .init(model: model, config: config))
     }
 }

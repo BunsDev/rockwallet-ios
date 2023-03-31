@@ -10,6 +10,21 @@
 
 import Foundation
 
+enum BiometricType: String {
+    case buy
+    case pendingLimits = "pending_limits"
+}
+
+struct VeriffSessionRequestData: RequestModelData {
+    var quoteId: String?
+    var isBiometric: Bool?
+    var biometricType: BiometricType?
+    
+    func getParameters() -> [String: Any] {
+        return [:]
+    }
+}
+
 struct VeriffSessionResponseData: ModelResponse {
     var url: String?
 }
@@ -26,6 +41,21 @@ class VeriffSessionWorkerMapper: ModelMapper<VeriffSessionResponseData, VeriffSe
 
 class VeriffSessionWorker: BaseApiWorker<VeriffSessionWorkerMapper> {
     override func getUrl() -> String {
-        return KYCAuthEndpoints.veriffSession.url
+        guard let requestData = requestData as? VeriffSessionRequestData,
+              let isBiometric = requestData.isBiometric,
+              let biometricType = requestData.biometricType?.rawValue else {
+            return KYCAuthEndpoints.veriffSession.url
+        }
+        
+        var params: [String] = [isBiometric.description, biometricType]
+        
+        // Bio auth for limits doesn't require quoteId, so if no quoteId is present this call is being executed to confirm new limits
+        guard let quoteId = requestData.quoteId else {
+            return APIURLHandler.getUrl(KYCAuthEndpoints.veriffBiometricVerificationSessionLimits, parameters: params)
+        }
+        
+        params.insert(quoteId, at: 0)
+        
+        return APIURLHandler.getUrl(KYCAuthEndpoints.veriffBiometricVerificationSession, parameters: params)
     }
 }

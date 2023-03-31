@@ -45,19 +45,24 @@ struct FindAddressResponseData: ModelResponse {
     var items: [FindAddressResponseModel]?
     
     struct FindAddressResponseModel: Codable {
+        var id: String?
         var text: String?
+        var type: String?
     }
 }
 
-struct FindAddress: Model, ItemSelectable {
+struct ResidentialAddress: Model, ItemSelectable {
     var displayName: String? { return text }
     var displayImage: ImageViewModel? { return nil }
     
     var text: String?
+    var id: String?
 }
 
-class FindAddressMapper: ModelMapper<FindAddressResponseData, [FindAddress]> {
-    override func getModel(from response: FindAddressResponseData?) -> [FindAddress]? {
-        return response?.items?.compactMap { .init(text: $0.text) }
+class FindAddressMapper: ModelMapper<FindAddressResponseData, [ResidentialAddress]> {
+    override func getModel(from response: FindAddressResponseData?) -> [ResidentialAddress]? {
+        guard let filteredItems = response?.items?.filter({ $0.type == "Address" }) else { return nil }
+        let items = filteredItems.compactMap { ResidentialAddress(text: $0.text, id: $0.id) }
+        return items
     }
 }

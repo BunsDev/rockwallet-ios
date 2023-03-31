@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import WalletKit
 
 enum PreviewType {
     // split buy into ach_buy and card_buy
@@ -56,6 +55,32 @@ enum OrderPreviewModels {
         }
         struct ResponseDisplay {
             var model: PopupViewModel
+        }
+    }
+    
+    struct VeriffLivenessCheck {
+        struct ActionResponse {
+            var quoteId: String?
+            var isBiometric: Bool?
+        }
+        
+        struct ResponseDisplay {
+            var quoteId: String?
+            var isBiometric: Bool?
+        }
+    }
+    
+    struct BiometricStatusCheck {
+        struct ViewAction {
+            let resetCounter: Bool
+        }
+    }
+    
+    struct BiometricStatusFailed {
+        struct ActionResponse {
+        }
+        
+        struct ResponseDisplay {
         }
     }
     
@@ -127,6 +152,7 @@ enum OrderPreviewModels {
             var previewType: PreviewType?
             var isAch: Bool?
             var failed: Bool?
+            var responseCode: String?
         }
         
         struct ResponseDisplay {

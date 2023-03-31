@@ -29,7 +29,8 @@ protocol AchActionResponses: AnyObject {
 }
 
 protocol AchResponseDisplays: AnyObject {
-    var plaidHandler: Handler? { get set }
+    var plaidHandler: PlaidLinkKitHandler? { get set }
+    
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay)
     func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay)
 }
@@ -101,7 +102,7 @@ extension Interactor where Self: AchViewActions,
         case .failure(let error):
             presenter?.presentError(actionResponse: .init(error: error))
         case .success(let handler):
-            presenter?.presentPlaidToken(actionResponse: .init(handler: handler))
+            presenter?.presentPlaidToken(actionResponse: .init(plaidHandler: handler))
         }
     }
     
@@ -160,13 +161,13 @@ extension Presenter where Self: AchActionResponses,
     }
     
     func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse) {
-        viewController?.displayPlaidToken(responseDisplay: .init(handler: actionResponse.handler))
+        viewController?.displayPlaidToken(responseDisplay: .init(plaidHandler: actionResponse.plaidHandler))
     }
 }
 
 extension Controller where Self: AchResponseDisplays {
     func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay) {
-        plaidHandler = responseDisplay.handler
+        plaidHandler = responseDisplay.plaidHandler
         plaidHandler?.open(presentUsing: .viewController(self))
     }
     

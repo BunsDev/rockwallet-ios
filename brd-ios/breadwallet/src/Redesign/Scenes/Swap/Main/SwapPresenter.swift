@@ -23,13 +23,12 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
               let from = item.from?.currency,
-              let to = item.to?.currency
-        else {
+              let to = item.to?.currency else {
             viewController?.displayError(responseDisplay: .init())
             return
         }
         
-        let sections: [Models.Section] = [
+        let sections: [ExchangeModels.Section] = [
             .rateAndTimer,
             .swapCard,
             .accountLimits
@@ -37,7 +36,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [ExchangeModels.Section: [Any]] = [
             .rateAndTimer: [
                 exchangeRateViewModel
             ],
@@ -90,8 +89,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let minimumValue = actionResponse.minimumValue ?? 0
-        
         var hasError: Bool = actionResponse.from?.fiatValue == 0
         if actionResponse.baseBalance == nil
             || actionResponse.from?.currency.code == actionResponse.to?.currency.code {
@@ -105,7 +102,9 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         } else {
             let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
             let tokenValue = actionResponse.from?.tokenValue ?? 0
-            let tokenCode = actionResponse.from?.currency.code.uppercased() ?? ""
+            let minimumValue = actionResponse.minimumValue ?? 0
+            let minimumUsd = actionResponse.minimumUsd ?? 0
+            
             let profile = UserManager.shared.profile
             let dailyLimit = profile?.swapAllowanceDaily ?? 0
             let lifetimeLimit = profile?.swapAllowanceLifetime ?? 0
@@ -123,9 +122,14 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
-            case _ where fiatValue < minimumValue:
+            case _ where fiatValue < minimumUsd:
+                // Value below minimum fiat
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumUsd, currency: actionResponse.from?.currency.code ?? "", reason: .swap)))
+                hasError = true
+                
+            case _ where tokenValue < minimumValue:
                 // Value below minimum crypto
-                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: tokenCode, reason: .swap)))
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: C.usdCurrencyCode, reason: .swap)))
                 hasError = true
                 
             case _ where fiatValue > dailyLimit:
@@ -142,7 +146,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 hasError = true
                 
             case _ where fiatValue > exchangeLimit:
-                // Over exchange limit ???!
+                // Over exchange limit
                 presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
                 hasError = true
                 
@@ -150,15 +154,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 // Remove presented error
                 presentError(actionResponse: .init(error: nil))
             }
-            
-            let toFee = actionResponse.toFee?.fiatValue ?? 0
-            if let to = actionResponse.to?.fiatValue,
-               to > 0,
-               to < toFee {
-                // toAmount does not cover widrawal fee
-                presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
-            }
-               
         }
         
         let continueEnabled = (!hasError && actionResponse.fromFee != nil)

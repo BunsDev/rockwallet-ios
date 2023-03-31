@@ -43,13 +43,13 @@ struct TxListViewModel: TxViewModel, Hashable {
     
     func shortDescription(for currency: Currency) -> String {
         switch transactionType {
-        case .defaultTransaction:
+        case .base:
             return handleDefaultTransactions()
             
-        case .swapTransaction:
+        case .swap:
             return handleSwapTransactions(for: currency)
             
-        case .sellTransaction:
+        case .sell:
             return handleSellTransactions()
             
         default:
@@ -79,7 +79,7 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleBuyTransactions() -> String {
-        let isBuy = transactionType == .buyTransaction
+        let isBuy = transactionType == .buy
         
         switch status {
         case .invalid, .failed, .refunded:
@@ -94,16 +94,15 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleSellTransactions() -> String {
-        // TODO: update texts
         switch status {
         case .invalid, .failed, .refunded:
-            return "Widrawal failed"
+            return L10n.Transaction.withdrawalFailed
     
         case .complete, .manuallySettled, .confirmed:
-            return "Widrawed to bank account"
+            return L10n.Transaction.withdrawalComplete
             
         default:
-            return "Pending withdraw with ACH"
+            return L10n.Transaction.pendingWithdrawWithAch
         }
     }
     

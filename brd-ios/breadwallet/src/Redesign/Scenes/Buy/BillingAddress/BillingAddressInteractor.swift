@@ -33,9 +33,10 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
                 self?.dataStore?.paymentstatus = data?.status
                 
                 guard self?.dataStore?.paymentstatus?.isSuccesful == true else {
-                    self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: L10n.Buy.paymentFailed)))
+                    self?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: data?.errorMessage ?? "")))
                     return
                 }
+                
                 self?.presenter?.presentSubmit(actionResponse: .init())
                 
             case .failure(let error):
@@ -59,7 +60,7 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
     }
     
     func stateProvinceSet(viewAction: BillingAddressModels.StateProvince.ViewAction) {
-        dataStore?.stateProvince = viewAction.stateProvince
+        dataStore?.state = .init(iso2: viewAction.stateProvince ?? "", name: viewAction.stateProvince ?? "")
         
         validate(viewAction: .init())
     }
@@ -89,10 +90,10 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
     }
     
     func submit(viewAction: BillingAddressModels.Submit.ViewAction) {
-        guard let countryIso = dataStore?.country,
+        guard let countryIso = dataStore?.country?.iso2,
               let street = dataStore?.address,
               let city = dataStore?.city,
-              let state = dataStore?.stateProvince,
+              let stateIso = dataStore?.state?.name,
               let zip = dataStore?.zipPostal,
               let lastName = dataStore?.lastName,
               let firstName = dataStore?.firstName,
@@ -100,14 +101,13 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
               let month = Int(dataStore?.expMonth ?? ""),
               let year = Int(dataStore?.expYear ?? ""),
               let cvv = dataStore?.cvv
-              
         else { return }
         
         let country = Checkout.Country(iso3166Alpha2: countryIso)
         let address = Address(addressLine1: street,
                               addressLine2: nil,
                               city: city,
-                              state: state,
+                              state: stateIso,
                               zip: zip,
                               country: country)
         
@@ -137,8 +137,8 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         let data = AddCardRequestData(token: checkoutToken,
                                       firstName: dataStore.firstName,
                                       lastName: dataStore.lastName,
-                                      countryCode: dataStore.country,
-                                      state: dataStore.stateProvince,
+                                      countryCode: dataStore.country?.iso2,
+                                      state: dataStore.state?.iso2,
                                       city: dataStore.city,
                                       zip: dataStore.zipPostal,
                                       address: dataStore.address)

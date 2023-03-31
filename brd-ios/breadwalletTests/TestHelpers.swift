@@ -11,7 +11,7 @@ import XCTest
 @testable import breadwallet
 @testable import WalletKit
 
-let testWalletSecAttrService: String = (Bundle.main.bundleIdentifier ?? "") + ".testnetQA.tests"
+let testWalletSecAttrService = "com.brd.testnetQA.tests"
 
 typealias CoreCurrency = WalletKit.Currency
 typealias AppCurrency = breadwallet.Currency
@@ -134,6 +134,89 @@ struct TestCurrencies {
         "currency_id": "hedera-mainnet:__native__"
     }
     """.utf8)
+
+    static var btc: AppCurrency {
+        let btc = CoreCurrency(uids: Currencies.shared.getUID(from: "btc")!.rawValue, name: "Bitcoin", code: "btc", type: "native", issuer: nil)
+        let metaData = try! JSONDecoder().decode(CurrencyMetaData.self, from: btcMetaData)
+        let network = networks.first(where: { $0.uids == "bitcoin-mainnet" })!
+        let BTC_SATOSHI = WalletKit.Unit(currency: btc, code: "BTC-SAT", name: "Satoshi", symbol: "SAT")
+        let BTC_BTC = WalletKit.Unit (currency: btc, code: "BTC-BTC",  name: "Bitcoin", symbol: "B", base: BTC_SATOSHI, decimals: 8)
+        return AppCurrency(core: btc,
+                           network: network,
+                           metaData: metaData,
+                           units: Set([BTC_SATOSHI, BTC_BTC]),
+                           baseUnit: BTC_SATOSHI,
+                           defaultUnit: BTC_BTC)!
+    }
+    
+    static var bch: AppCurrency {
+        let bch = CoreCurrency(uids: Currencies.shared.getUID(from: "bch")!.rawValue, name: "Bitcoin Cash", code: "bch", type: "native", issuer: nil)
+        let metaData = try! JSONDecoder().decode(CurrencyMetaData.self, from: bchMetaData)
+        let BCH_SATOSHI = WalletKit.Unit (currency: bch, code: "BCH-SAT",  name: "Satoshi", symbol: "SAT")
+        let BCH_BCH = WalletKit.Unit (currency: bch, code: "BCH-BTC",  name: "Bitcoin Cash", symbol: "BCH", base: BCH_SATOSHI, decimals: 8)
+        let network = networks.first(where: { $0.uids == "bitcoincash-mainnet" })!
+        return AppCurrency(core: bch,
+                           network: network,
+                           metaData: metaData,
+                           units: Set([BCH_SATOSHI, BCH_BCH]),
+                           baseUnit: BCH_SATOSHI,
+                           defaultUnit: BCH_BCH)!
+    }
+
+    static var eth: AppCurrency {
+        let eth = CoreCurrency(uids: Currencies.shared.getUID(from: "eth")!.rawValue, name: "Ethereum", code: "eth", type: "native", issuer: nil)
+        let metaData = try! JSONDecoder().decode(CurrencyMetaData.self, from: ethMetaData)
+        let ETH_WEI = WalletKit.Unit (currency: eth, code: "ETH-WEI", name: "WEI", symbol: "wei")
+        let ETH_GWEI = WalletKit.Unit (currency: eth, code: "ETH-GWEI", name: "GWEI",  symbol: "gwei", base: ETH_WEI, decimals: 9)
+        let ETH_ETHER = WalletKit.Unit (currency: eth, code: "ETH-ETH", name: "ETHER", symbol: "E", base: ETH_WEI, decimals: 18)
+        let network = networks.first(where: { $0.uids == "ethereum-mainnet" })!
+        return AppCurrency(core: eth,
+                           network: network,
+                           metaData: metaData,
+                           units: Set([ETH_WEI, ETH_GWEI, ETH_ETHER]),
+                           baseUnit: ETH_WEI,
+                           defaultUnit: ETH_ETHER)!
+    }
+    
+//    static var brd: AppCurrency {
+//        let metaData = try! JSONDecoder().decode(CurrencyMetaData.self, from: brdMetaData)
+//        let brd = CoreCurrency (uids: Currencies.shared.brd!.uid.rawValue, name: "BRD Token", code: Currencies.shared.brd!.code, type: "erc20", issuer: "0x558ec3152e2eb2174905cd19aea4e34a23de9ad6")
+//        let brd_brdi = WalletKit.Unit (currency: brd, code: "BRD_Integer", name: "BRD Integer", symbol: "BRDI")
+//        let brd_brd  = WalletKit.Unit (currency: brd, code: "BRD_Decimal", name: "BRD_Decimal", symbol: "BRD", base: brd_brdi, decimals: 18)
+//        let network = networks.first(where: { $0.uids == "ethereum-mainnet" })!
+//        return AppCurrency(core: brd,
+//                           network: network,
+//                           metaData: metaData,
+//                           units: Set([brd_brdi, brd_brd]),
+//                           baseUnit: brd_brdi,
+//                           defaultUnit: brd_brdi)!
+//    }
+    
+    static var xrp: AppCurrency {
+        let metaData = try! JSONDecoder().decode(CurrencyMetaData.self, from: xrpMetaData)
+        let xrp = CoreCurrency (uids: Currencies.shared.getUID(from: "xrp")!.rawValue, name: "XRP", code: "xrp", type: "native", issuer: nil)
+        let xrp_xrp = WalletKit.Unit (currency: xrp, code: "XRP", name: "XRP", symbol: "XRP")
+        let network = networks.first(where: { $0.uids == "ripple-mainnet" })!
+        return AppCurrency(core: xrp,
+                           network: network,
+                           metaData: metaData,
+                           units: Set([xrp_xrp]),
+                           baseUnit: xrp_xrp,
+                           defaultUnit: xrp_xrp)!
+    }
+    
+//    static var hbar: AppCurrency {
+//        let metaData = try! JSONDecoder().decode(CurrencyMetaData.self, from: hbarMetaData)
+//        let hbar = CoreCurrency (uids: Currencies.shared.hbar.uid.rawValue, name: "HBAR", code: Currencies.shared.hbar.code, type: "native", issuer: nil)
+//        let hbar_hbar = WalletKit.Unit (currency: hbar, code: "HBAR", name: "Hedera", symbol: "HBAR")
+//        let network = networks.first(where: { $0.uids == "hedera-mainnet" })!
+//        return AppCurrency(core: hbar,
+//                           network: network,
+//                           metaData: metaData,
+//                           units: Set([hbar_hbar]),
+//                           baseUnit: hbar_hbar,
+//                           defaultUnit: hbar_hbar)!
+//    }
 }
 
 func clearKeychain() {

@@ -35,7 +35,7 @@ class PayIdTests : XCTestCase {
     func assertIsPayId(address: String) {
         let payID = ResolvableFactory.resolver(address)
         XCTAssertNotNil(payID, "Resolver should not be nil for \(address)")
-        XCTAssertTrue(payID!.type == .payId, "Resolver should not be type Payid for \(address)")
+        XCTAssertTrue(payID!.type == .paymail, "Resolver should not be type Payid for \(address)")
     }
 
     func testBTC() {
@@ -46,7 +46,7 @@ class PayIdTests : XCTestCase {
             self.handleResult(result, expected: "mzVtspCQoEGnEbCUWVrug72yD4ShDTUbw8")
             exp.fulfill()
         }
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
 
     func testEth() {
@@ -57,7 +57,7 @@ class PayIdTests : XCTestCase {
             self.handleResult(result, expected: "0x8fB4CB96F7C15F9C39B3854595733F728E1963Bc")
             exp.fulfill()
         }
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
 
     func testUnsuportedCurrency() {
@@ -69,17 +69,17 @@ class PayIdTests : XCTestCase {
             case .success(_):
                 XCTFail("BCH should not return a payID")
             case .failure(let error):
-                XCTAssert(error == .currencyNotSupported, "Should return currency not supported error")
+                XCTAssertEqual(error.localizedDescription, "Should return currency not supported error")
             }
             exp.fulfill()
         }
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
 
-    func handleResult(_ result: Result<(String, String?), ResolvableError>, expected: String) {
+    func handleResult(_ result: Result<String?, Error>, expected: String) {
         switch result {
         case .success(let address):
-            XCTAssertTrue(address.0 == expected)
+            XCTAssertTrue(address == expected)
         case .failure(let error):
             XCTFail("message: \(error)")
         }

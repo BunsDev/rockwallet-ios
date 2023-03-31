@@ -9,18 +9,20 @@
 import UIKit
 import LinkKit
 
+typealias PlaidLinkKitHandler = Handler
+
 protocol LinkOAuthHandling {
-    var linkHandler: Handler? { get }
+    var plaidHandler: PlaidLinkKitHandler? { get }
 }
 
-class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, BuyPresenter, BuyStore>, BuyResponseDisplays {
-    
+class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
+                         BuyInteractor,
+                         BuyPresenter,
+                         BuyStore>,
+                         BuyResponseDisplays {
     typealias Models = BuyModels
     
-    var plaidHandler: Handler?
-    var didTriggerGetData: (() -> Void)?
-    
-    private var supportedCurrencies: [SupportedCurrency]?
+    var plaidHandler: LinkKit.Handler?
     
     // MARK: - Overrides
     
@@ -37,13 +39,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     override func setupSubviews() {
         super.setupSubviews()
         
-        tableView.register(WrapperTableViewCell<FESegmentControl>.self)
-        tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
-        tableView.delaysContentTouches = false
-        tableView.backgroundColor = LightColors.Background.two
-        
-        didTriggerGetData = { [weak self] in
+        didTriggerExchangeRate = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
     }
@@ -65,6 +61,9 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
+            
+        case .increaseLimits:
+            cell = self.tableView(tableView, increaseLimitsCellForRowAt: indexPath)
             
         default:
             cell = UITableViewCell()
@@ -107,6 +106,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
                 }
             }
         }
+        
         cell.setupCustomMargins(vertical: .large, horizontal: .large)
         
         return cell
@@ -155,6 +155,28 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         return cell
     }
     
+    func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = sections[indexPath.section]
+        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(font: Fonts.Body.three,
+                                       textColor: LightColors.Text.two,
+                                       isUserInteractionEnabled: true))
+            view.setup(with: model)
+            
+            view.didTapLink = { [weak self] in
+                self?.increaseLimitsTapped()
+            }
+        }
+        
+        return cell
+    }
+    
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
@@ -184,9 +206,15 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
         interactor?.showOrderPreview(viewAction: .init())
     }
     
+    private func increaseLimitsTapped() {
+        coordinator?.showInWebView(urlString: C.limits, title: L10n.Buy.increaseYourLimits)
+    }
+    
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
+        var supportedCurrencies: [SupportedCurrency]?
+        
         switch dataStore?.paymentMethod {
         case .ach:
             if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == C.USDT }) {
@@ -226,12 +254,10 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
             return
         }
         
-        UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
         tableView.endUpdates()
-        UIView.setAnimationsEnabled(true)
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
@@ -250,7 +276,7 @@ class BuyViewController: BaseTableViewController<BuyCoordinator, BuyInteractor, 
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }

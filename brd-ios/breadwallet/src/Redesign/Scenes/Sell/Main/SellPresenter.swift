@@ -19,18 +19,18 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
 
-        let sections = [
-            Models.Section.rateAndTimer,
-            Models.Section.swapCard,
-            Models.Section.payoutMethod,
-            Models.Section.accountLimits
+        let sections: [ExchangeModels.Section] = [
+            .rateAndTimer,
+            .swapCard,
+            .payoutMethod,
+            .accountLimits
         ]
 
-        let sectionRows = [
-            Models.Section.rateAndTimer: [
+        let sectionRows: [ExchangeModels.Section: [Any]] = [
+            .rateAndTimer: [
                 ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
             ],
-            Models.Section.swapCard: [
+            .swapCard: [
                 MainSwapViewModel(from: .init(amount: .zero(item),
                                               formattedTokenString: .init(string: ""),
                                               title: .text("I have 10.12000473 USDC"),
@@ -41,12 +41,12 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                             formattedTokenString: .init(string: ""),
                                             title: .text("I receive"),
                                             selectionDisabled: true),
-                                 hideSwapButton: true)
+                                  hideSwitchPlacesButton: true)
             ],
-            Models.Section.payoutMethod: [
+            .payoutMethod: [
                 paymentModel ?? CardSelectionViewModel(userInteractionEnabled: true)
             ],
-            Models.Section.accountLimits: [
+            .accountLimits: [
                 LabelViewModel.text("")
             ]
         ]
@@ -70,8 +70,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                         formattedTokenString: toFormattedFiatString,
                                         title: .text("I receive")),
                               
-                             hideSwapButton: true)
-        viewController?.displayAmount(responseDisplay: .init(continueEnabled: true,
+                             hideSwitchPlacesButton: true)
+        viewController?.displayAmount(responseDisplay: .init(continueEnabled: actionResponse.continueEnabled,
                                                              amounts: vm))
     }
     // MARK: - Additional Helpers

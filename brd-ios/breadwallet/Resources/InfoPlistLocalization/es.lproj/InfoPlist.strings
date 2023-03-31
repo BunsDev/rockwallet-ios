@@ -214,6 +214,14 @@
 /* Why is the verification declined label in profile screen */
 "Account.VerificationDeclined" = "¿Por qué se ha rechazado mi verificación?";
 
+"Account.VerificationSuccessful" = "Your verification was successful!";
+
+"Account.VerificationSuccessful.description" = "Your account has been successfully verified, and your limits have been updated.";
+
+"Account.VerificationUnsuccessful" = "We're sorry, your verification was unsuccessful";
+
+"Account.VerificationUnsuccessful.description" = "Please try your verification again, while keeping the following in mind:\n\n- Please ensure the area is well-lit\n- Please ensure you are centered in the frame";
+
 "Account.Verified" = "Verificado";
 
 /* Verified account message on profile screen */
@@ -223,8 +231,12 @@
 
 "Account.VerifiedAccountTitle" = "Your account is verified!";
 
+"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.";
+
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "Si verificas tu cuenta, tendrás acceso a:\n・Depósitos/retiradas ilimitados\n・Seguridad mejorada\n・Completa asistencia de activos\n・Compra de activos con tarjeta de crédito";
+
+"Account.VerifyAccountTitle" = "To start using 'Swap' or 'Buy', your wallet must be verified.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Introduce y verifica tu nueva dirección de email para tu cuenta de RockWallet.";
@@ -755,11 +767,15 @@
 /* Add card title for buy cryptos */
 "Buy.AddCard" = "Añadir tarjeta";
 
+"Buy.AddCardPrompt" = "Using a Credit Card may trigger additional fees from your Bank. We recommend using your Debit Card.";
+
 /* Add a debit or credit card label on add card flow */
 "Buy.AddDebitCreditCard" = "Asociar una tarjeta de débito o de crédito";
 
 /* Address label in billing address view on buy flow */
 "Buy.Address" = "Dirección";
+
+"Buy.AddYourCard" = "Add your card";
 
 "Buy.bankAccountFailureText" = "Inténtalo de nuevo o utiliza un método de pago diferente.";
 
@@ -834,6 +850,8 @@
 "Buy.FirstName" = "Nombre";
 
 "Buy.fundWithAch" = "Financiar con ACH";
+
+"Buy.IncreaseYourLimits" = "Increase your limits";
 
 "Buy.InvalidExpirationDate" = "¡La fecha de vencimiento introducida no es válida!";
 
@@ -1016,6 +1034,12 @@
 
 "ComingSoon.buttons.contactSupport" = "Contacta con el servicio de asistencia";
 
+"ComingSoon.BuyDescription" = "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.";
+
+"ComingSoon.SwapBuyTitle" = "This feature is not available for your account at this time.";
+
+"ComingSoon.SwapDescription" = "You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.";
+
 "ComingSoon.title" = "¡Próximamente!";
 
 /* Amount to Send: ($1.00) */
@@ -1176,6 +1200,8 @@
 "ErrorMessages.ExchangesUnavailable" = "Tenemos problemas temporales con la red. Inténtalo de nuevo más tarde.";
 
 "ErrorMessages.highWidrawalFee" = "Minimum buy/swap amount for this pair is temporarily higher due to higher withdrawal network fees. Try other pairs or try again later.";
+
+"ErrorMessages.InvalidPaymailBSVAddress" = "The Paymail address cannot be found. Please use the BSV address.";
 
 "ErrorMessages.Kyc.Underage" = "Debes tener al menos 18 años para completar la verificación de Nivel 1 y Nivel 2.";
 
@@ -1619,8 +1645,14 @@
 /* Onboarding screen restore an existing wallet. */
 "Onboarding.restoreWallet" = "Restaurar monedero";
 
+"Onboarding.RestoreYourWallet" = "Restore your wallet";
+
+"Onboarding.RestoreYourWalletDescription" = "You can restore your wallet with your recovery phrase or iCloud.";
+
 /* Onboarding screen Skip button title that allows the user to exit the onboarding process. */
 "Onboarding.skip" = "Omitir";
+
+"Onboarding.SkipPhrase" = "SKIP AND SAVE LATER";
 
 /* Onboarding screen Page 4 title */
 "OnboardingPageFour.title" = "¡Comienza a invertir hoy mismo desde solo 50 $!";
@@ -1717,6 +1749,10 @@
 
 /* Enable face ID prompt title */
 "Prompts.FaceId.title" = "Activar Face ID";
+
+"Prompts.LimitsAuthentication.body" = "Just one more small step, and you'll be able to enjoy your new limits.";
+
+"Prompts.LimitsAuthentication.title" = "Finish setting up your new Buy limits.";
 
 /* No passcode set warning body */
 "Prompts.NoPasscode.body" = "Se necesita una contraseña de dispositivo para proteger tu cartera. Ve a los ajustes y activa la contraseña.";
@@ -2589,6 +2625,8 @@
 
 "Swap.AmountPurchased.android" = "Importe de la compra:";
 
+"Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
+
 /* Back to Home button */
 "Swap.BackToHome" = "Volver al Inicio";
 
@@ -2643,6 +2681,8 @@
 "Swap.RequestTimedOut" = "Tu solicitud ha excedido el tiempo de espera. Por favor, inténtalo de nuevo.";
 
 "Swap.retry" = "Reintentar";
+
+"Swap.SameAssetMessage" = "It’s not possible to select the same asset for both sending and receiving. Please select a different asset for either sending or receiving.";
 
 /* Select assets title in swap flow */
 "Swap.SelectAssets" = "Seleccionar activos";
@@ -2920,6 +2960,10 @@
 
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "Esperando confirmación. Algunos comerciantes requieren confirmación para completar una transacción. Tiempo estimado: 1-2 horas.";
+
+"Transaction.WithdrawalComplete" = "Withdrawn to bank account";
+
+"Transaction.WithdrawalFailed" = "Withdrawal failed";
 
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "cuenta";

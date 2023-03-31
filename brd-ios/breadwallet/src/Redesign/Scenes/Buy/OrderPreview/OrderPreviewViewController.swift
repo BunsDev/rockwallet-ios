@@ -20,7 +20,9 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     override var sceneTitle: String? {
         return dataStore?.type?.title
     }
-
+    
+    private var veriffKYCManager: VeriffKYCManager?
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
@@ -202,9 +204,9 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         
-        let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAchTransaction : .buyTransaction
+        let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAch : .buy
         coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference,
                                  transactionType: transactionType,
                                  reason: responseDisplay.reason)
@@ -214,13 +216,36 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         coordinator?.showFailure(failure: responseDisplay.reason, availablePayments: dataStore?.availablePayments)
     }
     
+    func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay) {
+        veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
+        veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: .init(quoteId: responseDisplay.quoteId,
+                                                                                   isBiometric: responseDisplay.isBiometric,
+                                                                                   biometricType: .buy)) { [weak self] result in
+            switch result.status {
+            case .done:
+                self?.interactor?.checkBiometricStatus(viewAction: .init(resetCounter: true))
+                
+            default:
+                self?.displayBiometricStatusFailed(responseDisplay: .init())
+            }
+        }
+    }
+    
+    func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay) {
+        coordinator?.open(scene: Scenes.Failure) { vc in
+            vc.failure = .buyCard
+            vc.isModalDismissable = false
+            vc.navigationItem.hidesBackButton = true
+        }
+    }
+    
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
         coordinator?.showThreeDSecure(url: responseDisplay.url)
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }

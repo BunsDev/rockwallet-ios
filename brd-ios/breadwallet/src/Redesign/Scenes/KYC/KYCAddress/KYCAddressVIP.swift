@@ -18,6 +18,7 @@ protocol KYCAddressViewActions: BaseViewActions, CountriesAndStatesViewActions {
     func submitInfo(viewAction: KYCAddressModels.Submit.ViewAction)
     func showSsnInfo(viewAction: KYCAddressModels.SsnInfo.ViewAction)
     func setAddress(viewAction: KYCAddressModels.Address.ViewAction)
+    func validate(viewAction: KYCAddressModels.Validate.ViewAction)
 }
 
 protocol KYCAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
@@ -38,11 +39,9 @@ protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
     var birthDateString: String? { get set }
     var address: String? { get set }
     var city: String? { get set }
-    var state: String? { get set }
-    var stateCode: String? { get set }
+    var state: Place? { get set }
     var postalCode: String? { get set }
-    var country: String? { get set }
-    var countryFullName: String? { get set }
+    var country: Country? { get set }
     
     var isValid: Bool { get }
 }

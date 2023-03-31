@@ -40,7 +40,7 @@ class DefaultCurrencyViewController: UITableViewController, Subscriber {
         
         title = L10n.Settings.currency
         
-        let faqButton = UIButton.buildFaqButton(articleId: ArticleIds.displayCurrency, position: .right)
+        let faqButton = UIButton.buildHelpBarButton(articleId: ArticleIds.displayCurrency)
         navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: faqButton)]
     }
     

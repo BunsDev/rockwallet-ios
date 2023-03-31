@@ -98,8 +98,6 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
                 UserManager.shared.setUserCredentials(email: email, sessionToken: sessionKey, sessionTokenHash: sessionKeyHash)
                 
                 UserManager.shared.refresh { _ in
-                    Store.trigger(name: .didCreateAccount)
-                    
                     self?.presenter?.presentNext(actionResponse: .init())
                 }
                 

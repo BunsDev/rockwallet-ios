@@ -15,6 +15,7 @@ enum AddCardModels {
     typealias Item = AddCardStore
     
     enum Section: Sectionable {
+        case notificationPrompt
         case cardDetails
         case confirm
         
@@ -51,7 +52,6 @@ enum AddCardModels {
     }
     
     struct Submit {
-        // TODO: Should we pass CC info or is it ok for VC to just pass the DS?
         struct ViewAction {}
         struct ActionResponse {}
         struct ResponseDisplay {}

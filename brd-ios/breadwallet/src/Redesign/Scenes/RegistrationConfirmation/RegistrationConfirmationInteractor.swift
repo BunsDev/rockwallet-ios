@@ -28,8 +28,6 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         if code.count == CodeInputView.numberOfFields {
             confirm(viewAction: .init())
         }
-        
-        presenter?.presentValidate(actionResponse: .init(isValid: code.count == CodeInputView.numberOfFields))
     }
     
     func confirm(viewAction: RegistrationConfirmationModels.Confirm.ViewAction) {

@@ -54,7 +54,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         let limitsString = NSMutableAttributedString(string: paymentMethod == .ach ?
                                                      L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText))
         
-        let linkRange = limitsString.mutableString.range(of: L10n.Button.moreLimits)
+        let linkRange = limitsString.mutableString.range(of: L10n.Button.moreInfo)
         
         if isCustomLimits {
             if linkRange.location != NSNotFound {

@@ -23,16 +23,16 @@ struct OnboardingPage {
 }
 
 /**
-*  Takes the user through a sequence of onboarding screens (product walkthrough)
-*  and allows the user to either create a new wallet or restore an existing wallet.
-*/
+ *  Takes the user through a sequence of onboarding screens (product walkthrough)
+ *  and allows the user to either create a new wallet or restore an existing wallet.
+ */
 class OnboardingViewController: UIViewController {
     
     // This callback is passed in by the StartFlowPresenter so that actions within 
     // the onboarding screen can be directed to other functions of the app, such as wallet
     // restoration, PIN creation, etc.
     private var didExitWithAction: DidExitOnboardingWithAction?
-        
+    
     private let logoImageView: UIImageView = .init(image: Asset.logoVerticalWhite.image)
     
     private var showingLogo: Bool = false {
@@ -79,25 +79,15 @@ class OnboardingViewController: UIViewController {
     
     // Whenever we're animating from page to page this is set to true
     // to prevent additional taps on the Next button during the transition.
-    var isPaging: Bool = false {
-        didSet {
-            [createWalletButton, restoreButton, skipButton, backButton].forEach { (button) in
-                button.isUserInteractionEnabled = !isPaging
-            }
-        }
-    }
     
     var pageIndex: Int = 0 {
         didSet {
             // Show/hide the Back and Skip buttons.
             let backAlpha: CGFloat = (pageIndex == 1) ? 1.0 : 0.0
-            let skipAlpha: CGFloat = (pageIndex == 1) ? 1.0 : 0.0
-
             let delay = (pageIndex == 1) ? firstTransitionDelay : 0.0
             
             UIView.animate(withDuration: 0.3, delay: delay, options: .curveEaseIn, animations: { 
                 self.backButton.alpha = backAlpha
-                self.skipButton.alpha = skipAlpha                                
             }, completion: nil)
         }
     }
@@ -107,7 +97,7 @@ class OnboardingViewController: UIViewController {
     // CTA's that appear at the bottom of the screen
     private let createWalletButton = BRDButton(title: "", type: .secondary)
     private let recoverButton = BRDButton(title: "", type: .underlined)
-    private let restoreButton = BRDButton(title: "", type: .underlined)
+    private let restoreWithiCloudButton = BRDButton(title: L10n.CloudBackup.restoreButton.uppercased(), type: .tertiary)
     
     // Constraints used to show and hide the bottom buttons.
     private var topButtonAnimationConstraint: NSLayoutConstraint?
@@ -116,9 +106,82 @@ class OnboardingViewController: UIViewController {
     private var nextButtonAnimationConstraint: NSLayoutConstraint?
     
     private let backButton = UIButton(type: .custom)
-    private let skipButton = UIButton(type: .custom)
-        
+    
     private let cloudBackupExists: Bool
+    
+    private lazy var stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = Margins.extraExtraHuge.rawValue
+        return view
+    }()
+    
+    private let restoreWalletTitle: UILabel = {
+        let label = UILabel.wrapping(font: Fonts.Title.four, color: LightColors.Contrast.two)
+        label.text = L10n.Onboarding.restoreYourWallet
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let restoreWalletDescription: UILabel = {
+        let label = UILabel.wrapping(font: Fonts.Body.one, color: LightColors.Contrast.two)
+        label.text = L10n.Onboarding.restoreYourWalletDescription
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var illustration: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = Asset.unlockWalletDisabled.image
+        return imageView
+    }()
+    
+    private lazy var buttonsStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = Margins.extraExtraHuge.rawValue
+        return view
+    }()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if appearanceCount == 0 {
+            animateLandingPage()
+        }
+        
+        appearanceCount += 1
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Make sure we set this in case the user taps Restore Wallet, then comes
+        // back to the onboarding flow in case the nav bar hidden status is changed.
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationController?.isNavigationBarHidden = true
+        view.backgroundColor = LightColors.Contrast.one
+        
+        setUpLogo()
+        setUpPages()
+        setupSubviews()
+    }
+    
+    private func setupSubviews() {
+        setUpHeadingLabels()
+        setUpBottomButtons()
+        addBackButton()
+        setUpSecondView()
+    }
     
     required init(doesCloudBackupExist: Bool, didExitOnboarding: DidExitOnboardingWithAction?) {
         self.cloudBackupExists = doesCloudBackupExist
@@ -133,40 +196,13 @@ class OnboardingViewController: UIViewController {
     private func exitWith(action exitAction: OnboardingExitAction) {
         didExitWithAction?(exitAction)
     }
-            
-    @objc private func backTapped(sender: Any) {
-        
-        let headingLabel = headingLabels[pageIndex]
-        let subheadingLabel = subheadingLabels[pageIndex]
-        let headingConstraint = headingConstraints[pageIndex]
-        
-        UIView.animate(withDuration: 0.4, animations: { 
-            // make sure next or top/bottom buttons are animated out
-            self.topButtonAnimationConstraint?.constant = self.buttonsHiddenYOffset
-            self.nextButtonAnimationConstraint?.constant = self.buttonsHiddenYOffset
-            
-            headingLabel.alpha = 0
-            subheadingLabel.alpha = 0
-            headingConstraint.constant -= (self.headingLabelAnimationOffset)
-            
-            self.view.layoutIfNeeded()
-        }, completion: { _ in
-            self.reset(completion: { 
-                self.animateLandingPage()
-            })
-        })
-    }
-    
-    @objc private func skipTapped(sender: Any) {
-        exitWith(action: .createWallet)
-    }
     
     private func reset(completion: @escaping () -> Void) {
         
         for (index, constraint) in self.headingConstraints.enumerated() {
             constraint.constant = (index == 0) ? 0 : -(headingLabelAnimationOffset)
         }
-                
+        
         self.subheadingConstraints.forEach { $0.constant = headingSubheadingMargin }
         self.headingLabels.forEach { $0.alpha = 0 }
         self.subheadingLabels.forEach { $0.alpha = 0 }
@@ -174,10 +210,9 @@ class OnboardingViewController: UIViewController {
         view.layoutIfNeeded()
         
         self.pageIndex = 0
-
+        
         self.createWalletButton.title = createWalletButtonText(pageIndex: 0)
-        self.restoreButton.title = restoreButtonText(pageIndex: 0)
-
+        
         completion()        
     }
     
@@ -185,74 +220,10 @@ class OnboardingViewController: UIViewController {
         logoImageView.alpha = 0
         view.addSubview(logoImageView)
         
-//        let screenHeight = UIScreen.main.bounds.height
-//        let offset = (screenHeight / 4.0) + 20
-        
-        logoImageView.constrain([
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 160)
-            ])
-    }
-    
-//    private func animateIcons(metaData: [CurrencyMetaData]?) {
-//        guard pageIndex == 0 else { return }
-//        guard let metaData = metaData else {
-//            animateIcons(metaData: Currencies.shared.currencies)
-//            return
-//        }
-//
-//        // Used to be 20, and the app crashed
-//        let iconCount = metaData.count
-//        let iconSize: CGFloat = 40
-//        let duration = 10.0
-//        let maxDelay = 15.0
-//
-//        let currencies: [CurrencyMetaData] = Array(Array(metaData).sorted { return $0.isPreferred && !$1.isPreferred }[..<iconCount])
-//        for currency in currencies {
-//
-//            //Add icon
-//            let imageView = UIImageView(image: currency.imageNoBackground)
-//            iconImageViews.append(imageView)
-//            imageView.frame = CGRect(x: logoImageView.frame.midX - iconSize/2.0,
-//                                     y: logoImageView.frame.midY - iconSize/2.0,
-//                                     width: iconSize,
-//                                     height: iconSize)
-//            self.view.addSubview(imageView)
-//            self.view.sendSubviewToBack(imageView)
-//            imageView.alpha = 0.0
-//            imageView.tintColor = .white
-//
-//            let delay = Double.random(in: 0.0...maxDelay)
-//
-//            //Fade in Icon
-//            UIView.animate(withDuration: 1.5, delay: delay, animations: {
-//                imageView.alpha = 0.2
-//            })
-//
-//            //Animate icon on hypotenuse
-//            UIView.animate(withDuration: duration, delay: delay, animations: {
-//                let angle = CGFloat.random(in: 0...360.0) * .pi / 180.0
-//                let hypotenuse: CGFloat = 700.0
-//                imageView.frame = imageView.frame.offsetBy(dx: cos(angle) * hypotenuse, dy: sin(angle) * hypotenuse)
-//                let rotationAngle: CGFloat = Bool.random() ? .pi / -1.1 : .pi
-//                imageView.transform = imageView.transform.rotated(by: rotationAngle)
-//            }, completion: { _ in
-//                imageView.alpha = 0.0
-//                imageView.removeFromSuperview()
-//            })
-//        }
-//
-//        //Repeat
-//        DispatchQueue.main.asyncAfter(deadline: .now() + duration + maxDelay, execute: { [weak self] in
-//            self?.animateIcons(metaData: metaData)
-//        })
-//    }
-    
-    private func hideStarburstIcons() {
-        iconImageViews.forEach { $0.layer.removeAllAnimations() }
-        UIView.animate(withDuration: 0.1, animations: { [weak self] in
-            self?.iconImageViews.forEach { $0.alpha = 0.0 }
-        })
+        logoImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(ViewSizes.extralarge.rawValue * 2)
+        }
     }
     
     private func setUpPages() {
@@ -278,9 +249,9 @@ class OnboardingViewController: UIViewController {
         
         return label
     }
-        
+    
     private func setUpHeadingLabels() {
-
+        
         for (index, page) in pages.enumerated() {
             
             // create the headings
@@ -303,7 +274,7 @@ class OnboardingViewController: UIViewController {
             
             headingConstraints.append(animationConstraint)
             headingLabels.append(headingLabel)
-
+            
             // create the subheadings
             let subheadingLabel = makeHeadingLabel(text: page.subheading, 
                                                    font: Fonts.Subtitle.two,
@@ -325,15 +296,14 @@ class OnboardingViewController: UIViewController {
     }
     
     private func createWalletButtonText(pageIndex: Int) -> String {
+        guard pageIndex == 0 else {
+            return L10n.Onboarding.restoreWallet.uppercased()
+        }
         return L10n.CloudBackup.createButton
     }
-
+    
     private func recoverButtonText(pageIndex: Int) -> String {
-        //no middle button if no backup detected
-        if pageIndex == 0 && cloudBackupExists {
-            return L10n.CloudBackup.recoverButton
-        }
-        return ""
+        return L10n.CloudBackup.recoverButton
     }
     
     private func restoreButtonText(pageIndex: Int) -> String {
@@ -348,7 +318,7 @@ class OnboardingViewController: UIViewController {
     let buttonsVerticalMargin: CGFloat = 12.0
     let bottomButtonBottomMargin: CGFloat = 10.0
     let nextButtonBottomMargin: CGFloat = 20.0
-        
+    
     private var buttonsHiddenYOffset: CGFloat {
         return (buttonHeight + 40.0)
     }
@@ -368,9 +338,32 @@ class OnboardingViewController: UIViewController {
             return middleButtonVisibleYOffset
         }
     }
-        
+    
     private var nextButtonVisibleYOffset: CGFloat {
         return -nextButtonBottomMargin
+    }
+    
+    private func setUpSecondView() {
+        view.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(backButton.snp.bottom).inset(-Margins.extraHuge.rawValue)
+            make.leading.trailing.equalToSuperview().inset(Margins.extraExtraHuge.rawValue)
+        }
+        
+        stackView.addArrangedSubview(restoreWalletTitle)
+        stackView.addArrangedSubview(restoreWalletDescription)
+        
+        stackView.addArrangedSubview(illustration)
+        illustration.snp.makeConstraints { make in
+            make.height.width.equalTo(ViewSizes.extraExtraHuge.rawValue)
+        }
+        
+        if !cloudBackupExists {
+            restoreWithiCloudButton.removeFromSuperview()
+        }
+        
+        stackView.isHidden = true
+        restoreWithiCloudButton.isHidden = true
     }
     
     private func setUpBottomButtons() {
@@ -378,113 +371,79 @@ class OnboardingViewController: UIViewController {
         // once we reach the last page of the onboarding flow.
         createWalletButton.title = createWalletButtonText(pageIndex: 0)
         recoverButton.title = recoverButtonText(pageIndex: 0)
-        restoreButton.title = restoreButtonText(pageIndex: 0)
         
-        view.addSubview(createWalletButton)
-        view.addSubview(recoverButton)
-        view.addSubview(restoreButton)
-        
-        let buttonLeftRightMargin: CGFloat = 24
+        let buttonLeftRightMargin: CGFloat = Margins.large.rawValue
         let buttonHeight: CGFloat = ViewSizes.Common.largeCommon.rawValue
         
-        // Position the top button just below the bottom of the view (or safe area / notch) to start with
-        // so that we can animate it up into view.
-        topButtonAnimationConstraint = createWalletButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                                      constant: buttonsHiddenYOffset)
+        middleButtonAnimationConstraint = createWalletButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                                                     constant: buttonsHiddenYOffset)
+        bottomButtonAnimationConstraint = recoverButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                                                constant: buttonsHiddenYOffset)
         
-        middleButtonAnimationConstraint = recoverButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                                      constant: buttonsHiddenYOffset)
-        bottomButtonAnimationConstraint = restoreButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                                            constant: buttonsHiddenYOffset)
-        createWalletButton.constrain([
-            createWalletButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createWalletButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: buttonLeftRightMargin),
-            createWalletButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -buttonLeftRightMargin),                
-            createWalletButton.heightAnchor.constraint(equalToConstant: buttonHeight),
-            topButtonAnimationConstraint
-            ])
+        view.addSubview(createWalletButton)
+        createWalletButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(buttonsHiddenYOffset)
+            make.height.equalTo(buttonHeight)
+        }
         
-        recoverButton.constrain([
-            recoverButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            recoverButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: buttonLeftRightMargin),
-            recoverButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -buttonLeftRightMargin),
-            recoverButton.heightAnchor.constraint(equalToConstant: buttonHeight),
-            middleButtonAnimationConstraint
-            ])
+        view.addSubview(recoverButton)
+        recoverButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(createWalletButton.snp.bottom).inset(-Margins.small.rawValue)
+            make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
+            make.height.equalTo(buttonHeight)
+        }
         
-        restoreButton.constrain([
-            restoreButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            restoreButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: buttonLeftRightMargin),
-            restoreButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -buttonLeftRightMargin), 
-            restoreButton.heightAnchor.constraint(equalToConstant: buttonHeight),
-            bottomButtonAnimationConstraint
-            ])
+        view.addSubview(restoreWithiCloudButton)
+        restoreWithiCloudButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(createWalletButton.snp.bottom).inset(-Margins.small.rawValue)
+            make.leading.trailing.equalToSuperview().inset(buttonLeftRightMargin)
+            make.height.equalTo(buttonHeight)
+        }
         
         createWalletButton.tap = { [unowned self] in
             self.createWalletTapped()
         }
         
         recoverButton.tap = { [unowned self] in
-            self.recoverButtonTapped()
+            self.restoreButtonTapped()
         }
         
-        restoreButton.tap = { [unowned self] in
+        restoreWithiCloudButton.tap = { [unowned self] in
             self.restoreButtonTapped()
         }
     }
     
-    private func addBackAndSkipButtons() {
-        let image = Asset.back.image
+    private func addBackButton() {
+        let image = Asset.backWhite.image
         
         backButton.alpha = 0
-        skipButton.alpha = 0
         
         backButton.setImage(image, for: .normal)
         backButton.addTarget(self, action: #selector(backTapped(sender:)), for: .touchUpInside)
         
         view.addSubview(backButton)
-        
-        var topAnchor: NSLayoutYAxisAnchor?
-        var leadingAnchor: NSLayoutXAxisAnchor?
-        
-        topAnchor = view.safeAreaLayoutGuide.topAnchor
-        leadingAnchor = view.safeAreaLayoutGuide.leadingAnchor
-
-        backButton.constrain([
-            backButton.topAnchor.constraint(equalTo: topAnchor!, constant: 30),
-            backButton.leadingAnchor.constraint(equalTo: leadingAnchor!, constant: Margins.large.rawValue),
-            backButton.heightAnchor.constraint(equalToConstant: 13),
-            backButton.widthAnchor.constraint(equalToConstant: 20)
-            ])
-        
-        skipButton.setTitle(L10n.Onboarding.skip, for: .normal)
-        skipButton.titleLabel?.font = Fonts.button
-        skipButton.setTitleColor(LightColors.Text.three, for: .normal)
-        skipButton.addTarget(self, action: #selector(skipTapped(sender:)), for: .touchUpInside)
-        
-        view.addSubview(skipButton)
-        
-        var trailingAnchor: NSLayoutXAxisAnchor?
-        
-        trailingAnchor = view.safeAreaLayoutGuide.trailingAnchor
-        
-        skipButton.constrain([
-            skipButton.trailingAnchor.constraint(equalTo: trailingAnchor!, constant: -30),
-            skipButton.centerYAnchor.constraint(equalTo: backButton.centerYAnchor)
-            ])
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(Margins.small.rawValue)
+            make.leading.equalToSuperview().inset(Margins.large.rawValue)
+            make.height.width.equalTo(ViewSizes.small.rawValue)
+        }
     }
-            
+    
     private func animateLandingPage() {
-
+        
         let delay = 0.2
         let duration = 0.3//0.5
-                
+        
         // animate heading position
         let constraint = headingConstraints[0]
         UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseInOut, animations: {
             constraint.constant = -(self.headingLabelAnimationOffset)
         })            
-            
+        
         // animate heading fade-in
         let label = headingLabels[0]
         UIView.animate(withDuration: duration + 0.2, delay: delay * 2.0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
@@ -493,15 +452,25 @@ class OnboardingViewController: UIViewController {
         
         createWalletButton.alpha = 0
         recoverButton.alpha = 0
-        restoreButton.alpha = 0
+        logoImageView.isHidden = true
+        headingLabels.first?.isHidden = true
+        stackView.isHidden = false
+        restoreWithiCloudButton.isHidden = false
         
         // fade-in animation for the buttons
         UIView.animate(withDuration: (duration * 1.5), delay: (delay * 2.0), options: UIView.AnimationOptions.curveEaseIn, animations: { 
             self.createWalletButton.alpha = 1
-            self.restoreButton.alpha = 1
             self.recoverButton.alpha = 1
+            self.logoImageView.isHidden = false
+            self.headingLabels.first?.isHidden = false
+            self.stackView.isHidden = true
+            self.restoreWithiCloudButton.isHidden = true
+            
+            self.createWalletButton.snp.updateConstraints { make in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(self.buttonsHiddenYOffset)
+            }
         })
-
+        
         // slide-up animation for the top button
         UIView.animate(withDuration: (duration * 1.5), delay: delay, options: UIView.AnimationOptions.curveEaseInOut, animations: { 
             self.topButtonAnimationConstraint?.constant = self.topButtonVisibleYOffset
@@ -534,64 +503,64 @@ class OnboardingViewController: UIViewController {
         }
     }
     
+    // MARK: - User Interaction
+    @objc private func backTapped(sender: Any) {
+        let headingLabel = headingLabels[pageIndex]
+        let subheadingLabel = subheadingLabels[pageIndex]
+        let headingConstraint = headingConstraints[pageIndex]
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            // make sure next or top/bottom buttons are animated out
+            self.topButtonAnimationConstraint?.constant = self.buttonsHiddenYOffset
+            self.nextButtonAnimationConstraint?.constant = self.buttonsHiddenYOffset
+            
+            headingLabel.alpha = 0
+            subheadingLabel.alpha = 0
+            headingConstraint.constant -= (self.headingLabelAnimationOffset)
+            
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            self.reset(completion: {
+                self.animateLandingPage()
+            })
+        })
+    }
+    
+    private func restoreWithPhraseButtonTapped() {
+        stackView.isHidden = false
+        restoreWithiCloudButton.isHidden = false
+        logoImageView.isHidden = true
+        headingLabels.first?.isHidden = true
+        backButton.alpha = 1.0
+        recoverButton.alpha = 0.0
+        pageIndex = 1
+        createWalletButton.title = createWalletButtonText(pageIndex: pageIndex)
+        
+        if !cloudBackupExists {
+            createWalletButton.snp.updateConstraints { make in
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(Margins.large.rawValue)
+            }
+        }
+    }
+    
     private func createWalletTapped() {
+        guard pageIndex == 0 else {
+            showAlert(message: L10n.CloudBackup.recoverWarning,
+                      button: L10n.CloudBackup.recoverButton,
+                      completion: { [weak self] in
+                self?.exitWith(action: .restoreWallet)
+            })
+            return
+        }
         exitWith(action: .createWallet)
     }
-
-    private func recoverButtonTapped() {
-        showAlert(message: L10n.CloudBackup.recoverWarning,
-                  button: L10n.CloudBackup.recoverButton,
-                  completion: { [weak self] in
-                    self?.exitWith(action: .restoreWallet)
-                })
-    }
-
+    
     private func restoreButtonTapped() {
-        if cloudBackupExists {
-            exitWith(action: .restoreCloudBackup)
-        } else {
-            // 'Restore wallet'
-            exitWith(action: .restoreWallet)
+        guard pageIndex == 1 else {
+            restoreWithPhraseButtonTapped()
+            return
         }
-    }
-                         
-    private func setupSubviews() {
-        setUpHeadingLabels()
-        
-        setUpBottomButtons()
-        addBackAndSkipButtons()        
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if appearanceCount == 0 {
-            animateLandingPage()
-        }
-        
-        appearanceCount += 1
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Make sure we set this in case the user taps Restore Wallet, then comes
-        // back to the onboarding flow in case the nav bar hidden status is changed.
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = LightColors.Contrast.one
-                
-        setUpLogo()
-        setUpPages()
-        setupSubviews()
+        exitWith(action: .restoreCloudBackup)
     }
     
     private func showAlert(message: String, button: String, completion: @escaping () -> Void) {

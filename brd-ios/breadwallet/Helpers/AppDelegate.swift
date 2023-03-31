@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Doing so may prevent a valid URL from being passed to `continue(from:)` and
         // OAuth may not continue as expected.
         guard let linkOAuthHandler = window?.rootViewController as? LinkOAuthHandling,
-              let handler = linkOAuthHandler.linkHandler else { return false }
+              let handler = linkOAuthHandler.plaidHandler else { return false }
         // Continue the Link flow
         handler.continue(from: webpageURL)
         

@@ -25,7 +25,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .rateAndTimer,
             .from,
             .paymentMethod,
-            .accountLimits
+            .accountLimits,
+            .increaseLimits
         ]
         
         if item.achEnabled == true {
@@ -34,6 +35,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         let paymentSegment = SegmentControlViewModel(selectedIndex: item.type)
+        let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
+        limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
         let paymentMethodViewModel: CardSelectionViewModel
         if paymentSegment.selectedIndex == .ach && item.achEnabled == true {
@@ -52,7 +55,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .accountLimits: [
                 // dont ask
                 LabelViewModel.text("\n\n\n\n")
-            ]
+            ],
+            .increaseLimits: [LabelViewModel.attributedText(limitsString)]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
@@ -73,7 +77,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
-        // TODO: refactor this :S
         switch actionResponse.type {
         case .ach:
             if let paymentCard = actionResponse.card {
@@ -224,22 +227,19 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let profile = UserManager.shared.profile
         
         let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
-        let dailyMinLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMin : profile?.achAllowanceDailyMin
         let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
-        let dailyMinLimitText = ExchangeFormatter.crypto.string(for: dailyMinLimit) ?? ""
         let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
         let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
         
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
-        let wrappedViewModel: LimitsPopupViewModel = .init(perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
+        let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
+                                                           perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("$\(perTransactionLimitText) \(C.usdCurrencyCode)")),
-                                                           dailyMin: .init(title: .text(L10n.Buy.dailyMinLimits),
-                                                                           value: .text("$\(dailyMinLimitText) \(C.usdCurrencyCode)")),
                                                            dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
                                                                            value: .text("$\(dailyMaxLimitText) \(C.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
@@ -247,8 +247,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                                            monthly: .init(title: .text(L10n.Account.monthly),
                                                                           value: .text("$\(monthlyLimitText) \(C.usdCurrencyCode)")))
         
-        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(title: .text(title),
-                                                                           trailing: .init(image: Asset.close.image),
+        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(trailing: .init(image: Asset.close.image),
                                                                            wrappedView: wrappedViewModel,
                                                                            hideSeparator: true)
         

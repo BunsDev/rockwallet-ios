@@ -24,7 +24,7 @@ extension String {
     }
     
     var isValidPassword: Bool {
-        return matches(regularExpression: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!?&@€)(/]).{8,}")
+        return matches(regularExpression: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\W).{8,}$")
     }
 
     var sanitized: String {
@@ -103,14 +103,6 @@ extension String {
     
     var withoutHexPrefix: String {
         return self.removing(prefix: "0x")
-    }
-    
-    public func leftPadding(toLength: Int, withPad character: Character) -> String {
-        if count < toLength {
-            return String(repeatElement(character, count: toLength - count)) + self
-        } else {
-            return String(self[index(self.startIndex, offsetBy: count - toLength)...])
-        }
     }
     
     func removing(prefix: String) -> String {

@@ -32,7 +32,7 @@ enum VerificationStatus: Equatable {
     var isKYCLocationRestricted: Bool {
         guard let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason else { return false }
         
-        return restrictionReason == .country || restrictionReason == .state
+        return restrictionReason == .country || restrictionReason == .state || restrictionReason == .manuallyConfigured
     }
     
     var hasKYCLevelTwo: Bool {

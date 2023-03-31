@@ -23,12 +23,18 @@ class UserManager: NSObject {
             
             switch result {
             case .success(let profile):
+                guard let profile else { return }
+                
+                UserDefaults.email = profile.email
+                
                 self?.error = nil
                 self?.profile = profile
                 
-                if let email = profile?.email {
-                    UserDefaults.email = email
+                if profile.status.hasKYC {
+                    Store.trigger(name: .didApplyKyc)
                 }
+                
+                Store.trigger(name: .didCreateAccount)
                 
             case .failure(let error):
                 self?.error = error
@@ -41,8 +47,8 @@ class UserManager: NSObject {
         }
     }
     
-    func getVeriffSessionUrl(completion: @escaping ((Result<VeriffSession?, Error>?) -> Void)) {
-        VeriffSessionWorker().execute { result in
+    func getVeriffSessionUrl(livenessCheckData: VeriffSessionRequestData? = nil, completion: @escaping ((Result<VeriffSession?, Error>?) -> Void)) {
+        VeriffSessionWorker().execute(requestData: livenessCheckData) { result in
             completion(result)
         }
     }

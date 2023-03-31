@@ -27,7 +27,7 @@ class AccountInitializationTests : XCTestCase {
         Backend.connect(authenticator: keyStore)
         client = Backend.apiClient
         system = CoreSystem(keyStore: keyStore)
-        system.create(account: account!, authToken: "", btcWalletCreationCallback: {}, completion: {})
+        system.create(account: account!, btcWalletCreationCallback: {}, completion: {})
     }
     
     override class func tearDown() {
@@ -47,7 +47,7 @@ class AccountInitializationTests : XCTestCase {
 //                exp.fulfill()
 //            }))
 //        }
-//        waitForExpectations(timeout: 60, handler: nil)
+//        waitForExpectations(timeout: 3, handler: nil)
     }
     
 }

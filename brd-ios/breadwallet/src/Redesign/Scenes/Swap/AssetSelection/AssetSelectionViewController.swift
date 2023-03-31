@@ -32,7 +32,7 @@ class AssetSelectionViewController: ItemSelectionViewController {
         }
         
         cell.setup { view in
-            view.configure(with: model.isDisabled ? Presets.Asset.disabled : Presets.Asset.enabled)
+            view.configure(with: model.isDisabled ? Presets.AssetSelection.disabled : Presets.AssetSelection.enabled)
             view.setup(with: model)
             
             view.content.setupCustomMargins(vertical: .zero, horizontal: .large)
@@ -46,7 +46,7 @@ class AssetSelectionViewController: ItemSelectionViewController {
         guard let model = sectionRows[section]?[indexPath.row] as? AssetViewModel else { return }
         
         if model.isDisabled {
-            coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.Swap.enableAssetFirst), dismissType: .auto),
+            coordinator?.showToastMessage(model: InfoViewModel(description: .text(model.isDisabledReason), dismissType: .auto),
                                           configuration: Presets.InfoView.warning)
         } else {
             itemSelected?(model)

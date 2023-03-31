@@ -15,6 +15,7 @@ struct AddCardResponseData: ModelResponse {
     var paymentReference: String?
     var redirectUrl: String?
     var responseCode: String?
+    var errorMessage: String?
 }
 
 struct AddCard: Model {
@@ -33,7 +34,6 @@ struct AddCard: Model {
         case captured = "CAPTURED"
         case partiallyRefunded = "PARTIALLY_REFUNDED"
         case refunded = "REFUNDED"
-        
         case none
         
         var isSuccesful: Bool {
@@ -51,34 +51,11 @@ struct AddCard: Model {
         }
     }
     
-    enum ResponseCodes: String {
-        case accountClosed = "30046"
-        case accountFrozen = "30R16"
-        case insufficientFuds = "20051"
-        case none = ""
-        
-        var errorMessage: String? {
-            switch self {
-            case .accountClosed:
-                return L10n.ErrorMessages.Ach.accountClosed
-                
-            case .accountFrozen:
-                return L10n.ErrorMessages.Ach.accountFrozen
-                
-            case .insufficientFuds:
-                return L10n.ErrorMessages.Ach.insufficientFunds
-                
-            case .none:
-                return L10n.ErrorMessages.Ach.errorWhileProcessing
-                
-            }
-        }
-    }
-    
     var status: Status
     var paymentReference: String
     var redirectUrl: String?
-    var responseCode: ResponseCodes?
+    var responseCode: String?
+    var errorMessage: String?
 }
 
 class AddCardMapper: ModelMapper<AddCardResponseData, AddCard> {
@@ -86,7 +63,8 @@ class AddCardMapper: ModelMapper<AddCardResponseData, AddCard> {
         return AddCard(status: AddCard.Status(rawValue: response?.status ?? "") ?? .none,
                        paymentReference: response?.paymentReference ?? "",
                        redirectUrl: response?.redirectUrl,
-                       responseCode: AddCard.ResponseCodes(rawValue: response?.responseCode ?? ""))
+                       responseCode: response?.responseCode,
+                       errorMessage: response?.errorMessage)
     }
 }
 

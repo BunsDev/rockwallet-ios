@@ -16,6 +16,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     var presenter: OrderPreviewPresenter?
     var dataStore: OrderPreviewStore?
     
+    private var biometricStatusRetryCounter: Int = 0
+    
     // MARK: - OrderPreviewViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
@@ -41,13 +43,15 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                     self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                          previewType: self?.dataStore?.type,
                                                                          isAch: self?.dataStore?.isAchAccount,
-                                                                         failed: true))
+                                                                         failed: true,
+                                                                         responseCode: data?.responseCode))
                     return
                 }
                 self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                      previewType: self?.dataStore?.type,
                                                                      isAch: self?.dataStore?.isAchAccount,
-                                                                     failed: false))
+                                                                     failed: false,
+                                                                     responseCode: nil))
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -94,7 +98,6 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         presenter?.presentToggleTickbox(actionResponse: .init(value: viewAction.value))
     }
     
-    // TODO: add rate refreshing logic!
     // MARK: - Aditional helpers
     
     private func submitBuy() {
@@ -138,8 +141,31 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentThreeDSecure(actionResponse: .init(url: redirectUrl))
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard let store = self?.dataStore,
+                      let quoteId = store.quote?.quoteId,
+                      (error as? NetworkingError)?.errorType == .biometricAuthentication else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
             }
+        }
+    }
+    
+    func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
+        let requestData = BiometricStatusRequestData(quoteId: dataStore?.quote?.quoteId.description)
+        BiometricStatusHelper.shared.checkBiometricStatus(requestData: requestData, resetCounter: viewAction.resetCounter) { [weak self] error in
+            guard error == nil else {
+                self?.presenter?.presentBiometricStatusFailed(actionResponse: .init())
+                return
+            }
+            
+            guard self?.dataStore?.isAchAccount == true else {
+                self?.submitBuy()
+                return
+            }
+            self?.submitAchBuy()
         }
     }
     
@@ -168,11 +194,11 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
         let data = AchRequestData(quoteId: dataStore?.quote?.quoteId,
-                                   depositQuantity: formattedDepositQuantity,
-                                   withdrawalQuantity: toTokenValue,
-                                   destination: address,
-                                   accountId: dataStore?.card?.id,
-                                   nologCvv: dataStore?.cvv?.description)
+                                  depositQuantity: formattedDepositQuantity,
+                                  withdrawalQuantity: toTokenValue,
+                                  destination: address,
+                                  accountId: dataStore?.card?.id,
+                                  nologCvv: dataStore?.cvv?.description)
         
         AchWorker().execute(requestData: data) { [weak self] result in
             switch result {
@@ -188,7 +214,14 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentThreeDSecure(actionResponse: .init(url: redirectUrl))
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard let store = self?.dataStore,
+                      let quoteId = store.quote?.quoteId,
+                      (error as? NetworkingError)?.errorType == .biometricAuthentication else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
             }
         }
     }

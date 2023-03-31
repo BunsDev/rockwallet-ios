@@ -20,7 +20,7 @@ private let exchangeUpdate = ExchangeUpdater()
 
 class CoinGeckoTests : XCTestCase {
     
-    private let fiatCurrencies = FiatCurrency.availableCurrencies
+    private let fiatCurrencies = CurrencyFileManager.getCurrencyMetaDataFromCache(type: .fiatCurrencies)
     private let coinGeckoClient = CoinGeckoClient()
     
     override class func setUp() {
@@ -40,7 +40,7 @@ class CoinGeckoTests : XCTestCase {
     
     func testSupportedCrypto() {
         let exp = expectation(description: "Fetch supported currencies")
-        brClient.getCurrencyMetaData { metadata in
+        brClient.getCurrencyMetaData(type: .currencies) { metadata in
             
             XCTAssert(metadata.count > 0)
             let ids = metadata.values
@@ -79,7 +79,7 @@ class CoinGeckoTests : XCTestCase {
             
             
         }
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
     
 }

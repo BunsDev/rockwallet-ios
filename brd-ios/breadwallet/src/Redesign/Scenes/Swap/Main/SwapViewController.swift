@@ -10,25 +10,18 @@
 
 import UIKit
 
-protocol ExchangeButtonsProtocol {
-    
-    func setupVerticalButtons()
-}
-
-class SwapViewController: BaseTableViewController<SwapCoordinator,
+class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
                           SwapInteractor,
                           SwapPresenter,
                           SwapStore>,
                           SwapResponseDisplays {
     
-    typealias Models = SwapModels
+    typealias Models = ExchangeModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.HomeScreen.trade
     }
     
-    var didTriggerGetExchangeRate: (() -> Void)?
-
     // MARK: - Overrides
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,12 +33,8 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        tableView.register(WrapperTableViewCell<MainSwapView>.self)
-        tableView.delaysContentTouches = false
-        tableView.backgroundColor = LightColors.Background.two
-        
-        didTriggerGetExchangeRate = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(getFees: true))
+        didTriggerExchangeRate = { [weak self] in
+            self?.interactor?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
         }
     }
     
@@ -160,7 +149,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         if responseDisplay.error != nil {
-            LoadingView.hide()
+            LoadingView.hideIfNeeded()
         }
         
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
@@ -172,7 +161,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
         
         switch error {
         case .noQuote:
-            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()))
+            displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
         case .failed:
             coordinator?.showFailure()
@@ -182,25 +171,6 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
                                           model: responseDisplay.model,
                                           configuration: responseDisplay.config)
         }
-    }
-    
-    func displayAmount(responseDisplay: SwapModels.Amounts.ResponseDisplay) {
-        // TODO: Extract to VIPBaseViewController
-        LoadingView.hide()
-        
-        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
-        tableView.beginUpdates()
-        
-        guard let section = sections.firstIndex(of: Models.Section.swapCard),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
-        
-        cell.setup { view in
-            view.setup(with: responseDisplay.amounts)
-        }
-        
-        tableView.endUpdates()
     }
     
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {
@@ -237,7 +207,7 @@ class SwapViewController: BaseTableViewController<SwapCoordinator,
     }
     
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         coordinator?.showSwapInfo(from: responseDisplay.from, to: responseDisplay.to, exchangeId: responseDisplay.exchangeId)
     }
     

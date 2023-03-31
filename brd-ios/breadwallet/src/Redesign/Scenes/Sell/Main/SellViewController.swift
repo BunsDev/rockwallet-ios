@@ -9,26 +9,21 @@
 import UIKit
 import LinkKit
 
-class SellViewController: BaseTableViewController<SellCoordinator,
+class SellViewController: BaseExchangeTableViewController<SellCoordinator,
                           SellInteractor,
                           SellPresenter,
                           SellStore>,
                           SellResponseDisplays {
     
-    typealias Models = SellModels
+    typealias Models = ExchangeModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title
     }
     
-    var plaidHandler: Handler?
+    var plaidHandler: PlaidLinkKitHandler?
     
     // MARK: - Overrides
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        interactor?.getExchangeRate(viewAction: .init())
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -39,12 +34,11 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     override func setupSubviews() {
         super.setupSubviews()
         
-        tableView.register(WrapperTableViewCell<MainSwapView>.self)
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
-            
-        tableView.delaysContentTouches = false
+        didTriggerExchangeRate = { [weak self] in
+            self?.interactor?.getExchangeRate(viewAction: .init(), completion: {})
+        }
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -135,35 +129,15 @@ class SellViewController: BaseTableViewController<SellCoordinator,
     
     // MARK: - SellResponseDisplay
     
-    func displayAmount(responseDisplay: Models.Amounts.ResponseDisplay) {
-        // TODO: Extract to VIPBaseViewController
-        LoadingView.hide()
-        
-        tableView.beginUpdates()
-        
-        guard let section = sections.firstIndex(of: Models.Section.swapCard),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
-        
-        cell.wrappedView.setup(with: responseDisplay.amounts)
-        
-        tableView.endUpdates()
-        
-        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
-    
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        tableView.beginUpdates()
-        
         guard let section = sections.firstIndex(of: Models.Section.payoutMethod),
               let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
+        tableView.beginUpdates()
         cell.wrappedView.setup(with: responseDisplay.viewModel)
-        
         tableView.endUpdates()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
     }
 }

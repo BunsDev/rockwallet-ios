@@ -26,8 +26,6 @@ protocol Coordinatable: CoordinatableRoutes {
 
 class BaseCoordinator: NSObject,
                        Coordinatable {
-
-    // TODO: should eventually die
     weak var modalPresenter: ModalPresenter? {
         get {
             guard let modalPresenter = presenter else {
@@ -103,12 +101,18 @@ class BaseCoordinator: NSObject,
                     return
                 } else if profile.status.isKYCLocationRestricted {
                     self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swapAndBuyCard
+                        vc?.reason = .swap
                     }
                     
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc {
                     self?.showAccountVerification(flow: .swap)
+                    
+                    return
+                } else {
+                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .swap
+                    }
                     
                     return
                 }
@@ -130,14 +134,20 @@ class BaseCoordinator: NSObject,
                     }
                     
                     return
-                } else if profile.status.isKYCLocationRestricted {
+                } else if profile.status.isKYCLocationRestricted, type == .card {
                     self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swapAndBuyCard
+                        vc?.reason = .buy
                     }
                     
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc, type == .card {
                     self?.showAccountVerification(flow: .buy)
+                    
+                    return
+                } else if type == .card {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .buy
+                    }
                     
                     return
                 }
@@ -161,6 +171,14 @@ class BaseCoordinator: NSObject,
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc, type == .ach {
                     self?.showAccountVerification(flow: .buy)
+                    
+                    return
+                } else if type == .ach {
+                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                        vc?.reason = .buyAch
+                        vc?.dataStore?.coreSystem = coreSystem
+                        vc?.dataStore?.keyStore = keyStore
+                    }
                     
                     return
                 }
@@ -219,7 +237,7 @@ class BaseCoordinator: NSObject,
     }
     
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
-        open(scene: ExchangeDetailsViewController.self) { vc in
+        open(scene: Scenes.ExchangeDetails) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId
             vc.dataStore?.transactionType = type
@@ -257,14 +275,6 @@ class BaseCoordinator: NSObject,
         navigationController.popToRootViewController(animated: true, completion: completion)
     }
     
-    func showBuy() {
-        guard let vc = navigationController.viewControllers.first as? BuyViewController else {
-            return
-        }
-        vc.didTriggerGetData?()
-        navigationController.popToViewController(vc, animated: true)
-    }
-    
     func showBuyWithDifferentPayment(paymentMethod: PaymentCard.PaymentType?) {
         guard let vc = navigationController.viewControllers.first as? BuyViewController else {
             return
@@ -274,14 +284,6 @@ class BaseCoordinator: NSObject,
         navigationController.popToViewController(vc, animated: true)
     }
     
-    func showSwap() {
-        guard let vc = navigationController.viewControllers.first as? SwapViewController else {
-            return
-        }
-        vc.didTriggerGetExchangeRate?()
-        navigationController.popToViewController(vc, animated: true)
-    }
-
     /// Remove the child coordinator from the stack after iit finnished its flow
     func childDidFinish(child: Coordinatable) {
         childCoordinators.removeAll(where: { $0 === child })
@@ -342,7 +344,6 @@ class BaseCoordinator: NSObject,
     }
     
     // It prepares the next KYC coordinator OR returns true.
-    // In which case we show 3rd party popup or continue to Buy/Swap.
     func decideFlow(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
@@ -405,7 +406,7 @@ class BaseCoordinator: NSObject,
                           configuration: InfoViewConfiguration? = nil,
                           onTapCallback: (() -> Void)? = nil) {
         hideOverlay()
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         
         let error = error as? NetworkingError
         
@@ -430,17 +431,6 @@ class BaseCoordinator: NSObject,
         navigationController.showToastMessage(model: model,
                                               configuration: configuration,
                                               onTapCallback: onTapCallback)
-    }
-    
-    func hideMessage() {
-        guard let superview = UIApplication.shared.activeWindow,
-              let view = superview.subviews.first(where: { $0 is FEInfoView }) else { return }
-        
-        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
-            view.alpha = 0
-        } completion: { _ in
-            view.removeFromSuperview()
-        }
     }
     
     func showUnderConstruction(_ feat: String) {
@@ -474,13 +464,15 @@ class BaseCoordinator: NSObject,
     
     func showPopup<V: ViewProtocol & UIView>(with config: WrapperPopupConfiguration<V.C>?,
                                              viewModel: WrapperPopupViewModel<V.VM>,
-                                             confirmedCallback: @escaping (() -> Void)) -> WrapperPopupView<V>? {
+                                             confirmedCallback: @escaping (() -> Void),
+                                             cancelCallback: (() -> Void)? = nil) -> WrapperPopupView<V>? {
         guard let superview = navigationController.view else { return nil }
         
         let view = WrapperPopupView<V>()
         view.configure(with: config)
         view.setup(with: viewModel)
         view.confirmCallback = confirmedCallback
+        view.cancelCallback = cancelCallback
         
         superview.addSubview(view)
         superview.bringSubviewToFront(view)

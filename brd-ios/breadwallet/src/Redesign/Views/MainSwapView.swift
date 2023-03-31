@@ -18,7 +18,7 @@ struct MainSwapConfiguration: Configurable {
 struct MainSwapViewModel: ViewModel {
     var from: SwapCurrencyViewModel?
     var to: SwapCurrencyViewModel?
-    var hideSwapButton = false
+    var hideSwitchPlacesButton = false // TODO: Is this needed?
 }
 
 class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
@@ -165,8 +165,8 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         baseSwapCurrencyView.didFinish = didFinish
         termSwapCurrencyView.didChangeContent = contentSizeChanged
         termSwapCurrencyView.didFinish = didFinish
-        switchPlacesButton.isHidden = viewModel.hideSwapButton
         
+        switchPlacesButton.isHidden = viewModel.hideSwitchPlacesButton
         setToggleSwitchPlacesButtonState(viewModel.from?.formattedFiatString != nil)
         
         contentSizeChanged?()

@@ -16,21 +16,19 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     typealias Models = KYCAddressModels
     
+    override var isRoundedBackgroundEnabled: Bool { return true }
     override var sceneLeftAlignedTitle: String? {
         return L10n.Account.residentialAddress
     }
     
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        setRoundedShadowBackground()
-    }
+    private var veriffKYCManager: VeriffKYCManager?
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
         case .mandatory:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            
         case .country:
             cell = self.tableView(tableView, countryTextFieldCellForRowAt: indexPath)
             
@@ -142,6 +140,13 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
+    // MARK: Responses
+    
+    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
+        super.displayData(responseDisplay: responseDisplay)
+        interactor?.validate(viewAction: .init())
+    }
+    
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
         guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel else { return }
         
@@ -159,7 +164,10 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay) {
-        coordinator?.showExternalKYC()
+        veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
+        veriffKYCManager?.showExternalKYC { [weak self] result in
+            self?.coordinator?.handleVeriffKYC(result: result, for: .kyc)
+        }
     }
     
     func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay) {

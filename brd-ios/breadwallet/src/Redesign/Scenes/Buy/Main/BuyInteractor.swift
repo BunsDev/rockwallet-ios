@@ -19,20 +19,21 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     // MARK: - BuyViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard let currency = dataStore?.toAmount?.currency,
+        guard dataStore?.toAmount?.currency != nil,
               dataStore?.paymentMethod != nil,
-              dataStore?.supportedCurrencies?.isEmpty != false
-        else { return }
+              dataStore?.supportedCurrencies?.isEmpty != false else {
+            getExchangeRate(viewAction: .init(), completion: {})
+            return
+        }
         
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
                 ExchangeManager.shared.reload()
-
+                
                 self?.dataStore?.supportedCurrencies = currencies
-                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(amount: .zero(currency),
-                                                                                     paymentCard: self?.dataStore?.selected,
-                                                                                     type: self?.dataStore?.paymentMethod,
+                
+                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(type: self?.dataStore?.paymentMethod,
                                                                                      achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
                 self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
                                                                      card: self?.dataStore?.selected,
@@ -103,12 +104,12 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             dataStore?.selected = value
         }
         
-        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
-                                                       card: dataStore?.selected,
-                                                       type: dataStore?.paymentMethod,
-                                                       quote: dataStore?.quote))
-        getExchangeRate(viewAction: .init())
-            
+        getExchangeRate(viewAction: .init(), completion: { [weak self] in
+            self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
+                                                                 card: self?.dataStore?.selected,
+                                                                 type: self?.dataStore?.paymentMethod,
+                                                                 quote: self?.dataStore?.quote))
+        })
     }
     
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction) {
@@ -133,7 +134,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentNavigateAssetSelector(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
@@ -151,11 +151,12 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             }
         }
         
-        getExchangeRate(viewAction: .init())
-        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
-                                                       card: dataStore?.selected,
-                                                       type: dataStore?.paymentMethod,
-                                                       quote: dataStore?.quote))
+        getExchangeRate(viewAction: .init(), completion: { [weak self] in
+            self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
+                                                                 card: self?.dataStore?.selected,
+                                                                 type: self?.dataStore?.paymentMethod,
+                                                                 quote: self?.dataStore?.quote))
+        })
     }
     
     func retryPaymentMethod(viewAction: BuyModels.RetryPaymentMethod.ViewAction) {
@@ -183,14 +184,17 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         dataStore?.toAmount = currency
         
-        getExchangeRate(viewAction: .init())
-        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
-                                                       card: dataStore?.selected,
-                                                       type: dataStore?.paymentMethod,
-                                                       quote: dataStore?.quote))
+        getExchangeRate(viewAction: .init(), completion: { [weak self] in
+            self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
+                                                                 card: self?.dataStore?.selected,
+                                                                 type: self?.dataStore?.paymentMethod,
+                                                                 quote: self?.dataStore?.quote))
+        })
     }
     
     func showLimitsInfo(viewAction: BuyModels.LimitsInfo.ViewAction) {
         presenter?.presentLimitsInfo(actionResponse: .init(paymentMethod: dataStore?.paymentMethod))
     }
+    
+    // MARK: - Aditional helpers
 }

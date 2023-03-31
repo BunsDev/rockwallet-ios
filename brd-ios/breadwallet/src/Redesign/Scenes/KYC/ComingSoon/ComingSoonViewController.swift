@@ -11,7 +11,8 @@
 import UIKit
 
 enum Reason: SimpleMessage {
-    case swapAndBuyCard
+    case swap
+    case buy
     case buyAch
     case sell
     
@@ -21,8 +22,8 @@ enum Reason: SimpleMessage {
     
     var title: String {
         switch self {
-        case .swapAndBuyCard:
-            return L10n.ComingSoon.title
+        case .swap, .buy:
+            return L10n.ComingSoon.swapBuyTitle
             
         case .buyAch, .sell:
             return L10n.Buy.Ach.notAvailableTitle
@@ -31,8 +32,11 @@ enum Reason: SimpleMessage {
     
     var description: String {
         switch self {
-        case .swapAndBuyCard:
-            return L10n.ComingSoon.body
+        case .swap:
+            return  L10n.ComingSoon.swapDescription
+            
+        case .buy:
+            return L10n.ComingSoon.buyDescription
             
         case .buyAch:
             return L10n.Buy.Ach.notAvailableBody
@@ -44,7 +48,7 @@ enum Reason: SimpleMessage {
     
     var firstButtonTitle: String? {
         switch self {
-        case .swapAndBuyCard, .sell:
+        case .swap, .buy, .sell:
             return L10n.Swap.backToHome
             
         case .buyAch:
@@ -54,8 +58,8 @@ enum Reason: SimpleMessage {
     
     var secondButtonTitle: String? {
         switch self {
-        case .swapAndBuyCard:
-            return L10n.UpdatePin.contactSupport
+        case .swap, .buy:
+            return L10n.ComingSoon.Buttons.contactSupport
             
         case .buyAch:
             return L10n.Swap.backToHome
@@ -85,7 +89,7 @@ class ComingSoonViewController: BaseInfoViewController {
             .init(title: reason?.firstButtonTitle, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                if self?.reason == .swapAndBuyCard || self?.reason == .sell {
+                if self?.reason == .swap || self?.reason == .buy || self?.reason == .sell {
                     self?.coordinator?.dismissFlow()
                 } else if self?.reason == .buyAch {
                     self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem, keyStore: self?.dataStore?.keyStore)
@@ -94,7 +98,7 @@ class ComingSoonViewController: BaseInfoViewController {
             .init(title: reason?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                if self?.reason == .swapAndBuyCard {
+                if self?.reason == .swap || self?.reason == .buy {
                     self?.coordinator?.showSupport()
                 } else if self?.reason == .buyAch {
                     self?.coordinator?.dismissFlow()

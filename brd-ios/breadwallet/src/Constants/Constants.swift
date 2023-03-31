@@ -43,6 +43,7 @@ struct C {
     static let feedbackEmail = "support@\(companyURL)"
     static let veriffPrivacyPolicy = "https://www.veriff.com/privacy-policy"
     static let reviewLink = "https://apps.apple.com/us/app/rockwallet-buy-and-swap/id6444194230?action=write-review"
+    static let limits = "https://\(companyURL)/limits"
     static var standardPort: Int {
         return E.isTestnet ? 18333 : 8333
     }

@@ -14,11 +14,6 @@ class CheckListViewController: BaseTableViewController<BaseCoordinator,
                                CheckListStore>,
                                CheckListResponseDisplays {
     typealias Models = CheckListModels
-
-    override var topInsetValue: CGFloat {
-        return (sceneLeftAlignedTitle == nil ? 0 : Margins.extraHuge.rawValue + 28)
-        + (headerViewModel == nil ? 0 : ViewSizes.Common.defaultCommon.rawValue)
-    }
     
     override var sceneLeftAlignedTitle: String? { return "Checklist base VC" }
     var buttonTitle: String { return L10n.Button.confirm }

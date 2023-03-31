@@ -31,7 +31,6 @@ class BuyCoordinator: ExchangeCoordinator, BuyRoutes, BillingAddressRoutes, Asse
             vc.dataStore?.expYear = store.cardExpDateYear
             vc.dataStore?.expMonth = store.cardExpDateMonth
             vc.prepareData()
-            LoadingView.hide()
         }
     }
     

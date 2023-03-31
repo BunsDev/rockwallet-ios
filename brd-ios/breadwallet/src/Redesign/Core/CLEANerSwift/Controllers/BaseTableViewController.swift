@@ -15,6 +15,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
                               P: Presenter,
                               DS: BaseDataStore & NSObject>: VIPTableViewController<C, I, P, DS>,
                                                              FetchResponseDisplays {
+    override var isRoundedBackgroundEnabled: Bool { return false }
     override var isModalDismissableEnabled: Bool { return true }
     override var dismissText: String { return L10n.Button.skip }
     override var closeImage: UIImage? { return Asset.close.image }
@@ -102,7 +103,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
     }
 
     // MARK: UITableViewDataSource
@@ -197,7 +198,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         else { return UIView(frame: .zero) }
         
         view.setup { view in
-            view.configure(with: Presets.Asset.header)
+            view.configure(with: Presets.AssetSelection.header)
         }
         view.setupCustomMargins(vertical: .small, horizontal: .large)
 
@@ -461,78 +462,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, timerCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<ExchangeRateView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ExchangeRateViewModel
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
-    func tableView<T: UIView>(_ tableView: UITableView, displayErrorInCell cell: WrapperTableViewCell<T>) {
-        cell.setup { view in
-            guard let view = view as? StateDisplayable else { return }
-            
-            view.animateTo(state: .error, withAnimation: true)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, paymentSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? CardSelectionViewModel
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-            
-            view.didTapSelectCard = { [weak self] in
-                switch (self?.dataStore as? AchDataStore)?.paymentMethod {
-                case .ach:
-                    (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
-                default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true))
-                }
-            }
-        }
-        
-        return cell
-    }
-    
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
-        
-        switch self {
-        case is SwapViewController,
-            is BuyViewController,
-            is SellViewController:
-            continueButton.configure(with: Presets.Button.primary)
-            continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                             enabled: false,
-                                             callback: { [weak self] in
-                self?.buttonTapped()
-            }))
-            
-            guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-            verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-            verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
-            
-        default:
-            return
-        }
     }
     
     // MARK: UserInteractions

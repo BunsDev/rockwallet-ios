@@ -8,8 +8,6 @@
 //  See the LICENSE file at the project root for license information.
 //
 
-// TODO: Refactor configs and models.
-
 import UIKit
 
 struct SwapCurrencyConfiguration: Configurable {
@@ -92,12 +90,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         view.keyboardType = .decimalPad
         view.delegate = self
         view.addTarget(self, action: #selector(cryptoAmountDidChange(_:)), for: .editingChanged)
-        return view
-    }()
-    
-    private lazy var fiatLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = LightColors.Outline.two
+        view.adjustsFontSizeToFitWidth = true
+        view.contentScaleFactor = 0.8
         return view
     }()
     
@@ -119,8 +113,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = Margins.small.rawValue
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                         action: #selector(selectorTapped(_:))))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectorTapped(_:))))
         return view
     }()
     
@@ -134,6 +127,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         view.font = Fonts.Title.five
         view.textColor = LightColors.Text.three
         view.textAlignment = .left
+        view.sizeToFit()
         return view
     }()
     
@@ -142,12 +136,6 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         view.setup(with: .image(Asset.chevronDown.image))
         view.setupCustomMargins(all: .extraSmall)
         view.tintColor = LightColors.Text.three
-        return view
-    }()
-    
-    private lazy var cryptoLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = LightColors.Outline.two
         return view
     }()
     
@@ -195,12 +183,6 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         }
         headerStack.addArrangedSubview(titleLabel)
         
-        fiatAmountField.addSubview(fiatLineView)
-        fiatLineView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.minimum.rawValue)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-        
         mainStack.addArrangedSubview(cryptoStack)
         cryptoStack.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.medium.rawValue)
@@ -222,24 +204,12 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
             make.width.equalTo(ViewSizes.small.rawValue)
         }
         
-        let cryptoSpacer = UIView()
-        cryptoStack.addArrangedSubview(cryptoSpacer)
-        cryptoSpacer.snp.makeConstraints { make in
-            make.width.lessThanOrEqualToSuperview().priority(.required)
-        }
-        
         cryptoStack.addArrangedSubview(cryptoAmountField)
         cryptoAmountField.snp.makeConstraints { make in
             make.width.lessThanOrEqualToSuperview()
         }
         
         cryptoAmountField.setContentHuggingPriority(.required, for: .horizontal)
-        
-        cryptoAmountField.addSubview(cryptoLineView)
-        cryptoLineView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.minimum.rawValue)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
         
         mainStack.addArrangedSubview(fiatStack)
         
@@ -259,18 +229,22 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     @objc func fiatAmountDidChange(_ textField: UITextField) {
         decidePlaceholder()
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-        didChangeFiatAmount?(cleanedText)
+        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
         
+        let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
+        
+        didChangeFiatAmount?(cleanedText)
         didChangeContent?()
     }
     
     @objc func cryptoAmountDidChange(_ textField: UITextField) {
         decidePlaceholder()
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-        didChangeCryptoAmount?(cleanedText)
+        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
         
+        let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
+        
+        didChangeCryptoAmount?(cleanedText)
         didChangeContent?()
     }
     
@@ -293,6 +267,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         
         decidePlaceholder()
     }
+    
     override func configure(with config: SwapCurrencyConfiguration?) {
         super.configure(with: config)
         
@@ -311,16 +286,17 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         if !fiatAmountField.isFirstResponder {
             fiatAmountField.attributedText = viewModel.formattedFiatString
         }
-        fiatStack.isHidden = viewModel.formattedFiatString == nil
         
         if !cryptoAmountField.isFirstResponder {
             cryptoAmountField.attributedText = viewModel.formattedTokenString
         }
         
+        fiatStack.isHidden = viewModel.formattedFiatString == nil
+        
         codeLabel.text = viewModel.amount?.currency.code ?? viewModel.currencyCode
-        codeLabel.sizeToFit()
-
+        
         currencyIconImageView.wrappedView.setup(with: .image(viewModel.amount?.currency.imageSquareBackground ?? viewModel.currencyImage))
+        
         if viewModel.amount == nil {
             currencyIconImageView.wrappedView.contentMode = .scaleAspectFill
         }
@@ -334,9 +310,10 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         let noFee = viewModel.fee == nil || viewModel.fee?.tokenValue == 0 || viewModel.amount?.tokenValue == 0
         hideFeeAndAmountsStackView(noFee: noFee)
         
-        decidePlaceholder()
         let image: UIImage? = viewModel.selectionDisabled ? nil : Asset.chevronDown.image
         selectorImageView.setup(with: .image(image))
+        
+        decidePlaceholder()
     }
     
     func hideFeeAndAmountsStackView(noFee: Bool) {
@@ -358,15 +335,18 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     }
     
     private func setPlaceholder(for field: UITextField) {
-        let isActive = field.isFirstResponder && field.text?.isEmpty == true
-        if let textColor = field.textColor,
-           let lineViewColor = fiatLineView.backgroundColor,
-           let font = field.font {
-            field.attributedPlaceholder = NSAttributedString(string: ExchangeFormatter.fiat.string(for: 0) ?? "",
-                                                             attributes: [NSAttributedString.Key.foregroundColor: isActive ? lineViewColor : textColor,
-                                                                          NSAttributedString.Key.font: font]
-            )
-        }
+        guard let textColor = field.textColor,
+              let font = field.font,
+              let text = field.text,
+              let attributedPlaceholder = ExchangeFormatter.createAmountString(string: ExchangeFormatter.fiat.string(for: 0) ?? "") else { return }
+        
+        let isActive = field.isFirstResponder && text.isEmpty
+        
+        attributedPlaceholder.addAttributes([NSAttributedString.Key.foregroundColor: isActive ? LightColors.Outline.two : textColor,
+                                             NSAttributedString.Key.font: font],
+                                            range: NSRange(location: 0, length: attributedPlaceholder.length))
+        
+        field.attributedPlaceholder = attributedPlaceholder
     }
     
     private func decidePlaceholder() {

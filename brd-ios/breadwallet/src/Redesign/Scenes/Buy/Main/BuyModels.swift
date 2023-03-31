@@ -11,8 +11,6 @@ import UIKit
 enum BuyModels {
     
     struct Item {
-        var amount: Amount?
-        var paymentCard: PaymentCard?
         var type: PaymentCard.PaymentType?
         var achEnabled: Bool?
     }
@@ -23,6 +21,7 @@ enum BuyModels {
         case accountLimits
         case from
         case paymentMethod
+        case increaseLimits
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }

@@ -25,6 +25,8 @@ enum NetworkingError: FEError {
     case unprocessableEntity
     case serverAtCapacity
     case exchangesUnavailable
+    case biometricAuthenticationRequired
+    case biometricAuthenticationFailed
     
     var errorMessage: String {
         switch self {
@@ -49,6 +51,9 @@ enum NetworkingError: FEError {
         switch self {
         case .exchangesUnavailable:
             return .exchangesUnavailable
+            
+        case .biometricAuthenticationFailed, .biometricAuthenticationRequired:
+            return .biometricAuthentication
             
         default:
             return nil
@@ -84,6 +89,12 @@ enum NetworkingError: FEError {
                 self = .serverAtCapacity
             }
             
+        case 1001:
+            self = .biometricAuthenticationRequired
+            
+        case 1002:
+            self = .biometricAuthenticationFailed
+            
         default:
             return nil
         }
@@ -108,10 +119,5 @@ public class NetworkingErrorManager {
         guard let error = NetworkingError(error: error) else { return error }
         
         return error
-    }
-    
-    static func getImageUploadEncodingError() -> FEError? {
-        // TODO: Is this right?
-        return GeneralError(errorMessage: "Image encoding failed.")
     }
 }

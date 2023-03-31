@@ -6,6 +6,7 @@
 //  Copyright © 2017-2019 Breadwinner AG. All rights reserved.
 //
 
+import Combine
 import UIKit
 import SnapKit
 import Lottie
@@ -14,6 +15,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     private let walletAuthenticator: WalletAuthenticator
     private let notificationHandler = NotificationHandler()
     private let coreSystem: CoreSystem
+    
+    private var observers: [AnyCancellable] = []
     
     private lazy var assetListTableView: AssetListTableView = {
         let view = AssetListTableView()
@@ -74,6 +77,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private lazy var drawer: RWDrawer = {
         let view = RWDrawer()
+        view.dismissActionPublisher.sink { [weak self] _ in
+            self?.animationView.play(fromProgress: 1, toProgress: 0)
+        }.store(in: &observers)
         return view
     }()
     
@@ -85,6 +91,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
     var didTapCreateAccountFromPrompt: (() -> Void)?
+    var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
     var isInExchangeFlow = false
@@ -109,7 +116,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
                                  (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
-                                 // TODO: reenable drawer
+                                 // TODO: Uncomment to re-enable the drawer
 //                                 (L10n.Drawer.title, nil, #selector(buy)),
                                  (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
@@ -252,6 +259,13 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
         
+        // TODO: Uncomment to re-enable the drawer
+//        view.addSubview(drawer)
+//        drawer.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
+//            make.leading.trailing.bottom.equalToSuperview()
+//        }
+        
         view.addSubview(tabBarContainerView)
         tabBarContainerView.addSubview(tabBar)
         
@@ -265,14 +279,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             make.top.equalToSuperview().offset(Margins.large.rawValue)
             make.leading.trailing.equalToSuperview()
         }
- 
-        // TODO: reenable bottom drawer
-//        view.addSubview(drawer)
-//        drawer.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
-//            make.leading.trailing.bottom.equalToSuperview()
-//        }
         
+        // TODO: Uncomment to re-enable the drawer
 //        view.addSubview(animationView)
 //        animationView.snp.makeConstraints { make in
 //            make.centerX.equalTo(tabBar.snp.centerX)
@@ -286,6 +294,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         navigationItem.titleView = UIView()
         
         setupToolbar()
+        // TODO: Uncomment to re-enable the drawer
 //        setupDrawer()
         updateTotalAssets()
         setupAnimationView()
@@ -373,6 +382,18 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             PromptPresenter.shared.hidePrompt(.noAccount)
         })
         
+        Store.subscribe(self, name: .promptKyc, callback: { _ in
+            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+        })
+        
+        Store.subscribe(self, name: .promptNoAccount, callback: { _ in
+            self.didTapCreateAccountFromPrompt?()
+        })
+        
+        Store.subscribe(self, name: .promptLimitsAuthentication, callback: { _ in
+            self.didTapLimitsAuthenticationFromPrompt?()
+        })
+        
         Reachability.addDidChangeCallback({ [weak self] isReachable in
             PromptPresenter.shared.hidePrompt(.noInternet)
             
@@ -386,14 +407,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         }, callback: { _ in
             self.updateTotalAssets()
             self.updateAmountsForWidgets()
-        })
-        
-        Store.subscribe(self, name: .promptKyc, callback: { _ in
-            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
-        })
-        
-        Store.subscribe(self, name: .promptNoAccount, callback: { _ in
-            self.didTapCreateAccountFromPrompt?()
         })
         
         PromptPresenter.shared.trailingButtonCallback = { [weak self] promptType in
@@ -451,7 +464,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         drawer.hide()
     }
     
-    private func commotTapAction() {
+    private func commonTapAction() {
         guard drawer.isShown else { return }
         
         animationView.play(fromProgress: 1, toProgress: 0)
@@ -461,7 +474,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     @objc private func buy() {
         didTapBuy?(.card)
         
-        // TODO: uncomment to reenable drawer
+        // TODO: Uncomment to re-enable the drawer
 //        if drawer.isShown {
 //            animationView.play(fromProgress: 1, toProgress: 0)
 //        } else {
@@ -471,17 +484,17 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     @objc private func trade() {
-        commotTapAction()
+        commonTapAction()
         didTapTrade?()
     }
     
     @objc private func profile() {
-        commotTapAction()
+        commonTapAction()
         didTapProfile?()
     }
     
     @objc private func menu() {
-        commotTapAction()
+        commonTapAction()
         didTapMenu?()
     }
 }

@@ -25,22 +25,25 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
             .confirm
         ]
         
-        let trailingModel: ImageViewModel? = item.country == C.countryUS ? .image(Asset.chevronDown.image) : nil
+        let trailingModel: ImageViewModel? = item.country?.iso2 == C.countryUS ? .image(Asset.chevronDown.image) : nil
         
-        if item.country == C.countryUS && !E.isProduction {
-            sections.insert(.ssn, at: 5)
-            sections.insert(.ssnInfo, at: 6)
+        if item.country?.iso2 == C.countryUS && !E.isProduction {
+            let confirmIndex = sections.firstIndex(of: .confirm) ?? 0
+            sections.insert(contentsOf: [.ssn, .ssnInfo], at: confirmIndex)
         }
+        
+        let state = item.state?.name.isEmpty == true ? item.state?.iso2 : item.state?.name
         
         let sectionRows: [Models.Section: [Any]] = [
             .mandatory: [LabelViewModel.text(L10n.Account.mandatoryFields)],
             .address: [
                 TextFieldModel(title: "\(L10n.Buy.address)*",
-                               value: item.address)
+                               value: item.address,
+                               isUserInteractionEnabled: false)
             ],
             .country: [
                 TextFieldModel(title: L10n.Account.countryRegion,
-                               value: item.countryFullName,
+                               value: item.country?.name ?? "",
                                trailing: .image(Asset.chevronDown.image),
                                isUserInteractionEnabled: false)
             ],
@@ -48,9 +51,9 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Account.city,
                                                                 value: item.city),
                                                  secondary: .init(title: L10n.Buy.stateProvince,
-                                                                  value: item.state,
+                                                                  value: state,
                                                                   trailing: trailingModel,
-                                                                  isUserInteractionEnabled: item.country != C.countryUS))
+                                                                  isUserInteractionEnabled: item.country?.iso2 != C.countryUS))
             ],
             .postalCode: [
                 TextFieldModel(title: L10n.Account.postalCode,

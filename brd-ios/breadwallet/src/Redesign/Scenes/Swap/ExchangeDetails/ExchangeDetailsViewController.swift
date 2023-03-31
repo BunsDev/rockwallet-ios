@@ -18,13 +18,13 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     
     override var sceneLeftAlignedTitle: String? {
         switch dataStore?.transactionType {
-        case .buyTransaction, .buyAchTransaction:
+        case .buy, .buyAch:
             return L10n.Buy.details
             
-        case .swapTransaction:
+        case .swap:
             return L10n.Swap.details
             
-        case .sellTransaction:
+        case .sell:
             return L10n.Sell.details
             
         default:
@@ -81,7 +81,7 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         }
         
         cell.setup { view in
-            view.configure(with: Presets.Asset.header)
+            view.configure(with: Presets.AssetSelection.header)
             view.setup(with: model)
             view.content.setupCustomMargins(vertical: .medium, horizontal: .large)
         }

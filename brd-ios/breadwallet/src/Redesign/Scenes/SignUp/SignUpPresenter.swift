@@ -66,7 +66,7 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
                                         displayState: actionResponse.emailState),
                       isPasswordValid: actionResponse.isPasswordValid,
                       isPasswordEmpty: actionResponse.isPasswordEmpty,
-                      passwordModel: .init(title: L10n.Account.enterPassword,
+                      passwordModel: .init(title: L10n.Account.createPassword,
                                            hint: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
                                            && !actionResponse.isPasswordAgainEmpty ? L10n.Account.passwordDoNotMatch : nil,
                                            trailing: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty

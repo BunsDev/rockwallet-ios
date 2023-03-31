@@ -17,6 +17,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
                                     BillingAddressResponseDisplays {
     typealias Models = BillingAddressModels
     
+    override var isRoundedBackgroundEnabled: Bool { return true }
     override var sceneTitle: String? {
         return L10n.Buy.billingAddress
     }
@@ -24,12 +25,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     private var isValid = false
     
     // MARK: - Overrides
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        setRoundedShadowBackground()
-    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
@@ -140,7 +135,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: move to cell tap callback
         switch sections[indexPath.section] as? Models.Section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
@@ -169,7 +163,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func displaySubmit(responseDisplay: BillingAddressModels.Submit.ResponseDisplay) {
-        LoadingView.hide()
+        LoadingView.hideIfNeeded()
         coordinator?.dismissFlow()
         coordinator?.showOverlay(with: .success) { [weak self] in
             self?.interactor?.getPaymentCards(viewAction: .init())

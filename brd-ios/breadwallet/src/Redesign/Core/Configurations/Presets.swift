@@ -156,7 +156,7 @@ extension Presets {
                                                 errorBackgroundConfiguration: Presets.Background.TextField.error)
         
         static var phrase = TextFieldConfiguration(titleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one),
-                                                   selectedTitleConfiguration: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
+                                                   selectedTitleConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.two),
                                                    textConfiguration: .init(font: Fonts.Body.phrase, textColor: LightColors.Text.one),
                                                    placeholderConfiguration: .init(font: Fonts.Body.two, textColor: LightColors.Text.one))
     }
@@ -241,6 +241,7 @@ extension Presets {
 extension Presets {
     enum Animation: Double {
         case short = 0.25
+        case average = 0.35
         case long = 0.45
     }
 }
@@ -328,7 +329,7 @@ extension Presets {
 }
 
 extension Presets {
-    struct Asset {
+    struct AssetSelection {
         static var header = AssetConfiguration(topConfiguration: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one),
                                                bottomConfiguration: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two),
                                                topRightConfiguration: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one, textAlignment: .right),

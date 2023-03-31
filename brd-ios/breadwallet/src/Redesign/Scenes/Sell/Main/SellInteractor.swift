@@ -39,7 +39,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             dataStore?.fromAmount = .init(decimalAmount: fiat, isFiat: true, currency: currency, exchangeRate: 1 / rate)
         }
         
-        presenter?.presentAmount(actionResponse: .init(from: dataStore?.fromAmount))
+        presenter?.presentAmount(actionResponse: .init(from: dataStore?.fromAmount, continueEnabled: dataStore?.isFormValid ?? false))
     }
     
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
