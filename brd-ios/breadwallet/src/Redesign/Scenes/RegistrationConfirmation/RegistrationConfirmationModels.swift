@@ -25,6 +25,7 @@ enum RegistrationConfirmationModels {
     enum ConfirmationType {
         case account
         case twoStep
+        case authenticationCode
     }
     
     struct Validate {
