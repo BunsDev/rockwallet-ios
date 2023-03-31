@@ -59,6 +59,7 @@
 		0453B0C029D2DEB100BBE246 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */; };
+		049CE73C29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */; };
 		04FE239629D6F49300838DB6 /* SetTwoStepPhoneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */; };
 		1B1AFFA01FB7EF7C00E61908 /* BiometricsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */; };
 		222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */; };
@@ -902,6 +903,7 @@
 		0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
 		0470D13129BB2EFC00BB182D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailDestinationWorker.swift; sourceTree = "<group>"; };
+		049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneCodeWorker.swift; sourceTree = "<group>"; };
 		04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneWorker.swift; sourceTree = "<group>"; };
 		1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BiometricsSettingsViewController.swift; path = src/ViewControllers/BiometricsSettingsViewController.swift; sourceTree = "<group>"; };
 		222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+KV.swift"; path = "src/Platform/BRAPIClient+KV.swift"; sourceTree = "<group>"; };
@@ -1721,6 +1723,7 @@
 				044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */,
 				044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */,
 				04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */,
+				049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */,
 			);
 			path = VerifyPhoneNumber;
 			sourceTree = "<group>";
@@ -4433,6 +4436,7 @@
 				7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */,
 				CE3840E81FD590BD00437C31 /* AssetListTableView.swift in Sources */,
 				71A3171022A6D55A0088F97C /* InAppNotificationViewController.swift in Sources */,
+				049CE73C29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift in Sources */,
 				7CF5319D231EE01300E61F12 /* Base32.swift in Sources */,
 				CEAA9EA61DC3246F0066731D /* StartNavigationDelegate.swift in Sources */,
 				3A188FF82582835600957819 /* Sharing.swift in Sources */,

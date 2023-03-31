@@ -22,6 +22,15 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         presenter?.presentData(actionResponse: .init(item: Models.Item(email: UserDefaults.email,
                                                                        phoneNumber: UserDefaults.phoneNumber,
                                                                        confirmationType: confirmationType)))
+        
+        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
+            switch result {
+            case .success(let data):
+                break
+            case .failure(let error):
+                break
+            }
+        }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {
@@ -62,8 +71,8 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     // MARK: - Aditional helpers
     
     private func executeSetTwoStepPhone() {
-        let data = SetTwoStepPhoneRequestData(phone: "", updateCode: dataStore?.code)
-        SetTwoStepPhoneWorker().execute(requestData: data) { [weak self] result in
+        let data = SetTwoStepPhoneCodeRequestData(code: dataStore?.code)
+        SetTwoStepPhoneCodeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
                 UserManager.shared.refresh()

@@ -22,6 +22,7 @@ enum KYCAuthEndpoints: String, URLType {
     case documents = "kyc/documents"
     case upload = "kyc/upload"
     case submit = "kyc/session/submit"
+    case confirmationCodes = "confirmation-codes"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)
