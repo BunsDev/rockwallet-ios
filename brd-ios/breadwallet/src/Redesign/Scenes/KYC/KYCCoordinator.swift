@@ -58,7 +58,14 @@ class KYCCoordinator: BaseCoordinator,
             childCoordinators.append(coordinator)
             
         default:
-            showKYCLevelOne()
+            if UserManager.shared.hasTwoStepAuth {
+                showKYCLevelOne()
+            } else {
+                let coordinator = AccountCoordinator(navigationController: navigationController)
+                coordinator.start()
+                coordinator.parentCoordinator = self
+                childCoordinators.append(coordinator)
+            }
         }
     }
     

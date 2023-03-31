@@ -11,7 +11,7 @@
 import UIKit
 import PhoneNumberKit
 
-class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoordinator,
+class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinator,
                                        VerifyPhoneNumberInteractor,
                                        VerifyPhoneNumberPresenter,
                                        VerifyPhoneNumberStore>,
