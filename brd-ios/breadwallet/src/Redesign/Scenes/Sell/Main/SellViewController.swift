@@ -9,7 +9,7 @@
 import UIKit
 import LinkKit
 
-class SellViewController: BaseExchangeTableViewController<SellCoordinator,
+class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SellInteractor,
                           SellPresenter,
                           SellStore>,

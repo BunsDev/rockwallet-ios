@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccountCoordinator: ItemSelectionCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
+class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
     // MARK: - RegistrationRoutes
     
     override func start() {

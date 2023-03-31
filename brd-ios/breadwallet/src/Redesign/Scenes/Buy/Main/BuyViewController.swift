@@ -15,7 +15,7 @@ protocol LinkOAuthHandling {
     var plaidHandler: PlaidLinkKitHandler? { get }
 }
 
-class BuyViewController: BaseExchangeTableViewController<BuyCoordinator,
+class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                          BuyInteractor,
                          BuyPresenter,
                          BuyStore>,

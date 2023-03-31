@@ -88,7 +88,7 @@ class BaseCoordinator: NSObject,
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasSwapAccess {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
                         vc?.dataStore?.currencies = currencies
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
@@ -96,7 +96,7 @@ class BaseCoordinator: NSObject,
                     
                     return
                 } else if profile.status.isKYCLocationRestricted {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swap
                     }
                     
@@ -106,7 +106,7 @@ class BaseCoordinator: NSObject,
                     
                     return
                 } else {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .swap
                     }
                     
@@ -122,7 +122,7 @@ class BaseCoordinator: NSObject,
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasBuyAccess, type == .card {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
                         vc?.dataStore?.paymentMethod = type
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
@@ -131,7 +131,7 @@ class BaseCoordinator: NSObject,
                     
                     return
                 } else if profile.status.isKYCLocationRestricted, type == .card {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buy
                     }
                     
@@ -141,7 +141,7 @@ class BaseCoordinator: NSObject,
                     
                     return
                 } else if type == .card {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buy
                     }
                     
@@ -149,7 +149,7 @@ class BaseCoordinator: NSObject,
                 }
                 
                 if profile.kycAccessRights.hasAchAccess == true, type == .ach {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
                         vc?.dataStore?.paymentMethod = type
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
@@ -158,7 +158,7 @@ class BaseCoordinator: NSObject,
                     
                     return
                 } else if profile.status.isKYCLocationRestricted == true, type == .ach {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
@@ -170,7 +170,7 @@ class BaseCoordinator: NSObject,
                     
                     return
                 } else if type == .ach {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
+                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { vc in
                         vc?.reason = .buyAch
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
@@ -195,7 +195,7 @@ class BaseCoordinator: NSObject,
 //                    return
 //                }
                 
-                self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.Sell) { vc in
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                     vc?.dataStore?.currency = currency
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
