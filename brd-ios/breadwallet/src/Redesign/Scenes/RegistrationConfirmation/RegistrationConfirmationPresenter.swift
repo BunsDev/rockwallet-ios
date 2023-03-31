@@ -37,8 +37,9 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .help })
         }
         
-        var title: String?
-        var instructions: String?
+        let title: String
+        let instructions: String
+        
         switch confirmationType {
         case .account:
             title = L10n.AccountCreation.verifyEmail
