@@ -46,8 +46,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             title = L10n.VerifyPhoneNumber.Sms.title
             instructions = "\(L10n.VerifyPhoneNumber.Sms.instructions)\(": \n")\(email ?? "")"
         case .authenticationCode:
-            title = "Enter the 6-digit code"
-            instructions = "Enter the 6-digit code from your authenticator app"
+            title = L10n.Authentication.enterCode
+            instructions = L10n.Authentication.enterCodeDescription
         }
         
         var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
