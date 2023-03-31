@@ -1,5 +1,5 @@
 //
-//  EnterCodeView.swift
+//  AuthenticatorAppStore.swift
 //  breadwallet
 //
 //  Created by Dijana Angelovska on 29.3.23.

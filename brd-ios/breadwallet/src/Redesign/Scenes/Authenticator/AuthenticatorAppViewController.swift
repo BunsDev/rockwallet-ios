@@ -1,5 +1,5 @@
 //
-//  EnterCodeView.swift
+//  AuthenticatorAppViewController.swift
 //  breadwallet
 //
 //  Created by Dijana Angelovska on 29.3.23.
@@ -10,7 +10,7 @@
 
 import UIKit
 
-class AuthenticatorAppViewController: BaseTableViewController<AuthenticatorAppCoordinator,
+class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator,
                                       AuthenticatorAppInteractor,
                                       AuthenticatorAppPresenter,
                                       AuthenticatorAppStore>,
