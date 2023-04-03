@@ -17,8 +17,8 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         } else if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
         } else if !UserManager.shared.hasTwoStepAuth {
-//            showVerifyPhoneNumber()
-            showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStep)
+            showVerifyPhoneNumber()
+//            showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStep)
         } else {
             showSignUp()
         }

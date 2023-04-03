@@ -122,7 +122,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             
             switch self.dataStore?.confirmationType {
             case .account:
-                self.coordinator?.showAccountVerification()
+                self.coordinator?.showVerifyPhoneNumber()
+                
             case .twoStep:
                 self.coordinator?.dismissFlow()
                 

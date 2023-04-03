@@ -105,7 +105,8 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.verticalScrollIndicatorInsets.right = isRoundedBackgroundEnabled ? -Margins.huge.rawValue : 0
         
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.endUpdates()
         
         setupVerticalButtons()
     }
