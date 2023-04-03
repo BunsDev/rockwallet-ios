@@ -8,21 +8,21 @@
 
 import UIKit
 
-class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
+class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
     // MARK: - RegistrationRoutes
     
     override func start() {
         if DynamicLinksManager.shared.code != nil {
             showSetPassword()
-            return
-        }
-        
-        if UserManager.shared.profile?.status == .emailPending {
+        } else if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
-            return
+            // TODO: ENABLE 2FA
+//        } else if !UserManager.shared.hasTwoStepAuth {
+//            showVerifyPhoneNumber()
+//            showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStep)
+        } else {
+            showSignUp()
         }
-        
-        showSignUp()
     }
     
     func showRegistrationConfirmation(isModalDismissable: Bool, confirmationType: RegistrationConfirmationModels.ConfirmationType) {
@@ -30,6 +30,10 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
             vc.dataStore?.confirmationType = confirmationType
             vc.isModalDismissable = isModalDismissable
         }
+    }
+    
+    func showVerifyPhoneNumber() {
+        open(scene: Scenes.VerifyPhoneNumber)
     }
     
     func showChangeEmail() {

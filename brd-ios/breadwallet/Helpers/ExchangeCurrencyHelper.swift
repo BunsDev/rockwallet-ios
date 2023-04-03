@@ -27,7 +27,7 @@ struct ExchangeCurrencyHelper {
     
     static func revertIfNeeded(coordinator: CoordinatableRoutes? = nil, completion: (() -> Void)? = nil) {
         if let coordinator = coordinator {
-            guard coordinator.isKind(of: SwapCoordinator.self) || coordinator.isKind(of: BuyCoordinator.self) else {
+            guard coordinator.isKind(of: ExchangeCoordinator.self) else {
                 completion?()
                 
                 return

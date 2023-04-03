@@ -85,6 +85,7 @@ class UserManager: NSObject {
         UserDefaults.sessionToken = nil
         UserDefaults.sessionTokenHash = nil
         UserDefaults.deviceID = ""
+        UserDefaults.phoneNumber = nil
         
         UserManager.shared.profile = nil
         UserManager.shared.profileResult = nil

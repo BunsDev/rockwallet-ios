@@ -14,6 +14,8 @@ enum TwoStepEndpoints: String, URLType {
     static var baseURL: String = "https://"  + E.apiUrl + "blocksatoshi/wallet/2fa/%@"
     
     case settings
+    case phone
+    case phoneConfirm = "phone/confirm"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

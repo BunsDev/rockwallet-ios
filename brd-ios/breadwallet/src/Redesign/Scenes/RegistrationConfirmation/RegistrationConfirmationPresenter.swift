@@ -17,7 +17,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
         
-        let email = item.email
+        let email = "\(": \n")\(item.email ?? "")"
+        let phoneNumber = "\(": \n")\(item.phoneNumber ?? "")"
         let confirmationType = item.confirmationType
         
         var sections: [Models.Section] = [
@@ -36,15 +37,16 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .help })
         }
         
-        var title: String?
-        var instructions: String?
+        let title: String
+        let instructions: String
+        
         switch confirmationType {
         case .account:
             title = L10n.AccountCreation.verifyEmail
-            instructions = "\(L10n.AccountCreation.enterCode)\(": \n")\(email ?? "")"
+            instructions = "\(L10n.AccountCreation.enterCode)\(email)"
         case .twoStep:
             title = L10n.VerifyPhoneNumber.Sms.title
-            instructions = "\(L10n.VerifyPhoneNumber.Sms.instructions)\(": \n")\(email ?? "")"
+            instructions = "\(L10n.VerifyPhoneNumber.Sms.instructions)\(phoneNumber)"
         case .authenticationCode:
             title = L10n.Authentication.enterCode
             instructions = L10n.Authentication.enterCodeDescription

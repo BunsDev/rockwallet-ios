@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
+class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SwapInteractor,
                           SwapPresenter,
                           SwapStore>,
@@ -163,7 +163,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
             displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
         case .failed:
-            coordinator?.showFailure()
+            coordinator?.showFailure(failure: .swap, availablePayments: nil)
             
         default:
             coordinator?.showToastMessage(with: responseDisplay.error,

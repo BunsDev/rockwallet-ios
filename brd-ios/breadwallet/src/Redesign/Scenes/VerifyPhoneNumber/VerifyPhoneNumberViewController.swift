@@ -11,7 +11,7 @@
 import UIKit
 import PhoneNumberKit
 
-class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoordinator,
+class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinator,
                                        VerifyPhoneNumberInteractor,
                                        VerifyPhoneNumberPresenter,
                                        VerifyPhoneNumberStore>,
@@ -90,6 +90,12 @@ class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoor
     
     // MARK: - User Interaction
     
+    override func buttonTapped() {
+        super.buttonTapped()
+        
+        interactor?.confirm(viewAction: .init())
+    }
+    
     // MARK: - VerifyPhoneNumberResponseDisplay
     
     func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay) {
@@ -113,7 +119,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<ItemSelectionCoor
     
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.dismissFlow()
+            self?.coordinator?.showRegistrationConfirmation(isModalDismissable: false, confirmationType: .twoStep)
         })
     }
     

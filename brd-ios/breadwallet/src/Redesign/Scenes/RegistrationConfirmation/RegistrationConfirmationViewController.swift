@@ -119,6 +119,19 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             self?.coordinator?.dismissFlow()
+            
+            // TODO: ENABLE 2FA
+//            guard let self = self else { return }
+//            switch self.dataStore?.confirmationType {
+//            case .account:
+//                self.coordinator?.showVerifyPhoneNumber()
+//
+//            case .twoStep:
+//                self.coordinator?.dismissFlow()
+//
+//            default:
+//                break
+//            }
         })
     }
     

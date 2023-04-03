@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
+class ProfileCoordinator: ExchangeCoordinator, ProfileRoutes {
     // MARK: - ProfileRoutes
     
     override func start() {
