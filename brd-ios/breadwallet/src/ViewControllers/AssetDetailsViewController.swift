@@ -48,7 +48,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             // TODO: Replace buy with buySell for drawer
             case .buy:
                 guard UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
-                    self.coordinator?.handleUnverifiedUser(flow: .buy)
+                    self.coordinator?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: .buy)
                     return
                 }
                                 
@@ -61,7 +61,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
 
             case .swap:
                 guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
-                    self.coordinator?.handleUnverifiedUser(flow: .swap)
+                    self.coordinator?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
                     return
                 }
 

@@ -379,14 +379,25 @@ class ApplicationController: Subscriber {
             case .success(let profile):
                 guard profile?.isMigrated == false else { return }
                 
+                self?.triggerDeeplinkHandling()
+                
             case .failure(let error):
                 self?.coordinator?.showToastMessage(with: error)
                 
                 guard self?.isReachable == true else { return }
                 
+                self?.triggerDeeplinkHandling()
+                
             default:
                 return
             }
+        }
+    }
+    
+    private func triggerDeeplinkHandling() {
+        guard UserManager.shared.profile != nil else {
+            coordinator?.handleUserAccount()
+            return
         }
         
         guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
@@ -406,7 +417,7 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapBuy = { [weak self] type in
             guard let self = self, UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
-                self?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
+                self?.coordinator?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
                 return
             }
             
@@ -421,7 +432,7 @@ class ApplicationController: Subscriber {
             guard let self = self,
                   let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }),
                   UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
-                self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+                self?.coordinator?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
                 return
             }
             
@@ -435,7 +446,7 @@ class ApplicationController: Subscriber {
         homeScreen.didTapTrade = { [weak self] in
             // User can still swap even if location restricted
             guard let self = self, UserManager.shared.profile?.status.tradeStatus.restrictionReason != .verification else {
-                self?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
+                self?.coordinator?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
                 return
             }
             
@@ -512,17 +523,6 @@ class ApplicationController: Subscriber {
             vc.success = .limitsAuthentication
             vc.isModalDismissable = false
             vc.navigationItem.hidesBackButton = true
-        }
-    }
-    
-    private func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: Reason?) {
-        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
-        switch restrictionReason {
-        case .verification:
-            self.coordinator?.handleUnverifiedUser(flow: flow)
-            
-        case .location:
-            self.coordinator?.handleRestrictedUser(reason: reason)
         }
     }
     
