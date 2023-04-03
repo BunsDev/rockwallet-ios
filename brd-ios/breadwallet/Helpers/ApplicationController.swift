@@ -379,16 +379,22 @@ class ApplicationController: Subscriber {
             case .success(let profile):
                 guard profile?.isMigrated == false else { return }
                 
+                self?.triggerDeeplinkHandling()
+                
             case .failure(let error):
                 self?.coordinator?.showToastMessage(with: error)
                 
                 guard self?.isReachable == true else { return }
                 
+                self?.triggerDeeplinkHandling()
+                
             default:
                 return
             }
         }
-        
+    }
+    
+    private func triggerDeeplinkHandling() {
         guard UserManager.shared.profile != nil else {
             coordinator?.handleUserAccount()
             return
