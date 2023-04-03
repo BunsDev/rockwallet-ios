@@ -171,6 +171,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
         let buyVC = navigationController.children.first(where: { $0 is BuyViewController }) as? BuyViewController
         buyVC?.dataStore?.selected = selectedCard
         buyVC?.dataStore?.autoSelectDefaultPaymentMethod = false
+        // TODO: Refactor
         buyVC?.interactor?.getData(viewAction: .init())
     }
     
