@@ -23,14 +23,15 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                                                                        phoneNumber: UserDefaults.phoneNumber,
                                                                        confirmationType: confirmationType)))
         
-        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
-            switch result {
-            case .success(let data):
-                break
-            case .failure(let error):
-                break
-            }
-        }
+        // TODO: ENABLE 2FA
+//        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
+//            switch result {
+//            case .success(let data):
+//                break
+//            case .failure(let error):
+//                break
+//            }
+//        }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {
