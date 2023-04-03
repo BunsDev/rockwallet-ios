@@ -486,6 +486,22 @@ class BaseCoordinator: NSObject,
         return view
     }
     
+    func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: Reason?) {
+        guard UserManager.shared.profile != nil else {
+            handleUserAccount()
+            return
+        }
+        
+        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
+        switch restrictionReason {
+        case .verification:
+            handleUnverifiedUser(flow: flow)
+            
+        case .location:
+            handleRestrictedUser(reason: reason)
+        }
+    }
+    
     func handleUnverifiedUser(flow: ProfileModels.ExchangeFlow?) {
         open(scene: Scenes.VerifyAccount) { [weak self] vc in
             vc.flow = flow
