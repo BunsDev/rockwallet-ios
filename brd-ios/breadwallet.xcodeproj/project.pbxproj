@@ -2750,6 +2750,7 @@
 		7E8E978F283F4817008606B0 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C43EFBE929DC602D0067FE70 /* Workers */,
 				7E8E9792283F4830008606B0 /* ProfilePresenter.swift */,
 				7E8E9791283F4830008606B0 /* ProfileStore.swift */,
 				7E8E9794283F4830008606B0 /* ProfileVIP.swift */,
@@ -2757,9 +2758,6 @@
 				7E8E9795283F4830008606B0 /* ProfileViewController.swift */,
 				7E8E9796283F4830008606B0 /* ProfileInteractor.swift */,
 				7E8E9790283F4830008606B0 /* ProfileCoordinator.swift */,
-				7E2E1A40284E267000E56E69 /* ProfileWorker.swift */,
-				7B0418B4298A9131004A6385 /* UserInformationWorker.swift */,
-				C43EFBE729DC33620067FE70 /* LogoutWorker.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -3118,6 +3116,16 @@
 				9FDDE55625D5B79D00E42BE3 /* ChartViewModel.swift */,
 			);
 			path = ChartView;
+			sourceTree = "<group>";
+		};
+		C43EFBE929DC602D0067FE70 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				7E2E1A40284E267000E56E69 /* ProfileWorker.swift */,
+				7B0418B4298A9131004A6385 /* UserInformationWorker.swift */,
+				C43EFBE729DC33620067FE70 /* LogoutWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		C4520F032875C613003FFB7F /* AssetSelection */ = {
