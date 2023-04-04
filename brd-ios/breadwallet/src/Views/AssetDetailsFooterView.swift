@@ -16,7 +16,7 @@ enum AssetDetailsFooterAction {
 
 class AssetDetailsFooterView: UIView, Subscriber {
     
-    static let height: CGFloat = 72.0
+    static let height: CGFloat = 120.0
     
     private let actionSubject = PassthroughSubject<AssetDetailsFooterAction, Never>()
     var actionPublisher: AnyPublisher<AssetDetailsFooterAction, Never> {
@@ -49,16 +49,19 @@ class AssetDetailsFooterView: UIView, Subscriber {
     }
     
     private func setupToolbarButtons() {
-        let buttons = [
-            (Asset.send.image, #selector(send(_:))),
-            (Asset.receive.image, #selector(receive(_:))),
-            (Asset.buy.image, #selector(buy(_:))), // TODO: Replace buy with buySell for drawer
-            (Asset.trade.image, #selector(swap(_:)))
-        ].compactMap { (image, selector) -> BRDButton in
-            let button = BRDButton(title: nil, type: .secondary, image: image)
-            button.addTarget(self, action: selector, for: .touchUpInside)
+        let bottomButtonModels: [RWBottomBarItemViewModel] = [
+            .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
+            .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
+            .init(title: L10n.Button.buy, image: Asset.buy.image, callback: { self.buy() }),
+            .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, callback: { self.swap() })
+        ]
+        
+        let buttons = bottomButtonModels.compactMap { model -> RWBottomBarItem in
+            let button = RWBottomBarItem()
+            button.setup(with: model)
             return button
         }
+        
         let buttonsView = UIStackView(arrangedSubviews: buttons)
         buttonsView.spacing = Margins.small.rawValue
         buttonsView.distribution = .equalSpacing
@@ -68,23 +71,17 @@ class AssetDetailsFooterView: UIView, Subscriber {
         addSubview(buttonsView)
         buttonsView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.medium.rawValue)
-            make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
+            make.height.equalTo(RWBottomBarItem.defaultheight)
             make.leading.equalToSuperview().offset(Margins.huge.rawValue)
             make.trailing.equalToSuperview().offset(-Margins.huge.rawValue)
             make.bottom.equalToSuperview().inset(bottomMargin.rawValue)
         }
-        
-        buttons.forEach { button in
-            button.snp.makeConstraints { make in
-                make.width.equalTo(button.snp.height).priority(.required)
-            }
-        }
     }
 
-    @objc private func send(_ sender: UIButton) { actionSubject.send(.send) }
-    @objc private func receive(_ sender: UIButton) { actionSubject.send(.receive) }
-    @objc private func buy(_ sender: UIButton) { actionSubject.send(.buy) } // TODO: Replace buy with buySell for drawer
-    @objc private func swap(_ sender: UIButton) { actionSubject.send(.swap) }
+    @objc private func send() { actionSubject.send(.send) }
+    @objc private func receive() { actionSubject.send(.receive) }
+    @objc private func buy() { actionSubject.send(.buy) } // TODO: Replace buy with buySell for drawer
+    @objc private func swap() { actionSubject.send(.swap) }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding")
