@@ -16,7 +16,7 @@ enum AssetDetailsFooterAction {
 
 class AssetDetailsFooterView: UIView, Subscriber {
     
-    static let height: CGFloat = 120.0//72.0
+    static let height: CGFloat = 120.0
     
     private let actionSubject = PassthroughSubject<AssetDetailsFooterAction, Never>()
     var actionPublisher: AnyPublisher<AssetDetailsFooterAction, Never> {
