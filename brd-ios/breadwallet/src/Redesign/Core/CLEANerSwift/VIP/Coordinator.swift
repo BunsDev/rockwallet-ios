@@ -84,7 +84,7 @@ class BaseCoordinator: NSObject,
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
+            self?.decideFlow { showPopup in
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasSwapAccess {
@@ -118,7 +118,7 @@ class BaseCoordinator: NSObject,
     
     func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
+            self?.decideFlow { showPopup in
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasBuyAccess, type == .card {
@@ -184,7 +184,7 @@ class BaseCoordinator: NSObject,
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
+            self?.decideFlow { showPopup in
                 guard showPopup else { return }
                 
                 // TODO: Handle when Sell is ready.
@@ -340,7 +340,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     func decideFlow(completion: ((Bool) -> Void)?) {
-        guard DynamicLinksManager.shared.dynamicLinkType == nil else {
+        guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return
         }
@@ -556,6 +556,7 @@ class BaseCoordinator: NSObject,
         
         guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
         DynamicLinksManager.shared.dynamicLinkType = nil
+        
         switch deeplink {
         case .home:
             return

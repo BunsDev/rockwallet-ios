@@ -357,7 +357,6 @@ extension KeyStore: WalletAuthenticator {
         guard let key = apiAuthKey else { return completion(.failure(.invalidKey)) }
         getAuthCredentials(client: client, key: key) { authUserResult in
             let jwtResult = authUserResult.flatMap { authUser -> APIAuthenticationResult in
-                print("[KEYSTORE] BDB user id: \(authUser.userId)")
                 return client.generateToken(for: authUser, key: key)
                     .mapError { APIAuthenticationError.tokenGenerationError($0) }
             }
