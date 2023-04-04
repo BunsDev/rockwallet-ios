@@ -93,7 +93,7 @@ extension ProfileModels.NavigationItems {
                          button: .init(image: nil))
         case .logout:
             return .init(image: .image(Asset.logout.image),
-                         label: .text("Log out"),
+                         label: .text(L10n.Account.logout),
                          button: .init(image: nil))
         }
     }

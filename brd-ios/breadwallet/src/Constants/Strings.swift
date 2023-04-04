@@ -139,6 +139,10 @@ internal enum L10n {
     internal static let letsGetVerified = L10n.tr("Localizable", "Account.LetsGetVerified", fallback: "Let’s get you verified")
     /// Loading Wallet Message
     internal static let loadingMessage = L10n.tr("Localizable", "Account.loadingMessage", fallback: "Loading Wallet")
+    /// Log out
+    internal static let logout = L10n.tr("Localizable", "Account.Logout", fallback: "Log out")
+    /// You’ve been successfully logged out you RockWallet account. Your self-custodial wallet is still linked to this device.
+    internal static let logoutMessage = L10n.tr("Localizable", "Account.LogoutMessage", fallback: "You’ve been successfully logged out you RockWallet account. Your self-custodial wallet is still linked to this device.")
     /// (*)Mandatory Fields
     internal static let mandatoryFields = L10n.tr("Localizable", "Account.MandatoryFields", fallback: "(*)Mandatory Fields")
     /// Verify your account to get full access to the wallet message
