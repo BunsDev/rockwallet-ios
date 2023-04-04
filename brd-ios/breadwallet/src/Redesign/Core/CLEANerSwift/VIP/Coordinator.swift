@@ -24,14 +24,11 @@ protocol Coordinatable: CoordinatableRoutes {
     func start()
 }
 
-class BaseCoordinator: NSObject,
-                       Coordinatable {
+class BaseCoordinator: NSObject, Coordinatable {
     weak var modalPresenter: ModalPresenter? {
         get {
-            guard let modalPresenter = presenter else {
-                return parentCoordinator?.modalPresenter
-            }
-
+            guard let modalPresenter = presenter else { return parentCoordinator?.modalPresenter }
+            
             return modalPresenter
         }
         set {
@@ -428,12 +425,6 @@ class BaseCoordinator: NSObject,
         navigationController.showToastMessage(model: model,
                                               configuration: configuration,
                                               onTapCallback: onTapCallback)
-    }
-    
-    func showUnderConstruction(_ feat: String) {
-        showPopup(on: navigationController.topViewController,
-                  with: .init(title: .text("Under construction"),
-                              body: "The \(feat.uppercased()) functionality is being developed for You by the awesome RockWallet team. Stay tuned!"))
     }
     
     func showOverlay(with viewModel: TransparentViewModel, completion: (() -> Void)? = nil) {
