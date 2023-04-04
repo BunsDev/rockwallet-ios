@@ -24,6 +24,7 @@ enum ProfileModels {
         case paymentMethods
         case security
         case preferences
+        case logout
     }
     
     enum ExchangeFlow {
@@ -65,6 +66,12 @@ enum ProfileModels {
             var allPaymentCards: [PaymentCard]
         }
     }
+    
+    struct Logout {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
+    }
 }
 
 extension ProfileModels.NavigationItems {
@@ -83,6 +90,10 @@ extension ProfileModels.NavigationItems {
         case .preferences:
             return .init(image: .image(Asset.settings.image),
                          label: .text(L10n.Settings.preferences),
+                         button: .init(image: nil))
+        case .logout:
+            return .init(image: .image(Asset.logout.image),
+                         label: .text("Log out"),
                          button: .init(image: nil))
         }
     }

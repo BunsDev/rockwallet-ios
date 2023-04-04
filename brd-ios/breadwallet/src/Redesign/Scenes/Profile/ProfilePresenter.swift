@@ -63,6 +63,13 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
         viewController?.displayNavigation(responseDisplay: .init(item: item))
     }
     
+    func presentLogout(actionResponse: ProfileModels.Logout.ActionResponse) {
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text("""
+"You’ve been successfully logged out you RockWallet account. Your self-custodial wallet is still linked to this device.
+""")),
+                                                              config: Presets.InfoView.verification))
+    }
+    
     // MARK: - Additional Helpers
     
 }

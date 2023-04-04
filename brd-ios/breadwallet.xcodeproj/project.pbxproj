@@ -610,6 +610,7 @@
 		A2439D019C08106D6E14D70A /* MarketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24399A172C828ECD708E17D /* MarketInfo.swift */; };
 		A2439D7BB746E6CFC3F9B64A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2439F5D8263945E73EFF4A3 /* CacheService.swift */; };
 		C41816A729D5708B002D31F8 /* EnterCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41816A629D5708B002D31F8 /* EnterCodeView.swift */; };
+		C43EFBE829DC33620067FE70 /* LogoutWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43EFBE729DC33620067FE70 /* LogoutWorker.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
 		C46C28FE287EBF4F0035C843 /* BaseInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */; };
 		C46C28FF287EBF4F0035C843 /* BaseInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */; };
@@ -1442,6 +1443,7 @@
 		A24399A172C828ECD708E17D /* MarketInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketInfo.swift; sourceTree = "<group>"; };
 		A2439F5D8263945E73EFF4A3 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		C41816A629D5708B002D31F8 /* EnterCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeView.swift; sourceTree = "<group>"; };
+		C43EFBE729DC33620067FE70 /* LogoutWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWorker.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
 		C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoStore.swift; sourceTree = "<group>"; };
 		C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoPresenter.swift; sourceTree = "<group>"; };
@@ -2757,6 +2759,7 @@
 				7E8E9790283F4830008606B0 /* ProfileCoordinator.swift */,
 				7E2E1A40284E267000E56E69 /* ProfileWorker.swift */,
 				7B0418B4298A9131004A6385 /* UserInformationWorker.swift */,
+				C43EFBE729DC33620067FE70 /* LogoutWorker.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -4388,6 +4391,7 @@
 				7EE91A5C2968310100331B1F /* KYCAddressModels.swift in Sources */,
 				C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */,
 				C4F462A329CC86FF00083512 /* BackupCodesVIP.swift in Sources */,
+				C43EFBE829DC33620067FE70 /* LogoutWorker.swift in Sources */,
 				7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */,
 				7ECCA9992874342C00F99368 /* FETimerView.swift in Sources */,
 				7EF45F502845352400D1F7B0 /* KYCBasicPresenter.swift in Sources */,
