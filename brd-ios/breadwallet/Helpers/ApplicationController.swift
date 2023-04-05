@@ -275,7 +275,7 @@ class ApplicationController: Subscriber {
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
                 guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
-                Store.trigger(name: .handleDeeplink)
+                self.triggerDeeplinkHandling()
             }
         }
     }
@@ -377,8 +377,6 @@ class ApplicationController: Subscriber {
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success(let profile):
-                guard profile?.isMigrated == false else { return }
-                
                 self?.triggerDeeplinkHandling()
                 
             case .failure(let error):
