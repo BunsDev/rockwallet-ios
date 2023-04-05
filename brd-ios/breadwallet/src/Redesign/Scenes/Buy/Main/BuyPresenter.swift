@@ -25,8 +25,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .rateAndTimer,
             .from,
             .paymentMethod,
-            .accountLimits,
-            .increaseLimits
+            .accountLimits
+//            .increaseLimits
         ]
         
         if item.achEnabled == true {
