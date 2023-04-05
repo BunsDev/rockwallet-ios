@@ -773,6 +773,7 @@
 		CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */; };
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
 		D712BC9C29C9F2BA00C2F09E /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */; };
+		D712BD1229DACBAB00C2F09E /* RWBottomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */; };
 		D7EA320929C0805B00D9FD4F /* BiometricStatusHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */; };
 		D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */; };
 		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
@@ -1615,6 +1616,7 @@
 		CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AmountViewController.swift; path = src/ViewControllers/AmountViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
 		D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
+		D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWBottomBarItem.swift; sourceTree = "<group>"; };
 		D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusHelper.swift; sourceTree = "<group>"; };
 		D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeModels.swift; sourceTree = "<group>"; };
 		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
@@ -2637,6 +2639,7 @@
 				04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */,
 				7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */,
 				7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */,
+				D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4202,6 +4205,7 @@
 				C4842F1529939F4100915BA4 /* UnlinkWalletViewController.swift in Sources */,
 				CEC6AA3D1DEE687000EE5AFD /* RadialGradientView.swift in Sources */,
 				CEEC70921E95DA4400EF788E /* GradientSwitch.swift in Sources */,
+				D712BD1229DACBAB00C2F09E /* RWBottomBarItem.swift in Sources */,
 				7CEA35D5232A9D1200FB58C4 /* Identifier.swift in Sources */,
 				CEE20C2F1EA3E5820086F724 /* BlinkingView.swift in Sources */,
 				04185DC529D17E4600AECBFA /* IconTitleSubtitleToggleView.swift in Sources */,
