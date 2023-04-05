@@ -24,14 +24,11 @@ protocol Coordinatable: CoordinatableRoutes {
     func start()
 }
 
-class BaseCoordinator: NSObject,
-                       Coordinatable {
+class BaseCoordinator: NSObject, Coordinatable {
     weak var modalPresenter: ModalPresenter? {
         get {
-            guard let modalPresenter = presenter else {
-                return parentCoordinator?.modalPresenter
-            }
-
+            guard let modalPresenter = presenter else { return parentCoordinator?.modalPresenter }
+            
             return modalPresenter
         }
         set {
@@ -84,7 +81,7 @@ class BaseCoordinator: NSObject,
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
+            self?.decideFlow { showPopup in
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasSwapAccess {
@@ -118,7 +115,7 @@ class BaseCoordinator: NSObject,
     
     func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
+            self?.decideFlow { showPopup in
                 guard showPopup, let profile = UserManager.shared.profile else { return }
                 
                 if profile.kycAccessRights.hasBuyAccess, type == .card {
@@ -184,7 +181,7 @@ class BaseCoordinator: NSObject,
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
+            self?.decideFlow { showPopup in
                 guard showPopup else { return }
                 
                 // TODO: Handle when Sell is ready.
@@ -340,7 +337,7 @@ class BaseCoordinator: NSObject,
     
     // It prepares the next KYC coordinator OR returns true.
     func decideFlow(completion: ((Bool) -> Void)?) {
-        guard DynamicLinksManager.shared.dynamicLinkType == nil else {
+        guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return
         }
@@ -428,12 +425,6 @@ class BaseCoordinator: NSObject,
         navigationController.showToastMessage(model: model,
                                               configuration: configuration,
                                               onTapCallback: onTapCallback)
-    }
-    
-    func showUnderConstruction(_ feat: String) {
-        showPopup(on: navigationController.topViewController,
-                  with: .init(title: .text("Under construction"),
-                              body: "The \(feat.uppercased()) functionality is being developed for You by the awesome RockWallet team. Stay tuned!"))
     }
     
     func showOverlay(with viewModel: TransparentViewModel, completion: (() -> Void)? = nil) {
@@ -556,6 +547,7 @@ class BaseCoordinator: NSObject,
         
         guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
         DynamicLinksManager.shared.dynamicLinkType = nil
+        
         switch deeplink {
         case .home:
             return

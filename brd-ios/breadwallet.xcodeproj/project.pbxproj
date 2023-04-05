@@ -250,7 +250,6 @@
 		7B992F2529279598008C2174 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B992F2429279598008C2174 /* Assets.swift */; };
 		7BB22E49285B8D60003E37AC /* ContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB22E48285B8D60003E37AC /* ContentSizedTableView.swift */; };
 		7BB3B7D729558D33006FF250 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3B7D629558D33006FF250 /* Circle.swift */; };
-		7BB3B7D929558D5F006FF250 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3B7D829558D5F006FF250 /* GradientView.swift */; };
 		7BB3B7DC29558D97006FF250 /* Float+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3B7DA29558D97006FF250 /* Float+Extensions.swift */; };
 		7BB3B7DD29558D97006FF250 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3B7DB29558D97006FF250 /* UITableView+Extensions.swift */; };
 		7BB3B7E029558E93006FF250 /* Roboto-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7BB3B7DF29558E93006FF250 /* Roboto-Medium.otf */; };
@@ -1120,7 +1119,6 @@
 		7B992F2429279598008C2174 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Assets.swift; path = src/Constants/Assets.swift; sourceTree = "<group>"; };
 		7BB22E48285B8D60003E37AC /* ContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedTableView.swift; sourceTree = "<group>"; };
 		7BB3B7D629558D33006FF250 /* Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Circle.swift; path = src/Views/Circle.swift; sourceTree = "<group>"; };
-		7BB3B7D829558D5F006FF250 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GradientView.swift; path = src/Views/GradientView.swift; sourceTree = "<group>"; };
 		7BB3B7DA29558D97006FF250 /* Float+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Extensions.swift"; path = "src/Extensions/Float+Extensions.swift"; sourceTree = "<group>"; };
 		7BB3B7DB29558D97006FF250 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITableView+Extensions.swift"; path = "src/Extensions/UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		7BB3B7DF29558E93006FF250 /* Roboto-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.otf"; path = "Fonts/Roboto-Medium.otf"; sourceTree = "<group>"; };
@@ -3323,7 +3321,6 @@
 				CE8F0AE21EB91BB500AA7642 /* SearchHeaderView.swift */,
 				7C9724651FF07B9A004248C4 /* StatusPip.swift */,
 				CEA9178520C07FBB00F29B31 /* SyncingHeaderView.swift */,
-				7BB3B7D829558D5F006FF250 /* GradientView.swift */,
 				7C230E742037AD52002F0FF1 /* SyncingIndicator.swift */,
 				CE124CFF1E69170900DFA146 /* SyncingView.swift */,
 				CE0BC97F215ACBE100E68B2B /* TokenImageNoBackground.swift */,
@@ -4403,7 +4400,6 @@
 				7ECCA9642875A77300617067 /* OrderView.swift in Sources */,
 				7B39478C297000ED007D405E /* ForgotPasswordStore.swift in Sources */,
 				0470D13229BB2EFC00BB182D /* PaymailDestinationWorker.swift in Sources */,
-				7BB3B7D929558D5F006FF250 /* GradientView.swift in Sources */,
 				7E5CB3A22835090E00EC787E /* Marginable.swift in Sources */,
 				7C9724661FF07B9A004248C4 /* StatusPip.swift in Sources */,
 				C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */,

@@ -61,7 +61,7 @@ class ChartView: UIView {
     private let haptics = UIImpactFeedbackGenerator(style: .light)
     private var rawValues = [HistoryPeriod: [PriceDataPoint]]()
     private var coordinates = [CGPoint]()
-    private let line = GradientView()
+    private let line = UIView()
     private var circleY: NSLayoutConstraint?
     private var circleX: NSLayoutConstraint?
     private var lineX: NSLayoutConstraint?

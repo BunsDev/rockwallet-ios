@@ -274,7 +274,7 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                guard DynamicLinksManager.shared.dynamicLinkType != nil else { return }
+                guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
                 Store.trigger(name: .handleDeeplink)
             }
         }
