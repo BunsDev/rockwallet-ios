@@ -52,6 +52,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
         LogoutWorker().execute { [weak self] result in
             switch result {
             case .success:
+                UserManager.shared.resetUserCredentials()
                 self?.presenter?.presentLogout(actionResponse: .init())
 
             case .failure(let error):
