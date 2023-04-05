@@ -10,144 +10,12 @@
 
 import UIKit
 
-enum SuccessReason: SimpleMessage {
-    case buyCard
-    case buyAch
-    case sell
-    case documentVerification
-    case limitsAuthentication
-    
-    var iconName: String {
-        switch self {
-        case .documentVerification:
-            return Asset.ilVerificationsuccessfull.name
-            
-        default:
-            return Asset.success.name
-        }
-    }
-    
-    var title: String {
-        switch self {
-        case .buyCard:
-            return L10n.Buy.purchaseSuccessTitle
-            
-        case .buyAch:
-            return L10n.Buy.bankAccountSuccessTitle
-            
-        case .sell:
-            return L10n.Sell.withdrawalSuccessTitle
-            
-        case .documentVerification:
-            return L10n.Account.idVerificationApproved
-            
-        case .limitsAuthentication:
-            return L10n.Account.verificationSuccessful
-        }
-    }
-    
-    var description: String {
-        switch self {
-        case .buyCard:
-            return L10n.Buy.purchaseSuccessText
-            
-        case .buyAch:
-            return L10n.Buy.bankAccountSuccessText
-            
-        case .sell:
-            return L10n.Sell.withdrawalSuccessText
-            
-        case .documentVerification:
-            return L10n.Account.startUsingWallet
-            
-        case .limitsAuthentication:
-            return L10n.Account.VerificationSuccessful.description
-        }
-    }
-    
-    var firstButtonTitle: String? {
-        switch self {
-        case .documentVerification, .limitsAuthentication:
-            return L10n.Button.buyDigitalAssets
-            
-        default:
-            return L10n.Swap.backToHome
-        }
-    }
-    
-    var secondButtonTitle: String? {
-        switch self {
-        case .sell:
-            return L10n.Sell.withdrawDetails
-            
-        case .documentVerification:
-            return L10n.Button.receiveDigitalAssets
-            
-        case .limitsAuthentication:
-            return L10n.Swap.backToHome
-            
-        default:
-            return L10n.Buy.details
-        }
-    }
-    
-    var thirdButtonTitle: String? {
-        switch self {
-        case .documentVerification:
-            return L10n.Button.fundWalletWithAch
-            
-        default:
-            return nil
-        }
-    }
-    
-    var secondButtonUnderlined: Bool {
-        switch self {
-        case .documentVerification:
-            return false
-            
-        default:
-            return true
-        }
-    }
-    
-    var thirdButtoUnderlined: Bool {
-        switch self {
-        case .documentVerification:
-            return false
-            
-        default:
-            return true
-        }
-    }
-    
-    var secondButtonConfig: ButtonConfiguration {
-        switch self {
-        case .documentVerification:
-            return Presets.Button.secondaryNoBorder
-            
-        default:
-            return Presets.Button.noBorders
-        }
-    }
-    
-    var thirdButtonConfig: ButtonConfiguration {
-        switch self {
-        case .documentVerification:
-            return Presets.Button.secondaryNoBorder
-            
-        default:
-            return Presets.Button.noBorders
-        }
-    }
-}
-
 extension Scenes {
     static let Success = SuccessViewController.self
 }
 
 class SuccessViewController: BaseInfoViewController {
-    var success: SuccessReason? {
+    var reason: BaseInfoModels.SuccessReason? {
         didSet {
             prepareData()
         }
@@ -156,54 +24,35 @@ class SuccessViewController: BaseInfoViewController {
     var transactionType: TransactionType = .base
     let canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false
     
-    override var imageName: String? { return success?.iconName }
-    override var titleText: String? { return success?.title }
-    override var descriptionText: String? { return success?.description }
+    var didTapMainButton: (() -> Void)?
+    var didTapSecondayButton: (() -> Void)?
+    var didTapThirdButton: (() -> Void)?
+    
+    override var imageName: String? { return reason?.iconName }
+    override var titleText: String? { return reason?.title }
+    override var descriptionText: String? { return reason?.description }
     override var buttonViewModels: [ButtonViewModel] {
         var buttons: [ButtonViewModel] = [
-            .init(title: success?.firstButtonTitle, callback: { [weak self] in
+            .init(title: reason?.firstButtonTitle, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                switch self?.success {
-                case .documentVerification, .limitsAuthentication:
-                    self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem,
-                                               keyStore: self?.dataStore?.keyStore)
-                default:
-                    self?.coordinator?.dismissFlow()
-                }
+                self?.didTapMainButton?()
             }),
-            .init(title: success?.secondButtonTitle, isUnderlined: success?.secondButtonUnderlined ?? true, callback: { [weak self] in
+            .init(title: reason?.secondButtonTitle, isUnderlined: reason?.secondButtonUnderlined ?? true, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                switch self?.success {
-                case .documentVerification:
-                    LoadingView.show()
-                    self?.interactor?.getAssetSelectionData(viewModel: .init())
-                    
-                case .limitsAuthentication:
-                    self?.coordinator?.popToRoot()
-                    
-                default:
-                    self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
-                                                           type: self?.transactionType ?? .base)
-                }
+                self?.didTapSecondayButton?()
+                
+                
             }),
-            .init(title: success?.thirdButtonTitle, isUnderlined: success?.thirdButtoUnderlined ?? true, callback: { [weak self] in
+            .init(title: reason?.thirdButtonTitle, isUnderlined: reason?.thirdButtoUnderlined ?? true, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                switch self?.success {
-                case .documentVerification:
-                    self?.coordinator?.showBuy(type: .ach,
-                                               coreSystem: self?.dataStore?.coreSystem,
-                                               keyStore: self?.dataStore?.keyStore)
-                default:
-                    self?.coordinator?.showExchangeDetails(with: self?.dataStore?.itemId,
-                                                           type: self?.transactionType ?? .base)
-                }
+                self?.didTapThirdButton?()
             })
         ]
         
-        if !canUseAch && success == .documentVerification {
+        if !canUseAch && reason == .documentVerification {
             buttons.removeLast()
         }
         
@@ -212,10 +61,10 @@ class SuccessViewController: BaseInfoViewController {
     
     override var buttonConfigurations: [ButtonConfiguration] {
         var buttons = [Presets.Button.primary,
-                       success?.secondButtonConfig ?? Presets.Button.noBorders,
-                       success?.thirdButtonConfig ?? Presets.Button.noBorders]
+                       reason?.secondButtonConfig ?? Presets.Button.noBorders,
+                       reason?.thirdButtonConfig ?? Presets.Button.noBorders]
         
-        if !canUseAch && success == .documentVerification {
+        if !canUseAch && reason == .documentVerification {
             buttons.removeLast()
         }
         

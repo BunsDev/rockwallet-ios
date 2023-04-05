@@ -11,7 +11,7 @@
 import UIKit
 
 extension Scenes {
-    static let verificationInProgress = VerificationInProgressViewController.self
+    static let VerificationInProgress = VerificationInProgressViewController.self
 }
 
 class VerificationInProgressViewController: CheckListViewController {
@@ -106,16 +106,12 @@ class VerificationInProgressViewController: CheckListViewController {
     override func displayVerificationProgress(responseDisplay: CheckListModels.VerificationInProgress.ResponseDisplay) {
         switch responseDisplay.status {
         case .success:
-            coordinator?.open(scene: Scenes.Success) { vc in
-                vc.success = .documentVerification
-                vc.isModalDismissable = false
-                vc.navigationItem.hidesBackButton = true
-            }
+            coordinator?.showSuccess(reason: .documentVerification,
+                                     isModalDismissable: false,
+                                     hidesBackButton: true)
             
         case .failure(let reason):
-            coordinator?.open(scene: Scenes.Failure) { vc in
-                vc.failure = reason
-            }
+            coordinator?.showFailure(reason: reason)
         }
     }
 }

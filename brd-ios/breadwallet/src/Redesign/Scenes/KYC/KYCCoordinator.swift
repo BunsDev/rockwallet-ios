@@ -138,16 +138,14 @@ extension BaseCoordinator {
     private func forKYC(result: VeriffSdk.Result?) {
         switch result?.status {
         case .done:
-            open(scene: Scenes.verificationInProgress) { vc in
+            open(scene: Scenes.VerificationInProgress) { vc in
                 vc.navigationItem.hidesBackButton = true
             }
             
         case .error(let error):
             print(error.localizedDescription)
             
-            open(scene: Scenes.Failure) { vc in
-                vc.failure = .documentVerification
-            }
+            showFailure(reason: .documentVerification)
             
         default:
             dismissFlow()

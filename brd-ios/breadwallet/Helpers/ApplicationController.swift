@@ -376,7 +376,7 @@ class ApplicationController: Subscriber {
         
         UserManager.shared.refresh { [weak self] result in
             switch result {
-            case .success(let profile):
+            case .success:
                 self?.triggerDeeplinkHandling()
                 
             case .failure(let error):
@@ -508,20 +508,13 @@ class ApplicationController: Subscriber {
     
     private func handleBiometricStatus(approved: Bool) {
         LoadingView.hideIfNeeded()
+        
         guard approved else {
-            coordinator?.open(scene: Scenes.Failure) { vc in
-                vc.failure = .limitsAuthentication
-                vc.isModalDismissable = false
-                vc.navigationItem.hidesBackButton = true
-            }
+            coordinator?.showFailure(reason: .limitsAuthentication)
             return
         }
         
-        coordinator?.open(scene: Scenes.Success) { vc in
-            vc.success = .limitsAuthentication
-            vc.isModalDismissable = false
-            vc.navigationItem.hidesBackButton = true
-        }
+        coordinator?.showSuccess(reason: .limitsAuthentication)
     }
     
     /// Creates an instance of the home screen. This may be invoked from StartFlowPresenter.presentOnboardingFlow().

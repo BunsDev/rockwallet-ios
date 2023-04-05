@@ -163,7 +163,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
         case .failed:
-            coordinator?.showFailure(failure: .swap, availablePayments: nil)
+            coordinator?.showFailure(reason: .swap)
             
         default:
             coordinator?.showToastMessage(with: responseDisplay.error,

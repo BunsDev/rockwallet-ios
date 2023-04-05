@@ -19,9 +19,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         UserManager.shared.refresh { [weak self] result in
             switch result {
-            case .success(let data):
-                self?.dataStore?.profile = data
-                
+            case .success:
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item()))
                 
             case .failure(let error):
@@ -62,7 +60,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
     }
     
     func showVerificationInfo(viewAction: ProfileModels.VerificationInfo.ViewAction) {
-        presenter?.presentVerificationInfo(actionResponse: .init(status: dataStore?.profile?.status))
+        presenter?.presentVerificationInfo(actionResponse: .init(status: UserManager.shared.profile?.status))
     }
     
     func navigate(viewAction: ProfileModels.Navigate.ViewAction) {

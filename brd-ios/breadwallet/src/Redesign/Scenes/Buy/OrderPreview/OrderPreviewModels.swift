@@ -157,13 +157,13 @@ enum OrderPreviewModels {
         
         struct ResponseDisplay {
             var paymentReference: String
-            var reason: SuccessReason
+            var reason: BaseInfoModels.SuccessReason
         }
     }
     
     struct Failure {
         struct ResponseDisplay {
-            var reason: FailureReason
+            var reason: BaseInfoModels.FailureReason
         }
     }
     

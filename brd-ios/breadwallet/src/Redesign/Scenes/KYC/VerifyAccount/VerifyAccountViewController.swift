@@ -10,6 +10,7 @@ extension Scenes {
 
 class VerifyAccountViewController: BaseInfoViewController {
     var flow: ProfileModels.ExchangeFlow?
+    
     var didTapMainButton: (() -> Void)?
     var didTapSecondayButton: (() -> Void)?
     
@@ -24,6 +25,7 @@ class VerifyAccountViewController: BaseInfoViewController {
             return [
                 .init(title: L10n.Swap.backToHome, callback: { [weak self] in
                     self?.shouldDismiss = true
+                    
                     self?.didTapMainButton?()
                 }),
                 .init(title: L10n.ComingSoon.Buttons.contactSupport, isUnderlined: true, callback: { [weak self] in
@@ -35,10 +37,12 @@ class VerifyAccountViewController: BaseInfoViewController {
             return [
                 .init(title: L10n.Button.verify, callback: { [weak self] in
                     self?.shouldDismiss = true
+                    
                     self?.didTapMainButton?()
                 }),
                 .init(title: L10n.Button.maybeLater, isUnderlined: true, callback: { [weak self] in
                     self?.shouldDismiss = true
+                    
                     self?.didTapSecondayButton?()
                 })
             ]
