@@ -620,6 +620,8 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "BitID.title", fallback: "BitID Authentication Request")
   }
   internal enum Button {
+    /// Back
+    internal static let back = L10n.tr("Localizable", "Button.Back", fallback: "Back")
     /// As in "(tap here to) buy (bitcoin)"
     internal static let buy = L10n.tr("Localizable", "Button.buy", fallback: "Buy")
     /// Buy digital assets
