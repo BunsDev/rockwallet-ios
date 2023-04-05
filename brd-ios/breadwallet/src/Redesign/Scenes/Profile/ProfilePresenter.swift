@@ -63,6 +63,11 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
         viewController?.displayNavigation(responseDisplay: .init(item: item))
     }
     
+    func presentLogout(actionResponse: ProfileModels.Logout.ActionResponse) {
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Account.logoutMessage)),
+                                                              config: Presets.InfoView.verification))
+    }
+    
     // MARK: - Additional Helpers
     
 }

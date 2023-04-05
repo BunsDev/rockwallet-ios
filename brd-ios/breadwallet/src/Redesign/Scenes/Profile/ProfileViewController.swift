@@ -143,6 +143,10 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         case .security:
             coordinator?.showSecuirtySettings()
             
+        case .logout:
+            LoadingView.show()
+            interactor?.logout(viewAction: .init())
+            
         }
     }
     
@@ -150,6 +154,17 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards,
                                       selected: nil,
                                       fromBuy: false)
+    }
+    
+    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        LoadingView.hideIfNeeded()
+        
+        coordinator?.showToastMessage(with: responseDisplay.error,
+                                      model: responseDisplay.model,
+                                      configuration: responseDisplay.config,
+                                      onTapCallback: { [weak self] in
+            self?.coordinator?.dismissFlow()
+        })
     }
     
     // MARK: - Additional Helpers

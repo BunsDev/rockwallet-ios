@@ -131,6 +131,10 @@
 /* Loading Wallet Message */
 "Account.loadingMessage" = "Loading Wallet";
 
+"Account.Logout" = "Log out";
+
+"Account.LogoutMessage" = "You’ve been successfully logged out you RockWallet account. Your self-custodial wallet is still linked to this device.";
+
 "Account.MandatoryFields" = "(*)Mandatory Fields";
 
 /* Verify your account to get full access to the wallet message */
