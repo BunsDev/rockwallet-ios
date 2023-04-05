@@ -18,7 +18,6 @@ class DynamicLinksManager {
     }
     
     enum DynamicLinkType: String {
-        // User Account
         case setPassword = "op=password"
         case home = "home"
         case profile = "profile"
@@ -29,13 +28,15 @@ class DynamicLinksManager {
     var code: String?
     
     static func getDynamicLinkType(from url: URL) -> DynamicLinkType? {
-        if url.absoluteString.contains(DynamicLinkType.setPassword.rawValue) {
+        let url = url.absoluteString
+        
+        if url.contains(DynamicLinkType.setPassword.rawValue) {
             return .setPassword
-        } else if url.absoluteString.contains(DynamicLinkType.home.rawValue) {
+        } else if url.contains(DynamicLinkType.home.rawValue) {
             return .home
-        } else if url.absoluteString.contains(DynamicLinkType.profile.rawValue) {
+        } else if url.contains(DynamicLinkType.profile.rawValue) {
             return .profile
-        } else if url.absoluteString.contains(DynamicLinkType.swap.rawValue) {
+        } else if url.contains(DynamicLinkType.swap.rawValue) {
             return .swap
         }
         
@@ -52,15 +53,12 @@ class DynamicLinksManager {
             handleReSetPassword(with: url)
             
         case .home:
-            // TODO: In future handle parameters
             DynamicLinksManager.shared.dynamicLinkType = .home
             
         case .profile:
-            // TODO: In future handle parameters
             DynamicLinksManager.shared.dynamicLinkType = .profile
             
         case .swap:
-            // TODO: In future handle parameters
             DynamicLinksManager.shared.dynamicLinkType = .swap
             
         default:

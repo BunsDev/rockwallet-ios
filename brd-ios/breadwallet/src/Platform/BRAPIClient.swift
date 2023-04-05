@@ -263,15 +263,13 @@ open class BRAPIClient: NSObject, URLSessionDelegate, URLSessionTaskDelegate, BR
                         let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                         self.log("POST /token json response: \(json)")
                         if let topObj = json as? [String: Any],
-                            let walletTokenValue = topObj["token"] as? String,
-                            let uid = topObj["userID"] as? String {
+                            let walletTokenValue = topObj["token"] as? String {
                             // success! store it in the keychain
                             
                             UserDefaults.walletTokenValue = walletTokenValue
                             
                             var kcData = self.authenticator.apiUserAccount ?? [AnyHashable: Any]()
                             kcData["token"] = walletTokenValue
-                            kcData["userID"] = uid
                             self.authenticator.apiUserAccount = kcData
                         }
                     } catch let e {

@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-class AssetDetailsHeaderView: UIView, GradientDrawable, Subscriber {
+class AssetDetailsHeaderView: UIView, Subscriber {
     // MARK: - Views
     
     private lazy var intrinsicSizeView: UIView = {
