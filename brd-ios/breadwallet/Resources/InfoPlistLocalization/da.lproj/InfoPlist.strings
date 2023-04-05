@@ -651,6 +651,8 @@
 /* BitID Authentication Request alert view title */
 "BitID.title" = "BitID godkendelsesanmodning";
 
+"Button.Back" = "Back";
+
 /* As in "(tap here to) buy (bitcoin)" */
 "Button.buy" = "Køb";
 

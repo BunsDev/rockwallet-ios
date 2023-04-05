@@ -651,6 +651,8 @@
 /* BitID Authentication Request alert view title */
 "BitID.title" = "BitID 인증 요청";
 
+"Button.Back" = "Back";
+
 /* As in "(tap here to) buy (bitcoin)" */
 "Button.buy" = "구매하기";
 

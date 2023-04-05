@@ -651,6 +651,8 @@
 /* BitID Authentication Request alert view title */
 "BitID.title" = "Pedido de autenticação BitID";
 
+"Button.Back" = "Back";
+
 /* As in "(tap here to) buy (bitcoin)" */
 "Button.buy" = "Comprar";
 
