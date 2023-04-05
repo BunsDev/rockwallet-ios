@@ -393,7 +393,7 @@ class ApplicationController: Subscriber {
     }
     
     private func triggerDeeplinkHandling() {
-        guard UserManager.shared.profile != nil else {
+        guard UserManager.shared.profile != nil || UserManager.shared.profile?.isMigrated == true else {
             coordinator?.handleUserAccount()
             return
         }
