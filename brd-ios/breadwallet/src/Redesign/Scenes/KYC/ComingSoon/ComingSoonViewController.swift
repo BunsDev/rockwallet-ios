@@ -49,7 +49,7 @@ enum Reason: SimpleMessage {
     var firstButtonTitle: String? {
         switch self {
         case .swap, .buy, .sell:
-            return L10n.Swap.backToHome
+            return L10n.Button.back
             
         case .buyAch:
             return L10n.Buy.buyWithCardButton
@@ -62,7 +62,7 @@ enum Reason: SimpleMessage {
             return L10n.ComingSoon.Buttons.contactSupport
             
         case .buyAch:
-            return L10n.Swap.backToHome
+            return L10n.Button.back
             
         case .sell:
             return nil
