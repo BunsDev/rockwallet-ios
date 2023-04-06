@@ -43,7 +43,6 @@ class SuccessViewController: BaseInfoViewController {
                 
                 self?.didTapSecondayButton?()
                 
-                
             }),
             .init(title: reason?.thirdButtonTitle, isUnderlined: reason?.thirdButtoUnderlined ?? true, callback: { [weak self] in
                 self?.shouldDismiss = true
@@ -52,9 +51,7 @@ class SuccessViewController: BaseInfoViewController {
             })
         ]
         
-        if !canUseAch && reason == .documentVerification {
-            buttons.removeLast()
-        }
+        buttons.removeAll(where: { $0.title == nil })
         
         return buttons
     }
@@ -63,10 +60,6 @@ class SuccessViewController: BaseInfoViewController {
         var buttons = [Presets.Button.primary,
                        reason?.secondButtonConfig ?? Presets.Button.noBorders,
                        reason?.thirdButtonConfig ?? Presets.Button.noBorders]
-        
-        if !canUseAch && reason == .documentVerification {
-            buttons.removeLast()
-        }
         
         return buttons
     }

@@ -55,6 +55,7 @@ class FailureViewController: BaseInfoViewController {
     
     func handleBiometricStatus(approved: Bool) {
         LoadingView.hideIfNeeded()
+        
         guard approved else {
             coordinator?.showFailure(reason: .limitsAuthentication)
             return
