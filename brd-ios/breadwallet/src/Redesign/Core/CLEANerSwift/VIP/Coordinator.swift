@@ -93,11 +93,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     
                     return
                 } else if profile.status.isKYCLocationRestricted {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { [weak self] vc in
-                        self?.handleComingSoonNavigation(vc)
-                        
-                        vc?.reason = .swap
-                    }
+                    self?.showComingSoon(reason: .swap)
                     
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc {
@@ -105,11 +101,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     
                     return
                 } else {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { [weak self] vc in
-                        self?.handleComingSoonNavigation(vc)
-                        
-                        vc?.reason = .swap
-                    }
+                    self?.showComingSoon(reason: .swap)
                     
                     return
                 }
@@ -132,11 +124,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     
                     return
                 } else if profile.status.isKYCLocationRestricted, type == .card {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { [weak self] vc in
-                        self?.handleComingSoonNavigation(vc)
-                        
-                        vc?.reason = .buy
-                    }
+                    self?.showComingSoon(reason: .buy)
                     
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc, type == .card {
@@ -144,11 +132,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     
                     return
                 } else if type == .card {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { [weak self] vc in
-                        self?.handleComingSoonNavigation(vc)
-                        
-                        vc?.reason = .buy
-                    }
+                    self?.showComingSoon(reason: .buy)
                     
                     return
                 }
@@ -163,13 +147,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     
                     return
                 } else if profile.status.isKYCLocationRestricted == true, type == .ach {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { [weak self] vc in
-                        self?.handleComingSoonNavigation(vc)
-                        
-                        vc?.reason = .buyAch
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
+                    self?.showComingSoon(reason: .buyAch, coreSystem: coreSystem, keyStore: keyStore)
                     
                     return
                 } else if profile.kycAccessRights.restrictionReason == .kyc, type == .ach {
@@ -177,13 +155,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     
                     return
                 } else if type == .ach {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.ComingSoon) { [weak self] vc in
-                        self?.handleComingSoonNavigation(vc)
-                        
-                        vc?.reason = .buyAch
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
+                    self?.showComingSoon(reason: .buyAch, coreSystem: coreSystem, keyStore: keyStore)
                     
                     return
                 }
@@ -524,14 +496,6 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showComingSoon(reason: BaseInfoModels.ComingSoonReason?) {
-        open(scene: Scenes.ComingSoon) { [weak self] vc in
-            self?.handleComingSoonNavigation(vc)
-            
-            vc.reason = reason
-        }
-    }
-    
     func showFailure(reason: BaseInfoModels.FailureReason?,
                      isModalDismissable: Bool = false,
                      hidesBackButton: Bool = true,
@@ -562,6 +526,23 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.navigationItem.rightBarButtonItem = nil
             vc.dataStore?.itemId = itemId
             vc.transactionType = transactionType ?? .base
+        }
+    }
+    
+    func showComingSoon(reason: BaseInfoModels.ComingSoonReason?,
+                        isModalDismissable: Bool = false,
+                        hidesBackButton: Bool = true,
+                        coreSystem: CoreSystem? = nil,
+                        keyStore: KeyStore? = nil) {
+        open(scene: Scenes.ComingSoon) { [weak self] vc in
+            self?.handleComingSoonNavigation(vc)
+            
+            vc.reason = reason
+            vc.isModalDismissable = isModalDismissable
+            vc.navigationItem.hidesBackButton = hidesBackButton
+            vc.navigationItem.rightBarButtonItem = nil
+            vc.dataStore?.coreSystem = coreSystem
+            vc.dataStore?.keyStore = keyStore
         }
     }
     
