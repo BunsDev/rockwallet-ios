@@ -90,18 +90,34 @@ class BaseTableViewController<C: CoordinatableRoutes,
 
     override func prepareData() {
         super.prepareData()
-        (interactor as? FetchViewActions)?.getData(viewAction: .init())
+        (interactor as? (any FetchViewActions))?.getData(viewAction: .init())
     }
 
     // MARK: ResponseDisplay
+    
+    typealias DataSource = UITableViewDiffableDataSource<AnyHashable, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>
+    
+    var dataSource: DataSource?
+    
     func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
         sections = responseDisplay.sections
         sectionRows = responseDisplay.sectionRows
         
-        // TODO: DiffableDataSource
-        UIView.transition(with: tableView, duration: Presets.Animation.short.rawValue, options: .transitionCrossDissolve) { [weak self] in
-            self?.tableView.reloadData()
+        dataSource?.defaultRowAnimation = .fade
+        dataSource = DataSource(tableView: tableView) { [weak self] tableView, indexPath, _ in
+            return self?.tableView(tableView, cellForRowAt: indexPath)
         }
+        
+        var snapshot = Snapshot()
+        
+        snapshot.appendSections(sections)
+        for section in sections {
+            guard let aaaa = sectionRows[section] as? [AnyHashable] else { return }
+            snapshot.appendItems([aaaa], toSection: section)
+        }
+        
+        dataSource?.apply(snapshot, animatingDifferences: true)
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
         LoadingView.hideIfNeeded()
@@ -109,14 +125,14 @@ class BaseTableViewController<C: CoordinatableRoutes,
 
     // MARK: UITableViewDataSource
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let type = (sections[section] as? Sectionable)?.header
+        let type = (sections[section] as? (any Sectionable))?.header
         return self.tableView(tableView, accessoryViewForType: type, for: section) { [weak self] in
             self?.tableView(tableView, didSelectHeaderIn: section)
         }
     }
 
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let type = (sections[section] as? Sectionable)?.footer
+        let type = (sections[section] as? (any Sectionable))?.footer
         return self.tableView(tableView, accessoryViewForType: type, for: section) { [weak self] in
             self?.tableView(tableView, didSelectFooterIn: section)
         }

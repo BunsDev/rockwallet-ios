@@ -369,13 +369,6 @@
 		7E5B306028A680300065D2D8 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5B305F28A680300065D2D8 /* SuccessViewController.swift */; };
 		7E5B306228A681760065D2D8 /* FailureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5B306128A681760065D2D8 /* FailureViewController.swift */; };
 		7E5CB32D2834E63400EC787E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7E5CB32C2834E63400EC787E /* SnapKit */; };
-		7E5CB37C2835090E00EC787E /* DemoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3312835090D00EC787E /* DemoPresenter.swift */; };
-		7E5CB37D2835090E00EC787E /* DemoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3322835090D00EC787E /* DemoCoordinator.swift */; };
-		7E5CB37E2835090E00EC787E /* DemoVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3332835090D00EC787E /* DemoVIP.swift */; };
-		7E5CB37F2835090E00EC787E /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3342835090D00EC787E /* DemoViewController.swift */; };
-		7E5CB3802835090E00EC787E /* DemoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3352835090D00EC787E /* DemoInteractor.swift */; };
-		7E5CB3812835090E00EC787E /* DemoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3362835090D00EC787E /* DemoStore.swift */; };
-		7E5CB3822835090E00EC787E /* DemoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3372835090D00EC787E /* DemoModels.swift */; };
 		7E5CB3832835090E00EC787E /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB33A2835090D00EC787E /* Presets.swift */; };
 		7E5CB3852835090E00EC787E /* BackgroundConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB33C2835090D00EC787E /* BackgroundConfiguration.swift */; };
 		7E5CB3862835090E00EC787E /* ShadowConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB33D2835090D00EC787E /* ShadowConfiguration.swift */; };
@@ -406,7 +399,6 @@
 		7E5CB3A22835090E00EC787E /* Marginable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3662835090D00EC787E /* Marginable.swift */; };
 		7E5CB3A32835090E00EC787E /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3672835090E00EC787E /* Reusable.swift */; };
 		7E5CB3A42835090E00EC787E /* StateDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3682835090E00EC787E /* StateDisplayable.swift */; };
-		7E5CB3A52835090E00EC787E /* SubviewConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB3692835090E00EC787E /* SubviewConfigurable.swift */; };
 		7E5CB3A62835090E00EC787E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB36B2835090E00EC787E /* ThemeManager.swift */; };
 		7E5CB3A72835090E00EC787E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB36C2835090E00EC787E /* Fonts.swift */; };
 		7E5CB3A82835090E00EC787E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB36D2835090E00EC787E /* Colors.swift */; };
@@ -1231,13 +1223,6 @@
 		7E5B305A28A67FC60065D2D8 /* SwapInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapInfoViewController.swift; sourceTree = "<group>"; };
 		7E5B305F28A680300065D2D8 /* SuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 		7E5B306128A681760065D2D8 /* FailureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureViewController.swift; sourceTree = "<group>"; };
-		7E5CB3312835090D00EC787E /* DemoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoPresenter.swift; sourceTree = "<group>"; };
-		7E5CB3322835090D00EC787E /* DemoCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoCoordinator.swift; sourceTree = "<group>"; };
-		7E5CB3332835090D00EC787E /* DemoVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoVIP.swift; sourceTree = "<group>"; };
-		7E5CB3342835090D00EC787E /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
-		7E5CB3352835090D00EC787E /* DemoInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoInteractor.swift; sourceTree = "<group>"; };
-		7E5CB3362835090D00EC787E /* DemoStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoStore.swift; sourceTree = "<group>"; };
-		7E5CB3372835090D00EC787E /* DemoModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoModels.swift; sourceTree = "<group>"; };
 		7E5CB33A2835090D00EC787E /* Presets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presets.swift; sourceTree = "<group>"; };
 		7E5CB33C2835090D00EC787E /* BackgroundConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundConfiguration.swift; sourceTree = "<group>"; };
 		7E5CB33D2835090D00EC787E /* ShadowConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowConfiguration.swift; sourceTree = "<group>"; };
@@ -1268,7 +1253,6 @@
 		7E5CB3662835090D00EC787E /* Marginable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marginable.swift; sourceTree = "<group>"; };
 		7E5CB3672835090E00EC787E /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		7E5CB3682835090E00EC787E /* StateDisplayable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateDisplayable.swift; sourceTree = "<group>"; };
-		7E5CB3692835090E00EC787E /* SubviewConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubviewConfigurable.swift; sourceTree = "<group>"; };
 		7E5CB36B2835090E00EC787E /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		7E5CB36C2835090E00EC787E /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		7E5CB36D2835090E00EC787E /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -2438,23 +2422,8 @@
 				7E52B79D286EF4CE003D2249 /* Swap */,
 				7EF2187D2862F07A006ABCC1 /* Buy */,
 				7EF45F7C2847671F00D1F7B0 /* KYC */,
-				7E5CB3302835090D00EC787E /* Demo */,
 			);
 			path = Scenes;
-			sourceTree = "<group>";
-		};
-		7E5CB3302835090D00EC787E /* Demo */ = {
-			isa = PBXGroup;
-			children = (
-				7E5CB3312835090D00EC787E /* DemoPresenter.swift */,
-				7E5CB3322835090D00EC787E /* DemoCoordinator.swift */,
-				7E5CB3332835090D00EC787E /* DemoVIP.swift */,
-				7E5CB3342835090D00EC787E /* DemoViewController.swift */,
-				7E5CB3352835090D00EC787E /* DemoInteractor.swift */,
-				7E5CB3362835090D00EC787E /* DemoStore.swift */,
-				7E5CB3372835090D00EC787E /* DemoModels.swift */,
-			);
-			path = Demo;
 			sourceTree = "<group>";
 		};
 		7E5CB3382835090D00EC787E /* Core */ = {
@@ -2603,7 +2572,6 @@
 				7E5CB3662835090D00EC787E /* Marginable.swift */,
 				7E5CB3672835090E00EC787E /* Reusable.swift */,
 				7E5CB3682835090E00EC787E /* StateDisplayable.swift */,
-				7E5CB3692835090E00EC787E /* SubviewConfigurable.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4111,7 +4079,6 @@
 				7E5CB3AD2835090E00EC787E /* WrapperTableViewCell.swift in Sources */,
 				3AFAD9562569F722005853E8 /* GiftingStatusUpdater.swift in Sources */,
 				7E8E979D283F4830008606B0 /* ProfileInteractor.swift in Sources */,
-				7E5CB37C2835090E00EC787E /* DemoPresenter.swift in Sources */,
 				CE5F21DB1E4A93A500C47B8E /* LoginTransitionDelegate.swift in Sources */,
 				71C44E942264BE2C00EF4459 /* BaseRecoveryKeyViewController.swift in Sources */,
 				0452C93729D42FC600CCC8DA /* BlocksatoshiEndpoints.swift in Sources */,
@@ -4144,14 +4111,11 @@
 				CEA362681E00EE320061FC0E /* CameraGuideView.swift in Sources */,
 				7E8F7E47293F6AE50058019B /* SellModels.swift in Sources */,
 				CEDB0B0722D445DB00331FFC /* ChartView.swift in Sources */,
-				7E5CB3822835090E00EC787E /* DemoModels.swift in Sources */,
-				7E5CB37D2835090E00EC787E /* DemoCoordinator.swift in Sources */,
 				C491ABF928A6395D00E79954 /* OrderPreviewPresenter.swift in Sources */,
 				C4CCFCEA29D43DB600E38B3A /* AuthenticatorAppVIP.swift in Sources */,
 				CEBF32F61DDCEAF900348FC6 /* TransactionsTableViewController.swift in Sources */,
 				7BB3B7DD29558D97006FF250 /* UITableView+Extensions.swift in Sources */,
 				3ADE270C248F35B80023B770 /* ResolvedAddressLabel.swift in Sources */,
-				7E5CB37E2835090E00EC787E /* DemoVIP.swift in Sources */,
 				049CE73F29DD59C0009D0F2D /* PaymailDestinationWorker.swift in Sources */,
 				CE25BF8D1DF3B8A500BC67B6 /* InViewAlert.swift in Sources */,
 				7BDB49E72806CCBB0031F015 /* Bundle+Extensions.swift in Sources */,
@@ -4239,7 +4203,6 @@
 				CEEC70831E90C07C00EF788E /* MenuItem.swift in Sources */,
 				7EC37909281C098900028CA1 /* ErrorStruct.swift in Sources */,
 				CE92F9F01DED0C790046B516 /* PresentModalAnimator.swift in Sources */,
-				7E5CB3812835090E00EC787E /* DemoStore.swift in Sources */,
 				D7EA320929C0805B00D9FD4F /* BiometricStatusHelper.swift in Sources */,
 				CEA2480023DE819D00B18BC6 /* AttributeCell.swift in Sources */,
 				7CBD578F2107EB560042C388 /* PairedWalletData.swift in Sources */,
@@ -4382,7 +4345,6 @@
 				7ECCA9952874266200F99368 /* FESegmentControl.swift in Sources */,
 				7ED427F428755CB200AA19A8 /* ExchangeDetailsInteractor.swift in Sources */,
 				7EE91A5B2968310100331B1F /* KYCAddressPresenter.swift in Sources */,
-				7E5CB3A52835090E00EC787E /* SubviewConfigurable.swift in Sources */,
 				C41816A729D5708B002D31F8 /* EnterCodeView.swift in Sources */,
 				7ED427F128755CB200AA19A8 /* ExchangeDetailsModels.swift in Sources */,
 				C491ABFD28A6395D00E79954 /* OrderPreviewInteractor.swift in Sources */,
@@ -4494,7 +4456,6 @@
 				CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */,
 				7B2E5053289A5F02008CACD8 /* AddCardViewController.swift in Sources */,
 				71C44E90225D135E00EF4459 /* ConfirmRecoveryKeyViewController.swift in Sources */,
-				7E5CB3802835090E00EC787E /* DemoInteractor.swift in Sources */,
 				C491AC0028A6432500E79954 /* BuyOrderView.swift in Sources */,
 				7CF913BE1FFC7DC30085CB70 /* TxMemoCell.swift in Sources */,
 				3A0063BE2509D36500C74A97 /* ExtendedTouchArea.swift in Sources */,
@@ -4515,7 +4476,6 @@
 				7B54E59E27F4A2B0002DD1E4 /* DatePickerViewController.swift in Sources */,
 				7C0A3ACE210A0E1D006C2783 /* NotificationAuthorizer.swift in Sources */,
 				7E5CB3A32835090E00EC787E /* Reusable.swift in Sources */,
-				7E5CB37F2835090E00EC787E /* DemoViewController.swift in Sources */,
 				7CA3BC302006864C00517BF7 /* Currency.swift in Sources */,
 				7E5B305B28A67FC60065D2D8 /* SwapInfoViewController.swift in Sources */,
 				7C72D134226625130091B185 /* CoreSystem.swift in Sources */,

@@ -30,7 +30,7 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
             .confirm
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .name: [
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Buy.firstName,
                                                                 value: item.firstName),

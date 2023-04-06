@@ -30,7 +30,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                      networkFee: dataStore?.networkFee,
                                      card: dataStore?.card,
                                      isAchAccount: dataStore?.isAchAccount)
-            presenter?.presentData(actionResponse: .init(item: item))
+            presenter?.presentData(actionResponse: .init(item: item as? (any Hashable)))
             return
         }
         

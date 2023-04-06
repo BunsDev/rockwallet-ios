@@ -94,7 +94,7 @@ extension UIViewController {
         popup.layer.shadowOffset = .zero
         popup.layoutIfNeeded()
         
-        popup.configure(with: model.config ?? Presets.Popup.white)
+//        popup.configure(with: model.config ?? Presets.Popup.white)
         popup.setup(with: model)
         
         popup.buttonCallbacks = callbacks

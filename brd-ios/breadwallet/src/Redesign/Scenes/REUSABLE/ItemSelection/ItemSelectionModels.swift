@@ -8,15 +8,23 @@
 
 import UIKit
 
-protocol ItemSelectable {
+protocol ItemSelectable: Hashable {
     var displayName: String? { get }
     var displayImage: ImageViewModel? { get }
 }
 
-enum ItemSelectionModels {
+enum ItemSelectionModels: Hashable {
 
-    struct Item {
-        var items: [ItemSelectable]?
+    struct Item: Hashable {
+        static func == (lhs: ItemSelectionModels.Item, rhs: ItemSelectionModels.Item) -> Bool {
+            return lhs.isAddingEnabled == rhs.isAddingEnabled
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(isAddingEnabled.hashValue)
+        }
+        
+        var items: [any ItemSelectable]?
         var isAddingEnabled: Bool?
     }
     

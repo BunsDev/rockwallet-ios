@@ -31,7 +31,7 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
         }
         let navigationModel = navigationItems.compactMap { $0.model }
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .profile: [
                 ProfileViewModel(name: profile.email, image: Asset.avatar.name)
             ],

@@ -69,7 +69,7 @@ extension Interactor where Self: CountriesAndStatesViewActions,
         guard viewAction.code == nil else {
             dataStore?.state = .init(iso2: viewAction.code ?? "", name: viewAction.state ?? "")
             presenter?.presentData(actionResponse: .init(item: dataStore))
-             return
+            return
         }
         
         let states = dataStore?.countries.first(where: { $0.iso2 == Constant.countryUS })?.states

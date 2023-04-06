@@ -26,7 +26,7 @@ final class ForgotPasswordPresenter: NSObject, Presenter, ForgotPasswordActionRe
             .email
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .email: [TextFieldModel(title: L10n.Account.email, value: value)],
             .notice: [LabelViewModel.text(L10n.Account.resetPasswordMessage)]
         ]

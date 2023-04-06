@@ -166,7 +166,7 @@ class RedeemGiftViewController: UIViewController, Subscriber {
         }
     }
     
-    private func handleGetBalance(amount: WalletKit.Amount?) {
+    private func handleGetBalance(amount: CryptoAmount?) {
         guard let amount = amount, let btc = Currencies.shared.btc else { return }
         let fiatAmount = Amount(cryptoAmount: amount, currency: btc)
         UIView.animate(withDuration: 0.2, animations: {

@@ -57,7 +57,7 @@ protocol BillingAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
 }
 
 protocol BillingAddressDataPassing {
-    var dataStore: BillingAddressDataStore? { get }
+    var dataStore: (any BillingAddressDataStore)? { get }
 }
 
 protocol BillingAddressRoutes: CoordinatableRoutes, CountriesAndStatesRoutes {}

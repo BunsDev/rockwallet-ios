@@ -83,7 +83,7 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     func tableView(_ tableView: UITableView, addItemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ItemSelectable
+              let model = sectionRows[section]?[indexPath.row] as? (any ItemSelectable)
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -97,7 +97,7 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ItemSelectable
+              let model = sectionRows[section]?[indexPath.row] as? (any ItemSelectable)
         else { return UITableViewCell() }
         
         cell.setup { view in

@@ -7,8 +7,7 @@
 
 import UIKit
 
-// TODO: make equatable for decreasing updates
-protocol ViewModel {}
+protocol ViewModel: Hashable {}
 
 protocol ObjectConfigurable: NSObject {
     associatedtype C: Configurable

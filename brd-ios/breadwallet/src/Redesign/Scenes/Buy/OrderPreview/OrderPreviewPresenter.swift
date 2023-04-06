@@ -67,7 +67,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             sections.insert(.achNotification, at: 0)
         }
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .achNotification: [
                 achNotificationModel
             ],

@@ -34,7 +34,7 @@ final class KYCAddressPresenter: NSObject, Presenter, KYCAddressActionResponses 
         
         let state = item.state?.name.isEmpty == true ? item.state?.iso2 : item.state?.name
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .mandatory: [LabelViewModel.text(L10n.Account.mandatoryFields)],
             .address: [
                 TextFieldModel(title: "\(L10n.Buy.address)*",

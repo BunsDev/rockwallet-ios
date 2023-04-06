@@ -256,7 +256,7 @@ class UpdatePinViewController: UIViewController, Subscriber {
     func faqButtonPressed() {
         let model = PopupViewModel(title: .text(L10n.UpdatePin.Alert.title),
                                    body: L10n.UpdatePin.Alert.body,
-                                   config: Presets.Popup.whiteCentered,
+//                                   config: Presets.Popup.whiteCentered,
                                    closeButton: .init(image: Asset.close.image))
         showInfoPopup(with: model)
     }

@@ -36,7 +36,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
         
-        let sectionRows: [ExchangeModels.Section: [Any]] = [
+        let sectionRows: [ExchangeModels.Section: [any Hashable]] = [
             .rateAndTimer: [
                 exchangeRateViewModel
             ],

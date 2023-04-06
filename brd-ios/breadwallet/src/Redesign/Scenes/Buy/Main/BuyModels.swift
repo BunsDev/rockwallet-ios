@@ -10,7 +10,7 @@ import UIKit
 
 enum BuyModels {
     
-    struct Item {
+    struct Item: Hashable {
         var type: PaymentCard.PaymentType?
         var achEnabled: Bool?
     }

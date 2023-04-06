@@ -9,7 +9,7 @@
 import UIKit
 
 enum RegistrationConfirmationModels {
-    typealias Item = (email: String?, phoneNumber: String?, confirmationType: RegistrationConfirmationModels.ConfirmationType)
+    typealias Item = RegistrationConfirmationModels.ConfirmationType
     
     enum Section: Sectionable {
         case image
@@ -22,7 +22,7 @@ enum RegistrationConfirmationModels {
         var footer: AccessoryType? { return nil }
     }
     
-    enum ConfirmationType {
+    enum ConfirmationType: Hashable {
         case account
         case twoStep
         case authenticationCode

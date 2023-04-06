@@ -29,7 +29,7 @@ protocol AuthenticatorAppDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol AuthenticatorAppDataPassing {
-    var dataStore: AuthenticatorAppDataStore? { get }
+    var dataStore: (any AuthenticatorAppDataStore)? { get }
 }
 
 protocol AuthenticatorAppRoutes: CoordinatableRoutes {

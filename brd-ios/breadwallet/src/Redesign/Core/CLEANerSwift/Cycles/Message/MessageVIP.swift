@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol MessageActionResponses {
+protocol MessageActionResponses: Hashable {
     func presentError(actionResponse: MessageModels.Errors.ActionResponse)
     func presentNotification(actionResponse: MessageModels.Notification.ActionResponse)
     func presentAlert(actionResponse: MessageModels.Alert.ActionResponse)
 }
 
-protocol MessageResponseDisplays {
+protocol MessageResponseDisplays: Hashable {
     func displayMessage(responseDisplay: MessageModels.ResponseDisplays)
 }

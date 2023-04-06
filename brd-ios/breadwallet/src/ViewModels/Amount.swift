@@ -13,7 +13,18 @@ typealias CryptoAmount = WalletKit.Amount
 
 /// View model for representing the WalletKit.Amount model
 /// with extended currency, fiat conversion and formatting information
-public struct Amount {
+public struct Amount: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(currency.hashValue)
+        hasher.combine(cryptoAmount.hashValue)
+        hasher.combine(rate?.hashValue)
+        hasher.combine(minimumFractionDigits?.hashValue)
+        hasher.combine(maximumFractionDigits.hashValue)
+        hasher.combine(negative.hashValue)
+        hasher.combine(isZero.hashValue)
+        hasher.combine(locale.hashValue)
+    }
+    
     static let normalPrecisionDigits = 5
     static let highPrecisionDigits = 8
 

@@ -37,7 +37,7 @@ protocol VerifyPhoneNumberDataStore: BaseDataStore, CountriesAndStatesDataStore 
 }
 
 protocol VerifyPhoneNumberDataPassing {
-    var dataStore: VerifyPhoneNumberDataStore? { get }
+    var dataStore: (any VerifyPhoneNumberDataStore)? { get }
 }
 
 protocol VerifyPhoneNumberRoutes: CountriesAndStatesRoutes {

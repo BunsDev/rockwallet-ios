@@ -11,7 +11,50 @@
 import Lottie
 import UIKit
 
+extension LottieAnimation: Hashable {
+    public static func == (lhs: LottieAnimation, rhs: LottieAnimation) -> Bool {
+        return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
+    }
+}
+
+extension LottieLoopMode: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .playOnce:
+            break
+        case .loop:
+            break
+        case .autoReverse:
+            break
+        case .repeat(let value):
+            hasher.combine(value)
+        case .repeatBackwards(let value):
+            hasher.combine(value)
+        }
+    }
+}
+
 enum ImageViewModel: ViewModel {
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .animation(let value, let value2):
+            hasher.combine(value)
+            hasher.combine(value2)
+        case .imageName(let value):
+            hasher.combine(value?.hashValue)
+        case .image(let value):
+            hasher.combine(value?.hashValue)
+        case .photo(let value):
+            hasher.combine(value?.hashValue)
+        case .url(let value):
+            hasher.combine(value?.hashValue)
+        }
+    }
+    
     case animation(LottieAnimation?, LottieLoopMode?)
     case imageName(String?)
     case image(UIImage?)
@@ -20,13 +63,13 @@ enum ImageViewModel: ViewModel {
 }
 
 class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
-    
     override var contentMode: UIView.ContentMode {
         get { return imageView.contentMode }
         set { imageView.contentMode = newValue }
     }
     
     // MARK: Lazy UI
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -61,9 +104,8 @@ class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
     }
     
     // MARK: ViewModelable
-    public override func setup(with viewModel:
-                               ImageViewModel?) {
-        guard let viewModel = viewModel else { return }
+    
+    public override func setup(with viewModel: ImageViewModel?) {
         super.setup(with: viewModel)
         
         switch viewModel {
@@ -97,11 +139,8 @@ class FEImageView: FEView<BackgroundConfiguration, ImageViewModel> {
         layoutIfNeeded()
     }
     
-    // TODO: what is this magic? :o
     private func layoutViews(image: UIImage?) {
-        guard let image = image else {
-            return
-        }
+        guard let image = image else { return }
         
         var imageAspectRatio = image.size.height / image.size.width
         if imageAspectRatio >= 1.5 {

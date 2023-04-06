@@ -20,7 +20,7 @@ class DeleteProfileInfoInteractor: NSObject, Interactor, DeleteProfileInfoViewAc
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         let item = Models.Item(nil)
-        presenter?.presentData(actionResponse: .init(item: item))
+        presenter?.presentData(actionResponse: .init(item: item as? (any Hashable)))
     }
     
     func deleteProfile(viewAction: DeleteProfileInfoModels.DeleteProfile.ViewAction) {

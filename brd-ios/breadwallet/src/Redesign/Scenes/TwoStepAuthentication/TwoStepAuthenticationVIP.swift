@@ -27,7 +27,7 @@ protocol TwoStepAuthenticationDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol TwoStepAuthenticationDataPassing {
-    var dataStore: TwoStepAuthenticationDataStore? { get }
+    var dataStore: (any TwoStepAuthenticationDataStore)? { get }
 }
 
 protocol TwoStepAuthenticationRoutes: CountriesAndStatesRoutes {

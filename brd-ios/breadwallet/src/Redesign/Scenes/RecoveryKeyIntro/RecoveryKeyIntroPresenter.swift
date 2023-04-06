@@ -28,7 +28,7 @@ final class RecoveryKeyIntroPresenter: NSObject, Presenter, RecoveryKeyIntroActi
             .tickbox
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .title: [LabelViewModel.text(L10n.RecoveryKeyFlow.title)],
             .image: [ImageViewModel.photo(Asset.recoveryPhrase1st.image)],
             .writePhrase: [TitleValueViewModel(title: .text(L10n.RecoveryKeyFlow.WritePhrase.title),

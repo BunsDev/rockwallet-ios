@@ -47,7 +47,7 @@ final class KYCBasicPresenter: NSObject, Presenter, KYCBasicActionResponses {
                                           year: .init(title: nil, value: "YYYY"))
         }
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .name: [
                 DoubleHorizontalTextboxViewModel(primaryTitle: .text(L10n.Account.writeYourName),
                                                  primary: .init(title: L10n.Buy.firstName, value: item.firstName),

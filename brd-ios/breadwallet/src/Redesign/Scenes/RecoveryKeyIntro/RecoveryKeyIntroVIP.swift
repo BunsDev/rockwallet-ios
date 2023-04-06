@@ -30,7 +30,7 @@ protocol RecoveryKeyIntroDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol RecoveryKeyIntroDataPassing {
-    var dataStore: RecoveryKeyIntroDataStore? { get }
+    var dataStore: (any RecoveryKeyIntroDataStore)? { get }
 }
 
 protocol RecoveryKeyIntroRoutes: CoordinatableRoutes {

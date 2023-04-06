@@ -15,11 +15,10 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
 
     // MARK: - RegistrationConfirmationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? Models.Item else { return }
+        guard let confirmationType = actionResponse.item as? Models.Item else { return }
         
-        let email = "\(": \n")\(item.email ?? "")"
-        let phoneNumber = "\(": \n")\(item.phoneNumber ?? "")"
-        let confirmationType = item.confirmationType
+        let email = "\(": \n")\(UserDefaults.email ?? "")"
+        let phoneNumber = "\(": \n")\(UserDefaults.phoneNumber ?? "")"
         
         var sections: [Models.Section] = [
             .image,
@@ -64,7 +63,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             help.append(ButtonViewModel(title: L10n.VerifyPhoneNumber.Sms.changeNumber, isUnderlined: true))
         }
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .image: [
                 ImageViewModel.image(Asset.email.image)
             ],

@@ -12,7 +12,7 @@ class ItemSelectionStore: NSObject, BaseDataStore, ItemSelectionDataStore {
     // MARK: - ItemSelectionDataStore
     
     var itemId: String?
-    var items: [ItemSelectable]?
+    var items: [any ItemSelectable]?
     var instrumentID: String?
     
     var sceneTitle: String = ""
