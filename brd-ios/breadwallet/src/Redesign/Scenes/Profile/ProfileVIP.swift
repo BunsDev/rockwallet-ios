@@ -33,7 +33,6 @@ protocol ProfileResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponse
 }
 
 protocol ProfileDataStore: BaseDataStore, FetchDataStore {
-    var profile: Profile? { get set }
     var allPaymentCards: [PaymentCard]? { get set }
     var paymentCard: PaymentCard? { get set }
     var autoSelectDefaultPaymentMethod: Bool { get set }
@@ -46,5 +45,4 @@ protocol ProfileDataPassing {
 protocol ProfileRoutes: CoordinatableRoutes {
     func showSecuirtySettings()
     func showPreferences()
-    func showFailure(reason: FailureReason)
 }

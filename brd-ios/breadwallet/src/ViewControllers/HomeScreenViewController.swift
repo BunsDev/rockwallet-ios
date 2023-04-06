@@ -141,9 +141,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         isRefreshing = true
         
-        UserManager.shared.refresh { [weak self] _ in
-            PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: self?.walletAuthenticator, on: self)
-        }
+        PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: walletAuthenticator, on: self)
         
         Currencies.shared.reloadCurrencies()
         

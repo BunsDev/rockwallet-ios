@@ -158,16 +158,16 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                 }
             }
             
-            // TODO: For now, we are hard coding this error. Remove this line when needed.
             customAchErrorMessage = L10n.Buy.bankAccountFailureText
             
-            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard
+            let isAch = actionResponse.isAch == true
+            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             
             return
         }
         
-        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
+        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     

@@ -10,82 +10,19 @@
 
 import UIKit
 
-enum Reason: SimpleMessage {
-    case swap
-    case buy
-    case buyAch
-    case sell
-    
-    var iconName: String {
-        return Asset.time.name
-    }
-    
-    var title: String {
-        switch self {
-        case .swap, .buy:
-            return L10n.ComingSoon.swapBuyTitle
-            
-        case .buyAch, .sell:
-            return L10n.Buy.Ach.notAvailableTitle
-        }
-    }
-    
-    var description: String {
-        switch self {
-        case .swap:
-            return  L10n.ComingSoon.swapDescription
-            
-        case .buy:
-            return L10n.ComingSoon.buyDescription
-            
-        case .buyAch:
-            return L10n.Buy.Ach.notAvailableBody
-            
-        case .sell:
-            return L10n.Sell.notAvailableBody
-        }
-    }
-    
-    var firstButtonTitle: String? {
-        switch self {
-        case .swap, .buy, .sell:
-            return L10n.Button.back
-            
-        case .buyAch:
-            return L10n.Buy.buyWithCardButton
-        }
-    }
-    
-    var secondButtonTitle: String? {
-        switch self {
-        case .swap, .buy:
-            return L10n.ComingSoon.Buttons.contactSupport
-            
-        case .buyAch:
-            return L10n.Button.back
-            
-        case .sell:
-            return nil
-        }
-    }
-}
-
 extension Scenes {
     static let ComingSoon = ComingSoonViewController.self
 }
 
 class ComingSoonViewController: BaseInfoViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        GoogleAnalytics.logEvent(GoogleAnalytics.KycComingSoon(type: String(describing: reason)))
-    }
-    
-    var reason: Reason? {
+    var reason: BaseInfoModels.ComingSoonReason? {
         didSet {
             prepareData()
         }
     }
+    
+    var didTapMainButton: (() -> Void)?
+    var didTapSecondayButton: (() -> Void)?
     
     override var imageName: String? { return reason?.iconName }
     override var titleText: String? { return reason?.title }
@@ -96,25 +33,24 @@ class ComingSoonViewController: BaseInfoViewController {
             .init(title: reason?.firstButtonTitle, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                if self?.reason == .swap || self?.reason == .buy || self?.reason == .sell {
-                    self?.navigationController?.popViewController(animated: true)
-                } else if self?.reason == .buyAch {
-                    self?.coordinator?.showBuy(coreSystem: self?.dataStore?.coreSystem, keyStore: self?.dataStore?.keyStore)
-                }
+                self?.didTapMainButton?()
             }),
             .init(title: reason?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
-                if self?.reason == .swap || self?.reason == .buy {
-                    self?.coordinator?.showSupport()
-                } else if self?.reason == .buyAch {
-                    self?.navigationController?.popViewController(animated: true)
-                }
+                self?.didTapSecondayButton?()
             })
         ]
     }
+    
     override var buttonConfigurations: [ButtonConfiguration] {
         return [Presets.Button.primary,
                 Presets.Button.noBorders]
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.KycComingSoon(type: String(describing: reason)))
     }
 }

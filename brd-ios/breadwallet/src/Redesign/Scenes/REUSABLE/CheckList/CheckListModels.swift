@@ -20,7 +20,7 @@ enum CheckListModels {
     
     enum VerificationResponse {
         case success
-        case failure(FailureReason)
+        case failure(BaseInfoModels.FailureReason)
     }
     
     enum VerificationInProgress {

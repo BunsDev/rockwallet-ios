@@ -19,4 +19,3 @@ class LogoutWorker: BaseApiWorker<PlainMapper> {
         return .post
     }
 }
-

@@ -76,9 +76,9 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         SetTwoStepPhoneCodeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
-                UserManager.shared.refresh()
-                
-                self?.presenter?.presentConfirm(actionResponse: .init())
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -91,9 +91,9 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         RegistrationConfirmationWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
-                UserManager.shared.refresh()
-                
-                self?.presenter?.presentConfirm(actionResponse: .init())
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))

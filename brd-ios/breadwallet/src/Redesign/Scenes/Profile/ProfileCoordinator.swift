@@ -22,14 +22,6 @@ class ProfileCoordinator: ExchangeCoordinator, ProfileRoutes {
     func showPreferences() {
         modalPresenter?.presentPreferences()
     }
-    
-    func showFailure(reason: FailureReason) {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure) { vc in
-            vc?.navigationItem.hidesBackButton = true
-            vc?.isModalDismissable = false
-            vc?.failure = reason
-        }
-    }
 }
 
 extension BaseCoordinator {

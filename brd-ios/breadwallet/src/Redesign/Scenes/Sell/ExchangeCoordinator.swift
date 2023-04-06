@@ -70,28 +70,20 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
         navigationController.present(navController, animated: true)
     }
     
-    func showSuccess(paymentReference: String, transactionType: TransactionType, reason: SuccessReason) {
-        open(scene: Scenes.Success) { vc in
-            vc.navigationItem.hidesBackButton = true
-            vc.transactionType = transactionType
-            vc.dataStore?.itemId = paymentReference
-            vc.success = reason
-        }
-    }
-    
-    func showFailure(failure: FailureReason, availablePayments: [PaymentCard.PaymentType]?) {
-        open(scene: Scenes.Failure) { vc in
-            vc.navigationItem.hidesBackButton = true
-            vc.failure = failure
-            vc.availablePayments = availablePayments
-        }
-    }
-    
     func showSwapInfo(from: String, to: String, exchangeId: String) {
-        open(scene: SwapInfoViewController.self) { vc in
+        open(scene: Scenes.SwapInfo) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId
             vc.dataStore?.item = (from: from, to: to)
+            
+            vc.didTapMainButton = {
+                vc.coordinator?.dismissFlow()
+            }
+            
+            vc.didTapSecondayButton = {
+                (vc.coordinator as? ExchangeCoordinator)?.showExchangeDetails(with: vc.dataStore?.itemId, type: .swap)
+            }
+            
             vc.prepareData()
         }
     }

@@ -13,9 +13,9 @@ import Foundation
 enum ExchangeErrors: FEError {
     case noQuote(from: String?, to: String?)
     /// Param 1: amount, param 2 currency symbol
-    case tooLow(amount: Decimal, currency: String, reason: FailureReason)
+    case tooLow(amount: Decimal, currency: String, reason: BaseInfoModels.FailureReason)
     /// Param 1: amount, param 2 currency symbol
-    case tooHigh(amount: Decimal, currency: String, reason: FailureReason)
+    case tooHigh(amount: Decimal, currency: String, reason: BaseInfoModels.FailureReason)
     /// Param 1: amount, param 2 currency symbol
     case balanceTooLow(balance: Decimal, currency: String)
     case overDailyLimit(limit: Decimal)

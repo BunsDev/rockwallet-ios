@@ -207,13 +207,13 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         LoadingView.hideIfNeeded()
         
         let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAch : .buy
-        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference,
-                                 transactionType: transactionType,
-                                 reason: responseDisplay.reason)
+        coordinator?.showSuccess(reason: responseDisplay.reason,
+                                 itemId: responseDisplay.paymentReference,
+                                 transactionType: transactionType)
     }
     
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay) {
-        coordinator?.showFailure(failure: responseDisplay.reason, availablePayments: dataStore?.availablePayments)
+        coordinator?.showFailure(reason: responseDisplay.reason, availablePayments: dataStore?.availablePayments ?? [])
     }
     
     func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay) {
@@ -232,11 +232,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay) {
-        coordinator?.open(scene: Scenes.Failure) { vc in
-            vc.failure = .buyCard
-            vc.isModalDismissable = false
-            vc.navigationItem.hidesBackButton = true
-        }
+        coordinator?.showFailure(reason: .buyCard)
     }
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
