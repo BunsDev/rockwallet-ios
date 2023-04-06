@@ -9,6 +9,8 @@
 import UIKit
 import AVKit
 
+// swiftlint:disable type_body_length
+
 enum OnboardingExitAction {
     case restoreWallet
     case createWallet
@@ -574,3 +576,4 @@ class OnboardingViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
 }
+// swiftlint:enable type_body_length
