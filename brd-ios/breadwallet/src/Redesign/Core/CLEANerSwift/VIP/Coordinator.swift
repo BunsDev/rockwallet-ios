@@ -197,12 +197,12 @@ class BaseCoordinator: NSObject, Coordinatable {
                 guard showPopup else { return }
                 
                 // TODO: Handle when Sell is ready.
-                //                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false {
-                //                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                //                        vc?.reason = .sell
-                //                    }
-                //                    return
-                //                }
+//                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false {
+//                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
+//                        vc?.reason = .sell
+//                    }
+//                    return
+//                }
                 
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                     vc?.dataStore?.currency = currency
@@ -364,7 +364,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             // TODO: ENABLE 2FA
             if status == VerificationStatus.emailPending
                 || status == VerificationStatus.none
-                //                || !UserManager.shared.hasTwoStepAuth
+//              || !UserManager.shared.hasTwoStepAuth
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
@@ -553,6 +553,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.reason = reason
             vc.isModalDismissable = isModalDismissable
             vc.navigationItem.hidesBackButton = hidesBackButton
+            vc.navigationItem.rightBarButtonItem = nil
         }
     }
     
