@@ -161,11 +161,9 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         
         coordinator?.dismissFlow()
         
-        if let rootViewController = UIApplication.topViewController() {
-            rootViewController.showToastMessage(model: responseDisplay.model,
-                                                configuration: responseDisplay.config,
-                                                onTapCallback: nil)
-        }
+        UIApplication.topViewController()?.showToastMessage(model: responseDisplay.model,
+                                                            configuration: responseDisplay.config,
+                                                            onTapCallback: nil)
     }
     
     // MARK: - Additional Helpers
