@@ -280,15 +280,6 @@ class BaseCoordinator: NSObject, Coordinatable {
         navigationController.popToRootViewController(animated: true, completion: completion)
     }
     
-    func showBuyWithDifferentPayment(paymentMethod: PaymentCard.PaymentType?) {
-        guard let vc = navigationController.viewControllers.first as? BuyViewController else {
-            return
-        }
-        vc.updatePaymentMethod()
-        
-        navigationController.popToViewController(vc, animated: true)
-    }
-    
     /// Remove the child coordinator from the stack after iit finnished its flow
     func childDidFinish(child: Coordinatable) {
         childCoordinators.removeAll(where: { $0 === child })
@@ -670,22 +661,26 @@ class BaseCoordinator: NSObject, Coordinatable {
                 
             default:
                 if containsDebit || containsBankAccount {
-                    vc.coordinator?.showBuyWithDifferentPayment(paymentMethod: containsDebit ? .card : .ach)
-                } else {
-                    vc.coordinator?.popToRoot()
+                    guard let vc = self.navigationController.viewControllers.first as? BuyViewController else {
+                        return
+                    }
+                    
+                    vc.updatePaymentMethod(paymentMethod: containsDebit ? .card : .ach)
                 }
+                
+                vc.coordinator?.popToRoot()
             }
         }
         
         vc.didTapSecondayButton = {
             switch vc.reason {
-            case .buyCard, .swap:
+            case .swap:
                 vc.coordinator?.dismissFlow()
 
-            case .documentVerification, .documentVerificationRetry:
+            case .buyCard, .buyAch, .plaidConnection, .sell:
                 vc.coordinator?.showSupport()
                 
-            case .limitsAuthentication:
+            case .limitsAuthentication, .documentVerification, .documentVerificationRetry:
                 vc.coordinator?.popToRoot()
                 
             default:

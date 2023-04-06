@@ -130,13 +130,20 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
-                self?.interactor?.selectPaymentMethod(viewAction: .init(method: segment))
-                guard (Store.state.currencies.first(where: { $0.code == Constant.USDT }) == nil) else { return }
-                view.setup(with: SegmentControlViewModel(selectedIndex: .card))
+                self?.setSegment(segment)
             }
         }
         
         return cell
+    }
+    
+    private func setSegment(_ segment: PaymentCard.PaymentType) {
+        guard let section = sections.firstIndex(of: Models.Section.segment),
+              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
+        
+        interactor?.selectPaymentMethod(viewAction: .init(method: segment))
+        
+        cell.wrappedView.setup(with: SegmentControlViewModel(selectedIndex: segment))
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -318,13 +325,13 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     // MARK: - Additional Helpers
-    @objc func updatePaymentMethod() {
-        guard let availablePayments = dataStore?.availablePayments else { return }
+    
+    func updatePaymentMethod(paymentMethod: PaymentCard.PaymentType?) {
+        let paymentMethod = paymentMethod ?? .card
         
-        let paymentMethod: PaymentCard.PaymentType? = availablePayments.contains(.ach) == true ? .ach : .card
-        tableView.reloadData()
+        interactor?.retryPaymentMethod(viewAction: .init(method: paymentMethod))
         
-        interactor?.retryPaymentMethod(viewAction: .init(method: paymentMethod ?? .card))
+        setSegment(paymentMethod)
     }
     
     private func mapStructToDictionary<T>(item: T) -> [String: Any] {

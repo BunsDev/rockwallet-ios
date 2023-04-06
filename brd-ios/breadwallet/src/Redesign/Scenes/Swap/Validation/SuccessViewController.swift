@@ -67,7 +67,7 @@ class SuccessViewController: BaseInfoViewController {
     override func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay) {
         LoadingView.hideIfNeeded()
         
-        guard let coordinator = coordinator as? KYCCoordinator else { return }
+        guard let coordinator = coordinator as? ExchangeCoordinator else { return }
         
         coordinator.showAssetSelector(title: responseDisplay.title ?? "",
                                                             currencies: responseDisplay.currencies,
