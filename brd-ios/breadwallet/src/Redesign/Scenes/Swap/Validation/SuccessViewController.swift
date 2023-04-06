@@ -57,7 +57,7 @@ class SuccessViewController: BaseInfoViewController {
     }
     
     override var buttonConfigurations: [ButtonConfiguration] {
-        var buttons = [Presets.Button.primary,
+        let buttons = [Presets.Button.primary,
                        reason?.secondButtonConfig ?? Presets.Button.noBorders,
                        reason?.thirdButtonConfig ?? Presets.Button.noBorders]
         
