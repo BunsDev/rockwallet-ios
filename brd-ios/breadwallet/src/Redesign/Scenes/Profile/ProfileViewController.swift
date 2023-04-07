@@ -32,7 +32,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     override func prepareData() {}
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section] as? Models.Section
+        let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section
         
         let cell: UITableViewCell
         switch section {
@@ -113,7 +113,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .navigation:
             let indexPath = UserManager.shared.profile?.status.hasKYCLevelTwo == true ? indexPath.row : indexPath.row + 1
             interactor?.navigate(viewAction: .init(index: indexPath))

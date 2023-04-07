@@ -79,7 +79,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .email:
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
@@ -177,7 +177,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     }
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         
         switch section as? Models.Section {
         case .email:

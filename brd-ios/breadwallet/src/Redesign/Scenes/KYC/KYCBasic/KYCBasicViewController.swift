@@ -27,7 +27,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .name:
             cell = self.tableView(tableView, nameCellForRowAt: indexPath)
             

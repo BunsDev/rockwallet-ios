@@ -47,7 +47,7 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .instructions, .description:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             

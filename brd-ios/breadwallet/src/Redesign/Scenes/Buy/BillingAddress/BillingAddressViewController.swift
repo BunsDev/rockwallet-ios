@@ -28,7 +28,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .name:
             cell = self.tableView(tableView, nameCellForRowAt: indexPath)
             
@@ -58,7 +58,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func tableView(_ tableView: UITableView, nameCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
@@ -77,7 +77,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func tableView(_ tableView: UITableView, cityAndZipPostalCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
@@ -96,7 +96,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let model = dataSource?.itemIdentifier(for: indexPath) as? TextFieldModel,
               let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
         else {
@@ -112,7 +112,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard var model = dataSource?.itemIdentifier(for: indexPath) as? ButtonViewModel,
               let cell: WrapperTableViewCell<FEButton> = tableView.dequeueReusableCell(for: indexPath)
         else {
@@ -136,7 +136,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
             
@@ -193,7 +193,7 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     // MARK: - Additional Helpers
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         
         switch section as? Models.Section {
         case .stateProvince:

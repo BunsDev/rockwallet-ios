@@ -25,7 +25,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .mandatory:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -61,7 +61,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let model = dataSource?.itemIdentifier(for: indexPath) as? TextFieldModel,
               let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
         else {
@@ -77,8 +77,8 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func tableView(_ tableView: UITableView, cityAndStateCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section),
+              let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
         }
@@ -114,7 +114,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = sections[indexPath.section] as? Models.Section else { return }
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section else { return }
         switch section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
@@ -133,7 +133,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        let section = sections[indexPath.section]
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) else { return }
         
         interactor?.updateForm(viewAction: .init(section: section, value: text))
         
