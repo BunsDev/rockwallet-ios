@@ -11,6 +11,16 @@ import WalletKit
 
 typealias CryptoAmount = WalletKit.Amount
 
+extension WalletKit.Amount: Hashable {
+    public static func == (lhs: WalletKit.Amount, rhs: WalletKit.Amount) -> Bool {
+        return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
+    }
+}
+
 /// View model for representing the WalletKit.Amount model
 /// with extended currency, fiat conversion and formatting information
 public struct Amount: Hashable {
@@ -24,7 +34,7 @@ public struct Amount: Hashable {
     var maximumFractionDigits: Int
     var negative: Bool { return cryptoAmount.isNegative }
     var isZero: Bool { return self == Amount.zero(currency, rate: rate) }
-    internal var locale = Locale.current // for testing
+    private var locale = Locale.current // for testing
 
     // MARK: - Init
 
