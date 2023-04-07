@@ -58,7 +58,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func tableView(_ tableView: UITableView, nameCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
@@ -77,7 +76,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func tableView(_ tableView: UITableView, cityAndZipPostalCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
@@ -96,7 +94,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let model = dataSource?.itemIdentifier(for: indexPath) as? TextFieldModel,
               let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
         else {
@@ -112,7 +109,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     }
     
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard var model = dataSource?.itemIdentifier(for: indexPath) as? ButtonViewModel,
               let cell: WrapperTableViewCell<FEButton> = tableView.dequeueReusableCell(for: indexPath)
         else {

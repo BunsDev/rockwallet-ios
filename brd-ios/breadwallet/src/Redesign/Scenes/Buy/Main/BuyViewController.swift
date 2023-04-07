@@ -142,6 +142,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         interactor?.selectPaymentMethod(viewAction: .init(method: segment))
         
+        guard (Store.state.currencies.first(where: { $0.code == Constant.USDT }) == nil) else { return }
+        
         cell.wrappedView.setup(with: SegmentControlViewModel(selectedIndex: segment))
     }
     

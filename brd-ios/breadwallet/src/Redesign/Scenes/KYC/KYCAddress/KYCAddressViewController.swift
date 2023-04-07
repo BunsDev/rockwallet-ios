@@ -61,7 +61,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         guard let model = dataSource?.itemIdentifier(for: indexPath) as? TextFieldModel,
               let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
         else {
