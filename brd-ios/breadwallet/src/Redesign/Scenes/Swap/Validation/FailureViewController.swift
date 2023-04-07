@@ -75,9 +75,8 @@ class FailureViewController: BaseInfoViewController {
             return super.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
         }
         
-        guard let value = descriptionText,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
+        guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
+              let value = descriptionText else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         

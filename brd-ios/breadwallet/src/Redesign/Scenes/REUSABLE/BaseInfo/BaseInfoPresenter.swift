@@ -30,7 +30,7 @@ final class BaseInfoPresenter: NSObject, Presenter, BaseInfoActionResponses {
             ],
             .description: [
                 LabelViewModel.text(nil)
-            ],
+            ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
