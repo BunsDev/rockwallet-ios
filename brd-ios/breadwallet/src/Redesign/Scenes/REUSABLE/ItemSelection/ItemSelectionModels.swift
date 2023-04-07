@@ -15,15 +15,7 @@ protocol ItemSelectable: Hashable {
 
 enum ItemSelectionModels: Hashable {
 
-    struct Item: Hashable {
-        static func == (lhs: ItemSelectionModels.Item, rhs: ItemSelectionModels.Item) -> Bool {
-            return lhs.isAddingEnabled == rhs.isAddingEnabled
-        }
-        
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(isAddingEnabled.hashValue)
-        }
-        
+    struct Item {
         var items: [any ItemSelectable]?
         var isAddingEnabled: Bool?
     }
