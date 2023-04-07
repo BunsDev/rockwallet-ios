@@ -65,9 +65,8 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     }
     
     func tableView(_ tableView: UITableView, phoneNumberCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<PhoneNumberView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? PhoneNumberViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PhoneNumberViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }

@@ -84,9 +84,8 @@ class BackupCodesViewController: BaseTableViewController<BackupCodesCoordinator,
     }
     
     func tableView(_ tableView: UITableView, backupCodesCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<BackupCodesView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? BackupCodesViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? BackupCodesViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }

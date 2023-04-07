@@ -78,9 +78,8 @@ class VerificationInProgressViewController: CheckListViewController {
     }
     
     override func tableView(_ tableView: UITableView, checkmarkCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ChecklistItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ChecklistItemViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? ChecklistItemViewModel else {
             return UITableViewCell()
         }
         

@@ -58,8 +58,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
               let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)

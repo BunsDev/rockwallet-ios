@@ -75,9 +75,8 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
     }
     
     func tableView(_ tableView: UITableView, enterCodeCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<EnterCodeView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? EnterCodeViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? EnterCodeViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -91,9 +90,8 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
     }
     
     func tableView(_ tableView: UITableView, copyCodeCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<OrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? OrderViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? OrderViewModel
         else {
             return UITableViewCell()
         }

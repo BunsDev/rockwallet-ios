@@ -62,7 +62,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? TextFieldModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? TextFieldModel,
               let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -79,7 +79,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     func tableView(_ tableView: UITableView, cityAndStateCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? DoubleHorizontalTextboxViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
         }
         

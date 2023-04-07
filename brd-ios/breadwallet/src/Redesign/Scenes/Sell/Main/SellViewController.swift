@@ -71,9 +71,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, swapMainCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<MainSwapView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? MainSwapViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? MainSwapViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }

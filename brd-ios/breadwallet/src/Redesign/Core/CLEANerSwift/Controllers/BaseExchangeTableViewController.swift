@@ -44,9 +44,8 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, timerCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ExchangeRateView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ExchangeRateViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? ExchangeRateViewModel
         else {
             return UITableViewCell()
         }
@@ -60,9 +59,8 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, paymentSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? CardSelectionViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? CardSelectionViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }

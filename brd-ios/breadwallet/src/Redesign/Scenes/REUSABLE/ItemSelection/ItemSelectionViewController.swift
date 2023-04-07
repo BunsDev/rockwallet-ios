@@ -77,9 +77,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     }
     
     func tableView(_ tableView: UITableView, addItemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? (any ItemSelectable)
+              let model = dataSource?.itemIdentifier(for: indexPath) as? (any ItemSelectable)
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -91,9 +90,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     }
     
     func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? (any ItemSelectable)
+              let model = dataSource?.itemIdentifier(for: indexPath) as? (any ItemSelectable)
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -111,7 +109,7 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
             return
         }
         
-        guard let model = sectionRows[section]?[indexPath.row], dataStore?.isSelectingEnabled == true else { return }
+        guard let model = dataSource?.itemIdentifier(for: indexPath), dataStore?.isSelectingEnabled == true else { return }
         
         itemSelected?(model)
         

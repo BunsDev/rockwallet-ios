@@ -33,9 +33,8 @@ class CardSelectionViewController: ItemSelectionViewController {
     }
     
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? PaymentCard
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PaymentCard
         else {
             return UITableViewCell()
         }

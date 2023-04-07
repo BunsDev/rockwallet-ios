@@ -82,9 +82,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, cryptoSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<SwapCurrencyView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? SwapCurrencyViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? SwapCurrencyViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -147,8 +146,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -169,8 +167,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)

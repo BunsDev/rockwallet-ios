@@ -24,7 +24,6 @@ class AssetSelectionViewController: ItemSelectionViewController {
     }
     
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<AssetView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? AssetViewModel
         else {
@@ -42,8 +41,7 @@ class AssetSelectionViewController: ItemSelectionViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? AssetViewModel else { return }
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? AssetViewModel else { return }
         
         if model.isDisabled {
             coordinator?.showToastMessage(model: InfoViewModel(description: .text(model.isDisabledReason), dismissType: .auto),

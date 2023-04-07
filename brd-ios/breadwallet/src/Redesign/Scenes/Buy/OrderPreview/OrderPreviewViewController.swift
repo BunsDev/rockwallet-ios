@@ -71,8 +71,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -87,9 +86,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, paymentMethodCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<PaymentMethodView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? PaymentMethodViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PaymentMethodViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -114,9 +112,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, orderCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<BuyOrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? BuyOrderViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? BuyOrderViewModel
         else {
             return UITableViewCell()
         }
@@ -136,8 +133,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
               let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
