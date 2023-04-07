@@ -19,7 +19,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                          BuyInteractor,
                          BuyPresenter,
                          BuyStore>,
-                         BuyResponseDisplays, Subscriber {
+                         BuyResponseDisplays,
+                         Subscriber {
     typealias Models = BuyModels
     
     var plaidHandler: LinkKit.Handler?
