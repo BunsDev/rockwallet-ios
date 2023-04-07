@@ -149,7 +149,6 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
         guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel else { return }
-        let model = dataSource?.itemIdentifier(for: indexPath) as? ButtonViewModel
         
         model.enabled = responseDisplay.isValid
         sectionRows[Models.Section.confirm] = [model]
