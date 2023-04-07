@@ -149,12 +149,13 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay) {
         guard var model = sectionRows[Models.Section.confirm]?.first as? ButtonViewModel else { return }
+        let model = dataSource?.itemIdentifier(for: indexPath) as? ButtonViewModel
         
         model.enabled = responseDisplay.isValid
         sectionRows[Models.Section.confirm] = [model]
         
-        guard let index = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: index)) as? WrapperTableViewCell<FEButton> else {
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.confirm),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FEButton> else {
             return
         }
         

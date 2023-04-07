@@ -248,8 +248,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.submit),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.submit),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FEButton> else { return }
         
         cell.wrappedView.isEnabled = responseDisplay.continueEnabled
     }

@@ -101,8 +101,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.rateAndTimer),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<ExchangeRateView> else {
             return nil
         }
         
@@ -110,8 +110,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.accountLimits),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell
@@ -134,8 +134,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     // MARK: - SellResponseDisplay
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.payoutMethod),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.payoutMethod),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<CardSelectionView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.viewModel)
         

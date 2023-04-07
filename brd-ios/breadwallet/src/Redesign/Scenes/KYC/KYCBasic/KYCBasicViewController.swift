@@ -116,8 +116,8 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     // MARK: - KYCBasicResponseDisplay
     
     func displayValidate(responseDisplay: KYCBasicModels.Validate.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.confirm),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.confirm),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FEButton> else { return }
         
         isValid = responseDisplay.isValid
         cell.wrappedView.isEnabled = isValid

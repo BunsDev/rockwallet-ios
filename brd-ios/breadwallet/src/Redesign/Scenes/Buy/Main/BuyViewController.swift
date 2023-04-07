@@ -137,8 +137,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     private func setSegment(_ segment: PaymentCard.PaymentType) {
-        guard let section = sections.firstIndex(of: Models.Section.segment),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.segment),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FESegmentControl> else { return }
         
         interactor?.selectPaymentMethod(viewAction: .init(method: segment))
         
@@ -188,8 +188,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.rateAndTimer),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<ExchangeRateView> else {
             continueButton.viewModel?.enabled = false
             continueButton.setup(with: continueButton.viewModel)
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
@@ -201,8 +201,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.accountLimits),
+              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell
@@ -254,10 +254,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-        guard let fromSection = sections.firstIndex(of: Models.Section.from),
-              let toSection = sections.firstIndex(of: Models.Section.paymentMethod),
-              let fromCell = tableView.cellForRow(at: .init(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: .init(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+        guard let fromIndexPath = dataSource?.indexPath(for: Models.Section.from),
+              let toIndexPath = dataSource?.indexPath(for: Models.Section.paymentMethod),
+              let fromCell = tableView.cellForRow(at: fromIndexPath) as? WrapperTableViewCell<SwapCurrencyView>,
+              let toCell = tableView.cellForRow(at: toIndexPath) as? WrapperTableViewCell<CardSelectionView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             

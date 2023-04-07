@@ -46,7 +46,7 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch sections[section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: section) as? Models.Section {
         case .image:
             return imageName == nil ? 0 : 1
             
