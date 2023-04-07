@@ -39,22 +39,6 @@ extension LottieLoopMode: Hashable {
 }
 
 enum ImageViewModel: ViewModel {
-    func hash(into hasher: inout Hasher) {
-        switch self {
-        case .animation(let value, let value2):
-            hasher.combine(value)
-            hasher.combine(value2)
-        case .imageName(let value):
-            hasher.combine(value?.hashValue)
-        case .image(let value):
-            hasher.combine(value?.hashValue)
-        case .photo(let value):
-            hasher.combine(value?.hashValue)
-        case .url(let value):
-            hasher.combine(value?.hashValue)
-        }
-    }
-    
     case animation(LottieAnimation?, LottieLoopMode?)
     case imageName(String?)
     case image(UIImage?)
