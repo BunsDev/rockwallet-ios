@@ -137,14 +137,13 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     private func setSegment(_ segment: PaymentCard.PaymentType) {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.segment),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FESegmentControl> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.segment.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
         
         interactor?.selectPaymentMethod(viewAction: .init(method: segment))
         
-        guard (Store.state.currencies.first(where: { $0.code == Constant.USDT }) == nil) else { return }
-        
-        cell.wrappedView.setup(with: SegmentControlViewModel(selectedIndex: segment))
+        let isUSDTAvailable = Store.state.currencies.first(where: { $0.code == Constant.USDT }) == nil
+        cell.wrappedView.setup(with: SegmentControlViewModel(selectedIndex: isUSDTAvailable ? .card : segment))
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -190,8 +189,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             continueButton.viewModel?.enabled = false
             continueButton.setup(with: continueButton.viewModel)
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
@@ -203,8 +202,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FELabel> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell
@@ -256,10 +255,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-        guard let fromIndexPath = dataSource?.indexPath(for: Models.Section.from),
-              let toIndexPath = dataSource?.indexPath(for: Models.Section.paymentMethod),
-              let fromCell = tableView.cellForRow(at: fromIndexPath) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: toIndexPath) as? WrapperTableViewCell<CardSelectionView> else {
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
+              let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             

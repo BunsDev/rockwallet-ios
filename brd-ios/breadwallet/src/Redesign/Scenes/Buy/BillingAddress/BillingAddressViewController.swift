@@ -152,8 +152,8 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
 
     // MARK: - BillingAddressResponseDisplay
     func displayValidate(responseDisplay: BillingAddressModels.Validate.ResponseDisplay) {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.confirm),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FEButton> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         isValid = responseDisplay.isValid
         cell.wrappedView.isEnabled = isValid

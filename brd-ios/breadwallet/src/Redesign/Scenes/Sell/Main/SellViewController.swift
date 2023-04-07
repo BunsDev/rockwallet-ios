@@ -101,8 +101,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             return nil
         }
         
@@ -110,8 +110,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FELabel> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell
@@ -134,8 +134,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     // MARK: - SellResponseDisplay
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.payoutMethod),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<CardSelectionView> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.payoutMethod.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.viewModel)
         

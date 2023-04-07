@@ -111,8 +111,8 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - Additional Helpers
     
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: section),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FETextField> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == section.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
             return nil
         }
         

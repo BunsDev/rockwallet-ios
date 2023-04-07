@@ -136,8 +136,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     }
     
     func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.input),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<CodeInputView>
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.input.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
         else { return }
         
         cell.wrappedView.showErrorMessage()

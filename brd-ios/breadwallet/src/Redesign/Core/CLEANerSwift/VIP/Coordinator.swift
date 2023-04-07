@@ -119,7 +119,6 @@ class BaseCoordinator: NSObject, Coordinatable {
                         vc?.dataStore?.paymentMethod = type
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
-                        vc?.prepareData()
                     }
                     
                     return
@@ -142,7 +141,6 @@ class BaseCoordinator: NSObject, Coordinatable {
                         vc?.dataStore?.paymentMethod = type
                         vc?.dataStore?.coreSystem = coreSystem
                         vc?.dataStore?.keyStore = keyStore
-                        vc?.prepareData()
                     }
                     
                     return
@@ -180,7 +178,6 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.currency = currency
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
-                    vc?.prepareData()
                 }
             }
         }
@@ -218,7 +215,6 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId
             vc.dataStore?.transactionType = type
-            vc.prepareData()
         }
     }
     

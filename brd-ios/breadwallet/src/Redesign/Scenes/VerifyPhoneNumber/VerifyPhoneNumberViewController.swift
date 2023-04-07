@@ -98,8 +98,8 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     // MARK: - VerifyPhoneNumberResponseDisplay
     
     func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay) {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: Models.Section.phoneNumber),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<PhoneNumberView>
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.phoneNumber.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<PhoneNumberView>
         else { return }
         
         cell.setup { view in

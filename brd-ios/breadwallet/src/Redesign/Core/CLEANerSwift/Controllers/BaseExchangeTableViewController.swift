@@ -110,8 +110,8 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     func displayAmount(responseDisplay: ExchangeModels.Amounts.ResponseDisplay) {
         LoadingView.hideIfNeeded()
         
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: ExchangeModels.Section.swapCard),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<MainSwapView> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == ExchangeModels.Section.swapCard.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.amounts)
         

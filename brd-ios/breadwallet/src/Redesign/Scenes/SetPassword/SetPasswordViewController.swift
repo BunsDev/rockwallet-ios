@@ -113,8 +113,8 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
         continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
-        guard let noticeIndexPath = dataSource?.indexPath(for: Models.Section.notice),
-              let noticeCell = tableView.cellForRow(at: noticeIndexPath) as? WrapperTableViewCell<FELabel> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.notice.hashValue }),
+              let noticeCell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else { return }
         noticeCell.setup { view in
             view.configure(with: responseDisplay.noticeConfiguration)
         }
@@ -136,8 +136,8 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - Additional Helpers
     
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
-        guard let dataSourceIndexPath = dataSource?.indexPath(for: section),
-              let cell = tableView.cellForRow(at: dataSourceIndexPath) as? WrapperTableViewCell<FETextField> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == section.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
             return nil
         }
         

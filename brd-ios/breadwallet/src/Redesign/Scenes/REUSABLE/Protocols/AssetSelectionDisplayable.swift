@@ -58,7 +58,6 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
             vc?.dataStore?.items = sortedCurrencies ?? []
             vc?.dataStore?.sceneTitle = title
             vc?.itemSelected = selected
-            vc?.prepareData()
         }
     }
     
