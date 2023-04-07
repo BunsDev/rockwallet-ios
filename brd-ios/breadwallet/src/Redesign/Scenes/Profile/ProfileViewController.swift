@@ -23,14 +23,6 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         GoogleAnalytics.logEvent(GoogleAnalytics.Profile())
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        interactor?.getData(viewAction: .init())
-    }
-    
-    override func prepareData() {}
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section
         
