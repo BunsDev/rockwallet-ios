@@ -13,9 +13,14 @@ class VIPTableViewController<C: CoordinatableRoutes,
                              DS: BaseDataStore & NSObject>: VIPViewController<C, I, P, DS>,
                                                             UITableViewDelegate,
                                                             UITableViewDataSource {
+    typealias DataSource = UITableViewDiffableDataSource<AnyHashable, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>
+    
     var sections: [AnyHashable] = []
     var sectionRows: [AnyHashable: [Any]] = [:]
-
+    
+    var dataSource: DataSource?
+    
     // MARK: LazyUI
     
     lazy var tableView: ContentSizedTableView = {
@@ -134,13 +139,13 @@ class VIPTableViewController<C: CoordinatableRoutes,
     // MARK: ResponseDisplay
     
     // MARK: UITableViewDataSource
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return dataSource?.numberOfSections(in: tableView) ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let section = sections[section]
-        return sectionRows[section]?.count ?? 0
+        return dataSource?.tableView(tableView, numberOfRowsInSection: section) ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

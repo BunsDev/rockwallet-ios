@@ -95,11 +95,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
 
     // MARK: ResponseDisplay
     
-    typealias DataSource = UITableViewDiffableDataSource<AnyHashable, AnyHashable>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>
-    
-    var dataSource: DataSource?
-    
     func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
         sections = responseDisplay.sections
         sectionRows = responseDisplay.sectionRows
@@ -110,11 +105,10 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         var snapshot = Snapshot()
-        
         snapshot.appendSections(sections)
         for section in sections {
-            guard let aaaa = sectionRows[section] as? [AnyHashable] else { return }
-            snapshot.appendItems([aaaa], toSection: section)
+            guard let items = sectionRows[section] as? [AnyHashable] else { return }
+            snapshot.appendItems(items, toSection: section)
         }
         
         dataSource?.apply(snapshot, animatingDifferences: true)

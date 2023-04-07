@@ -26,7 +26,7 @@ class AssetSelectionViewController: ItemSelectionViewController {
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<AssetView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? AssetViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? AssetViewModel
         else {
             return UITableViewCell()
         }

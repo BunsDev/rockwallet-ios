@@ -57,10 +57,6 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
         navigationItem.searchController = searchController
     }
     
-    @objc override func dismissModal() {
-        super.dismissModal()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch sections[indexPath.section] as? Models.Section {
@@ -120,10 +116,6 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
         itemSelected?(model)
         
         coordinator?.dismissFlow()
-    }
-    
-    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
-        super.displayData(responseDisplay: responseDisplay)
     }
     
     // MARK: - Search View Delegate
