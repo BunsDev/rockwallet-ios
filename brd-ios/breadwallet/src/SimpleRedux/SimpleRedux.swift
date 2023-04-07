@@ -84,6 +84,7 @@ enum TriggerName {
     case promptLimitsAuthentication
     case handleDeeplink
     case promptTwoStep
+    case reloadBuy
 }
 
 func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
@@ -167,6 +168,8 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
     case (.promptLimitsAuthentication, .promptLimitsAuthentication):
         return true
     case (.handleDeeplink, .handleDeeplink):
+        return true
+    case (.reloadBuy, .reloadBuy):
         return true
     default:
         return false
