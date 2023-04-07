@@ -70,6 +70,7 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - User Interaction
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
+        let section = sections[indexPath.section]
         
         switch section as? Models.Section {
         case .email:
