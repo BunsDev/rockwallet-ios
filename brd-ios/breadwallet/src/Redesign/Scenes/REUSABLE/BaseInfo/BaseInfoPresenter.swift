@@ -21,7 +21,19 @@ final class BaseInfoPresenter: NSObject, Presenter, BaseInfoActionResponses {
             .description
         ]
         
-        viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: [:]))   
+        let sectionRows: [Models.Section: [any Hashable]] = [
+            .image: [
+                ImageViewModel.image(nil)
+            ],
+            .title: [
+                LabelViewModel.text(nil)
+            ],
+            .description: [
+                LabelViewModel.text(nil)
+            ],
+        ]
+        
+        viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
 
     // MARK: - BaseInfoActionResponses
