@@ -161,17 +161,10 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
     
     func displaySubmit(responseDisplay: BillingAddressModels.Submit.ResponseDisplay) {
         LoadingView.hideIfNeeded()
-        coordinator?.dismissFlow()
         coordinator?.showOverlay(with: .success) { [weak self] in
-            self?.interactor?.getPaymentCards(viewAction: .init())
+            Store.trigger(name: .reloadBuy)
+            self?.coordinator?.dismissFlow()
         }
-    }
-    
-    func displayPaymentCards(responseDisplay: BillingAddressModels.PaymentCards.ResponseDisplay) {
-        coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            guard let selectedCard = selectedCard else { return }
-            self?.coordinator?.reloadBuy(selectedCard: selectedCard)
-        })
     }
     
     func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay) {

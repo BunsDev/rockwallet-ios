@@ -45,20 +45,6 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         }
     }
     
-    func getPaymentCards(viewAction: BillingAddressModels.PaymentCards.ViewAction) {
-        PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let data):
-                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: data))
-                
-            case .failure(let error):
-                self.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
-    }
-    
     func stateProvinceSet(viewAction: BillingAddressModels.StateProvince.ViewAction) {
         dataStore?.state = .init(iso2: viewAction.stateProvince ?? "", name: viewAction.stateProvince ?? "")
         
