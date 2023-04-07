@@ -28,7 +28,7 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
             case .success(let data):
                 guard let data = data, let transactionType = self?.dataStore?.transactionType else { return }
                 let item = ExchangeDetailsModels.Item(detail: data, type: transactionType)
-                self?.presenter?.presentData(actionResponse: .init(item: item as? (any Hashable)))
+                self?.presenter?.presentData(actionResponse: .init(item: item))
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
