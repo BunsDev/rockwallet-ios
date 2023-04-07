@@ -212,8 +212,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit.git",
       "state" : {
-        "branch" : "kenan/mock_transactions",
-        "revision" : "6c3255d481951c550c0e87aa76f038140a55b17e"
+        "revision" : "847befdc6984f4003656da2cfea44f911b0f8be6",
+        "version" : "5.0.16"
       }
     },
     {
