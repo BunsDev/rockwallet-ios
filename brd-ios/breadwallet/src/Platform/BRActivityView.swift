@@ -38,6 +38,7 @@ class BRActivityViewController: UIViewController {
         boundingBoxView.layer.cornerRadius = CornerRadius.common.rawValue
         
         activityIndicatorView.startAnimating()
+        activityIndicatorView.color = .white
         
         messageLabel.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
         messageLabel.textColor = UIColor.white
