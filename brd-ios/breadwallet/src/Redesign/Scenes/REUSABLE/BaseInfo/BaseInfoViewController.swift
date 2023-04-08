@@ -27,6 +27,10 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     var buttonViewModels: [ButtonViewModel] { return [] }
     var buttonConfigurations: [ButtonConfiguration] { return [] }
     
+    var didTapMainButton: (() -> Void)?
+    var didTapSecondayButton: (() -> Void)?
+    var didTapThirdButton: (() -> Void)?
+    
     // MARK: - Overrides
     
     override var closeImage: UIImage? { return Asset.close.image }

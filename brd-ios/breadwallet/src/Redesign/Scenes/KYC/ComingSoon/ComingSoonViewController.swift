@@ -21,9 +21,6 @@ class ComingSoonViewController: BaseInfoViewController {
         }
     }
     
-    var didTapMainButton: (() -> Void)?
-    var didTapSecondayButton: (() -> Void)?
-    
     override var imageName: String? { return reason?.iconName }
     override var titleText: String? { return reason?.title }
     override var descriptionText: String? { return reason?.description }
