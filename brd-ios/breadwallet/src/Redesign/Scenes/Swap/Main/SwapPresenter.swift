@@ -182,7 +182,16 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             presentAssetInfoPopup(actionResponse: .init())
         } else if let error = actionResponse.error as? FEError {
             let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
-            let config = Presets.InfoView.error
+            let config: InfoViewConfiguration
+            
+            switch error as? ExchangeErrors {
+            case .highFees:
+                config = Presets.InfoView.warning
+
+            default:
+                config = Presets.InfoView.error
+            }
+            
             viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
         } else {
             viewController?.displayMessage(responseDisplay: .init())
