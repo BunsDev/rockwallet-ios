@@ -91,7 +91,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.invalidateTableViewIntrinsicContentSize()
+                self?.tableView.invalidateTableViewIntrinsicContentSize()
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -139,7 +139,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         cell.wrappedView.setup(with: responseDisplay.viewModel)
         
-        invalidateTableViewIntrinsicContentSize()
+        tableView.invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)

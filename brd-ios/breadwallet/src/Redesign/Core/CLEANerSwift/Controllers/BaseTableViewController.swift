@@ -111,7 +111,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
             snapshot.appendItems(items, toSection: section)
         }
         
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, completion: { [weak self] in
+            self?.tableView.invalidateIntrinsicContentSize()
+        })
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
         LoadingView.hideIfNeeded()
@@ -480,28 +482,17 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     /// Override in subclass
     func textFieldDidBegin(for indexPath: IndexPath, with text: String?) {
-        invalidateTableViewIntrinsicContentSize()
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass
     func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        invalidateTableViewIntrinsicContentSize()
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass
     func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
-        invalidateTableViewIntrinsicContentSize()
-    }
-    
-    func invalidateTableViewIntrinsicContentSize() {
-        if #unavailable(iOS 16.0) {
-            DispatchQueue.main.async {
-                self.tableView.isScrollEnabled = false
-                self.tableView.isScrollEnabled = true
-            }
-        } else {
-            tableView.visibleCells.forEach({ $0.invalidateIntrinsicContentSize() })
-        }
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass

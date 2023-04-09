@@ -115,7 +115,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         
         cell.wrappedView.setup(with: responseDisplay.amounts)
         
-        invalidateTableViewIntrinsicContentSize()
+        tableView.invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = responseDisplay.continueEnabled
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)

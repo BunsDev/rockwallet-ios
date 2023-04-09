@@ -109,7 +109,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.invalidateTableViewIntrinsicContentSize()
+                self?.tableView.invalidateTableViewIntrinsicContentSize()
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)

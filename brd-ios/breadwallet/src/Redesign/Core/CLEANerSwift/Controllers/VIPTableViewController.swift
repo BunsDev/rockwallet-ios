@@ -110,8 +110,6 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.verticalScrollIndicatorInsets.right = isRoundedBackgroundEnabled ? -Margins.huge.rawValue : 0
         
-        tableView.reloadData()
-        
         setupVerticalButtons()
     }
     
@@ -129,6 +127,8 @@ class VIPTableViewController<C: CoordinatableRoutes,
         contentShadowView.snp.updateConstraints { make in
             make.top.equalTo(self.tableView.snp.top).inset(tableView.contentInset.top)
         }
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
