@@ -34,6 +34,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             self.didSelectTransaction(transactions: transactions, selectedIndex: index)
         })
         
+        // TODO: Lots of duplicated logic here. Check ApplicationController.
         footerView.actionPublisher.sink { [unowned self] action in
             // TODO: Uncomment for drawer
 //            if action != .buySell { hideDrawer() }
