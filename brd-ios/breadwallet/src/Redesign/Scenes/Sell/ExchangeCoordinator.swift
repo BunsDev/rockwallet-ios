@@ -159,14 +159,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
         navigationController.present(nc, animated: true)
     }
     
-    func reloadBuy(selectedCard: PaymentCard) {
-        let buyVC = navigationController.children.first(where: { $0 is BuyViewController }) as? BuyViewController
-        buyVC?.dataStore?.selected = selectedCard
-        buyVC?.dataStore?.autoSelectDefaultPaymentMethod = false
-        // TODO: Refactor
-        buyVC?.interactor?.getData(viewAction: .init())
-    }
-    
     func dismissCardsSelectionFlow(completion: (() -> Void)?) {
         navigationController.dismiss(animated: true, completion: completion)
         parentCoordinator?.childDidFinish(child: self)

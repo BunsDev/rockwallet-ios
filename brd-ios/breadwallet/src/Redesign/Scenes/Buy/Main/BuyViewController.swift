@@ -19,7 +19,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                          BuyInteractor,
                          BuyPresenter,
                          BuyStore>,
-                         BuyResponseDisplays {
+                         BuyResponseDisplays,
+                         Subscriber {
     typealias Models = BuyModels
     
     var plaidHandler: LinkKit.Handler?
@@ -30,6 +31,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         super.viewDidLoad()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Buy(type: dataStore?.paymentMethod?.rawValue ?? ""))
+        
+        Store.subscribe(self, name: .reloadBuy) { [weak self] _ in
+            self?.prepareData()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
