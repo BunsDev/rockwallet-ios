@@ -1591,6 +1591,8 @@
 /* Menu button title */
 "MenuButton.support" = "Support";
 
+"MenuButton.TellFriend" = "Tell a friend";
+
 /* button label */
 "MenuViewController.createButton" = "Create New Wallet";
 
@@ -2506,6 +2508,8 @@
 
 /* Sync blockchain label */
 "Settings.sync" = "Sync Blockchain";
+
+"Settings.TellFriendDescription" = "Hey, I use RockWallet to send, receive, store, buy and trade crypto. It’s really easy to use. Give it a try. https://rockwallet.com/";
 
 /* Settings title */
 "Settings.title" = "Menu";

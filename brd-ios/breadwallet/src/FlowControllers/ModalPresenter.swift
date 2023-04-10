@@ -592,11 +592,8 @@ class ModalPresenter: Subscriber {
                 self?.presentFaq()
             },
             // Tell a friend
-            MenuItem(title: "Tell a friend", icon: MenuItem.Icon.tellFriend) {
-                let vc = UIActivityViewController(activityItems: ["""
-Hey, I use RockWallet to send, receive, store, buy and trade crypto.
-It’s really easy to use. Give it a try. https://rockwallet.com/
-"""],
+            MenuItem(title: L10n.MenuButton.tellFriend, icon: MenuItem.Icon.tellFriend) {
+                let vc = UIActivityViewController(activityItems: [L10n.Settings.tellFriendDescription],
                                                   applicationActivities: nil)
                 vc.title = L10n.About.AppName.android
                 vc.popoverPresentationController?.sourceView = menuNav.view
