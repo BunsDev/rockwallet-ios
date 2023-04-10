@@ -268,7 +268,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         navigationController.show(nvc, sender: nil)
     }
     
-    func decideFlow(completion: ((Bool) -> Void)?) {
+    private func decideFlow(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return
