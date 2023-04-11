@@ -24,10 +24,6 @@ class SuccessViewController: BaseInfoViewController {
     var transactionType: TransactionType = .base
     let canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false
     
-    var didTapMainButton: (() -> Void)?
-    var didTapSecondayButton: (() -> Void)?
-    var didTapThirdButton: (() -> Void)?
-    
     override var imageName: String? { return reason?.iconName }
     override var titleText: String? { return reason?.title }
     override var descriptionText: String? { return reason?.description }

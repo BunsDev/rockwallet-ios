@@ -33,6 +33,24 @@ struct ButtonConfiguration: Configurable {
 }
 
 struct ButtonViewModel: ViewModel {
+    static func == (lhs: ButtonViewModel, rhs: ButtonViewModel) -> Bool {
+        return lhs.title == rhs.title
+        && lhs.attributedTitle == rhs.attributedTitle
+        && lhs.isUnderlined == rhs.isUnderlined
+        && lhs.image == rhs.image
+        && lhs.enabled == rhs.enabled
+        && lhs.shouldTemporarilyDisableAfterTap == rhs.shouldTemporarilyDisableAfterTap
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title?.hashValue)
+        hasher.combine(attributedTitle.hashValue)
+        hasher.combine(isUnderlined.hashValue)
+        hasher.combine(image.hashValue)
+        hasher.combine(enabled.hashValue)
+        hasher.combine(shouldTemporarilyDisableAfterTap.hashValue)
+    }
+    
     var title: String?
     var attributedTitle: NSAttributedString?
     var isUnderlined = false

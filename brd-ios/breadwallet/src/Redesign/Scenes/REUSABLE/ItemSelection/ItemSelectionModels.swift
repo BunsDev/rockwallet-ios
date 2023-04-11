@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol ItemSelectable {
+protocol ItemSelectable: Hashable {
     var displayName: String? { get }
     var displayImage: ImageViewModel? { get }
 }
 
-enum ItemSelectionModels {
+enum ItemSelectionModels: Hashable {
 
     struct Item {
-        var items: [ItemSelectable]?
+        var items: [any ItemSelectable]?
         var isAddingEnabled: Bool?
     }
     

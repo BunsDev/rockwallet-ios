@@ -34,7 +34,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .notificationPrompt:
             cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
             
@@ -55,9 +55,8 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     }
     
     func tableView(_ tableView: UITableView, bankCardInputDetailsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<BankCardInputDetailsView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? BankCardInputDetailsViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? BankCardInputDetailsViewModel else {
             return UITableViewCell()
         }
         
@@ -83,8 +82,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
               let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -102,8 +100,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard var model = sectionRows[section]?[indexPath.row] as? ButtonViewModel,
+        guard var model = dataSource?.itemIdentifier(for: indexPath) as? ButtonViewModel,
               let cell: WrapperTableViewCell<FEButton> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -136,15 +133,15 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     // MARK: - AddCardResponseDisplay
     
     func displayCardInfo(responseDisplay: AddCardModels.CardInfo.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.cardDetails),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<BankCardInputDetailsView> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.cardDetails.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<BankCardInputDetailsView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.model)
     }
     
     func displayValidate(responseDisplay: AddCardModels.Validate.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.confirm),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         isValid = responseDisplay.isValid
         cell.wrappedView.isEnabled = isValid

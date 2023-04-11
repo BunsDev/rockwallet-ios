@@ -71,7 +71,7 @@ extension UIViewController {
     // MARK: - Info Popup
     // TODO: Unify / cleanup the logic with BaseCoordinator
     
-    func showInfoPopup(with model: PopupViewModel, callbacks: [(() -> Void)] = []) {
+    func showInfoPopup(with model: PopupViewModel, config: PopupConfiguration? = Presets.Popup.white, callbacks: [(() -> Void)] = []) {
         let blurView = UIVisualEffectView()
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -94,7 +94,7 @@ extension UIViewController {
         popup.layer.shadowOffset = .zero
         popup.layoutIfNeeded()
         
-        popup.configure(with: model.config ?? Presets.Popup.white)
+        popup.configure(with: config ?? Presets.Popup.white)
         popup.setup(with: model)
         
         popup.buttonCallbacks = callbacks

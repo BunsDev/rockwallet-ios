@@ -31,7 +31,7 @@ struct TradeStatus {
     var restrictionReason: TradeRestrictionReason?
 }
 
-enum VerificationStatus: Equatable {
+enum VerificationStatus: Hashable {
     case none
     case emailPending
     case email
@@ -191,7 +191,7 @@ struct VerificationConfiguration: Configurable {
     var benefits: LabelConfiguration?
 }
 
-enum KYC {
+enum KYC: Hashable {
     case levelOne
     case levelTwo
     case veriff

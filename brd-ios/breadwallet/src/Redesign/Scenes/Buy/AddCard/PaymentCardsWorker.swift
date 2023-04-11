@@ -27,7 +27,7 @@ struct PaymentCardsResponseData: ModelResponse {
     var paymentInstruments: [PaymentInstrument]
 }
 
-struct PaymentCard: ItemSelectable, Hashable {
+struct PaymentCard: ItemSelectable {
     enum Scheme: String {
         case visa = "VISA"
         case mastercard = "MASTERCARD"

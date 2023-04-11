@@ -25,7 +25,7 @@ protocol BackupCodesDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol BackupCodesDataPassing {
-    var dataStore: BackupCodesDataStore? { get }
+    var dataStore: (any BackupCodesDataStore)? { get }
 }
 
 protocol BackupCodesRoutes: CoordinatableRoutes {

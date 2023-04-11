@@ -23,7 +23,6 @@ struct PopupViewModel: ViewModel {
     var imageName: String?
     var body: String?
     var buttons: [ButtonViewModel] = []
-    var config: PopupConfiguration?
     var closeButton: ButtonViewModel? = .init(image: Asset.close.image)
 }
 

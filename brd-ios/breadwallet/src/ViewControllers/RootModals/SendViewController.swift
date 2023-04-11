@@ -820,7 +820,6 @@ extension SendViewController {
         copyKeyboardChangeAnimation(notification: notification)
     }
     
-    // TODO: maybe put this in ModalPresentable?
     private func copyKeyboardChangeAnimation(notification: Notification) {
         guard let info = KeyboardNotificationInfo(notification.userInfo) else { return }
         UIView.animate(withDuration: info.animationDuration, delay: 0, options: info.animationOptions, animations: {

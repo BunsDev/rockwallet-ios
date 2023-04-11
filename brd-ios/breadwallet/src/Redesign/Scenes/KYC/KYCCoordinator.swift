@@ -57,7 +57,6 @@ class KYCCoordinator: BaseCoordinator,
             vc?.itemSelected = { item in
                 selected?(item as? Country)
             }
-            vc?.prepareData()
         }
     }
     
@@ -70,7 +69,6 @@ class KYCCoordinator: BaseCoordinator,
             vc?.itemSelected = { item in
                 selected?(item as? Place)
             }
-            vc?.prepareData()
         }
     }
     

@@ -26,7 +26,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .accountLimits
         ]
 
-        let sectionRows: [ExchangeModels.Section: [Any]] = [
+        let sectionRows: [ExchangeModels.Section: [any Hashable]] = [
             .rateAndTimer: [
                 ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
             ],

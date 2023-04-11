@@ -25,9 +25,6 @@ class FailureViewController: BaseInfoViewController {
         }
     }
     
-    var didTapMainButton: (() -> Void)?
-    var didTapSecondayButton: (() -> Void)?
-    
     override var imageName: String? { return reason?.iconName }
     override var titleText: String? { return reason?.title }
     override var descriptionText: String? { return reason?.description }
@@ -75,9 +72,8 @@ class FailureViewController: BaseInfoViewController {
             return super.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
         }
         
-        guard let value = descriptionText,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
+        guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
+              let value = descriptionText else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         

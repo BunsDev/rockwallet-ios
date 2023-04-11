@@ -17,9 +17,6 @@ extension Scenes {
 class SwapInfoViewController: BaseInfoViewController {
     typealias Item = (from: String, to: String)
     
-    var didTapMainButton: (() -> Void)?
-    var didTapSecondayButton: (() -> Void)?
-    
     override var imageName: String? { return Asset.celebrate.name }
     override var titleText: String? { return L10n.Swap.swapping((dataStore?.item as? Item)?.from ?? "", (dataStore?.item as? Item)?.to ?? "") }
     override var descriptionText: String? {

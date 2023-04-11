@@ -14,6 +14,15 @@ struct RWBottomBarItemConfiguration: Configurable {
 }
 
 struct RWBottomBarItemViewModel: ViewModel {
+    static func == (lhs: RWBottomBarItemViewModel, rhs: RWBottomBarItemViewModel) -> Bool {
+        return lhs.title == rhs.title && lhs.image == rhs.image
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title.hashValue)
+        hasher.combine(image.hashValue)
+    }
+    
     var title: String
     var image: UIImage?
     var callback: (() -> Void)?

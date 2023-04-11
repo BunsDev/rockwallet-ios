@@ -34,7 +34,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .image:
             cell = self.tableView(tableView, coverCellForRowAt: indexPath)
             (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.setupCustomMargins(vertical: .extraExtraHuge, horizontal: .large)
@@ -136,8 +136,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     }
     
     func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.input),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.input.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
         else { return }
         
         cell.wrappedView.showErrorMessage()

@@ -67,7 +67,6 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     func showDeleteProfile(with keyMaster: KeyStore) {
         open(scene: Scenes.DeleteProfileInfo) { vc in
             vc.dataStore?.keyMaster = keyMaster
-            vc.prepareData()
         }
     }
     

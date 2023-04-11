@@ -47,7 +47,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .instructions:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
         
@@ -65,9 +65,8 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     }
     
     func tableView(_ tableView: UITableView, phoneNumberCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<PhoneNumberView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? PhoneNumberViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PhoneNumberViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -99,8 +98,8 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     // MARK: - VerifyPhoneNumberResponseDisplay
     
     func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.phoneNumber),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<PhoneNumberView>
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.phoneNumber.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<PhoneNumberView>
         else { return }
         
         cell.setup { view in

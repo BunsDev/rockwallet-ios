@@ -47,7 +47,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             paymentMethodViewModel = CardSelectionViewModel()
         }
         
-        let sectionRows: [Models.Section: [ViewModel]] =  [
+        let sectionRows: [Models.Section: [any Hashable]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],

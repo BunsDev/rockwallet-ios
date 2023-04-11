@@ -17,7 +17,7 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
     
     // MARK: - VerifyPhoneNumberActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        if let item = actionResponse.item as? Models.Item,
+        if let item = actionResponse.item as? (any Models.Item),
            let iso2 = item.country?.iso2,
            let name = item.country?.name,
            let areaCode = item.country?.areaCode {
@@ -33,7 +33,7 @@ final class VerifyPhoneNumberPresenter: NSObject, Presenter, VerifyPhoneNumberAc
             .phoneNumber
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
                 LabelViewModel.text(L10n.VerifyPhoneNumber.instructions)
             ],

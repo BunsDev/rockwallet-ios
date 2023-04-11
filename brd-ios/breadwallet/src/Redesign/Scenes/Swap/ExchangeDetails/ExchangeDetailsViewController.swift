@@ -46,7 +46,7 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section] as? Models.Section
+        let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section
         
         let cell: UITableViewCell
         switch section {
@@ -73,9 +73,8 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     }
     
     func tableView(_ tableView: UITableView, headerCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<AssetView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? AssetViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? AssetViewModel
         else {
             return UITableViewCell()
         }
@@ -90,9 +89,8 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     }
     
     func tableView(_ tableView: UITableView, orderCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<OrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? OrderViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? OrderViewModel
         else {
             return UITableViewCell()
         }
@@ -110,9 +108,8 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     }
     
     func tableView(_ tableView: UITableView, buyOrderCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<BuyOrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? BuyOrderViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? BuyOrderViewModel
         else {
             return UITableViewCell()
         }

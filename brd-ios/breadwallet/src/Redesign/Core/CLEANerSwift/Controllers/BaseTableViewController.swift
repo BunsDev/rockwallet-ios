@@ -90,18 +90,30 @@ class BaseTableViewController<C: CoordinatableRoutes,
 
     override func prepareData() {
         super.prepareData()
-        (interactor as? FetchViewActions)?.getData(viewAction: .init())
+        (interactor as? (any FetchViewActions))?.getData(viewAction: .init())
     }
 
     // MARK: ResponseDisplay
+    
     func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
         sections = responseDisplay.sections
         sectionRows = responseDisplay.sectionRows
         
-        // TODO: DiffableDataSource
-        UIView.transition(with: tableView, duration: Presets.Animation.short.rawValue, options: .transitionCrossDissolve) { [weak self] in
-            self?.tableView.reloadData()
+        dataSource?.defaultRowAnimation = .fade
+        dataSource = DataSource(tableView: tableView) { [weak self] tableView, indexPath, _ in
+            return self?.tableView(tableView, cellForRowAt: indexPath)
         }
+        
+        var snapshot = Snapshot()
+        snapshot.appendSections(sections)
+        for section in sections {
+            guard let items = sectionRows[section] as? [AnyHashable] else { continue }
+            snapshot.appendItems(items, toSection: section)
+        }
+        
+        dataSource?.apply(snapshot, completion: { [weak self] in
+            self?.tableView.invalidateIntrinsicContentSize()
+        })
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
         LoadingView.hideIfNeeded()
@@ -109,14 +121,14 @@ class BaseTableViewController<C: CoordinatableRoutes,
 
     // MARK: UITableViewDataSource
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let type = (sections[section] as? Sectionable)?.header
+        let type = (sections[section] as? (any Sectionable))?.header
         return self.tableView(tableView, accessoryViewForType: type, for: section) { [weak self] in
             self?.tableView(tableView, didSelectHeaderIn: section)
         }
     }
 
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let type = (sections[section] as? Sectionable)?.footer
+        let type = (sections[section] as? (any Sectionable))?.footer
         return self.tableView(tableView, accessoryViewForType: type, for: section) { [weak self] in
             self?.tableView(tableView, didSelectFooterIn: section)
         }
@@ -212,9 +224,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     // MARK: Custom cells
     func tableView(_ tableView: UITableView, coverCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<FEImageView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ImageViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? ImageViewModel
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -226,8 +237,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -242,8 +252,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, titleLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -258,8 +267,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, iconTitleSubtitleToggleViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? IconTitleSubtitleToggleViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? IconTitleSubtitleToggleViewModel,
               let cell: WrapperTableViewCell<IconTitleSubtitleToggleView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -274,8 +282,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, titleValueCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? TitleValueViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? TitleValueViewModel,
               let cell: WrapperTableViewCell<TitleValueView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -302,8 +309,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, descriptionLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -318,8 +324,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? ButtonViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? ButtonViewModel,
               let cell: WrapperTableViewCell<FEButton> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -339,8 +344,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? MultipleButtonsViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? MultipleButtonsViewModel,
               let cell: WrapperTableViewCell<MultipleButtonsView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -356,8 +360,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, textFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? TextFieldModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? TextFieldModel,
               let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -384,8 +387,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
               let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -404,9 +406,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, navigationCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<NavigationItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? NavigationViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? NavigationViewModel
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -420,9 +421,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, profileViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ProfileView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ProfileViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? ProfileViewModel
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -434,9 +434,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, checkmarkCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ChecklistItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ChecklistItemViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? ChecklistItemViewModel else {
             return UITableViewCell()
         }
         
@@ -450,9 +449,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, tickboxCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<TickboxItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? TickboxItemViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? TickboxItemViewModel else {
             return UITableViewCell()
         }
         
@@ -466,9 +464,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? SegmentControlViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? SegmentControlViewModel
         else {
             return UITableViewCell()
         }
@@ -485,28 +482,17 @@ class BaseTableViewController<C: CoordinatableRoutes,
     
     /// Override in subclass
     func textFieldDidBegin(for indexPath: IndexPath, with text: String?) {
-        invalidateTableViewIntrinsicContentSize()
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass
     func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        invalidateTableViewIntrinsicContentSize()
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass
     func textFieldDidUpdate(for indexPath: IndexPath, with text: String?) {
-        invalidateTableViewIntrinsicContentSize()
-    }
-    
-    func invalidateTableViewIntrinsicContentSize() {
-        if #unavailable(iOS 16.0) {
-            DispatchQueue.main.async {
-                self.tableView.isScrollEnabled = false
-                self.tableView.isScrollEnabled = true
-            }
-        } else {
-            tableView.visibleCells.forEach({ $0.invalidateIntrinsicContentSize() })
-        }
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     /// Override in subclass

@@ -20,12 +20,16 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     var shouldDismiss = false
     
-    var imageName: String? { return Asset.timeoutStatusIcon.name }
-    var titleText: String? { return "Override" }
-    var descriptionText: String? { return "Override" }
+    var imageName: String? { return nil }
+    var titleText: String? { return nil }
+    var descriptionText: String? { return nil }
     
     var buttonViewModels: [ButtonViewModel] { return [] }
     var buttonConfigurations: [ButtonConfiguration] { return [] }
+    
+    var didTapMainButton: (() -> Void)?
+    var didTapSecondayButton: (() -> Void)?
+    var didTapThirdButton: (() -> Void)?
     
     // MARK: - Overrides
     
@@ -45,25 +49,9 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
         verticalButtons.wrappedView.setup(with: .init(buttons: buttonViewModels))
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch sections[section] as? Models.Section {
-        case .image:
-            return imageName == nil ? 0 : 1
-            
-        case .title:
-            return titleText == nil ? 0 : 1
-            
-        case .description:
-            return descriptionText == nil ? 0 : 1
-            
-        default:
-            return 0
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .image:
             cell = self.tableView(tableView, coverCellForRowAt: indexPath)
             
@@ -85,8 +73,9 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     override func tableView(_ tableView: UITableView, coverCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: WrapperTableViewCell<FEImageView> = tableView.dequeueReusableCell(for: indexPath),
-              let value = imageName
-        else { return UITableViewCell() }
+              let value = imageName else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
         
         cell.setup { view in
             view.configure(with: Presets.Background.transparent)
@@ -100,9 +89,8 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, titleLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let value = titleText,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
+        guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
+              let value = titleText else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
@@ -115,9 +103,8 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, descriptionLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let value = descriptionText,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
+        guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
+              let value = descriptionText else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         

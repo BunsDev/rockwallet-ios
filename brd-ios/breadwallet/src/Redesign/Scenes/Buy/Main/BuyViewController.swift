@@ -57,7 +57,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .segment:
             cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
             
@@ -87,9 +87,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, cryptoSelectionCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<SwapCurrencyView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? SwapCurrencyViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? SwapCurrencyViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -143,17 +142,17 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     private func setSegment(_ segment: PaymentCard.PaymentType) {
-        guard let section = sections.firstIndex(of: Models.Section.segment),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.segment.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
         
         interactor?.selectPaymentMethod(viewAction: .init(method: segment))
         
-        cell.wrappedView.setup(with: SegmentControlViewModel(selectedIndex: segment))
+        let isUSDTAvailable = Store.state.currencies.first(where: { $0.code == Constant.USDT }) == nil
+        cell.wrappedView.setup(with: SegmentControlViewModel(selectedIndex: isUSDTAvailable ? .card : segment))
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -174,8 +173,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -196,8 +194,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             continueButton.viewModel?.enabled = false
             continueButton.setup(with: continueButton.viewModel)
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
@@ -209,8 +207,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell
@@ -262,10 +260,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-        guard let fromSection = sections.firstIndex(of: Models.Section.from),
-              let toSection = sections.firstIndex(of: Models.Section.paymentMethod),
-              let fromCell = tableView.cellForRow(at: .init(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: .init(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
+              let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
@@ -275,7 +273,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
         toCell.wrappedView.setup(with: actionResponse.cardModel)
         
-        invalidateTableViewIntrinsicContentSize()
+        tableView.invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)

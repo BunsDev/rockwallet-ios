@@ -28,7 +28,7 @@ protocol CheckListDataStore: BaseDataStore {
 }
 
 protocol CheckListDataPassing {
-    var dataStore: CheckListDataStore? { get }
+    var dataStore: (any CheckListDataStore)? { get }
 }
 
 protocol CheckListRoutes: CoordinatableRoutes {

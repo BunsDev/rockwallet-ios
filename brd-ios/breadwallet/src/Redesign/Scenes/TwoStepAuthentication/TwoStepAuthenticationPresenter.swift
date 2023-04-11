@@ -53,7 +53,7 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         methodsText.append(interactableText)
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
                 LabelViewModel.text(L10n.TwoStep.mainInstructions + " " + "")
             ],

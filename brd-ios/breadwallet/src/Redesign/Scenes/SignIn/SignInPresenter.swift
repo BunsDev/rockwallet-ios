@@ -27,7 +27,7 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
             .forgotPassword
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
             .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password)],
             .forgotPassword: [MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.forgotPassword,

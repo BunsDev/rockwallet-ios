@@ -33,7 +33,7 @@ protocol DeleteProfileInfoDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol DeleteProfileInfoDataPassing {
-    var dataStore: DeleteProfileInfoDataStore? { get }
+    var dataStore: (any DeleteProfileInfoDataStore)? { get }
 }
 
 protocol DeleteProfileInfoRoutes: CoordinatableRoutes {

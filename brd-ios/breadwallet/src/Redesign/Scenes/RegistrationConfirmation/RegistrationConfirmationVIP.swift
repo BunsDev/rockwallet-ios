@@ -35,7 +35,7 @@ protocol RegistrationConfirmationDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol RegistrationConfirmationDataPassing {
-    var dataStore: RegistrationConfirmationDataStore? { get }
+    var dataStore: (any RegistrationConfirmationDataStore)? { get }
 }
 
 protocol RegistrationConfirmationRoutes: CoordinatableRoutes {

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Rate: Equatable {
+struct Rate: Hashable {
     let code: String
     let name: String
     let rate: Double

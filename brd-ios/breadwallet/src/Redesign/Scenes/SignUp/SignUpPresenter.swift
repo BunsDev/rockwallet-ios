@@ -31,7 +31,7 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
             .promotionsTickbox
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
             .password: [TextFieldModel(title: L10n.Account.createPassword, value: item.password)],
             .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password)],

@@ -44,7 +44,7 @@ protocol AddCardDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol AddCardDataPassing {
-    var dataStore: AddCardDataStore? { get }
+    var dataStore: (any AddCardDataStore)? { get }
 }
 
 protocol AddCardRoutes: CoordinatableRoutes {
