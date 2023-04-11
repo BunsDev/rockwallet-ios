@@ -171,7 +171,7 @@ enum BaseInfoModels {
     }
     
     enum FailureReason: SimpleMessage {
-        case buyCard
+        case buyCard(String?)
         case buyAch(String)
         case swap
         case plaidConnection
@@ -211,8 +211,9 @@ enum BaseInfoModels {
         
         var description: String {
             switch self {
-            case .buyCard:
-                return L10n.Buy.failureTransactionMessage
+            case .buyCard(let message):
+                guard let message else { return L10n.Buy.failureTransactionMessage }
+                return message
                 
             case .swap:
                 return L10n.Swap.failureSwapMessage

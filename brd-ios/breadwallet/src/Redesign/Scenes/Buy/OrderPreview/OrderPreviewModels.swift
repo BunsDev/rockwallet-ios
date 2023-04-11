@@ -153,6 +153,7 @@ enum OrderPreviewModels {
             var isAch: Bool?
             var failed: Bool?
             var responseCode: String?
+            var errorDescription: String?
         }
         
         struct ResponseDisplay {
