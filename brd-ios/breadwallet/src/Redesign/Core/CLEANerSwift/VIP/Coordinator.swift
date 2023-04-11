@@ -101,8 +101,7 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showBuy(type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         guard let profile = UserManager.shared.profile,
-              profile.kycAccessRights.hasBuyAccess,
-              profile.status.tradeStatus.canTrade else {
+              ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
             handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
             return
         }
@@ -410,11 +409,6 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
-        guard UserManager.shared.profile != nil else {
-            handleUserAccount()
-            return
-        }
-        
         guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
         
         switch restrictionReason {
