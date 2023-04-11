@@ -73,13 +73,13 @@ class FailureViewController: BaseInfoViewController {
         }
         
         guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
-              let value = descriptionText else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, textAlignment: .left))
-            view.setup(with: .text(value))
+            view.setup(with: model)
             view.setupCustomMargins(vertical: .extraHuge, horizontal: .extraHuge)
             view.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()

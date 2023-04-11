@@ -73,13 +73,13 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     override func tableView(_ tableView: UITableView, coverCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: WrapperTableViewCell<FEImageView> = tableView.dequeueReusableCell(for: indexPath),
-              let value = imageName else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? ImageViewModel else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
             view.configure(with: Presets.Background.transparent)
-            view.setup(with: .imageName(value))
+            view.setup(with: model)
             view.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(ViewSizes.extraExtraHuge.rawValue)
             }
@@ -90,13 +90,13 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     override func tableView(_ tableView: UITableView, titleLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
-              let value = titleText else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Title.six, textColor: LightColors.Text.three, textAlignment: .center))
-            view.setup(with: .text(value))
+            view.setup(with: model)
         }
         
         return cell
@@ -104,13 +104,13 @@ class BaseInfoViewController: BaseTableViewController<BaseCoordinator,
     
     override func tableView(_ tableView: UITableView, descriptionLabelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
-              let value = descriptionText else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, textAlignment: .center))
-            view.setup(with: .text(value))
+            view.setup(with: model)
             view.setupCustomMargins(vertical: .extraHuge, horizontal: .extraHuge)
             view.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()

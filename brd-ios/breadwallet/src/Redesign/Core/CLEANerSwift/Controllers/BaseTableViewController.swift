@@ -107,8 +107,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
         var snapshot = Snapshot()
         snapshot.appendSections(sections)
         for section in sections {
-            guard let items = sectionRows[section] as? [AnyHashable] else { continue }
-            snapshot.appendItems(items, toSection: section)
+            let items = sectionRows[section]
+            snapshot.appendItems(items as? [AnyHashable] ?? [], toSection: section)
         }
         
         dataSource?.apply(snapshot, completion: { [weak self] in
