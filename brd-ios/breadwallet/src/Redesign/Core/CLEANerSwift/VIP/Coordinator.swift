@@ -80,100 +80,56 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
-        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            self?.decideFlow { showPopup in
-                guard showPopup, let profile = UserManager.shared.profile else { return }
-                
-                if profile.kycAccessRights.hasSwapAccess {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
-                        vc?.dataStore?.currencies = currencies
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
-                    
-                    return
-                } else if profile.status.isKYCLocationRestricted {
-                    self?.showComingSoon(reason: .swap)
-                    
-                    return
-                } else if profile.kycAccessRights.restrictionReason == .kyc {
-                    self?.showAccountVerification(flow: .swap)
-                    
-                    return
-                } else {
-                    self?.showComingSoon(reason: .swap)
-                    
-                    return
+        guard let profile = UserManager.shared.profile,
+              profile.kycAccessRights.hasSwapAccess else {
+            handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
+            return
+        }
+        
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
+                    vc?.dataStore?.currencies = currencies
+                    vc?.dataStore?.coreSystem = coreSystem
+                    vc?.dataStore?.keyStore = keyStore
                 }
             }
         }
     }
     
-    func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
-        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            self?.decideFlow { showPopup in
-                guard showPopup, let profile = UserManager.shared.profile else { return }
-                
-                if profile.kycAccessRights.hasBuyAccess, type == .card {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
-                        vc?.dataStore?.paymentMethod = type
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
-                    
-                    return
-                } else if profile.status.isKYCLocationRestricted, type == .card {
-                    self?.showComingSoon(reason: .buy)
-                    
-                    return
-                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .card {
-                    self?.showAccountVerification(flow: .buy)
-                    
-                    return
-                } else if type == .card {
-                    self?.showComingSoon(reason: .buy)
-                    
-                    return
-                }
-                
-                if profile.kycAccessRights.hasAchAccess == true, type == .ach {
-                    self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
-                        vc?.dataStore?.paymentMethod = type
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
-                    
-                    return
-                } else if profile.status.isKYCLocationRestricted == true, type == .ach {
-                    self?.showComingSoon(reason: .buyAch, coreSystem: coreSystem, keyStore: keyStore)
-                    
-                    return
-                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .ach {
-                    self?.showAccountVerification(flow: .buy)
-                    
-                    return
-                } else if type == .ach {
-                    self?.showComingSoon(reason: .buyAch, coreSystem: coreSystem, keyStore: keyStore)
-                    
-                    return
+    func showBuy(type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+        guard let profile = UserManager.shared.profile,
+              profile.kycAccessRights.hasBuyAccess,
+              profile.status.tradeStatus.canTrade else {
+            handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
+            return
+        }
+        
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
+                    vc?.dataStore?.paymentMethod = type
+                    vc?.dataStore?.coreSystem = coreSystem
+                    vc?.dataStore?.keyStore = keyStore
                 }
             }
         }
     }
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
-        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            self?.decideFlow { showPopup in
-                guard showPopup else { return }
-                
-                // TODO: Handle when Sell is ready.
-//                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false {
-//                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
-//                        vc?.reason = .sell
-//                    }
-//                    return
-//                }
-                
+        guard let profile = UserManager.shared.profile, profile.status.tradeStatus.canTrade else {
+            handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+            return
+        }
+        
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                     vc?.dataStore?.currency = currency
                     vc?.dataStore?.coreSystem = coreSystem
@@ -184,17 +140,17 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showProfile() {
-        decideFlow { [weak self] showPopup in
-            guard showPopup else { return }
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
             
             self?.openModally(coordinator: ProfileCoordinator.self, scene: Scenes.Profile)
         }
     }
     
-    func showAccountVerification(flow: ProfileModels.ExchangeFlow? = nil) {
+    func showAccountVerification() {
         let nvc = RootNavigationController()
         let coordinator = KYCCoordinator(navigationController: nvc)
-        coordinator.start(flow: flow)
+        coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         navigationController.present(nvc, animated: true)
@@ -246,6 +202,10 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func popToRoot(completion: (() -> Void)? = nil) {
         navigationController.popToRootViewController(animated: true, completion: completion)
+    }
+    
+    func popViewController(completion: (() -> Void)? = nil) {
+        navigationController.popViewController(animated: true, completion: completion)
     }
     
     /// Remove the child coordinator from the stack after iit finnished its flow
@@ -306,8 +266,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         navigationController.show(nvc, sender: nil)
     }
     
-    // It prepares the next KYC coordinator OR returns true.
-    func decideFlow(completion: ((Bool) -> Void)?) {
+    private func decideFlow(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return
@@ -457,37 +416,50 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
         
         guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
+        
         switch restrictionReason {
         case .verification:
-            handleUnverifiedUser(flow: flow)
+            showVerifyAccount(flow: flow)
             
         case .location:
             showComingSoon(reason: reason)
+            
         }
     }
     
-    func handleUnverifiedUser(flow: ProfileModels.ExchangeFlow?) {
+    func showVerifyAccount(flow: ProfileModels.ExchangeFlow?,
+                           isModalDismissable: Bool = false,
+                           hidesBackButton: Bool = true) {
         open(scene: Scenes.VerifyAccount) { [weak self] vc in
+            self?.handleVerifyAccountNavigation(vc, flow: flow)
+            
             vc.flow = flow
-            
-            vc.didTapMainButton = {
-                switch flow {
-                case .buy, .swap:
-                    vc.navigationController?.popViewController(animated: true)
-                    
-                default:
-                    self?.showAccountVerification()
-                }
+            vc.isModalDismissable = isModalDismissable
+            vc.navigationItem.hidesBackButton = hidesBackButton
+            vc.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    private func handleVerifyAccountNavigation(_ vc: VerifyAccountViewController?, flow: ProfileModels.ExchangeFlow?) {
+        guard let vc else { return }
+        
+        vc.didTapMainButton = { [weak self] in
+            switch flow {
+            case .buy, .swap:
+                vc.coordinator?.popViewController()
+                
+            default:
+                self?.showAccountVerification()
             }
-            
-            vc.didTapSecondayButton = {
-                switch flow {
-                case .buy, .swap:
-                    self?.showSupport()
-                    
-                default:
-                    vc.navigationController?.popViewController(animated: true)
-                }
+        }
+        
+        vc.didTapSecondayButton = { [weak self] in
+            switch flow {
+            case .buy, .swap:
+                self?.showSupport()
+                
+            default:
+                vc.coordinator?.popViewController()
             }
         }
     }
@@ -547,9 +519,11 @@ class BaseCoordinator: NSObject, Coordinatable {
         
         vc.didTapMainButton = {
             if vc.reason == .swap || vc.reason == .buy || vc.reason == .sell {
-                vc.navigationController?.popViewController(animated: true)
+                vc.coordinator?.popViewController()
             } else if vc.reason == .buyAch {
-                vc.coordinator?.showBuy(coreSystem: vc.dataStore?.coreSystem, keyStore: vc.dataStore?.keyStore)
+                vc.coordinator?.showBuy(type: .card,
+                                        coreSystem: vc.dataStore?.coreSystem,
+                                        keyStore: vc.dataStore?.keyStore)
             }
         }
         
@@ -557,7 +531,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             if vc.reason == .swap || vc.reason == .buy {
                 vc.coordinator?.showSupport()
             } else if vc.reason == .buyAch {
-                vc.navigationController?.popViewController(animated: true)
+                vc.coordinator?.popViewController()
             }
         }
     }
@@ -568,8 +542,10 @@ class BaseCoordinator: NSObject, Coordinatable {
         vc.didTapMainButton = {
             switch vc.reason {
             case .documentVerification, .limitsAuthentication:
-                vc.coordinator?.showBuy(coreSystem: vc.dataStore?.coreSystem,
+                vc.coordinator?.showBuy(type: .card,
+                                        coreSystem: vc.dataStore?.coreSystem,
                                         keyStore: vc.dataStore?.keyStore)
+                
             default:
                 vc.coordinator?.dismissFlow()
             }
@@ -596,6 +572,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 vc.coordinator?.showBuy(type: .ach,
                                         coreSystem: vc.dataStore?.coreSystem,
                                         keyStore: vc.dataStore?.keyStore)
+                
             default:
                 vc.coordinator?.showExchangeDetails(with: vc.dataStore?.itemId,
                                                     type: vc.transactionType)
@@ -696,7 +673,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             
         case .swap:
             guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
-                self.handleUnverifiedUser(flow: .swap)
+                self.showVerifyAccount(flow: .swap)
                 return
             }
             

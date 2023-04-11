@@ -18,38 +18,6 @@ class KYCCoordinator: BaseCoordinator,
                       KYCAddressRoutes,
                       AssetSelectionDisplayable {
     override func start() {
-        start(flow: nil)
-    }
-    
-    func start(flow: ProfileModels.ExchangeFlow?) {
-        if let flow = flow {
-            open(scene: Scenes.VerifyAccount) { vc in
-                vc.flow = flow
-                
-                vc.didTapMainButton = { [weak self] in
-                    switch flow {
-                    case .buy, .swap:
-                        self?.dismissFlow()
-                        
-                    default:
-                        self?.showAccountVerification()
-                    }
-                }
-                
-                vc.didTapSecondayButton = { [weak self] in
-                    switch flow {
-                    case .buy, .swap:
-                        self?.showSupport()
-                        
-                    default:
-                        self?.dismissFlow()
-                    }
-                }
-            }
-            
-            return
-        }
-        
         switch UserManager.shared.profile?.status {
         case .emailPending:
             let coordinator = AccountCoordinator(navigationController: navigationController)
