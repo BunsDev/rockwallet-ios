@@ -66,7 +66,7 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol OrderPreviewDataPassing {
-    var dataStore: OrderPreviewDataStore? { get }
+    var dataStore: (any OrderPreviewDataStore)? { get }
 }
 
 protocol OrderPreviewRoutes: CoordinatableRoutes {

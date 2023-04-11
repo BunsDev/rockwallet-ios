@@ -35,7 +35,7 @@ protocol SignInDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol SignInDataPassing {
-    var dataStore: SignInDataStore? { get }
+    var dataStore: (any SignInDataStore)? { get }
 }
 
 protocol SignInRoutes: CoordinatableRoutes {

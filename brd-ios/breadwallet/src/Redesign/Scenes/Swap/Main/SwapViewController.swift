@@ -40,7 +40,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -61,9 +61,8 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, swapMainCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<MainSwapView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? MainSwapViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? MainSwapViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -110,7 +109,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.invalidateTableViewIntrinsicContentSize()
+                self?.tableView.invalidateTableViewIntrinsicContentSize()
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -120,8 +119,8 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             return nil
         }
         
@@ -129,8 +128,8 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell

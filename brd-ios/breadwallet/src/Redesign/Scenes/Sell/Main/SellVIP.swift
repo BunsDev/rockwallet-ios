@@ -37,7 +37,7 @@ protocol SellDataStore: BaseDataStore, ExchangeDataStore, AchDataStore {
 }
 
 protocol SellDataPassing {
-    var dataStore: SellDataStore? { get }
+    var dataStore: (any SellDataStore)? { get }
 }
 
 protocol SellRoutes: CoordinatableRoutes {

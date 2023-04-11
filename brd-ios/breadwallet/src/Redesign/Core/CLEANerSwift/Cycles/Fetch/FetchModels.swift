@@ -30,12 +30,12 @@ enum AccessoryType: Hashable {
     }
 }
 
-protocol Sectionable {
+protocol Sectionable: Hashable {
     var header: AccessoryType? { get }
     var footer: AccessoryType? { get }
 }
 
-enum FetchModels {
+enum FetchModels: Hashable {
     typealias Item = Any
     
     struct Get {
@@ -44,19 +44,19 @@ enum FetchModels {
         }
         
         struct ActionResponse {
-            let item: Item?
+            let item: Any?
             
-            init(item: Item?) {
+            init(item: Any?) {
                 self.item = item
             }
         }
         
         struct ResponseDisplay {
             var sections: [AnyHashable]
-            var sectionRows: [AnyHashable: [Any]]
+            var sectionRows: [AnyHashable: [any Hashable]]
             
             init(sections: [AnyHashable],
-                 sectionRows: [AnyHashable: [Any]]) {
+                 sectionRows: [AnyHashable: [any Hashable]]) {
                 self.sections = sections
                 self.sectionRows = sectionRows
             }

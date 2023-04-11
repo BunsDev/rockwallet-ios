@@ -26,7 +26,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         // TODO: Get the code from BE
         let code = "06N6 YMJQ Q4SX 2LBI P6BS TQ2C LFYA"
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
                 LabelViewModel.text(L10n.Authentication.instructions)
             ],

@@ -7,22 +7,22 @@
 
 import Foundation
 
-protocol FetchViewActions {
+protocol FetchViewActions: Hashable {
     func getData(viewAction: FetchModels.Get.ViewAction)
 }
 
-protocol FetchActionResponses {
+protocol FetchActionResponses: Hashable {
     func presentData(actionResponse: FetchModels.Get.ActionResponse)
 }
 
-protocol FetchResponseDisplays {
+protocol FetchResponseDisplays: Hashable {
     func displayData(responseDisplay: FetchModels.Get.ResponseDisplay)
 }
 
-protocol FetchDataStore {
+protocol FetchDataStore: Hashable {
     var itemId: String? { get set }
 }
 
-protocol FetchDataPassing {
-    var dataStore: FetchDataStore? { get }
+protocol FetchDataPassing: Hashable {
+    var dataStore: (any FetchDataStore)? { get }
 }

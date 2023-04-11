@@ -41,7 +41,7 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
                                                                                  value: item.cardCVV,
                                                                                  trailing: .image(Asset.help.image.withRenderingMode(.alwaysOriginal))))
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .notificationPrompt: [
                 addCardNotificationModel
             ],

@@ -63,7 +63,7 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
 }
 
 protocol SwapDataPassing {
-    var dataStore: SwapDataStore? { get }
+    var dataStore: (any SwapDataStore)? { get }
 }
 
 protocol SwapRoutes: CoordinatableRoutes {

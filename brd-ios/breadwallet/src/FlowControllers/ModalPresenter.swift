@@ -325,9 +325,7 @@ class ModalPresenter: Subscriber {
             self?.alertPresenter?.presentAlert(.sendSuccess, completion: {})
         }
         
-        topViewController?.present(root, animated: true)
-        
-        return nil
+        return root
     }
     
     private func makeReceiveView(currency: Currency, isRequestAmountVisible: Bool, isBTCLegacy: Bool = false) -> UIViewController? {

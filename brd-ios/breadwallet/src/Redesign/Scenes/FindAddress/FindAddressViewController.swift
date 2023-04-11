@@ -32,9 +32,8 @@ class FindAddressViewController: ItemSelectionViewController {
     }
     
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ItemSelectable
+              let model = dataSource?.itemIdentifier(for: indexPath) as? (any ItemSelectable)
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -46,8 +45,7 @@ class FindAddressViewController: ItemSelectionViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = sections[indexPath.section]
-        guard let item = sectionRows[section]?[indexPath.row] as? ResidentialAddress, let text = item.displayName, !text.isEmpty else { return }
+        guard let item = dataSource?.itemIdentifier(for: indexPath) as? ResidentialAddress, let text = item.displayName, !text.isEmpty else { return }
         callback?(item)
         coordinator?.dismissFlow()
     }

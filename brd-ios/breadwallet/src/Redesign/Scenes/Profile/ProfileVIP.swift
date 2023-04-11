@@ -39,7 +39,7 @@ protocol ProfileDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol ProfileDataPassing {
-    var dataStore: ProfileDataStore? { get }
+    var dataStore: (any ProfileDataStore)? { get }
 }
 
 protocol ProfileRoutes: CoordinatableRoutes {

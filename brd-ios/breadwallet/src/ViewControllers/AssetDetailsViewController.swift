@@ -34,9 +34,12 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             self.didSelectTransaction(transactions: transactions, selectedIndex: index)
         })
         
+        // TODO: Lots of duplicated logic here. Check ApplicationController.
         footerView.actionPublisher.sink { [unowned self] action in
             // TODO: Uncomment for drawer
 //            if action != .buySell { hideDrawer() }
+            
+            guard let coreSystem, let keyStore else { return }
             
             switch action {
             case .send:
@@ -47,28 +50,18 @@ class AssetDetailsViewController: UIViewController, Subscriber {
                 
             // TODO: Replace buy with buySell for drawer
             case .buy:
-                guard UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
-                    self.coordinator?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: .buy)
-                    return
-                }
-                                
                 self.coordinator?.showBuy(type: .card,
-                                          coreSystem: self.coreSystem,
-                                          keyStore: self.keyStore)
+                                          coreSystem: coreSystem,
+                                          keyStore: keyStore)
                 
                 // TODO: Uncomment to re-enable drawer
 //                toggleDrawer()
-
+                
             case .swap:
-                guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
-                    self.coordinator?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
-                    return
-                }
-
-                guard let coreSystem, let keyStore else { return }
                 self.coordinator?.showSwap(currencies: Store.state.currencies,
                                            coreSystem: coreSystem,
                                            keyStore: keyStore)
+                
             }
         }.store(in: &observers)
     }

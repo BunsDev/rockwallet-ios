@@ -31,7 +31,7 @@ protocol ExchangeDetailsDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol ExchangeDetailsDataPassing {
-    var dataStore: ExchangeDetailsDataStore? { get }
+    var dataStore: (any ExchangeDetailsDataStore)? { get }
 }
 
 protocol ExchangeDetailsRoutes: CoordinatableRoutes {

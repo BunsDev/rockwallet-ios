@@ -25,9 +25,6 @@ class FailureViewController: BaseInfoViewController {
         }
     }
     
-    var didTapMainButton: (() -> Void)?
-    var didTapSecondayButton: (() -> Void)?
-    
     override var imageName: String? { return reason?.iconName }
     override var titleText: String? { return reason?.title }
     override var descriptionText: String? { return reason?.description }
@@ -75,15 +72,14 @@ class FailureViewController: BaseInfoViewController {
             return super.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
         }
         
-        guard let value = descriptionText,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
+        guard let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, textAlignment: .left))
-            view.setup(with: .text(value))
+            view.setup(with: model)
             view.setupCustomMargins(vertical: .extraHuge, horizontal: .extraHuge)
             view.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()

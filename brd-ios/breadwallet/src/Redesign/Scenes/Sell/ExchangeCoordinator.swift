@@ -34,7 +34,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.dataStore?.card = card
             vc.dataStore?.quote = quote
             vc.dataStore?.availablePayments = availablePayments
-            vc.prepareData()
         }
     }
     
@@ -83,8 +82,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.didTapSecondayButton = {
                 (vc.coordinator as? ExchangeCoordinator)?.showExchangeDetails(with: vc.dataStore?.itemId, type: .swap)
             }
-            
-            vc.prepareData()
         }
     }
     
@@ -94,7 +91,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.dataStore?.cvv = store.cardCVV
             vc.dataStore?.expYear = store.cardExpDateYear
             vc.dataStore?.expMonth = store.cardExpDateMonth
-            vc.prepareData()
         }
     }
     
@@ -112,7 +108,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc?.dataStore?.items = cards
             let backButtonVisible = self.navigationController.children.last is BillingAddressViewController
             vc?.navigationItem.hidesBackButton = backButtonVisible
-            vc?.prepareData()
             
             vc?.itemSelected = { item in
                 selected?(item as? PaymentCard)
@@ -134,7 +129,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc?.itemSelected = { item in
                 selected?(item as? Country)
             }
-            vc?.prepareData()
         }
     }
     
@@ -147,7 +141,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc?.itemSelected = { item in
                 selected?(item as? Place)
             }
-            vc?.prepareData()
         }
     }
     

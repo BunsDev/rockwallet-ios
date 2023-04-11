@@ -50,6 +50,17 @@ extension UICollectionView {
 // MARK: - UI Tweaks
 
 extension UITableView {
+    func invalidateTableViewIntrinsicContentSize() {
+        if #unavailable(iOS 16.0) {
+            DispatchQueue.main.async {
+                self.isScrollEnabled = false
+                self.isScrollEnabled = true
+            }
+        } else {
+            self.visibleCells.forEach({ $0.invalidateIntrinsicContentSize() })
+        }
+    }
+    
     func emptyHeaderFooterView() {
         tableHeaderView = UIView(frame: CGRect(origin: .zero,
                                                size: CGSize(width: 0,

@@ -15,7 +15,22 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                              ProfileResponseDisplays {
     typealias Models = ProfileModels
     
+    private var didDisplayData = false
+    
     // MARK: - Overrides
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard didDisplayData else { return }
+        interactor?.getData(viewAction: .init())
+    }
+    
+    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
+        super.displayData(responseDisplay: responseDisplay)
+        
+        didDisplayData = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,16 +38,8 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         GoogleAnalytics.logEvent(GoogleAnalytics.Profile())
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        interactor?.getData(viewAction: .init())
-    }
-    
-    override func prepareData() {}
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section] as? Models.Section
+        let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section
         
         let cell: UITableViewCell
         switch section {
@@ -58,8 +65,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
               let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -114,7 +120,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .navigation:
             let indexPath = UserManager.shared.profile?.status.hasKYCLevelTwo == true ? indexPath.row : indexPath.row + 1
             interactor?.navigate(viewAction: .init(index: indexPath))

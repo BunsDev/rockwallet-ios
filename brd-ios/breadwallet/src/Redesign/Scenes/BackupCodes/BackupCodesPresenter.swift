@@ -29,7 +29,7 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
                                               LabelViewModel.text("789 456"),
                                               LabelViewModel.text("654 456")] // TODO: Update with BE codes
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
                 LabelViewModel.text(L10n.BackupCodes.instructions)
             ],

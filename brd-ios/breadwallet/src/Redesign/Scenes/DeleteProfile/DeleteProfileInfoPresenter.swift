@@ -31,7 +31,7 @@ final class DeleteProfileInfoPresenter: NSObject, Presenter, DeleteProfileInfoAc
             .tickbox
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .title: [
                 checklistTitle
             ],

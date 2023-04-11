@@ -36,7 +36,7 @@ protocol SetPasswordDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol SetPasswordDataPassing {
-    var dataStore: SetPasswordDataStore? { get }
+    var dataStore: (any SetPasswordDataStore)? { get }
 }
 
 protocol SetPasswordRoutes: CoordinatableRoutes {

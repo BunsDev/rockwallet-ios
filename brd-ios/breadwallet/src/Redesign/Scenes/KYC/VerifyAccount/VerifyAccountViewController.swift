@@ -11,9 +11,6 @@ extension Scenes {
 class VerifyAccountViewController: BaseInfoViewController {
     var flow: ProfileModels.ExchangeFlow?
     
-    var didTapMainButton: (() -> Void)?
-    var didTapSecondayButton: (() -> Void)?
-    
     override var imageName: String? { return Asset.verification.name }
     override var titleText: String? { return L10n.Account.verifyAccountTitle }
     override var descriptionText: String? { return L10n.Account.verifyAccountDescription }

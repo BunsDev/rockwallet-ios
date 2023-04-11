@@ -37,7 +37,7 @@ protocol KYCBasicDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol KYCBasicDataPassing {
-    var dataStore: KYCBasicDataStore? { get }
+    var dataStore: (any KYCBasicDataStore)? { get }
 }
 
 protocol KYCBasicRoutes: CoordinatableRoutes {

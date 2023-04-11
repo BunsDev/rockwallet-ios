@@ -70,7 +70,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchData
 }
 
 protocol BuyDataPassing: AchDataStore {
-    var dataStore: BuyDataStore? { get }
+    var dataStore: (any BuyDataStore)? { get }
 }
 
 protocol BuyRoutes: CoordinatableRoutes {

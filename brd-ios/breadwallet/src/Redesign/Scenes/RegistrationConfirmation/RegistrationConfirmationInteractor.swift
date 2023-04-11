@@ -19,9 +19,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard let confirmationType = dataStore?.confirmationType else { return }
         
-        presenter?.presentData(actionResponse: .init(item: Models.Item(email: UserDefaults.email,
-                                                                       phoneNumber: UserDefaults.phoneNumber,
-                                                                       confirmationType: confirmationType)))
+        presenter?.presentData(actionResponse: .init(item: confirmationType))
         
         // TODO: ENABLE 2FA
 //        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in

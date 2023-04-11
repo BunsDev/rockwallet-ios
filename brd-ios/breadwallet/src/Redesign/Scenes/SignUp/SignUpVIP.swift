@@ -40,7 +40,7 @@ protocol SignUpDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol SignUpDataPassing {
-    var dataStore: SignUpDataStore? { get }
+    var dataStore: (any SignUpDataStore)? { get }
 }
 
 protocol SignUpRoutes: CoordinatableRoutes {

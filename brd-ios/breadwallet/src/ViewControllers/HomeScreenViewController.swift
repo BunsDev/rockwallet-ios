@@ -81,7 +81,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapSell: (() -> Void)?
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
-    var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
+    var didTapProfileFromPrompt: (() -> Void)?
     var didTapCreateAccountFromPrompt: (() -> Void)?
     var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
@@ -374,7 +374,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         })
         
         Store.subscribe(self, name: .promptKyc, callback: { _ in
-            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+            self.didTapProfileFromPrompt?()
         })
         
         Store.subscribe(self, name: .promptNoAccount, callback: { _ in
@@ -407,7 +407,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         PromptPresenter.shared.trailingButtonCallback = { [weak self] promptType in
             switch promptType {
             case .kyc:
-                self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+                self?.didTapProfileFromPrompt?()
                 
             case .noAccount:
                 self?.didTapCreateAccountFromPrompt?()

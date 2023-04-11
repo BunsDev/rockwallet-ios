@@ -27,7 +27,7 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
             .notice
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password)],
             .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password)],
             .notice: [LabelViewModel.text(L10n.Account.passwordRequirements)]
