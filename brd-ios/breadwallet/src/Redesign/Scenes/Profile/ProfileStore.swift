@@ -15,7 +15,5 @@ class ProfileStore: NSObject, BaseDataStore, ProfileDataStore {
     var allPaymentCards: [PaymentCard]?
     var paymentCard: PaymentCard?
     
-    var autoSelectDefaultPaymentMethod = true
-    
     // MARK: - Aditional helpers
 }

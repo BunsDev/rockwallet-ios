@@ -111,9 +111,11 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didTapSelectAsset = { [weak self] in
-                if self?.dataStore?.paymentMethod == .card {
-                    self?.interactor?.navigateAssetSelector(viewAction: .init())
-                }
+                self?.interactor?.navigateAssetSelector(viewAction: .init())
+            }
+            
+            view.didTapHeaderInfoButton = { [weak self] in
+                
             }
         }
         
@@ -229,20 +231,9 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
-        var supportedCurrencies: [SupportedCurrency]?
-        
-        switch dataStore?.paymentMethod {
-        case .ach:
-            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == Constant.USDT }) {
-                supportedCurrencies = [usdCurrency]
-            }
-        default:
-            supportedCurrencies = dataStore?.supportedCurrencies
-        }
-        
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: dataStore?.currencies,
-                                       supportedCurrencies: supportedCurrencies) { [weak self] item in
+                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] item in
             guard let item = item as? AssetViewModel else { return }
             self?.interactor?.setAssets(viewAction: .init(currency: item.subtitle))
         }
@@ -305,14 +296,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showToastMessage(with: responseDisplay.error,
                                       model: responseDisplay.model,
                                       configuration: responseDisplay.config)
-    }
-    
-    func displayManageAssetsMessage(responseDisplay: BuyModels.AchData.ResponseDisplay) {
-        coordinator?.showToastMessage(model: responseDisplay.model,
-                                      configuration: responseDisplay.config,
-                                      onTapCallback: { [weak self] in
-            self?.coordinator?.showManageAssets(coreSystem: self?.dataStore?.coreSystem)
-        })
     }
     
     func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay) {

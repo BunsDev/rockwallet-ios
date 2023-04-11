@@ -20,6 +20,7 @@ struct SwapCurrencyViewModel: ViewModel {
     var amount: Amount?
     var currencyCode: String?
     var currencyImage: UIImage?
+    var headerInfoButtonTitle: String?
     var formattedFiatString: NSMutableAttributedString?
     var formattedTokenString: NSMutableAttributedString?
     var fee: Amount?
@@ -31,12 +32,11 @@ struct SwapCurrencyViewModel: ViewModel {
 
 class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>, UITextFieldDelegate {
     var didTapSelectAsset: (() -> Void)?
+    var didTapHeaderInfoButton: (() -> Void)?
     var didChangeFiatAmount: ((String?) -> Void)?
     var didChangeCryptoAmount: ((String?) -> Void)?
     var didChangeContent: (() -> Void)?
     var didFinish: ((_ didSwitchPlaces: Bool) -> Void)?
-    
-    var isFeeAndAmountsStackViewHidden = true
     
     private lazy var mainStack: UIStackView = {
         let view = UIStackView()
@@ -53,11 +53,17 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         return view
     }()
     
-    private lazy var titleLabel: FELabel = {
+    private lazy var headerTitleLabel: FELabel = {
         let view = FELabel()
         view.font = Fonts.Body.three
         view.textColor = LightColors.Text.three
         view.textAlignment = .left
+        return view
+    }()
+    
+    private lazy var headerInfoButton: FEButton = {
+        let view = FEButton()
+        view.addTarget(self, action: #selector(headerInfoButtonTapped(_:)), for: .touchUpInside)
         return view
     }()
     
@@ -182,7 +188,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         headerStack.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.small.rawValue)
         }
-        headerStack.addArrangedSubview(titleLabel)
+        headerStack.addArrangedSubview(headerTitleLabel)
+        headerStack.addArrangedSubview(headerInfoButton)
         
         mainStack.addArrangedSubview(cryptoStack)
         cryptoStack.snp.makeConstraints { make in
@@ -276,13 +283,25 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         configure(shadow: config?.shadow)
         
         currencyIconImageView.wrappedView.configure(background: config?.currencyIconBackground)
+        
+        var buttonConfig = BackgroundConfiguration(backgroundColor: LightColors.purpleMuted,
+                                                   tintColor: LightColors.instantPurple,
+                                                   border: BorderConfiguration(tintColor: .clear,
+                                                                               borderWidth: 0,
+                                                                               cornerRadius: .fullRadius))
+        headerInfoButton.configure(with: ButtonConfiguration(normalConfiguration: buttonConfig,
+                                                             selectedConfiguration: buttonConfig,
+                                                             disabledConfiguration: buttonConfig,
+                                                             font: Fonts.Body.three))
     }
     
     override func setup(with viewModel: SwapCurrencyViewModel?) {
         guard let viewModel = viewModel else { return }
         super.setup(with: viewModel)
         
-        titleLabel.setup(with: viewModel.title)
+        headerTitleLabel.setup(with: viewModel.title)
+        headerInfoButton.setup(with: .init(title: viewModel.headerInfoButtonTitle))
+        headerInfoButton.isHidden = viewModel.headerInfoButtonTitle == nil
         
         if !fiatAmountField.isFirstResponder {
             fiatAmountField.attributedText = viewModel.formattedFiatString
@@ -318,10 +337,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     }
     
     func hideFeeAndAmountsStackView(noFee: Bool) {
-        isFeeAndAmountsStackViewHidden = noFee
-        
-        feeAndAmountsStackView.alpha = isFeeAndAmountsStackViewHidden ? 0 : 1
-        feeAndAmountsStackView.isHidden = isFeeAndAmountsStackViewHidden
+        feeAndAmountsStackView.alpha = noFee ? 0 : 1
+        feeAndAmountsStackView.isHidden = noFee
     }
     
     func resetTextFieldValues() {
@@ -333,6 +350,10 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         endEditing(true)
         
         didTapSelectAsset?()
+    }
+    
+    @objc private func headerInfoButtonTapped(_ sender: FEButton) {
+        didTapHeaderInfoButton?()
     }
     
     private func setPlaceholder(for field: UITextField) {
@@ -355,8 +376,8 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         setPlaceholder(for: cryptoAmountField)
     }
     
-    func setAlphaToLabels(alpha value: Double) {
-        titleLabel.alpha = value
+    func setAlpha(value: Double) {
+        headerTitleLabel.alpha = value
         fiatStack.alpha = value
         fiatAmountField.alpha = value
         fiatCurrencyLabel.alpha = value

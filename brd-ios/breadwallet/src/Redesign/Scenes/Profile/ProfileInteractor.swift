@@ -73,12 +73,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
             switch result {
             case .success(let data):
                 self?.dataStore?.allPaymentCards = data
-                
-                if self?.dataStore?.autoSelectDefaultPaymentMethod == true {
-                    self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first
-                }
-                
-                self?.dataStore?.autoSelectDefaultPaymentMethod = true
+                self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first
                 
             default:
                 break

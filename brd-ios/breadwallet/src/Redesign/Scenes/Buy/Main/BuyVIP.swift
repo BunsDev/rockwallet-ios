@@ -35,7 +35,6 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
-    func presentDisabledCurrencyMessage(actionResponse: BuyModels.AchData.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
     func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse)
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse)
@@ -47,7 +46,6 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay)
-    func displayManageAssetsMessage(responseDisplay: BuyModels.AchData.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay)
 }
 
@@ -63,7 +61,6 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchData
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     
-    var autoSelectDefaultPaymentMethod: Bool { get set }
     var paymentMethod: PaymentCard.PaymentType? { get set }
     var publicToken: String? { get set }
     var mask: String? { get set }

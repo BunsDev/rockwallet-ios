@@ -64,13 +64,13 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.toAmount?.currency else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: Constant.usdCurrencyCode,
-                                                                                   to: dataStore?.toAmount?.currency.code)))
+                                                                                        to: dataStore?.toAmount?.currency.code)))
             return
         }
+                
+        dataStore?.values = viewAction
         
         let to: Amount
-        
-        dataStore?.values = viewAction
         
         if let value = viewAction.tokenValue,
            let crypto = ExchangeFormatter.current.number(from: value)?.decimalValue {
@@ -120,10 +120,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             containsDebitCard {
             dataStore?.availablePayments.append(.card)
         }
+        
         if dataStore?.selected?.cardType == .debit,
            dataStore?.paymentMethod == .card,
-           dataStore?.ach != nil,
-           dataStore?.toAmount?.currency.code == Constant.USDT {
+           dataStore?.ach != nil {
             dataStore?.availablePayments.append(.ach)
         }
         
@@ -138,17 +138,11 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
         case .ach:
-            guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else {
-                presenter?.presentDisabledCurrencyMessage(actionResponse: .init(currencyCode: Constant.USDT))
-                return
-            }
-            dataStore?.toAmount = .zero(currency)
             dataStore?.selected = dataStore?.ach
             
         case .card:
-            if dataStore?.autoSelectDefaultPaymentMethod == true {
-                dataStore?.selected = dataStore?.cards.first
-            }
+            dataStore?.selected = dataStore?.cards.first
+            
         }
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
@@ -168,21 +162,20 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
             
         case .card:
-            if dataStore?.autoSelectDefaultPaymentMethod == true {
-                if dataStore?.availablePayments.contains(.card) == true {
-                    dataStore?.selected = dataStore?.cards.first(where: { $0.cardType == .debit })
-                    guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
-                    selectedCurrency = .zero(currency)
-                } else {
-                    dataStore?.selected = dataStore?.cards.first
-                }
+            if dataStore?.availablePayments.contains(.card) == true {
+                dataStore?.selected = dataStore?.cards.first(where: { $0.cardType == .debit })
+                guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
+                selectedCurrency = .zero(currency)
+            } else {
+                dataStore?.selected = dataStore?.cards.first
             }
+            
             presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
+            
         }
         
-        let currency = selectedCurrency == nil ? dataStore?.toAmount : selectedCurrency
         dataStore?.paymentMethod = viewAction.method
-        dataStore?.toAmount = currency
+        dataStore?.toAmount = selectedCurrency == nil ? dataStore?.toAmount : selectedCurrency
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
             self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
