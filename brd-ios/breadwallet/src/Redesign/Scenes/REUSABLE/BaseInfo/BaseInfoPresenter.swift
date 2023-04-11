@@ -34,7 +34,7 @@ final class BaseInfoPresenter: NSObject, Presenter, BaseInfoActionResponses {
                 ImageViewModel.imageName(viewController?.imageName ?? nil)
             ],
             .title: [
-                LabelViewModel.text(nil)
+                LabelViewModel.text(viewController?.titleText ?? nil)
             ],
             .description: [
                 LabelViewModel.text(viewController?.descriptionText ?? nil)
