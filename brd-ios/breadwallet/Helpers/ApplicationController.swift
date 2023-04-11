@@ -414,10 +414,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapBuy = { [weak self] type in
-            guard let self = self, UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
-                self?.coordinator?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
-                return
-            }
+            guard let self else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -428,9 +425,7 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapSell = { [weak self] in
             guard let self = self,
-                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }),
-                  UserManager.shared.profile?.status.tradeStatus.canTrade == true else {
-                self?.coordinator?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else {
                 return
             }
             
@@ -442,11 +437,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapTrade = { [weak self] in
-            // User can still swap even if location restricted
-            guard let self = self, UserManager.shared.profile?.status.tradeStatus.restrictionReason != .verification else {
-                self?.coordinator?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
-                return
-            }
+            guard let self else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -459,12 +450,8 @@ class ApplicationController: Subscriber {
             self?.coordinator?.showProfile()
         }
         
-        didTapDeleteAccount = { [unowned self] in
-            coordinator?.showDeleteProfileInfo(keyMaster: keyStore)
-        }
-        
-        homeScreen.didTapProfileFromPrompt = { [unowned self] profile in
-            switch profile {
+        homeScreen.didTapProfileFromPrompt = { [unowned self] in
+            switch UserManager.shared.profileResult {
             case .success:
                 coordinator?.showAccountVerification()
                 
@@ -503,6 +490,10 @@ class ApplicationController: Subscriber {
             let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: self.coreSystem)
             let nc = RootNavigationController(rootViewController: vc)
             navigationController.present(nc, animated: true, completion: nil)
+        }
+        
+        didTapDeleteAccount = { [unowned self] in
+            coordinator?.showDeleteProfileInfo(keyMaster: keyStore)
         }
     }
     
