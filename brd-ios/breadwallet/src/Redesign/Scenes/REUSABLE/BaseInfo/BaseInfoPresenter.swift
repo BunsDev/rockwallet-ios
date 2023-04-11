@@ -31,13 +31,13 @@ final class BaseInfoPresenter: NSObject, Presenter, BaseInfoActionResponses {
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .image: [
-                ImageViewModel.imageName(viewController?.imageName ?? nil)
+                ImageViewModel.imageName(viewController?.imageName)
             ],
             .title: [
-                LabelViewModel.text(viewController?.titleText ?? nil)
+                LabelViewModel.text(viewController?.titleText)
             ],
             .description: [
-                LabelViewModel.text(viewController?.descriptionText ?? nil)
+                LabelViewModel.text(viewController?.descriptionText)
             ]
         ]
         
