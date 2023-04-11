@@ -612,6 +612,7 @@
 		C41816A729D5708B002D31F8 /* EnterCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41816A629D5708B002D31F8 /* EnterCodeView.swift */; };
 		C43EFBE829DC33620067FE70 /* LogoutWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43EFBE729DC33620067FE70 /* LogoutWorker.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
+		C461E47829E430E7006BAC3A /* ShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C461E47729E430E7006BAC3A /* ShareItem.swift */; };
 		C46C28FE287EBF4F0035C843 /* BaseInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */; };
 		C46C28FF287EBF4F0035C843 /* BaseInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */; };
 		C46C2900287EBF4F0035C843 /* BaseInfoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28F9287EBF4F0035C843 /* BaseInfoModels.swift */; };
@@ -1445,6 +1446,7 @@
 		C41816A629D5708B002D31F8 /* EnterCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeView.swift; sourceTree = "<group>"; };
 		C43EFBE729DC33620067FE70 /* LogoutWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWorker.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
+		C461E47729E430E7006BAC3A /* ShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItem.swift; sourceTree = "<group>"; };
 		C46C28F7287EBF4F0035C843 /* BaseInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoStore.swift; sourceTree = "<group>"; };
 		C46C28F8287EBF4F0035C843 /* BaseInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoPresenter.swift; sourceTree = "<group>"; };
 		C46C28F9287EBF4F0035C843 /* BaseInfoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoModels.swift; sourceTree = "<group>"; };
@@ -2738,6 +2740,7 @@
 				7EF2187F28630E2F006ABCC1 /* UserManager.swift */,
 				7B0AE80429768D990079C7E1 /* UserSignature.swift */,
 				D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */,
+				C461E47729E430E7006BAC3A /* ShareItem.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4457,6 +4460,7 @@
 				7CF5319D231EE01300E61F12 /* Base32.swift in Sources */,
 				CEAA9EA61DC3246F0066731D /* StartNavigationDelegate.swift in Sources */,
 				3A188FF82582835600957819 /* Sharing.swift in Sources */,
+				C461E47829E430E7006BAC3A /* ShareItem.swift in Sources */,
 				22A9A94B1DF61945000F0016 /* BRCoding.swift in Sources */,
 				045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */,
 				3AEA2CAB24D3219200DA4C3A /* SelectBackupView.swift in Sources */,

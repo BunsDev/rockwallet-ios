@@ -591,6 +591,14 @@ class ModalPresenter: Subscriber {
                 
                 self?.presentFaq()
             },
+            // Tell a friend
+            MenuItem(title: L10n.MenuButton.tellFriend, icon: MenuItem.Icon.tellFriend) {
+                let shareItem = [ShareItem(title: L10n.About.AppName.android,
+                                           shareText: L10n.Settings.tellFriendDescription)]
+                let activityViewController = UIActivityViewController(activityItems: shareItem, applicationActivities: nil)
+                
+                menuNav.present(activityViewController, animated: true)
+            },
             // About
             MenuItem(title: L10n.Settings.about, icon: MenuItem.Icon.about) {
                 menuNav.pushViewController(AboutViewController(), animated: true)
