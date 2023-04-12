@@ -198,7 +198,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let model: BuyOrderViewModel
         switch type {
         case .sell:
-            model = BuyOrderViewModel(rateValue: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
+            model = BuyOrderViewModel(rate: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
                                       amount: .init(title: .text("\(L10n.Sell.subtotal)"), value: .text(amountText), infoImage: nil),
                                       cardFee: .init(title: .text(displayFeeTitle),
                                                      value: .text(cardFeeText),
@@ -208,7 +208,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                       paymentMethod: method)
             
         default:
-            model = BuyOrderViewModel(rateValue: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
+            model = BuyOrderViewModel(rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                                       amount: .init(title: .text("\(L10n.Swap.amountPurchased)"), value: .text(amountText), infoImage: nil),
                                       cardFee: .init(title: .text(displayFeeTitle),
                                                      value: .text(cardFeeText),

@@ -216,6 +216,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         
+        let instantBuyFee: TitleValueViewModel? = isAchAccount ? .init(title: .text("Instant Buy fee"), value: .text("$0.55 USD")) : nil
+        
         switch item.type {
         case .sell:
             let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue - networkFee - cardFee) ?? "", fiatCurrency)
@@ -230,9 +232,10 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         default:
             model = .init(currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
-                          rate: .init(exchangeRate: rate, timer: nil),
+                          rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                           amount: .init(title: .text(L10n.Swap.amountPurchased), value: .text(amountText), infoImage: nil),
                           cardFee: cardAchFee,
+                          instantBuyFee: instantBuyFee,
                           networkFee: .init(title: .text(L10n.Swap.miningNetworkFee),
                                             value: .text(networkFeeText),
                                             infoImage: .image(infoImage)),
