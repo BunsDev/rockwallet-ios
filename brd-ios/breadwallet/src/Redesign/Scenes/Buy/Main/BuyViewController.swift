@@ -124,15 +124,15 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath)
-        else {
+    func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? SegmentControlViewModel else {
             return UITableViewCell()
         }
         
         cell.setup { view in
             view.configure(with: .init())
-            view.setup(with: SegmentControlViewModel(selectedIndex: dataStore?.paymentMethod))
+            view.setup(with: model)
             
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
@@ -143,14 +143,16 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         return cell
     }
     
-    private func setSegment(_ segment: PaymentCard.PaymentType) {
+    private func setSegment(_ segment: Int) {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.segment.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
+        cell.wrappedView.selectSegment(index: segment)
         
-        interactor?.selectPaymentMethod(viewAction: .init(method: segment))
-        
-        let isUSDTAvailable = Store.state.currencies.first(where: { $0.code == Constant.USDT }) == nil
-        cell.wrappedView.setup(with: SegmentControlViewModel(selectedIndex: isUSDTAvailable ? .card : segment))
+        let paymentTypes = PaymentCard.PaymentType.allCases
+        if paymentTypes.count >= segment {
+            let paymentType = paymentTypes[segment]
+            interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
+        }
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -313,11 +315,13 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     // MARK: - Additional Helpers
     
     func updatePaymentMethod(paymentMethod: PaymentCard.PaymentType?) {
+        guard let filteredIndex = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == paymentMethod }) else { return }
+        
         let paymentMethod = paymentMethod ?? .card
         
         interactor?.retryPaymentMethod(viewAction: .init(method: paymentMethod))
         
-        setSegment(paymentMethod)
+        setSegment(filteredIndex)
     }
     
     private func mapStructToDictionary<T>(item: T) -> [String: Any] {

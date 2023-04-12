@@ -34,12 +34,18 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        let paymentSegment = SegmentControlViewModel(selectedIndex: item.type)
+        
+        let paymentTypes = PaymentCard.PaymentType.allCases
+        let selectedPaymentType = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == item.type })
+        
+        let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
+                                                     segments: [L10n.Buy.buyWithCard,
+                                                                L10n.Buy.fundWithAch])
         let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
         limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
         let paymentMethodViewModel: CardSelectionViewModel
-        if paymentSegment.selectedIndex == .ach && item.achEnabled == true {
+        if item.type == .ach && item.achEnabled == true {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)
