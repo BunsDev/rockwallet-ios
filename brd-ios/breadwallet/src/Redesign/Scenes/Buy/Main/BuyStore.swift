@@ -49,10 +49,12 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd),
+              let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
+              let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description,
               let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achAllowanceLifetime)
         else { return nil }
         
+        let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
         let limitsString = NSMutableAttributedString(string: paymentMethod == .ach ?
                                                      L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText))
         
