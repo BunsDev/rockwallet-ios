@@ -212,8 +212,7 @@ enum BaseInfoModels {
         var description: String {
             switch self {
             case .buyCard(let message):
-                guard let message else { return L10n.Buy.failureTransactionMessage }
-                return message
+                return message ?? L10n.Buy.failureTransactionMessage
                 
             case .swap:
                 return L10n.Swap.failureSwapMessage
