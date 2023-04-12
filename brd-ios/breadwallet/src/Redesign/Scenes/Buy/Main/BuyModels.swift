@@ -166,4 +166,12 @@ enum BuyModels {
             var viewModel: WrapperPopupViewModel<LimitsPopupViewModel>
         }
     }
+    
+    struct InstantAchPopup {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {
+            var model: PopupViewModel
+        }
+    }
 }

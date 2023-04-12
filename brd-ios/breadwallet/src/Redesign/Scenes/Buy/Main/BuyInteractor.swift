@@ -189,5 +189,9 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentLimitsInfo(actionResponse: .init(paymentMethod: dataStore?.paymentMethod))
     }
     
+    func showInstantAchPopup(viewAction: BuyModels.InstantAchPopup.ViewAction) {
+        presenter?.presentInstantAchPopup(actionResponse: .init())
+    }
+    
     // MARK: - Aditional helpers
 }

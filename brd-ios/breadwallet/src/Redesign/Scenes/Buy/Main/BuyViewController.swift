@@ -115,7 +115,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didTapHeaderInfoButton = { [weak self] in
-                
+                self?.interactor?.showInstantAchPopup(viewAction: .init())
             }
         }
         
@@ -310,6 +310,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                                                            confirmedCallback: { [weak self] in
             self?.coordinator?.dismissFlow()
         })
+    }
+    
+    func displayInstantAchPopup(responseDisplay: BuyModels.InstantAchPopup.ResponseDisplay) {
+        coordinator?.showPopup(with: responseDisplay.model)
     }
     
     // MARK: - Additional Helpers

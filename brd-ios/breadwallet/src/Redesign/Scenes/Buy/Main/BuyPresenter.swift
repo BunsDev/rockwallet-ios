@@ -235,6 +235,15 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
     }
     
+    func presentInstantAchPopup(actionResponse: BuyModels.InstantAchPopup.ActionResponse) {
+        let a1 = "Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account."
+        let a2 = "The instant portion of your transaction will show in your account within seconds!"
+        let model = PopupViewModel(title: .text("What is Instant Buy?"),
+                                   body: a1 + a2)
+        
+        viewController?.displayInstantAchPopup(responseDisplay: .init(model: model))
+    }
+    
     // MARK: - Additional Helpers
     
 }
