@@ -11,7 +11,6 @@
 import UIKit
 
 enum PreviewType {
-    // split buy into ach_buy and card_buy
     case buy
     case sell
     
@@ -35,7 +34,7 @@ enum OrderPreviewModels {
     typealias Item = (type: PreviewType?, to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?, isAchAccount: Bool?)
     
     enum Section: Sectionable {
-        case achNotification
+        case achSegment
         case orderInfoCard
         case payment
         case termsAndConditions

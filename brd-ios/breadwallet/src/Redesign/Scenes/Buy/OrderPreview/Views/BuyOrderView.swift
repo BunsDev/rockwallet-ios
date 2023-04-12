@@ -11,6 +11,10 @@
 import UIKit
 
 struct BuyOrderConfiguration: Configurable {
+    var notice: LabelConfiguration = .init(font: Fonts.Body.three, textColor: LightColors.instantPurple, textAlignment: .center)
+    var noticeBackground: BackgroundConfiguration? = .init(backgroundColor: LightColors.purpleMuted,
+                                                           tintColor: LightColors.purpleMuted,
+                                                           border: Presets.Border.commonPlain)
     var title: LabelConfiguration = .init(font: Fonts.Body.two, textColor: LightColors.Text.one)
     var currencyAmountName: LabelConfiguration = .init(font: Fonts.Title.five, textColor: LightColors.Text.one)
     var rate: LabelConfiguration = .init(font: Fonts.Title.five, textColor: LightColors.Text.one)
@@ -27,6 +31,7 @@ struct BuyOrderConfiguration: Configurable {
 }
 
 struct BuyOrderViewModel: ViewModel {
+    var notice: LabelViewModel?
     var title: LabelViewModel = .text(L10n.Buy.yourOrder)
     var currencyIcon: ImageViewModel?
     var currencyAmountName: LabelViewModel?
@@ -44,6 +49,16 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = Margins.medium.rawValue
+        return view
+    }()
+    
+    private lazy var noticeContainer: WrapperView<UIView> = {
+        let view = WrapperView<UIView>()
+        return view
+    }()
+    
+    private lazy var noticeLabel: FELabel = {
+        let view = FELabel()
         return view
     }()
     
@@ -130,6 +145,17 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         }
         content.setupCustomMargins(all: .huge)
         
+        mainStack.addArrangedSubview(noticeContainer)
+        noticeContainer.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(ViewSizes.large.rawValue)
+        }
+        
+        noticeContainer.addSubview(noticeLabel)
+        
+        noticeLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         mainStack.addArrangedSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.extraSmall.rawValue)
@@ -201,6 +227,8 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
     override func configure(with config: BuyOrderConfiguration?) {
         super.configure(with: config)
         
+        noticeLabel.configure(with: config?.notice)
+        noticeContainer.configure(background: config?.noticeBackground)
         titleLabel.configure(with: config?.title)
         currencyIconImageView.wrappedView.configure(background: config?.currencyIconImage)
         currencyNameLabel.configure(with: config?.currencyAmountName)
@@ -222,6 +250,7 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
     override func setup(with viewModel: BuyOrderViewModel?) {
         super.setup(with: viewModel)
         
+        noticeLabel.setup(with: .text("With Instant Buy, $59.98 will be settled immediately."))
         titleLabel.setup(with: viewModel?.title)
         currencyIconImageView.wrappedView.setup(with: viewModel?.currencyIcon)
         currencyNameLabel.setup(with: viewModel?.currencyAmountName)

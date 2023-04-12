@@ -25,7 +25,6 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let wrappedViewModel = prepareOrderPreviewViewModel(for: item)
         
-        let achNotificationModel = InfoViewModel(description: .text(item.type?.disclaimer), dismissType: .persistent)
         let achTermsModel = InfoViewModel(description: .text(L10n.Buy.terms),
                                           button: .init(title: L10n.About.terms, isUnderlined: true),
                                           tickbox: .init(title: .text(L10n.Buy.understandAndAgree)),
@@ -64,12 +63,16 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         ]
         
         if isAchAccount {
-            sections.insert(.achNotification, at: 0)
+            sections.insert(.achSegment, at: 0)
         }
         
+        let achSegment = SegmentControlViewModel(selectedIndex: 0,
+                                                 segments: [.init(image: Asset.flash.image, title: "Instant"),
+                                                            .init(image: Asset.timelapse.image, title: "3-5 days")])
+        
         let sectionRows: [Models.Section: [any Hashable]] = [
-            .achNotification: [
-                achNotificationModel
+            .achSegment: [
+                achSegment
             ],
             .orderInfoCard: [
                 wrappedViewModel

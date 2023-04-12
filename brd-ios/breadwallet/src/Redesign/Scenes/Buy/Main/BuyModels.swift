@@ -111,14 +111,6 @@ enum BuyModels {
         }
     }
     
-//    struct Failure {
-//        struct ViewAction {}
-//        
-//        struct ActionResponse {}
-//        
-//        struct ResponseDisplay {}
-//    }
-    
     struct PaymentMethod {
         struct ViewAction {
             let method: PaymentCard.PaymentType

@@ -30,13 +30,15 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         
         tableView.register(WrapperTableViewCell<BuyOrderView>.self)
         tableView.register(WrapperTableViewCell<PaymentMethodView>.self)
+        
+        view.backgroundColor = LightColors.Background.two
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-        case .achNotification:
-            cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
+        case .achSegment:
+            cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
             
         case .orderInfoCard:
             cell = self.tableView(tableView, orderCellForRowAt: indexPath)
@@ -45,9 +47,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
             cell = self.tableView(tableView, paymentMethodCellForRowAt: indexPath)
             
         case .termsAndConditions:
-            guard let isAchAccount = dataStore?.isAchAccount else { return UITableViewCell() }
-            
-            if isAchAccount {
+            if let isAchAccount = dataStore?.isAchAccount, isAchAccount {
                 cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
             } else {
                 cell = self.tableView(tableView, labelCellForRowAt: indexPath)
@@ -66,6 +66,25 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         
         cell.setBackground(with: Presets.Background.transparent)
         cell.setupCustomMargins(all: .large)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? SegmentControlViewModel else {
+            return UITableViewCell()
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+            
+            view.didChangeValue = { [weak self] segment in
+//                self?.view.endEditing(true)
+//                self?.setSegment(segment)
+            }
+        }
         
         return cell
     }
@@ -121,9 +140,11 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: model)
+            
             view.cardFeeInfoTapped = { [weak self] in
                 self?.interactor?.showInfoPopup(viewAction: .init(isCardFee: true))
             }
+            
             view.networkFeeInfoTapped = { [weak self] in
                 self?.interactor?.showInfoPopup(viewAction: .init(isCardFee: false))
             }

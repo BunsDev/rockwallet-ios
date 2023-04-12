@@ -19,7 +19,12 @@ struct SegmentControlConfiguration: Configurable {
 struct SegmentControlViewModel: ViewModel {
     /// Passing 'nil' leaves the control deselected
     var selectedIndex: Int?
-    var segments: [String] = []
+    var segments: [Segment]
+    
+    struct Segment: Hashable {
+        let image: UIImage?
+        let title: String?
+    }
 }
 
 class FESegmentControl: UISegmentedControl, ViewProtocol {
@@ -85,7 +90,14 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
         
         removeAllSegments()
         for (index, element) in (viewModel?.segments ?? []).enumerated() {
-            insertSegment(withTitle: element, at: index, animated: true)
+            if let image = element.image, let title = element.title {
+                let image = UIImage.textEmbeded(image: image,
+                                                string: title,
+                                                isImageBeforeText: true)
+                insertSegment(with: image, at: index, animated: true)
+            } else if let title = element.title {
+                insertSegment(withTitle: title, at: index, animated: true)
+            }
         }
         
         UIView.setAnimationsEnabled(true)
@@ -100,6 +112,36 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
         } else {
             viewModel?.selectedIndex = nil
             selectedSegmentIndex = UISegmentedControl.noSegment
+        }
+    }
+}
+
+extension UIImage {
+    static func textEmbeded(image: UIImage,
+                            string: String,
+                            isImageBeforeText: Bool,
+                            font: UIFont = Fonts.button) -> UIImage {
+        let expectedTextSize = (string as NSString).size(withAttributes: [.font: font])
+        let width = expectedTextSize.width + image.size.width + 5
+        let height = max(expectedTextSize.height, image.size.width)
+        let size = CGSize(width: width, height: height)
+
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            let fontTopPosition: CGFloat = (height - expectedTextSize.height) / 2
+            let textOrigin: CGFloat = isImageBeforeText
+                ? image.size.width + 5
+                : 0
+            let textPoint: CGPoint = CGPoint.init(x: textOrigin, y: fontTopPosition)
+            string.draw(at: textPoint, withAttributes: [.font: font])
+            let alignment: CGFloat = isImageBeforeText
+                ? 0
+                : expectedTextSize.width + 5
+            let rect = CGRect(x: alignment,
+                              y: (height - image.size.height) / 2,
+                          width: image.size.width,
+                         height: image.size.height)
+            image.draw(in: rect)
         }
     }
 }
