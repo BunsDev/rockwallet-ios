@@ -22,6 +22,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     private var veriffKYCManager: VeriffKYCManager?
+    private var drawerManager = RWDrawerManager()
     
     // MARK: - Overrides
     
@@ -42,11 +43,14 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         }, { [weak self] in
             
         }]
-        setupDrawer(config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
+        drawerManager.setupDrawer(on: self,
+                                  config: drawerConfig,
+                                  viewModel: drawerViewModel,
+                                  callbacks: drawerCallbacks) { [unowned self] drawer in
             
         }
         
-        toggleDrawer()
+        drawerManager.toggleDrawer()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

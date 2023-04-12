@@ -62,25 +62,25 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         return view
     }()
     
-    lazy var stack: UIStackView = {
+    private lazy var stack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = Margins.huge.rawValue
         return view
     }()
     
-    lazy var drawerImage: FEImageView = {
+    private lazy var drawerImage: FEImageView = {
         let view = FEImageView()
         view.setup(with: .image(Asset.dragControl.image))
         return view
     }()
     
-    lazy var title: WrapperView<FELabel> = {
+    private lazy var title: WrapperView<FELabel> = {
         let view = WrapperView<FELabel>()
         return view
     }()
     
-    lazy var buttonStack: UIStackView = {
+    private lazy var buttonStack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = Margins.small.rawValue
@@ -220,15 +220,12 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     }
     
     func toggle() {
-        guard blurView.alpha == 0 else {
-            return hide()
-        }
-        
-        show()
+        blurView.alpha == 0 ? show() : hide()
     }
     
     @objc private func outsideTapped(_ sender: UITapGestureRecognizer) {
         hide()
+        
         dismissActionSubject.send()
     }
     

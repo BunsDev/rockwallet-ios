@@ -777,7 +777,7 @@
 		D7F75963299A1D2300FB4BFA /* FindAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */; };
 		D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */; };
 		D7F75969299D1F9900FB4BFA /* RetrieveAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */; };
-		D7F8EA3829C4857B008DD7C7 /* DrawerPresntable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */; };
+		D7F8EA3829C4857B008DD7C7 /* RWDrawerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3729C4857B008DD7C7 /* RWDrawerManager.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1614,7 +1614,7 @@
 		D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressViewController.swift; sourceTree = "<group>"; };
 		D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressWorker.swift; sourceTree = "<group>"; };
 		D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAddressWorker.swift; sourceTree = "<group>"; };
-		D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPresntable.swift; sourceTree = "<group>"; };
+		D7F8EA3729C4857B008DD7C7 /* RWDrawerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWDrawerManager.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2479,7 +2479,6 @@
 				7E5CB3492835090D00EC787E /* NSLayoutConstraint+priority.swift */,
 				049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */,
 				7B67708D29053CDF006FB72A /* Shadow+Background+Extensions.swift */,
-				D7F8EA3729C4857B008DD7C7 /* DrawerPresntable.swift */,
 				D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */,
 			);
 			path = Extensions;
@@ -2681,6 +2680,7 @@
 				7C0F3DC32124A81100531E54 /* Backend.swift */,
 				7B8CF81D28A3D0C600D54D14 /* CardDetailsFormatter.swift */,
 				7B54E57427F4A2B0002DD1E4 /* DatePickerViewController.swift */,
+				D7F8EA3729C4857B008DD7C7 /* RWDrawerManager.swift */,
 				7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */,
 				7BDB49B52805AC780031F015 /* EmailFeedbackManager.swift */,
 				7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */,
@@ -4066,7 +4066,7 @@
 				7B2E5057289A5F02008CACD8 /* AddCardModels.swift in Sources */,
 				7E5CB39D2835090E00EC787E /* Alertable.swift in Sources */,
 				7E5CB3892835090E00EC787E /* Margins+Sizes.swift in Sources */,
-				D7F8EA3829C4857B008DD7C7 /* DrawerPresntable.swift in Sources */,
+				D7F8EA3829C4857B008DD7C7 /* RWDrawerManager.swift in Sources */,
 				0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */,
 				7EB838482849DD8200C7CC05 /* FELink.swift in Sources */,
 				CEBF32F01DDCD30600348FC6 /* AssetDetailsViewController.swift in Sources */,
