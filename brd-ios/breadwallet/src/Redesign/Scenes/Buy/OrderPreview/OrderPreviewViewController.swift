@@ -32,6 +32,21 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         tableView.register(WrapperTableViewCell<PaymentMethodView>.self)
         
         view.backgroundColor = LightColors.Background.two
+        
+        let drawerConfig = DrawerConfiguration()
+        let drawerViewModel = DrawerViewModel()
+        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
+            
+        }, { [weak self] in
+            
+        }, { [weak self] in
+            
+        }]
+        setupDrawer(config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
+            
+        }
+        
+        toggleDrawer()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

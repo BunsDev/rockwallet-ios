@@ -48,7 +48,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     private var drawerInitialY: CGFloat = 0.0
     
     private lazy var blurView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
         view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         view.alpha = 0
@@ -90,16 +90,22 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     
     override func setupSubviews() {
         super.setupSubviews()
+        
         isUserInteractionEnabled = false
         
-        content.addSubview(blurView)
+        UIApplication.shared.activeWindow?.addSubview(blurView)
         blurView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        blurView.contentView.addSubview(content)
+        content.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         content.addSubview(drawer)
         drawer.snp.makeConstraints { make in
-            make.top.equalTo(content.snp.bottom)
+            make.top.equalTo(blurView.contentView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
@@ -199,7 +205,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         isUserInteractionEnabled = false
         drawer.snp.removeConstraints()
         drawer.snp.makeConstraints { make in
-            make.top.equalTo(content.snp.bottom)
+            make.top.equalTo(blurView.contentView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
@@ -211,7 +217,6 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         } completion: { [weak self] _ in
             self?.drawer.transform = .identity
         }
-
     }
     
     func toggle() {
