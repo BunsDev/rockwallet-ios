@@ -60,7 +60,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
     }
     
     func showVerificationInfo(viewAction: ProfileModels.VerificationInfo.ViewAction) {
-        presenter?.presentVerificationInfo(actionResponse: .init(status: UserManager.shared.profile?.status))
+        presenter?.presentVerificationInfo(actionResponse: .init(verified: UserManager.shared.profile?.status.hasKYCLevelTwo ?? false))
     }
     
     func navigate(viewAction: ProfileModels.Navigate.ViewAction) {
