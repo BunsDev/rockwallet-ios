@@ -48,7 +48,7 @@ enum ProfileModels {
     struct VerificationInfo {
         struct ViewAction {}
         struct ActionResponse {
-            var status: VerificationStatus?
+            var verified: Bool
         }
         struct ResponseDisplay {
             var model: PopupViewModel
