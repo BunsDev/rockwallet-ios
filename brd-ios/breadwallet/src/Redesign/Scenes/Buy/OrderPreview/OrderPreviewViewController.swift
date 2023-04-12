@@ -264,7 +264,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay) {
-        coordinator?.showFailure(reason: .buyCard)
+        coordinator?.showFailure(reason: .buyCard(nil))
     }
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {

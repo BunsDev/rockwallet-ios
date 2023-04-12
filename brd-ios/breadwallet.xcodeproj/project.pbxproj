@@ -5052,7 +5052,7 @@
 					"$(SRCROOT)/Modules/breadwallet-core/**",
 				);
 				INFOPLIST_FILE = breadwallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5104,7 +5104,7 @@
 					"$(SRCROOT)/Modules/breadwallet-core/**",
 				);
 				INFOPLIST_FILE = breadwallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5335,7 +5335,7 @@
 					"$(SRCROOT)/Modules/breadwallet-core/**",
 				);
 				INFOPLIST_FILE = breadwallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5639,7 +5639,7 @@
 					"$(SRCROOT)/Modules/breadwallet-core/**",
 				);
 				INFOPLIST_FILE = breadwallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

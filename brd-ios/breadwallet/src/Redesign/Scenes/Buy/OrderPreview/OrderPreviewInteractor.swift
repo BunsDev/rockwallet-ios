@@ -44,14 +44,16 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                                                          previewType: self?.dataStore?.type,
                                                                          isAch: self?.dataStore?.isAchAccount,
                                                                          failed: true,
-                                                                         responseCode: data?.responseCode))
+                                                                         responseCode: data?.responseCode,
+                                                                         errorDescription: data?.errorMessage))
                     return
                 }
                 self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                      previewType: self?.dataStore?.type,
                                                                      isAch: self?.dataStore?.isAchAccount,
                                                                      failed: false,
-                                                                     responseCode: nil))
+                                                                     responseCode: nil,
+                                                                     errorDescription: nil))
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))

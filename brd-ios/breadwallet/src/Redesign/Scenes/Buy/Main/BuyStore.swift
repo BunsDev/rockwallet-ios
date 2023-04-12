@@ -42,8 +42,10 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd) else { return nil }
+              let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
+              let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description else { return nil }
         
+        let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
         let limitsString = NSMutableAttributedString(string: L10n.Buy.buyLimits(minText, maxText))
         let linkRange = limitsString.mutableString.range(of: L10n.Button.moreInfo)
         

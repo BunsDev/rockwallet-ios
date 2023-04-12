@@ -281,9 +281,10 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         // We need to make sure the swap from amount is still less than the balance
         if let balance = sender?.wallet.currency.state?.balance,
            let minimumValue = dataStore?.quote?.minimumValue,
-           let minimumUsd = dataStore?.quote?.minimumUsd {
-            let amount = dataStore?.from ?? Amount(decimalAmount: 0, isFiat: false, currency: dataStore?.from?.currency ?? balance.currency)
-            if amount > balance || amount.tokenValue < minimumValue || amount.fiatValue < minimumUsd {
+           let minimumUsd = dataStore?.quote?.minimumUsd,
+           let amount = dataStore?.from,
+           let fee = dataStore?.fromFeeAmount {
+            if (amount + fee) > balance || amount.tokenValue < minimumValue || amount.fiatValue < minimumUsd {
                 let error = ExchangeErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
                 self.presenter?.presentError(actionResponse: .init(error: error))
                 return
