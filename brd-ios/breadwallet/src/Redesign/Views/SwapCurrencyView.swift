@@ -284,15 +284,15 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         
         currencyIconImageView.wrappedView.configure(background: config?.currencyIconBackground)
         
-        var buttonConfig = BackgroundConfiguration(backgroundColor: LightColors.purpleMuted,
+        let buttonConfig = BackgroundConfiguration(backgroundColor: LightColors.purpleMuted,
                                                    tintColor: LightColors.instantPurple,
                                                    border: BorderConfiguration(tintColor: .clear,
                                                                                borderWidth: 0,
                                                                                cornerRadius: .fullRadius))
-        headerInfoButton.configure(with: ButtonConfiguration(normalConfiguration: buttonConfig,
-                                                             selectedConfiguration: buttonConfig,
-                                                             disabledConfiguration: buttonConfig,
-                                                             font: Fonts.Body.three))
+        headerInfoButton.configure(with: .init(normalConfiguration: buttonConfig,
+                                               selectedConfiguration: buttonConfig,
+                                               disabledConfiguration: buttonConfig,
+                                               font: Fonts.Body.three))
     }
     
     override func setup(with viewModel: SwapCurrencyViewModel?) {

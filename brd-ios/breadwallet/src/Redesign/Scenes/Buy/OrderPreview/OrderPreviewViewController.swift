@@ -34,19 +34,18 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         
         view.backgroundColor = LightColors.Background.two
         
-        let drawerConfig = DrawerConfiguration()
-        let drawerViewModel = DrawerViewModel()
-        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
-            
-        }, { [weak self] in
-            
-        }, { [weak self] in
+        let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
+        let drawerViewModel = DrawerViewModel(title: .text("Puchase with Instant Buy"),
+                                              description: .text("$55,00 assets will settle immediately."),
+                                              buttons: [.init(title: "Confirm purchase")],
+                                              notice: .init(title: "Instant purchase", image: Asset.flash.image))
+        let drawerCallbacks: [(() -> Void)] = [{ [weak self] in
             
         }]
         drawerManager.setupDrawer(on: self,
                                   config: drawerConfig,
                                   viewModel: drawerViewModel,
-                                  callbacks: drawerCallbacks) { [unowned self] drawer in
+                                  callbacks: drawerCallbacks) { [weak self] drawer in
             
         }
         
