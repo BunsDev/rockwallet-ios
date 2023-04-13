@@ -51,7 +51,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemChromeMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
-        view.alpha = 0.9
+        view.alpha = 0.94
         view.isUserInteractionEnabled = false
         return view
     }()
