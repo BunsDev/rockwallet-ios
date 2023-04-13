@@ -32,7 +32,7 @@ struct DrawerViewModel: ViewModel {
 
 class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
     var callbacks: [(() -> Void)] = []
-    var isShown: Bool { return blurView.alpha == 1 }
+    var isShown: Bool { return containerView.alpha == 1 }
     
     static var bottomToolbarHeight = 84.0
     
@@ -41,11 +41,18 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         dismissActionSubject.eraseToAnyPublisher()
     }
     
+    lazy var containerView: UIView = {
+        let view = UIView()
+        view.alpha = 0.0
+        view.isUserInteractionEnabled = true
+        return view
+    }()
+    
     private lazy var blurView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
+        let blurEffect = UIBlurEffect(style: .systemChromeMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        view.alpha = 0
+        view.alpha = 0.9
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -99,19 +106,24 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         
         isUserInteractionEnabled = false
         
-        UIApplication.shared.activeWindow?.addSubview(blurView)
+        UIApplication.shared.activeWindow?.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        containerView.addSubview(blurView)
         blurView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        blurView.contentView.addSubview(content)
+        containerView.addSubview(content)
         content.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         content.addSubview(drawer)
         drawer.snp.makeConstraints { make in
-            make.top.equalTo(blurView.contentView.snp.bottom)
+            make.top.equalTo(containerView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
@@ -149,7 +161,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onDrag(_:)))
         panGesture.delegate = self
         drawer.addGestureRecognizer(panGesture)
-        blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
+        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
         grabberImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
     }
     
@@ -218,7 +230,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     }
     
     func show() {
-        guard blurView.alpha == 0 else { return }
+        guard containerView.alpha == 0 else { return }
         
         isUserInteractionEnabled = true
         
@@ -229,7 +241,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         }
         
         Self.animate(withDuration: Presets.Animation.average.rawValue) { [weak self] in
-            self?.blurView.alpha = 1
+            self?.containerView.alpha = 1
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
             self?.layoutIfNeeded()
@@ -237,18 +249,18 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     }
     
     func hide() {
-        guard blurView.alpha == 1 else { return }
+        guard containerView.alpha == 1 else { return }
         
         isUserInteractionEnabled = false
         
         drawer.snp.removeConstraints()
         drawer.snp.makeConstraints { make in
-            make.top.equalTo(blurView.contentView.snp.bottom)
+            make.top.equalTo(containerView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
         Self.animate(withDuration: Presets.Animation.average.rawValue) { [weak self] in
-            self?.blurView.alpha = 0
+            self?.containerView.alpha = 0
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
             self?.layoutIfNeeded()
@@ -258,7 +270,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     }
     
     func toggle() {
-        if blurView.alpha == 0 {
+        if containerView.alpha == 0 {
             return show()
         } else {
             return hide()
