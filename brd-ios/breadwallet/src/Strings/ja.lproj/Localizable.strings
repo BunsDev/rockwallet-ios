@@ -5,7 +5,7 @@
 "About.blog" = "ブログ";
 
 /* About screen footer */
-"About.footer" = "グローバルブレッドチームによって開発されました。バージョン %sビルド%s";
+"About.footer" = "グローバルブレッドチームによって開発されました。バージョン %1$sビルド%2$s";
 
 /* Privay Policy button label */
 "About.privacy" = "プライバシーポリシー";
@@ -99,7 +99,7 @@
 "Account.EnterPassword" = "Enter your password";
 
 /* $10000 per BTC */
-"Account.exchangeRate" = "%sあたり%s";
+"Account.exchangeRate" = "%2$sあたり%1$s";
 
 "Account.explanationSSN" = "We are required to verify the identity of all our users to comply with regulations.\n\nThat is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.";
 
@@ -601,10 +601,10 @@
 "BackupCodes.Title" = "Backup codes";
 
 /* Send BCH view body. */
-"BCH.body" = "送金先のBCHアドレスを入力してください。フォーク時（%s）にウォレット内にあった全てのBCHが送られます。";
+"BCH.body" = "送金先のBCHアドレスを入力してください。フォーク時（%1$s）にウォレット内にあった全てのBCHが送られます。";
 
 /* Confirm sending <$5.00> to <address>? */
-"BCH.confirmationMessage" = "%sを%sに送金することを確認する";
+"BCH.confirmationMessage" = "%1$sを%2$sに送金することを確認する";
 
 /* Confirmation alert title */
 "BCH.confirmationTitle" = "承認";
@@ -634,7 +634,7 @@
 "BitID.approve" = "承認する";
 
 /* <sitename> is requesting authentication using your bitcoin wallet */
-"BitID.authenticationRequest" = "%sがビットコインウォレットを使っての認証を求めています";
+"BitID.authenticationRequest" = "%1$sがビットコインウォレットを使っての認証を求めています";
 
 /* Deny button label */
 "BitID.deny" = "拒否する";
@@ -769,6 +769,30 @@
 "Buy.3DSecure" = "3D Secure";
 
 "Buy.Ach.AccountUnlinked" = "Your bank account has been unlinked from RockWallet for security purposes. Please link it again to continue using ACH payments.";
+
+"Buy.Ach.Hybrid.Title" = "3-5 days";
+
+"Buy.Ach.Instant.ConfirmationDrawer.ConfirmAction" = "Confirm purchase";
+
+"Buy.Ach.Instant.ConfirmationDrawer.Description" = "$%s assets will settle immediately.";
+
+"Buy.Ach.Instant.ConfirmationDrawer.Notice" = "Instant purchase";
+
+"Buy.Ach.Instant.ConfirmationDrawer.Title" = "Puchase with Instant Buy";
+
+"Buy.Ach.Instant.Fee.Title" = "Instant Buy fee";
+
+"Buy.Ach.Instant.InfoButtonTitle" = "\"Receive up to $500.00 instantly\"";
+
+"Buy.Ach.Instant.OrderPreview.Notice" = "With Instant Buy, %s will be settled immediately.";
+
+"Buy.Ach.Instant.PopupContent" = "Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!";
+
+"Buy.Ach.Instant.PopupTitle" = "What is Instant Buy?";
+
+"Buy.Ach.Instant.Success.Description" = "You will receive a confirmation email when your digital assets are delivered to your wallet.";
+
+"Buy.Ach.Instant.Title" = "Instant";
 
 "Buy.Ach.NotAvailableBody" = "Fund with ACH isn’t available in your region. We'll notify you when this feature is released. You can still buy digital assets with a debit/credit card.";
 
@@ -1032,7 +1056,7 @@
 
 "CloudBackup.mainWarningConfirmation" = "iCloudバックアップを無効にしてもよろしいですか？これにより、すべてのデバイスからバックアップが削除されます。";
 
-"CloudBackup.pinAttempts" = "バックアップを消去する前に残っている試行： %s";
+"CloudBackup.pinAttempts" = "バックアップを消去する前に残っている試行： %1$@";
 
 "CloudBackup.recoverButton" = "回復キーから復元";
 
@@ -1054,7 +1078,7 @@
 
 "CloudBackup.understandText" = "この機能はiCloudキーチェーンが有効になっていないと機能しないことを理解しています。";
 
-"CloudBackup.warningBody" = "あなたのiCloudバックアップは、あと%s回の間違ったPIN試行の後に消去されます。";
+"CloudBackup.warningBody" = "あなたのiCloudバックアップは、あと%1$@回の間違ったPIN試行の後に消去されます。";
 
 "ComingSoon.body" = "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
 
@@ -1087,7 +1111,7 @@
 "Confirmation.hederaMemo" = "ヘデラメモ";
 
 /* eg. Processing time: This transaction is predicted to complete in [10-60 minutes]. */
-"Confirmation.processingTime" = "処理時間: この取引は%sで完了する見込みです。";
+"Confirmation.processingTime" = "処理時間: この取引は%1$sで完了する見込みです。";
 
 /* Label for "send" button on final confirmation screen */
 "Confirmation.send" = "送金する";
@@ -1115,7 +1139,7 @@
 "ConfirmPaperPhrase.label" = "すべてが正しく記述されていることを確認するには、回復フレーズから次の単語を入力してください。";
 
 /* Word label eg. Word #1, Word #2 */
-"ConfirmPaperPhrase.word" = "フレーズ #%s";
+"ConfirmPaperPhrase.word" = "フレーズ #%1$s";
 
 "CreateGift.amountLabel" = "金額を選択（$ USD）";
 
@@ -1175,16 +1199,16 @@
 "Drawer.title" = "Buy / Sell";
 
 /* Share address by e-mail subject */
-"Email.address_subject" = "%s住所";
+"Email.address_subject" = "%1$s住所";
 
 /* Service capabilities description */
-"EME.permissions.accountRequest" = "%s のアカウント情報をリクエスト";
+"EME.permissions.accountRequest" = "%1$s のアカウント情報をリクエスト";
 
 /* Service capabilities description */
-"EME.permissions.callRequest" = "%s のスマートコントラクトのコールをリクエスト";
+"EME.permissions.callRequest" = "%1$s のスマートコントラクトのコールをリクエスト";
 
 /* Service capabilities description */
-"EME.permissions.paymentRequest" = "%s のアカウント情報をリクエスト";
+"EME.permissions.paymentRequest" = "%1$s のアカウント情報をリクエスト";
 
 "ErrorMessages.accessDenied" = "You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.";
 
@@ -1309,7 +1333,7 @@
 "ExportTransfers.header" = "輸出取引？";
 
 /* You can customize your Face ID Spending Limit from the [menu] */
-"FaceIDSettings.customizeText" = "%sからFace ID使用限度額をカスタマイズすることができます。";
+"FaceIDSettings.customizeText" = "%1$sからFace ID使用限度額をカスタマイズすることができます。";
 
 /* Text describing the purpose of the Face ID settings in the BRD app. */
 "FaceIDSettings.explanatoryText" = "Face IDを使用してBRDアプリのロックを解除し、送金してください。";
@@ -1351,12 +1375,12 @@
 "FeeSelector.economyWarning" = "このオプションは早く送金を済ませたい方にはお勧めしません。";
 
 /* E.g. Estimated delivery: 10-60 minutes */
-"FeeSelector.estimatedDeliver" = "推定送金時間: %s";
+"FeeSelector.estimatedDeliver" = "推定送金時間: %1$s";
 
 /* [This transaction will complete in] 2-5 minutes */
 "FeeSelector.ethTime" = "2〜5分";
 
-"FeeSelector.lessThanMinutes" = "<%s 分";
+"FeeSelector.lessThanMinutes" = "<%1$d 分";
 
 /* Priority fee */
 "FeeSelector.priority" = "優先度";
@@ -1419,7 +1443,7 @@
 "Import.checking" = "秘密鍵の残高確認中...";
 
 /* Sweep private key confirmation message */
-"Import.confirm" = "この秘密鍵からウォレットに%sを送信しますか? ビットコインネットワークは手数料%sを頂戴します。";
+"Import.confirm" = "この秘密鍵からウォレットに%1$sを送信しますか? ビットコインネットワークは手数料%2$sを頂戴します。";
 
 /* Duplicate key error message */
 "Import.Error.duplicate" = "この秘密鍵はすでにあなたのウォレットに存在しています。";
@@ -1542,7 +1566,7 @@
 "LocationPlugin.notAuthorized" = "ブレッドは位置情報サービスへのアクセスが許可されていません。";
 
 /* Wallet creation date prefix */
-"ManageWallet.creationDatePrefix" = "あなたは%sにご自身のウォレットを作成しました";
+"ManageWallet.creationDatePrefix" = "あなたは%1$sにご自身のウォレットを作成しました";
 
 /* Manage wallet description text */
 "ManageWallet.description" = "あなたのウォレットの名前はご自身のアカウントの取引履歴上でのみ表示され、あなた以外誰も閲覧することができません。";
@@ -1705,7 +1729,7 @@
 "OnboardingPageTwo.title" = "世界中で何百万もの人々がBRDを利用しています。あなたもぜひ。";
 
 /* Eg. Send 1.0Eth to purchase CCC */
-"PaymentConfirmation.amountText" = "%sを購入するために%sを送金する";
+"PaymentConfirmation.amountText" = "%2$sを購入するために%1$sを送金する";
 
 /* Payment expired message */
 "PaymentConfirmation.PaymentExpired" = "The payment has expired due to inactivity. Please try again with the same card, or use a different card.";
@@ -1739,10 +1763,10 @@
 "PaymentProtocol.Errors.smallOutputError" = "支払いが行えませんでした";
 
 /* Amount too small error message */
-"PaymentProtocol.Errors.smallPayment" = "%s未満のビットコインの支払いは行えません。";
+"PaymentProtocol.Errors.smallPayment" = "%1$s未満のビットコインの支払いは行えません。";
 
 /* Output too small error message. */
-"PaymentProtocol.Errors.smallTransaction" = "ビットコインの送金額は%s以上である必要があります。";
+"PaymentProtocol.Errors.smallTransaction" = "ビットコインの送金額は%1$s以上である必要があります。";
 
 /* Unsupported signature type payment protocol error message */
 "PaymentProtocol.Errors.unsupportedSignatureType" = "サポートされていないタイプの署名です";
@@ -1996,7 +2020,7 @@
 "RecoveryKeyFlow.HelpPopup.title" = "What is “Recovery Phrase”?";
 
 /* Hint text for recovery key intro page, e.g., Step 2 */
-"RecoveryKeyFlow.howItWorksStep" = "使い方 - ステップ%s";
+"RecoveryKeyFlow.howItWorksStep" = "使い方 - ステップ%1$@";
 
 /* Error text displayed when the user enters an incorrect recovery phrase */
 "RecoveryKeyFlow.invalidPhrase" = "入力した単語の一部が回復フレーズと一致しません。もう一度お試しください。";
@@ -2080,7 +2104,7 @@
 "RecoveryKeyFlow.writeKeyScreenTitle" = "あなたの回復フレーズ";
 
 /* Title for the step number when the user pages through the recovery words */
-"RecoveryKeyFlow.writeKeyStepTitle" = "%sの%s";
+"RecoveryKeyFlow.writeKeyStepTitle" = "%1$@の%2$@";
 
 "RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated  in the next step.";
 
@@ -2150,7 +2174,7 @@
 "Scanner.flashButtonLabel" = "カメラのフラッシュ";
 
 /* (alert dialog message) Would you like to send a [Bitcoin / Bitcoin Cash / Ethereum] payment to this address?") */
-"Scanner.paymentPromptMessage" = "この住所に %s の支払いを送信しますか?";
+"Scanner.paymentPromptMessage" = "この住所に %1$@ の支払いを送信しますか?";
 
 /* alert dialog title */
 "Scanner.paymentPromptTitle" = "支払いを送る";
@@ -2260,7 +2284,7 @@
 "Send.amountLabel" = "金額";
 
 /* Balance: $4.00 */
-"Send.balance" = "残高: %s";
+"Send.balance" = "残高: %1$s";
 
 /* Balance: $4.00 for iOS, the balance can't have a parameter */
 "Send.balanceString" = "残高:";
@@ -2313,11 +2337,11 @@
 "Send.ethSendSelf" = "自分に送金することはできません。";
 
 /* Network Fee: $0.01 */
-"Send.fee" = "ネットワーク手数料: %s";
+"Send.fee" = "ネットワーク手数料: %1$s";
 
 "Send.fio_invalid" = "無効なFIOアドレス。";
 
-"Send.fio_noAddress" = "このFIOアドレスに関連付けられている%sアドレスはありません。";
+"Send.fio_noAddress" = "このFIOアドレスに関連付けられている%1$sアドレスはありません。";
 
 "Send.fio_retrievalError" = "このFIOアドレスのアドレスの取得中にエラーが発生しました。後でもう一度やり直してください。";
 
@@ -2331,16 +2355,16 @@
 "Send.insufficientGas" = "Insufficient gas.";
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
-"Send.insufficientGasMessage" = "このタイプのトークンを送金するには、ウォレットに%s以上保有していなければなりません。今すぐイーサリアムのウォレットに移動しますか?";
+"Send.insufficientGasMessage" = "このタイプのトークンを送金するには、ウォレットに%1$s以上保有していなければなりません。今すぐイーサリアムのウォレットに移動しますか?";
 
 /* Your balance is insufficient to complete this action. */
 "Send.insufficientGasTitle" = "Insufficient %s Balance";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
-"Send.invalidAddressMessage" = "送金先のアドレスが無効な%sアドレスです。";
+"Send.invalidAddressMessage" = "送金先のアドレスが無効な%1$sアドレスです。";
 
 /* Invalid address on pasteboard message */
-"Send.invalidAddressOnPasteboard" = "ペーストボードに有効な%sアドレスが入っていません。";
+"Send.invalidAddressOnPasteboard" = "ペーストボードに有効な%1$sアドレスが入っていません。";
 
 /* Invalid address alert title */
 "Send.invalidAddressTitle" = "無効なアドレスです";
@@ -2379,7 +2403,7 @@
 "Send.payId_invalid" = "PayIDが無効です。";
 
 /* Error message for no address associated with a PayID for a given currency */
-"Send.payId_noAddress" = "このPayIDに関連付けられている%sアドレスはありません。";
+"Send.payId_noAddress" = "このPayIDに関連付けられている%1$sアドレスはありません。";
 
 /* Error message for error in retrieving the address from the PayID endpoint */
 "Send.payId_retrievalError" = "このPayIDの住所の取得中にエラーが発生しました。後でもう一度やり直してください。";
@@ -2451,7 +2475,7 @@
 "Settings.currency" = "表示される通貨";
 
 /* e.g. "USD Settings" (settings for how USD is handled) */
-"Settings.currencyPageTitle" = "%s設定";
+"Settings.currencyPageTitle" = "%1$s設定";
 
 /* Section title for a collection of different settings screens, one for each currency */
 "Settings.currencySettings" = "通貨設定";
@@ -2598,7 +2622,7 @@
 /* Staking banner title */
 "Staking.stakingTitle" = "ステーキング";
 
-"Staking.stakingTo" = "%sへのステーキング";
+"Staking.stakingTo" = "%1$sへのステーキング";
 
 "Staking.statusPending" = "保留中";
 
@@ -2615,7 +2639,7 @@
 /* Tezos XTZ baker asset type */
 "Staking.tezosOnly" = "テゾスのみ";
 
-"Staking.title" = "ステーク%s";
+"Staking.title" = "ステーク%1$s";
 
 "Staking.unstake" = "アンステーク";
 
@@ -2634,7 +2658,7 @@
 "StartPaperPhrase.buttonTitle" = "回復フレーズを書き留めます";
 
 /* Argument is date; date should be on a new line */
-"StartPaperPhrase.date" = "最後に書き留めた\n %s";
+"StartPaperPhrase.date" = "最後に書き留めた\n %1$@";
 
 /* button label */
 "StartViewController.createButton" = "新しいウォレットを作成する";
@@ -2781,22 +2805,22 @@
 "SyncingView.retry" = "再試行";
 
 /* "eg. Synced through <Jan 12, 2015> */
-"SyncingView.syncedThrough" = "%sまで同期完了";
+"SyncingView.syncedThrough" = "%1$sまで同期完了";
 
 /* Syncing view syncing state header text */
 "SyncingView.syncing" = "同期中";
 
 /* 6 d (6 days) */
-"TimeSince.days" = "%s日";
+"TimeSince.days" = "%1$s日";
 
 /* 6 h (6 hours) */
-"TimeSince.hours" = "%s時間";
+"TimeSince.hours" = "%1$s時間";
 
 /* 6 m (6 minutes) */
-"TimeSince.minutes" = "%s分";
+"TimeSince.minutes" = "%1$s分";
 
 /* 6 s (6 seconds) */
-"TimeSince.seconds" = "%s秒";
+"TimeSince.seconds" = "%1$s秒";
 
 "Title.AutoEnterPin" = "Auto-enter PIN";
 
@@ -2838,7 +2862,7 @@
 "TokenList.show" = "表示する";
 
 /* You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] */
-"TouchIdSettings.customizeText" = "%sからTouch ID利用限度額を変更できます。";
+"TouchIdSettings.customizeText" = "%1$sからTouch ID利用限度額を変更できます。";
 
 /* Fingerprint enabling description body */
 "TouchIdSettings.customizeText.android" = "指紋認証利用上限は指紋認証利用上限画面でカスタマイズできます";
@@ -2859,7 +2883,7 @@
 "TouchIdSettings.linkText" = "Touch ID利用限度額画面";
 
 /* Spending Limit: b100,000 ($100) */
-"TouchIdSettings.spendingLimit" = "利用限度: %s (%s)";
+"TouchIdSettings.spendingLimit" = "利用限度: %1$s (%2$s)";
 
 /* Touch id switch label. */
 "TouchIdSettings.switchLabel" = "ブレッドでTouch IDの有効化";
@@ -2907,7 +2931,7 @@
 "Transaction.confirming" = "進行中";
 
 /* eg. Ending balance: $50.00 */
-"Transaction.ending" = "期末残高: %s";
+"Transaction.ending" = "期末残高: %1$s";
 
 /* Exchange rate on date header */
 "Transaction.exchangeOnDayReceived" = "受け取り時の為替レート：";
@@ -2922,7 +2946,7 @@
 "Transaction.FailedSwap" = "Failed swap";
 
 /* (b600 fee) */
-"Transaction.fee" = "(%s 手数料)";
+"Transaction.fee" = "(%1$s 手数料)";
 
 /* Invalid transaction */
 "Transaction.invalid" = "無効";
@@ -2956,23 +2980,23 @@
 "Transaction.PurchaseFailedWithAch" = "Purchase with ACH failed";
 
 /* Receive status text: 'In progress: 20%' */
-"Transaction.receivedStatus" = "進行中: %s";
+"Transaction.receivedStatus" = "進行中: %1$s";
 
 "Transaction.refunded" = "Refunded";
 
 /* Send status text: 'In progress: 20%' */
-"Transaction.sendingStatus" = "進行中: %s";
+"Transaction.sendingStatus" = "進行中: %1$s";
 
 /* sending to <address> */
-"Transaction.sendingTo" = "%sに送金中";
+"Transaction.sendingTo" = "%1$sに送金中";
 
 /* sent to <address> */
-"Transaction.sentTo" = "%sに送金済み";
+"Transaction.sentTo" = "%1$sに送金済み";
 
-"Transaction.stakingTo" = "%sへのステーキング";
+"Transaction.stakingTo" = "%1$sへのステーキング";
 
 /* eg. Starting balance: $50.00 */
-"Transaction.starting" = "期首残高: %s";
+"Transaction.starting" = "期首残高: %1$s";
 
 "Transaction.swapFromFailed" = "Swap from %s failed";
 
@@ -2990,9 +3014,9 @@
 "Transaction.swapToFailed" = "Swap to %s failed";
 
 /* e.g. "[The money you paid was a] Fee for token transfer: BRD" (BRD is the token that was transfered) */
-"Transaction.tokenTransfer" = "トークン送金の手数料: %s";
+"Transaction.tokenTransfer" = "トークン送金の手数料: %1$s";
 
-"Transaction.toRecipient" = "〜 %s";
+"Transaction.toRecipient" = "〜 %1$s";
 
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "承認を待っています。トランザクションの完了には承認が必要となる場合があります。推定時間: 1-2時間。";
@@ -3017,10 +3041,10 @@
 "TransactionDetails.amountHeader" = "金額";
 
 /* "(it was worth) $100 when sent, (and it is worth) $200 now" */
-"TransactionDetails.amountWhenReceived" = "%s を受領したので、%s になります";
+"TransactionDetails.amountWhenReceived" = "%1$s を受領したので、%2$s になります";
 
 /* "(it was worth) $100 when sent, (and it is worth) $200 now" */
-"TransactionDetails.amountWhenSent" = "送金時%s、現在%s";
+"TransactionDetails.amountWhenSent" = "送金時%1$s、現在%2$s";
 
 /* Block height label */
 "TransactionDetails.blockHeightLabel" = "ブロックチェーンで承認済み";
@@ -3054,7 +3078,7 @@
 "TransactionDetails.feeHeader" = "総手数料";
 
 /* "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. */
-"TransactionDetails.from" = "%sで";
+"TransactionDetails.from" = "%1$sで";
 
 /* Tx detail field header */
 "TransactionDetails.gasLimitHeader" = "ガソリン上限";
@@ -3064,7 +3088,7 @@
 
 "TransactionDetails.gift" = "贈り物";
 
-"TransactionDetails.giftedTo" = "%s贈られました";
+"TransactionDetails.giftedTo" = "%1$s贈られました";
 
 /* Label for Hedera Memo field on transaction details screen */
 "TransactionDetails.hederaMemo" = "ヘデラメモ";
@@ -3079,41 +3103,41 @@
 "TransactionDetails.more" = "もっと見る...";
 
 /* Moved $5.00 (as in "I moved $5 to another location") */
-"TransactionDetails.moved" = "%sを移動させました";
+"TransactionDetails.moved" = "%1$sを移動させました";
 
 /* Moved $5.00 */
-"TransactionDetails.movedAmountDescription" = "<b>%s</b>を移動させました";
+"TransactionDetails.movedAmountDescription" = "<b>%1$s</b>を移動させました";
 
 /* eg. Confirmed in Block: Not Confirmed */
 "TransactionDetails.notConfirmedBlockHeightLabel" = "未承認";
 
 /* "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. */
-"TransactionDetails.received" = "%sを受け取りました";
+"TransactionDetails.received" = "%1$sを受け取りました";
 
 /* Received $5.00 */
-"TransactionDetails.receivedAmountDescription" = "<b>%s</b>を受け取りました";
+"TransactionDetails.receivedAmountDescription" = "<b>%1$s</b>を受け取りました";
 
 /* received from <address> */
-"TransactionDetails.receivedFrom" = "%sから受け取りました";
+"TransactionDetails.receivedFrom" = "%1$sから受け取りました";
 
 /* received via <address> */
-"TransactionDetails.receivedVia" = "%s経由で受け取り済み";
+"TransactionDetails.receivedVia" = "%1$s経由で受け取り済み";
 
 /* receiving from <address> */
-"TransactionDetails.receivingFrom" = "%sから受け取っています";
+"TransactionDetails.receivingFrom" = "%1$sから受け取っています";
 
 /* receiving via <address> */
-"TransactionDetails.receivingVia" = "%s経由で受け取り中";
+"TransactionDetails.receivingVia" = "%1$s経由で受け取り中";
 
 "TransactionDetails.reclaim" = "再利用";
 
 "TransactionDetails.resend" = "再送信";
 
 /* "Sent [$5] to [address]" => This is the "Sent [$5]" part. */
-"TransactionDetails.sent" = "%sを送金しました";
+"TransactionDetails.sent" = "%1$sを送金しました";
 
 /* Sent $5.00 */
-"TransactionDetails.sentAmountDescription" = "<b>%s</b>を送金しました";
+"TransactionDetails.sentAmountDescription" = "<b>%1$s</b>を送金しました";
 
 /* Show Details button */
 "TransactionDetails.showDetails" = "詳細を表示する";
@@ -3146,7 +3170,7 @@
 "TransactionDetails.titleSent" = "送金済み";
 
 /* "Sent [$5] to [address]" => This is the "to [address]" part. */
-"TransactionDetails.to" = "%sに";
+"TransactionDetails.to" = "%1$sに";
 
 /* Tx detail field header */
 "TransactionDetails.totalHeader" = "トータル";
@@ -3195,7 +3219,7 @@
 "UDomains.invalid" = "Invalid address.";
 
 /* Disabled until date */
-"UnlockScreen.disabled" = "以下まで無効: %s";
+"UnlockScreen.disabled" = "以下まで無効: %1$s";
 
 /* Unlock with FaceID accessibility label */
 "UnlockScreen.faceIdText" = "FaceIDでロックを解除する";
@@ -3562,7 +3586,7 @@
 "WritePaperPhrase.previous" = "前へ";
 
 /* 1 of 3 */
-"WritePaperPhrase.step" = "%sの%s";
+"WritePaperPhrase.step" = "%2$dの%1$d";
 
 "WritePaperPhrase.warning" = "For security purposes, do not screenshot or email these words.";
 
