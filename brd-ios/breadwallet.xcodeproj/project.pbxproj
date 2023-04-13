@@ -3909,7 +3909,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "find \"${PROJECT_DIR}\" -name \"*.strings\" | while read filename; do\n  sed -i '' -E 's/%([12])\\$[@s]/%s/g' \"$filename\"\ndone\n";
+			shellScript = "find \"${PROJECT_DIR}\" -name \"*.strings\" | while read filename; do\n    sed -i '' -E 's/%[0-9]\\$[@sldi]/%s/g' \"${filename}\"\ndone\n";
 		};
 		7C3C4695218253DC0036D95A /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
