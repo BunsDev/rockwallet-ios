@@ -896,8 +896,8 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "Buy.Ach.Hybrid.Title", fallback: "3-5 days")
       }
       internal enum Instant {
-        /// "Receive up to $500.00 instantly"
-        internal static let infoButtonTitle = L10n.tr("Localizable", "Buy.Ach.Instant.InfoButtonTitle", fallback: "\"Receive up to $500.00 instantly\"")
+        /// Receive up to $500.00 instantly
+        internal static let infoButtonTitle = L10n.tr("Localizable", "Buy.Ach.Instant.InfoButtonTitle", fallback: "Receive up to $500.00 instantly")
         /// Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!
         internal static let popupContent = L10n.tr("Localizable", "Buy.Ach.Instant.PopupContent", fallback: "Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!")
         /// What is Instant Buy?
