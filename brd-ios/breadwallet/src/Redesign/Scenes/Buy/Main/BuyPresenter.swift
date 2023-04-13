@@ -35,7 +35,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         
-        let paymentTypes = PaymentCard.PaymentType.allCases
         let selectedPaymentType = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == item.type })
         
         let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
@@ -78,7 +77,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let formattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
         
         cryptoModel = .init(amount: actionResponse.amount,
-                            headerInfoButtonTitle: actionResponse.type == .ach ? "Receive up to $500.00 instantly" : nil,
+                            headerInfoButtonTitle: actionResponse.type == .ach ? L10n.Buy.Ach.Instant.infoButtonTitle : nil,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
@@ -236,10 +235,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     func presentInstantAchPopup(actionResponse: BuyModels.InstantAchPopup.ActionResponse) {
-        let a1 = "Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account."
-        let a2 = "The instant portion of your transaction will show in your account within seconds!"
-        let model = PopupViewModel(title: .text("What is Instant Buy?"),
-                                   body: a1 + a2)
+        let model = PopupViewModel(title: .text(L10n.Buy.Ach.Instant.popupTitle),
+                                   body: L10n.Buy.Ach.Instant.popupContent)
         
         viewController?.displayInstantAchPopup(responseDisplay: .init(model: model))
     }

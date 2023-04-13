@@ -67,8 +67,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         }
         
         let achSegment = SegmentControlViewModel(selectedIndex: 0,
-                                                 segments: [.init(image: Asset.flash.image, title: "Instant"),
-                                                            .init(image: Asset.timelapse.image, title: "3-5 days")])
+                                                 segments: [.init(image: Asset.flash.image, title: L10n.Buy.Ach.Instant.title),
+                                                            .init(image: Asset.timelapse.image, title: L10n.Buy.Ach.Hybrid.title)])
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .achSegment: [
@@ -160,11 +160,12 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     }
     
     func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse) {
+        // TODO: Update amount
         let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
-        let drawerViewModel = DrawerViewModel(title: .text("Puchase with Instant Buy"),
-                                              description: .text("$55,00 assets will settle immediately."),
-                                              buttons: [.init(title: "Confirm purchase")],
-                                              notice: .init(title: "Instant purchase", image: Asset.flash.image))
+        let drawerViewModel = DrawerViewModel(title: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.title),
+                                              description: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.description("YYY")),
+                                              buttons: [.init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.confirmAction)],
+                                              notice: .init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.notice, image: Asset.flash.image))
         let drawerCallbacks: [ (() -> Void) ] = [ { [weak self] in
             self?.viewController?.showPinInput()
         }]
@@ -216,7 +217,9 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         
-        let instantBuyFee: TitleValueViewModel? = isAchAccount ? .init(title: .text("Instant Buy fee"), value: .text("$0.55 USD")) : nil
+        // TODO: Update fee
+        let instantBuyFee: TitleValueViewModel? = isAchAccount ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
+                                                                       value: .text("$0.55 USD")) : nil
         
         switch item.type {
         case .sell:
@@ -230,7 +233,9 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           totalCost: .init(title: .text(L10n.Swap.youReceive), value: .text(totalText)))
             
         default:
-            model = .init(currencyIcon: .image(toCryptoDisplayImage),
+            // TODO: Update amount
+            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice("000")),
+                          currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                           amount: .init(title: .text(L10n.Swap.amountPurchased), value: .text(amountText), infoImage: nil),

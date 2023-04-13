@@ -233,7 +233,7 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
     override func setup(with viewModel: BuyOrderViewModel?) {
         super.setup(with: viewModel)
         
-        noticeLabel.setup(with: .text("With Instant Buy, $59.98 will be settled immediately."))
+        noticeLabel.setup(with: viewModel?.notice)
         titleLabel.setup(with: viewModel?.title)
         currencyIconImageView.wrappedView.setup(with: viewModel?.currencyIcon)
         currencyNameLabel.setup(with: viewModel?.currencyAmountName)

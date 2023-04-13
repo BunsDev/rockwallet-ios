@@ -82,7 +82,7 @@ enum BaseInfoModels {
             case .buyAch(let isInstant):
                 let text: String
                 if isInstant {
-                    text = "You will receive a confirmation email when your digital assets are delivered to your wallet."
+                    text = L10n.Buy.Ach.Instant.Success.description
                 } else {
                     text = L10n.Buy.bankAccountSuccessText
                 }
