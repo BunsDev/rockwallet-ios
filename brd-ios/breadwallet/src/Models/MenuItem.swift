@@ -16,6 +16,7 @@ struct MenuItem {
         static let wallet = Asset.wallet.image
         static let preferences = Asset.settings.image
         static let support = Asset.chat.image
+        static let tellFriend = Asset.friend.image
         static let about = Asset.info.image
         static let atmMap = Asset.placemark.image
         static let export = Asset.withdrawal.image

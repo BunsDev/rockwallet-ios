@@ -1506,6 +1506,8 @@ internal enum L10n {
     internal static let settings = L10n.tr("Localizable", "MenuButton.settings", fallback: "Settings")
     /// Menu button title
     internal static let support = L10n.tr("Localizable", "MenuButton.support", fallback: "Support")
+    /// Tell a friend
+    internal static let tellFriend = L10n.tr("Localizable", "MenuButton.TellFriend", fallback: "Tell a friend")
   }
   internal enum MenuViewController {
     /// button label
@@ -2330,6 +2332,8 @@ internal enum L10n {
     internal static let shareWithWidget = L10n.tr("Localizable", "Settings.shareWithWidget", fallback: "Share portfolio data with widgets")
     /// Sync blockchain label
     internal static let sync = L10n.tr("Localizable", "Settings.sync", fallback: "Sync Blockchain")
+    /// Hey, I use RockWallet to send, receive, store, buy and trade crypto. It’s really easy to use. Give it a try. https://rockwallet.com/
+    internal static let tellFriendDescription = L10n.tr("Localizable", "Settings.TellFriendDescription", fallback: "Hey, I use RockWallet to send, receive, store, buy and trade crypto. It’s really easy to use. Give it a try. https://rockwallet.com/")
     /// Settings title
     internal static let title = L10n.tr("Localizable", "Settings.title", fallback: "Menu")
     /// Touch ID spending limit label

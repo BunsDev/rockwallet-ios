@@ -311,6 +311,7 @@ internal enum Asset {
   internal static let fav = ImageAsset(name: "fav")
   internal static let filter = ImageAsset(name: "filter")
   internal static let forward = ImageAsset(name: "forward")
+  internal static let friend = ImageAsset(name: "friend")
   internal static let help = ImageAsset(name: "help")
   internal static let history = ImageAsset(name: "history")
   internal static let home = ImageAsset(name: "home")
