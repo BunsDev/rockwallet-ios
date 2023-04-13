@@ -82,8 +82,6 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeValue = { [weak self] segment in
-//                self?.view.endEditing(true)
-//                self?.setSegment(segment)
             }
         }
         

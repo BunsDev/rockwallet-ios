@@ -144,34 +144,18 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
         guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
-            var customAchErrorMessage: String = ""
-            if actionResponse.isAch == true {
-                switch actionResponse.responseCode {
-                case "30046":
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountClosed
-                    
-                case "30R16":
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountFrozen
-                    
-                case "20051":
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.insufficientFunds
-                    
-                default:
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.errorWhileProcessing
-                }
-            }
-            
-            customAchErrorMessage = L10n.Buy.bankAccountFailureText
-            
             let isAch = actionResponse.isAch == true
+            let responseCode = actionResponse.responseCode ?? ""
             let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell
-                                                                ? .sell : .buyAch(customAchErrorMessage)) : .buyCard(actionResponse.errorDescription)
+                                                                ? .sell : .buyAch(isAch, responseCode)) : .buyCard(actionResponse.errorDescription)
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             
             return
         }
         
-        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
+        // TODO: Update this when BE is ready.
+        let buyAchSuccessReason = Int.random(in: 0...1) == 0
+        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(buyAchSuccessReason)) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     
@@ -181,7 +165,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                                               description: .text("$55,00 assets will settle immediately."),
                                               buttons: [.init(title: "Confirm purchase")],
                                               notice: .init(title: "Instant purchase", image: Asset.flash.image))
-        let drawerCallbacks: [(() -> Void)] = [{ [weak self] in
+        let drawerCallbacks: [ (() -> Void) ] = [ { [weak self] in
             self?.viewController?.showPinInput()
         }]
         

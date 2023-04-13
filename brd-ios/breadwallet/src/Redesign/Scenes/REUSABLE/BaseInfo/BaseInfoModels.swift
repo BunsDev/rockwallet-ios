@@ -40,7 +40,7 @@ enum BaseInfoModels {
     
     enum SuccessReason: SimpleMessage {
         case buyCard
-        case buyAch
+        case buyAch(Bool)
         case sell
         case documentVerification
         case limitsAuthentication
@@ -79,8 +79,15 @@ enum BaseInfoModels {
             case .buyCard:
                 return L10n.Buy.purchaseSuccessText
                 
-            case .buyAch:
-                return L10n.Buy.bankAccountSuccessText
+            case .buyAch(let isInstant):
+                let text: String
+                if isInstant {
+                    text = "You will receive a confirmation email when your digital assets are delivered to your wallet."
+                } else {
+                    text = L10n.Buy.bankAccountSuccessText
+                }
+                
+                return text
                 
             case .sell:
                 return L10n.Sell.withdrawalSuccessText
@@ -172,7 +179,7 @@ enum BaseInfoModels {
     
     enum FailureReason: SimpleMessage {
         case buyCard(String?)
-        case buyAch(String)
+        case buyAch(Bool, String)
         case swap
         case plaidConnection
         case sell
@@ -220,8 +227,27 @@ enum BaseInfoModels {
             case .plaidConnection:
                 return L10n.Buy.plaidErrorDescription
                 
-            case .buyAch(let message):
-                return message
+            case .buyAch(let isAch, let responseCode):
+                let text: String
+                if isAch {
+                    switch responseCode {
+                    case "30046":
+                        text = L10n.ErrorMessages.Ach.accountClosed
+                        
+                    case "30R16":
+                        text = L10n.ErrorMessages.Ach.accountFrozen
+                        
+                    case "20051":
+                        text = L10n.ErrorMessages.Ach.insufficientFunds
+                        
+                    default:
+                        text = L10n.ErrorMessages.Ach.errorWhileProcessing
+                    }
+                } else {
+                    text = L10n.Buy.bankAccountFailureText
+                }
+                
+                return text
                 
             case .sell:
                 return L10n.Sell.tryAgain
