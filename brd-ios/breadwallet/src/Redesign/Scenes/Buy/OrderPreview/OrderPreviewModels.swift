@@ -57,6 +57,16 @@ enum OrderPreviewModels {
         }
     }
     
+    struct AchInstantDrawer {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {
+            var model: DrawerViewModel
+            var config: DrawerConfiguration
+            let callbacks: [(() -> Void)]
+        }
+    }
+    
     struct VeriffLivenessCheck {
         struct ActionResponse {
             var quoteId: String?

@@ -33,23 +33,6 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         tableView.register(WrapperTableViewCell<PaymentMethodView>.self)
         
         view.backgroundColor = LightColors.Background.two
-        
-        let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
-        let drawerViewModel = DrawerViewModel(title: .text("Puchase with Instant Buy"),
-                                              description: .text("$55,00 assets will settle immediately."),
-                                              buttons: [.init(title: "Confirm purchase")],
-                                              notice: .init(title: "Instant purchase", image: Asset.flash.image))
-        let drawerCallbacks: [(() -> Void)] = [{ [weak self] in
-            
-        }]
-        drawerManager.setupDrawer(on: self,
-                                  config: drawerConfig,
-                                  viewModel: drawerViewModel,
-                                  callbacks: drawerCallbacks) { [weak self] drawer in
-            
-        }
-        
-        drawerManager.toggleDrawer()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -202,6 +185,14 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
+        if let store = dataStore, store.isAchAccount {
+            interactor?.showAchInstantDrawer(viewAction: .init())
+        } else {
+            showPinInput()
+        }
+    }
+    
+    func showPinInput() {
         coordinator?.showPinInput(keyStore: dataStore?.keyStore) { [weak self] success in
             if success {
                 self?.interactor?.checkTimeOut(viewAction: .init())
@@ -245,6 +236,16 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         coordinator?.showSuccess(reason: responseDisplay.reason,
                                  itemId: responseDisplay.paymentReference,
                                  transactionType: transactionType)
+    }
+    
+    func displayAchInstantDrawer(responseDisplay: OrderPreviewModels.AchInstantDrawer.ResponseDisplay) {
+        drawerManager.setupDrawer(on: self,
+                                  config: responseDisplay.config,
+                                  viewModel: responseDisplay.model,
+                                  callbacks: responseDisplay.callbacks) { _ in
+        }
+        
+        drawerManager.toggleDrawer()
     }
     
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay) {

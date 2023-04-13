@@ -164,7 +164,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             customAchErrorMessage = L10n.Buy.bankAccountFailureText
             
             let isAch = actionResponse.isAch == true
-            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard(actionResponse.errorDescription)
+            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell
+                                                                ? .sell : .buyAch(customAchErrorMessage)) : .buyCard(actionResponse.errorDescription)
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             
             return
@@ -172,6 +173,21 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
+    }
+    
+    func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse) {
+        let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
+        let drawerViewModel = DrawerViewModel(title: .text("Puchase with Instant Buy"),
+                                              description: .text("$55,00 assets will settle immediately."),
+                                              buttons: [.init(title: "Confirm purchase")],
+                                              notice: .init(title: "Instant purchase", image: Asset.flash.image))
+        let drawerCallbacks: [(() -> Void)] = [{ [weak self] in
+            self?.viewController?.showPinInput()
+        }]
+        
+        viewController?.displayAchInstantDrawer(responseDisplay: .init(model: drawerViewModel,
+                                                                       config: drawerConfig,
+                                                                       callbacks: drawerCallbacks))
     }
     
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse) {
