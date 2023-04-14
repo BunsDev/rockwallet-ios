@@ -207,6 +207,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay) {
         LoadingView.hideIfNeeded()
+        hideToastMessage()
         coordinator?.showSwapInfo(from: responseDisplay.from, to: responseDisplay.to, exchangeId: responseDisplay.exchangeId)
     }
     
