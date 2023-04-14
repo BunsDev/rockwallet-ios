@@ -30,18 +30,11 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var values: BuyModels.Amounts.ViewAction = .init()
     var paymentMethod: PaymentCard.PaymentType? {
         didSet {
-            let selectedCurrency: Currency
-            if paymentMethod == .ach {
-                guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
-                selectedCurrency = currency
-            } else {
-                guard let currency = Store.state.currencies.first(where: {
-                    $0.code.lowercased() == Constant.BTC.lowercased()
-                }) ?? Store.state.currencies.first  else { return  }
-                selectedCurrency = currency
-            }
+            guard let currency = Store.state.currencies.first(where: {
+                $0.code.lowercased() == Constant.BTC.lowercased()
+            }) ?? Store.state.currencies.first  else { return  }
             
-            toAmount = .zero(selectedCurrency)
+            toAmount = .zero(currency)
         }
     }
     var publicToken: String?
@@ -50,20 +43,16 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
-              let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description,
-              let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achAllowanceLifetime)
-        else { return nil }
+              let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description else { return nil }
         
         let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
-        let limitsString = NSMutableAttributedString(string: paymentMethod == .ach ?
-                                                     L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText))
-        
+        let limitsString = NSMutableAttributedString(string: L10n.Buy.buyLimits(minText, maxText))
         let linkRange = limitsString.mutableString.range(of: L10n.Button.moreInfo)
         
-        if isCustomLimits {
-            if linkRange.location != NSNotFound {
-                limitsString.addAttribute(.underlineStyle, value: 1, range: linkRange)
-            }
+        if isCustomLimits && linkRange.location != NSNotFound {
+            limitsString.addAttribute(.underlineStyle, value: 1, range: linkRange)
+            limitsString.addAttribute(.font, value: Fonts.Subtitle.three, range: linkRange)
+            limitsString.addAttribute(.foregroundColor, value: LightColors.secondary, range: linkRange)
         } else {
             limitsString.replaceCharacters(in: linkRange, with: "")
         }
@@ -93,7 +82,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
-    var autoSelectDefaultPaymentMethod = true
     var canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess
     
     // MARK: - Aditional helpers

@@ -16,6 +16,7 @@ struct ButtonConfiguration: Configurable {
     var selectedConfiguration: BackgroundConfiguration?
     var disabledConfiguration: BackgroundConfiguration?
     var shadowConfiguration: ShadowConfiguration?
+    var font = Fonts.button
     var buttonContentEdgeInsets = UIEdgeInsets(top: Margins.medium.rawValue,
                                                left: Margins.huge.rawValue,
                                                bottom: Margins.medium.rawValue,
@@ -116,12 +117,12 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         guard let config = config else { return }
         
         self.config = config
+        
         contentEdgeInsets = config.buttonContentEdgeInsets
         setTitleColor(config.normalConfiguration?.tintColor, for: .normal)
         setTitleColor(config.disabledConfiguration?.tintColor, for: .disabled)
         setTitleColor(config.selectedConfiguration?.tintColor, for: .selected)
         setTitleColor(config.selectedConfiguration?.tintColor, for: .highlighted)
-        titleLabel?.font = Fonts.button
         
         layoutIfNeeded()
     }
@@ -133,7 +134,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         
         var defaultAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.backgroundColor: UIColor.clear,
-            NSAttributedString.Key.font: Fonts.button]
+            NSAttributedString.Key.font: config?.font ?? Fonts.button]
         let attributedString: NSAttributedString
         
         if viewModel.isUnderlined {

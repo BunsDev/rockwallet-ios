@@ -25,7 +25,6 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let wrappedViewModel = prepareOrderPreviewViewModel(for: item)
         
-        let achNotificationModel = InfoViewModel(description: .text(item.type?.disclaimer), dismissType: .persistent)
         let achTermsModel = InfoViewModel(description: .text(L10n.Buy.terms),
                                           button: .init(title: L10n.About.terms, isUnderlined: true),
                                           tickbox: .init(title: .text(L10n.Buy.understandAndAgree)),
@@ -64,12 +63,16 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         ]
         
         if isAchAccount {
-            sections.insert(.achNotification, at: 0)
+            sections.insert(.achSegment, at: 0)
         }
         
+        let achSegment = SegmentControlViewModel(selectedIndex: 0,
+                                                 segments: [.init(image: Asset.flash.image, title: L10n.Buy.Ach.Instant.title),
+                                                            .init(image: Asset.timelapse.image, title: L10n.Buy.Ach.Hybrid.title)])
+        
         let sectionRows: [Models.Section: [any Hashable]] = [
-            .achNotification: [
-                achNotificationModel
+            .achSegment: [
+                achSegment
             ],
             .orderInfoCard: [
                 wrappedViewModel
@@ -141,34 +144,35 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
         guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
-            var customAchErrorMessage: String = ""
-            if actionResponse.isAch == true {
-                switch actionResponse.responseCode {
-                case "30046":
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountClosed
-                    
-                case "30R16":
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountFrozen
-                    
-                case "20051":
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.insufficientFunds
-                    
-                default:
-                    customAchErrorMessage = L10n.ErrorMessages.Ach.errorWhileProcessing
-                }
-            }
-            
-            customAchErrorMessage = L10n.Buy.bankAccountFailureText
-            
             let isAch = actionResponse.isAch == true
-            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard(actionResponse.errorDescription)
+            let responseCode = actionResponse.responseCode ?? ""
+            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell
+                                                                ? .sell : .buyAch(isAch, responseCode)) : .buyCard(actionResponse.errorDescription)
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             
             return
         }
         
-        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
+        // TODO: Update this when BE is ready.
+        let buyAchSuccessReason = Int.random(in: 0...1) == 0
+        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(buyAchSuccessReason)) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
+    }
+    
+    func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse) {
+        // TODO: Update amount
+        let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
+        let drawerViewModel = DrawerViewModel(title: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.title),
+                                              description: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.description("YYY")),
+                                              buttons: [.init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.confirmAction)],
+                                              notice: .init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.notice, image: Asset.flash.image))
+        let drawerCallbacks: [ (() -> Void) ] = [ { [weak self] in
+            self?.viewController?.showPinInput()
+        }]
+        
+        viewController?.displayAchInstantDrawer(responseDisplay: .init(model: drawerViewModel,
+                                                                       config: drawerConfig,
+                                                                       callbacks: drawerCallbacks))
     }
     
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse) {
@@ -213,6 +217,10 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         
+        // TODO: Update fee
+        let instantBuyFee: TitleValueViewModel? = isAchAccount ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
+                                                                       value: .text("$0.55 USD")) : nil
+        
         switch item.type {
         case .sell:
             let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue - networkFee - cardFee) ?? "", fiatCurrency)
@@ -225,11 +233,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           totalCost: .init(title: .text(L10n.Swap.youReceive), value: .text(totalText)))
             
         default:
-            model = .init(currencyIcon: .image(toCryptoDisplayImage),
+            // TODO: Update amount
+            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice("000")),
+                          currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
-                          rate: .init(exchangeRate: rate, timer: nil),
+                          rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                           amount: .init(title: .text(L10n.Swap.amountPurchased), value: .text(amountText), infoImage: nil),
                           cardFee: cardAchFee,
+                          instantBuyFee: instantBuyFee,
                           networkFee: .init(title: .text(L10n.Swap.miningNetworkFee),
                                             value: .text(networkFeeText),
                                             infoImage: .image(infoImage)),

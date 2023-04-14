@@ -274,7 +274,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: ViewSizes.bottomToolbarHeight.rawValue)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: RWDrawer.bottomToolbarHeight)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)
@@ -456,17 +456,21 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     // MARK: Actions
     
     @objc private func showHome() {
-        if drawerIsShown {
-            animationView.play(fromProgress: 1, toProgress: 0)
-        }
-        hideDrawer()
+        // TODO: Uncomment for drawer
+
+//        if drawerIsShown {
+//            animationView.play(fromProgress: 1, toProgress: 0)
+//        }
+//        hideDrawer()
     }
     
     private func commonTapAction() {
-        if drawerIsShown {
-            animationView.play(fromProgress: 1, toProgress: 0)
-        }
-        hideDrawer()
+        // TODO: Uncomment for drawer
+
+//        if drawerIsShown {
+//            animationView.play(fromProgress: 1, toProgress: 0)
+//        }
+//        hideDrawer()
     }
     
     @objc private func buy() {

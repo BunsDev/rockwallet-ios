@@ -144,7 +144,6 @@ class BaseApiWorker<M: Mapper>: APIWorker {
         } else if let data = result {
             completion?(.success(data))
         } else {
-            // No content
             completion?(.success(nil))
         }
     }
