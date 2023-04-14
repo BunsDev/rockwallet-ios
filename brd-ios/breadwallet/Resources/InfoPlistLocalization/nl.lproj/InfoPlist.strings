@@ -1056,7 +1056,7 @@
 
 "CloudBackup.mainWarningConfirmation" = "Weet u zeker dat u iCloud-back-up wilt uitschakelen? Hiermee wordt uw back-up van alle apparaten verwijderd.";
 
-"CloudBackup.pinAttempts" = "Pogingen blijven voordat back-up wordt gewist: %1$ @";
+"CloudBackup.pinAttempts" = "Pogingen blijven voordat back-up wordt gewist: %s";
 
 "CloudBackup.recoverButton" = "Herstellen vanaf herstelsleutel";
 
