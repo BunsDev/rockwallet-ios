@@ -24,13 +24,13 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .description: [
-                LabelViewModel.text("Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
+                LabelViewModel.text(L10n.PaymailAddress.description)
             ],
             .emailView: [
-                LabelViewModel.text("Your Paymail address:")
+                LabelViewModel.text(L10n.PaymailAddress.yourPaymailAddress)
             ],
             .paymail: [
-                MultipleButtonsViewModel(buttons: [ButtonViewModel(title: "What is Paymail?",
+                MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.PaymailAddress.whatIsPaymail,
                                                                    isUnderlined: true)])]
         ]
         
@@ -38,12 +38,8 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     }
     
     func presentPaymailPopup(actionResponse: PaymailAddressModels.InfoPopup.ActionResponse) {
-        let model: PopupViewModel = .init(title: .text("What is Paymail?"),
-                                          body: """
-Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.
-The goals of the paymail protocol are:
-User friendly payment destinations through memorable handles
-""")
+        let model: PopupViewModel = .init(title: .text(L10n.PaymailAddress.whatIsPaymail),
+                                          body: L10n.PaymailAddress.popupDescription)
         
         viewController?.displayPaymailPopup(responseDisplay: .init(model: model))
     }

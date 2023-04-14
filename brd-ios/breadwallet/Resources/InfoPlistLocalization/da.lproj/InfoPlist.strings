@@ -1728,6 +1728,16 @@
 /* Onboarding screen Page 2 title */
 "OnboardingPageTwo.title" = "Gør som millioner af mennesker over hele verden, der stoler på RockWallet.";
 
+"PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
+
+"PaymailAddress.popupDescription" = "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles";
+
+"PaymailAddress.title" = "Paymail Address";
+
+"PaymailAddress.whatIsPaymail" = "What is Paymail?";
+
+"PaymailAddress.yourPaymailAddress" = "Your Paymail address:";
+
 /* Eg. Send 1.0Eth to purchase CCC */
 "PaymentConfirmation.amountText" = "Send %s for at købe %s";
 

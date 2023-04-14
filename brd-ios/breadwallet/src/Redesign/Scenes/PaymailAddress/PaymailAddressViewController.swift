@@ -18,7 +18,7 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
     // MARK: - Overrides
     
     override var sceneLeftAlignedTitle: String? {
-        return "Paymail Address"
+        return L10n.PaymailAddress.title
     }
     
     override func setupVerticalButtons() {

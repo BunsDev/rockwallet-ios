@@ -1647,6 +1647,20 @@ internal enum L10n {
     /// Onboarding screen Page 2 title
     internal static let title = L10n.tr("Localizable", "OnboardingPageTwo.title", fallback: "Join people around the world who trust RockWallet.")
   }
+  internal enum PaymailAddress {
+    /// Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.
+    internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
+    /// Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.
+    /// The goals of the paymail protocol are:
+    /// User friendly payment destinations through memorable handles
+    internal static let popupDescription = L10n.tr("Localizable", "PaymailAddress.popupDescription", fallback: "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles")
+    /// Paymail Address
+    internal static let title = L10n.tr("Localizable", "PaymailAddress.title", fallback: "Paymail Address")
+    /// What is Paymail?
+    internal static let whatIsPaymail = L10n.tr("Localizable", "PaymailAddress.whatIsPaymail", fallback: "What is Paymail?")
+    /// Your Paymail address:
+    internal static let yourPaymailAddress = L10n.tr("Localizable", "PaymailAddress.yourPaymailAddress", fallback: "Your Paymail address:")
+  }
   internal enum PaymentConfirmation {
     /// Eg. Send 1.0Eth to purchase CCC
     internal static func amountText(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
