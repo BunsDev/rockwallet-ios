@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BackupCodesViewController: BaseTableViewController<BackupCodesCoordinator,
+class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
                                  BackupCodesInteractor,
                                  BackupCodesPresenter,
                                  BackupCodesStore>,

@@ -16,10 +16,8 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
             showSetPassword()
         } else if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
-            // TODO: ENABLE 2FA
-//        } else if !UserManager.shared.hasTwoStepAuth {
-//            showVerifyPhoneNumber()
-//            showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStep)
+        } else if !UserManager.shared.hasTwoStepAuth {
+            showVerifyPhoneNumber()
         } else {
             showSignUp()
         }
@@ -68,6 +66,10 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.DeleteProfileInfo) { vc in
             vc.dataStore?.keyMaster = keyMaster
         }
+    }
+    
+    func showKYCLevelOne() {
+        open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
     }
     
     // MARK: - Aditional helpers

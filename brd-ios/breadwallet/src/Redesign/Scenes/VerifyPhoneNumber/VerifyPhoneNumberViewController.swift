@@ -117,9 +117,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     }
     
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay) {
-        coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.showRegistrationConfirmation(isModalDismissable: false, confirmationType: .twoStep)
-        })
+        coordinator?.showKYCLevelOne()
     }
     
     // MARK: - Additional Helpers

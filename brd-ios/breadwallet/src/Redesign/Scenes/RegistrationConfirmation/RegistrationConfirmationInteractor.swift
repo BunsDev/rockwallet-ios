@@ -21,15 +21,15 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         
         presenter?.presentData(actionResponse: .init(item: confirmationType))
         
-        // TODO: ENABLE 2FA
-//        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
-//            switch result {
-//            case .success(let data):
-//                break
-//            case .failure(let error):
-//                break
-//            }
-//        }
+        // TODO: REMOVE
+        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
+            switch result {
+            case .success(let data):
+                break
+            case .failure(let error):
+                break
+            }
+        }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {

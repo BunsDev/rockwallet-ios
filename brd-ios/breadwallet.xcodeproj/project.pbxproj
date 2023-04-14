@@ -630,7 +630,6 @@
 		C4CCFCEA29D43DB600E38B3A /* AuthenticatorAppVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE329D43DB600E38B3A /* AuthenticatorAppVIP.swift */; };
 		C4CCFCEB29D43DB600E38B3A /* AuthenticatorAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE429D43DB600E38B3A /* AuthenticatorAppViewController.swift */; };
 		C4CCFCEC29D43DB600E38B3A /* AuthenticatorAppInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE529D43DB600E38B3A /* AuthenticatorAppInteractor.swift */; };
-		C4F4629F29CC86FF00083512 /* BackupCodesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F4629829CC86FF00083512 /* BackupCodesCoordinator.swift */; };
 		C4F462A029CC86FF00083512 /* BackupCodesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F4629929CC86FF00083512 /* BackupCodesStore.swift */; };
 		C4F462A129CC86FF00083512 /* BackupCodesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F4629A29CC86FF00083512 /* BackupCodesPresenter.swift */; };
 		C4F462A229CC86FF00083512 /* BackupCodesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F4629B29CC86FF00083512 /* BackupCodesModels.swift */; };
@@ -1456,7 +1455,6 @@
 		C4CCFCE329D43DB600E38B3A /* AuthenticatorAppVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppVIP.swift; sourceTree = "<group>"; };
 		C4CCFCE429D43DB600E38B3A /* AuthenticatorAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppViewController.swift; sourceTree = "<group>"; };
 		C4CCFCE529D43DB600E38B3A /* AuthenticatorAppInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppInteractor.swift; sourceTree = "<group>"; };
-		C4F4629829CC86FF00083512 /* BackupCodesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesCoordinator.swift; sourceTree = "<group>"; };
 		C4F4629929CC86FF00083512 /* BackupCodesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesStore.swift; sourceTree = "<group>"; };
 		C4F4629A29CC86FF00083512 /* BackupCodesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesPresenter.swift; sourceTree = "<group>"; };
 		C4F4629B29CC86FF00083512 /* BackupCodesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesModels.swift; sourceTree = "<group>"; };
@@ -3161,7 +3159,6 @@
 		C4F4629729CC86D100083512 /* BackupCodes */ = {
 			isa = PBXGroup;
 			children = (
-				C4F4629829CC86FF00083512 /* BackupCodesCoordinator.swift */,
 				C4F4629929CC86FF00083512 /* BackupCodesStore.swift */,
 				C4F4629A29CC86FF00083512 /* BackupCodesPresenter.swift */,
 				C4F4629B29CC86FF00083512 /* BackupCodesModels.swift */,
@@ -4199,7 +4196,6 @@
 				CE92F9F41DED59E80046B516 /* UIView+AnimationAdditions.swift in Sources */,
 				CEDB0B0522D4354C00331FFC /* LineLoadingView.swift in Sources */,
 				044D09A229C8525E00C510DC /* VerifyPhoneNumberVIP.swift in Sources */,
-				C4F4629F29CC86FF00083512 /* BackupCodesCoordinator.swift in Sources */,
 				7E42ACCC293F485800E1FC26 /* PlaidErrorWorker.swift in Sources */,
 				7EF45F332844D26E00D1F7B0 /* VerificationView.swift in Sources */,
 				7E87B32D285346E00097671F /* UIImage+Compress.swift in Sources */,

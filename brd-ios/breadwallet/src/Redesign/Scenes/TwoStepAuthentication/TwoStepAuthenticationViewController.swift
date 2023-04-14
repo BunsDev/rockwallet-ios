@@ -36,20 +36,6 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         case .methods:
             cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
             
-        case .additionalMethods:
-            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
-            
-            // TODO: This and similar cases should be cleaned up and unified.
-            let wrappedCell = cell as? WrapperTableViewCell<FELabel>
-            wrappedCell?.isUserInteractionEnabled = true
-            wrappedCell?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(methodsTapped(_:))))
-            
-        case .settingsTitle:
-            cell =  self.tableView(tableView, titleLabelCellForRowAt: indexPath)
-            
-        case .settings:
-            cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
-            
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
         }
