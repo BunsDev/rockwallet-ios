@@ -211,8 +211,8 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
             self?.baseSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
             self?.termSwapCurrencyView.hideFeeAndAmountsStackView(noFee: true)
             
-            self?.baseSwapCurrencyView.setAlphaToLabels(alpha: 0.2)
-            self?.termSwapCurrencyView.setAlphaToLabels(alpha: 0.2)
+            self?.baseSwapCurrencyView.setAlpha(value: 0.2)
+            self?.termSwapCurrencyView.setAlpha(value: 0.2)
         } completion: { [weak self] _ in
             UIView.animate(withDuration: Presets.Animation.short.rawValue,
                            delay: 0.0,
@@ -221,8 +221,8 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
                 bottomFrame.transform = CGAffineTransform(translationX: 0, y: isNormal ? verticalDistance : -verticalDistance)
                 self?.switchPlacesButton.transform = isNormal ? CGAffineTransform(rotationAngle: .pi) : .identity
                 
-                self?.baseSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
-                self?.termSwapCurrencyView.setAlphaToLabels(alpha: 1.0)
+                self?.baseSwapCurrencyView.setAlpha(value: 1.0)
+                self?.termSwapCurrencyView.setAlpha(value: 1.0)
                 
                 self?.baseSwapCurrencyView.resetTextFieldValues()
                 self?.termSwapCurrencyView.resetTextFieldValues()

@@ -83,4 +83,8 @@ struct LightColors {
     }
     /// Primary button selected / highlighted
     static var primaryPressed = ThemeManager.shared.color(for: "primary-pressed")
+    /// ACH Purple Muted
+    static var purpleMuted = ThemeManager.shared.color(for: "ach-purple-muted")
+    /// ACH Instant Purple
+    static var instantPurple = ThemeManager.shared.color(for: "ach-instant-purple")
 }

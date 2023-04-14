@@ -154,6 +154,10 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         }
     }
     
+    func showAchInstantDrawer(viewAction: OrderPreviewModels.AchInstantDrawer.ViewAction) {
+        presenter?.presentAchInstantDrawer(actionResponse: .init())
+    }
+    
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
         let requestData = BiometricStatusRequestData(quoteId: dataStore?.quote?.quoteId.description)
         BiometricStatusHelper.shared.checkBiometricStatus(requestData: requestData, resetCounter: viewAction.resetCounter) { [weak self] error in

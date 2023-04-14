@@ -132,6 +132,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
+        
         return cell
     }
     

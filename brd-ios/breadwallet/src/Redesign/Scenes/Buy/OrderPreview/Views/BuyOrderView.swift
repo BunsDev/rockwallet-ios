@@ -11,14 +11,14 @@
 import UIKit
 
 struct BuyOrderConfiguration: Configurable {
+    var notice: LabelConfiguration = .init(font: Fonts.Body.three, textColor: LightColors.instantPurple, textAlignment: .center)
+    var noticeBackground: BackgroundConfiguration? = .init(backgroundColor: LightColors.purpleMuted,
+                                                           tintColor: LightColors.purpleMuted,
+                                                           border: Presets.Border.commonPlain)
     var title: LabelConfiguration = .init(font: Fonts.Body.two, textColor: LightColors.Text.one)
     var currencyAmountName: LabelConfiguration = .init(font: Fonts.Title.five, textColor: LightColors.Text.one)
-    var rate: LabelConfiguration = .init(font: Fonts.Title.five, textColor: LightColors.Text.one)
-    var rateValue: TitleValueConfiguration = Presets.TitleValue.common
-    var amount: TitleValueConfiguration = Presets.TitleValue.common
-    var cardFee: TitleValueConfiguration = Presets.TitleValue.common
-    var networkFee: TitleValueConfiguration = Presets.TitleValue.common
-    var totalCost: TitleValueConfiguration = Presets.TitleValue.bold
+    var common: TitleValueConfiguration = Presets.TitleValue.common
+    var bold: TitleValueConfiguration = Presets.TitleValue.bold
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
@@ -27,13 +27,14 @@ struct BuyOrderConfiguration: Configurable {
 }
 
 struct BuyOrderViewModel: ViewModel {
+    var notice: LabelViewModel?
     var title: LabelViewModel = .text(L10n.Buy.yourOrder)
     var currencyIcon: ImageViewModel?
     var currencyAmountName: LabelViewModel?
-    var rate: ExchangeRateViewModel?
-    var rateValue: TitleValueViewModel?
+    var rate: TitleValueViewModel?
     var amount: TitleValueViewModel
     var cardFee: TitleValueViewModel
+    var instantBuyFee: TitleValueViewModel?
     var networkFee: TitleValueViewModel
     var totalCost: TitleValueViewModel
     var paymentMethod: PaymentMethodViewModel?
@@ -44,6 +45,16 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = Margins.medium.rawValue
+        return view
+    }()
+    
+    private lazy var noticeContainer: WrapperView<UIView> = {
+        let view = WrapperView<UIView>()
+        return view
+    }()
+    
+    private lazy var noticeLabel: FELabel = {
+        let view = FELabel()
         return view
     }()
     
@@ -69,11 +80,6 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         return view
     }()
     
-    private lazy var rateView: ExchangeRateView = {
-        let view = ExchangeRateView()
-        return view
-    }()
-    
     private lazy var topLineView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 1.0
@@ -81,7 +87,7 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         return view
     }()
     
-    private lazy var rateValueView: TitleValueView = {
+    private lazy var rateView: TitleValueView = {
         let view = TitleValueView()
         return view
     }()
@@ -92,6 +98,11 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
     }()
     
     private lazy var cardFeeView: TitleValueView = {
+        let view = TitleValueView()
+        return view
+    }()
+    
+    private lazy var instantBuyFeeView: TitleValueView = {
         let view = TitleValueView()
         return view
     }()
@@ -130,10 +141,18 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         }
         content.setupCustomMargins(all: .huge)
         
-        mainStack.addArrangedSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
+        mainStack.addArrangedSubview(noticeContainer)
+        noticeContainer.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(ViewSizes.large.rawValue)
         }
+        
+        noticeContainer.addSubview(noticeLabel)
+        
+        noticeLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        mainStack.addArrangedSubview(titleLabel)
         
         mainStack.addArrangedSubview(currencyStackView)
         currencyStackView.snp.makeConstraints { make in
@@ -148,34 +167,16 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         currencyStackView.addArrangedSubview(currencyNameLabel)
         
         mainStack.addArrangedSubview(rateView)
-        rateView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-        }
         
         mainStack.addArrangedSubview(topLineView)
         topLineView.snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.minimum.rawValue)
         }
         
-        mainStack.addArrangedSubview(rateValueView)
-        rateValueView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-        }
-        
         mainStack.addArrangedSubview(amountView)
-        amountView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-        }
-        
         mainStack.addArrangedSubview(cardFeeView)
-        cardFeeView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-        }
-        
+        mainStack.addArrangedSubview(instantBuyFeeView)
         mainStack.addArrangedSubview(networkFeeView)
-        networkFeeView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-        }
         
         mainStack.addArrangedSubview(bottomLineView)
         bottomLineView.snp.makeConstraints { make in
@@ -183,8 +184,11 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         }
         
         mainStack.addArrangedSubview(totalCostView)
-        totalCostView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
+        
+        [titleLabel, rateView, amountView, cardFeeView, instantBuyFeeView, networkFeeView, totalCostView].forEach { view in
+            view.snp.makeConstraints { make in
+                make.height.equalTo(ViewSizes.extraSmall.rawValue)
+            }
         }
         
         mainStack.addArrangedSubview(paymentMethodView)
@@ -201,15 +205,22 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
     override func configure(with config: BuyOrderConfiguration?) {
         super.configure(with: config)
         
+        noticeLabel.configure(with: config?.notice)
+        noticeContainer.configure(background: config?.noticeBackground)
         titleLabel.configure(with: config?.title)
         currencyIconImageView.wrappedView.configure(background: config?.currencyIconImage)
         currencyNameLabel.configure(with: config?.currencyAmountName)
-        rateView.configure(with: .init())
-        rateValueView.configure(with: config?.rateValue)
-        amountView.configure(with: config?.amount)
-        cardFeeView.configure(with: config?.cardFee)
-        networkFeeView.configure(with: config?.networkFee)
-        totalCostView.configure(with: config?.totalCost)
+        rateView.configure(with: config?.common)
+        amountView.configure(with: config?.common)
+        cardFeeView.configure(with: config?.common)
+        
+        var instantBuyFeeConfig = config?.common
+        instantBuyFeeConfig?.title.textColor = LightColors.instantPurple
+        instantBuyFeeConfig?.title.font = Fonts.Subtitle.two
+        instantBuyFeeView.configure(with: instantBuyFeeConfig)
+        
+        networkFeeView.configure(with: config?.common)
+        totalCostView.configure(with: config?.bold)
         
         paymentMethodView.configure(with: .init(background: .init(backgroundColor: LightColors.Background.one,
                                                                   tintColor: LightColors.Text.one)))
@@ -222,6 +233,7 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
     override func setup(with viewModel: BuyOrderViewModel?) {
         super.setup(with: viewModel)
         
+        noticeLabel.setup(with: viewModel?.notice)
         titleLabel.setup(with: viewModel?.title)
         currencyIconImageView.wrappedView.setup(with: viewModel?.currencyIcon)
         currencyNameLabel.setup(with: viewModel?.currencyAmountName)
@@ -233,11 +245,12 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
             view.isHidden = viewModel?.currencyIcon == nil && viewModel?.currencyAmountName == nil && viewModel?.rate == nil
         }
         
-        rateValueView.setup(with: viewModel?.rateValue)
-        rateValueView.isHidden = viewModel?.rateValue == nil
-        
         amountView.setup(with: viewModel?.amount)
         cardFeeView.setup(with: viewModel?.cardFee)
+        
+        instantBuyFeeView.setup(with: viewModel?.instantBuyFee)
+        instantBuyFeeView.isHidden = viewModel?.instantBuyFee == nil
+        
         networkFeeView.setup(with: viewModel?.networkFee)
         totalCostView.setup(with: viewModel?.totalCost)
         

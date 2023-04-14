@@ -33,9 +33,9 @@ struct WrapperPopupViewModel<VM: ViewModel>: ViewModel {
 }
 
 class WrapperPopupView<T: ViewProtocol & UIView>: UIView,
-                                         Wrappable,
-                                         Reusable,
-                                         Borderable {
+                                                  Wrappable,
+                                                  Reusable,
+                                                  Borderable {
     
     // MARK: Lazy UI
     lazy var content: UIStackView = {

@@ -18,23 +18,20 @@ struct SegmentControlConfiguration: Configurable {
 
 struct SegmentControlViewModel: ViewModel {
     /// Passing 'nil' leaves the control deselected
-    var selectedIndex: PaymentCard.PaymentType?
+    var selectedIndex: Int?
+    var segments: [Segment]
+    
+    struct Segment: Hashable {
+        let image: UIImage?
+        let title: String?
+    }
 }
 
 class FESegmentControl: UISegmentedControl, ViewProtocol {
     var config: SegmentControlConfiguration?
     var viewModel: SegmentControlViewModel?
     
-    var didChangeValue: ((PaymentCard.PaymentType) -> Void)?
-    
-    convenience init() {
-        let items = [
-            L10n.Buy.buyWithCard,
-            L10n.Buy.fundWithAch
-        ]
-        
-        self.init(items: items)
-    }
+    var didChangeValue: ((Int) -> Void)?
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -61,6 +58,8 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
     func configure(with config: SegmentControlConfiguration?) {
         guard let config = config else { return }
         
+        self.config = config
+        
         snp.makeConstraints { make in
             make.height.equalTo(ViewSizes.Common.defaultCommon.rawValue)
         }
@@ -80,17 +79,39 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
         
         valueChanged = { [weak self] in
             guard let selectedSegmentIndex = self?.selectedSegmentIndex, selectedSegmentIndex >= 0 else { return }
-            self?.didChangeValue?(PaymentCard.PaymentType.allCases[selectedSegmentIndex])
+            self?.didChangeValue?(selectedSegmentIndex)
         }
     }
     
     func setup(with viewModel: SegmentControlViewModel?) {
-        guard let index = viewModel?.selectedIndex,
-              let filteredIndex = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == index }) else {
-            selectedSegmentIndex = UISegmentedControl.noSegment
-            return
+        self.viewModel = viewModel
+        
+        UIView.setAnimationsEnabled(false)
+        
+        removeAllSegments()
+        for (index, element) in (viewModel?.segments ?? []).enumerated() {
+            if let image = element.image, let title = element.title {
+                let image = UIImage.textEmbeded(image: image,
+                                                string: title,
+                                                isImageBeforeText: true)
+                insertSegment(with: image, at: index, animated: true)
+            } else if let title = element.title {
+                insertSegment(withTitle: title, at: index, animated: true)
+            }
         }
         
-        selectedSegmentIndex = filteredIndex
+        UIView.setAnimationsEnabled(true)
+        
+        selectSegment(index: viewModel?.selectedIndex)
+    }
+    
+    func selectSegment(index: Int?) {
+        if let index = index {
+            viewModel?.selectedIndex = index
+            selectedSegmentIndex = index
+        } else {
+            viewModel?.selectedIndex = nil
+            selectedSegmentIndex = UISegmentedControl.noSegment
+        }
     }
 }

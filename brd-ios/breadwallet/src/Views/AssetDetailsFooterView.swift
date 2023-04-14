@@ -23,7 +23,6 @@ class AssetDetailsFooterView: UIView, Subscriber {
         actionSubject.eraseToAnyPublisher()
     }
     
-    private var hasSetup = false
     private let currency: Currency
     
     init(currency: Currency) {
