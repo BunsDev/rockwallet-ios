@@ -141,6 +141,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
+        hideToastMessage()
         interactor?.showConfirmation(viewAction: .init())
     }
     
@@ -154,7 +155,6 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
         guard let error = responseDisplay.error as? ExchangeErrors else {
-            hideToastMessage()
             return
         }
         
@@ -174,6 +174,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {
         view.endEditing(true)
+        hideToastMessage()
         
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: responseDisplay.to ?? responseDisplay.from,
