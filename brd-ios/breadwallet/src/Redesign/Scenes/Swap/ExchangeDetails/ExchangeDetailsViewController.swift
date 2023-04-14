@@ -42,6 +42,7 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         tableView.register(WrapperTableViewCell<AssetView>.self)
         tableView.register(WrapperTableViewCell<OrderView>.self)
         tableView.register(WrapperTableViewCell<BuyOrderView>.self)
+        
         tableView.backgroundColor = LightColors.Background.two
     }
     

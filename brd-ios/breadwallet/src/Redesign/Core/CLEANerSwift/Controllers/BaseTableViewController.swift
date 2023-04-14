@@ -463,21 +463,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
         return cell
     }
     
-    func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
-              let model = dataSource?.itemIdentifier(for: indexPath) as? SegmentControlViewModel
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
     // MARK: UserInteractions
     
     /// Override in subclass

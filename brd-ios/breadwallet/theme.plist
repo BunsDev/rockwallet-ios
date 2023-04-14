@@ -55,6 +55,10 @@
 		<string>FAEAE9</string>
 		<key>primary-pressed</key>
 		<string>559085</string>
+		<key>ach-purple-muted</key>
+		<string>F8F2FF</string>
+		<key>ach-instant-purple</key>
+		<string>63468C</string>
 	</dict>
 </dict>
 </plist>

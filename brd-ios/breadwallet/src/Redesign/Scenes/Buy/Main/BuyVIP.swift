@@ -25,6 +25,7 @@ protocol BuyViewActions: BaseViewActions,
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
     func retryPaymentMethod(viewAction: BuyModels.RetryPaymentMethod.ViewAction)
     func showLimitsInfo(viewAction: BuyModels.LimitsInfo.ViewAction)
+    func showInstantAchPopup(viewAction: BuyModels.InstantAchPopup.ViewAction)
 }
 
 protocol BuyActionResponses: BaseActionResponses,
@@ -35,10 +36,10 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentAssets(actionResponse: BuyModels.Assets.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
-    func presentDisabledCurrencyMessage(actionResponse: BuyModels.AchData.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
     func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse)
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse)
+    func presentInstantAchPopup(actionResponse: BuyModels.InstantAchPopup.ActionResponse)
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays, AchResponseDisplays {
@@ -47,8 +48,8 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay)
-    func displayManageAssetsMessage(responseDisplay: BuyModels.AchData.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay)
+    func displayInstantAchPopup(responseDisplay: BuyModels.InstantAchPopup.ResponseDisplay)
 }
 
 protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
@@ -63,7 +64,6 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchData
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     
-    var autoSelectDefaultPaymentMethod: Bool { get set }
     var paymentMethod: PaymentCard.PaymentType? { get set }
     var publicToken: String? { get set }
     var mask: String? { get set }

@@ -891,6 +891,46 @@ internal enum L10n {
       internal static func walletDisabled(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
         return L10n.tr("Localizable", "Buy.Ach.WalletDisabled", p1, p2, fallback: "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.")
       }
+      internal enum Hybrid {
+        /// 3-5 days
+        internal static let title = L10n.tr("Localizable", "Buy.Ach.Hybrid.Title", fallback: "3-5 days")
+      }
+      internal enum Instant {
+        /// Receive up to $500.00 instantly
+        internal static let infoButtonTitle = L10n.tr("Localizable", "Buy.Ach.Instant.InfoButtonTitle", fallback: "Receive up to $500.00 instantly")
+        /// Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!
+        internal static let popupContent = L10n.tr("Localizable", "Buy.Ach.Instant.PopupContent", fallback: "Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!")
+        /// What is Instant Buy?
+        internal static let popupTitle = L10n.tr("Localizable", "Buy.Ach.Instant.PopupTitle", fallback: "What is Instant Buy?")
+        /// Instant
+        internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Title", fallback: "Instant")
+        internal enum ConfirmationDrawer {
+          /// Confirm purchase
+          internal static let confirmAction = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.ConfirmAction", fallback: "Confirm purchase")
+          /// $%s assets will settle immediately.
+          internal static func description(_ p1: UnsafePointer<CChar>) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Description", p1, fallback: "$%s assets will settle immediately.")
+          }
+          /// Instant purchase
+          internal static let notice = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Notice", fallback: "Instant purchase")
+          /// Puchase with Instant Buy
+          internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Title", fallback: "Puchase with Instant Buy")
+        }
+        internal enum Fee {
+          /// Instant Buy fee
+          internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Title", fallback: "Instant Buy fee")
+        }
+        internal enum OrderPreview {
+          /// With Instant Buy, %s will be settled immediately.
+          internal static func notice(_ p1: UnsafePointer<CChar>) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.OrderPreview.Notice", p1, fallback: "With Instant Buy, %s will be settled immediately.")
+          }
+        }
+        internal enum Success {
+          /// You will receive a confirmation email when your digital assets are delivered to your wallet.
+          internal static let description = L10n.tr("Localizable", "Buy.Ach.Instant.Success.Description", fallback: "You will receive a confirmation email when your digital assets are delivered to your wallet.")
+        }
+      }
       internal enum WalletDisabled {
         /// here
         internal static let link = L10n.tr("Localizable", "Buy.Ach.WalletDisabled.Link", fallback: "here")

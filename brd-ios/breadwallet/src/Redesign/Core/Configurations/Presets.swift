@@ -366,10 +366,10 @@ extension Presets {
 
 extension Presets {
     struct TitleValue {
-        static var common = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, numberOfLines: 1),
-                                                    value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right))
+        static var common = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
+                                                    value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one, textAlignment: .right))
         
-        static var bold = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
+        static var bold = TitleValueConfiguration(title: .init(font: Fonts.Body.one, textColor: LightColors.Text.one, numberOfLines: 1),
                                                   value: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.one, textAlignment: .right))
         
         static var small = TitleValueConfiguration(title: .init(font: Fonts.Body.three, textColor: LightColors.Text.two, numberOfLines: 1),

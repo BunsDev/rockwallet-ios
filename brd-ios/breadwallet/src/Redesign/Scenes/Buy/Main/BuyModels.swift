@@ -111,14 +111,6 @@ enum BuyModels {
         }
     }
     
-//    struct Failure {
-//        struct ViewAction {}
-//        
-//        struct ActionResponse {}
-//        
-//        struct ResponseDisplay {}
-//    }
-    
     struct PaymentMethod {
         struct ViewAction {
             let method: PaymentCard.PaymentType
@@ -172,6 +164,14 @@ enum BuyModels {
         struct ResponseDisplay {
             var config: WrapperPopupConfiguration<LimitsPopupConfiguration>
             var viewModel: WrapperPopupViewModel<LimitsPopupViewModel>
+        }
+    }
+    
+    struct InstantAchPopup {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {
+            var model: PopupViewModel
         }
     }
 }
