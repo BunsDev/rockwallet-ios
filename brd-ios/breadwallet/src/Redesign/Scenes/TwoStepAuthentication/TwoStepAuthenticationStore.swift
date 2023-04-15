@@ -15,5 +15,7 @@ class TwoStepAuthenticationStore: NSObject, BaseDataStore, TwoStepAuthentication
     
     var itemId: String?
     
+    var keyStore: KeyStore?
+    
     // MARK: - Aditional helpers
 }

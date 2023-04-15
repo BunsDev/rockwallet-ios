@@ -165,6 +165,12 @@ class BaseCoordinator: NSObject, Coordinatable {
         UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
     }
     
+    func showTwoStepAuthentication(keyStore: KeyStore?) {
+        openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
+            vc?.dataStore?.keyStore = keyStore
+        }
+    }
+    
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
         open(scene: Scenes.ExchangeDetails) { vc in
             vc.navigationItem.hidesBackButton = true
@@ -635,6 +641,12 @@ class BaseCoordinator: NSObject, Coordinatable {
                 break
             }
         }
+    }
+    
+    func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {
+        ExchangeAuthHelper.showPinInput(on: navigationController,
+                                        keyStore: keyStore,
+                                        callback: callback)
     }
     
     func prepareForDeeplinkHandling(coreSystem: CoreSystem, keyStore: KeyStore) {

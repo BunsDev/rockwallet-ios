@@ -87,8 +87,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders],
-                                       axis: self.dataStore?.confirmationType == .twoStep ? .vertical : .horizontal))
+            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
             
             view.callbacks = [
                 resendCodeTapped,
@@ -125,8 +124,11 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             case .account:
                 self.coordinator?.dismissFlow()
                 
-            case .twoStep:
+            case .twoStepEmail:
                 self.coordinator?.showVerifyPhoneNumber()
+                
+            case .twoStepApp:
+                break
                 
             default:
                 break

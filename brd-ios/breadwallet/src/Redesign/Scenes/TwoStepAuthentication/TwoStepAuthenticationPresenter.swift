@@ -18,7 +18,8 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
     // MARK: - TwoStepAuthenticationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         var sections: [Models.Section] = [
-            .methods
+            .email,
+            .app
         ]
         
         let isTwoStepEnabled = Bool.random() ? LabelViewModel.text(L10n.TwoStep.mainInstructions) : nil
@@ -30,11 +31,13 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
             .instructions: [
                 isTwoStepEnabled
             ],
-            .methods: [
+            .email: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.mail.image),
                                                  title: .text("Email address"),
                                                  subtitle: .text(UserDefaults.email ?? ""),
-                                                 checkmark: .image(Asset.radiobutton.image)),
+                                                 checkmark: .image(Asset.radiobutton.image))
+            ],
+            .app: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.phone.image),
                                                  title: .text(L10n.TwoStep.Methods.AuthApp.title),
                                                  checkmark: .image(Asset.radiobutton.image))

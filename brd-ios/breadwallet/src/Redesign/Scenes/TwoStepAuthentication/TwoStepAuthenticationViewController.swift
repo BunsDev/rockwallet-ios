@@ -33,7 +33,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         case .instructions:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             
-        case .methods:
+        case .email, .app:
             cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
             
         default:
@@ -42,6 +42,31 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         
         cell.setBackground(with: Presets.Background.transparent)
         cell.setupCustomMargins(vertical: .large, horizontal: .large)
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, iconTitleSubtitleToggleViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
+        
+        (cell as? WrapperTableViewCell<IconTitleSubtitleToggleView>)?.wrappedView.didTap = { [weak self] in
+            guard let self else { return }
+            self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
+                if success {
+                    switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+                    case .email:
+                        self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                    case .app:
+                        break
+                        
+                    default:
+                        break
+                    }
+                } else {
+                    
+                }
+            })
+        }
         
         return cell
     }

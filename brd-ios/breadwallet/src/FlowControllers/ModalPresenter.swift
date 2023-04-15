@@ -18,13 +18,17 @@ class ModalPresenter: Subscriber {
     
     // MARK: - Public
     
-    init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?, deleteAccountCallback: (() -> Void)?) {
+    init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?,
+         deleteAccountCallback: (() -> Void)?,
+         twoStepAuthCallback: (() -> Void)?) {
         self.system = system
         self.window = window
         self.alertPresenter = alertPresenter
         self.deleteAccountCallback = deleteAccountCallback
+        self.twoStepAuthCallback = twoStepAuthCallback
         self.keyStore = keyStore
         self.modalTransitionDelegate = ModalTransitionDelegate(type: .regular)
+        
         addSubscriptions()
     }
     
@@ -37,6 +41,7 @@ class ModalPresenter: Subscriber {
     private let keyStore: KeyStore
     private var alertPresenter: AlertPresenter?
     private var deleteAccountCallback: (() -> Void)?
+    private var twoStepAuthCallback: (() -> Void)?
     private let modalTransitionDelegate: ModalTransitionDelegate
     private let messagePresenter = MessageUIPresenter()
     private let verifyPinTransitionDelegate = PinTransitioningDelegate()
@@ -1104,9 +1109,7 @@ class ModalPresenter: Subscriber {
             
             // Two-Factor Authentication (2FA)
             MenuItem(title: "Two-Factor Authentication (2FA)") { [weak self] in
-                guard let self = self else { return }
-                let vc = TwoStepAuthenticationViewController()
-                menuNav.pushViewController(vc, animated: true)
+                self?.twoStepAuthCallback?()
             },
             
             // Paper key
