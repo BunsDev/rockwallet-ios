@@ -17,23 +17,27 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
     
     // MARK: - TwoStepAuthenticationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let sections: [Models.Section] = [
-            .instructions,
+        var sections: [Models.Section] = [
             .methods
         ]
         
+        let isTwoStepEnabled = Bool.random() ? LabelViewModel.text(L10n.TwoStep.mainInstructions) : nil
+        if let isTwoStepEnabled {
+            sections.insert(.instructions, at: 0)
+        }
+        
         let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
-                LabelViewModel.text(L10n.TwoStep.mainInstructions)
+                isTwoStepEnabled
             ],
             .methods: [
-                IconTitleSubtitleToggleViewModel(icon: .image(Asset.email.image),
+                IconTitleSubtitleToggleViewModel(icon: .image(Asset.mail.image),
                                                  title: .text("Email address"),
                                                  subtitle: .text(UserDefaults.email ?? ""),
                                                  checkmark: .image(Asset.radiobutton.image)),
-                IconTitleSubtitleToggleViewModel(icon: .image(Asset.pad.image),
+                IconTitleSubtitleToggleViewModel(icon: .image(Asset.phone.image),
                                                  title: .text(L10n.TwoStep.Methods.AuthApp.title),
-                                                 checkmark: .image(Asset.radiobuttonSelected.image))
+                                                 checkmark: .image(Asset.radiobutton.image))
             ]
         ]
         

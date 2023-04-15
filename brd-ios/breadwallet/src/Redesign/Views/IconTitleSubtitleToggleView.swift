@@ -77,7 +77,7 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
     override func setupSubviews() {
         super.setupSubviews()
         
-        content.setupCustomMargins(vertical: .zero, horizontal: .zero)
+        content.setupCustomMargins(vertical: .extraSmall, horizontal: .zero)
         
         content.addSubview(mainStack)
         mainStack.snp.makeConstraints { make in
