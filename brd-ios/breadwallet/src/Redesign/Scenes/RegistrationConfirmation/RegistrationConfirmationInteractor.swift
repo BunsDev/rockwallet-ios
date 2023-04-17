@@ -21,6 +21,14 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         
         presenter?.presentData(actionResponse: .init(item: confirmationType))
         
+        switch dataStore?.confirmationType {
+        case .twoStepEmail, .twoStepApp:
+            TwoStepChangeWorker().execute(requestData: TwoStepChangeRequestData()) { _ in }
+            
+        default:
+            break
+        }
+        
         // TODO: REMOVE
         ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
             switch result {
