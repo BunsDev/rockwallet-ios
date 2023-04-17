@@ -768,6 +768,12 @@
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
 		D712BC9C29C9F2BA00C2F09E /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */; };
 		D712BD1229DACBAB00C2F09E /* RWBottomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */; };
+		D78D296029ED3A7B0039A5D6 /* TwoStepSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */; };
+		D78D296129ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */; };
+		D78D296229ED3A7B0039A5D6 /* TwoStepSettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295B29ED3A7B0039A5D6 /* TwoStepSettingsModels.swift */; };
+		D78D296329ED3A7B0039A5D6 /* TwoStepSettingsVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295C29ED3A7B0039A5D6 /* TwoStepSettingsVIP.swift */; };
+		D78D296429ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295D29ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift */; };
+		D78D296529ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295E29ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift */; };
 		D7EA320929C0805B00D9FD4F /* BiometricStatusHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */; };
 		D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */; };
 		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
@@ -1604,6 +1610,12 @@
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
 		D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWBottomBarItem.swift; sourceTree = "<group>"; };
+		D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsStore.swift; sourceTree = "<group>"; };
+		D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsPresenter.swift; sourceTree = "<group>"; };
+		D78D295B29ED3A7B0039A5D6 /* TwoStepSettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsModels.swift; sourceTree = "<group>"; };
+		D78D295C29ED3A7B0039A5D6 /* TwoStepSettingsVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsVIP.swift; sourceTree = "<group>"; };
+		D78D295D29ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsViewController.swift; sourceTree = "<group>"; };
+		D78D295E29ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsInteractor.swift; sourceTree = "<group>"; };
 		D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusHelper.swift; sourceTree = "<group>"; };
 		D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeModels.swift; sourceTree = "<group>"; };
 		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
@@ -2405,6 +2417,7 @@
 			children = (
 				C4CCFCDE29D43D6100E38B3A /* Authenticator */,
 				04185DB729D1794000AECBFA /* TwoStepAuthentication */,
+				D78D295729ED3A460039A5D6 /* TwoStepSettings */,
 				D7F75961299A1D1700FB4BFA /* FindAddress */,
 				D7F0AF21298D2D3A00474E5C /* VerificationInProgress */,
 				7B60825B29700B1600C4736B /* SetPassword */,
@@ -3534,6 +3547,19 @@
 			name = AnimatedIcons;
 			sourceTree = "<group>";
 		};
+		D78D295729ED3A460039A5D6 /* TwoStepSettings */ = {
+			isa = PBXGroup;
+			children = (
+				D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */,
+				D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */,
+				D78D295B29ED3A7B0039A5D6 /* TwoStepSettingsModels.swift */,
+				D78D295C29ED3A7B0039A5D6 /* TwoStepSettingsVIP.swift */,
+				D78D295D29ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift */,
+				D78D295E29ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift */,
+			);
+			path = TwoStepSettings;
+			sourceTree = "<group>";
+		};
 		D7F0AF21298D2D3A00474E5C /* VerificationInProgress */ = {
 			isa = PBXGroup;
 			children = (
@@ -4016,6 +4042,7 @@
 				7B54E59D27F4A2B0002DD1E4 /* Shadowable.swift in Sources */,
 				7B05888528A2668F00D7C971 /* DeleteCardWorker.swift in Sources */,
 				7E5CB3A02835090E00EC787E /* VIPTableViewController.swift in Sources */,
+				D78D296429ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift in Sources */,
 				3A5C9B2B22A5676F00C907C1 /* PriceChange.swift in Sources */,
 				7E5CB3AC2835090E00EC787E /* WrapperView.swift in Sources */,
 				7EF45F512845352400D1F7B0 /* KYCBasicViewController.swift in Sources */,
@@ -4204,6 +4231,7 @@
 				C4F462A529CC86FF00083512 /* BackupCodesInteractor.swift in Sources */,
 				7CAF4EDF22CE80D100326168 /* AssetCollection.swift in Sources */,
 				CEE6282A1EA98B6D001035AA /* DispatchQueue+Additions.swift in Sources */,
+				D78D296329ED3A7B0039A5D6 /* TwoStepSettingsVIP.swift in Sources */,
 				C4842F1529939F4100915BA4 /* UnlinkWalletViewController.swift in Sources */,
 				CEC6AA3D1DEE687000EE5AFD /* RadialGradientView.swift in Sources */,
 				CEEC70921E95DA4400EF788E /* GradientSwitch.swift in Sources */,
@@ -4257,6 +4285,7 @@
 				7C377EC220F6C29E00E8CF1C /* UIAlertController+Additions.swift in Sources */,
 				7ED83AF8284F40EB00261565 /* CheckListStore.swift in Sources */,
 				3A6FD42D24E456B800068ECE /* KeyStoreUtils.swift in Sources */,
+				D78D296229ED3A7B0039A5D6 /* TwoStepSettingsModels.swift in Sources */,
 				7EF45F4F2845352400D1F7B0 /* KYCBasicInteractor.swift in Sources */,
 				7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */,
 				7B60826729700B9E00C4736B /* SetPasswordViewController.swift in Sources */,
@@ -4297,6 +4326,7 @@
 				7BF5D4FA296D4FC900942ADB /* SignUpPresenter.swift in Sources */,
 				7E5B306228A681760065D2D8 /* FailureViewController.swift in Sources */,
 				C46C2903287EBF4F0035C843 /* BaseInfoInteractor.swift in Sources */,
+				D78D296129ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift in Sources */,
 				3AFB571524E2E0BA00087527 /* UIHelpers.swift in Sources */,
 				4F3AB11B25D53F4300B378DC /* ExternalAPIRequest.swift in Sources */,
 				222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */,
@@ -4373,6 +4403,7 @@
 				CEEE92F11EBA7CBA00B7AC9C /* RequestAmountViewController.swift in Sources */,
 				7BDB49B62805AC780031F015 /* EmailFeedbackManager.swift in Sources */,
 				CE8CD8DF1E2E825100785E02 /* VerifyPinViewController.swift in Sources */,
+				D78D296029ED3A7B0039A5D6 /* TwoStepSettingsStore.swift in Sources */,
 				0452C93C29D42FC600CCC8DA /* WalletEndpoints.swift in Sources */,
 				7CA238142011A97C00A4A59D /* TxDetailViewController.swift in Sources */,
 				CE65C665207B0BEF000C99C4 /* ManageCurrencyCell.swift in Sources */,
@@ -4392,6 +4423,7 @@
 				7EBC6B0B2848ABC5000A301F /* RegistrationConfirmationInteractor.swift in Sources */,
 				7ECCA9992874342C00F99368 /* FETimerView.swift in Sources */,
 				7EF45F502845352400D1F7B0 /* KYCBasicPresenter.swift in Sources */,
+				D78D296529ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift in Sources */,
 				C4CCFCE929D43DB600E38B3A /* AuthenticatorAppModels.swift in Sources */,
 				7B9434332886A7FA00638703 /* DeleteProfileInfoVIP.swift in Sources */,
 				CE8CD8DD1E2D9EF200785E02 /* Sender.swift in Sources */,
