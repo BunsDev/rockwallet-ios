@@ -29,6 +29,7 @@
 		04185DC329D179B700AECBFA /* TwoStepAuthenticationVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DBD29D179B600AECBFA /* TwoStepAuthenticationVIP.swift */; };
 		04185DC529D17E4600AECBFA /* IconTitleSubtitleToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */; };
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
+		043DB5D029EDC7B900DEB8FD /* SetTwoStepAppWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */; };
 		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
 		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
@@ -877,6 +878,7 @@
 		04185DBD29D179B600AECBFA /* TwoStepAuthenticationVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStepAuthenticationVIP.swift; sourceTree = "<group>"; };
 		04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleToggleView.swift; sourceTree = "<group>"; };
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
+		043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppWorker.swift; sourceTree = "<group>"; };
 		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
 		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
@@ -1718,7 +1720,7 @@
 				044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */,
 				044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */,
 				044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */,
-				045A432529EAABE400489114 /* Email */,
+				045A432529EAABE400489114 /* Auth */,
 				045A432429EAABD700489114 /* Phone */,
 			);
 			path = VerifyPhoneNumber;
@@ -1748,12 +1750,13 @@
 			path = Phone;
 			sourceTree = "<group>";
 		};
-		045A432529EAABE400489114 /* Email */ = {
+		045A432529EAABE400489114 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				045A432629EAADD400489114 /* SetTwoStepEmailWorker.swift */,
+				043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */,
 			);
-			path = Email;
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		0495723D29BF19F80078BFE7 /* Send */ = {
@@ -4072,6 +4075,7 @@
 				7E5CB3A62835090E00EC787E /* ThemeManager.swift in Sources */,
 				7C6ACCB61FEB345E0028ABFA /* TxStatusCell.swift in Sources */,
 				CE5393B022D7CC98000303B3 /* HistoryPeriod.swift in Sources */,
+				043DB5D029EDC7B900DEB8FD /* SetTwoStepAppWorker.swift in Sources */,
 				7B39478E297000ED007D405E /* ForgotPasswordModels.swift in Sources */,
 				7EF45F8C284768C100D1F7B0 /* ItemSelectionModels.swift in Sources */,
 				C4CCFCEC29D43DB600E38B3A /* AuthenticatorAppInteractor.swift in Sources */,
