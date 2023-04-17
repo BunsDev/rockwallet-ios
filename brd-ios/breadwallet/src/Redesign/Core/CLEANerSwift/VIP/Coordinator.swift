@@ -79,7 +79,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
+    func showSwap(selectedCurrency: Currency? = nil, currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         guard let profile = UserManager.shared.profile,
               profile.kycAccessRights.hasSwapAccess else {
             handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
@@ -94,12 +94,14 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.currencies = currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    guard let currency = selectedCurrency else { return }
+                    vc?.dataStore?.from = .zero(currency)
                 }
             }
         }
     }
     
-    func showBuy(type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showBuy(selectedCurrency: Currency? = nil, type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         guard let profile = UserManager.shared.profile,
               ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
             handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
@@ -114,6 +116,8 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    guard let currency = selectedCurrency else { return }
+                    vc?.dataStore?.toAmount = .zero(currency)
                 }
             }
         }
