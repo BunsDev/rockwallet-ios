@@ -41,10 +41,10 @@ class DeleteProfileInfoViewController: BaseTableViewController<AccountCoordinato
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? DeleteProfileInfoModels.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? DeleteProfileInfoModels.Section {
         case .title:
             cell =  self.tableView(tableView, labelCellForRowAt: indexPath)
-            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.six, textColor: LightColors.Text.three))
+            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.five, textColor: LightColors.Text.three))
             (cell as? WrapperTableViewCell<FELabel>)?.setupCustomMargins(top: .huge, leading: .large, bottom: .extraSmall, trailing: .huge)
             
         case .checkmarks:

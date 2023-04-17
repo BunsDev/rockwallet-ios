@@ -201,7 +201,7 @@ class ModalPresenter: Subscriber {
     }
     
     func presentFaq(articleId: String? = nil, currency: Currency? = nil) {
-        guard let url = URL(string: C.supportLink) else { return }
+        guard let url = URL(string: Constant.supportLink) else { return }
         let webViewController = SimpleWebViewController(url: url)
         webViewController.setup(with: .init(title: L10n.MenuButton.support))
         let navController = RootNavigationController(rootViewController: webViewController)
@@ -325,9 +325,7 @@ class ModalPresenter: Subscriber {
             self?.alertPresenter?.presentAlert(.sendSuccess, completion: {})
         }
         
-        topViewController?.present(root, animated: true)
-        
-        return nil
+        return root
     }
     
     private func makeReceiveView(currency: Currency, isRequestAmountVisible: Bool, isBTCLegacy: Bool = false) -> UIViewController? {
@@ -561,7 +559,9 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }
                 
-                let feedback = EmailFeedbackManager.Feedback(recipients: C.feedbackEmail, subject: L10n.Title.rockwalletFeedback, body: "")
+                GoogleAnalytics.logEvent(GoogleAnalytics.Feedback())
+                
+                let feedback = EmailFeedbackManager.Feedback(recipients: Constant.feedbackEmail, subject: L10n.Title.rockwalletFeedback, body: "")
                 if let feedbackManager = EmailFeedbackManager(feedback: feedback, on: topVc) {
                     self?.feedbackManager = feedbackManager
                     
@@ -585,6 +585,8 @@ class ModalPresenter: Subscriber {
             
             // Support
             MenuItem(title: L10n.MenuButton.support, icon: MenuItem.Icon.support) { [weak self] in
+                GoogleAnalytics.logEvent(GoogleAnalytics.ContactSupport())
+                
                 self?.presentFaq()
             },
             // About
@@ -703,7 +705,7 @@ class ModalPresenter: Subscriber {
                              alert.addAction(UIAlertAction(title: L10n.Title.save, style: .default) { (_) in
                                  guard let newHost = alert.textFields?.first?.text, !newHost.isEmpty else {
                                      UserDefaults.debugBackendHost = nil
-                                     Backend.apiClient.host = C.backendHost
+                                     Backend.apiClient.host = Constant.backendHost
                                      (menuNav.topViewController as? MenuViewController)?.reloadMenu()
                                      return
                                  }
@@ -938,12 +940,12 @@ class ModalPresenter: Subscriber {
         let pushAccountView = {
             guard let nc = self.topViewController?.navigationController as? RootNavigationController,
                   nc.viewControllers.count == 1 else { return }
-            let accountViewController = AccountViewController(currency: currency, wallet: self.system.wallet(for: currency))
+            let accountViewController = AssetDetailsViewController(currency: currency, wallet: self.system.wallet(for: currency))
             nc.pushViewController(accountViewController, animated: animated)
             completion?()
         }
         
-        if let accountVC = topViewController as? AccountViewController {
+        if let accountVC = topViewController as? AssetDetailsViewController {
             if accountVC.currency == currency {
                 completion?()
             } else {
@@ -968,7 +970,7 @@ class ModalPresenter: Subscriber {
     
     private func handleScanQrURL() {
         guard !Store.state.isLoginRequired else { presentLoginScan(); return }
-        if topViewController is AccountViewController || topViewController is LoginViewController {
+        if topViewController is AssetDetailsViewController || topViewController is LoginViewController {
             presentLoginScan()
         } else {
             if let presented = UIApplication.shared.activeWindow?.rootViewController?.presentedViewController {
@@ -1073,6 +1075,8 @@ class ModalPresenter: Subscriber {
                 RecoveryKeyFlowController.presentUnlinkWalletFlow(from: vc,
                                                                   keyMaster: self.keyStore,
                                                                   phraseEntryReason: .validateForWipingWallet({ [weak self] in
+                    GoogleAnalytics.logEvent(GoogleAnalytics.WipeWallet())
+                    
                     self?.wipeWallet()
                 }))
             },
@@ -1089,6 +1093,16 @@ class ModalPresenter: Subscriber {
                 guard let self = self else { return }
                 self.presentBiometricsMenuItem()
             },
+            
+            // TODO: ENABLE 2FA
+            // Two-Factor Authentication (2FA)
+//            MenuItem(title: "Two-Factor Authentication (2FA)") { [weak self] in
+//                guard let self = self else { return }
+//                let biometricsSettings = TwoStepAuthenticationViewController()
+//                let nc = RootNavigationController(rootViewController: biometricsSettings)
+//                biometricsSettings.addCloseNavigationItem()
+//                self.topViewController?.present(nc, animated: true)
+//            },
             
             // Paper key
             MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in
@@ -1126,3 +1140,6 @@ class ModalPresenter: Subscriber {
         return securityItems
     }
 }
+
+// swiftlint:enable type_body_length
+// swiftlint:enable cyclomatic_complexity

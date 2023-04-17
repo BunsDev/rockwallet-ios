@@ -18,24 +18,6 @@ class KYCCoordinator: BaseCoordinator,
                       KYCAddressRoutes,
                       AssetSelectionDisplayable {
     override func start() {
-        start(flow: nil)
-    }
-    
-    func start(flow: ProfileModels.ExchangeFlow?) {
-        if let flow = flow {
-            open(scene: Scenes.VerifyAccount) { vc in
-                vc.flow = flow
-                vc.didTapContactSupportButton = { [weak self] in
-                    self?.showSupport()
-                }
-                vc.didTapBackToHomeButton = { [weak self] in
-                    self?.dismissFlow()
-                }
-            }
-            
-            return
-        }
-        
         switch UserManager.shared.profile?.status {
         case .emailPending:
             let coordinator = AccountCoordinator(navigationController: navigationController)
@@ -45,6 +27,16 @@ class KYCCoordinator: BaseCoordinator,
             
         default:
             showKYCLevelOne()
+            
+            // TODO: ENABLE 2FA
+//            if UserManager.shared.hasTwoStepAuth {
+//                showKYCLevelOne()
+//            } else {
+//                let coordinator = AccountCoordinator(navigationController: navigationController)
+//                coordinator.start()
+//                coordinator.parentCoordinator = self
+//                childCoordinators.append(coordinator)
+//            }
         }
     }
     
@@ -65,7 +57,6 @@ class KYCCoordinator: BaseCoordinator,
             vc?.itemSelected = { item in
                 selected?(item as? Country)
             }
-            vc?.prepareData()
         }
     }
     
@@ -78,7 +69,6 @@ class KYCCoordinator: BaseCoordinator,
             vc?.itemSelected = { item in
                 selected?(item as? Place)
             }
-            vc?.prepareData()
         }
     }
     
@@ -97,14 +87,6 @@ class KYCCoordinator: BaseCoordinator,
     }
     
     // MARK: - Aditional helpers
-    
-    @objc func popFlow(sender: UIBarButtonItem) {
-        if navigationController.children.count == 1 {
-            dismissFlow()
-        }
-        
-        navigationController.popToRootViewController(animated: true)
-    }
 }
 
 extension BaseCoordinator {
@@ -122,16 +104,14 @@ extension BaseCoordinator {
     private func forKYC(result: VeriffSdk.Result?) {
         switch result?.status {
         case .done:
-            open(scene: Scenes.verificationInProgress) { vc in
+            open(scene: Scenes.VerificationInProgress) { vc in
                 vc.navigationItem.hidesBackButton = true
             }
             
         case .error(let error):
             print(error.localizedDescription)
             
-            open(scene: Scenes.Failure) { vc in
-                vc.failure = .documentVerification
-            }
+            showFailure(reason: .documentVerification)
             
         default:
             dismissFlow()
@@ -139,66 +119,6 @@ extension BaseCoordinator {
     }
     
     private func forLiveness() {}
-}
-
-class VeriffKYCManager: NSObject, VeriffSdkDelegate {
-    enum VeriffType {
-        case kyc, liveness
-    }
-    
-    private var completion: ((VeriffSdk.Result) -> Void)?
-    
-    private var navigationController: UINavigationController?
-    
-    init(navigationController: UINavigationController?) {
-        self.navigationController = navigationController
-    }
-    
-    func showExternalKYC(completion: ((VeriffSdk.Result) -> Void)?) {
-        self.completion = completion
-        
-        navigationController?.popToRootViewController(animated: false)
-        
-        UserManager.shared.getVeriffSessionUrl { result in
-            switch result {
-            case .success(let data):
-                guard let navigationController = self.navigationController else { return }
-                
-                VeriffSdk.shared.delegate = self
-                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
-                                                     configuration: Presets.veriff,
-                                                     presentingFrom: navigationController)
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    func showExternalKYCForLivenessCheck(livenessCheckData: VeriffSessionRequestData?, completion: ((VeriffSdk.Result) -> Void)?) {
-        self.completion = completion
-        
-        UserManager.shared.getVeriffSessionUrl(livenessCheckData:
-                .init(quoteId: livenessCheckData?.quoteId,
-                      isBiometric: livenessCheckData?.isBiometric)) { result in
-            switch result {
-            case .success(let data):
-                guard let navigationController = self.navigationController else { return }
-                
-                VeriffSdk.shared.delegate = self
-                VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
-                                                     configuration: Presets.veriff,
-                                                     presentingFrom: navigationController)
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    func sessionDidEndWithResult(_ result: Veriff.VeriffSdk.Result) {
-        completion?(result)
-    }
 }
 
 extension KYCCoordinator {

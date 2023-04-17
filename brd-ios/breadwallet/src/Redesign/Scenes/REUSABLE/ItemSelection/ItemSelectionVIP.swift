@@ -29,14 +29,14 @@ protocol ItemSelectionResponseDisplays: AnyObject, BaseResponseDisplays, FetchRe
 }
 
 protocol ItemSelectionDataStore: BaseDataStore, FetchDataStore {
-    var items: [ItemSelectable]? { get set }
+    var items: [any ItemSelectable]? { get set }
     var isAddingEnabled: Bool? { get set }
     var instrumentID: String? { get set }
     var sceneTitle: String { get set }
 }
 
 protocol ItemSelectionDataPassing {
-    var dataStore: ItemSelectionDataStore? { get }
+    var dataStore: (any ItemSelectionDataStore)? { get }
 }
 
 protocol ItemSelectionRoutes: CoordinatableRoutes {

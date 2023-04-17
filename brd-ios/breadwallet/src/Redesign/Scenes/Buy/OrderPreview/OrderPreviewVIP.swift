@@ -33,9 +33,9 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentCvvInfoPopup(actionResponse: OrderPreviewModels.CvvInfoPopup.ActionResponse)
     func presentThreeDSecure(actionResponse: OrderPreviewModels.ThreeDSecure.ActionResponse)
     func presentVeriffLivenessCheck(actionResponse: OrderPreviewModels.VeriffLivenessCheck.ActionResponse)
-    func presentBiometricStatus(actionResponse: OrderPreviewModels.BiometricStatusCheck.ActionResponse)
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse)
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse)
+    func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse)
 }
 
 protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
@@ -46,9 +46,9 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayCvvInfoPopup(responseDisplay: OrderPreviewModels.CvvInfoPopup.ResponseDisplay)
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay)
     func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay)
-    func displayBiometricStatus(responseDisplay: OrderPreviewModels.BiometricStatusCheck.ResponseDisplay)
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay)
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay)
+    func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay)
 }
 
 protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
@@ -66,7 +66,7 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol OrderPreviewDataPassing {
-    var dataStore: OrderPreviewDataStore? { get }
+    var dataStore: (any OrderPreviewDataStore)? { get }
 }
 
 protocol OrderPreviewRoutes: CoordinatableRoutes {
@@ -82,6 +82,4 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
     func showTermsAndConditions(url: URL)
     func showTimeout(type: PreviewType?)
     func showThreeDSecure(url: URL)
-    func showSuccess(paymentReference: String, transactionType: TransactionType, reason: SuccessReason)
-    func showFailure(failure: FailureReason, availablePayments: [PaymentCard.PaymentType]?)
 }

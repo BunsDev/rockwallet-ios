@@ -117,6 +117,8 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         .transactions
     ]
     
+    private var timer: Timer?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -141,7 +143,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         tableView.addSubview(emptyMessage)
         emptyMessage.constrain([
             emptyMessage.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptyMessage.topAnchor.constraint(equalTo: tableView.topAnchor, constant: E.isIPhone5 ? 50.0 : AccountHeaderView.headerViewMinHeight),
+            emptyMessage.topAnchor.constraint(equalTo: tableView.topAnchor, constant: E.isIPhone5 ? 50.0 : AssetDetailsHeaderView.headerViewMinHeight),
             emptyMessage.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -Margins.large.rawValue)
         ])
     }
@@ -213,6 +215,10 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     }
     
     private func subscribeToTransactionUpdates() {
+        wallet?.requestReceiveAddressSync()
+        self.timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true, block: { [weak self] _ in
+                self?.wallet?.requestReceiveAddressSync()
+            }) // Repeat every 15 seconds while self exists
         wallet?.subscribe(self) { [weak self] event in
             switch event {
             case .balanceUpdated,

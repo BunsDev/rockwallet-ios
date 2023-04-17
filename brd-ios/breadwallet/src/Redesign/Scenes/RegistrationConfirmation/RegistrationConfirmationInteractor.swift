@@ -17,33 +17,41 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     // MARK: - RegistrationConfirmationViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: UserDefaults.email))
+        guard let confirmationType = dataStore?.confirmationType else { return }
+        
+        presenter?.presentData(actionResponse: .init(item: confirmationType))
+        
+        // TODO: ENABLE 2FA
+//        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
+//            switch result {
+//            case .success(let data):
+//                break
+//            case .failure(let error):
+//                break
+//            }
+//        }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {
-        let code = viewAction.item ?? ""
+        let code = viewAction.code ?? ""
         
         dataStore?.code = code
         
         if code.count == CodeInputView.numberOfFields {
             confirm(viewAction: .init())
         }
-        
-        presenter?.presentValidate(actionResponse: .init(isValid: code.count == CodeInputView.numberOfFields))
     }
     
     func confirm(viewAction: RegistrationConfirmationModels.Confirm.ViewAction) {
-        let data = RegistrationConfirmationRequestData(code: dataStore?.code)
-        RegistrationConfirmationWorker().execute(requestData: data) { [weak self] result in
-            switch result {
-            case .success:
-                UserManager.shared.refresh()
-                
-                self?.presenter?.presentConfirm(actionResponse: .init())
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
+        switch dataStore?.confirmationType {
+        case .account:
+            executeRegistrationConfirmation()
+            
+        case .twoStep:
+            executeSetTwoStepPhone()
+            
+        default:
+            break
         }
     }
     
@@ -60,4 +68,34 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     }
 
     // MARK: - Aditional helpers
+    
+    private func executeSetTwoStepPhone() {
+        let data = SetTwoStepPhoneCodeRequestData(code: dataStore?.code)
+        SetTwoStepPhoneCodeWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success:
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
+    private func executeRegistrationConfirmation() {
+        let data = RegistrationConfirmationRequestData(code: dataStore?.code)
+        RegistrationConfirmationWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success:
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
 }

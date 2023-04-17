@@ -27,7 +27,7 @@ class FETimerView: FEView<TimerConfiguration, TimerViewModel> {
     private lazy var stack: UIStackView = {
         let view = UIStackView()
         view.spacing = Margins.extraSmall.rawValue
-        view.alignment = .center
+        view.alignment = .trailing
         return view
     }()
     
@@ -48,11 +48,15 @@ class FETimerView: FEView<TimerConfiguration, TimerViewModel> {
     override func setupSubviews() {
         super.setupSubviews()
         
+        let spacer = UIView()
+        stack.addArrangedSubview(spacer)
+        spacer.snp.makeConstraints { make in
+            make.width.lessThanOrEqualToSuperview().priority(.low)
+        }
+        
         content.addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.trailing.top.bottom.equalToSuperview()
-            make.height.equalTo(ViewSizes.extraSmall.rawValue)
-            make.width.lessThanOrEqualTo(content.snp.width)
+            make.leading.trailing.top.bottom.equalToSuperview()
         }
         
         stack.addArrangedSubview(titleLabel)

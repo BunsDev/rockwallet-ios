@@ -77,6 +77,7 @@ struct QuoteModelResponse: ModelResponse {
     var toFee: Decimal?
     var buyFees: Decimal?
     var achFees: AchFee?
+    var isMinimumImpactedByWithdrawal: Bool?
 }
 
 struct Quote {
@@ -94,6 +95,7 @@ struct Quote {
     var toFee: EstimateFee?
     var buyFee: Decimal?
     var buyFeeUsd: Decimal?
+    var isMinimumImpactedByWithdrawal: Bool?
 }
 
 struct EstimateFee: Model {
@@ -130,7 +132,8 @@ class QuoteMapper: ModelMapper<QuoteModelResponse, Quote> {
                      fromFee: fromFee,
                      toFee: toFee,
                      buyFee: response.buyFees ?? response.achFees?.achFeePercentage,
-                     buyFeeUsd: response.achFees?.achFeeFixedUsd)
+                     buyFeeUsd: response.achFees?.achFeeFixedUsd,
+                     isMinimumImpactedByWithdrawal: response.isMinimumImpactedByWithdrawal)
     }
 }
 

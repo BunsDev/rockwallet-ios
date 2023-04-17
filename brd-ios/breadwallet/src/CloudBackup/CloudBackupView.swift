@@ -239,4 +239,5 @@ struct CloudBackupView_Previews: PreviewProvider {
     private static let synchronizer = BackupSynchronizer(context: .onboarding,
                                                          keyStore: CloudBackupView_Previews.keyStore,
                                                          navController: RootNavigationController())
+    // swiftlint:enable force_try
 }

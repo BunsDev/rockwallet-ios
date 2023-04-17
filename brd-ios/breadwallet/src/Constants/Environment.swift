@@ -84,6 +84,14 @@ struct E {
         return key
     }
     
+    static var sardineClientId: String {
+        guard let clientid = Bundle.main.object(forInfoDictionaryKey: "SARDINE_CLIENT_ID") as? String,
+              !clientid.isEmpty else {
+            return fail()
+        }
+        return clientid
+    }
+    
     static let isTestnet: Bool = {
         #if TESTNET
             return true
@@ -140,3 +148,5 @@ struct E {
         fatalError("Env not configured properly")
     }
 }
+
+// swiftlint:enable type_name

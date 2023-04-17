@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemSelectionCoordinator: BuyCoordinator, ItemSelectionRoutes {
+class ItemSelectionCoordinator: ExchangeCoordinator, ItemSelectionRoutes {
     // MARK: - ItemSelectionRoutes
     override func start() {
         open(scene: Scenes.ItemSelection)

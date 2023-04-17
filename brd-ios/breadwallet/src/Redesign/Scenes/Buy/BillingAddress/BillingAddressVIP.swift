@@ -20,21 +20,18 @@ protocol BillingAddressViewActions: BaseViewActions, CountriesAndStatesViewActio
     func cityAndZipPostalSet(viewAction: BillingAddressModels.CityAndZipPostal.ViewAction)
     func stateProvinceSet(viewAction: BillingAddressModels.StateProvince.ViewAction)
     func addressSet(viewAction: BillingAddressModels.Address.ViewAction)
-    func getPaymentCards(viewAction: BillingAddressModels.PaymentCards.ViewAction)
     func validate(viewAction: BillingAddressModels.Validate.ViewAction)
     func submit(viewAction: BillingAddressModels.Submit.ViewAction)
 }
 
 protocol BillingAddressActionResponses: BaseActionResponses, CountriesAndStatesActionResponses {
     func presentThreeDSecure(actionResponse: BillingAddressModels.ThreeDSecure.ActionResponse)
-    func presentPaymentCards(actionResponse: BillingAddressModels.PaymentCards.ActionResponse)
     func presentValidate(actionResponse: BillingAddressModels.Validate.ActionResponse)
     func presentSubmit(actionResponse: BillingAddressModels.Submit.ActionResponse)
 }
 
 protocol BillingAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay)
-    func displayPaymentCards(responseDisplay: BillingAddressModels.PaymentCards.ResponseDisplay)
     func displayValidate(responseDisplay: BillingAddressModels.Validate.ResponseDisplay)
     func displaySubmit(responseDisplay: BillingAddressModels.Submit.ResponseDisplay)
 }
@@ -57,7 +54,7 @@ protocol BillingAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
 }
 
 protocol BillingAddressDataPassing {
-    var dataStore: BillingAddressDataStore? { get }
+    var dataStore: (any BillingAddressDataStore)? { get }
 }
 
 protocol BillingAddressRoutes: CoordinatableRoutes, CountriesAndStatesRoutes {}

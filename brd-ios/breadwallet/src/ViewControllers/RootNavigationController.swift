@@ -45,8 +45,9 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         }
         
         switch viewController {
-        case is AccountViewController,
-            is HomeScreenViewController:
+        case is AssetDetailsViewController,
+            is HomeScreenViewController,
+            is SimpleWebViewController:
             backgroundColor = .clear
             tintColor = LightColors.Text.three
             

@@ -154,7 +154,6 @@ final class TxMetaData: BRKVStoreObject, Codable {
     
     // MARK: -
 
-    // swiftlint:disable:next function_parameter_count
     static func create(forTransaction tx: Transaction,
                        key: String,
                        rate: Rate?,

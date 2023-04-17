@@ -28,6 +28,7 @@ extension UIView {
         layer.backgroundColor = config.backgroundColor.cgColor
         
         guard let border = config.border else { return }
+        
         let radius = border.cornerRadius == .fullRadius ? bounds.height / 2 : border.cornerRadius.rawValue
         
         layer.masksToBounds = true
@@ -35,5 +36,9 @@ extension UIView {
         layer.cornerCurve = .continuous
         layer.borderWidth = border.borderWidth
         layer.borderColor = border.tintColor.cgColor
+        
+        if let maskedCorners = border.maskedCorners {
+            layer.maskedCorners = maskedCorners
+        }
     }
 }

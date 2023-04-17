@@ -13,9 +13,9 @@ protocol BaseActionResponses: MessageActionResponses {}
 
 protocol BaseResponseDisplays: MessageResponseDisplays {}
 
-protocol BaseDataStore {}
+protocol BaseDataStore: Hashable {}
 
-protocol BaseDataPassing {
+protocol BaseDataPassing: Hashable {
     associatedtype DataStore: BaseDataStore
     var dataStore: DataStore? { get }
 }

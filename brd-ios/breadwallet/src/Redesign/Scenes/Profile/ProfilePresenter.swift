@@ -31,7 +31,7 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
         }
         let navigationModel = navigationItems.compactMap { $0.model }
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .profile: [
                 ProfileViewModel(name: profile.email, image: Asset.avatar.name)
             ],
@@ -49,8 +49,8 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
     }
     
     func presentVerificationInfo(actionResponse: ProfileModels.VerificationInfo.ActionResponse) {
-        let title = actionResponse.status == .levelTwo(.levelTwo) ? L10n.Account.verifiedAccountTitle : L10n.Account.whyVerify
-        let body = actionResponse.status == .levelTwo(.levelTwo) ? L10n.Account.verifiedAccountText : L10n.Account.verifyAccountText
+        let title = actionResponse.verified ? L10n.Account.verifiedAccountTitle : L10n.Account.whyVerify
+        let body = actionResponse.verified ? L10n.Account.verifiedAccountText : L10n.Account.verifyAccountText
         
         let model = PopupViewModel(title: .text(title),
                                    body: body)
@@ -61,6 +61,11 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
     func presentNavigation(actionResponse: ProfileModels.Navigate.ActionResponse) {
         let item = Models.NavigationItems.allCases[actionResponse.index]
         viewController?.displayNavigation(responseDisplay: .init(item: item))
+    }
+    
+    func presentLogout(actionResponse: ProfileModels.Logout.ActionResponse) {
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Account.logoutMessage)),
+                                                              config: Presets.InfoView.verification))
     }
     
     // MARK: - Additional Helpers

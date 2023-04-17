@@ -27,7 +27,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .name:
             cell = self.tableView(tableView, nameCellForRowAt: indexPath)
             
@@ -48,9 +48,8 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func tableView(_ tableView: UITableView, nameCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? DoubleHorizontalTextboxViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
         }
         
@@ -67,9 +66,8 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func tableView(_ tableView: UITableView, dateCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<DateView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? DateViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? DateViewModel else {
             return UITableViewCell()
         }
         
@@ -86,8 +84,7 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, buttonCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard var model = sectionRows[section]?[indexPath.row] as? ButtonViewModel,
+        guard var model = dataSource?.itemIdentifier(for: indexPath) as? ButtonViewModel,
               let cell: WrapperTableViewCell<FEButton> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -119,8 +116,8 @@ class KYCBasicViewController: BaseTableViewController<KYCCoordinator,
     // MARK: - KYCBasicResponseDisplay
     
     func displayValidate(responseDisplay: KYCBasicModels.Validate.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.confirm),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         isValid = responseDisplay.isValid
         cell.wrappedView.isEnabled = isValid

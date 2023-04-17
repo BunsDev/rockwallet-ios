@@ -15,18 +15,31 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                              ProfileResponseDisplays {
     typealias Models = ProfileModels
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        interactor?.getData(viewAction: .init())
-    }
-    
-    override func prepareData() {}
+    private var didDisplayData = false
     
     // MARK: - Overrides
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard didDisplayData else { return }
+        interactor?.getData(viewAction: .init())
+    }
+    
+    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
+        super.displayData(responseDisplay: responseDisplay)
+        
+        didDisplayData = true
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Profile())
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section] as? Models.Section
+        let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section
         
         let cell: UITableViewCell
         switch section {
@@ -52,8 +65,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
               let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -108,7 +120,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .navigation:
             let indexPath = UserManager.shared.profile?.status.hasKYCLevelTwo == true ? indexPath.row : indexPath.row + 1
             interactor?.navigate(viewAction: .init(index: indexPath))
@@ -137,6 +149,10 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         case .security:
             coordinator?.showSecuirtySettings()
             
+        case .logout:
+            LoadingView.show()
+            interactor?.logout(viewAction: .init())
+            
         }
     }
     
@@ -144,6 +160,16 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards,
                                       selected: nil,
                                       fromBuy: false)
+    }
+    
+    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        LoadingView.hideIfNeeded()
+        
+        coordinator?.dismissFlow()
+        
+        UIApplication.topViewController()?.showToastMessage(model: responseDisplay.model,
+                                                            configuration: responseDisplay.config,
+                                                            onTapCallback: nil)
     }
     
     // MARK: - Additional Helpers

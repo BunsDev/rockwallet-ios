@@ -67,7 +67,7 @@ class RecoveryKeyIntroViewController: BaseTableViewController<BaseCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section] as? Models.Section
+        let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section
         
         let cell: UITableViewCell
         switch section {

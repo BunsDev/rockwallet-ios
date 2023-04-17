@@ -65,6 +65,7 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         allAssets = assetCollection.availableAssets
             .sorted {
                 if let balance = coreSystem.walletBalance(currencyId: $0.uid),
@@ -79,6 +80,7 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         reconcileChanges()
     }
     
@@ -102,6 +104,8 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         title = L10n.TokenList.addTitle
         
         tableView.delegate = self
@@ -117,6 +121,8 @@ class AddWalletsViewController: UIViewController, UITableViewDelegate, UITableVi
         
         setupSearchBar()
         setupInfoView()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.AddWallet())
     }
     
     private func addCurrency(_ identifier: CurrencyId) {

@@ -15,13 +15,33 @@ final class BaseInfoPresenter: NSObject, Presenter, BaseInfoActionResponses {
     weak var viewController: BaseInfoViewController?
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let sections: [Models.Section] = [
-            .image,
-            .title,
-            .description
+        var sections: [Models.Section] = []
+        
+        if viewController?.imageName != nil {
+            sections.append(.image)
+        }
+        
+        if viewController?.titleText != nil {
+            sections.append(.title)
+        }
+        
+        if viewController?.descriptionText != nil {
+            sections.append(.description)
+        }
+        
+        let sectionRows: [Models.Section: [any Hashable]] = [
+            .image: [
+                ImageViewModel.imageName(viewController?.imageName)
+            ],
+            .title: [
+                LabelViewModel.text(viewController?.titleText)
+            ],
+            .description: [
+                LabelViewModel.text(viewController?.descriptionText)
+            ]
         ]
         
-        viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: [:]))   
+        viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
 
     // MARK: - BaseInfoActionResponses

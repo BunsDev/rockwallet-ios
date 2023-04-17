@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/checkout/checkout-event-logger-ios-framework.git",
       "state" : {
-        "revision" : "2ef34662f1525526aeb5681c6af5f69572ab36c9",
-        "version" : "1.2.0"
+        "revision" : "127060063e2b28ca4610269c26da12dc4ca3a781",
+        "version" : "1.2.1"
       }
     },
     {
@@ -21,25 +21,25 @@
     {
       "identity" : "frames-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/checkout/frames-ios.git",
+      "location" : "https://github.com/rockwalletcode/frames-ios.git",
       "state" : {
-        "revision" : "431a2bcc1792bfdc30906d8277e28b802285122d",
-        "version" : "4.0.3"
+        "revision" : "68e08aa650dff07d28cc0a3edac937510b1ff5e8",
+        "version" : "4.0.4"
       }
     },
     {
       "identity" : "iqkeyboardmanager",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
+      "location" : "https://github.com/rockwalletcode/IQKeyboardManager.git",
       "state" : {
-        "revision" : "474f849accae40fe61b5302d9b057dd48ee073ba",
-        "version" : "6.5.9"
+        "revision" : "0ea3febb36cfcec2afb5841fd8809a9c0fa545b3",
+        "version" : "6.5.11"
       }
     },
     {
       "identity" : "lottie-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/airbnb/lottie-ios.git",
+      "location" : "https://github.com/rockwalletcode/lottie-ios.git",
       "state" : {
         "revision" : "b4bd0604ded9574807f41b4004b57dd1226a30a4",
         "version" : "3.5.0"
@@ -50,23 +50,32 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/marmelroy/PhoneNumberKit.git",
       "state" : {
-        "revision" : "2964493a52e64812833662a7bd19def82f35973c",
-        "version" : "3.4.10"
+        "revision" : "434a7432cceca19829bc6e34bdcfc0b0ee4c6801",
+        "version" : "3.5.7"
       }
     },
     {
       "identity" : "plaid-link-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/plaid/plaid-link-ios",
+      "location" : "https://github.com/rockwalletcode/plaid-link-ios.git",
       "state" : {
-        "revision" : "8c0ca813013037e79b0a2ffb08d989b368473711",
-        "version" : "4.0.1"
+        "revision" : "e0c37ef66c511a29023986c35d14c99506edacde",
+        "version" : "4.2.0"
+      }
+    },
+    {
+      "identity" : "sardine-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rockwalletcode/sardine-ios.git",
+      "state" : {
+        "revision" : "77f943e9a7c2b0b855ecd6d9b4907315bf2942d8",
+        "version" : "1.0.2"
       }
     },
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "location" : "https://github.com/rockwalletcode/SnapKit.git",
       "state" : {
         "revision" : "f222cbdf325885926566172f6f5f06af95473158",
         "version" : "5.6.0"
@@ -75,7 +84,7 @@
     {
       "identity" : "veriff-ios-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Veriff/veriff-ios-spm/",
+      "location" : "https://github.com/rockwalletcode/veriff-ios-spm.git",
       "state" : {
         "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205",
         "version" : "4.51.0"
@@ -86,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit.git",
       "state" : {
-        "revision" : "43870d6324c297e4fe89a1753d033b0c2f8e941c",
-        "version" : "5.0.14"
+        "revision" : "847befdc6984f4003656da2cfea44f911b0f8be6",
+        "version" : "5.0.16"
       }
     },
     {
@@ -95,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit-core.git",
       "state" : {
-        "revision" : "ee116ab18ccf9d5297cf0e5c1258c4aca1b43639",
-        "version" : "5.0.14"
+        "revision" : "a61e037393d5d2ec727f8702a1400be3de5689cd",
+        "version" : "5.0.16"
       }
     }
   ],

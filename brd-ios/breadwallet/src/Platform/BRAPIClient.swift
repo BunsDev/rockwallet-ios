@@ -41,7 +41,7 @@ open class BRAPIClient: NSObject, URLSessionDelegate, URLSessionTaskDelegate, BR
     var proto = "https"
     
     // host is the server(s) on which the API is hosted
-    var host = C.backendHost
+    var host = Constant.backendHost
     
     // isFetchingAuth is set to true when a request is currently trying to renew authentication (the token)
     // it is useful because fetching auth is not idempotent and not reentrant, so at most one auth attempt
@@ -263,15 +263,13 @@ open class BRAPIClient: NSObject, URLSessionDelegate, URLSessionTaskDelegate, BR
                         let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                         self.log("POST /token json response: \(json)")
                         if let topObj = json as? [String: Any],
-                            let walletTokenValue = topObj["token"] as? String,
-                            let uid = topObj["userID"] as? String {
+                            let walletTokenValue = topObj["token"] as? String {
                             // success! store it in the keychain
                             
                             UserDefaults.walletTokenValue = walletTokenValue
                             
                             var kcData = self.authenticator.apiUserAccount ?? [AnyHashable: Any]()
                             kcData["token"] = walletTokenValue
-                            kcData["userID"] = uid
                             self.authenticator.apiUserAccount = kcData
                         }
                     } catch let e {

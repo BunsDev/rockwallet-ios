@@ -67,7 +67,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             sections.insert(.achNotification, at: 0)
         }
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .achNotification: [
                 achNotificationModel
             ],
@@ -115,8 +115,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         viewController?.displayVeriffLivenessCheck(responseDisplay: .init(quoteId: actionResponse.quoteId, isBiometric: actionResponse.isBiometric))
     }
     
-    func presentBiometricStatus(actionResponse: OrderPreviewModels.BiometricStatusCheck.ActionResponse) {
-        viewController?.displayBiometricStatus(responseDisplay: .init())
+    func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse) {
+        viewController?.displayBiometricStatusFailed(responseDisplay: .init())
     }
     
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse) {
@@ -141,12 +141,33 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
         guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
-            let reason: FailureReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
+            var customAchErrorMessage: String = ""
+            if actionResponse.isAch == true {
+                switch actionResponse.responseCode {
+                case "30046":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountClosed
+                    
+                case "30R16":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.accountFrozen
+                    
+                case "20051":
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.insufficientFunds
+                    
+                default:
+                    customAchErrorMessage = L10n.ErrorMessages.Ach.errorWhileProcessing
+                }
+            }
+            
+            customAchErrorMessage = L10n.Buy.bankAccountFailureText
+            
+            let isAch = actionResponse.isAch == true
+            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell ? .sell : .buyAch(customAchErrorMessage)) : .buyCard(actionResponse.errorDescription)
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
+            
             return
         }
-        let reason: SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         
+        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     
@@ -175,7 +196,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let from = item.from ?? 0
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
         let networkFee = item.networkFee?.fiatValue ?? 0
-        let fiatCurrency = (quote.fromFee?.currency ?? C.usdCurrencyCode).uppercased()
+        let fiatCurrency = (quote.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
         
         let currencyFormat = "%@ %@"
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)

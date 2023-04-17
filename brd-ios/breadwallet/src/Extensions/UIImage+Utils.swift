@@ -9,8 +9,6 @@
 import UIKit
 import CoreGraphics
 
-private let inputImageKey = "inputImage"
-
 extension UIImage {
     static func qrCode(from url: String?,
                        color: CIColor = .black,

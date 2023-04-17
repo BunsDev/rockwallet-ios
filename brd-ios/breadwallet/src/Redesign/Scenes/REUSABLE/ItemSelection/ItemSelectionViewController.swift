@@ -57,13 +57,9 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
         navigationItem.searchController = searchController
     }
     
-    @objc override func dismissModal() {
-        super.dismissModal()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .addItem:
             cell = self.tableView(tableView, addItemCellForRowAt: indexPath)
             
@@ -81,9 +77,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     }
     
     func tableView(_ tableView: UITableView, addItemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ItemSelectable
+              let model = dataSource?.itemIdentifier(for: indexPath) as? (any ItemSelectable)
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -95,9 +90,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     }
     
     func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ItemSelectable
+              let model = dataSource?.itemIdentifier(for: indexPath) as? (any ItemSelectable)
         else { return UITableViewCell() }
         
         cell.setup { view in
@@ -109,21 +103,17 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = sections[indexPath.section] as? Models.Section,
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
               section == Models.Section.items else {
             coordinator?.open(scene: Scenes.AddCard)
             return
         }
         
-        guard let model = sectionRows[section]?[indexPath.row], dataStore?.isSelectingEnabled == true else { return }
+        guard let model = dataSource?.itemIdentifier(for: indexPath), dataStore?.isSelectingEnabled == true else { return }
         
         itemSelected?(model)
         
         coordinator?.dismissFlow()
-    }
-    
-    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
-        super.displayData(responseDisplay: responseDisplay)
     }
     
     // MARK: - Search View Delegate

@@ -28,11 +28,11 @@ class MessageUIPresenter: NSObject {
         
         // We include the previous log since it may provide clues about crashes etc. affecting
         // the current run of the app.
-        if let previousLogData = try? Data(contentsOf: C.previousLogFilePath) {
+        if let previousLogData = try? Data(contentsOf: Constant.previousLogFilePath) {
             attachments.append(("brd_logs_previous.txt", previousLogData))
         }
         
-        if let currentLogData = try? Data(contentsOf: C.logFilePath) {
+        if let currentLogData = try? Data(contentsOf: Constant.logFilePath) {
             attachments.append(("brd_logs_current.txt", currentLogData))
         }
         
@@ -51,7 +51,7 @@ class MessageUIPresenter: NSObject {
         
         let emailView = MFMailComposeViewController()
         
-        emailView.setToRecipients([C.feedbackEmail])
+        emailView.setToRecipients([Constant.feedbackEmail])
         emailView.setSubject("RockWallet Logs")
         emailView.setMessageBody("RockWallet Logs", isHTML: false)
         
@@ -71,7 +71,7 @@ class MessageUIPresenter: NSObject {
         originalTitleTextAttributes = UINavigationBar.appearance().titleTextAttributes
         UINavigationBar.appearance().titleTextAttributes = nil
         let emailView = MFMailComposeViewController()
-        emailView.setToRecipients([C.feedbackEmail])
+        emailView.setToRecipients([Constant.feedbackEmail])
         emailView.mailComposeDelegate = self
         present(emailView)
     }

@@ -28,6 +28,13 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     
     // MARK: - Overrides
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Registration())
+        GoogleAnalytics.logEvent(GoogleAnalytics.CreateAccount())
+    }
+    
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
         
@@ -72,7 +79,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .email:
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
@@ -170,7 +177,7 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     }
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         
         switch section as? Models.Section {
         case .email:
@@ -197,8 +204,8 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
         continueButton.viewModel?.enabled = isValid
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         
-        guard let noticeSection = sections.firstIndex(of: Models.Section.notice),
-              let noticeCell = tableView.cellForRow(at: .init(row: 0, section: noticeSection)) as? WrapperTableViewCell<FELabel> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.notice.hashValue }),
+              let noticeCell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else { return }
         noticeCell.setup { view in
             view.configure(with: responseDisplay.noticeConfiguration)
         }
@@ -215,14 +222,14 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
     }
     
     func displayNext(responseDisplay: SignUpModels.Next.ResponseDisplay) {
-        coordinator?.showRegistrationConfirmation(isModalDismissable: false)
+        coordinator?.showRegistrationConfirmation(isModalDismissable: false, confirmationType: .account)
     }
     
     // MARK: - Additional Helpers
     
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
-        guard let section = sections.firstIndex(of: section),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == section.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
             return nil
         }
         

@@ -11,9 +11,19 @@ import WalletKit
 
 typealias CryptoAmount = WalletKit.Amount
 
+extension WalletKit.Amount: Hashable {
+    public static func == (lhs: WalletKit.Amount, rhs: WalletKit.Amount) -> Bool {
+        return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
+    }
+}
+
 /// View model for representing the WalletKit.Amount model
 /// with extended currency, fiat conversion and formatting information
-public struct Amount {
+public struct Amount: Hashable {
     static let normalPrecisionDigits = 5
     static let highPrecisionDigits = 8
 
@@ -302,7 +312,7 @@ extension Decimal {
 extension String {
     func usDecimalString(fromLocale inputLocale: Locale) -> String {
         let expectedFormat = ExchangeFormatter.current
-        expectedFormat.locale = Locale(identifier: C.usLocaleCode)
+        expectedFormat.locale = Locale(identifier: Constant.usLocaleCode)
         
         // createUInt256ParseDecimal expects en_us formatted string
         let inputFormat = NumberFormatter()

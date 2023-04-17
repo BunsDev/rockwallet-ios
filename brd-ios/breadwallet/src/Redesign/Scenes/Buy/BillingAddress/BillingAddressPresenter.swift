@@ -20,6 +20,7 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
     // MARK: - Additional Helpers
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
+        
         let sections: [Models.Section] = [
             .name,
             .country,
@@ -29,7 +30,7 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
             .confirm
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .name: [
                 DoubleHorizontalTextboxViewModel(primary: .init(title: L10n.Buy.firstName,
                                                                 value: item.firstName),
@@ -62,10 +63,6 @@ final class BillingAddressPresenter: NSObject, Presenter, BillingAddressActionRe
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
-    }
-    
-    func presentPaymentCards(actionResponse: BillingAddressModels.PaymentCards.ActionResponse) {
-        viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards ?? []))
     }
     
     func presentThreeDSecure(actionResponse: BillingAddressModels.ThreeDSecure.ActionResponse) {

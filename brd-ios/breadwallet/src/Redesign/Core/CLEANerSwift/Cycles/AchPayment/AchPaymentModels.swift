@@ -30,11 +30,11 @@ enum AchPaymentModels {
         struct ViewAction {}
         
         struct ActionResponse {
-            var handler: Handler
+            var plaidHandler: PlaidLinkKitHandler
         }
         
         struct ResponseDisplay {
-            var handler: Handler
+            var plaidHandler: PlaidLinkKitHandler
         }
     }
 }

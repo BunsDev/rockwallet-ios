@@ -25,7 +25,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .mandatory:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -45,7 +45,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
             cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
             
         case .ssnInfo:
-            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
             
         case .confirm:
             cell = self.tableView(tableView, buttonCellForRowAt: indexPath)
@@ -61,8 +61,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func tableView(_ tableView: UITableView, countryTextFieldCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? TextFieldModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? TextFieldModel,
               let cell: WrapperTableViewCell<FETextField> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -77,9 +76,9 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     func tableView(_ tableView: UITableView, cityAndStateCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? DoubleHorizontalTextboxViewModel else {
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section),
+              let cell: WrapperTableViewCell<DoubleHorizontalTextboxView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? DoubleHorizontalTextboxViewModel else {
             return UITableViewCell()
         }
         
@@ -95,10 +94,10 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
         
-        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
             return cell
         }
         
@@ -114,7 +113,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = sections[indexPath.section] as? Models.Section else { return }
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section else { return }
         switch section {
         case .country:
             interactor?.pickCountry(viewAction: .init())
@@ -133,7 +132,7 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
     }
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        let section = sections[indexPath.section]
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) else { return }
         
         interactor?.updateForm(viewAction: .init(section: section, value: text))
         
@@ -153,8 +152,8 @@ class KYCAddressViewController: BaseTableViewController<KYCCoordinator,
         model.enabled = responseDisplay.isValid
         sectionRows[Models.Section.confirm] = [model]
         
-        guard let index = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: index)) as? WrapperTableViewCell<FEButton> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else {
             return
         }
         

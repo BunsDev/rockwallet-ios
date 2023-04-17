@@ -13,9 +13,14 @@ class VIPTableViewController<C: CoordinatableRoutes,
                              DS: BaseDataStore & NSObject>: VIPViewController<C, I, P, DS>,
                                                             UITableViewDelegate,
                                                             UITableViewDataSource {
+    typealias DataSource = UITableViewDiffableDataSource<AnyHashable, AnyHashable>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>
+    
     var sections: [AnyHashable] = []
     var sectionRows: [AnyHashable: [Any]] = [:]
-
+    
+    var dataSource: DataSource?
+    
     // MARK: LazyUI
     
     lazy var tableView: ContentSizedTableView = {
@@ -88,11 +93,10 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         tableView.heightUpdated = { height in
             self.contentShadowView.snp.remakeConstraints { make in
-                make.leading.equalTo(Margins.large.rawValue)
-                make.trailing.equalTo(-Margins.large.rawValue)
+                make.leading.equalToSuperview().inset(Margins.large.rawValue)
+                make.trailing.equalToSuperview().inset(Margins.large.rawValue)
                 make.top.equalTo(self.tableView.snp.top).inset(self.tableView.contentInset.top)
-                make.height.equalTo(height + Margins.extraLarge.rawValue)
-                make.width.equalTo(self.tableView.snp.width).offset(Margins.extraHuge.rawValue)
+                make.height.equalTo(height + Margins.large.rawValue)
             }
         }
         
@@ -105,9 +109,6 @@ class VIPTableViewController<C: CoordinatableRoutes,
         tableView.layer.masksToBounds = !isRoundedBackgroundEnabled
         
         tableView.verticalScrollIndicatorInsets.right = isRoundedBackgroundEnabled ? -Margins.huge.rawValue : 0
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
         
         setupVerticalButtons()
     }
@@ -135,13 +136,13 @@ class VIPTableViewController<C: CoordinatableRoutes,
     // MARK: ResponseDisplay
     
     // MARK: UITableViewDataSource
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return dataSource?.numberOfSections(in: tableView) ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let section = sections[section]
-        return sectionRows[section]?.count ?? 0
+        return dataSource?.tableView(tableView, numberOfRowsInSection: section) ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

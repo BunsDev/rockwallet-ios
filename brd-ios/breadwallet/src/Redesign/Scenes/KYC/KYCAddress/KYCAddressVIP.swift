@@ -47,7 +47,7 @@ protocol KYCAddressDataStore: BaseDataStore, CountriesAndStatesDataStore {
 }
 
 protocol KYCAddressDataPassing {
-    var dataStore: KYCAddressDataStore? { get }
+    var dataStore: (any KYCAddressDataStore)? { get }
 }
 
 protocol KYCAddressRoutes: CoordinatableRoutes {

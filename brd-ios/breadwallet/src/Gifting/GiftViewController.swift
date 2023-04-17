@@ -28,7 +28,7 @@ class GiftViewController: BaseSendViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let coinGeckoClient = CoinGeckoClient()
-    private let gradientView = GradientView()
+    private let gradientView = UIView()
     private let headerView = GiftHeaderView()
     private let qr = UIImageView(image: Asset.empty.image)
     private let header = UILabel.wrapping(font: Fonts.Title.one, color: LightColors.Contrast.two)
@@ -306,7 +306,7 @@ class GiftViewController: BaseSendViewController {
                 guard let self = self else { return }
                 let feeCurrency = self.sender.wallet.feeCurrency
                 let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
-                let rate = Rate(code: "USD", name: "USD", rate: rate.price, reciprocalCode: C.BTC)
+                let rate = Rate(code: "USD", name: "USD", rate: rate.price, reciprocalCode: Constant.BTC)
                 let displayAmount = Amount(amount: amount,
                                           rate: rate,
                                           maximumFractionDigits: Amount.highPrecisionDigits)

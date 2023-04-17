@@ -17,21 +17,18 @@ protocol Coordinatable: CoordinatableRoutes {
     var childCoordinators: [Coordinatable] { get set }
     var navigationController: UINavigationController { get set }
     var parentCoordinator: Coordinatable? { get set }
-
+    
     init(navigationController: UINavigationController)
     
     func childDidFinish(child: Coordinatable)
     func start()
 }
 
-class BaseCoordinator: NSObject,
-                       Coordinatable {
+class BaseCoordinator: NSObject, Coordinatable {
     weak var modalPresenter: ModalPresenter? {
         get {
-            guard let modalPresenter = presenter else {
-                return parentCoordinator?.modalPresenter
-            }
-
+            guard let modalPresenter = presenter else { return parentCoordinator?.modalPresenter }
+            
             return modalPresenter
         }
         set {
@@ -47,13 +44,13 @@ class BaseCoordinator: NSObject,
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-
+    
     init(viewController: UIViewController) {
         viewController.hidesBottomBarWhenPushed = true
         let navigationController = RootNavigationController(rootViewController: viewController)
         self.navigationController = navigationController
     }
-
+    
     func start() {
         let nvc = RootNavigationController()
         let coordinator: Coordinatable
@@ -76,151 +73,87 @@ class BaseCoordinator: NSObject,
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         
-        if DynamicLinksManager.shared.code != nil {
-            UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.dismiss(animated: true)
-        }
-        
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
-        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
-                guard showPopup, let profile = UserManager.shared.profile else { return }
-                
-                if profile.kycAccessRights.hasSwapAccess {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.Swap) { vc in
-                        vc?.dataStore?.currencies = currencies
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
-                    
-                    return
-                } else if profile.status.isKYCLocationRestricted {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swap
-                    }
-                    
-                    return
-                } else if profile.kycAccessRights.restrictionReason == .kyc {
-                    self?.showAccountVerification(flow: .swap)
-                    
-                    return
-                } else {
-                    self?.openModally(coordinator: SwapCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .swap
-                    }
-                    
-                    return
+    func showSwap(selectedCurrency: Currency? = nil, currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
+        guard let profile = UserManager.shared.profile,
+              profile.kycAccessRights.hasSwapAccess else {
+            handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
+            return
+        }
+        
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
+                    vc?.dataStore?.currencies = currencies
+                    vc?.dataStore?.coreSystem = coreSystem
+                    vc?.dataStore?.keyStore = keyStore
+                    guard let currency = selectedCurrency else { return }
+                    vc?.dataStore?.from = .zero(currency)
                 }
             }
         }
     }
     
-    func showBuy(type: PaymentCard.PaymentType = .card, coreSystem: CoreSystem?, keyStore: KeyStore?) {
-        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
-                guard showPopup, let profile = UserManager.shared.profile else { return }
-                
-                if profile.kycAccessRights.hasBuyAccess, type == .card {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
-                        vc?.dataStore?.paymentMethod = type
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                        vc?.prepareData()
-                    }
-                    
-                    return
-                } else if profile.status.isKYCLocationRestricted, type == .card {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .buy
-                    }
-                    
-                    return
-                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .card {
-                    self?.showAccountVerification(flow: .buy)
-                    
-                    return
-                } else if type == .card {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .buy
-                    }
-                    
-                    return
-                }
-                
-                if profile.kycAccessRights.hasAchAccess == true, type == .ach {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.Buy) { vc in
-                        vc?.dataStore?.paymentMethod = type
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                        vc?.prepareData()
-                    }
-                    
-                    return
-                } else if profile.status.isKYCLocationRestricted == true, type == .ach {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .buyAch
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
-                    
-                    return
-                } else if profile.kycAccessRights.restrictionReason == .kyc, type == .ach {
-                    self?.showAccountVerification(flow: .buy)
-                    
-                    return
-                } else if type == .ach {
-                    self?.openModally(coordinator: BuyCoordinator.self, scene: Scenes.ComingSoon) { vc in
-                        vc?.reason = .buyAch
-                        vc?.dataStore?.coreSystem = coreSystem
-                        vc?.dataStore?.keyStore = keyStore
-                    }
-                    
-                    return
+    func showBuy(selectedCurrency: Currency? = nil, type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+        guard let profile = UserManager.shared.profile,
+              ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
+            handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
+            return
+        }
+        
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
+                    vc?.dataStore?.paymentMethod = type
+                    vc?.dataStore?.coreSystem = coreSystem
+                    vc?.dataStore?.keyStore = keyStore
+                    guard let currency = selectedCurrency else { return }
+                    vc?.dataStore?.toAmount = .zero(currency)
                 }
             }
         }
     }
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
-        ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-            decideFlow { showPopup in
-                guard showPopup else { return }
-                
-                // TODO: Handle when Sell is ready.
-//                if UserManager.shared.profile?.kycAccessRights.hasBuyAccess == false {
-//                    self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.ComingSoon) { vc in
-//                        vc?.reason = .sell
-//                    }
-//                    return
-//                }
-                
-                self?.openModally(coordinator: SellCoordinator.self, scene: Scenes.Sell) { vc in
+        guard let profile = UserManager.shared.profile, profile.status.tradeStatus.canTrade else {
+            handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+            return
+        }
+        
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                     vc?.dataStore?.currency = currency
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
-                    vc?.prepareData()
                 }
             }
         }
     }
     
     func showProfile() {
-        decideFlow { [weak self] showPopup in
-            guard showPopup else { return }
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
             
             self?.openModally(coordinator: ProfileCoordinator.self, scene: Scenes.Profile)
         }
     }
     
-    func showAccountVerification(flow: ProfileModels.ExchangeFlow? = nil) {
+    func showAccountVerification() {
         let nvc = RootNavigationController()
         let coordinator = KYCCoordinator(navigationController: nvc)
-        coordinator.start(flow: flow)
+        coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         navigationController.present(nvc, animated: true)
@@ -241,7 +174,6 @@ class BaseCoordinator: NSObject,
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.itemId = exchangeId
             vc.dataStore?.transactionType = type
-            vc.prepareData()
         }
     }
     
@@ -256,7 +188,7 @@ class BaseCoordinator: NSObject,
     }
     
     func showSupport() {
-        showInWebView(urlString: C.supportLink, title: L10n.MenuButton.support)
+        showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
@@ -275,13 +207,8 @@ class BaseCoordinator: NSObject,
         navigationController.popToRootViewController(animated: true, completion: completion)
     }
     
-    func showBuyWithDifferentPayment(paymentMethod: PaymentCard.PaymentType?) {
-        guard let vc = navigationController.viewControllers.first as? BuyViewController else {
-            return
-        }
-        vc.updatePaymentMethod()
-        
-        navigationController.popToViewController(vc, animated: true)
+    func popViewController(completion: (() -> Void)? = nil) {
+        navigationController.popViewController(animated: true, completion: completion)
     }
     
     /// Remove the child coordinator from the stack after iit finnished its flow
@@ -304,12 +231,11 @@ class BaseCoordinator: NSObject,
         navigationController.modalPresentationStyle = presentationStyle
         navigationController.show(controller, sender: nil)
     }
-
+    
     /// Only call from coordinator subclasses
     func set<C: BaseCoordinator,
              VC: BaseControllable>(coordinator: C.Type,
                                    scene: VC.Type,
-                                   presentationStyle: UIModalPresentationStyle = .fullScreen,
                                    configure: ((VC?) -> Void)? = nil) {
         let controller = VC()
         let coordinator = C(navigationController: navigationController)
@@ -336,15 +262,14 @@ class BaseCoordinator: NSObject,
         let coordinator = C(navigationController: nvc)
         controller.coordinator = coordinator as? VC.CoordinatorType
         configure?(controller)
-
+        
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         
         navigationController.show(nvc, sender: nil)
     }
     
-    // It prepares the next KYC coordinator OR returns true.
-    func decideFlow(completion: ((Bool) -> Void)?) {
+    private func decideFlow(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
             completion?(false)
             return
@@ -357,8 +282,10 @@ class BaseCoordinator: NSObject,
         case .success(let profile):
             let status = profile?.status
             
+            // TODO: ENABLE 2FA
             if status == VerificationStatus.emailPending
                 || status == VerificationStatus.none
+//              || !UserManager.shared.hasTwoStepAuth
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
@@ -433,12 +360,6 @@ class BaseCoordinator: NSObject,
                                               onTapCallback: onTapCallback)
     }
     
-    func showUnderConstruction(_ feat: String) {
-        showPopup(on: navigationController.topViewController,
-                  with: .init(title: .text("Under construction"),
-                              body: "The \(feat.uppercased()) functionality is being developed for You by the awesome RockWallet team. Stay tuned!"))
-    }
-    
     func showOverlay(with viewModel: TransparentViewModel, completion: (() -> Void)? = nil) {
         guard let parent = navigationController.view else { return }
         
@@ -483,11 +404,281 @@ class BaseCoordinator: NSObject,
         
         view.layoutIfNeeded()
         view.alpha = 0
-            
+        
         UIView.animate(withDuration: Presets.Animation.short.rawValue) {
             view.alpha = 1
         }
         
         return view
+    }
+    
+    func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
+        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
+        
+        switch restrictionReason {
+        case .verification:
+            showVerifyAccount(flow: flow)
+            
+        case .location:
+            showComingSoon(reason: reason)
+            
+        }
+    }
+    
+    func showVerifyAccount(flow: ProfileModels.ExchangeFlow?,
+                           isModalDismissable: Bool = false,
+                           hidesBackButton: Bool = true) {
+        open(scene: Scenes.VerifyAccount) { [weak self] vc in
+            self?.handleVerifyAccountNavigation(vc, flow: flow)
+            
+            vc.flow = flow
+            vc.isModalDismissable = isModalDismissable
+            vc.navigationItem.hidesBackButton = hidesBackButton
+            vc.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    private func handleVerifyAccountNavigation(_ vc: VerifyAccountViewController?, flow: ProfileModels.ExchangeFlow?) {
+        guard let vc else { return }
+        
+        vc.didTapMainButton = { [weak self] in
+            switch flow {
+            case .buy, .swap:
+                vc.coordinator?.popViewController()
+                
+            default:
+                self?.showAccountVerification()
+            }
+        }
+        
+        vc.didTapSecondayButton = { [weak self] in
+            switch flow {
+            case .buy, .swap:
+                self?.showSupport()
+                
+            default:
+                vc.coordinator?.popViewController()
+            }
+        }
+    }
+    
+    func showFailure(reason: BaseInfoModels.FailureReason?,
+                     isModalDismissable: Bool = false,
+                     hidesBackButton: Bool = true,
+                     availablePayments: [PaymentCard.PaymentType]? = [],
+                     containsDebit: Bool = false,
+                     containsBankAccount: Bool = false) {
+        open(scene: Scenes.Failure) { [weak self] vc in
+            self?.handleFailureNavigation(vc, containsDebit: containsDebit, containsBankAccount: containsBankAccount)
+            
+            vc.reason = reason
+            vc.isModalDismissable = isModalDismissable
+            vc.navigationItem.hidesBackButton = hidesBackButton
+            vc.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    func showSuccess(reason: BaseInfoModels.SuccessReason?,
+                     isModalDismissable: Bool = false,
+                     hidesBackButton: Bool = true,
+                     itemId: String? = nil,
+                     transactionType: TransactionType? = nil) {
+        open(scene: Scenes.Success) { [weak self] vc in
+            self?.handleSuccessNavigation(vc)
+            
+            vc.reason = reason
+            vc.isModalDismissable = isModalDismissable
+            vc.navigationItem.hidesBackButton = hidesBackButton
+            vc.navigationItem.rightBarButtonItem = nil
+            vc.dataStore?.itemId = itemId
+            vc.transactionType = transactionType ?? .base
+        }
+    }
+    
+    func showComingSoon(reason: BaseInfoModels.ComingSoonReason?,
+                        isModalDismissable: Bool = false,
+                        hidesBackButton: Bool = true,
+                        coreSystem: CoreSystem? = nil,
+                        keyStore: KeyStore? = nil) {
+        open(scene: Scenes.ComingSoon) { [weak self] vc in
+            self?.handleComingSoonNavigation(vc)
+            
+            vc.reason = reason
+            vc.isModalDismissable = isModalDismissable
+            vc.navigationItem.hidesBackButton = hidesBackButton
+            vc.navigationItem.rightBarButtonItem = nil
+            vc.dataStore?.coreSystem = coreSystem
+            vc.dataStore?.keyStore = keyStore
+        }
+    }
+    
+    private func handleComingSoonNavigation(_ vc: ComingSoonViewController?) {
+        guard let vc else { return }
+        
+        vc.didTapMainButton = {
+            if vc.reason == .swap || vc.reason == .buy || vc.reason == .sell {
+                vc.coordinator?.popViewController()
+            } else if vc.reason == .buyAch {
+                vc.coordinator?.showBuy(type: .card,
+                                        coreSystem: vc.dataStore?.coreSystem,
+                                        keyStore: vc.dataStore?.keyStore)
+            }
+        }
+        
+        vc.didTapSecondayButton = {
+            if vc.reason == .swap || vc.reason == .buy {
+                vc.coordinator?.showSupport()
+            } else if vc.reason == .buyAch {
+                vc.coordinator?.popViewController()
+            }
+        }
+    }
+    
+    private func handleSuccessNavigation(_ vc: SuccessViewController?) {
+        guard let vc else { return }
+        
+        vc.didTapMainButton = {
+            switch vc.reason {
+            case .documentVerification, .limitsAuthentication:
+                vc.coordinator?.showBuy(type: .card,
+                                        coreSystem: vc.dataStore?.coreSystem,
+                                        keyStore: vc.dataStore?.keyStore)
+                
+            default:
+                vc.coordinator?.dismissFlow()
+            }
+        }
+        
+        vc.didTapSecondayButton = {
+            switch vc.reason {
+            case .documentVerification:
+                LoadingView.show()
+                vc.interactor?.getAssetSelectionData(viewModel: .init())
+                
+            case .limitsAuthentication:
+                vc.coordinator?.popToRoot()
+                
+            default:
+                vc.coordinator?.showExchangeDetails(with: vc.dataStore?.itemId,
+                                                    type: vc.transactionType)
+            }
+        }
+        
+        vc.didTapThirdButton = {
+            switch vc.reason {
+            case .documentVerification:
+                vc.coordinator?.showBuy(type: .ach,
+                                        coreSystem: vc.dataStore?.coreSystem,
+                                        keyStore: vc.dataStore?.keyStore)
+                
+            default:
+                vc.coordinator?.showExchangeDetails(with: vc.dataStore?.itemId,
+                                                    type: vc.transactionType)
+            }
+        }
+    }
+    
+    private func handleFailureNavigation(_ vc: FailureViewController?, containsDebit: Bool, containsBankAccount: Bool) {
+        guard let vc else { return }
+        
+        vc.didTapMainButton = {
+            switch vc.reason {
+            case .swap:
+                vc.coordinator?.popToRoot()
+                
+            case .documentVerification:
+                vc.coordinator?.showSupport()
+                
+            case .documentVerificationRetry:
+                vc.veriffKYCManager = VeriffKYCManager(navigationController: vc.coordinator?.navigationController)
+                vc.veriffKYCManager?.showExternalKYC { result in
+                    vc.coordinator?.handleVeriffKYC(result: result, for: .kyc)
+                }
+                
+            case .limitsAuthentication:
+                LoadingView.show()
+                vc.veriffKYCManager = VeriffKYCManager(navigationController: vc.coordinator?.navigationController)
+                let requestData = VeriffSessionRequestData(quoteId: nil, isBiometric: true, biometricType: .pendingLimits)
+                vc.veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: requestData) { result in
+                    switch result.status {
+                    case .done:
+                        BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: true) { error in
+                            vc.handleBiometricStatus(approved: error == nil)
+                        }
+                        
+                    default:
+                        vc.handleBiometricStatus(approved: false)
+                    }
+                }
+                
+            default:
+                if containsDebit || containsBankAccount {
+                    guard let vc = self.navigationController.viewControllers.first as? BuyViewController else {
+                        return
+                    }
+                    
+                    vc.updatePaymentMethod(paymentMethod: containsDebit ? .card : .ach)
+                }
+                
+                vc.coordinator?.popToRoot()
+            }
+        }
+        
+        vc.didTapSecondayButton = {
+            switch vc.reason {
+            case .swap:
+                vc.coordinator?.dismissFlow()
+
+            case .buyCard, .buyAch, .plaidConnection, .sell:
+                vc.coordinator?.showSupport()
+                
+            case .limitsAuthentication, .documentVerification, .documentVerificationRetry:
+                vc.coordinator?.popToRoot()
+                
+            default:
+                break
+            }
+        }
+    }
+    
+    func prepareForDeeplinkHandling(coreSystem: CoreSystem, keyStore: KeyStore) {
+        guard !childCoordinators.isEmpty else {
+            handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
+            return
+        }
+        
+        childCoordinators.forEach { child in
+            child.navigationController.dismiss(animated: false) { [weak self] in
+                self?.childDidFinish(child: child)
+                guard self?.childCoordinators.isEmpty == true else { return }
+                self?.handleDeeplink(coreSystem: coreSystem, keyStore: keyStore)
+            }
+        }
+    }
+    
+    private func handleDeeplink(coreSystem: CoreSystem, keyStore: KeyStore) {
+        popToRoot()
+        
+        guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
+        DynamicLinksManager.shared.dynamicLinkType = nil
+        
+        switch deeplink {
+        case .home:
+            return
+            
+        case .profile:
+            showProfile()
+            
+        case .swap:
+            guard UserManager.shared.profile?.status.hasKYCLevelTwo == true else {
+                self.showVerifyAccount(flow: .swap)
+                return
+            }
+            
+            showSwap(currencies: Store.state.currencies, coreSystem: coreSystem, keyStore: keyStore)
+            
+        case .setPassword:
+            handleUserAccount()
+        }
     }
 }

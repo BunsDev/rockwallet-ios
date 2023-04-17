@@ -63,7 +63,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func setAmount(viewAction: BuyModels.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.toAmount?.currency else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: C.usdCurrencyCode,
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: Constant.usdCurrencyCode,
                                                                                    to: dataStore?.toAmount?.currency.code)))
             return
         }
@@ -123,7 +123,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         if dataStore?.selected?.cardType == .debit,
            dataStore?.paymentMethod == .card,
            dataStore?.ach != nil,
-           dataStore?.toAmount?.currency.code == C.USDT {
+           dataStore?.toAmount?.currency.code == Constant.USDT {
             dataStore?.availablePayments.append(.ach)
         }
         
@@ -134,13 +134,12 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentNavigateAssetSelector(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
         case .ach:
-            guard let currency = Store.state.currencies.first(where: { $0.code == C.USDT }) else {
-                presenter?.presentDisabledCurrencyMessage(actionResponse: .init(currencyCode: C.USDT))
+            guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else {
+                presenter?.presentDisabledCurrencyMessage(actionResponse: .init(currencyCode: Constant.USDT))
                 return
             }
             dataStore?.toAmount = .zero(currency)
@@ -196,4 +195,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func showLimitsInfo(viewAction: BuyModels.LimitsInfo.ViewAction) {
         presenter?.presentLimitsInfo(actionResponse: .init(paymentMethod: dataStore?.paymentMethod))
     }
+    
+    // MARK: - Aditional helpers
 }

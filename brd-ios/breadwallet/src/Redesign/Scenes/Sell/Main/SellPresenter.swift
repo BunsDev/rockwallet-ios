@@ -26,7 +26,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .accountLimits
         ]
 
-        let sectionRows: [ExchangeModels.Section: [Any]] = [
+        let sectionRows: [ExchangeModels.Section: [any Hashable]] = [
             .rateAndTimer: [
                 ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
             ],
@@ -35,13 +35,12 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                               formattedTokenString: .init(string: ""),
                                               title: .text("I have 10.12000473 USDC"),
                                               selectionDisabled: true),
-
-                                  to: .init(currencyCode: C.usdCurrencyCode,
+                                  
+                                  to: .init(currencyCode: Constant.usdCurrencyCode,
                                             currencyImage: Asset.us.image,
                                             formattedTokenString: .init(string: ""),
                                             title: .text("I receive"),
-                                            selectionDisabled: true),
-                                  hideSwitchPlacesButton: true)
+                                            selectionDisabled: true))
             ],
             .payoutMethod: [
                 paymentModel ?? CardSelectionViewModel(userInteractionEnabled: true)
@@ -57,23 +56,21 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         guard let from = actionResponse.from else { return }
         let toFiatValue = from.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: from.fiatValue)
         let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: from.tokenValue)
-
+        
         let fromFormattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
         let toFormattedFiatString = ExchangeFormatter.createAmountString(string: toFiatValue ?? "")
         
         let vm = MainSwapViewModel(from: .init(amount: from,
-                                          formattedTokenString: fromFormattedTokenString,
-                                          title: .text("I have 10.12000473 USDC")),
-                              
-                              to: .init(currencyCode: C.usdCurrencyCode,
-                                        currencyImage: Asset.us.image,
-                                        formattedTokenString: toFormattedFiatString,
-                                        title: .text("I receive")),
-                              
-                             hideSwitchPlacesButton: true)
+                                               formattedTokenString: fromFormattedTokenString,
+                                               title: .text("I have 10.12000473 USDC")),
+                                   
+                                   to: .init(currencyCode: Constant.usdCurrencyCode,
+                                             currencyImage: Asset.us.image,
+                                             formattedTokenString: toFormattedFiatString,
+                                             title: .text("I receive")))
         viewController?.displayAmount(responseDisplay: .init(continueEnabled: actionResponse.continueEnabled,
                                                              amounts: vm))
     }
     // MARK: - Additional Helpers
-
+    
 }

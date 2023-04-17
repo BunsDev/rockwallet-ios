@@ -11,8 +11,8 @@ import WalletKit
 
 class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
-    // ExchangeRateDaatStore
-    var fromCode: String { return C.usdCurrencyCode }
+    // MARK: - ExchangeRateDataStore
+    var fromCode: String { return Constant.usdCurrencyCode }
     var toCode: String { toAmount?.currency.code ?? "" }
     var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {
@@ -30,12 +30,15 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var values: BuyModels.Amounts.ViewAction = .init()
     var paymentMethod: PaymentCard.PaymentType? {
         didSet {
+            guard toAmount == nil else { return }
             let selectedCurrency: Currency
             if paymentMethod == .ach {
-                guard let currency = Store.state.currencies.first(where: { $0.code == C.USDT }) else { return }
+                guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
                 selectedCurrency = currency
             } else {
-                guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == C.BTC.lowercased() }) ?? Store.state.currencies.first  else { return  }
+                guard let currency = Store.state.currencies.first(where: {
+                    $0.code.lowercased() == Constant.BTC.lowercased()
+                }) ?? Store.state.currencies.first  else { return  }
                 selectedCurrency = currency
             }
             
@@ -47,10 +50,12 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd),
+              let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
+              let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description,
               let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achAllowanceLifetime)
         else { return nil }
         
+        let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
         let limitsString = NSMutableAttributedString(string: paymentMethod == .ach ?
                                                      L10n.Buy.achLimits(minText, maxText, lifetimeLimit) : L10n.Buy.buyLimits(minText, maxText))
         

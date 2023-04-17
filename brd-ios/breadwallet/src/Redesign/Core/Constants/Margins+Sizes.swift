@@ -83,4 +83,7 @@ enum ViewSizes: CGFloat {
     case extraExtraHuge = 100.0
     /// Illustration
     case illustration = 116.0
+    
+    /// Custom view for bottom toolbar
+    case bottomToolbarHeight = 84.0
 }

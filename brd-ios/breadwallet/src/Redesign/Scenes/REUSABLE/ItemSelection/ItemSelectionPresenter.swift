@@ -29,7 +29,7 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
             sections.insert(Models.Section.addItem, at: 0)
         }
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             Models.Section.items: items,
             Models.Section.addItem: [L10n.Swap.addItem]
         ]

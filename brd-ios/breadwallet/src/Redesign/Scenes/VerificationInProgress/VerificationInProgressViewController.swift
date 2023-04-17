@@ -11,7 +11,7 @@
 import UIKit
 
 extension Scenes {
-    static let verificationInProgress = VerificationInProgressViewController.self
+    static let VerificationInProgress = VerificationInProgressViewController.self
 }
 
 class VerificationInProgressViewController: CheckListViewController {
@@ -59,7 +59,7 @@ class VerificationInProgressViewController: CheckListViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .title:
             cell =  self.tableView(tableView, labelCellForRowAt: indexPath)
             (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Title.five, textColor: LightColors.Text.three))
@@ -78,9 +78,8 @@ class VerificationInProgressViewController: CheckListViewController {
     }
     
     override func tableView(_ tableView: UITableView, checkmarkCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<ChecklistItemView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? ChecklistItemViewModel else {
+              let model = dataSource?.itemIdentifier(for: indexPath) as? ChecklistItemViewModel else {
             return UITableViewCell()
         }
         
@@ -106,16 +105,12 @@ class VerificationInProgressViewController: CheckListViewController {
     override func displayVerificationProgress(responseDisplay: CheckListModels.VerificationInProgress.ResponseDisplay) {
         switch responseDisplay.status {
         case .success:
-            coordinator?.open(scene: Scenes.Success) { vc in
-                vc.success = .documentVerification
-                vc.isModalDismissable = false
-                vc.navigationItem.hidesBackButton = true
-            }
+            coordinator?.showSuccess(reason: .documentVerification,
+                                     isModalDismissable: false,
+                                     hidesBackButton: true)
             
         case .failure(let reason):
-            coordinator?.open(scene: Scenes.Failure) { vc in
-                vc.failure = reason
-            }
+            coordinator?.showFailure(reason: reason)
         }
     }
 }

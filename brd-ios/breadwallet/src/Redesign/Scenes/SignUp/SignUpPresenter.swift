@@ -20,7 +20,7 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
-        guard let termsAndConditionsURL = URL(string: C.termsAndConditions) else { return }
+        guard let termsAndConditionsURL = URL(string: Constant.termsAndConditions) else { return }
         
         let sections: [Models.Section] =  [
             .email,
@@ -31,7 +31,7 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
             .promotionsTickbox
         ]
         
-        let sectionRows: [Models.Section: [Any]] = [
+        let sectionRows: [Models.Section: [any Hashable]] = [
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
             .password: [TextFieldModel(title: L10n.Account.createPassword, value: item.password)],
             .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password)],

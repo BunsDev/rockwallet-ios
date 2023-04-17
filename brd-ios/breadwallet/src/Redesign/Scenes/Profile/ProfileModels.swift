@@ -24,11 +24,13 @@ enum ProfileModels {
         case paymentMethods
         case security
         case preferences
+        case logout
     }
     
     enum ExchangeFlow {
         case buy
         case swap
+        case sell
     }
     
     struct Navigate {
@@ -46,7 +48,7 @@ enum ProfileModels {
     struct VerificationInfo {
         struct ViewAction {}
         struct ActionResponse {
-            var status: VerificationStatus?
+            var verified: Bool
         }
         struct ResponseDisplay {
             var model: PopupViewModel
@@ -63,6 +65,12 @@ enum ProfileModels {
         struct ResponseDisplay {
             var allPaymentCards: [PaymentCard]
         }
+    }
+    
+    struct Logout {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
     }
 }
 
@@ -82,6 +90,10 @@ extension ProfileModels.NavigationItems {
         case .preferences:
             return .init(image: .image(Asset.settings.image),
                          label: .text(L10n.Settings.preferences),
+                         button: .init(image: nil))
+        case .logout:
+            return .init(image: .image(Asset.logout.image),
+                         label: .text(L10n.Account.logout),
                          button: .init(image: nil))
         }
     }

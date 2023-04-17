@@ -31,7 +31,7 @@ protocol BaseInfoDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol BaseInfoDataPassing {
-    var dataStore: BaseInfoDataStore? { get }
+    var dataStore: (any BaseInfoDataStore)? { get }
 }
 
 protocol BaseInfoRoutes: CoordinatableRoutes {

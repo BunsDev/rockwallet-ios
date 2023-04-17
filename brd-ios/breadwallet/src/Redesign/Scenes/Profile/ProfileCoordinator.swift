@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
+class ProfileCoordinator: ExchangeCoordinator, ProfileRoutes {
     // MARK: - ProfileRoutes
     
     override func start() {
@@ -21,14 +21,6 @@ class ProfileCoordinator: BuyCoordinator, ProfileRoutes {
     
     func showPreferences() {
         modalPresenter?.presentPreferences()
-    }
-    
-    func showFailure(reason: FailureReason) {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.Failure) { vc in
-            vc?.navigationItem.hidesBackButton = true
-            vc?.isModalDismissable = false
-            vc?.failure = reason
-        }
     }
 }
 

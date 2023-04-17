@@ -9,8 +9,6 @@
 //
 
 import UIKit
-import Veriff
-import WalletKit
 
 enum PreviewType {
     // split buy into ach_buy and card_buy
@@ -76,7 +74,9 @@ enum OrderPreviewModels {
         struct ViewAction {
             let resetCounter: Bool
         }
-        
+    }
+    
+    struct BiometricStatusFailed {
         struct ActionResponse {
         }
         
@@ -152,17 +152,19 @@ enum OrderPreviewModels {
             var previewType: PreviewType?
             var isAch: Bool?
             var failed: Bool?
+            var responseCode: String?
+            var errorDescription: String?
         }
         
         struct ResponseDisplay {
             var paymentReference: String
-            var reason: SuccessReason
+            var reason: BaseInfoModels.SuccessReason
         }
     }
     
     struct Failure {
         struct ResponseDisplay {
-            var reason: FailureReason
+            var reason: BaseInfoModels.FailureReason
         }
     }
     

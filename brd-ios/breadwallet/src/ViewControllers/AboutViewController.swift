@@ -71,6 +71,8 @@ class AboutViewController: UIViewController {
         setActions()
         
         view.backgroundColor = LightColors.Background.one
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.About())
     }
 
     private func addSubviews() {
@@ -97,11 +99,11 @@ class AboutViewController: UIViewController {
     
     private func setActions() {
         privacy.tap = { [weak self] in
-            self?.presentURL(string: C.privacyPolicy, title: self?.privacy.titleLabel?.text ?? "")
+            self?.presentURL(string: Constant.privacyPolicy, title: self?.privacy.titleLabel?.text ?? "")
         }
         
         terms.tap = { [weak self] in
-            self?.presentURL(string: C.termsAndConditions, title: self?.terms.titleLabel?.text ?? "")
+            self?.presentURL(string: Constant.termsAndConditions, title: self?.terms.titleLabel?.text ?? "")
         }
     }
 

@@ -64,27 +64,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DynamicLinksManager.handleDynamicLink(dynamicLink: webpageURL)
         
-        // The Plaid Link SDK ignores unexpected URLs passed to `continue(from:)` as
+        // The Plaid Link SDK ignores unexpected URLs passed to `resumeAfterTermination(from:)` as
         // per Apple’s recommendations, so there is no need to filter out unrelated URLs.
-        // Doing so may prevent a valid URL from being passed to `continue(from:)` and
-        // OAuth may not continue as expected.
+        // Doing so may prevent a valid URL from being passed to `resumeAfterTermination(from:)` and OAuth may not continue as expected.
         guard let linkOAuthHandler = window?.rootViewController as? LinkOAuthHandling,
-              let handler = linkOAuthHandler.linkHandler else { return false }
+              let handler = linkOAuthHandler.plaidHandler else { return false }
         // Continue the Link flow
-        handler.continue(from: webpageURL)
+        handler.resumeAfterTermination(from: webpageURL)
         
         return true
     }
 
-    // stdout is redirected to C.logFilePath for testflight and debug builds
+    // stdout is redirected to Constant.logFilePath for testflight and debug builds
     private func redirectStdOut() {
         guard E.isDebug || E.isTestFlight else { return }
         
-        let logFilePath = C.logFilePath
-        let previousLogFilePath = C.previousLogFilePath
+        let logFilePath = Constant.logFilePath
+        let previousLogFilePath = Constant.previousLogFilePath
         
-        // If there is already content at C.logFilePath from the previous run of the app,
-        // store that content in C.previousLogFilePath so that we can upload both the previous
+        // If there is already content at Constant.logFilePath from the previous run of the app,
+        // store that content in Constant.previousLogFilePath so that we can upload both the previous
         // and current log from Menu / Developer / Send Logs.
         if FileManager.default.fileExists(atPath: logFilePath.path),
            let logData = try? Data(contentsOf: logFilePath) {

@@ -66,6 +66,7 @@ enum TriggerName {
     case promptShareData
     case didApplyKyc
     case didCreateAccount
+    case didSetTwoStep
     case didWritePaperKey
     case wipeWalletNoPrompt
     case showCurrency(Currency?)
@@ -80,7 +81,10 @@ enum TriggerName {
     case didSelectBaker(Baker?)
     case promptKyc
     case promptNoAccount
-    case handleUserAccount
+    case promptLimitsAuthentication
+    case handleDeeplink
+    case promptTwoStep
+    case reloadBuy
 }
 
 func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
@@ -149,6 +153,8 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.createAccount, .createAccount):
         return true
+    case (.promptTwoStep, .promptTwoStep):
+        return true
     case (.handleGift, .handleGift):
         return true
     case (.reImportGift, .reImportGift):
@@ -159,7 +165,11 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.promptNoAccount, .promptNoAccount):
         return true
-    case (.handleUserAccount, .handleUserAccount):
+    case (.promptLimitsAuthentication, .promptLimitsAuthentication):
+        return true
+    case (.handleDeeplink, .handleDeeplink):
+        return true
+    case (.reloadBuy, .reloadBuy):
         return true
     default:
         return false
@@ -274,3 +284,5 @@ class Store {
     private var subscriptions: [Int: [Subscription]] = [:]
     private var triggers: [Int: [Trigger]] = [:]
 }
+
+// swiftlint:enable legacy_hashing

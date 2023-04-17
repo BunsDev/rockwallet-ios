@@ -34,7 +34,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .achNotification:
             cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
             
@@ -71,8 +71,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? LabelViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
               let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -87,9 +86,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, paymentMethodCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<PaymentMethodView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? PaymentMethodViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PaymentMethodViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -114,9 +112,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func tableView(_ tableView: UITableView, orderCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<BuyOrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? BuyOrderViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? BuyOrderViewModel
         else {
             return UITableViewCell()
         }
@@ -136,8 +133,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
-        guard let model = sectionRows[section]?[indexPath.row] as? InfoViewModel,
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
               let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
@@ -207,34 +203,32 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         LoadingView.hideIfNeeded()
         
         let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAch : .buy
-        coordinator?.showSuccess(paymentReference: responseDisplay.paymentReference,
-                                 transactionType: transactionType,
-                                 reason: responseDisplay.reason)
+        coordinator?.showSuccess(reason: responseDisplay.reason,
+                                 itemId: responseDisplay.paymentReference,
+                                 transactionType: transactionType)
     }
     
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay) {
-        coordinator?.showFailure(failure: responseDisplay.reason, availablePayments: dataStore?.availablePayments)
+        coordinator?.showFailure(reason: responseDisplay.reason, availablePayments: dataStore?.availablePayments ?? [])
     }
     
     func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay) {
         veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
         veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: .init(quoteId: responseDisplay.quoteId,
-                                                                                   isBiometric: responseDisplay.isBiometric)) { [weak self] result in
+                                                                                   isBiometric: responseDisplay.isBiometric,
+                                                                                   biometricType: .buy)) { [weak self] result in
             switch result.status {
             case .done:
                 self?.interactor?.checkBiometricStatus(viewAction: .init(resetCounter: true))
                 
-            case .error(let error):
-                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: error.localizedDescription)))
-                
             default:
-                self?.interactor?.presenter?.presentError(actionResponse: .init(error: GeneralError()))
+                self?.displayBiometricStatusFailed(responseDisplay: .init())
             }
         }
     }
     
-    func displayBiometricStatus(responseDisplay: OrderPreviewModels.BiometricStatusCheck.ResponseDisplay) {
-        coordinator?.handleVeriffKYC(for: .liveness)
+    func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay) {
+        coordinator?.showFailure(reason: .buyCard(nil))
     }
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
@@ -254,8 +248,8 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.submit),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.submit.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         cell.wrappedView.isEnabled = responseDisplay.continueEnabled
     }

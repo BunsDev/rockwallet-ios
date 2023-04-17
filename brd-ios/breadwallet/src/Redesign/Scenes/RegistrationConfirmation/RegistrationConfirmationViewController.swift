@@ -13,7 +13,6 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
                                               RegistrationConfirmationPresenter,
                                               RegistrationConfirmationStore>,
                                               RegistrationConfirmationResponseDisplays {
-    
     typealias Models = RegistrationConfirmationModels
     
     override var isModalDismissableEnabled: Bool { return isModalDismissable }
@@ -21,19 +20,10 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     
     // MARK: - Overrides
     
-    override func setupVerticalButtons() {
-        super.setupVerticalButtons()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.confirm,
-                                         enabled: false,
-                                         callback: { [weak self] in
-            self?.buttonTapped()
-        }))
-        
-        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
+        GoogleAnalytics.logEvent(GoogleAnalytics.VerifyProfile(type: String(describing: dataStore?.confirmationType)))
     }
     
     override func setupSubviews() {
@@ -44,7 +34,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .image:
             cell = self.tableView(tableView, coverCellForRowAt: indexPath)
             (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.setupCustomMargins(vertical: .extraExtraHuge, horizontal: .large)
@@ -59,7 +49,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             cell = self.tableView(tableView, codeInputCellForRowAt: indexPath)
             
         case .help:
-            cell = self.tableView(tableView, buttonsCellForRowAt: indexPath)
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -89,15 +79,16 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, buttonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, buttonsCellForRowAt: indexPath)
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
         
-        guard let cell = cell as? WrapperTableViewCell<HorizontalButtonsView> else {
+        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
             return cell
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: self.dataStore?.confirmationType == .twoStep ? .vertical : .horizontal))
             
             view.callbacks = [
                 resendCodeTapped,
@@ -110,15 +101,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
 
     // MARK: - User Interaction
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        interactor?.validate(viewAction: .init(item: text))
+        interactor?.validate(viewAction: .init(code: text))
         
         super.textFieldDidFinish(for: indexPath, with: text)
-    }
-    
-    override func buttonTapped() {
-        super.buttonTapped()
-        
-        interactor?.confirm(viewAction: .init())
     }
     
     private func resendCodeTapped() {
@@ -131,20 +116,28 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
 
     // MARK: - RegistrationConfirmationResponseDisplay
     
-    func displayValidate(responseDisplay: RegistrationConfirmationModels.Validate.ResponseDisplay) {
-        continueButton.viewModel?.enabled = responseDisplay.isValid
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
-    
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             self?.coordinator?.dismissFlow()
+            
+            // TODO: ENABLE 2FA
+//            guard let self = self else { return }
+//            switch self.dataStore?.confirmationType {
+//            case .account:
+//                self.coordinator?.showVerifyPhoneNumber()
+//
+//            case .twoStep:
+//                self.coordinator?.dismissFlow()
+//
+//            default:
+//                break
+//            }
         })
     }
     
     func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.input),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.input.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
         else { return }
         
         cell.wrappedView.showErrorMessage()

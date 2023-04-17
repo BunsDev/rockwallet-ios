@@ -75,7 +75,7 @@ extension DescriptionSendCell: UITextViewDelegate {
         }
 
         let count = (textView.text ?? "").utf8.count + text.utf8.count
-        if count > C.maxMemoLength {
+        if count > Constant.maxMemoLength {
             return false
         } else {
             return true

@@ -21,11 +21,6 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
         return L10n.Account.resetPasswordTitle
     }
     
-    lazy var createAccountButton: FEButton = {
-        let view = FEButton()
-        return view
-    }()
-    
     // MARK: - Overrides
     
     override func setupVerticalButtons() {
@@ -45,7 +40,7 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .notice:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -75,7 +70,7 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - User Interaction
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
-        let section = sections[indexPath.section]
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
         
         switch section as? Models.Section {
         case .email:
@@ -116,8 +111,8 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - Additional Helpers
     
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
-        guard let section = sections.firstIndex(of: section),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == section.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
             return nil
         }
         

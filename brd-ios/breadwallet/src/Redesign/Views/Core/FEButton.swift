@@ -33,11 +33,30 @@ struct ButtonConfiguration: Configurable {
 }
 
 struct ButtonViewModel: ViewModel {
+    static func == (lhs: ButtonViewModel, rhs: ButtonViewModel) -> Bool {
+        return lhs.title == rhs.title
+        && lhs.attributedTitle == rhs.attributedTitle
+        && lhs.isUnderlined == rhs.isUnderlined
+        && lhs.image == rhs.image
+        && lhs.enabled == rhs.enabled
+        && lhs.shouldTemporarilyDisableAfterTap == rhs.shouldTemporarilyDisableAfterTap
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title?.hashValue)
+        hasher.combine(attributedTitle.hashValue)
+        hasher.combine(isUnderlined.hashValue)
+        hasher.combine(image.hashValue)
+        hasher.combine(enabled.hashValue)
+        hasher.combine(shouldTemporarilyDisableAfterTap.hashValue)
+    }
+    
     var title: String?
     var attributedTitle: NSAttributedString?
     var isUnderlined = false
     var image: UIImage?
     var enabled = true
+    var shouldTemporarilyDisableAfterTap = false
     var callback: (() -> Void)?
 }
 
@@ -149,6 +168,10 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
     }
     
     @objc private func buttonTapped() {
+        if viewModel?.shouldTemporarilyDisableAfterTap == true {
+            toggleButtonStateWithTimer()
+        }
+        
         viewModel?.callback?()
     }
     
@@ -157,6 +180,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         let shadow = config?.shadowConfiguration
         
         isUserInteractionEnabled = true
+        
         switch state {
         case .normal:
             background = config?.normalConfiguration
@@ -175,9 +199,11 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         displayState = state
         
         UIView.setAnimationsEnabled(withAnimation)
+        
         Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
             self?.updateLayout(background: background, shadow: shadow)
         }
+        
         UIView.setAnimationsEnabled(true)
     }
     

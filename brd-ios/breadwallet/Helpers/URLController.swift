@@ -95,9 +95,8 @@ class URLController: Subscriber {
             
             return true
             
-        case "https" where DynamicLinksManager.getDynamicLinkType(from: url) == .setPassword:
+        case "https" where DynamicLinksManager.getDynamicLinkType(from: url) != nil:
             DynamicLinksManager.handleDynamicLink(dynamicLink: url)
-            Store.trigger(name: .handleUserAccount)
             
             return true
             

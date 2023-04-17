@@ -10,7 +10,8 @@
 
 import UIKit
 
-private var touchSpamPreventedViews = [WrapperTableViewCell<FETextField>.self]
+private var touchSpamPreventedViews = [WrapperTableViewCell<FETextField>.self,
+                                       WrapperTableViewCell<NavigationItemView>.self]
 
 extension UIView {
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

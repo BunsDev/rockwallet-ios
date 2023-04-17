@@ -9,7 +9,7 @@
 import UIKit
 import LinkKit
 
-class SellViewController: BaseExchangeTableViewController<SellCoordinator,
+class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SellInteractor,
                           SellPresenter,
                           SellStore>,
@@ -21,9 +21,15 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
         return L10n.Sell.title
     }
     
-    var plaidHandler: Handler?
+    var plaidHandler: PlaidLinkKitHandler?
     
     // MARK: - Overrides
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Sell())
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -41,7 +47,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -65,9 +71,8 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     }
     
     func tableView(_ tableView: UITableView, swapMainCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<MainSwapView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? MainSwapViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? MainSwapViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -86,8 +91,7 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
+                self?.tableView.invalidateTableViewIntrinsicContentSize()
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -97,8 +101,8 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             return nil
         }
         
@@ -106,8 +110,8 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell
@@ -130,12 +134,12 @@ class SellViewController: BaseExchangeTableViewController<SellCoordinator,
     // MARK: - SellResponseDisplay
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        guard let section = sections.firstIndex(of: Models.Section.payoutMethod),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.payoutMethod.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
-        tableView.beginUpdates()
         cell.wrappedView.setup(with: responseDisplay.viewModel)
-        tableView.endUpdates()
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)

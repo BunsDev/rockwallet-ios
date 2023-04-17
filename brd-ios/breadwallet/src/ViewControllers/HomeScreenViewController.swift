@@ -75,22 +75,15 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         return view
     }()
     
-    private lazy var drawer: RWDrawer = {
-        let view = RWDrawer()
-        view.dismissActionPublisher.sink { [weak self] _ in
-            self?.animationView.play(fromProgress: 1, toProgress: 0)
-        }.store(in: &observers)
-        return view
-    }()
-    
     var didSelectCurrency: ((Currency) -> Void)?
     var didTapManageWallets: (() -> Void)?
     var didTapBuy: ((PaymentCard.PaymentType) -> Void)?
     var didTapSell: (() -> Void)?
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
-    var didTapProfileFromPrompt: ((Result<Profile?, Error>?) -> Void)?
+    var didTapProfileFromPrompt: (() -> Void)?
     var didTapCreateAccountFromPrompt: (() -> Void)?
+    var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
     var isInExchangeFlow = false
@@ -115,7 +108,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
                                  (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
-                                 (L10n.Drawer.title, nil, #selector(buy)),
+                                 // TODO: uncomment for drawer
+//                                 (L10n.Drawer.title, nil, #selector(buy)),
+                                 (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
                                  (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
     
@@ -146,9 +141,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         isRefreshing = true
         
-        UserManager.shared.refresh { [weak self] _ in
-            PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: self?.walletAuthenticator, on: self)
-        }
+        PromptPresenter.shared.attemptShowGeneralPrompt(walletAuthenticator: walletAuthenticator, on: self)
         
         Currencies.shared.reloadCurrencies()
         
@@ -164,6 +157,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         isInExchangeFlow = false
         ExchangeCurrencyHelper.revertIfNeeded()
+        
+        GoogleAnalytics.logEvent(GoogleAnalytics.Home())
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -256,11 +251,21 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
         
-        view.addSubview(drawer)
-        drawer.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
+        // TODO: Uncomment for drawer
+//        let drawerConfig = DrawerConfiguration()
+//        let drawerViewModel = DrawerViewModel()
+//        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
+//            self?.didTapDrawerButton(.card)
+//        }, { [weak self] in
+//            self?.didTapDrawerButton(.ach)
+//        }, { [weak self]
+//            in self?.didTapDrawerButton()
+//        }]
+//        setupDrawer(config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
+//            drawer.dismissActionPublisher.sink { [weak self] _ in
+//                self?.animationView.play(fromProgress: 1, toProgress: 0)
+//            }.store(in: &self.observers)
+//        }
         
         view.addSubview(tabBarContainerView)
         tabBarContainerView.addSubview(tabBar)
@@ -269,18 +274,19 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: 84)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: ViewSizes.bottomToolbarHeight.rawValue)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)
             make.leading.trailing.equalToSuperview()
         }
         
-        view.addSubview(animationView)
-        animationView.snp.makeConstraints { make in
-            make.centerX.equalTo(tabBar.snp.centerX)
-            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
-        }
+        // TODO: Uncomment for drawer
+//        view.addSubview(animationView)
+//        animationView.snp.makeConstraints { make in
+//            make.centerX.equalTo(tabBar.snp.centerX)
+//            make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
+//        }
     }
     
     private func setInitialData() {
@@ -289,21 +295,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         navigationItem.titleView = UIView()
         
         setupToolbar()
-        setupDrawer()
         updateTotalAssets()
         setupAnimationView()
-    }
-    
-    func setupDrawer() {
-        drawer.callbacks = [ { [weak self] in
-            self?.didTapDrawerButton(.card)
-        }, { [weak self] in
-            self?.didTapDrawerButton(.ach)
-        }, { [weak self]
-            in self?.didTapDrawerButton()
-        }]
-        drawer.configure(with: DrawerConfiguration())
-        drawer.setup(with: DrawerViewModel(drawerBottomOffset: 84))
     }
     
     private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
@@ -376,12 +369,24 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             PromptPresenter.shared.hidePrompt(.noAccount)
         })
         
+        Store.subscribe(self, name: .didSetTwoStep, callback: { _ in
+            PromptPresenter.shared.hidePrompt(.twoStep)
+        })
+        
         Store.subscribe(self, name: .promptKyc, callback: { _ in
-            self.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+            self.didTapProfileFromPrompt?()
         })
         
         Store.subscribe(self, name: .promptNoAccount, callback: { _ in
             self.didTapCreateAccountFromPrompt?()
+        })
+        
+        Store.subscribe(self, name: .promptTwoStep, callback: { _ in
+            // TODO: ENABLE 2FA
+        })
+        
+        Store.subscribe(self, name: .promptLimitsAuthentication, callback: { _ in
+            self.didTapLimitsAuthenticationFromPrompt?()
         })
         
         Reachability.addDidChangeCallback({ [weak self] isReachable in
@@ -402,7 +407,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         PromptPresenter.shared.trailingButtonCallback = { [weak self] promptType in
             switch promptType {
             case .kyc:
-                self?.didTapProfileFromPrompt?(UserManager.shared.profileResult)
+                self?.didTapProfileFromPrompt?()
                 
             case .noAccount:
                 self?.didTapCreateAccountFromPrompt?()
@@ -451,23 +456,27 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     // MARK: Actions
     
     @objc private func showHome() {
-        drawer.hide()
+        if drawerIsShown {
+            animationView.play(fromProgress: 1, toProgress: 0)
+        }
+        hideDrawer()
     }
     
     private func commonTapAction() {
-        guard drawer.isShown else { return }
-        
-        animationView.play(fromProgress: 1, toProgress: 0)
-        drawer.toggle()
+        if drawerIsShown {
+            animationView.play(fromProgress: 1, toProgress: 0)
+        }
+        hideDrawer()
     }
     
     @objc private func buy() {
-        if drawer.isShown {
-            animationView.play(fromProgress: 1, toProgress: 0)
-        } else {
-            animationView.play()
-        }
-        drawer.toggle()
+        didTapBuy?(.card)
+//        if drawerIsShown {
+//            animationView.play(fromProgress: 1, toProgress: 0)
+//        } else {
+//            animationView.play()
+//        }
+//        toggleDrawer()
     }
     
     @objc private func trade() {

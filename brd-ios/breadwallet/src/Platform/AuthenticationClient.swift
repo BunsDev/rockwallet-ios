@@ -13,7 +13,7 @@ import WalletKit
 
 /// Handles user authentication and JWT token generation
 struct AuthenticationClient {
-    static let defaultTokenExpiration = TimeInterval(C.secondsInDay * 7)
+    static let defaultTokenExpiration = TimeInterval(Constant.secondsInDay * 7)
     
     let baseURL: URL
     let urlSession: URLSession
@@ -23,7 +23,7 @@ struct AuthenticationClient {
     /// Authenticates a user with their key and returns the authenticated user credentials.
     func authenticate(apiKey: Key, clientToken: String, deviceId: String, completion: @escaping (Result<AuthUserCredentials, APIRequestError>) -> Void) {
         getUser(apiKey: apiKey, clientToken: clientToken, deviceId: deviceId) { result in
-            completion(result.map { AuthUserCredentials(userId: $0.userId, userToken: $0.token, clientToken: $0.clientToken) })
+            completion(result.map { AuthUserCredentials(userToken: $0.token, clientToken: $0.clientToken) })
         }
     }
 
@@ -129,7 +129,6 @@ struct AuthenticationClient {
     }
     
     fileprivate struct AuthUser: Codable {
-        let userId: String
         let created: Date
         let lastAccess: Date
         let clientToken: String
@@ -143,7 +142,6 @@ struct AuthenticationClient {
 
 /// An authenticated user and credentials for generating a JWT
 struct AuthUserCredentials: Codable {
-    let userId: String
     let userToken: String
     let clientToken: String
 }

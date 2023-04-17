@@ -10,7 +10,7 @@
 
 import UIKit
 
-class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
+class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SwapInteractor,
                           SwapPresenter,
                           SwapStore>,
@@ -40,7 +40,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-        switch sections[indexPath.section] as? Models.Section {
+        switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
@@ -61,9 +61,8 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     }
     
     func tableView(_ tableView: UITableView, swapMainCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = sections[indexPath.section]
         guard let cell: WrapperTableViewCell<MainSwapView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = sectionRows[section]?[indexPath.row] as? MainSwapViewModel
+              let model = dataSource?.itemIdentifier(for: indexPath) as? MainSwapViewModel
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -110,8 +109,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
             }
             
             view.contentSizeChanged = { [weak self] in
-                self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
+                self?.tableView.invalidateTableViewIntrinsicContentSize()
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -121,8 +119,8 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(of: Models.Section.rateAndTimer),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
             return nil
         }
         
@@ -130,8 +128,8 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     }
     
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(of: Models.Section.accountLimits),
-              let cell = tableView.cellForRow(at: .init(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
         return cell
@@ -142,6 +140,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
+        hideToastMessage()
         interactor?.showConfirmation(viewAction: .init())
     }
     
@@ -155,7 +154,6 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
         guard let error = responseDisplay.error as? ExchangeErrors else {
-            hideToastMessage()
             return
         }
         
@@ -164,7 +162,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
             displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
         case .failed:
-            coordinator?.showFailure()
+            coordinator?.showFailure(reason: .swap)
             
         default:
             coordinator?.showToastMessage(with: responseDisplay.error,
@@ -175,6 +173,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {
         view.endEditing(true)
+        hideToastMessage()
         
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: responseDisplay.to ?? responseDisplay.from,
@@ -208,6 +207,7 @@ class SwapViewController: BaseExchangeTableViewController<SwapCoordinator,
     
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay) {
         LoadingView.hideIfNeeded()
+        hideToastMessage()
         coordinator?.showSwapInfo(from: responseDisplay.from, to: responseDisplay.to, exchangeId: responseDisplay.exchangeId)
     }
     

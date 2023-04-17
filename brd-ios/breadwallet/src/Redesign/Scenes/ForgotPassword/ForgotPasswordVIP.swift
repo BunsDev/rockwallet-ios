@@ -34,7 +34,7 @@ protocol ForgotPasswordDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol ForgotPasswordDataPassing {
-    var dataStore: ForgotPasswordDataStore? { get }
+    var dataStore: (any ForgotPasswordDataStore)? { get }
 }
 
 protocol ForgotPasswordRoutes: CoordinatableRoutes {

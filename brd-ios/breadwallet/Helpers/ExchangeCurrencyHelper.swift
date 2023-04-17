@@ -12,7 +12,7 @@ import Foundation
 
 struct ExchangeCurrencyHelper {
     static func setUSDifNeeded(completion: (() -> Void)) {
-        guard Store.state.defaultCurrencyCode != C.usdCurrencyCode else {
+        guard Store.state.defaultCurrencyCode != Constant.usdCurrencyCode else {
             completion()
             
             return
@@ -20,14 +20,14 @@ struct ExchangeCurrencyHelper {
         
         UserDefaults.temporaryDefaultCurrencyCode = Store.state.defaultCurrencyCode
         
-        Store.perform(action: DefaultCurrency.SetDefault(C.usdCurrencyCode))
+        Store.perform(action: DefaultCurrency.SetDefault(Constant.usdCurrencyCode))
         
         completion()
     }
     
     static func revertIfNeeded(coordinator: CoordinatableRoutes? = nil, completion: (() -> Void)? = nil) {
         if let coordinator = coordinator {
-            guard coordinator.isKind(of: SwapCoordinator.self) || coordinator.isKind(of: BuyCoordinator.self) else {
+            guard coordinator.isKind(of: ExchangeCoordinator.self) else {
                 completion?()
                 
                 return

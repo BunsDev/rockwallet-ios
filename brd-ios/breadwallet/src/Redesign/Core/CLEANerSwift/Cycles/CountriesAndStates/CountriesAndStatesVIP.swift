@@ -9,6 +9,7 @@
 //
 
 import Foundation
+import PhoneNumberKit
 
 protocol CountriesAndStatesViewActions: FetchViewActions {
     func pickCountry(viewAction: CountriesAndStatesModels.SelectCountry.ViewAction)
@@ -43,7 +44,7 @@ extension Interactor where Self: CountriesAndStatesViewActions,
     
     func pickCountry(viewAction: CountriesAndStatesModels.SelectCountry.ViewAction) {
         guard viewAction.iso2 == nil else {
-            dataStore?.country = .init(iso2: viewAction.iso2 ?? "", name: viewAction.countryFullName ?? "")
+            dataStore?.country = .init(iso2: viewAction.iso2 ?? "", name: viewAction.countryFullName ?? "", areaCode: viewAction.areaCode)
             dataStore?.state = nil
             
             presenter?.presentData(actionResponse: .init(item: dataStore))
@@ -55,7 +56,8 @@ extension Interactor where Self: CountriesAndStatesViewActions,
             switch result {
             case .success(let data):
                 self?.dataStore?.countries = data ?? []
-                self?.presenter?.presentCountry(actionResponse: .init(countries: data))
+                
+                self?.presenter?.presentCountry(actionResponse: .init(countries: self?.dataStore?.countries))
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -67,10 +69,10 @@ extension Interactor where Self: CountriesAndStatesViewActions,
         guard viewAction.code == nil else {
             dataStore?.state = .init(iso2: viewAction.code ?? "", name: viewAction.state ?? "")
             presenter?.presentData(actionResponse: .init(item: dataStore))
-             return
+            return
         }
         
-        let states = dataStore?.countries.first(where: { $0.iso2 == C.countryUS })?.states
+        let states = dataStore?.countries.first(where: { $0.iso2 == Constant.countryUS })?.states
         guard states == nil else {
             presenter?.presentState(actionResponse: .init(states: states))
             return
@@ -80,7 +82,7 @@ extension Interactor where Self: CountriesAndStatesViewActions,
             switch result {
             case .success(let data):
                 self?.dataStore?.countries = data ?? []
-                let states = self?.dataStore?.countries.first(where: { $0.iso2 == C.countryUS })?.states
+                let states = self?.dataStore?.countries.first(where: { $0.iso2 == Constant.countryUS })?.states
                 self?.presenter?.presentState(actionResponse: .init(states: states))
                 
             case .failure(let error):
@@ -94,7 +96,19 @@ extension Presenter where Self: CountriesAndStatesActionResponses,
                            Self.ResponseDisplays: CountriesAndStatesResponseDisplays {
     
     func presentCountry(actionResponse: CountriesAndStatesModels.SelectCountry.ActionResponse) {
-        guard let countries = actionResponse.countries else { return }
+        guard var countries = actionResponse.countries else { return }
+        
+        if self.isKind(of: VerifyPhoneNumberPresenter.self) == true {
+            let phoneNumberKit = PhoneNumberKit()
+            
+            countries.indices.forEach { index in
+                let areaCode = String(phoneNumberKit.countryCode(for: countries[index].iso2) ?? 0)
+                
+                countries[index].areaCode = areaCode
+                countries[index].name = "+" + areaCode + " " + countries[index].name
+            }
+        }
+        
         viewController?.displayCountry(responseDisplay: .init(countries: countries))
     }
     
@@ -107,10 +121,9 @@ extension Presenter where Self: CountriesAndStatesActionResponses,
 extension Controller where Self: CountriesAndStatesResponseDisplays,
                            Self.ViewActions: CountriesAndStatesViewActions,
                            Self.Coordinator: CountriesAndStatesRoutes {
-    
     func displayCountry(responseDisplay: CountriesAndStatesModels.SelectCountry.ResponseDisplay) {
         coordinator?.showCountrySelector(countries: responseDisplay.countries) { [weak self] model in
-            self?.interactor?.pickCountry(viewAction: .init(iso2: model?.iso2, countryFullName: model?.name))
+            self?.interactor?.pickCountry(viewAction: .init(areaCode: model?.areaCode, iso2: model?.iso2, countryFullName: model?.name))
         }
     }
     

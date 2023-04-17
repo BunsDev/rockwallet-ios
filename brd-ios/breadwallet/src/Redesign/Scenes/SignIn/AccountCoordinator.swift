@@ -8,27 +8,32 @@
 
 import UIKit
 
-class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
+class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, ForgotPasswordRoutes, SetPasswordRoutes {
     // MARK: - RegistrationRoutes
     
     override func start() {
         if DynamicLinksManager.shared.code != nil {
             showSetPassword()
-            return
+        } else if UserManager.shared.profile?.status == .emailPending {
+            showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
+            // TODO: ENABLE 2FA
+//        } else if !UserManager.shared.hasTwoStepAuth {
+//            showVerifyPhoneNumber()
+//            showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStep)
+        } else {
+            showSignUp()
         }
-        
-        if UserManager.shared.profile?.status == .emailPending {
-            showRegistrationConfirmation(isModalDismissable: true)
-            return
-        }
-        
-        showSignUp()
     }
     
-    func showRegistrationConfirmation(isModalDismissable: Bool) {
+    func showRegistrationConfirmation(isModalDismissable: Bool, confirmationType: RegistrationConfirmationModels.ConfirmationType) {
         open(scene: Scenes.RegistrationConfirmation) { vc in
+            vc.dataStore?.confirmationType = confirmationType
             vc.isModalDismissable = isModalDismissable
         }
+    }
+    
+    func showVerifyPhoneNumber() {
+        open(scene: Scenes.VerifyPhoneNumber)
     }
     
     func showChangeEmail() {
@@ -62,7 +67,6 @@ class AccountCoordinator: BaseCoordinator, SignInRoutes, SignUpRoutes, ForgotPas
     func showDeleteProfile(with keyMaster: KeyStore) {
         open(scene: Scenes.DeleteProfileInfo) { vc in
             vc.dataStore?.keyMaster = keyMaster
-            vc.prepareData()
         }
     }
     

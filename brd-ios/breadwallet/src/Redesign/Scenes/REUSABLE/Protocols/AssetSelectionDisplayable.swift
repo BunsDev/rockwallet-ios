@@ -27,14 +27,15 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
                                       $0.code.uppercased())
             let bottomRightText = String(format: "%@ %@",
                                          ExchangeFormatter.fiat.string(for: $0.state?.balance?.fiatValue) ?? "",
-                                         C.usdCurrencyCode)
+                                         Constant.usdCurrencyCode)
             
             return AssetViewModel(icon: $0.imageSquareBackground,
                                   title: $0.name,
                                   subtitle: $0.code,
                                   topRightText: topRightText,
                                   bottomRightText: bottomRightText,
-                                  isDisabled: isDisabledAsset(code: $0.code, supportedCurrencies: supportedCurrencies) ?? false)
+                                  isDisabled: isDisabledAsset(code: $0.code, supportedCurrencies: supportedCurrencies) ?? false,
+                                  isDisabledReason: L10n.Swap.assetSelectionMessage)
         }
         
         let unsupportedAssets = supportedAssets.filter { item in !(data?.contains(where: { $0.subtitle?.lowercased() == item.code }) ?? false) }
@@ -43,7 +44,8 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
             return AssetViewModel(icon: $0.imageSquareBackground,
                                   title: $0.name,
                                   subtitle: $0.code.uppercased(),
-                                  isDisabled: true)
+                                  isDisabled: true,
+                                  isDisabledReason: L10n.Swap.sameAssetMessage)
         }
         
         data?.append(contentsOf: disabledData ?? [])
@@ -56,7 +58,6 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
             vc?.dataStore?.items = sortedCurrencies ?? []
             vc?.dataStore?.sceneTitle = title
             vc?.itemSelected = selected
-            vc?.prepareData()
         }
     }
     

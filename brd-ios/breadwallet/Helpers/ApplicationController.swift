@@ -10,9 +10,12 @@ import UIKit
 import WalletKit
 import UserNotifications
 import IQKeyboardManagerSwift
+import Firebase
 #if canImport(WidgetKit)
 import WidgetKit
 #endif
+
+// swiftlint:disable type_body_length
 
 class ApplicationController: Subscriber {
     let window = UIWindow()
@@ -52,6 +55,7 @@ class ApplicationController: Subscriber {
     private var appRatingManager = AppRatingManager()
     private var backgroundTaskID: UIBackgroundTaskIdentifier = .invalid
     private var shouldDisableBiometrics = false
+    private var veriffKYCManager: VeriffKYCManager?
     
     private var isReachable = true {
         didSet {
@@ -77,6 +81,8 @@ class ApplicationController: Subscriber {
     /// didFinishLaunchingWithOptions
     func launch(application: UIApplication, options: [UIApplication.LaunchOptionsKey: Any]?) {
         handleLaunchOptions(options)
+        
+        FirebaseApp.configure()
         
         UNUserNotificationCenter.current().delegate = notificationHandler
 
@@ -119,7 +125,7 @@ class ApplicationController: Subscriber {
     private func decideFlow() {
 //         Override point for direct VC opening (Dev helper)
 //        guardProtected {
-//            self.coordinator?.openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCAddress) { vc in
+//            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
 //                // configure
 //            }
 //        }
@@ -162,6 +168,8 @@ class ApplicationController: Subscriber {
     
     private func enterOnboarding() {
         guardProtected {
+            GoogleAnalytics.logEvent(GoogleAnalytics.OnBoarding())
+            
             guard let startFlowController = self.startFlowController, self.keyStore.noWallet else { return }
             startFlowController.startOnboarding { [unowned self] account in
                 self.setupSystem(with: account)
@@ -248,7 +256,7 @@ class ApplicationController: Subscriber {
     private func setupDefaults() {
         if UserDefaults.standard.object(forKey: shouldRequireLoginTimeoutKey) == nil {
             // Default 3 min timeout.
-            UserDefaults.standard.set(C.secondsInMinute*3.0, forKey: shouldRequireLoginTimeoutKey)
+            UserDefaults.standard.set(Constant.secondsInMinute*3.0, forKey: shouldRequireLoginTimeoutKey)
         }
     }
     
@@ -267,7 +275,7 @@ class ApplicationController: Subscriber {
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
                 guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
-                Store.trigger(name: .handleUserAccount)
+                self.triggerDeeplinkHandling()
             }
         }
     }
@@ -362,23 +370,21 @@ class ApplicationController: Subscriber {
     }
     
     private func afterLoginFlow() {
-        Store.subscribe(self, name: .handleUserAccount, callback: { _ in
-            self.coordinator?.handleUserAccount()
-        })
+        Store.subscribe(self, name: .handleDeeplink) { _ in
+            self.coordinator?.prepareForDeeplinkHandling(coreSystem: self.coreSystem, keyStore: self.keyStore)
+        }
         
         UserManager.shared.refresh { [weak self] result in
             switch result {
-            case .success(let profile):
-                guard profile?.isMigrated == false else { return }
-                
-                Store.trigger(name: .handleUserAccount)
+            case .success:
+                self?.triggerDeeplinkHandling()
                 
             case .failure(let error):
                 self?.coordinator?.showToastMessage(with: error)
                 
                 guard self?.isReachable == true else { return }
                 
-                Store.trigger(name: .handleUserAccount)
+                self?.triggerDeeplinkHandling()
                 
             default:
                 return
@@ -386,16 +392,29 @@ class ApplicationController: Subscriber {
         }
     }
     
+    private func triggerDeeplinkHandling() {
+        guard UserManager.shared.profile != nil else {
+            coordinator?.handleUserAccount()
+            return
+        }
+        
+        guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
+        Store.trigger(name: .handleDeeplink)
+    }
+    
     private func addHomeScreenHandlers(homeScreen: HomeScreenViewController,
                                        navigationController: UINavigationController) {
         homeScreen.didSelectCurrency = { [unowned self] currency in
             let wallet = self.coreSystem.wallet(for: currency)
-            let accountViewController = AccountViewController(currency: currency, wallet: wallet)
-            navigationController.pushViewController(accountViewController, animated: true)
+            let assetDetailsViewController = AssetDetailsViewController(currency: currency, wallet: wallet)
+            assetDetailsViewController.coordinator = self.coordinator
+            assetDetailsViewController.keyStore = self.keyStore
+            assetDetailsViewController.coreSystem = self.coreSystem
+            navigationController.pushViewController(assetDetailsViewController, animated: true)
         }
         
         homeScreen.didTapBuy = { [weak self] type in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -406,17 +425,19 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapSell = { [weak self] in
             guard let self = self,
-                  let token = Store.state.currencies.first(where: { $0.code == C.USDT })
-            else { return }
+                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else {
+                return
+            }
             
             self.homeScreenViewController?.isInExchangeFlow = true
+            
             self.coordinator?.showSell(for: token,
                                        coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         
         homeScreen.didTapTrade = { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
@@ -429,12 +450,8 @@ class ApplicationController: Subscriber {
             self?.coordinator?.showProfile()
         }
         
-        didTapDeleteAccount = { [unowned self] in
-            coordinator?.showDeleteProfileInfo(keyMaster: keyStore)
-        }
-        
-        homeScreen.didTapProfileFromPrompt = { [unowned self] profile in
-            switch profile {
+        homeScreen.didTapProfileFromPrompt = { [unowned self] in
+            switch UserManager.shared.profileResult {
             case .success:
                 coordinator?.showAccountVerification()
                 
@@ -447,6 +464,23 @@ class ApplicationController: Subscriber {
             self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
         }
         
+        homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
+            LoadingView.show()
+            veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)
+            let requestData = VeriffSessionRequestData(quoteId: nil, isBiometric: true, biometricType: .pendingLimits)
+            veriffKYCManager?.showExternalKYCForLivenessCheck(livenessCheckData: requestData) { [weak self] result in
+                switch result.status {
+                case .done:
+                    BiometricStatusHelper.shared.checkBiometricStatus(resetCounter: true) { error in
+                        self?.handleBiometricStatus(approved: error == nil)
+                    }
+                    
+                default:
+                    self?.handleBiometricStatus(approved: false)
+                }
+            }
+        }
+        
         homeScreen.didTapMenu = { [unowned self] in
             self.modalPresenter?.presentMenu()
         }
@@ -457,6 +491,21 @@ class ApplicationController: Subscriber {
             let nc = RootNavigationController(rootViewController: vc)
             navigationController.present(nc, animated: true, completion: nil)
         }
+        
+        didTapDeleteAccount = { [unowned self] in
+            coordinator?.showDeleteProfileInfo(keyMaster: keyStore)
+        }
+    }
+    
+    private func handleBiometricStatus(approved: Bool) {
+        LoadingView.hideIfNeeded()
+        
+        guard approved else {
+            coordinator?.showFailure(reason: .limitsAuthentication)
+            return
+        }
+        
+        coordinator?.showSuccess(reason: .limitsAuthentication)
     }
     
     /// Creates an instance of the home screen. This may be invoked from StartFlowPresenter.presentOnboardingFlow().
@@ -577,3 +626,5 @@ extension ApplicationController {
         }
     }
 }
+
+// swiftlint:enable type_body_length
