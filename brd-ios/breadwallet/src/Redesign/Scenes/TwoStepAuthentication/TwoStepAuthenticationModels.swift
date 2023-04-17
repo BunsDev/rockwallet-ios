@@ -15,10 +15,8 @@ enum TwoStepAuthenticationModels {
     
     enum Section: Sectionable {
         case instructions
-        case methods
-        case additionalMethods
-        case settingsTitle
-        case settings
+        case email
+        case app
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }

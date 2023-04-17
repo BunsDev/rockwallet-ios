@@ -24,6 +24,7 @@ protocol TwoStepAuthenticationResponseDisplays: AnyObject, BaseResponseDisplays,
 }
 
 protocol TwoStepAuthenticationDataStore: BaseDataStore, FetchDataStore {
+    var keyStore: KeyStore? { get set }
 }
 
 protocol TwoStepAuthenticationDataPassing {

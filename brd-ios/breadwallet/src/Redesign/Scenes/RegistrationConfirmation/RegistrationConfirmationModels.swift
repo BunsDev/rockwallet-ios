@@ -24,8 +24,8 @@ enum RegistrationConfirmationModels {
     
     enum ConfirmationType: Hashable {
         case account
-        case twoStep
-        case authenticationCode
+        case twoStepEmail
+        case twoStepApp
     }
     
     struct Validate {

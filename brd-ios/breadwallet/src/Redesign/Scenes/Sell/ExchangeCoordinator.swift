@@ -11,12 +11,6 @@ import UIKit
 import WalletKit
 
 class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, OrderPreviewRoutes, BillingAddressRoutes, AssetSelectionDisplayable {
-    func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {
-        ExchangeAuthHelper.showPinInput(on: navigationController,
-                                        keyStore: keyStore,
-                                        callback: callback)
-    }
-    
     func showOrderPreview(type: PreviewType? = .buy,
                           coreSystem: CoreSystem?,
                           keyStore: KeyStore?,

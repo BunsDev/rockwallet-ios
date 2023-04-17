@@ -64,6 +64,7 @@ class ApplicationController: Subscriber {
     }
 
     var didTapDeleteAccount: (() -> Void)?
+    var didTapTwoStepAuth: (() -> Void)?
     
     // MARK: - Init/Launch
 
@@ -111,7 +112,8 @@ class ApplicationController: Subscriber {
                                         system: coreSystem,
                                         window: window,
                                         alertPresenter: alertPresenter,
-                                        deleteAccountCallback: didTapDeleteAccount)
+                                        deleteAccountCallback: didTapDeleteAccount,
+                                        twoStepAuthCallback: didTapTwoStepAuth)
         appRatingManager.start()
         setupSubscribers()
         
@@ -211,7 +213,8 @@ class ApplicationController: Subscriber {
                                                          system: self.coreSystem,
                                                          window: self.window,
                                                          alertPresenter: self.alertPresenter,
-                                                         deleteAccountCallback: self.didTapDeleteAccount)
+                                                         deleteAccountCallback: self.didTapDeleteAccount,
+                                                         twoStepAuthCallback: self.didTapTwoStepAuth)
                     self.coreSystem.connect()
                     
                     self.wipeWalletIfNeeded()
@@ -494,6 +497,10 @@ class ApplicationController: Subscriber {
         
         didTapDeleteAccount = { [unowned self] in
             coordinator?.showDeleteProfileInfo(keyMaster: keyStore)
+        }
+        
+        didTapTwoStepAuth = { [unowned self] in
+            coordinator?.showTwoStepAuthentication(keyStore: keyStore)
         }
     }
     

@@ -21,15 +21,15 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         
         presenter?.presentData(actionResponse: .init(item: confirmationType))
         
-        // TODO: ENABLE 2FA
-//        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
-//            switch result {
-//            case .success(let data):
-//                break
-//            case .failure(let error):
-//                break
-//            }
-//        }
+        // TODO: REMOVE
+        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
+            switch result {
+            case .success(let data):
+                break
+            case .failure(let error):
+                break
+            }
+        }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {
@@ -47,8 +47,11 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .account:
             executeRegistrationConfirmation()
             
-        case .twoStep:
-            executeSetTwoStepPhone()
+        case .twoStepEmail:
+            executeSetTwoStepEmail()
+            
+        case .twoStepApp:
+            break
             
         default:
             break
@@ -72,6 +75,21 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     private func executeSetTwoStepPhone() {
         let data = SetTwoStepPhoneCodeRequestData(code: dataStore?.code)
         SetTwoStepPhoneCodeWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success:
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
+    private func executeSetTwoStepEmail() {
+        let data = SetTwoStepEmailRequestData(updateCode: dataStore?.code)
+        SetTwoStepEmailWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
                 UserManager.shared.refresh { _ in

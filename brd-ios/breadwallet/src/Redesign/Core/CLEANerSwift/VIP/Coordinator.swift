@@ -165,6 +165,12 @@ class BaseCoordinator: NSObject, Coordinatable {
         UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
     }
     
+    func showTwoStepAuthentication(keyStore: KeyStore?) {
+        openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
+            vc?.dataStore?.keyStore = keyStore
+        }
+    }
+    
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
         open(scene: Scenes.ExchangeDetails) { vc in
             vc.navigationItem.hidesBackButton = true
@@ -218,21 +224,21 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     /// Only call from coordinator subclasses
-    func open<T: BaseControllable>(scene: T.Type,
-                                   presentationStyle: UIModalPresentationStyle = .fullScreen,
-                                   configure: ((T) -> Void)? = nil) {
-        let controller = T()
-        controller.coordinator = (self as? T.CoordinatorType)
+    func open<VC: BaseControllable>(scene: VC.Type,
+                                    presentationStyle: UIModalPresentationStyle = .fullScreen,
+                                    configure: ((VC) -> Void)? = nil) {
+        let controller = VC()
+        controller.coordinator = (self as? VC.CoordinatorType)
         configure?(controller)
         navigationController.modalPresentationStyle = presentationStyle
         navigationController.show(controller, sender: nil)
     }
     
     /// Only call from coordinator subclasses
-    func set<C: BaseCoordinator,
-             VC: BaseControllable>(coordinator: C.Type,
-                                   scene: VC.Type,
-                                   configure: ((VC?) -> Void)? = nil) {
+    func open<C: BaseCoordinator,
+              VC: BaseControllable>(coordinator: C.Type,
+                                    scene: VC.Type,
+                                    configure: ((VC?) -> Void)? = nil) {
         let controller = VC()
         let coordinator = C(navigationController: navigationController)
         controller.coordinator = coordinator as? VC.CoordinatorType
@@ -241,7 +247,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         
-        navigationController.setViewControllers([controller], animated: true)
+        navigationController.show(controller, sender: nil)
     }
     
     /// Only call from coordinator subclasses
@@ -635,6 +641,12 @@ class BaseCoordinator: NSObject, Coordinatable {
                 break
             }
         }
+    }
+    
+    func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {
+        ExchangeAuthHelper.showPinInput(on: navigationController,
+                                        keyStore: keyStore,
+                                        callback: callback)
     }
     
     func prepareForDeeplinkHandling(coreSystem: CoreSystem, keyStore: KeyStore) {

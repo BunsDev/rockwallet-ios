@@ -18,13 +18,17 @@ class ModalPresenter: Subscriber {
     
     // MARK: - Public
     
-    init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?, deleteAccountCallback: (() -> Void)?) {
+    init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?,
+         deleteAccountCallback: (() -> Void)?,
+         twoStepAuthCallback: (() -> Void)?) {
         self.system = system
         self.window = window
         self.alertPresenter = alertPresenter
         self.deleteAccountCallback = deleteAccountCallback
+        self.twoStepAuthCallback = twoStepAuthCallback
         self.keyStore = keyStore
         self.modalTransitionDelegate = ModalTransitionDelegate(type: .regular)
+        
         addSubscriptions()
     }
     
@@ -37,6 +41,7 @@ class ModalPresenter: Subscriber {
     private let keyStore: KeyStore
     private var alertPresenter: AlertPresenter?
     private var deleteAccountCallback: (() -> Void)?
+    private var twoStepAuthCallback: (() -> Void)?
     private let modalTransitionDelegate: ModalTransitionDelegate
     private let messagePresenter = MessageUIPresenter()
     private let verifyPinTransitionDelegate = PinTransitioningDelegate()
@@ -1102,15 +1107,10 @@ class ModalPresenter: Subscriber {
                 self.presentBiometricsMenuItem()
             },
             
-            // TODO: ENABLE 2FA
             // Two-Factor Authentication (2FA)
-//            MenuItem(title: "Two-Factor Authentication (2FA)") { [weak self] in
-//                guard let self = self else { return }
-//                let biometricsSettings = TwoStepAuthenticationViewController()
-//                let nc = RootNavigationController(rootViewController: biometricsSettings)
-//                biometricsSettings.addCloseNavigationItem()
-//                self.topViewController?.present(nc, animated: true)
-//            },
+            MenuItem(title: "Two-Factor Authentication (2FA)") { [weak self] in
+                self?.twoStepAuthCallback?()
+            },
             
             // Paper key
             MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in
