@@ -16,13 +16,16 @@ extension Scenes {
 
 protocol AuthenticatorAppViewActions: BaseViewActions, FetchViewActions {
     func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction)
+    func next(viewAction: AuthenticatorAppModels.Next.ViewAction)
 }
 
 protocol AuthenticatorAppActionResponses: BaseActionResponses, FetchActionResponses {
     func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse)
+    func presentNext(actionResponse: AuthenticatorAppModels.Next.ActionResponse)
 }
 
 protocol AuthenticatorAppResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+    func displayNext(responseDisplay: AuthenticatorAppModels.Next.ResponseDisplay)
 }
 
 protocol AuthenticatorAppDataStore: BaseDataStore, FetchDataStore {

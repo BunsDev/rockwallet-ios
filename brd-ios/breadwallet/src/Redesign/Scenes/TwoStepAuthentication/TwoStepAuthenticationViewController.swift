@@ -56,8 +56,9 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                     switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
                     case .email:
                         self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                        
                     case .app:
-                        break
+                        self.coordinator?.showAuthenticatorApp()
                         
                     default:
                         break

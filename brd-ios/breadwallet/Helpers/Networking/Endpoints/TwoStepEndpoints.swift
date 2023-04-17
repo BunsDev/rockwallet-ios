@@ -15,6 +15,7 @@ enum TwoStepEndpoints: String, URLType {
     
     case settings
     case change
+    case exchange
     case phone
     case phoneConfirm = "phone/confirm"
     case email

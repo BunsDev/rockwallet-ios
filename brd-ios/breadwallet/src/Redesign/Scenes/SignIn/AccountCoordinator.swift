@@ -34,6 +34,14 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.VerifyPhoneNumber)
     }
     
+    func showAuthenticatorApp() {
+        open(scene: Scenes.AuthenticatorApp)
+    }
+    
+    func showBackupCodes() {
+        open(scene: Scenes.BackupCodes)
+    }
+    
     func showChangeEmail() {
         open(scene: Scenes.SignUp)
     }

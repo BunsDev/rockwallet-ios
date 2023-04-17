@@ -130,7 +130,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
                 })
                 
             case .twoStepApp:
-                break
+                self.coordinator?.showBackupCodes()
                 
             default:
                 break

@@ -9,3 +9,36 @@
 //
 
 import Foundation
+
+struct TwoStepExchangeRequestData: RequestModelData {
+    let code: String?
+    
+    func getParameters() -> [String: Any] {
+        return ["code": code ?? ""]
+    }
+}
+
+struct TwoStepExchangeResponseData: ModelResponse {
+    let updateCode: String?
+}
+
+struct TwoStepExchange: Model {
+    let updateCode: String
+    
+}
+
+class TwoStepExchangeMapper: ModelMapper<TwoStepExchangeResponseData, TwoStepExchange> {
+    override func getModel(from response: TwoStepExchangeResponseData?) -> TwoStepExchange? {
+        return .init(updateCode: response?.updateCode ?? "")
+    }
+}
+
+class TwoStepExchangeWorker: BaseApiWorker<TwoStepExchangeMapper> {
+    override func getUrl() -> String {
+        return TwoStepEndpoints.exchange.url
+    }
+    
+    override func getMethod() -> HTTPMethod {
+        return .post
+    }
+}

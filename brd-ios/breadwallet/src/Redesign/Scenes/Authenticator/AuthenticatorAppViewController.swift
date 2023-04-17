@@ -48,11 +48,40 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-        case .instructions, .description:
+        case .importWithLink:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            
+            cell.setBackground(with: Presets.Background.transparent)
+            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.setBackground(with: .init(backgroundColor: LightColors.Background.two,
+                                                                                            tintColor: LightColors.Background.two,
+                                                                                            border: .init(borderWidth: 0,
+                                                                                                          cornerRadius: CornerRadius.common)))
+            cell.contentView.setupCustomMargins(vertical: .large, horizontal: .large)
+            
+            let wrappedCell = cell as? WrapperTableViewCell<FELabel>
+            wrappedCell?.isUserInteractionEnabled = true
+            wrappedCell?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(importWithLinkTapped(_:))))
+            
+        case .divider:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            
+            cell.setupCustomMargins(vertical: .large, horizontal: .large)
+            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Subtitle.two,
+                                                                                        textColor: LightColors.Text.three,
+                                                                                        textAlignment: .center,
+                                                                                        numberOfLines: 1))
+            
+        case .instructions:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
+            
+            cell.setBackground(with: Presets.Background.transparent)
+            cell.setupCustomMargins(vertical: .large, horizontal: .large)
             
         case .qrCode:
             cell = self.tableView(tableView, coverCellForRowAt: indexPath)
+            
+            cell.setBackground(with: Presets.Background.transparent)
+            cell.setupCustomMargins(vertical: .large, horizontal: .large)
             
             (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.snp.makeConstraints({ make in
                 make.height.equalTo(ViewSizes.extraExtraHuge.rawValue * 2)
@@ -61,15 +90,18 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
         case .enterCodeManually:
             cell = self.tableView(tableView, enterCodeCellForRowAt: indexPath)
             
+            cell.setBackground(with: Presets.Background.transparent)
+            cell.setupCustomMargins(vertical: .large, horizontal: .large)
+            
         case .copyCode:
             cell = self.tableView(tableView, copyCodeCellForRowAt: indexPath)
-        
+            
+            cell.setBackground(with: Presets.Background.transparent)
+            cell.setupCustomMargins(vertical: .large, horizontal: .large)
+            
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
         }
-        
-        cell.setBackground(with: Presets.Background.transparent)
-        cell.setupCustomMargins(vertical: .large, horizontal: .large)
         
         return cell
     }
@@ -113,10 +145,18 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
     override func buttonTapped() {
         super.buttonTapped()
         
-        // TODO: Add continue action
+        interactor?.next(viewAction: .init())
+    }
+    
+    @objc private func importWithLinkTapped(_ sender: Any) {
+        
     }
 
     // MARK: - AuthenticatorAppResponseDisplay
-
+    
+    func displayNext(responseDisplay: AuthenticatorAppModels.Next.ResponseDisplay) {
+        coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepApp)
+    }
+    
     // MARK: - Additional Helpers
 }

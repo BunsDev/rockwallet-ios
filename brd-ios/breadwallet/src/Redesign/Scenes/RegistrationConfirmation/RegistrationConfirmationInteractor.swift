@@ -59,7 +59,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             executeSetTwoStepEmail()
             
         case .twoStepApp:
-            break
+            executeSetTwoStepApp()
             
         default:
             break
@@ -83,6 +83,21 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     private func executeSetTwoStepPhone() {
         let data = SetTwoStepPhoneCodeRequestData(code: dataStore?.code)
         SetTwoStepPhoneCodeWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success:
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
+    private func executeSetTwoStepApp() {
+        let data = TwoStepExchangeRequestData(code: dataStore?.code)
+        TwoStepExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
                 UserManager.shared.refresh { _ in

@@ -103,7 +103,11 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
     override func buttonTapped() {
         super.buttonTapped()
         
-        // TODO: Add continue action
+        coordinator?.popToRoot(completion: { [weak self] in
+            self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text("2FA Successfully set up"),
+                                                                     dismissType: .auto),
+                                                configuration: Presets.InfoView.warning)
+        })
     }
     
     private func getCodesTapped() {

@@ -15,18 +15,27 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
 
     weak var viewController: AuthenticatorAppViewController?
     
+    // MARK: - AuthenticatorAppActionResponses
+    
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let sections: [Models.Section] = [
+            .importWithLink,
+            .divider,
             .instructions,
             .qrCode,
             .enterCodeManually,
-            .copyCode,
-            .description
+            .copyCode
         ]
-        // TODO: Get the code from BE
+        
         let code = "06N6 YMJQ Q4SX 2LBI P6BS TQ2C LFYA"
         
         let sectionRows: [Models.Section: [any Hashable]] = [
+            .importWithLink: [
+                LabelViewModel.attributedText(generateImportLinkText())
+            ],
+            .divider: [
+                LabelViewModel.text("OR")
+            ],
             .instructions: [
                 LabelViewModel.text(L10n.Authentication.instructions)
             ],
@@ -41,16 +50,15 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
                 OrderViewModel(title: "",
                                value: AuthenticatorAppPresenter.generateAttributedCopyValue(with: code, isCopyable: true),
                                isCopyable: true)
-            ],
-            .description: [
-                LabelViewModel.text(L10n.Authentication.description)
             ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
-
-    // MARK: - AuthenticatorAppActionResponses
+    
+    func presentNext(actionResponse: AuthenticatorAppModels.Next.ActionResponse) {
+        viewController?.displayNext(responseDisplay: .init())
+    }
     
     func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse) {
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
@@ -86,5 +94,27 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
             return UIImage(ciImage: qrImage)
         }
         return nil
+    }
+    
+    private func generateImportLinkText() -> NSAttributedString {
+        let importTitle = "Using an authenticator app?"
+        let importAction = "Import with link"
+        let partOneAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: LightColors.Text.one,
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.Body.two]
+        let partTwoAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: LightColors.Text.three,
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+            NSAttributedString.Key.font: Fonts.Subtitle.two]
+        
+        let partOne = NSMutableAttributedString(string: importTitle + "\n\n", attributes: partOneAttributes)
+        let partTwo = NSMutableAttributedString(string: importAction, attributes: partTwoAttributes)
+        let combined = NSMutableAttributedString()
+        combined.append(partOne)
+        combined.append(partTwo)
+        
+        return combined
     }
 }

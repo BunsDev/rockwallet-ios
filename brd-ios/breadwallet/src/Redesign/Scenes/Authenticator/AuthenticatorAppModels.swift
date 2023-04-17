@@ -12,11 +12,12 @@ import UIKit
 
 enum AuthenticatorAppModels {
     enum Section: Sectionable {
+        case importWithLink
+        case divider
         case instructions
         case qrCode
         case enterCodeManually
         case copyCode
-        case description
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
@@ -27,5 +28,11 @@ enum AuthenticatorAppModels {
             var value: String?
         }
         struct ActionResponse {}
+    }
+    
+    struct Next {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
     }
 }
