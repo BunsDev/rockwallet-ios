@@ -30,9 +30,12 @@ class BaseTableViewController<C: CoordinatableRoutes,
     override func setupCloseButton(closeAction: Selector) {
         var closeButton: UIBarButtonItem = .init()
         
-        if coordinator is AccountCoordinator
-            && !self.isKind(of: RegistrationConfirmationViewController.self)
-            && !self.isKind(of: DeleteProfileInfoViewController.self) {
+        if coordinator is AccountCoordinator &&
+            (self.isKind(of: VerifyPhoneNumberViewController.self) ||
+             self.isKind(of: SignInViewController.self) ||
+             self.isKind(of: SignUpViewController.self) ||
+             self.isKind(of: ForgotPasswordViewController.self) ||
+             self.isKind(of: SetPasswordViewController.self)) {
             guard navigationItem.leftBarButtonItem?.title != dismissText,
                   navigationItem.rightBarButtonItem?.title != dismissText else { return }
             
