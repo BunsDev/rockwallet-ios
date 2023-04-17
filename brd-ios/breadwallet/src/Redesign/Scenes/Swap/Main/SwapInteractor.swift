@@ -39,14 +39,18 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 
                 let enabled = self?.dataStore?.currencies.filter { cur in currencies.map { $0.name }.contains(cur.code) }
                 
-                guard let from = enabled?.first,
-                      let to = enabled?.first(where: { $0.code != from.code })
+                let fromCurrency: Currency? = self?.dataStore?.from != nil ? self?.dataStore?.from?.currency : enabled?.first
+                
+                guard let fromCurrency,
+                      let toCurrency = enabled?.first(where: { $0.code != fromCurrency.code })
                 else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
-                self?.dataStore?.from = .zero(from)
-                self?.dataStore?.to = .zero(to)
+                if self?.dataStore?.from == nil {
+                    self?.dataStore?.from = .zero(fromCurrency)
+                }
+                self?.dataStore?.to = .zero(toCurrency)
                 
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item(from: self?.dataStore?.from,
                                                                                      to: self?.dataStore?.to)))

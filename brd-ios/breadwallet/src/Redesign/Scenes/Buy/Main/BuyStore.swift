@@ -30,6 +30,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var values: BuyModels.Amounts.ViewAction = .init()
     var paymentMethod: PaymentCard.PaymentType? {
         didSet {
+            guard toAmount == nil else { return }
             let selectedCurrency: Currency
             if paymentMethod == .ach {
                 guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
