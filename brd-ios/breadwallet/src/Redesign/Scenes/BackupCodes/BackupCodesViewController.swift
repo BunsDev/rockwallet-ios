@@ -135,7 +135,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
 
     // MARK: - Additional Helpers
     
-    func createPDF() {
+    private func createPDF() {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.backupCodes.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<BackupCodesView> else { return }
         
