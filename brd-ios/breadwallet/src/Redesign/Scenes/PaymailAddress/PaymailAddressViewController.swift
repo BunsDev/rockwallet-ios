@@ -93,7 +93,6 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
         super.buttonTapped()
         
         interactor?.showSuccessBottomAlert(viewAction: .init())
-        coordinator?.goBack()
     }
     
     private func showPaymailPopup() {
@@ -108,7 +107,7 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
     
     func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.Success.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.dismissFlow()
+            self?.coordinator?.goBack()
         })
     }
 
