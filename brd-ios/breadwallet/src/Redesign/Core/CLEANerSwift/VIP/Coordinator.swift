@@ -166,9 +166,14 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showTwoStepAuthentication(keyStore: KeyStore?) {
-        openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
-            vc?.dataStore?.keyStore = keyStore
+        openModally(coordinator: AccountCoordinator.self, scene: Scenes.BackupCodes) { vc in
+            
         }
+        
+        
+//        openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
+//            vc?.dataStore?.keyStore = keyStore
+//        }
     }
     
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
