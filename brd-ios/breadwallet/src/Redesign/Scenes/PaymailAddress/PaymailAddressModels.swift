@@ -26,4 +26,10 @@ enum PaymailAddressModels {
             var model: PopupViewModel
         }
     }
+    
+    struct Success {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
+    }
 }

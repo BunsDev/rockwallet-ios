@@ -24,5 +24,8 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         presenter?.presentPaymailPopup(actionResponse: .init())
     }
 
+    func showSuccessBottomAlert(viewAction: Models.Success.ViewAction) {
+        presenter?.presentSuccessBottomAlert(actionResponse: .init())
+    }
     // MARK: - Aditional helpers
 }

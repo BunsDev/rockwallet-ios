@@ -43,6 +43,10 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
         
         viewController?.displayPaymailPopup(responseDisplay: .init(model: model))
     }
+    
+    func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.Success.ActionResponse) {
+        viewController?.displaySuccessBottomAlert(responseDisplay: .init())
+    }
 
     // MARK: - Additional Helpers
 

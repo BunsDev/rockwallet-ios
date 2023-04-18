@@ -92,6 +92,7 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
     override func buttonTapped() {
         super.buttonTapped()
         
+        interactor?.showSuccessBottomAlert(viewAction: .init())
         coordinator?.goBack()
     }
     
@@ -103,6 +104,12 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
     
     func displayPaymailPopup(responseDisplay: PaymailAddressModels.InfoPopup.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
+    }
+    
+    func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.Success.ResponseDisplay) {
+        coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
+            self?.coordinator?.dismissFlow()
+        })
     }
 
     // MARK: - Additional Helpers
