@@ -12,7 +12,7 @@ import UIKit
 
 struct TitleButtonConfiguration: Configurable {
     var background: BackgroundConfiguration = .init(backgroundColor: LightColors.Background.two, tintColor: LightColors.Background.two,
-                                                    border: .init(borderWidth: 0, cornerRadius: CornerRadius.common))
+                                                    border: Presets.Border.commonPlain)
     var title: LabelConfiguration? = .init(font: Fonts.Body.two, textColor: LightColors.Text.one)
     var button: ButtonConfiguration = Presets.Button.noBorders
 }

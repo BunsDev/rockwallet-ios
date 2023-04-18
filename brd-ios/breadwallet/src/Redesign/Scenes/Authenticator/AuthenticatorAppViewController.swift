@@ -70,6 +70,10 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
         case .copyCode:
             cell = self.tableView(tableView, orderViewCellForRowAt: indexPath)
             
+            (cell as? WrapperTableViewCell<OrderView>)?.setup({ view in
+                view.configure(with: Presets.Order.auth)
+            })
+            
             (cell as? WrapperTableViewCell<OrderView>)?.wrappedView.didCopyValue = { [weak self] value in
                 self?.interactor?.copyValue(viewAction: .init(value: value))
             }
