@@ -31,7 +31,8 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .importWithLink: [
-                LabelViewModel.attributedText(generateImportLinkText())
+                TitleButtonViewModel(title: .text("Using an authenticator app?"),
+                                     button: .init(title: "Import with link", isUnderlined: true))
             ],
             .divider: [
                 LabelViewModel.text("OR")
@@ -94,27 +95,5 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
             return UIImage(ciImage: qrImage)
         }
         return nil
-    }
-    
-    private func generateImportLinkText() -> NSAttributedString {
-        let importTitle = "Using an authenticator app?"
-        let importAction = "Import with link"
-        let partOneAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: LightColors.Text.one,
-            NSAttributedString.Key.backgroundColor: UIColor.clear,
-            NSAttributedString.Key.font: Fonts.Body.two]
-        let partTwoAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: LightColors.Text.three,
-            NSAttributedString.Key.backgroundColor: UIColor.clear,
-            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.font: Fonts.Subtitle.two]
-        
-        let partOne = NSMutableAttributedString(string: importTitle + "\n\n", attributes: partOneAttributes)
-        let partTwo = NSMutableAttributedString(string: importAction, attributes: partTwoAttributes)
-        let combined = NSMutableAttributedString()
-        combined.append(partOne)
-        combined.append(partTwo)
-        
-        return combined
     }
 }

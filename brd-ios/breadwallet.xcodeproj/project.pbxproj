@@ -30,6 +30,7 @@
 		04185DC529D17E4600AECBFA /* IconTitleSubtitleToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */; };
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
 		043DB5D029EDC7B900DEB8FD /* SetTwoStepAppWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */; };
+		043DB5D229EE838400DEB8FD /* TitleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D129EE838400DEB8FD /* TitleButtonView.swift */; };
 		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
 		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
@@ -885,6 +886,7 @@
 		04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleToggleView.swift; sourceTree = "<group>"; };
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
 		043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppWorker.swift; sourceTree = "<group>"; };
+		043DB5D129EE838400DEB8FD /* TitleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleButtonView.swift; sourceTree = "<group>"; };
 		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
 		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
@@ -2645,6 +2647,7 @@
 				7E8E97A1283F78B0008606B0 /* ProfileView.swift */,
 				7ED83AEF284F40EA00261565 /* ChecklistItemView.swift */,
 				7B9434382886C6A700638703 /* TickboxItemView.swift */,
+				043DB5D129EE838400DEB8FD /* TitleButtonView.swift */,
 				7EBC6B0C2848B81A000A301F /* CodeInputView.swift */,
 				044D09A429C8561A00C510DC /* PhoneNumberView.swift */,
 				7E0968B7284A29CE006B4FC2 /* TransparentView.swift */,
@@ -4228,6 +4231,7 @@
 				7B54E5B727F4A2B1002DD1E4 /* RoundedView.swift in Sources */,
 				7BF5D4EF296BFC8D00942ADB /* SignInPresenter.swift in Sources */,
 				7E5CB3862835090E00EC787E /* ShadowConfiguration.swift in Sources */,
+				043DB5D229EE838400DEB8FD /* TitleButtonView.swift in Sources */,
 				7C35E719200AF3940064808F /* TxListViewModel.swift in Sources */,
 				7EE62495295C141D00FC19CC /* main.swift in Sources */,
 				C4F462A429CC86FF00083512 /* BackupCodesViewController.swift in Sources */,

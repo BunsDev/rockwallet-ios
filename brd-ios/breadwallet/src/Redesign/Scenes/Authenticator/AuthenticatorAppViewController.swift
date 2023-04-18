@@ -49,39 +49,30 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
         case .importWithLink:
-            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            cell = self.tableView(tableView, titleButtonViewCellForRowAt: indexPath)
             
-            cell.setBackground(with: Presets.Background.transparent)
-            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.setBackground(with: .init(backgroundColor: LightColors.Background.two,
-                                                                                            tintColor: LightColors.Background.two,
-                                                                                            border: .init(borderWidth: 0,
-                                                                                                          cornerRadius: CornerRadius.common)))
-            cell.contentView.setupCustomMargins(vertical: .large, horizontal: .large)
-            
-            let wrappedCell = cell as? WrapperTableViewCell<FELabel>
-            wrappedCell?.isUserInteractionEnabled = true
-            wrappedCell?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(importWithLinkTapped(_:))))
+            (cell as? WrapperTableViewCell<TitleButtonView>)?.wrappedView.didTapButton = { [weak self] in
+                
+            }
             
         case .divider:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
-            cell.setupCustomMargins(vertical: .large, horizontal: .large)
             (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Subtitle.two,
                                                                                         textColor: LightColors.Text.three,
-                                                                                        textAlignment: .center,
-                                                                                        numberOfLines: 1))
+                                                                                        textAlignment: .center))
             
         case .instructions:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             
-            cell.setBackground(with: Presets.Background.transparent)
-            cell.setupCustomMargins(vertical: .large, horizontal: .large)
+            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Body.two,
+                                                                                        textColor: LightColors.Text.three))
             
         case .qrCode:
             cell = self.tableView(tableView, coverCellForRowAt: indexPath)
             
-            cell.setBackground(with: Presets.Background.transparent)
-            cell.setupCustomMargins(vertical: .large, horizontal: .large)
+            (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.configure(background: .init(border: .init(borderWidth: 1,
+                                                                                                                cornerRadius: CornerRadius.common)))
             
             (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.snp.makeConstraints({ make in
                 make.height.equalTo(ViewSizes.extraExtraHuge.rawValue * 2)
@@ -90,18 +81,15 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
         case .enterCodeManually:
             cell = self.tableView(tableView, enterCodeCellForRowAt: indexPath)
             
-            cell.setBackground(with: Presets.Background.transparent)
-            cell.setupCustomMargins(vertical: .large, horizontal: .large)
-            
         case .copyCode:
             cell = self.tableView(tableView, copyCodeCellForRowAt: indexPath)
-            
-            cell.setBackground(with: Presets.Background.transparent)
-            cell.setupCustomMargins(vertical: .large, horizontal: .large)
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
         }
+        
+        cell.setBackground(with: Presets.Background.transparent)
+        cell.setupCustomMargins(vertical: .large, horizontal: .large)
         
         return cell
     }

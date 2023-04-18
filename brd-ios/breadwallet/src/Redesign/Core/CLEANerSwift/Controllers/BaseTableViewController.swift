@@ -89,6 +89,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<DateView>.self)
         tableView.register(WrapperTableViewCell<TitleValueView>.self)
         tableView.register(WrapperTableViewCell<IconTitleSubtitleToggleView>.self)
+        tableView.register(WrapperTableViewCell<TitleButtonView>.self)
     }
 
     override func prepareData() {
@@ -233,6 +234,21 @@ class BaseTableViewController<C: CoordinatableRoutes,
         
         cell.setup { view in
             view.configure(with: Presets.Background.transparent)
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleButtonViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<TitleButtonView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? TitleButtonViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
             view.setup(with: model)
         }
         
