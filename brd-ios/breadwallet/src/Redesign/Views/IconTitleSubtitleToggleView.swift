@@ -125,9 +125,6 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         subtitleLabel.configure(with: config.subtitle)
         checkmarkImageView.configure(with: config.checkmark)
         
-        shadowView = self
-        backgroundView = self
-        
         configure(background: config.background)
         configure(shadow: config.shadow)
     }
