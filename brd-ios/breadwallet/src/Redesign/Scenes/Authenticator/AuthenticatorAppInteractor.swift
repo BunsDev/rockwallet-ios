@@ -20,8 +20,6 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         presenter?.presentData(actionResponse: .init(item: nil))
-        
-        TwoStepChangeWorker().execute(requestData: TwoStepChangeRequestData()) { _ in }
     }
     
     func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction) {

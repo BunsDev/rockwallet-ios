@@ -23,7 +23,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         
         switch dataStore?.confirmationType {
         case .twoStepEmail, .twoStepApp:
-            TwoStepChangeWorker().execute(requestData: TwoStepChangeRequestData()) { _ in }
+            resend(viewAction: .init())
             
         default:
             break
@@ -67,14 +67,30 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     }
     
     func resend(viewAction: RegistrationConfirmationModels.Resend.ViewAction) {
-        ResendConfirmationWorker().execute { [weak self] result in
-            switch result {
-            case .success:
-                self?.presenter?.presentResend(actionResponse: .init())
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+        switch dataStore?.confirmationType {
+        case .twoStepEmail, .twoStepApp:
+            TwoStepChangeWorker().execute(requestData: TwoStepChangeRequestData()) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.presenter?.presentResend(actionResponse: .init())
+                    
+                case .failure(let error):
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                }
             }
+            
+        case .account:
+            ResendConfirmationWorker().execute { [weak self] result in
+                switch result {
+                case .success:
+                    self?.presenter?.presentResend(actionResponse: .init())
+                    
+                case .failure(let error):
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                }
+            }
+        default:
+            break
         }
     }
 

@@ -26,6 +26,10 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         let authExists = authType != nil
         
+        if authExists {
+            sections.insert(.instructions, at: 0)
+        }
+        
         var authMethodDescription: String?
         if authType == .email {
             authMethodDescription = "Two Factor Authentication in enabled with Email"
@@ -36,10 +40,6 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         let isTwoStepEnabled = authExists ? LabelViewModel.text(authMethodDescription) : nil
         let emailAuthCheckmark = authType == .email ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
         let appAuthCheckmark = authType == .authenticator ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
-        
-        if authExists {
-            sections.insert(.instructions, at: 0)
-        }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
