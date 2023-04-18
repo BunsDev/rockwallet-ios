@@ -32,6 +32,7 @@
 		043DB5D029EDC7B900DEB8FD /* SetTwoStepAppWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */; };
 		043DB5D229EE838400DEB8FD /* TitleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D129EE838400DEB8FD /* TitleButtonView.swift */; };
 		043DB5D429EE8B9C00DEB8FD /* PaddedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */; };
+		043DB5D629EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */; };
 		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
 		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
@@ -888,6 +889,7 @@
 		043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppWorker.swift; sourceTree = "<group>"; };
 		043DB5D129EE838400DEB8FD /* TitleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleButtonView.swift; sourceTree = "<group>"; };
 		043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedImageView.swift; sourceTree = "<group>"; };
+		043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppCodeWorker.swift; sourceTree = "<group>"; };
 		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
 		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
@@ -1735,7 +1737,6 @@
 				044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */,
 				044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */,
 				045A432529EAABE400489114 /* Auth */,
-				045A432429EAABD700489114 /* Phone */,
 			);
 			path = VerifyPhoneNumber;
 			sourceTree = "<group>";
@@ -1755,20 +1756,14 @@
 			path = Endpoints;
 			sourceTree = "<group>";
 		};
-		045A432429EAABD700489114 /* Phone */ = {
-			isa = PBXGroup;
-			children = (
-				049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */,
-				04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */,
-			);
-			path = Phone;
-			sourceTree = "<group>";
-		};
 		045A432529EAABE400489114 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				045A432629EAADD400489114 /* SetTwoStepEmailWorker.swift */,
 				043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */,
+				049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */,
+				043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */,
+				04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -4144,6 +4139,7 @@
 				7E5CB39D2835090E00EC787E /* Alertable.swift in Sources */,
 				7E5CB3892835090E00EC787E /* Margins+Sizes.swift in Sources */,
 				D7F8EA3829C4857B008DD7C7 /* RWDrawerManager.swift in Sources */,
+				043DB5D629EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift in Sources */,
 				0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */,
 				7EB838482849DD8200C7CC05 /* FELink.swift in Sources */,
 				CEBF32F01DDCD30600348FC6 /* AssetDetailsViewController.swift in Sources */,

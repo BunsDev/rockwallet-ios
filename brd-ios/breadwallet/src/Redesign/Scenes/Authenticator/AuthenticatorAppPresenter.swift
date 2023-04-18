@@ -18,6 +18,8 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
     // MARK: - AuthenticatorAppActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        guard let item = actionResponse.item as? SetTwoStepApp else { return }
+        
         let sections: [Models.Section] = [
             .importWithLink,
             .divider,
@@ -27,7 +29,8 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
             .copyCode
         ]
         
-        let code = "06N6 YMJQ Q4SX 2LBI P6BS TQ2C LFYA"
+        let code = item.code
+        let url = item.url
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .importWithLink: [
@@ -41,7 +44,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
                 LabelViewModel.text(L10n.Authentication.instructions)
             ],
             .qrCode: [
-                PaddedImageViewModel(image: .image(generateQRCode(from: code)))
+                PaddedImageViewModel(image: .image(generateQRCode(from: url)))
             ],
             .enterCodeManually: [
                 LabelViewModel.attributedText(prepareEnterCodeText())
@@ -64,7 +67,13 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
                                                               config: Presets.InfoView.verification))
     }
-
+    
+    func presentOpenTotpUrl(actionResponse: AuthenticatorAppModels.OpenTotpUrl.ActionResponse) {
+        guard let urlString = actionResponse.url, let url = URL(string: urlString) else { return }
+        
+        viewController?.displayOpenTotpUrl(responseDisplay: .init(url: url))
+    }
+    
     // MARK: - Additional Helpers
 
     private static func generateAttributedCopyValue(with value: String, isCopyable: Bool) -> NSAttributedString {
@@ -88,12 +97,15 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
     
     private func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: .utf8)
-        if let QRFilter = CIFilter(name: "CIQRCodeGenerator") {
-            QRFilter.setValue(data, forKey: "inputMessage")
-            guard let qrImage = QRFilter.outputImage else {return nil}
-            return UIImage(ciImage: qrImage)
-        }
-        return nil
+        
+        guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+        filter.setValue(data, forKey: "inputMessage")
+        
+        let transform = CGAffineTransform(scaleX: 30, y: 30)
+        
+        guard let qrImage = filter.outputImage?.transformed(by: transform) else { return nil }
+        
+        return UIImage(ciImage: qrImage)
     }
     
     private func prepareEnterCodeText() -> NSMutableAttributedString {

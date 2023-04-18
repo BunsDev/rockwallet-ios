@@ -45,7 +45,7 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
             cell = self.tableView(tableView, titleButtonViewCellForRowAt: indexPath)
             
             (cell as? WrapperTableViewCell<TitleButtonView>)?.wrappedView.didTapButton = { [weak self] in
-                
+                self?.interactor?.openTotpUrl(viewAction: .init())
             }
             
         case .divider:
@@ -96,14 +96,14 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
         interactor?.next(viewAction: .init())
     }
     
-    @objc private func importWithLinkTapped(_ sender: Any) {
-        
-    }
-
     // MARK: - AuthenticatorAppResponseDisplay
     
     func displayNext(responseDisplay: AuthenticatorAppModels.Next.ResponseDisplay) {
         coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepApp)
+    }
+    
+    func displayOpenTotpUrl(responseDisplay: AuthenticatorAppModels.OpenTotpUrl.ResponseDisplay) {
+        coordinator?.openUrl(url: responseDisplay.url)
     }
     
     // MARK: - Additional Helpers

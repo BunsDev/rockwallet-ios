@@ -24,11 +24,10 @@ class TwoStepAuthenticationInteractor: NSObject, Interactor, TwoStepAuthenticati
             case .success(let data):
                 self?.presenter?.presentData(actionResponse: .init(item: data?.type))
                 
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+            case .failure:
+                self?.presenter?.presentData(actionResponse: .init(item: nil))
             }
         }
-        
     }
     
     // MARK: - Aditional helpers

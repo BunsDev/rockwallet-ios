@@ -643,6 +643,11 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
+    func openUrl(url: URL) {
+        guard UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:])
+    }
+    
     func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {
         ExchangeAuthHelper.showPinInput(on: navigationController,
                                         keyStore: keyStore,

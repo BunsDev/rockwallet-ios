@@ -15,11 +15,24 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
 
     var presenter: AuthenticatorAppPresenter?
     var dataStore: AuthenticatorAppStore?
-
+    
+    private var setTwoStepAppModel: SetTwoStepApp?
+    
     // MARK: - AuthenticatorAppViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: nil))
+        let data = SetTwoStepAppRequestData(updateCode: nil)
+        SetTwoStepAppWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.setTwoStepAppModel = data
+                
+                self?.presenter?.presentData(actionResponse: .init(item: self?.setTwoStepAppModel))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction) {
@@ -27,6 +40,10 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
         UIPasteboard.general.string = value
         
         presenter?.presentCopyValue(actionResponse: .init())
+    }
+    
+    func openTotpUrl(viewAction: AuthenticatorAppModels.OpenTotpUrl.ViewAction) {
+        presenter?.presentOpenTotpUrl(actionResponse: .init(url: setTwoStepAppModel?.url))
     }
     
     func next(viewAction: AuthenticatorAppModels.Next.ViewAction) {

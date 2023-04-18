@@ -22,7 +22,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         presenter?.presentData(actionResponse: .init(item: confirmationType))
         
         switch dataStore?.confirmationType {
-        case .twoStepEmail, .twoStepApp:
+        case .twoStepEmail:
             resend(viewAction: .init())
             
         default:
@@ -115,9 +115,18 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         let data = TwoStepExchangeRequestData(code: dataStore?.code)
         TwoStepExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
-            case .success:
-                UserManager.shared.refresh { _ in
-                    self?.presenter?.presentConfirm(actionResponse: .init())
+            case .success(let data):
+                let data = SetTwoStepAppRequestData(updateCode: data?.updateCode)
+                SetTwoStepAppWorker().execute(requestData: data) { [weak self] result in
+                    switch result {
+                    case .success:
+                        UserManager.shared.refresh { _ in
+                            self?.presenter?.presentConfirm(actionResponse: .init())
+                        }
+                        
+                    case .failure(let error):
+                        self?.presenter?.presentError(actionResponse: .init(error: error))
+                    }
                 }
                 
             case .failure(let error):

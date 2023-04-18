@@ -23,14 +23,18 @@ struct SetTwoStepAppRequestData: RequestModelData {
 }
 
 struct SetTwoStepAppResponseData: ModelResponse {
+    let code: String?
+    let url: String?
 }
 
 struct SetTwoStepApp: Model {
+    let code: String
+    let url: String
 }
 
 class SetTwoStepAppMapper: ModelMapper<SetTwoStepAppResponseData, SetTwoStepApp> {
     override func getModel(from response: SetTwoStepAppResponseData?) -> SetTwoStepApp? {
-        return .init() // Should return something?!
+        return .init(code: response?.code ?? "", url: response?.url ?? "")
     }
 }
 

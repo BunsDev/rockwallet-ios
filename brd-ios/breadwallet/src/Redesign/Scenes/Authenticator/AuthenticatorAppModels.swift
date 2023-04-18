@@ -11,6 +11,8 @@
 import UIKit
 
 enum AuthenticatorAppModels {
+    typealias Item = SetTwoStepApp?
+    
     enum Section: Sectionable {
         case importWithLink
         case divider
@@ -28,6 +30,16 @@ enum AuthenticatorAppModels {
             var value: String?
         }
         struct ActionResponse {}
+    }
+    
+    struct OpenTotpUrl {
+        struct ViewAction {}
+        struct ActionResponse {
+            let url: String?
+        }
+        struct ResponseDisplay {
+            let url: URL
+        }
     }
     
     struct Next {
