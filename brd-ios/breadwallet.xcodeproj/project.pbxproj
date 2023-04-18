@@ -2449,8 +2449,8 @@
 				7B3947822970007A007D405E /* ForgotPassword */,
 				7BF5D4F0296D4F9C00942ADB /* SignUp */,
 				7BF5D4E3296BF6CE00942ADB /* SignIn */,
-				044D099729C8515700C510DC /* VerifyPhoneNumber */,
 				C4F4629729CC86D100083512 /* BackupCodes */,
+				044D099729C8515700C510DC /* VerifyPhoneNumber */,
 				7EBC6AFD2848ABAB000A301F /* RegistrationConfirmation */,
 				7B9434292886A7CA00638703 /* DeleteProfile */,
 				7E8E978F283F4817008606B0 /* Profile */,
@@ -3198,10 +3198,10 @@
 		C4F4629729CC86D100083512 /* BackupCodes */ = {
 			isa = PBXGroup;
 			children = (
-				C4F4629929CC86FF00083512 /* BackupCodesStore.swift */,
 				C4F4629A29CC86FF00083512 /* BackupCodesPresenter.swift */,
-				C4F4629B29CC86FF00083512 /* BackupCodesModels.swift */,
+				C4F4629929CC86FF00083512 /* BackupCodesStore.swift */,
 				C4F4629C29CC86FF00083512 /* BackupCodesVIP.swift */,
+				C4F4629B29CC86FF00083512 /* BackupCodesModels.swift */,
 				C4F4629D29CC86FF00083512 /* BackupCodesViewController.swift */,
 				C4F4629E29CC86FF00083512 /* BackupCodesInteractor.swift */,
 			);

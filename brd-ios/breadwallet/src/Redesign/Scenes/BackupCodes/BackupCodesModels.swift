@@ -13,7 +13,6 @@ enum BackupCodesModels {
     
     enum Section: Sectionable {
         case instructions
-        case description
         case backupCodes
         case getNewCodes
         

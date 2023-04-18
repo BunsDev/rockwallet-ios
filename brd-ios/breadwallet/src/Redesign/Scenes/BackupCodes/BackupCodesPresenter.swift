@@ -18,30 +18,26 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let sections: [Models.Section] = [
             .instructions,
-            .backupCodes,
-            .description,
-            .getNewCodes
+            .getNewCodes,
+            .backupCodes
         ]
         
         let backupCodes: [LabelViewModel] = [LabelViewModel.text("123 456"),
-                                              LabelViewModel.text("695 456"),
-                                              LabelViewModel.text("123 789"),
-                                              LabelViewModel.text("789 456"),
-                                              LabelViewModel.text("654 456")] // TODO: Update with BE codes
+                                             LabelViewModel.text("695 456"),
+                                             LabelViewModel.text("123 789"),
+                                             LabelViewModel.text("789 456"),
+                                             LabelViewModel.text("654 456")] // TODO: Update with BE codes
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
                 LabelViewModel.text(L10n.BackupCodes.instructions)
             ],
-            .backupCodes: [
-                BackupCodesViewModel(backupCodes: backupCodes)
-            ],
-            .description: [
-                LabelViewModel.text(L10n.BackupCodes.description)
-            ],
             .getNewCodes: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.BackupCodes.getNewCodes,
-                                                                   isUnderlined: true)])]
+                                                                   isUnderlined: true)])],
+            .backupCodes: [
+                BackupCodesViewModel(backupCodes: backupCodes)
+            ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
