@@ -41,11 +41,10 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
                 LabelViewModel.text(L10n.Authentication.instructions)
             ],
             .qrCode: [
-                ImageViewModel.photo(generateQRCode(from: code))
+                PaddedImageViewModel(image: .image(generateQRCode(from: code)))
             ],
             .enterCodeManually: [
-                EnterCodeViewModel(title: .text(L10n.Authentication.unableToScanCode),
-                                   description: .text(L10n.Authentication.enterCodeManually))
+                LabelViewModel.attributedText(prepareEnterCodeText())
             ],
             .copyCode: [
                 OrderViewModel(title: "",
@@ -87,7 +86,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         return completeText
     }
     
-    func generateQRCode(from string: String) -> UIImage? {
+    private func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: .utf8)
         if let QRFilter = CIFilter(name: "CIQRCodeGenerator") {
             QRFilter.setValue(data, forKey: "inputMessage")
@@ -95,5 +94,24 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
             return UIImage(ciImage: qrImage)
         }
         return nil
+    }
+    
+    private func prepareEnterCodeText() -> NSMutableAttributedString {
+        let partOneAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: LightColors.Text.three,
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.Subtitle.two]
+        let partTwoAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: LightColors.Text.three,
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.Body.two]
+        
+        let partOne = NSMutableAttributedString(string: L10n.Authentication.unableToScanCode + "\n", attributes: partOneAttributes)
+        let partTwo = NSMutableAttributedString(string: L10n.Authentication.enterCodeManually, attributes: partTwoAttributes)
+        let combined = NSMutableAttributedString()
+        combined.append(partOne)
+        combined.append(partTwo)
+        
+        return combined
     }
 }

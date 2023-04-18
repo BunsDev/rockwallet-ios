@@ -90,6 +90,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<TitleValueView>.self)
         tableView.register(WrapperTableViewCell<IconTitleSubtitleToggleView>.self)
         tableView.register(WrapperTableViewCell<TitleButtonView>.self)
+        tableView.register(WrapperTableViewCell<PaddedImageView>.self)
+        tableView.register(WrapperTableViewCell<OrderView>.self)
     }
 
     override func prepareData() {
@@ -249,6 +251,36 @@ class BaseTableViewController<C: CoordinatableRoutes,
         
         cell.setup { view in
             view.configure(with: .init())
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, paddedImageViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<PaddedImageView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PaddedImageViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, orderViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<OrderView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? OrderViewModel
+        else {
+            return UITableViewCell()
+        }
+        
+        cell.setup { view in
+            view.configure(with: Presets.Order.small)
             view.setup(with: model)
         }
         

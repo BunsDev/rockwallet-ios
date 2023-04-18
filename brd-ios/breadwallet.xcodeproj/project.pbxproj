@@ -31,6 +31,7 @@
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
 		043DB5D029EDC7B900DEB8FD /* SetTwoStepAppWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */; };
 		043DB5D229EE838400DEB8FD /* TitleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D129EE838400DEB8FD /* TitleButtonView.swift */; };
+		043DB5D429EE8B9C00DEB8FD /* PaddedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */; };
 		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
 		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
@@ -606,7 +607,6 @@
 		A243978083345DAFD36DA7A4 /* MarketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24399A172C828ECD708E17D /* MarketInfo.swift */; };
 		A2439D019C08106D6E14D70A /* MarketInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24399A172C828ECD708E17D /* MarketInfo.swift */; };
 		A2439D7BB746E6CFC3F9B64A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2439F5D8263945E73EFF4A3 /* CacheService.swift */; };
-		C41816A729D5708B002D31F8 /* EnterCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41816A629D5708B002D31F8 /* EnterCodeView.swift */; };
 		C43EFBE829DC33620067FE70 /* LogoutWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43EFBE729DC33620067FE70 /* LogoutWorker.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
 		C461E47829E430E7006BAC3A /* ShareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C461E47729E430E7006BAC3A /* ShareItem.swift */; };
@@ -887,6 +887,7 @@
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
 		043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppWorker.swift; sourceTree = "<group>"; };
 		043DB5D129EE838400DEB8FD /* TitleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleButtonView.swift; sourceTree = "<group>"; };
+		043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedImageView.swift; sourceTree = "<group>"; };
 		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
 		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
@@ -1442,7 +1443,6 @@
 		A243988A5DA12A405BFEB9F6 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		A24399A172C828ECD708E17D /* MarketInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketInfo.swift; sourceTree = "<group>"; };
 		A2439F5D8263945E73EFF4A3 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
-		C41816A629D5708B002D31F8 /* EnterCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeView.swift; sourceTree = "<group>"; };
 		C43EFBE729DC33620067FE70 /* LogoutWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWorker.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
 		C461E47729E430E7006BAC3A /* ShareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItem.swift; sourceTree = "<group>"; };
@@ -2647,6 +2647,7 @@
 				7E8E97A1283F78B0008606B0 /* ProfileView.swift */,
 				7ED83AEF284F40EA00261565 /* ChecklistItemView.swift */,
 				7B9434382886C6A700638703 /* TickboxItemView.swift */,
+				043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */,
 				043DB5D129EE838400DEB8FD /* TitleButtonView.swift */,
 				7EBC6B0C2848B81A000A301F /* CodeInputView.swift */,
 				044D09A429C8561A00C510DC /* PhoneNumberView.swift */,
@@ -3195,7 +3196,6 @@
 				C4CCFCE229D43DB600E38B3A /* AuthenticatorAppModels.swift */,
 				C4CCFCE429D43DB600E38B3A /* AuthenticatorAppViewController.swift */,
 				C4CCFCE529D43DB600E38B3A /* AuthenticatorAppInteractor.swift */,
-				C41816A629D5708B002D31F8 /* EnterCodeView.swift */,
 			);
 			path = Authenticator;
 			sourceTree = "<group>";
@@ -4344,6 +4344,7 @@
 				0452C93629D42FC600CCC8DA /* ExchangeEndpoints.swift in Sources */,
 				CE27F9591E2C8EA300F7F7F2 /* Amount.swift in Sources */,
 				7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */,
+				043DB5D429EE8B9C00DEB8FD /* PaddedImageView.swift in Sources */,
 				7EE91A5D2968310100331B1F /* KYCAddressVIP.swift in Sources */,
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
 				CEEC708E1E954AAB00EF788E /* AboutHeaderView.swift in Sources */,
@@ -4430,7 +4431,6 @@
 				7ECCA9952874266200F99368 /* FESegmentControl.swift in Sources */,
 				7ED427F428755CB200AA19A8 /* ExchangeDetailsInteractor.swift in Sources */,
 				7EE91A5B2968310100331B1F /* KYCAddressPresenter.swift in Sources */,
-				C41816A729D5708B002D31F8 /* EnterCodeView.swift in Sources */,
 				7ED427F128755CB200AA19A8 /* ExchangeDetailsModels.swift in Sources */,
 				C491ABFD28A6395D00E79954 /* OrderPreviewInteractor.swift in Sources */,
 				7EB8FD232897D212000FF75C /* BuyPresenter.swift in Sources */,

@@ -22,13 +22,6 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
     override var sceneLeftAlignedTitle: String? {
         return L10n.Authentication.title
     }
-
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        tableView.register(WrapperTableViewCell<EnterCodeView>.self)
-        tableView.register(WrapperTableViewCell<OrderView>.self)
-    }
     
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
@@ -69,20 +62,17 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
                                                                                         textColor: LightColors.Text.three))
             
         case .qrCode:
-            cell = self.tableView(tableView, coverCellForRowAt: indexPath)
-            
-            (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.configure(background: .init(border: .init(borderWidth: 1,
-                                                                                                                cornerRadius: CornerRadius.common)))
-            
-            (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.snp.makeConstraints({ make in
-                make.height.equalTo(ViewSizes.extraExtraHuge.rawValue * 2)
-            })
+            cell = self.tableView(tableView, paddedImageViewCellForRowAt: indexPath)
             
         case .enterCodeManually:
-            cell = self.tableView(tableView, enterCodeCellForRowAt: indexPath)
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
         case .copyCode:
-            cell = self.tableView(tableView, copyCodeCellForRowAt: indexPath)
+            cell = self.tableView(tableView, orderViewCellForRowAt: indexPath)
+            
+            (cell as? WrapperTableViewCell<OrderView>)?.wrappedView.didCopyValue = { [weak self] value in
+                self?.interactor?.copyValue(viewAction: .init(value: value))
+            }
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -90,40 +80,6 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
         
         cell.setBackground(with: Presets.Background.transparent)
         cell.setupCustomMargins(vertical: .large, horizontal: .large)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, enterCodeCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<EnterCodeView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = dataSource?.itemIdentifier(for: indexPath) as? EnterCodeViewModel
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, copyCodeCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<OrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = dataSource?.itemIdentifier(for: indexPath) as? OrderViewModel
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.setup { view in
-            view.configure(with: Presets.Order.small)
-            view.setup(with: model)
-            
-            view.didCopyValue = { [weak self] value in
-                self?.interactor?.copyValue(viewAction: .init(value: value))
-            }
-        }
         
         return cell
     }
