@@ -3196,23 +3196,35 @@
 
 "TwoStep.additionalMethodsTitle" = "";
 
+"TwoStep.BuyTransactions" = "Buy transactions";
+
 "TwoStep.changePhoneNumberTitle" = "Change Phone Number";
 
 "TwoStep.getBackupCodesTitle" = "";
 
 "TwoStep.mainInstructions" = "Two Factor Authentication in enabled with the phone number ending in";
 
-"TwoStep.mainTitle" = "Two factor authentication";
+"TwoStep.mainTitle" = "Two Factor Authentication";
+
+"TwoStep.Mandatory" = "(Mandatory)";
 
 "TwoStep.methods.additionalGetBackupCodesAction" = "Get your backup codes";
 
 "TwoStep.methods.additionalTitle" = "Additional methods";
 
-"TwoStep.methods.authApp.title" = "Authentication app";
+"TwoStep.methods.authApp.title" = "Authenticator app";
 
 "TwoStep.methods.phone.subtitle" = "Change Phone Number";
 
 "TwoStep.methods.phone.title" = "Phone number";
+
+"TwoStep.PreferredSettings" = "Select you preferred 2FA Settings";
+
+"TwoStep.RecoverChangingPassword" = "Recover/Changing password";
+
+"TwoStep.SendingFunds" = "Sending funds";
+
+"TwoStep.Settings" = "2FA Settings";
 
 "TwoStep.settings.achWithdrawal" = "ACH Withdrawal";
 
@@ -3225,6 +3237,10 @@
 "TwoStep.settings.recoverChangePassword" = "Recover/Changing password";
 
 "TwoStep.settings.signInNewDevice" = "Sign in into new device";
+
+"TwoStep.SignInIntoNewDevice" = "Sign in into new device";
+
+"TwoStep.TwoStepPeriod" = "Every 90 days";
 
 "UDomains.invalid" = "Invalid address.";
 
