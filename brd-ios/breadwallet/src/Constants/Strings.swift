@@ -596,8 +596,8 @@ internal enum L10n {
     internal static let description = L10n.tr("Localizable", "BackupCodes.description", fallback: "You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.")
     /// Get new codes
     internal static let getNewCodes = L10n.tr("Localizable", "BackupCodes.getNewCodes", fallback: "Get new codes")
-    /// Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method
-    internal static let instructions = L10n.tr("Localizable", "BackupCodes.instructions", fallback: "Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method")
+    /// Download your backup codes and store them securely. You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.
+    internal static let instructions = L10n.tr("Localizable", "BackupCodes.instructions", fallback: "Download your backup codes and store them securely. You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.")
     /// Backup codes
     internal static let title = L10n.tr("Localizable", "BackupCodes.Title", fallback: "Backup codes")
   }
