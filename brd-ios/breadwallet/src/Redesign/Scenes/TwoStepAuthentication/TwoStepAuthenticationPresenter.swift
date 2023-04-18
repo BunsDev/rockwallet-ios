@@ -17,13 +17,27 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
     
     // MARK: - TwoStepAuthenticationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        let authType = actionResponse.item as? TwoStepSettingsResponseData.TwoStepType?
+        
         var sections: [Models.Section] = [
             .email,
             .app
         ]
         
-        let isTwoStepEnabled = Bool.random() ? LabelViewModel.text(L10n.TwoStep.mainInstructions) : nil
-        if let isTwoStepEnabled {
+        let authExists = authType != nil
+        
+        var authMethodDescription: String?
+        if authType == .email {
+            authMethodDescription = "Two Factor Authentication in enabled with Email"
+        } else if authType == .authenticator {
+            authMethodDescription = "Two Factor Authentication in enabled with Authenticator App"
+        }
+        
+        let isTwoStepEnabled = authExists ? LabelViewModel.text(authMethodDescription) : nil
+        let emailAuthCheckmark = authType == .email ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
+        let appAuthCheckmark = authType == .authenticator ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
+        
+        if authExists {
             sections.insert(.instructions, at: 0)
         }
         
@@ -35,12 +49,12 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.mail.image),
                                                  title: .text("Email address"),
                                                  subtitle: .text(UserDefaults.email ?? ""),
-                                                 checkmark: .image(Asset.radiobutton.image))
+                                                 checkmark: .image(emailAuthCheckmark))
             ],
             .app: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.phone.image),
                                                  title: .text(L10n.TwoStep.Methods.AuthApp.title),
-                                                 checkmark: .image(Asset.radiobutton.image))
+                                                 checkmark: .image(appAuthCheckmark))
             ]
         ]
         

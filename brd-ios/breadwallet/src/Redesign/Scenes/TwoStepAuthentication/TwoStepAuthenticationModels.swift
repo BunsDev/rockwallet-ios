@@ -11,7 +11,7 @@
 import UIKit
 
 enum TwoStepAuthenticationModels {
-    typealias Item = ()
+    typealias Item = TwoStepSettingsResponseData.TwoStepType?
     
     enum Section: Sectionable {
         case instructions
