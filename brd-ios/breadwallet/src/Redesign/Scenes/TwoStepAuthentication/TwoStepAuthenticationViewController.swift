@@ -48,8 +48,11 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         case .instructions:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             
-        case .email, .app:
+        case .email, .app, .backupCodes, .settings, .disable:
             cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
+            
+        case .settingsTitle:
+            cell = self.tableView(tableView, titleLabelCellForRowAt: indexPath)
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)

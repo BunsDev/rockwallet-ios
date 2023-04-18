@@ -33,4 +33,3 @@ extension String {
         return enumerated().map { $0.isMultiple(of: stride) && ($0 != 0) ? "\(separator)\($1)" : String($1) }.joined()
     }
 }
-

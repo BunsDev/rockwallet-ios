@@ -24,10 +24,11 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
             .app
         ]
         
-        let authExists = authType != nil
+        let authExists = actionResponse.item != nil
         
         if authExists {
             sections.insert(.instructions, at: 0)
+            sections.append(contentsOf: [.settingsTitle, .backupCodes, .settings, .disable])
         }
         
         var authMethodDescription: String?
@@ -40,6 +41,7 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         let isTwoStepEnabled = authExists ? LabelViewModel.text(authMethodDescription) : nil
         let emailAuthCheckmark = authType == .email ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
         let appAuthCheckmark = authType == .authenticator ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
+        let settingsChevron = Asset.chevronRight.image.tinted(with: LightColors.Text.three)
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
@@ -57,6 +59,22 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                                                  title: .text(L10n.TwoStep.Methods.AuthApp.title),
                                                  checkmark: .image(appAuthCheckmark),
                                                  isInteractable: authType != .authenticator)
+            ],
+            .settingsTitle: [
+                LabelViewModel.text("Settings")
+            ],
+            .backupCodes: [
+                IconTitleSubtitleToggleViewModel(title: .text("Backup codes"),
+                                                 checkmark: .image(settingsChevron))
+            ],
+            .settings: [
+                IconTitleSubtitleToggleViewModel(title: .text("Two Factor Authentication Settings"),
+                                                 checkmark: .image(settingsChevron))
+            ],
+            .disable: [
+                IconTitleSubtitleToggleViewModel(title: .text("Disable 2FA"),
+                                                 checkmark: nil,
+                                                 isDestructive: true)
             ]
         ]
         

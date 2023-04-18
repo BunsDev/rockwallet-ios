@@ -17,6 +17,11 @@ enum TwoStepAuthenticationModels {
         case instructions
         case email
         case app
+        case divider
+        case settingsTitle
+        case backupCodes
+        case settings
+        case disable
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }

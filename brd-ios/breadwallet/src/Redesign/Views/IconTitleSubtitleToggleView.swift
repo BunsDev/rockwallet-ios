@@ -13,6 +13,7 @@ import UIKit
 struct IconTitleSubtitleToggleConfiguration: Configurable {
     var icon: BackgroundConfiguration = .init(tintColor: LightColors.Text.three)
     var title: LabelConfiguration = .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.three, numberOfLines: 1)
+    var destructiveTitle: LabelConfiguration = .init(font: Fonts.Subtitle.one, textColor: LightColors.Error.one, numberOfLines: 1)
     var subtitle: LabelConfiguration = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, numberOfLines: 1)
     var checkmark: BackgroundConfiguration? = .init(tintColor: LightColors.primary)
     var shadow: ShadowConfiguration?
@@ -23,8 +24,9 @@ struct IconTitleSubtitleToggleViewModel: ViewModel {
     var icon: ImageViewModel?
     var title: LabelViewModel
     var subtitle: LabelViewModel?
-    var checkmark: ImageViewModel = .image(Asset.radiobutton.image)
+    var checkmark: ImageViewModel? = .image(Asset.radiobutton.image)
     var checkmarkToggle: Bool = false
+    var isDestructive: Bool = false
     var isInteractable: Bool = true
 }
 
@@ -121,7 +123,6 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         super.configure(with: config)
         
         iconImageView.configure(with: config.icon)
-        titleLabel.configure(with: config.title)
         subtitleLabel.configure(with: config.subtitle)
         checkmarkImageView.configure(with: config.checkmark)
         
@@ -140,6 +141,9 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         checkmarkImageView.setup(with: viewModel?.checkmark)
         checkmarkImageView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == true
         checkmarkToggleView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == false
+        
+        let isDestructive = viewModel?.isDestructive ?? false
+        titleLabel.configure(with: isDestructive ? config?.destructiveTitle : config?.title)
     }
     
     @objc func tapped() {
