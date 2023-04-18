@@ -36,6 +36,10 @@ class BackupCodesInteractor: NSObject, Interactor, BackupCodesViewActions {
         
         getData(viewAction: .init())
     }
-
+    
+    func skipSaving(viewAction: BackupCodesModels.SkipBackupCodeSaving.ViewAction) {
+        presenter?.presentSkipSaving(actionResponse: .init())
+    }
+    
     // MARK: - Aditional helpers
 }

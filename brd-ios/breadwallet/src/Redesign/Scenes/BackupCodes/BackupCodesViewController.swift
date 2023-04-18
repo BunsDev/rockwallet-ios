@@ -120,11 +120,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
     override func buttonTapped() {
         super.buttonTapped()
         
-        coordinator?.popToRoot(completion: { [weak self] in
-            self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text("2FA Successfully set up"),
-                                                                     dismissType: .auto),
-                                                configuration: Presets.InfoView.warning)
-        })
+        interactor?.skipSaving(viewAction: .init())
     }
     
     private func getCodesTapped() {
@@ -132,6 +128,23 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
     }
 
     // MARK: - BackupCodesResponseDisplay
+    
+    func displaySkipSaving(responseDisplay: BackupCodesModels.SkipBackupCodeSaving.ResponseDisplay) {
+        guard let navigationController = coordinator?.navigationController else { return }
+        
+        coordinator?.showPopup(on: navigationController,
+                               blurred: false,
+                               with: responseDisplay.popupViewModel,
+                               config: responseDisplay.popupConfig,
+                               closeButtonCallback: {
+        }, callbacks: [ { [weak self] in
+            self?.coordinator?.popToRoot(completion: { [weak self] in
+                self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text("2FA Successfully set up"),
+                                                                         dismissType: .auto),
+                                                    configuration: Presets.InfoView.warning)
+            })
+        } ])
+    }
     
     // MARK: - Additional Helpers
     

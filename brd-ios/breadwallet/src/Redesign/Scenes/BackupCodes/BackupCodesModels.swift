@@ -25,4 +25,15 @@ enum BackupCodesModels {
             var method: HTTPMethod
         }
     }
+    
+    struct SkipBackupCodeSaving {
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {
+            var popupViewModel: PopupViewModel
+            var popupConfig: PopupConfiguration
+        }
+    }
 }

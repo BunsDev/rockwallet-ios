@@ -14,12 +14,15 @@ extension Scenes {
 
 protocol BackupCodesViewActions: BaseViewActions, FetchViewActions {
     func getBackupCodes(viewAction: BackupCodesModels.BackupCodes.ViewAction)
+    func skipSaving(viewAction: BackupCodesModels.SkipBackupCodeSaving.ViewAction)
 }
 
 protocol BackupCodesActionResponses: BaseActionResponses, FetchActionResponses {
+    func presentSkipSaving(actionResponse: BackupCodesModels.SkipBackupCodeSaving.ActionResponse)
 }
 
 protocol BackupCodesResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+    func displaySkipSaving(responseDisplay: BackupCodesModels.SkipBackupCodeSaving.ResponseDisplay)
 }
 
 protocol BackupCodesDataStore: BaseDataStore, FetchDataStore {
