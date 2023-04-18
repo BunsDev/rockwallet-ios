@@ -1728,6 +1728,16 @@
 /* Onboarding screen Page 2 title */
 "OnboardingPageTwo.title" = "Unisciti a milioni di persone che in tutto il mondo si fidano di RockWallet.";
 
+"PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
+
+"PaymailAddress.popupDescription" = "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles";
+
+"PaymailAddress.title" = "Paymail Address";
+
+"PaymailAddress.whatIsPaymail" = "What is Paymail?";
+
+"PaymailAddress.yourPaymailAddress" = "Your Paymail address:";
+
 /* Eg. Send 1.0Eth to purchase CCC */
 "PaymentConfirmation.amountText" = "Invia %s per acquistare %s";
 
@@ -3186,6 +3196,8 @@
 
 "TwoStep.additionalMethodsTitle" = "";
 
+"TwoStep.BuyTransactions" = "Buy transactions";
+
 "TwoStep.changePhoneNumberTitle" = "Change Phone Number";
 
 "TwoStep.getBackupCodesTitle" = "";
@@ -3193,6 +3205,8 @@
 "TwoStep.mainInstructions" = "Two Factor Authentication in enabled with the phone number ending in";
 
 "TwoStep.mainTitle" = "Two factor authentication";
+
+"TwoStep.Mandatory" = "(Mandatory)";
 
 "TwoStep.methods.additionalGetBackupCodesAction" = "Get your backup codes";
 
@@ -3203,6 +3217,14 @@
 "TwoStep.methods.phone.subtitle" = "Change Phone Number";
 
 "TwoStep.methods.phone.title" = "Phone number";
+
+"TwoStep.PreferredSettings" = "Select you preferred 2FA Settings";
+
+"TwoStep.RecoverChangingPassword" = "Recover/Changing password";
+
+"TwoStep.SendingFunds" = "Sending funds";
+
+"TwoStep.Settings" = "2FA Settings";
 
 "TwoStep.settings.achWithdrawal" = "ACH Withdrawal";
 
@@ -3215,6 +3237,10 @@
 "TwoStep.settings.recoverChangePassword" = "Recover/Changing password";
 
 "TwoStep.settings.signInNewDevice" = "Sign in into new device";
+
+"TwoStep.SignInIntoNewDevice" = "Sign in into new device";
+
+"TwoStep.TwoStepPeriod" = "Every 90 days";
 
 "UDomains.invalid" = "Invalid address.";
 
