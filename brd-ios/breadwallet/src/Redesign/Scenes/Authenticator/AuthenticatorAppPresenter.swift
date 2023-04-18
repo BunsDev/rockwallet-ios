@@ -30,6 +30,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         ]
         
         let code = item.code
+        let codeFormatted = code.separated(stride: 4)
         let url = item.url
         
         let sectionRows: [Models.Section: [any Hashable]] = [
@@ -51,7 +52,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
             ],
             .copyCode: [
                 OrderViewModel(title: "",
-                               value: AuthenticatorAppPresenter.generateAttributedCopyValue(with: code, isCopyable: true),
+                               value: AuthenticatorAppPresenter.generateAttributedCopyValue(with: codeFormatted, isCopyable: true),
                                isCopyable: true)
             ]
         ]
