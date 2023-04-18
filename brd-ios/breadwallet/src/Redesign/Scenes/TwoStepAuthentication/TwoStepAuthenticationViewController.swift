@@ -19,7 +19,22 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     
     override var sceneLeftAlignedTitle: String? { return L10n.TwoStep.mainTitle }
     
+    private var didDisplayData = false
+    
     // MARK: - Overrides
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard didDisplayData else { return }
+        interactor?.getData(viewAction: .init())
+    }
+    
+    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
+        super.displayData(responseDisplay: responseDisplay)
+        
+        didDisplayData = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
