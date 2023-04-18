@@ -24,7 +24,7 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
         
         let backupCodes: [LabelViewModel] = (actionResponse.item as? [String])?.compactMap({ string in
             var string = string
-            string.insert(" ", at: string.index(string.startIndex, offsetBy: 2))
+            string.insert(" ", at: string.index(string.startIndex, offsetBy: 3))
             return LabelViewModel.text(string)
         }) ?? []
         
