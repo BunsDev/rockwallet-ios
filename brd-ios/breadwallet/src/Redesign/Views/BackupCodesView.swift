@@ -11,9 +11,9 @@
 import UIKit
 
 struct BackupCodesViewConfiguration: Configurable {
-    var backupCodes: [LabelConfiguration] = [LabelConfiguration(font: Fonts.Title.five,
-                                                                textColor: LightColors.Text.three,
-                                                                textAlignment: .center)]
+    var backupCode: LabelConfiguration = .init(font: Fonts.Title.five,
+                                               textColor: LightColors.Text.three,
+                                               textAlignment: .center)
 }
 
 struct BackupCodesViewModel: ViewModel {
@@ -29,14 +29,12 @@ class BackupCodesView: FEView<BackupCodesViewConfiguration, BackupCodesViewModel
         return view
     }()
     
-    private lazy var backupCodeLabels: [FELabel] = []
-    
     override func setupSubviews() {
         super.setupSubviews()
         
         content.addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
@@ -49,23 +47,13 @@ class BackupCodesView: FEView<BackupCodesViewConfiguration, BackupCodesViewModel
     private func setupBackupCodesView() {
         guard let viewModel = viewModel, let config = config else { return }
         
-        backupCodeLabels = []
         stack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-        for (index, model) in viewModel.backupCodes.enumerated() {
+        for model in viewModel.backupCodes {
             let backupCodeLabel = FELabel()
-            
-            var labelConfig: LabelConfiguration?
-            if index < config.backupCodes.count {
-                labelConfig = config.backupCodes[index]
-            } else {
-                labelConfig = config.backupCodes.last
-            }
-            
-            backupCodeLabel.configure(with: labelConfig)
+            backupCodeLabel.configure(with: config.backupCode)
             backupCodeLabel.setup(with: model)
             
-            backupCodeLabels.append(backupCodeLabel)
             stack.addArrangedSubview(backupCodeLabel)
         }
         

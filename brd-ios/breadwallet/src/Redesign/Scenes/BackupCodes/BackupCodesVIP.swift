@@ -13,6 +13,7 @@ extension Scenes {
 }
 
 protocol BackupCodesViewActions: BaseViewActions, FetchViewActions {
+    func getBackupCodes(viewAction: BackupCodesModels.BackupCodes.ViewAction)
 }
 
 protocol BackupCodesActionResponses: BaseActionResponses, FetchActionResponses {

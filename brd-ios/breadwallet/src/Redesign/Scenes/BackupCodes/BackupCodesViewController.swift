@@ -128,11 +128,11 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
     }
     
     private func getCodesTapped() {
-        // TODO: Add action to get new codes from BE
+        interactor?.getBackupCodes(viewAction: .init(method: .delete))
     }
 
     // MARK: - BackupCodesResponseDisplay
-
+    
     // MARK: - Additional Helpers
     
     private func createPDF() {

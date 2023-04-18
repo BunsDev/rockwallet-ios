@@ -22,11 +22,11 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
             .backupCodes
         ]
         
-        let backupCodes: [LabelViewModel] = [LabelViewModel.text("123 456"),
-                                             LabelViewModel.text("695 456"),
-                                             LabelViewModel.text("123 789"),
-                                             LabelViewModel.text("789 456"),
-                                             LabelViewModel.text("654 456")] // TODO: Update with BE codes
+        let backupCodes: [LabelViewModel] = (actionResponse.item as? [String])?.compactMap({ string in
+            var string = string
+            string.insert(" ", at: string.index(string.startIndex, offsetBy: 2))
+            return LabelViewModel.text(string)
+        }) ?? []
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
@@ -42,7 +42,7 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
-
+    
     // MARK: - Additional Helpers
 
 }

@@ -297,6 +297,7 @@
 		7BDB4A112806FA190031F015 /* brd-tokens.tar in Resources */ = {isa = PBXBuildFile; fileRef = 7BDB4A0F2806FA190031F015 /* brd-tokens.tar */; };
 		7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */; };
 		7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */; };
+		7BEF9B4D29EEEC590073186E /* RecoveryCodesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF9B4C29EEEC590073186E /* RecoveryCodesWorker.swift */; };
 		7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */; };
 		7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */; };
 		7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */; };
@@ -1167,6 +1168,7 @@
 		7BDB4A0F2806FA190031F015 /* brd-tokens.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; name = "brd-tokens.tar"; path = "Resources/brd-tokens.tar"; sourceTree = "<group>"; };
 		7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardInputDetailsView.swift; sourceTree = "<group>"; };
 		7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalButtonsView.swift; sourceTree = "<group>"; };
+		7BEF9B4C29EEEC590073186E /* RecoveryCodesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryCodesWorker.swift; sourceTree = "<group>"; };
 		7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVIP.swift; sourceTree = "<group>"; };
 		7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInInteractor.swift; sourceTree = "<group>"; };
 		7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInModels.swift; sourceTree = "<group>"; };
@@ -2631,6 +2633,7 @@
 				7E8E979F283F48EE008606B0 /* NavigationItemView.swift */,
 				7E7AFBE929409FCC0063023F /* RWDrawer.swift */,
 				7ECCA9982874342C00F99368 /* FETimerView.swift */,
+				C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */,
 				7ECCA99C28745E0400F99368 /* AssetView.swift */,
 				7EF45F7A2846244F00D1F7B0 /* ItemView.swift */,
 				7B78631B287427680092F35B /* MainSwapView.swift */,
@@ -2787,7 +2790,6 @@
 				7ECCA9942874266200F99368 /* FESegmentControl.swift */,
 				7EB838472849DD8200C7CC05 /* FELink.swift */,
 				7E5CB37B2835090E00EC787E /* FEButton.swift */,
-				C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -3204,6 +3206,7 @@
 				C4F4629B29CC86FF00083512 /* BackupCodesModels.swift */,
 				C4F4629D29CC86FF00083512 /* BackupCodesViewController.swift */,
 				C4F4629E29CC86FF00083512 /* BackupCodesInteractor.swift */,
+				7BEF9B4C29EEEC590073186E /* RecoveryCodesWorker.swift */,
 			);
 			path = BackupCodes;
 			sourceTree = "<group>";
@@ -4571,6 +4574,7 @@
 				7CA1C47420EC25B9002E9E68 /* QRCode.swift in Sources */,
 				7BBBF4DB287421CF00E4D36B /* SwapInteractor.swift in Sources */,
 				7EE91A5E2968310100331B1F /* KYCAddressViewController.swift in Sources */,
+				7BEF9B4D29EEEC590073186E /* RecoveryCodesWorker.swift in Sources */,
 				CE41327622CACA05002391E6 /* BalanceCell.swift in Sources */,
 				04185DC129D179B700AECBFA /* TwoStepAuthenticationStore.swift in Sources */,
 				7E5CB3AA2835090E00EC787E /* WrapperAccessoryView.swift in Sources */,

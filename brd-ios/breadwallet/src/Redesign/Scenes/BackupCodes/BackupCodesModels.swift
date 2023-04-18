@@ -9,7 +9,7 @@
 import UIKit
 
 enum BackupCodesModels {
-    typealias Item = BackupCodesDataStore
+    typealias Item = ([String])
     
     enum Section: Sectionable {
         case instructions
@@ -18,5 +18,11 @@ enum BackupCodesModels {
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
+    }
+    
+    struct BackupCodes {
+        struct ViewAction {
+            var method: HTTPMethod
+        }
     }
 }
