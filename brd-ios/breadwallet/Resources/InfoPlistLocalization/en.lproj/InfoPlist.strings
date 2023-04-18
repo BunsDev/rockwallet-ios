@@ -596,7 +596,7 @@
 
 "BackupCodes.getNewCodes" = "Get new codes";
 
-"BackupCodes.instructions" = "Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method";
+"BackupCodes.instructions" = "Download your backup codes and store them securely. You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.";
 
 "BackupCodes.Title" = "Backup codes";
 
