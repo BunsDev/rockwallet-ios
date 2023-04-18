@@ -17,7 +17,7 @@ class TwoStepSettingsViewController: BaseTableViewController<AccountCoordinator,
 
     // MARK: - Overrides
     
-    override var sceneLeftAlignedTitle: String? { return "2FA Settings" }
+    override var sceneLeftAlignedTitle: String? { return L10n.TwoStep.settings }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell

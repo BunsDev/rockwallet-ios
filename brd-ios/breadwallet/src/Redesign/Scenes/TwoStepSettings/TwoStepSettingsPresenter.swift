@@ -22,19 +22,19 @@ final class TwoStepSettingsPresenter: NSObject, Presenter, TwoStepSettingsAction
         ]
         
         let sectionRows: [Models.Section: [any Hashable]] = [
-            .description: [LabelViewModel.text("Select your preferred 2FA settings")],
+            .description: [LabelViewModel.text(L10n.TwoStep.preferredSettings)],
             .settings: [
-                IconTitleSubtitleToggleViewModel(title: .text("Sign in into new device"),
-                                                 subtitle: .text("(Mandatory)"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.signInIntoNewDevice),
+                                                 subtitle: .text(L10n.TwoStep.mandatory),
                                                  checkmark: .image(Asset.checkboxSelectedCircle.image)),
-                IconTitleSubtitleToggleViewModel(title: .text("Recover/Changing password"),
-                                                 subtitle: .text("(Mandatory)"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.recoverChangingPassword),
+                                                 subtitle: .text(L10n.TwoStep.mandatory),
                                                  checkmark: .image(Asset.checkboxSelectedCircle.image)),
-                IconTitleSubtitleToggleViewModel(title: .text("Every 90 days"),
-                                                 subtitle: .text("(Mandatory)"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.twoStepPeriod),
+                                                 subtitle: .text(L10n.TwoStep.mandatory),
                                                  checkmark: .image(Asset.checkboxSelectedCircle.image)),
-                IconTitleSubtitleToggleViewModel(title: .text("Sending funds"), checkmarkToggle: true),
-                IconTitleSubtitleToggleViewModel(title: .text("Buy transactions"), checkmarkToggle: true)
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.sendingFunds), checkmarkToggle: true),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.buyTransactions), checkmarkToggle: true)
             ]
         ]
         
