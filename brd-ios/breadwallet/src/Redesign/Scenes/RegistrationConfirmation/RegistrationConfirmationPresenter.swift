@@ -29,6 +29,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         
         if confirmationType == .twoStepApp {
             sections = sections.filter({ $0 != .image })
+            sections = sections.filter({ $0 != .instructions })
+            sections = sections.filter({ $0 != .help })
         }
         
         let title: String
