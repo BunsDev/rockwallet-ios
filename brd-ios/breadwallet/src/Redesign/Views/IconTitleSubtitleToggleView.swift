@@ -25,6 +25,7 @@ struct IconTitleSubtitleToggleViewModel: ViewModel {
     var subtitle: LabelViewModel?
     var checkmark: ImageViewModel = .image(Asset.radiobutton.image)
     var checkmarkToggle: Bool = false
+    var isInteractable: Bool = true
 }
 
 class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, IconTitleSubtitleToggleViewModel> {
@@ -145,6 +146,8 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
     }
     
     @objc func tapped() {
+        guard viewModel?.isInteractable == true else { return }
+        
         didTap?()
     }
 }

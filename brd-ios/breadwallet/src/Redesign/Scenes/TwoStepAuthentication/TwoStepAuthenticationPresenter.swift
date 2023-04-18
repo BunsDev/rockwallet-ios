@@ -49,12 +49,14 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.mail.image),
                                                  title: .text("Email address"),
                                                  subtitle: .text(UserDefaults.email ?? ""),
-                                                 checkmark: .image(emailAuthCheckmark))
+                                                 checkmark: .image(emailAuthCheckmark),
+                                                 isInteractable: authType != .email)
             ],
             .app: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.phone.image),
                                                  title: .text(L10n.TwoStep.Methods.AuthApp.title),
-                                                 checkmark: .image(appAuthCheckmark))
+                                                 checkmark: .image(appAuthCheckmark),
+                                                 isInteractable: authType != .authenticator)
             ]
         ]
         

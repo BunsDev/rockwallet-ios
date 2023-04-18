@@ -136,8 +136,11 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
                                blurred: false,
                                with: responseDisplay.popupViewModel,
                                config: responseDisplay.popupConfig,
-                               closeButtonCallback: {
+                               closeButtonCallback: { [weak self] in
+            self?.coordinator?.hidePopup()
         }, callbacks: [ { [weak self] in
+            self?.coordinator?.hidePopup()
+            
             self?.coordinator?.popToRoot(completion: { [weak self] in
                 self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text("2FA Successfully set up"),
                                                                          dismissType: .auto),
