@@ -43,7 +43,17 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             
         case .emailView:
-            cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
+            cell = self.tableView(tableView, textFieldCellForRowAt: indexPath)
+            
+            let castedCell = cell as? WrapperTableViewCell<FETextField>
+            castedCell?.setup { view in
+                var config = Presets.TextField.primary
+                config.autocapitalizationType = UITextAutocapitalizationType.none
+                config.autocorrectionType = .no
+                config.keyboardType = .emailAddress
+                
+                view.configure(with: config)
+            }
         
         case .paymail:
             cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)

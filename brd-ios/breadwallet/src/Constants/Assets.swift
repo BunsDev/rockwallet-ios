@@ -327,6 +327,7 @@ internal enum Asset {
   internal static let more = ImageAsset(name: "more")
   internal static let pad = ImageAsset(name: "pad")
   internal static let passport = ImageAsset(name: "passport")
+  internal static let paymailAddress = ImageAsset(name: "paymailAddress")
   internal static let pending = ImageAsset(name: "pending")
   internal static let phone = ImageAsset(name: "phone")
   internal static let qr = ImageAsset(name: "qr")

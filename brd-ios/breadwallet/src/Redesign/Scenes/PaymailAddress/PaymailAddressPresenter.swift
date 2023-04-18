@@ -27,7 +27,7 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
                 LabelViewModel.text(L10n.PaymailAddress.description)
             ],
             .emailView: [
-                LabelViewModel.text(L10n.PaymailAddress.yourPaymailAddress)
+                TextFieldModel(title: "Create your paymail", value: "@rockwallet.io")
             ],
             .paymail: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.PaymailAddress.whatIsPaymail,

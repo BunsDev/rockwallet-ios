@@ -560,6 +560,11 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.MenuButton.scan, icon: MenuItem.Icon.scan) { [weak self] in
                 self?.presentLoginScan()
             },
+            // Paymail address
+            MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) {
+                menuNav.pushViewController(PaymailAddressViewController(), animated: true)
+            },
+            
             // Feedback
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }
