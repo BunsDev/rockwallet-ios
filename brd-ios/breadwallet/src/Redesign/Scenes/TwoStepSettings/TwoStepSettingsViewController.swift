@@ -28,6 +28,15 @@ class TwoStepSettingsViewController: BaseTableViewController<AccountCoordinator,
         case .settings:
             cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
             
+            (cell as? WrapperTableViewCell<IconTitleSubtitleToggleView>)?.wrappedView.didToggle = { [weak self] isOn in
+                // TODO: Refactor
+                if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 2 {
+                    self?.interactor?.toggleSetting(viewAction: .init(sending: isOn, buy: nil))
+                } else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+                    self?.interactor?.toggleSetting(viewAction: .init(sending: nil, buy: isOn))
+                }
+            }
+            
         default:
             cell = self.tableView(tableView, cellForRowAt: indexPath)
         }

@@ -24,7 +24,7 @@ class UserManager: NSObject {
         let group = DispatchGroup()
 
         group.enter()
-        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData()) { [weak self] result in
+        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData(method: .get, sending: false, achSell: false, buy: false)) { [weak self] result in
             switch result {
             case .success:
                 self?.hasTwoStepAuth = true

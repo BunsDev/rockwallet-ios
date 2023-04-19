@@ -16,6 +16,8 @@ final class TwoStepSettingsPresenter: NSObject, Presenter, TwoStepSettingsAction
     // MARK: - TwoStepSettingsActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        guard let settings = actionResponse.item as? TwoStepSettings else { return }
+        
         let sections: [Models.Section] = [
             .description,
             .settings
@@ -33,8 +35,12 @@ final class TwoStepSettingsPresenter: NSObject, Presenter, TwoStepSettingsAction
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.twoStepPeriod),
                                                  subtitle: .text(L10n.TwoStep.mandatory),
                                                  checkmark: .image(Asset.checkboxSelectedCircle.image)),
-                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.sendingFunds), checkmarkToggle: true),
-                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.buyTransactions), checkmarkToggle: true)
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.sendingFunds),
+                                                 checkmarkToggleState: settings.sending,
+                                                 checkmarkToggle: true),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.buyTransactions),
+                                                 checkmarkToggleState: settings.buy,
+                                                 checkmarkToggle: true)
             ]
         ]
         

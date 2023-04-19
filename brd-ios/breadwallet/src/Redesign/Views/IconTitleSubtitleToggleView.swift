@@ -25,6 +25,7 @@ struct IconTitleSubtitleToggleViewModel: ViewModel {
     var title: LabelViewModel
     var subtitle: LabelViewModel?
     var checkmark: ImageViewModel? = .image(Asset.radiobutton.image)
+    var checkmarkToggleState: Bool = false
     var checkmarkToggle: Bool = false
     var isDestructive: Bool = false
     var isInteractable: Bool = true
@@ -32,6 +33,7 @@ struct IconTitleSubtitleToggleViewModel: ViewModel {
 
 class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, IconTitleSubtitleToggleViewModel> {
     var didTap: (() -> Void)?
+    var didToggle: ((Bool) -> Void)?
     
     private lazy var mainStack: UIStackView = {
         let view = UIStackView()
@@ -68,6 +70,7 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
     
     private lazy var checkmarkToggleView: UISwitch = {
         let view = UISwitch()
+        view.addTarget(self, action: #selector(switchToggled), for: .valueChanged)
         return view
     }()
     
@@ -114,7 +117,7 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         }
         
         titleSubtitleStack.arrangedSubviews.forEach { subView in
-            subView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+            subView.setContentCompressionResistancePriority(.required, for: .vertical)
         }
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
@@ -144,13 +147,18 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         subtitleLabel.isHidden = viewModel?.subtitle == nil
         checkmarkImageView.setup(with: viewModel?.checkmark)
         checkmarkImageView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == true
+        checkmarkToggleView.isOn = viewModel?.checkmarkToggleState ?? false
         checkmarkToggleView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == false
         
         let isDestructive = viewModel?.isDestructive ?? false
         titleLabel.configure(with: isDestructive ? config?.destructiveTitle : config?.title)
     }
     
-    @objc func tapped() {
+    @objc private func switchToggled() {
+        didToggle?(checkmarkToggleView.isOn)
+    }
+    
+    @objc private func tapped() {
         guard viewModel?.isInteractable == true else { return }
         
         didTap?()

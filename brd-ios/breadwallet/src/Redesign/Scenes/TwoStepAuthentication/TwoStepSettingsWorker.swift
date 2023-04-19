@@ -11,8 +11,19 @@
 import Foundation
 
 struct TwoStepSettingsRequestData: RequestModelData {
+    var method: HTTPMethod
+    let sending: Bool?
+    let achSell: Bool?
+    let buy: Bool?
+    
     func getParameters() -> [String: Any] {
-        return [:]
+        let params = [
+            "sending": sending,
+            "achSell": achSell,
+            "buy": buy
+        ]
+        
+        return params.compactMapValues { $0 }
     }
 }
 
@@ -47,5 +58,10 @@ class TwoStepSettingsMapper: ModelMapper<TwoStepSettingsResponseData, TwoStepSet
 class TwoStepSettingsWorker: BaseApiWorker<TwoStepSettingsMapper> {
     override func getUrl() -> String {
         return TwoStepEndpoints.settings.url
+    }
+    
+    override func getMethod() -> HTTPMethod {
+        let method = (requestData as? TwoStepSettingsRequestData)?.method ?? .get
+        return method
     }
 }
