@@ -26,13 +26,14 @@ class BaseTableViewController<C: CoordinatableRoutes,
         let view = FEButton()
         return view
     }()
-
+    
     override func setupCloseButton(closeAction: Selector) {
         var closeButton: UIBarButtonItem = .init()
         
-        if coordinator is AccountCoordinator
-            && !self.isKind(of: RegistrationConfirmationViewController.self)
-            && !self.isKind(of: DeleteProfileInfoViewController.self) {
+        if self.isKind(of: SignInViewController.self) ||
+            self.isKind(of: SignUpViewController.self) ||
+            self.isKind(of: ForgotPasswordViewController.self) ||
+            self.isKind(of: SetPasswordViewController.self) {
             guard navigationItem.leftBarButtonItem?.title != dismissText,
                   navigationItem.rightBarButtonItem?.title != dismissText else { return }
             
@@ -86,6 +87,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<DateView>.self)
         tableView.register(WrapperTableViewCell<TitleValueView>.self)
         tableView.register(WrapperTableViewCell<IconTitleSubtitleToggleView>.self)
+        tableView.register(WrapperTableViewCell<TitleButtonView>.self)
+        tableView.register(WrapperTableViewCell<PaddedImageView>.self)
+        tableView.register(WrapperTableViewCell<OrderView>.self)
     }
 
     override func prepareData() {
@@ -230,6 +234,51 @@ class BaseTableViewController<C: CoordinatableRoutes,
         
         cell.setup { view in
             view.configure(with: Presets.Background.transparent)
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleButtonViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<TitleButtonView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? TitleButtonViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, paddedImageViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<PaddedImageView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PaddedImageViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, orderViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<OrderView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? OrderViewModel
+        else {
+            return UITableViewCell()
+        }
+        
+        cell.setup { view in
+            view.configure(with: Presets.Order.small)
             view.setup(with: model)
         }
         
@@ -458,21 +507,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
             view.configure(with: .init())
             view.setup(with: model)
             view.setupCustomMargins(horizontal: .large)
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
-              let model = dataSource?.itemIdentifier(for: indexPath) as? SegmentControlViewModel
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
         }
         
         return cell

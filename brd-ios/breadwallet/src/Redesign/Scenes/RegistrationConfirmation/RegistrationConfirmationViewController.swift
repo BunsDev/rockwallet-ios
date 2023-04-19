@@ -87,8 +87,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders],
-                                       axis: self.dataStore?.confirmationType == .twoStep ? .vertical : .horizontal))
+            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
             
             view.callbacks = [
                 resendCodeTapped,
@@ -117,21 +116,33 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     // MARK: - RegistrationConfirmationResponseDisplay
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
+        view.endEditing(true)
+        
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.dismissFlow()
-            
-            // TODO: ENABLE 2FA
-//            guard let self = self else { return }
-//            switch self.dataStore?.confirmationType {
-//            case .account:
-//                self.coordinator?.showVerifyPhoneNumber()
-//
-//            case .twoStep:
-//                self.coordinator?.dismissFlow()
-//
-//            default:
-//                break
-//            }
+            guard let self = self else { return }
+            switch self.dataStore?.confirmationType {
+            case .account:
+                self.coordinator?.showVerifyPhoneNumber()
+                
+            case .acountTwoStepEmailSettings, .twoStepEmail:
+                self.coordinator?.popToRoot(completion: { [weak self] in
+                    self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.message),
+                                                                             dismissType: .auto),
+                                                        configuration: Presets.InfoView.warning)
+                })
+                
+            case .acountTwoStepAppSettings:
+                self.coordinator?.showAuthenticatorApp()
+                
+            case .twoStepApp:
+                self.coordinator?.showBackupCodes()
+                
+            case .disable:
+                self.coordinator?.popToRoot()
+                
+            default:
+                break
+            }
         })
     }
     

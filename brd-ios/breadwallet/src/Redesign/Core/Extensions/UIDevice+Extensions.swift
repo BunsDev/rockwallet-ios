@@ -12,10 +12,14 @@ import UIKit
 
 extension UIDevice {
     var hasNotch: Bool {
+        return UIDevice.current.bottomNotch > 0
+    }
+    
+    var bottomNotch: CGFloat {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
-        guard let window = windowScene?.windows.first else { return false }
+        guard let window = windowScene?.windows.first else { return 0 }
         
-        return window.safeAreaInsets.bottom > 20
+        return window.safeAreaInsets.bottom
     }
 }

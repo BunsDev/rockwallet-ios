@@ -18,7 +18,6 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         guard let confirmationType = actionResponse.item as? Models.Item else { return }
         
         let email = "\(": \n")\(UserDefaults.email ?? "")"
-        let phoneNumber = "\(": \n")\(UserDefaults.phoneNumber ?? "")"
         
         var sections: [Models.Section] = [
             .image,
@@ -28,11 +27,9 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             .help
         ]
         
-        if confirmationType == .twoStep || confirmationType == .authenticationCode {
+        if confirmationType == .twoStepApp {
             sections = sections.filter({ $0 != .image })
-        }
-        
-        if confirmationType == .authenticationCode {
+            sections = sections.filter({ $0 != .instructions })
             sections = sections.filter({ $0 != .help })
         }
         
@@ -40,27 +37,25 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         let instructions: String
         
         switch confirmationType {
-        case .account:
+        case .account, .acountTwoStepEmailSettings, .acountTwoStepAppSettings:
             title = L10n.AccountCreation.verifyEmail
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
-        case .twoStep:
-            title = L10n.VerifyPhoneNumber.Sms.title
-            instructions = "\(L10n.VerifyPhoneNumber.Sms.instructions)\(phoneNumber)"
-        case .authenticationCode:
-            title = L10n.Authentication.enterCode
-            instructions = L10n.Authentication.enterCodeDescription
+            
+        case .twoStepEmail, .disable:
+            title = "We’ve sent you a code"
+            instructions = "\(L10n.AccountCreation.enterCode)\(email)"
+            
+        case .twoStepApp:
+            title = "Enter the code from your Authenticator app"
+            instructions = ""
+            
         }
         
         var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
-                                                       isUnderlined: true,
-                                                       shouldTemporarilyDisableAfterTap: confirmationType == .twoStep)]
+                                                       isUnderlined: true)]
         
         if UserManager.shared.profile?.status == .emailPending {
             help.append(ButtonViewModel(title: L10n.AccountCreation.changeEmail, isUnderlined: true))
-        }
-        
-        if confirmationType == .twoStep {
-            help.append(ButtonViewModel(title: L10n.VerifyPhoneNumber.Sms.changeNumber, isUnderlined: true))
         }
         
         let sectionRows: [Models.Section: [any Hashable]] = [

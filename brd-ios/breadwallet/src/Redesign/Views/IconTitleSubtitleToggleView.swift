@@ -2,7 +2,7 @@
 //  IconTitleSubtitleToggleView.swift
 //  breadwallet
 //
-//  Created by Kanan Mamedoff on 27/03/2023.
+//  Created by Kenan Mamedoff on 27/03/2023.
 //  Copyright © 2023 RockWallet, LLC. All rights reserved.
 //
 //  See the LICENSE file at the project root for license information.
@@ -13,6 +13,7 @@ import UIKit
 struct IconTitleSubtitleToggleConfiguration: Configurable {
     var icon: BackgroundConfiguration = .init(tintColor: LightColors.Text.three)
     var title: LabelConfiguration = .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.three, numberOfLines: 1)
+    var destructiveTitle: LabelConfiguration = .init(font: Fonts.Subtitle.one, textColor: LightColors.Error.one, numberOfLines: 1)
     var subtitle: LabelConfiguration = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, numberOfLines: 1)
     var checkmark: BackgroundConfiguration? = .init(tintColor: LightColors.primary)
     var shadow: ShadowConfiguration?
@@ -23,12 +24,15 @@ struct IconTitleSubtitleToggleViewModel: ViewModel {
     var icon: ImageViewModel?
     var title: LabelViewModel
     var subtitle: LabelViewModel?
-    var checkmark: ImageViewModel = .image(Asset.radiobutton.image)
-    var checkmarkToggle: Bool = false
+    var checkmark: ImageViewModel?
+    var checkmarkToggleState: Bool?
+    var isDestructive: Bool = false
+    var isInteractable: Bool = true
 }
 
 class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, IconTitleSubtitleToggleViewModel> {
     var didTap: (() -> Void)?
+    var didToggle: ((Bool) -> Void)?
     
     private lazy var mainStack: UIStackView = {
         let view = UIStackView()
@@ -65,6 +69,7 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
     
     private lazy var checkmarkToggleView: UISwitch = {
         let view = UISwitch()
+        view.addTarget(self, action: #selector(switchToggled), for: .valueChanged)
         return view
     }()
     
@@ -77,7 +82,7 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
     override func setupSubviews() {
         super.setupSubviews()
         
-        content.setupCustomMargins(vertical: .zero, horizontal: .zero)
+        content.setupCustomMargins(vertical: .extraSmall, horizontal: .zero)
         
         content.addSubview(mainStack)
         mainStack.snp.makeConstraints { make in
@@ -110,6 +115,10 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
             make.trailing.bottom.equalToSuperview().offset(Margins.medium.rawValue)
         }
         
+        titleSubtitleStack.arrangedSubviews.forEach { subView in
+            subView.setContentCompressionResistancePriority(.required, for: .vertical)
+        }
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         addGestureRecognizer(tapGestureRecognizer)
     }
@@ -120,12 +129,8 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         super.configure(with: config)
         
         iconImageView.configure(with: config.icon)
-        titleLabel.configure(with: config.title)
         subtitleLabel.configure(with: config.subtitle)
         checkmarkImageView.configure(with: config.checkmark)
-        
-        shadowView = self
-        backgroundView = self
         
         configure(background: config.background)
         configure(shadow: config.shadow)
@@ -139,12 +144,24 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         titleLabel.setup(with: viewModel?.title)
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.subtitle == nil
+        
         checkmarkImageView.setup(with: viewModel?.checkmark)
-        checkmarkImageView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == true
-        checkmarkToggleView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == false
+        checkmarkImageView.isHidden = viewModel?.checkmarkToggleState != nil
+        
+        checkmarkToggleView.isOn = viewModel?.checkmarkToggleState ?? false
+        checkmarkToggleView.isHidden = viewModel?.checkmarkToggleState == nil
+        
+        let isDestructive = viewModel?.isDestructive ?? false
+        titleLabel.configure(with: isDestructive ? config?.destructiveTitle : config?.title)
     }
     
-    @objc func tapped() {
+    @objc private func switchToggled() {
+        didToggle?(checkmarkToggleView.isOn)
+    }
+    
+    @objc private func tapped() {
+        guard viewModel?.isInteractable == true else { return }
+        
         didTap?()
     }
 }

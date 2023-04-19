@@ -18,35 +18,39 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let sections: [Models.Section] = [
             .instructions,
-            .backupCodes,
-            .description,
-            .getNewCodes
+            .getNewCodes,
+            .backupCodes
         ]
         
-        let backupCodes: [LabelViewModel] = [LabelViewModel.text("123 456"),
-                                              LabelViewModel.text("695 456"),
-                                              LabelViewModel.text("123 789"),
-                                              LabelViewModel.text("789 456"),
-                                              LabelViewModel.text("654 456")] // TODO: Update with BE codes
+        let backupCodes: [LabelViewModel] = (actionResponse.item as? [String])?.compactMap({ string in
+            return LabelViewModel.text(string.separated(stride: 3))
+        }) ?? []
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
                 LabelViewModel.text(L10n.BackupCodes.instructions)
             ],
-            .backupCodes: [
-                BackupCodesViewModel(backupCodes: backupCodes)
-            ],
-            .description: [
-                LabelViewModel.text(L10n.BackupCodes.description)
-            ],
             .getNewCodes: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.BackupCodes.getNewCodes,
-                                                                   isUnderlined: true)])]
+                                                                   isUnderlined: true)])],
+            .backupCodes: [
+                BackupCodesViewModel(backupCodes: backupCodes)
+            ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
-
+    
+    func presentSkipSaving(actionResponse: BackupCodesModels.SkipBackupCodeSaving.ActionResponse) {
+        let popupViewModel = PopupViewModel(title: .text(L10n.Alert.important),
+                                            body: L10n.TwoStep.App.BackupCodes.warning,
+                                            buttons: [.init(title: L10n.Button.iUnderstand)],
+                                            closeButton: .init(image: Asset.close.image))
+        
+        viewController?.displaySkipSaving(responseDisplay: .init(popupViewModel: popupViewModel,
+                                                                    popupConfig: Presets.Popup.whiteCentered))
+    }
+    
     // MARK: - Additional Helpers
 
 }

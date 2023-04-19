@@ -79,7 +79,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showSwap(selectedCurrency: Currency? = nil, currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
+    func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
         guard let profile = UserManager.shared.profile,
               profile.kycAccessRights.hasSwapAccess else {
             handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
@@ -94,14 +94,12 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.currencies = currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
-                    guard let currency = selectedCurrency else { return }
-                    vc?.dataStore?.from = .zero(currency)
                 }
             }
         }
     }
     
-    func showBuy(selectedCurrency: Currency? = nil, type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showBuy(type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         guard let profile = UserManager.shared.profile,
               ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
             handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
@@ -116,8 +114,6 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
-                    guard let currency = selectedCurrency else { return }
-                    vc?.dataStore?.toAmount = .zero(currency)
                 }
             }
         }
@@ -167,6 +163,12 @@ class BaseCoordinator: NSObject, Coordinatable {
         
         childCoordinators.append(coordinator)
         UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
+    }
+    
+    func showTwoStepAuthentication(keyStore: KeyStore?) {
+        openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
+            vc?.dataStore?.keyStore = keyStore
+        }
     }
     
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
@@ -222,21 +224,21 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     /// Only call from coordinator subclasses
-    func open<T: BaseControllable>(scene: T.Type,
-                                   presentationStyle: UIModalPresentationStyle = .fullScreen,
-                                   configure: ((T) -> Void)? = nil) {
-        let controller = T()
-        controller.coordinator = (self as? T.CoordinatorType)
+    func open<VC: BaseControllable>(scene: VC.Type,
+                                    presentationStyle: UIModalPresentationStyle = .fullScreen,
+                                    configure: ((VC) -> Void)? = nil) {
+        let controller = VC()
+        controller.coordinator = (self as? VC.CoordinatorType)
         configure?(controller)
         navigationController.modalPresentationStyle = presentationStyle
         navigationController.show(controller, sender: nil)
     }
     
     /// Only call from coordinator subclasses
-    func set<C: BaseCoordinator,
-             VC: BaseControllable>(coordinator: C.Type,
-                                   scene: VC.Type,
-                                   configure: ((VC?) -> Void)? = nil) {
+    func open<C: BaseCoordinator,
+              VC: BaseControllable>(coordinator: C.Type,
+                                    scene: VC.Type,
+                                    configure: ((VC?) -> Void)? = nil) {
         let controller = VC()
         let coordinator = C(navigationController: navigationController)
         controller.coordinator = coordinator as? VC.CoordinatorType
@@ -245,7 +247,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         
-        navigationController.setViewControllers([controller], animated: true)
+        navigationController.show(controller, sender: nil)
     }
     
     /// Only call from coordinator subclasses
@@ -282,10 +284,8 @@ class BaseCoordinator: NSObject, Coordinatable {
         case .success(let profile):
             let status = profile?.status
             
-            // TODO: ENABLE 2FA
             if status == VerificationStatus.emailPending
                 || status == VerificationStatus.none
-//              || !UserManager.shared.hasTwoStepAuth
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
@@ -639,6 +639,17 @@ class BaseCoordinator: NSObject, Coordinatable {
                 break
             }
         }
+    }
+    
+    func openUrl(url: URL) {
+        guard UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:])
+    }
+    
+    func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {
+        ExchangeAuthHelper.showPinInput(on: navigationController,
+                                        keyStore: keyStore,
+                                        callback: callback)
     }
     
     func prepareForDeeplinkHandling(coreSystem: CoreSystem, keyStore: KeyStore) {

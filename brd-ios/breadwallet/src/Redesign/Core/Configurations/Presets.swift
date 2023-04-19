@@ -326,6 +326,16 @@ extension Presets {
                                                                 tintColor: LightColors.Text.one,
                                                                 border: Presets.Border.mediumPlain),
                                               contentBackground: .init(tintColor: LightColors.Text.one))
+        
+        static var auth = OrderConfiguration(title: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.three, textAlignment: .center, numberOfLines: 1),
+                                             value: .init(font: Fonts.Subtitle.two,
+                                                          textColor: LightColors.Text.three,
+                                                          textAlignment: .center),
+                                             background: .init(backgroundColor: LightColors.Background.cards,
+                                                               border: .init(tintColor: LightColors.Outline.one,
+                                                                             borderWidth: 1,
+                                                                             cornerRadius: CornerRadius.common)),
+                                             contentBackground: .init(tintColor: LightColors.Background.cards))
     }
 }
 
@@ -366,10 +376,10 @@ extension Presets {
 
 extension Presets {
     struct TitleValue {
-        static var common = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.two, numberOfLines: 1),
-                                                    value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, textAlignment: .right))
+        static var common = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
+                                                    value: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one, textAlignment: .right))
         
-        static var bold = TitleValueConfiguration(title: .init(font: Fonts.Body.two, textColor: LightColors.Text.one, numberOfLines: 1),
+        static var bold = TitleValueConfiguration(title: .init(font: Fonts.Body.one, textColor: LightColors.Text.one, numberOfLines: 1),
                                                   value: .init(font: Fonts.Subtitle.one, textColor: LightColors.Text.one, textAlignment: .right))
         
         static var small = TitleValueConfiguration(title: .init(font: Fonts.Body.three, textColor: LightColors.Text.two, numberOfLines: 1),

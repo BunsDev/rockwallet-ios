@@ -264,6 +264,10 @@ internal enum L10n {
     internal static let whyVerify = L10n.tr("Localizable", "Account.WhyVerify", fallback: "Why should I verify my identity?")
     /// Write your name as it appears on your ID label in create account
     internal static let writeYourName = L10n.tr("Localizable", "Account.WriteYourName", fallback: "Write your name as it appears on your ID")
+    internal enum EmailAddress {
+      /// Email address
+      internal static let title = L10n.tr("Localizable", "Account.EmailAddress.Title", fallback: "Email address")
+    }
     internal enum VerificationSuccessful {
       /// Your account has been successfully verified, and your limits have been updated.
       internal static let description = L10n.tr("Localizable", "Account.VerificationSuccessful.description", fallback: "Your account has been successfully verified, and your limits have been updated.")
@@ -448,6 +452,8 @@ internal enum L10n {
     internal static let error = L10n.tr("Localizable", "Alert.error", fallback: "Error")
     /// Hedera Account succesfully created header alert view
     internal static let hederaAccount = L10n.tr("Localizable", "Alert.HederaAccount", fallback: "Hedera Account succesfully created.")
+    /// Important note
+    internal static let important = L10n.tr("Localizable", "Alert.Important", fallback: "Important note")
     /// No internet alert message
     internal static let noInternet = L10n.tr("Localizable", "Alert.noInternet", fallback: "No internet connection found. Check your connection and try again.")
     /// KYCCamera doesn't have permission to use the camera, please change privacy settings
@@ -596,8 +602,8 @@ internal enum L10n {
     internal static let description = L10n.tr("Localizable", "BackupCodes.description", fallback: "You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.")
     /// Get new codes
     internal static let getNewCodes = L10n.tr("Localizable", "BackupCodes.getNewCodes", fallback: "Get new codes")
-    /// Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method
-    internal static let instructions = L10n.tr("Localizable", "BackupCodes.instructions", fallback: "Save your backup codes in a secure place. These might be the only way to access your account if you are unable to access your phone or you can’t use your security method")
+    /// Download your backup codes and store them securely. You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.
+    internal static let instructions = L10n.tr("Localizable", "BackupCodes.instructions", fallback: "Download your backup codes and store them securely. You can use each backup code once, if you’ve already used most of them, you can request a new set of codes.")
     /// Backup codes
     internal static let title = L10n.tr("Localizable", "BackupCodes.Title", fallback: "Backup codes")
   }
@@ -638,6 +644,8 @@ internal enum L10n {
     internal static let dismiss = L10n.tr("Localizable", "Button.dismiss", fallback: "Dismiss")
     /// Done button title
     internal static let done = L10n.tr("Localizable", "Button.done", fallback: "DONE")
+    /// DOWNLOAD
+    internal static let download = L10n.tr("Localizable", "Button.Download", fallback: "DOWNLOAD")
     /// Finish button title
     internal static let finish = L10n.tr("Localizable", "Button.Finish", fallback: "Finish")
     /// Fund your wallet with ACH
@@ -648,6 +656,8 @@ internal enum L10n {
     internal static let home = L10n.tr("Localizable", "Button.Home", fallback: "Home")
     /// Ignore button label
     internal static let ignore = L10n.tr("Localizable", "Button.ignore", fallback: "Ignore")
+    /// I understand
+    internal static let iUnderstand = L10n.tr("Localizable", "Button.iUnderstand", fallback: "I understand")
     /// Let’s go!
     internal static let letsGo = L10n.tr("Localizable", "Button.letsGo", fallback: "Let’s go!")
     /// Map button
@@ -1646,6 +1656,20 @@ internal enum L10n {
     internal static let subtitle = L10n.tr("Localizable", "OnboardingPageTwo.subtitle", fallback: "We have over $6 billion USD worth of assets under protection.")
     /// Onboarding screen Page 2 title
     internal static let title = L10n.tr("Localizable", "OnboardingPageTwo.title", fallback: "Join people around the world who trust RockWallet.")
+  }
+  internal enum PaymailAddress {
+    /// Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.
+    internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
+    /// Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.
+    /// The goals of the paymail protocol are:
+    /// User friendly payment destinations through memorable handles
+    internal static let popupDescription = L10n.tr("Localizable", "PaymailAddress.popupDescription", fallback: "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles")
+    /// Paymail Address
+    internal static let title = L10n.tr("Localizable", "PaymailAddress.title", fallback: "Paymail Address")
+    /// What is Paymail?
+    internal static let whatIsPaymail = L10n.tr("Localizable", "PaymailAddress.whatIsPaymail", fallback: "What is Paymail?")
+    /// Your Paymail address:
+    internal static let yourPaymailAddress = L10n.tr("Localizable", "PaymailAddress.yourPaymailAddress", fallback: "Your Paymail address:")
   }
   internal enum PaymentConfirmation {
     /// Eg. Send 1.0Eth to purchase CCC
@@ -3010,22 +3034,80 @@ internal enum L10n {
   internal enum TwoStep {
     /// 
     internal static let additionalMethodsTitle = L10n.tr("Localizable", "TwoStep.additionalMethodsTitle", fallback: "")
+    /// Buy transactions
+    internal static let buyTransactions = L10n.tr("Localizable", "TwoStep.BuyTransactions", fallback: "Buy transactions")
     /// Change Phone Number
     internal static let changePhoneNumberTitle = L10n.tr("Localizable", "TwoStep.changePhoneNumberTitle", fallback: "Change Phone Number")
     /// 
     internal static let getBackupCodesTitle = L10n.tr("Localizable", "TwoStep.getBackupCodesTitle", fallback: "")
     /// Two Factor Authentication in enabled with the phone number ending in
     internal static let mainInstructions = L10n.tr("Localizable", "TwoStep.mainInstructions", fallback: "Two Factor Authentication in enabled with the phone number ending in")
-    /// Two factor authentication
-    internal static let mainTitle = L10n.tr("Localizable", "TwoStep.mainTitle", fallback: "Two factor authentication")
+    /// Two Factor Authentication
+    internal static let mainTitle = L10n.tr("Localizable", "TwoStep.mainTitle", fallback: "Two Factor Authentication")
+    /// (Mandatory)
+    internal static let mandatory = L10n.tr("Localizable", "TwoStep.Mandatory", fallback: "(Mandatory)")
+    /// Select you preferred 2FA Settings
+    internal static let preferredSettings = L10n.tr("Localizable", "TwoStep.PreferredSettings", fallback: "Select you preferred 2FA Settings")
+    /// Recover/Changing password
+    internal static let recoverChangingPassword = L10n.tr("Localizable", "TwoStep.RecoverChangingPassword", fallback: "Recover/Changing password")
+    /// Sending funds
+    internal static let sendingFunds = L10n.tr("Localizable", "TwoStep.SendingFunds", fallback: "Sending funds")
+    /// 2FA Settings
+    internal static let settings = L10n.tr("Localizable", "TwoStep.Settings", fallback: "2FA Settings")
+    /// Sign in into new device
+    internal static let signInIntoNewDevice = L10n.tr("Localizable", "TwoStep.SignInIntoNewDevice", fallback: "Sign in into new device")
+    /// Every 90 days
+    internal static let twoStepPeriod = L10n.tr("Localizable", "TwoStep.TwoStepPeriod", fallback: "Every 90 days")
+    internal enum App {
+      internal enum BackupCodes {
+        /// Your backup codes are the only way to access your account if you lose access your Authenticator App
+        internal static let warning = L10n.tr("Localizable", "TwoStep.App.BackupCodes.warning", fallback: "Your backup codes are the only way to access your account if you lose access your Authenticator App")
+      }
+      internal enum Import {
+        /// Import with link
+        internal static let action = L10n.tr("Localizable", "TwoStep.App.Import.action", fallback: "Import with link")
+        /// Using an authenticator app?
+        internal static let title = L10n.tr("Localizable", "TwoStep.App.Import.title", fallback: "Using an authenticator app?")
+      }
+    }
+    internal enum AuthSettings {
+      /// Two Factor Authentication Settings
+      internal static let title = L10n.tr("Localizable", "TwoStep.AuthSettings.Title", fallback: "Two Factor Authentication Settings")
+    }
+    internal enum Change {
+      /// 
+      internal static let title = L10n.tr("Localizable", "TwoStep.Change.Title", fallback: "")
+    }
+    internal enum Disable {
+      /// Disable 2FA
+      internal static let title = L10n.tr("Localizable", "TwoStep.Disable.Title", fallback: "Disable 2FA")
+    }
+    internal enum Menu {
+      /// Two-Factor Authentication (2FA)
+      internal static let title = L10n.tr("Localizable", "TwoStep.Menu.Title", fallback: "Two-Factor Authentication (2FA)")
+    }
+    internal enum Method {
+      internal enum App {
+        /// Two Factor Authentication in enabled with Authenticator App
+        internal static let description = L10n.tr("Localizable", "TwoStep.Method.App.Description", fallback: "Two Factor Authentication in enabled with Authenticator App")
+      }
+      internal enum Email {
+        /// Two Factor Authentication in enabled with Email
+        internal static let description = L10n.tr("Localizable", "TwoStep.Method.Email.Description", fallback: "Two Factor Authentication in enabled with Email")
+      }
+    }
+    internal enum Success {
+      /// 2FA Successfully set up
+      internal static let message = L10n.tr("Localizable", "TwoStep.Success.Message", fallback: "2FA Successfully set up")
+    }
     internal enum Methods {
       /// Get your backup codes
       internal static let additionalGetBackupCodesAction = L10n.tr("Localizable", "TwoStep.methods.additionalGetBackupCodesAction", fallback: "Get your backup codes")
       /// Additional methods
       internal static let additionalTitle = L10n.tr("Localizable", "TwoStep.methods.additionalTitle", fallback: "Additional methods")
       internal enum AuthApp {
-        /// Authentication app
-        internal static let title = L10n.tr("Localizable", "TwoStep.methods.authApp.title", fallback: "Authentication app")
+        /// Authenticator app
+        internal static let title = L10n.tr("Localizable", "TwoStep.methods.authApp.title", fallback: "Authenticator app")
       }
       internal enum Phone {
         /// Change Phone Number

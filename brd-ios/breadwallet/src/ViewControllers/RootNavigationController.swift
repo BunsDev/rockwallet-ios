@@ -62,8 +62,8 @@ class RootNavigationController: UINavigationController, UINavigationControllerDe
         case is BuyViewController,
             is SwapViewController,
             is SellViewController,
-            is ExchangeDetailsViewController:
-            
+            is ExchangeDetailsViewController,
+            is OrderPreviewViewController:
             backgroundColor = LightColors.Background.two
             tintColor = LightColors.Text.three
             

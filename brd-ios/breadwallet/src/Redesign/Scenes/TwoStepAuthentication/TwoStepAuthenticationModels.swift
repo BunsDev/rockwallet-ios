@@ -11,16 +11,30 @@
 import UIKit
 
 enum TwoStepAuthenticationModels {
-    typealias Item = ()
+    typealias Item = TwoStepSettingsResponseData.TwoStepType?
     
     enum Section: Sectionable {
         case instructions
-        case methods
-        case additionalMethods
+        case email
+        case app
         case settingsTitle
+        case backupCodes
         case settings
+        case disable
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
+    }
+    
+    struct ChangeMethod {
+        struct ViewAction {
+            let indexPath: IndexPath
+        }
+        struct ActionResponse {
+            let indexPath: IndexPath
+        }
+        struct ResponseDisplay {
+            let indexPath: IndexPath
+        }
     }
 }

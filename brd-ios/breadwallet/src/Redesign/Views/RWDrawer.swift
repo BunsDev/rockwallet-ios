@@ -13,45 +13,46 @@ import UIKit
 import SnapKit
 
 struct DrawerConfiguration: Configurable {
+    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.one)
     var titleConfig = LabelConfiguration(font: Fonts.Subtitle.one,
                                          textColor: LightColors.secondary,
                                          textAlignment: .center)
-    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.two)
-    var buttons = [
-        Presets.Button.primary,
-        Presets.Button.primary,
-        Presets.Button.secondary
-    ]
+    var descriptionConfig = LabelConfiguration(font: Fonts.Body.two,
+                                               textColor: LightColors.Text.one,
+                                               textAlignment: .center)
+    var buttons: [ButtonConfiguration] = []
 }
 
 struct DrawerViewModel: ViewModel {
-    var title: String? = L10n.Drawer.title
-    var drawerImage: ImageViewModel? = .image(Asset.dragControl.image)
-    var buttons: [ButtonViewModel] = [
-        .init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
-        .init(title: L10n.Buy.fundWithAch, image: Asset.bank.image),
-        .init(title: L10n.Button.sell, image: Asset.sell.image)
-    ]
-    var additionalBottomOffset: CGFloat = UIDevice.current.hasNotch ? 0 : Margins.large.rawValue
-    var drawerBottomOffset = ViewSizes.bottomToolbarHeight.rawValue
+    var title: LabelViewModel?
+    var description: LabelViewModel?
+    var buttons: [ButtonViewModel] = []
+    var notice: ButtonViewModel?
 }
 
 class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
     var callbacks: [(() -> Void)] = []
-    var isShown: Bool { return blurView.alpha == 1 }
+    var isShown: Bool { return containerView.alpha == 1 }
     
-    private var viewTranslation = CGPoint(x: 0, y: 0)
+    static var bottomToolbarHeight = 84.0
+    
     private let dismissActionSubject = PassthroughSubject<Void, Never>()
     var dismissActionPublisher: AnyPublisher<Void, Never> {
         dismissActionSubject.eraseToAnyPublisher()
     }
-    private var drawerInitialY: CGFloat = 0.0
+    
+    lazy var containerView: UIView = {
+        let view = UIView()
+        view.alpha = 0.0
+        view.isUserInteractionEnabled = true
+        return view
+    }()
     
     private lazy var blurView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
+        let blurEffect = UIBlurEffect(style: .systemChromeMaterialDark)
         let view = UIVisualEffectView(effect: blurEffect)
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        view.alpha = 0
+        view.alpha = 0.94
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -62,25 +63,37 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         return view
     }()
     
-    lazy var stack: UIStackView = {
+    private lazy var stack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
+        view.alignment = .center
         view.spacing = Margins.huge.rawValue
         return view
     }()
     
-    lazy var drawerImage: FEImageView = {
+    private lazy var grabberImage: FEImageView = {
         let view = FEImageView()
         view.setup(with: .image(Asset.dragControl.image))
         return view
     }()
     
-    lazy var title: WrapperView<FELabel> = {
-        let view = WrapperView<FELabel>()
+    private lazy var title: FELabel = {
+        let view = FELabel()
         return view
     }()
     
-    lazy var buttonStack: UIStackView = {
+    private lazy var notice: WrapperView<FEImageView> = {
+        let view = WrapperView<FEImageView>()
+        view.wrappedView.setupCustomMargins(all: .extraSmall)
+        return view
+    }()
+    
+    private lazy var popupDescription: FELabel = {
+        let view = FELabel()
+        return view
+    }()
+    
+    private lazy var buttonStack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = Margins.small.rawValue
@@ -90,16 +103,27 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     
     override func setupSubviews() {
         super.setupSubviews()
+        
         isUserInteractionEnabled = false
         
-        content.addSubview(blurView)
+        UIApplication.shared.activeWindow?.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        containerView.addSubview(blurView)
         blurView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        containerView.addSubview(content)
+        content.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         content.addSubview(drawer)
         drawer.snp.makeConstraints { make in
-            make.top.equalTo(content.snp.bottom)
+            make.top.equalTo(containerView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
@@ -110,9 +134,10 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
             make.leading.equalToSuperview().inset(Margins.huge.rawValue)
             make.bottom.equalToSuperview()
         }
-        stack.addArrangedSubview(drawerImage)
-        drawerImage.snp.makeConstraints { make in
+        stack.addArrangedSubview(grabberImage)
+        grabberImage.snp.makeConstraints { make in
             make.height.equalTo(Margins.extraSmall.rawValue)
+            make.width.equalTo(ViewSizes.extralarge.rawValue)
         }
         
         stack.addArrangedSubview(title)
@@ -120,20 +145,40 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
             make.height.equalTo(ViewSizes.small.rawValue)
         }
         
+        stack.addArrangedSubview(notice)
+        notice.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue)
+            make.width.equalTo(164).priority(.high)
+        }
+        
+        stack.addArrangedSubview(popupDescription)
+        
         stack.addArrangedSubview(buttonStack)
+        buttonStack.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+        }
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onDrag(_:)))
         panGesture.delegate = self
         drawer.addGestureRecognizer(panGesture)
-        blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
-        drawerImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
+        containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
+        grabberImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(outsideTapped(_:))))
     }
     
     override func configure(with config: DrawerConfiguration?) {
         guard let config = config else { return }
         super.configure(with: config)
         
-        title.wrappedView.configure(with: config.titleConfig)
+        title.configure(with: config.titleConfig)
+        popupDescription.configure(with: config.descriptionConfig)
+        
+        let noticeConfig = BackgroundConfiguration(backgroundColor: LightColors.purpleMuted,
+                                                   tintColor: LightColors.instantPurple,
+                                                   border: BorderConfiguration(tintColor: .clear,
+                                                                               borderWidth: 0,
+                                                                               cornerRadius: .fullRadius))
+        notice.configure(background: noticeConfig)
+        
         drawer.backgroundColor = config.background.backgroundColor
         content.backgroundColor = nil
     }
@@ -142,14 +187,29 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         guard let viewModel = viewModel, let config = config else { return }
         
         super.setup(with: viewModel)
-        drawerImage.setup(with: viewModel.drawerImage)
-        drawerImage.isHidden = viewModel.drawerImage == nil
         
+        title.setup(with: viewModel.title)
         title.isHidden = viewModel.title == nil
-        if let text = viewModel.title {
-            title.wrappedView.setup(with: .text(text))
+        
+        popupDescription.setup(with: viewModel.description)
+        popupDescription.isHidden = viewModel.description == nil
+        
+        if let noticeModel = viewModel.notice, let image = noticeModel.image, let title = noticeModel.title {
+            let image = UIImage.textEmbeded(image: image,
+                                            string: title,
+                                            isImageBeforeText: true,
+                                            tintColor: LightColors.instantPurple)
+            notice.wrappedView.setup(with: .image(image))
         }
         
+        notice.isHidden = viewModel.notice == nil
+        
+        stack.snp.updateConstraints { make in
+            let bottomOffset = UIDevice.current.hasNotch ? UIDevice.current.bottomNotch : Margins.large.rawValue
+            make.bottom.equalToSuperview().inset(bottomOffset)
+        }
+        
+        buttonStack.arrangedSubviews.forEach({ $0.removeFromSuperview() })
         for ((vm, conf), callback) in zip(zip(viewModel.buttons, config.buttons), callbacks) {
             let button = FEButton()
             button.configure(with: conf)
@@ -166,18 +226,12 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
 
         buttonStack.isHidden = viewModel.buttons.isEmpty
         
-        stack.snp.updateConstraints { make in
-            let bottomOffset = viewModel.drawerBottomOffset + viewModel.additionalBottomOffset
-            make.bottom.equalToSuperview().inset(bottomOffset)
-        }
-        
         content.layoutIfNeeded()
     }
     
-    var contentChanged: (() -> Void)?
-    
     func show() {
-        guard blurView.alpha == 0 else { return }
+        guard containerView.alpha == 0 else { return }
+        
         isUserInteractionEnabled = true
         
         drawer.snp.removeConstraints()
@@ -187,7 +241,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         }
         
         Self.animate(withDuration: Presets.Animation.average.rawValue) { [weak self] in
-            self?.blurView.alpha = 1
+            self?.containerView.alpha = 1
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
             self?.layoutIfNeeded()
@@ -195,40 +249,45 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
     }
     
     func hide() {
-        guard blurView.alpha == 1 else { return }
+        guard containerView.alpha == 1 else { return }
+        
         isUserInteractionEnabled = false
+        
         drawer.snp.removeConstraints()
         drawer.snp.makeConstraints { make in
-            make.top.equalTo(content.snp.bottom)
+            make.top.equalTo(containerView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
         Self.animate(withDuration: Presets.Animation.average.rawValue) { [weak self] in
-            self?.blurView.alpha = 0
+            self?.containerView.alpha = 0
             self?.drawer.layoutIfNeeded()
             self?.content.layoutIfNeeded()
             self?.layoutIfNeeded()
         } completion: { [weak self] _ in
             self?.drawer.transform = .identity
         }
-
     }
     
     func toggle() {
-        guard blurView.alpha == 0 else {
+        if containerView.alpha == 0 {
+            return show()
+        } else {
             return hide()
         }
-        
-        show()
     }
     
     @objc private func outsideTapped(_ sender: UITapGestureRecognizer) {
         hide()
+        
         dismissActionSubject.send()
     }
     
     @objc private func onDrag(_ sender: UIPanGestureRecognizer) {
         guard let draggedView = sender.view else { return }
+        
+        let translation = sender.translation(in: draggedView.superview)
+        var drawerInitialY: Double = 0
         
         switch sender.state {
         case .began:
@@ -236,29 +295,38 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
             drawerInitialY = draggedView.frame.origin.y
             
         case .changed:
-            let translation = sender.translation(in: draggedView.superview)
-            
             // Prevent dragging the view higher than the initial frame
             let newY = max(drawerInitialY + translation.y, drawerInitialY)
             guard newY > drawerInitialY else {
-                Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                Self.animate(withDuration: Presets.Animation.long.rawValue,
+                             delay: 0,
+                             usingSpringWithDamping: 0.7,
+                             initialSpringVelocity: 1,
+                             options: .curveEaseOut, animations: {
                     self.drawer.transform = .identity
                 })
                 return
             }
             
-            viewTranslation = translation
-            Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.drawer.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+            Self.animate(withDuration: Presets.Animation.long.rawValue,
+                         delay: 0,
+                         usingSpringWithDamping: 0.7,
+                         initialSpringVelocity: 1,
+                         options: .curveEaseOut, animations: {
+                self.drawer.transform = CGAffineTransform(translationX: 0, y: translation.y)
             })
             
         case .ended:
             // Hide the view if dragged sufficiently, otherwise return to initial state
-            if viewTranslation.y > 100 {
+            if translation.y > 100 {
                 hide()
                 dismissActionSubject.send()
             } else {
-                Self.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                Self.animate(withDuration: Presets.Animation.long.rawValue,
+                             delay: 0,
+                             usingSpringWithDamping: 0.7,
+                             initialSpringVelocity: 1,
+                             options: .curveEaseOut, animations: {
                     self.drawer.transform = .identity
                 })
             }

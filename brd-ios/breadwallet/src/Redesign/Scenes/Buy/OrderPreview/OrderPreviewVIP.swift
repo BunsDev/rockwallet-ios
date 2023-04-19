@@ -21,6 +21,7 @@ protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions {
     func updateCvv(viewAction: OrderPreviewModels.CvvValidation.ViewAction)
     func showCvvInfoPopup(viewAction: OrderPreviewModels.CvvInfoPopup.ViewAction)
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction)
+    func showAchInstantDrawer(viewAction: OrderPreviewModels.AchInstantDrawer.ViewAction)
     func submit(viewAction: OrderPreviewModels.Submit.ViewAction)
     func toggleTickbox(viewAction: OrderPreviewModels.Tickbox.ViewAction)
 }
@@ -35,6 +36,7 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentVeriffLivenessCheck(actionResponse: OrderPreviewModels.VeriffLivenessCheck.ActionResponse)
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse)
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse)
+    func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse)
     func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse)
 }
 
@@ -48,6 +50,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayVeriffLivenessCheck(responseDisplay: OrderPreviewModels.VeriffLivenessCheck.ResponseDisplay)
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay)
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay)
+    func displayAchInstantDrawer(responseDisplay: OrderPreviewModels.AchInstantDrawer.ResponseDisplay)
     func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay)
 }
 
@@ -78,7 +81,6 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
                           card: PaymentCard?,
                           quote: Quote?,
                           availablePayments: [PaymentCard.PaymentType]?)
-    func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?)
     func showTermsAndConditions(url: URL)
     func showTimeout(type: PreviewType?)
     func showThreeDSecure(url: URL)

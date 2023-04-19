@@ -18,6 +18,8 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
                                        VerifyPhoneNumberResponseDisplays {
     typealias Models = VerifyPhoneNumberModels
     
+    override var isModalDismissableEnabled: Bool { return false }
+    
     override var sceneLeftAlignedTitle: String? {
         return L10n.VerifyPhoneNumber.title
     }
@@ -117,9 +119,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     }
     
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay) {
-        coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.showRegistrationConfirmation(isModalDismissable: false, confirmationType: .twoStep)
-        })
+        coordinator?.showKYCLevelOne()
     }
     
     // MARK: - Additional Helpers

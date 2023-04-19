@@ -34,12 +34,17 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        let paymentSegment = SegmentControlViewModel(selectedIndex: item.type)
+        
+        let selectedPaymentType = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == item.type })
+        
+        let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
+                                                     segments: [.init(image: nil, title: L10n.Buy.buyWithCard),
+                                                                .init(image: nil, title: L10n.Buy.fundWithAch)])
         let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
         limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
         let paymentMethodViewModel: CardSelectionViewModel
-        if paymentSegment.selectedIndex == .ach && item.achEnabled == true {
+        if item.type == .ach && item.achEnabled == true {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
                                                             subtitle: .text(L10n.Buy.linkBankAccount),
                                                             userInteractionEnabled: true)
@@ -53,8 +58,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
-                // dont ask
-                LabelViewModel.text("\n\n\n\n")
+                LabelViewModel.text("")
             ],
             .increaseLimits: [LabelViewModel.attributedText(limitsString)]
         ]
@@ -73,6 +77,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let formattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
         
         cryptoModel = .init(amount: actionResponse.amount,
+                            headerInfoButtonTitle: actionResponse.type == .ach ? L10n.Buy.Ach.Instant.infoButtonTitle : nil,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
@@ -105,7 +110,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                                    subtitle: .text(L10n.Buy.linkBankAccount),
                                                    userInteractionEnabled: true)
             }
-            cryptoModel.selectionDisabled = true
             
         default:
             if let paymentCard = actionResponse.card {
@@ -158,14 +162,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
     }
     
-    private func presentAchData(actionResponse: BuyModels.Assets.ActionResponse) {
-        
-    }
-    
-    private func presentCardData(actionResponse: BuyModels.Assets.ActionResponse) {
-        
-    }
-    
     func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse) {
         viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
     }
@@ -198,22 +194,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let config = Presets.InfoView.error
         
         viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
-    }
-    
-    func presentDisabledCurrencyMessage(actionResponse: BuyModels.AchData.ActionResponse) {
-        let currencyCode = actionResponse.currencyCode ?? ""
-        let infoMessage = NSMutableAttributedString(string: L10n.Buy.Ach.walletDisabled(currencyCode, L10n.WalletConnectionSettings.link))
-        let linkRange = infoMessage.mutableString.range(of: L10n.WalletConnectionSettings.link)
-        
-        if linkRange.location != NSNotFound {
-            infoMessage.addAttribute(.underlineStyle, value: 1, range: linkRange)
-        }
-        
-        let model = InfoViewModel(description: .attributedText(infoMessage),
-                                  dismissType: .tapToDismiss)
-        let config = Presets.InfoView.verification
-        
-        viewController?.displayManageAssetsMessage(responseDisplay: .init(model: model, config: config))
     }
     
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse) {
@@ -252,6 +232,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                                                            hideSeparator: true)
         
         viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
+    }
+    
+    func presentInstantAchPopup(actionResponse: BuyModels.InstantAchPopup.ActionResponse) {
+        let model = PopupViewModel(title: .text(L10n.Buy.Ach.Instant.popupTitle),
+                                   body: L10n.Buy.Ach.Instant.popupContent)
+        
+        viewController?.displayInstantAchPopup(responseDisplay: .init(model: model))
     }
     
     // MARK: - Additional Helpers

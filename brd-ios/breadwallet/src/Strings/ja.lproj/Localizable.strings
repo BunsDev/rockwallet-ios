@@ -94,6 +94,8 @@
 
 "Account.Email" = "Email";
 
+"Account.EmailAddress.Title" = "Email address";
+
 "Account.EnterEmail" = "Enter your e-mail";
 
 "Account.EnterPassword" = "Enter your password";
@@ -477,6 +479,8 @@
 /* Hedera Account succesfully created header alert view */
 "Alert.HederaAccount" = "Hedera Account succesfully created.";
 
+"Alert.Important" = "Important note";
+
 /* Keystore error */
 "Alert.keystore.generic.android" = "Android OSのKeystoreに問題があります。support@rockwallet.com にお問い合わせください。";
 
@@ -679,6 +683,8 @@
 /* Done button title */
 "Button.done" = "終了";
 
+"Button.Download" = "DOWNLOAD";
+
 /* Finish button title */
 "Button.Finish" = "Finish";
 
@@ -692,6 +698,8 @@
 
 /* Ignore button label */
 "Button.ignore" = "無視する";
+
+"Button.iUnderstand" = "I understand";
 
 "Button.letsGo" = "Let’s go!";
 
@@ -1727,6 +1735,16 @@
 
 /* Onboarding screen Page 2 title */
 "OnboardingPageTwo.title" = "世界中で何百万もの人々がBRDを利用しています。あなたもぜひ。";
+
+"PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
+
+"PaymailAddress.popupDescription" = "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles";
+
+"PaymailAddress.title" = "Paymail Address";
+
+"PaymailAddress.whatIsPaymail" = "What is Paymail?";
+
+"PaymailAddress.yourPaymailAddress" = "Your Paymail address:";
 
 /* Eg. Send 1.0Eth to purchase CCC */
 "PaymentConfirmation.amountText" = "%sを購入するために%sを送金する";
@@ -3186,13 +3204,35 @@
 
 "TwoStep.additionalMethodsTitle" = "";
 
+"TwoStep.App.BackupCodes.warning" = "Your backup codes are the only way to access your account if you lose access your Authenticator App";
+
+"TwoStep.App.Import.action" = "Import with link";
+
+"TwoStep.App.Import.title" = "Using an authenticator app?";
+
+"TwoStep.AuthSettings.Title" = "Two Factor Authentication Settings";
+
+"TwoStep.BuyTransactions" = "Buy transactions";
+
+"TwoStep.Change.Title" = "";
+
 "TwoStep.changePhoneNumberTitle" = "Change Phone Number";
+
+"TwoStep.Disable.Title" = "Disable 2FA";
 
 "TwoStep.getBackupCodesTitle" = "";
 
 "TwoStep.mainInstructions" = "Two Factor Authentication in enabled with the phone number ending in";
 
 "TwoStep.mainTitle" = "Two factor authentication";
+
+"TwoStep.Mandatory" = "(Mandatory)";
+
+"TwoStep.Menu.Title" = "Two-Factor Authentication (2FA)";
+
+"TwoStep.Method.App.Description" = "Two Factor Authentication in enabled with Authenticator App";
+
+"TwoStep.Method.Email.Description" = "Two Factor Authentication in enabled with Email";
 
 "TwoStep.methods.additionalGetBackupCodesAction" = "Get your backup codes";
 
@@ -3204,6 +3244,14 @@
 
 "TwoStep.methods.phone.title" = "Phone number";
 
+"TwoStep.PreferredSettings" = "Select you preferred 2FA Settings";
+
+"TwoStep.RecoverChangingPassword" = "Recover/Changing password";
+
+"TwoStep.SendingFunds" = "Sending funds";
+
+"TwoStep.Settings" = "2FA Settings";
+
 "TwoStep.settings.achWithdrawal" = "ACH Withdrawal";
 
 "TwoStep.settings.buyTransactions" = "Buy transactions";
@@ -3212,9 +3260,17 @@
 
 "TwoStep.settings.funds" = "Sending funds";
 
+
+
 "TwoStep.settings.recoverChangePassword" = "Recover/Changing password";
 
 "TwoStep.settings.signInNewDevice" = "Sign in into new device";
+
+"TwoStep.SignInIntoNewDevice" = "Sign in into new device";
+
+"TwoStep.Success.Message" = "2FA Successfully set up";
+
+"TwoStep.TwoStepPeriod" = "Every 90 days";
 
 "UDomains.invalid" = "Invalid address.";
 

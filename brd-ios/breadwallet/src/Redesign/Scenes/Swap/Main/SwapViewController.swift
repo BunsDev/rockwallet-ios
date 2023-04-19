@@ -132,6 +132,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
             return nil
         }
+        
         return cell
     }
     
@@ -207,7 +208,6 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay) {
         LoadingView.hideIfNeeded()
-        hideToastMessage()
         coordinator?.showSwapInfo(from: responseDisplay.from, to: responseDisplay.to, exchangeId: responseDisplay.exchangeId)
     }
     

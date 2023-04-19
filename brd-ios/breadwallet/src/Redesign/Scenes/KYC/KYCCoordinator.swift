@@ -18,26 +18,10 @@ class KYCCoordinator: BaseCoordinator,
                       KYCAddressRoutes,
                       AssetSelectionDisplayable {
     override func start() {
-        switch UserManager.shared.profile?.status {
-        case .emailPending:
-            let coordinator = AccountCoordinator(navigationController: navigationController)
-            coordinator.start()
-            coordinator.parentCoordinator = self
-            childCoordinators.append(coordinator)
-            
-        default:
-            showKYCLevelOne()
-            
-            // TODO: ENABLE 2FA
-//            if UserManager.shared.hasTwoStepAuth {
-//                showKYCLevelOne()
-//            } else {
-//                let coordinator = AccountCoordinator(navigationController: navigationController)
-//                coordinator.start()
-//                coordinator.parentCoordinator = self
-//                childCoordinators.append(coordinator)
-//            }
-        }
+        let coordinator = AccountCoordinator(navigationController: navigationController)
+        coordinator.start()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
     }
     
     func showKYCAddress(firstName: String?, lastName: String?, birthDate: String?) {

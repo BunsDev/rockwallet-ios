@@ -91,7 +91,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
             Models.Section.header: [header] as [any Hashable],
             Models.Section.order: [
                 OrderViewModel(title: L10n.Swap.transactionID,
-                               value: ExchangeDetailsPresenter.generateAttributedOrderValue(with: orderValue, isCopyable: true),
+                               value: CopyTextIcon.generate(with: orderValue, isCopyable: true),
                                isCopyable: true)
             ],
             Models.Section.buyOrder: [
@@ -110,18 +110,18 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
             ],
             Models.Section.timestamp: [
                 OrderViewModel(title: L10n.Swap.timestamp,
-                               value: ExchangeDetailsPresenter.generateAttributedOrderValue(with: dateString, isCopyable: false),
+                               value: CopyTextIcon.generate(with: dateString, isCopyable: false),
                                isCopyable: false)
             ],
             Models.Section.transactionFrom: [
                 OrderViewModel(title: "\(detail.source.currency) \(L10n.TransactionDetails.txHashHeader)",
-                               value: ExchangeDetailsPresenter.generateAttributedOrderValue(with: transactionFromValue, isCopyable: true),
+                               value: CopyTextIcon.generate(with: transactionFromValue, isCopyable: true),
                                isCopyable: true)
             ],
             Models.Section.transactionTo: [
                 OrderViewModel(title: "\(detail.destination.currency) \(L10n.TransactionDetails.txHashHeader)",
-                               value: ExchangeDetailsPresenter.generateAttributedOrderValue(with: transactionToValue,
-                                                                                            isCopyable: transactionToValueIsCopyable),
+                               value: CopyTextIcon.generate(with: transactionToValue,
+                                                            isCopyable: transactionToValueIsCopyable),
                                isCopyable: transactionToValueIsCopyable)
             ]
         ]
@@ -142,25 +142,6 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
     }
 
     // MARK: - Additional Helpers
-    
-    private static func generateAttributedOrderValue(with value: String, isCopyable: Bool) -> NSAttributedString {
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = Asset.copy.image.withRenderingMode(.alwaysOriginal)
-        imageAttachment.bounds = CGRect(x: 0,
-                                        y: -Margins.extraSmall.rawValue,
-                                        width: ViewSizes.extraSmall.rawValue,
-                                        height: ViewSizes.extraSmall.rawValue)
-        let attachmentString = NSAttributedString(attachment: imageAttachment)
-        let completeText = NSMutableAttributedString(string: "")
-        completeText.append(NSAttributedString(string: value))
-        
-        if isCopyable {
-            completeText.append(NSAttributedString(string: "  "))
-            completeText.append(attachmentString)
-        }
-        
-        return completeText
-    }
     
     private func getBaseCurrencyImage(currencyCode: String) -> UIImage? {
         guard let currency = Store.state.currencies.first(where: { $0.code == currencyCode }) else { return nil }
@@ -198,7 +179,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let model: BuyOrderViewModel
         switch type {
         case .sell:
-            model = BuyOrderViewModel(rateValue: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
+            model = BuyOrderViewModel(rate: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
                                       amount: .init(title: .text("\(L10n.Sell.subtotal)"), value: .text(amountText), infoImage: nil),
                                       cardFee: .init(title: .text(displayFeeTitle),
                                                      value: .text(cardFeeText),
@@ -208,7 +189,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                       paymentMethod: method)
             
         default:
-            model = BuyOrderViewModel(rateValue: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
+            model = BuyOrderViewModel(rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                                       amount: .init(title: .text("\(L10n.Swap.amountPurchased)"), value: .text(amountText), infoImage: nil),
                                       cardFee: .init(title: .text(displayFeeTitle),
                                                      value: .text(cardFeeText),

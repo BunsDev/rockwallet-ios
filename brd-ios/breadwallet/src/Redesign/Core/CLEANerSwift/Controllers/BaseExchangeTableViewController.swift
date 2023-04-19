@@ -2,7 +2,7 @@
 //  BaseExchangeTableViewController.swift
 //  breadwallet
 //
-//  Created by Kanan Mamedoff on 03/03/2023.
+//  Created by Kenan Mamedoff on 03/03/2023.
 //  Copyright © 2023 RockWallet, LLC. All rights reserved.
 //
 //  See the LICENSE file at the project root for license information.
@@ -35,7 +35,6 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     override func setupSubviews() {
         super.setupSubviews()
         
-        tableView.register(WrapperTableViewCell<FESegmentControl>.self)
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
         tableView.register(WrapperTableViewCell<CardSelectionView>.self)
@@ -109,6 +108,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     
     func displayAmount(responseDisplay: ExchangeModels.Amounts.ResponseDisplay) {
         LoadingView.hideIfNeeded()
+        hideToastMessage()
         
         guard let section = sections.firstIndex(where: { $0.hashValue == ExchangeModels.Section.swapCard.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }

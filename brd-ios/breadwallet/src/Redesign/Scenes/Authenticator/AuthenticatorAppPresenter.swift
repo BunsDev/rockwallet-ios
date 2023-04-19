@@ -15,76 +15,98 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
 
     weak var viewController: AuthenticatorAppViewController?
     
+    // MARK: - AuthenticatorAppActionResponses
+    
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        guard let item = actionResponse.item as? SetTwoStepAuth else { return }
+        
         let sections: [Models.Section] = [
+            .importWithLink,
+            .divider,
             .instructions,
             .qrCode,
             .enterCodeManually,
-            .copyCode,
-            .description
+            .copyCode
         ]
-        // TODO: Get the code from BE
-        let code = "06N6 YMJQ Q4SX 2LBI P6BS TQ2C LFYA"
+        
+        let code = item.code
+        let codeFormatted = code.separated(stride: 4)
+        let url = item.url
         
         let sectionRows: [Models.Section: [any Hashable]] = [
+            .importWithLink: [
+                TitleButtonViewModel(title: .text(L10n.TwoStep.App.Import.title),
+                                     button: .init(title: L10n.TwoStep.App.Import.action, isUnderlined: true))
+            ],
+            .divider: [
+                LabelViewModel.text("OR")
+            ],
             .instructions: [
                 LabelViewModel.text(L10n.Authentication.instructions)
             ],
             .qrCode: [
-                ImageViewModel.photo(generateQRCode(from: code))
+                PaddedImageViewModel(image: .image(generateQRCode(from: url)))
             ],
             .enterCodeManually: [
-                EnterCodeViewModel(title: .text(L10n.Authentication.unableToScanCode),
-                                   description: .text(L10n.Authentication.enterCodeManually))
+                LabelViewModel.attributedText(prepareEnterCodeText())
             ],
             .copyCode: [
                 OrderViewModel(title: "",
-                               value: AuthenticatorAppPresenter.generateAttributedCopyValue(with: code, isCopyable: true),
+                               value: CopyTextIcon.generate(with: codeFormatted,
+                                                            isCopyable: true),
                                isCopyable: true)
-            ],
-            .description: [
-                LabelViewModel.text(L10n.Authentication.description)
             ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
-
-    // MARK: - AuthenticatorAppActionResponses
+    
+    func presentNext(actionResponse: AuthenticatorAppModels.Next.ActionResponse) {
+        viewController?.displayNext(responseDisplay: .init())
+    }
     
     func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse) {
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
                                                               config: Presets.InfoView.verification))
     }
-
-    // MARK: - Additional Helpers
-
-    private static func generateAttributedCopyValue(with value: String, isCopyable: Bool) -> NSAttributedString {
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = Asset.copy.image.withRenderingMode(.alwaysOriginal)
-        imageAttachment.bounds = CGRect(x: 0,
-                                        y: -Margins.extraSmall.rawValue,
-                                        width: ViewSizes.extraSmall.rawValue,
-                                        height: ViewSizes.extraSmall.rawValue)
-        let attachmentString = NSAttributedString(attachment: imageAttachment)
-        let completeText = NSMutableAttributedString(string: "")
-        completeText.append(NSAttributedString(string: value))
+    
+    func presentOpenTotpUrl(actionResponse: AuthenticatorAppModels.OpenTotpUrl.ActionResponse) {
+        guard let urlString = actionResponse.url, let url = URL(string: urlString) else { return }
         
-        if isCopyable {
-            completeText.append(NSAttributedString(string: "  "))
-            completeText.append(attachmentString)
-        }
-        
-        return completeText
+        viewController?.displayOpenTotpUrl(responseDisplay: .init(url: url))
     }
     
-    func generateQRCode(from string: String) -> UIImage? {
+    // MARK: - Additional Helpers
+    
+    private func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: .utf8)
-        if let QRFilter = CIFilter(name: "CIQRCodeGenerator") {
-            QRFilter.setValue(data, forKey: "inputMessage")
-            guard let qrImage = QRFilter.outputImage else {return nil}
-            return UIImage(ciImage: qrImage)
-        }
-        return nil
+        
+        guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+        filter.setValue(data, forKey: "inputMessage")
+        
+        let transform = CGAffineTransform(scaleX: 30, y: 30)
+        
+        guard let qrImage = filter.outputImage?.transformed(by: transform) else { return nil }
+        
+        return UIImage(ciImage: qrImage)
+    }
+    
+    private func prepareEnterCodeText() -> NSMutableAttributedString {
+        let partOneAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: LightColors.Text.three,
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.Subtitle.two]
+        let partTwoAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: LightColors.Text.three,
+            NSAttributedString.Key.backgroundColor: UIColor.clear,
+            NSAttributedString.Key.font: Fonts.Body.two]
+        
+        let partOne = NSMutableAttributedString(string: L10n.Authentication.unableToScanCode + "\n", attributes: partOneAttributes)
+        let partTwo = NSMutableAttributedString(string: L10n.Authentication.enterCodeManually, attributes: partTwoAttributes)
+        let combined = NSMutableAttributedString()
+        combined.append(partOne)
+        combined.append(partTwo)
+        
+        return combined
     }
 }
