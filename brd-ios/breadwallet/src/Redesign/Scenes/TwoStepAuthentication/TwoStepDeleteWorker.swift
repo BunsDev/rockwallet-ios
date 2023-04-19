@@ -24,10 +24,8 @@ struct TwoStepDeleteRequestData: RequestModelData {
 
 class TwoStepDeleteWorker: BaseApiWorker<PlainMapper> {
     override func getUrl() -> String {
-        var url = TwoStepEndpoints.delete.url
-        var modifiedUrl = url.remove(at: url.index(before: url.endIndex))
-        
-        return modifiedUrl
+        var url = TwoStepEndpoints.delete.url.replacingOccurrences(of: "/2fa/", with: "/2fa")
+        return url
     }
     
     override func getMethod() -> HTTPMethod {
