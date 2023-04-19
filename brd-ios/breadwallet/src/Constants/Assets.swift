@@ -304,6 +304,7 @@ internal enum Asset {
   internal static let copy = ImageAsset(name: "copy")
   internal static let copyIcon = ImageAsset(name: "copyIcon")
   internal static let distribute = ImageAsset(name: "distribute")
+  internal static let download = ImageAsset(name: "download")
   internal static let driversLicense = ImageAsset(name: "drivers_license")
   internal static let echosystem = ImageAsset(name: "echosystem")
   internal static let edit = ImageAsset(name: "edit")

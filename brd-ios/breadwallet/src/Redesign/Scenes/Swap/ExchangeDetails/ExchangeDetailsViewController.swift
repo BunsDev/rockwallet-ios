@@ -55,7 +55,11 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
             cell = self.tableView(tableView, headerCellForRowAt: indexPath)
             
         case .order, .timestamp, .transactionFrom, .transactionTo:
-            cell = self.tableView(tableView, orderCellForRowAt: indexPath)
+            cell = self.tableView(tableView, orderViewCellForRowAt: indexPath)
+            
+            (cell as? WrapperTableViewCell<OrderView>)?.wrappedView.didCopyValue = { [weak self] value in
+                self?.interactor?.copyValue(viewAction: .init(value: value))
+            }
             
         case .image:
             cell = self.tableView(tableView, coverCellForRowAt: indexPath)
@@ -84,25 +88,6 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
             view.configure(with: Presets.AssetSelection.header)
             view.setup(with: model)
             view.content.setupCustomMargins(vertical: .medium, horizontal: .large)
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, orderCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<OrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = dataSource?.itemIdentifier(for: indexPath) as? OrderViewModel
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.setup { view in
-            view.configure(with: Presets.Order.small)
-            view.setup(with: model)
-            
-            view.didCopyValue = { [weak self] value in
-                self?.interactor?.copyValue(viewAction: .init(value: value))
-            }
         }
         
         return cell

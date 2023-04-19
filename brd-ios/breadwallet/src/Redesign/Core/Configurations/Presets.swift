@@ -326,6 +326,16 @@ extension Presets {
                                                                 tintColor: LightColors.Text.one,
                                                                 border: Presets.Border.mediumPlain),
                                               contentBackground: .init(tintColor: LightColors.Text.one))
+        
+        static var auth = OrderConfiguration(title: .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.three, textAlignment: .center, numberOfLines: 1),
+                                             value: .init(font: Fonts.Subtitle.two,
+                                                          textColor: LightColors.Text.three,
+                                                          textAlignment: .center),
+                                             background: .init(backgroundColor: LightColors.Background.cards,
+                                                               border: .init(tintColor: LightColors.Outline.one,
+                                                                             borderWidth: 1,
+                                                                             cornerRadius: CornerRadius.common)),
+                                             contentBackground: .init(tintColor: LightColors.Background.cards))
     }
 }
 

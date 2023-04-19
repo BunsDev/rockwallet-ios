@@ -15,12 +15,15 @@ extension Scenes {
 }
 
 protocol TwoStepAuthenticationViewActions: BaseViewActions, FetchViewActions {
+    func changeMethod(viewAction: TwoStepAuthenticationModels.ChangeMethod.ViewAction)
 }
 
 protocol TwoStepAuthenticationActionResponses: BaseActionResponses, FetchActionResponses {
+    func presentChangeMethod(actionResponse: TwoStepAuthenticationModels.ChangeMethod.ActionResponse)
 }
 
 protocol TwoStepAuthenticationResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+    func displayChangeMethod(responseDisplay: TwoStepAuthenticationModels.ChangeMethod.ResponseDisplay)
 }
 
 protocol TwoStepAuthenticationDataStore: BaseDataStore, FetchDataStore {

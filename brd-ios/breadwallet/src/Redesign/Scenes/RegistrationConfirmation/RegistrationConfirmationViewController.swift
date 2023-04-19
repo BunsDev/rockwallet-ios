@@ -116,19 +116,29 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     // MARK: - RegistrationConfirmationResponseDisplay
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
+        view.endEditing(true)
+        
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.dismissFlow()
-            
             guard let self = self else { return }
             switch self.dataStore?.confirmationType {
             case .account:
-                self.coordinator?.dismissFlow()
-                
-            case .twoStepEmail:
                 self.coordinator?.showVerifyPhoneNumber()
                 
+            case .acountTwoStepEmailSettings, .twoStepEmail:
+                self.coordinator?.popToRoot(completion: { [weak self] in
+                    self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.message),
+                                                                             dismissType: .auto),
+                                                        configuration: Presets.InfoView.warning)
+                })
+                
+            case .acountTwoStepAppSettings:
+                self.coordinator?.showAuthenticatorApp()
+                
             case .twoStepApp:
-                break
+                self.coordinator?.showBackupCodes()
+                
+            case .disable:
+                self.coordinator?.popToRoot()
                 
             default:
                 break

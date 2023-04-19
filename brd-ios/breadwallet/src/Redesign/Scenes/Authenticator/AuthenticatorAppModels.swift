@@ -11,12 +11,15 @@
 import UIKit
 
 enum AuthenticatorAppModels {
+    typealias Item = SetTwoStepAuth?
+    
     enum Section: Sectionable {
+        case importWithLink
+        case divider
         case instructions
         case qrCode
         case enterCodeManually
         case copyCode
-        case description
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
@@ -27,5 +30,21 @@ enum AuthenticatorAppModels {
             var value: String?
         }
         struct ActionResponse {}
+    }
+    
+    struct OpenTotpUrl {
+        struct ViewAction {}
+        struct ActionResponse {
+            let url: String?
+        }
+        struct ResponseDisplay {
+            let url: URL
+        }
+    }
+    
+    struct Next {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
     }
 }

@@ -284,10 +284,8 @@ class BaseCoordinator: NSObject, Coordinatable {
         case .success(let profile):
             let status = profile?.status
             
-            // TODO: ENABLE 2FA
             if status == VerificationStatus.emailPending
                 || status == VerificationStatus.none
-//              || !UserManager.shared.hasTwoStepAuth
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 
@@ -641,6 +639,11 @@ class BaseCoordinator: NSObject, Coordinatable {
                 break
             }
         }
+    }
+    
+    func openUrl(url: URL) {
+        guard UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:])
     }
     
     func showPinInput(keyStore: KeyStore?, callback: ((_ success: Bool) -> Void)?) {

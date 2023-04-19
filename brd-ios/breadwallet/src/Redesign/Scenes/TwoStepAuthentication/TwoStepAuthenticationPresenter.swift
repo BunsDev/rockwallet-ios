@@ -17,15 +17,33 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
     
     // MARK: - TwoStepAuthenticationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        let authType = actionResponse.item as? TwoStepSettingsResponseData.TwoStepType?
+        
         var sections: [Models.Section] = [
             .email,
             .app
         ]
         
-        let isTwoStepEnabled = Bool.random() ? LabelViewModel.text(L10n.TwoStep.mainInstructions) : nil
-        if let isTwoStepEnabled {
+        let authExists = actionResponse.item != nil
+        
+        if authExists {
             sections.insert(.instructions, at: 0)
+            sections.append(contentsOf: [.settingsTitle, .backupCodes, .settings, .disable])
         }
+        
+        var authMethodDescription: String?
+        if authType == .email {
+            authMethodDescription = L10n.TwoStep.Method.Email.description
+            
+            sections.removeAll(where: { $0 == .backupCodes })
+        } else if authType == .authenticator {
+            authMethodDescription = L10n.TwoStep.Method.App.description
+        }
+        
+        let isTwoStepEnabled = authExists ? LabelViewModel.text(authMethodDescription) : nil
+        let emailAuthCheckmark = authType == .email ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
+        let appAuthCheckmark = authType == .authenticator ? Asset.radiobuttonSelected.image : Asset.radiobutton.image
+        let settingsChevron = Asset.chevronRight.image.tinted(with: LightColors.Text.three)
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .instructions: [
@@ -33,18 +51,39 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
             ],
             .email: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.mail.image),
-                                                 title: .text("Email address"),
+                                                 title: .text(L10n.Account.EmailAddress.title),
                                                  subtitle: .text(UserDefaults.email ?? ""),
-                                                 checkmark: .image(Asset.radiobutton.image))
+                                                 checkmark: .image(emailAuthCheckmark),
+                                                 isInteractable: authType != .email)
             ],
             .app: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.phone.image),
                                                  title: .text(L10n.TwoStep.Methods.AuthApp.title),
-                                                 checkmark: .image(Asset.radiobutton.image))
+                                                 checkmark: .image(appAuthCheckmark),
+                                                 isInteractable: authType != .authenticator)
+            ],
+            .settingsTitle: [
+                LabelViewModel.text(L10n.MenuButton.settings)
+            ],
+            .backupCodes: [
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.BackupCodes.title),
+                                                 checkmark: .image(settingsChevron))
+            ],
+            .settings: [
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.AuthSettings.title),
+                                                 checkmark: .image(settingsChevron))
+            ],
+            .disable: [
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Disable.title),
+                                                 isDestructive: true)
             ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
+    }
+    
+    func presentChangeMethod(actionResponse: TwoStepAuthenticationModels.ChangeMethod.ActionResponse) {
+        viewController?.displayChangeMethod(responseDisplay: .init(indexPath: actionResponse.indexPath))
     }
     
     // MARK: - Additional Helpers

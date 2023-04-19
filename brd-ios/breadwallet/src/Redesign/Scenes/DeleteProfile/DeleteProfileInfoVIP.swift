@@ -22,10 +22,12 @@ protocol DeleteProfileInfoViewActions: BaseViewActions, FetchViewActions {
 
 protocol DeleteProfileInfoActionResponses: BaseActionResponses, FetchActionResponses {
     func presentToggleTickbox(actionResponse: DeleteProfileInfoModels.Tickbox.ActionResponse)
+    func presentDeleteProfile(actionResponse: DeleteProfileInfoModels.DeleteProfile.ActionResponse)
 }
 
 protocol DeleteProfileInfoResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
     func displayToggleTickbox(responseDisplay: DeleteProfileInfoModels.Tickbox.ResponseDisplay)
+    func displayDeleteProfile(responseDisplay: DeleteProfileInfoModels.DeleteProfile.ResponseDisplay)
 }
 
 protocol DeleteProfileInfoDataStore: BaseDataStore, FetchDataStore {

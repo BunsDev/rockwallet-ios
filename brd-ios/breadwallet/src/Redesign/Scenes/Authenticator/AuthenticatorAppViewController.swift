@@ -16,19 +16,12 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
                                       AuthenticatorAppStore>,
                                       AuthenticatorAppResponseDisplays {
     typealias Models = AuthenticatorAppModels
-
-    // MARK: - Overrides
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Authentication.title
     }
-
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        tableView.register(WrapperTableViewCell<EnterCodeView>.self)
-        tableView.register(WrapperTableViewCell<OrderView>.self)
-    }
+    
+    // MARK: - Overrides
     
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
@@ -48,22 +41,43 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-        case .instructions, .description:
+        case .importWithLink:
+            cell = self.tableView(tableView, titleButtonViewCellForRowAt: indexPath)
+            
+            (cell as? WrapperTableViewCell<TitleButtonView>)?.wrappedView.didTapButton = { [weak self] in
+                self?.interactor?.openTotpUrl(viewAction: .init())
+            }
+            
+        case .divider:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            
+            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Subtitle.two,
+                                                                                        textColor: LightColors.Text.three,
+                                                                                        textAlignment: .center))
+            
+        case .instructions:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             
-        case .qrCode:
-            cell = self.tableView(tableView, coverCellForRowAt: indexPath)
+            (cell as? WrapperTableViewCell<FELabel>)?.wrappedView.configure(with: .init(font: Fonts.Body.two,
+                                                                                        textColor: LightColors.Text.three))
             
-            (cell as? WrapperTableViewCell<FEImageView>)?.wrappedView.snp.makeConstraints({ make in
-                make.height.equalTo(ViewSizes.extraExtraHuge.rawValue * 2)
-            })
+        case .qrCode:
+            cell = self.tableView(tableView, paddedImageViewCellForRowAt: indexPath)
             
         case .enterCodeManually:
-            cell = self.tableView(tableView, enterCodeCellForRowAt: indexPath)
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
         case .copyCode:
-            cell = self.tableView(tableView, copyCodeCellForRowAt: indexPath)
-        
+            cell = self.tableView(tableView, orderViewCellForRowAt: indexPath)
+            
+            (cell as? WrapperTableViewCell<OrderView>)?.setup({ view in
+                view.configure(with: Presets.Order.auth)
+            })
+            
+            (cell as? WrapperTableViewCell<OrderView>)?.wrappedView.didCopyValue = { [weak self] value in
+                self?.interactor?.copyValue(viewAction: .init(value: value))
+            }
+            
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -74,49 +88,23 @@ class AuthenticatorAppViewController: BaseTableViewController<AccountCoordinator
         return cell
     }
     
-    func tableView(_ tableView: UITableView, enterCodeCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<EnterCodeView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = dataSource?.itemIdentifier(for: indexPath) as? EnterCodeViewModel
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init())
-            view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, copyCodeCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: WrapperTableViewCell<OrderView> = tableView.dequeueReusableCell(for: indexPath),
-              let model = dataSource?.itemIdentifier(for: indexPath) as? OrderViewModel
-        else {
-            return UITableViewCell()
-        }
-        
-        cell.setup { view in
-            view.configure(with: Presets.Order.small)
-            view.setup(with: model)
-            
-            view.didCopyValue = { [weak self] value in
-                self?.interactor?.copyValue(viewAction: .init(value: value))
-            }
-        }
-        
-        return cell
-    }
-    
     // MARK: - User Interaction
     
     override func buttonTapped() {
         super.buttonTapped()
         
-        // TODO: Add continue action
+        interactor?.next(viewAction: .init())
     }
-
+    
     // MARK: - AuthenticatorAppResponseDisplay
-
+    
+    func displayNext(responseDisplay: AuthenticatorAppModels.Next.ResponseDisplay) {
+        coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepApp)
+    }
+    
+    func displayOpenTotpUrl(responseDisplay: AuthenticatorAppModels.OpenTotpUrl.ResponseDisplay) {
+        coordinator?.openUrl(url: responseDisplay.url)
+    }
+    
     // MARK: - Additional Helpers
 }
