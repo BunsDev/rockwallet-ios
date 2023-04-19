@@ -126,7 +126,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
                 
             case .acountTwoStepEmailSettings, .twoStepEmail:
                 self.coordinator?.popToRoot(completion: { [weak self] in
-                    self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.Message),
+                    self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.message),
                                                                              dismissType: .auto),
                                                         configuration: Presets.InfoView.warning)
                 })

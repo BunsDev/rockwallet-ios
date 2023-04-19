@@ -110,7 +110,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     // MARK: - User Interaction
     
     private func changeMethod(indexPath: IndexPath) {
-        let alert = UIAlertController(title: L10n.TwoStep.Change.Title, message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: L10n.TwoStep.Change.title, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: { [weak self] _ in
             self?.interactor?.changeMethod(viewAction: .init(indexPath: indexPath))
         }))
