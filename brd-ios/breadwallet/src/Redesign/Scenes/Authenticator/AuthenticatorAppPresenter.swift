@@ -35,8 +35,8 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .importWithLink: [
-                TitleButtonViewModel(title: .text("Using an authenticator app?"),
-                                     button: .init(title: "Import with link", isUnderlined: true))
+                TitleButtonViewModel(title: .text(L10n.TwoStep.App.Import.title),
+                                     button: .init(title: L10n.TwoStep.App.Import.action, isUnderlined: true))
             ],
             .divider: [
                 LabelViewModel.text("OR")

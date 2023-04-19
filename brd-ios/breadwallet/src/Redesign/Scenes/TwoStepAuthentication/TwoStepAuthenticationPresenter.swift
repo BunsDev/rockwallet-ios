@@ -33,11 +33,11 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         var authMethodDescription: String?
         if authType == .email {
-            authMethodDescription = "Two Factor Authentication in enabled with Email"
+            authMethodDescription = L10n.TwoStep.Method.Email.Description
             
             sections.removeAll(where: { $0 == .backupCodes })
         } else if authType == .authenticator {
-            authMethodDescription = "Two Factor Authentication in enabled with Authenticator App"
+            authMethodDescription = L10n.TwoStep.Method.App.Description
         }
         
         let isTwoStepEnabled = authExists ? LabelViewModel.text(authMethodDescription) : nil
@@ -51,7 +51,7 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
             ],
             .email: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.mail.image),
-                                                 title: .text("Email address"),
+                                                 title: .text(L10n.Account.EmailAddress.Title),
                                                  subtitle: .text(UserDefaults.email ?? ""),
                                                  checkmark: .image(emailAuthCheckmark),
                                                  isInteractable: authType != .email)
@@ -63,18 +63,18 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                                                  isInteractable: authType != .authenticator)
             ],
             .settingsTitle: [
-                LabelViewModel.text("Settings")
+                LabelViewModel.text(L10n.MenuButton.settings)
             ],
             .backupCodes: [
-                IconTitleSubtitleToggleViewModel(title: .text("Backup codes"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.BackupCodes.Title),
                                                  checkmark: .image(settingsChevron))
             ],
             .settings: [
-                IconTitleSubtitleToggleViewModel(title: .text("Two Factor Authentication Settings"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.AuthSettings.Title),
                                                  checkmark: .image(settingsChevron))
             ],
             .disable: [
-                IconTitleSubtitleToggleViewModel(title: .text("Disable 2FA"),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Disable.Title),
                                                  isDestructive: true)
             ]
         ]

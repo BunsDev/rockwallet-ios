@@ -42,12 +42,9 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
     }
     
     func presentSkipSaving(actionResponse: BackupCodesModels.SkipBackupCodeSaving.ActionResponse) {
-        let popupViewModel = PopupViewModel(title: .text("Important note"),
-                                            body: """
-Your backup codes are the only way to to
-access your account if you loose access your Authenticator App
-""",
-                                            buttons: [.init(title: "I understand")],
+        let popupViewModel = PopupViewModel(title: .text(L10n.Alert.Important),
+                                            body: L10n.TwoStep.App.BackupCodes.warning,
+                                            buttons: [.init(title: L10n.Button.iUnderstand)],
                                             closeButton: .init(image: Asset.close.image))
         
         viewController?.displaySkipSaving(responseDisplay: .init(popupViewModel: popupViewModel,

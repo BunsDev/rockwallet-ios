@@ -36,7 +36,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
         super.setupVerticalButtons()
         
         continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: "DOWNLOAD",
+        continueButton.setup(with: .init(title: L10n.Button.Download,
                                          image: Asset.download.image,
                                          enabled: true,
                                          callback: { [weak self] in
@@ -44,7 +44,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
         }))
         
         nextButton.configure(with: Presets.Button.noBorders)
-        nextButton.setup(with: .init(title: "Continue",
+        nextButton.setup(with: .init(title: L10n.Button.continueAction,
                                      isUnderlined: true,
                                      enabled: true,
                                      callback: { [weak self] in
@@ -142,7 +142,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
             self?.coordinator?.hidePopup()
             
             self?.coordinator?.popToRoot(completion: { [weak self] in
-                self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text("2FA Successfully set up"),
+                self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.Message),
                                                                          dismissType: .auto),
                                                     configuration: Presets.InfoView.warning)
             })

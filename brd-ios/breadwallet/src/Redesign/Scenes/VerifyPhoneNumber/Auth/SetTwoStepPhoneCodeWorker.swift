@@ -44,10 +44,6 @@ class SetTwoStepPhoneCodeWorker: BaseApiWorker<SetTwoStepPhoneCodeMapper> {
     }
 }
 
-
-
-
-
 struct ConfirmationCodesRequestData: RequestModelData {
     func getParameters() -> [String: Any] {
         return [:]
