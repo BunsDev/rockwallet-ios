@@ -30,13 +30,8 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         }
         
         // TODO: REMOVE
-        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { result in
-            switch result {
-            case .success(let data):
-                break
-            case .failure(let error):
-                break
-            }
+        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { _ in
+            
         }
     }
     
@@ -92,6 +87,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                     self?.presenter?.presentError(actionResponse: .init(error: error))
                 }
             }
+            
         default:
             break
         }

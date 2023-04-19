@@ -22,22 +22,12 @@ struct TwoStepDeleteRequestData: RequestModelData {
     }
 }
 
-struct TwoStepDeleteResponseData: ModelResponse {
-}
-
-struct TwoStepDelete: Model {
-    
-}
-
-class TwoStepDeleteMapper: ModelMapper<TwoStepDeleteResponseData, TwoStepDelete> {
-    override func getModel(from response: TwoStepDeleteResponseData?) -> TwoStepDelete? {
-        return .init()
-    }
-}
-
-class TwoStepDeleteWorker: BaseApiWorker<TwoStepDeleteMapper> {
+class TwoStepDeleteWorker: BaseApiWorker<PlainMapper> {
     override func getUrl() -> String {
-        return TwoStepEndpoints.delete.url
+        var url = TwoStepEndpoints.delete.url
+        var modifiedUrl = url.remove(at: url.index(before: url.endIndex))
+        
+        return modifiedUrl
     }
     
     override func getMethod() -> HTTPMethod {

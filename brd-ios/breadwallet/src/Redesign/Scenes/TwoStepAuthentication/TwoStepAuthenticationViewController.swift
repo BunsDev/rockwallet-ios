@@ -77,7 +77,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showTwoStepSettings()
                 
             case .disable:
-                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepApp)
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .disable)
                 
             default:
                 if UserManager.shared.twoStepSettings?.type == nil {

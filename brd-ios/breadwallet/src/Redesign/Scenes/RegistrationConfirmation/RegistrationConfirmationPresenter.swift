@@ -41,11 +41,11 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             title = L10n.AccountCreation.verifyEmail
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
-        case .twoStepEmail:
+        case .twoStepEmail, .disable:
             title = "We’ve sent you a code"
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
-        case .twoStepApp, .disable:
+        case .twoStepApp:
             title = "Enter the code from your Authenticator app"
             instructions = ""
             
