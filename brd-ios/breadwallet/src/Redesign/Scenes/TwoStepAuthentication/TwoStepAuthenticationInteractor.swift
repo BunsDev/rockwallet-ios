@@ -19,7 +19,7 @@ class TwoStepAuthenticationInteractor: NSObject, Interactor, TwoStepAuthenticati
     // MARK: - TwoStepAuthenticationViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData(method: .get, sending: false, achSell: false, buy: false)) { [weak self] result in
+        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData(method: .get)) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.presenter?.presentData(actionResponse: .init(item: data?.type))

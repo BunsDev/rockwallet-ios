@@ -12,9 +12,9 @@ import Foundation
 
 struct TwoStepSettingsRequestData: RequestModelData {
     var method: HTTPMethod
-    let sending: Bool?
-    let achSell: Bool?
-    let buy: Bool?
+    var sending: Bool?
+    var achSell: Bool?
+    var buy: Bool?
     
     func getParameters() -> [String: Any] {
         let params = [

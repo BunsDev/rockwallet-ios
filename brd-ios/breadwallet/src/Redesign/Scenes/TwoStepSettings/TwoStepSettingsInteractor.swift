@@ -19,10 +19,7 @@ class TwoStepSettingsInteractor: NSObject, Interactor, TwoStepSettingsViewAction
     // MARK: - TwoStepSettingsViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        requestData = TwoStepSettingsRequestData(method: .get,
-                                                 sending: nil,
-                                                 achSell: nil,
-                                                 buy: nil)
+        requestData = TwoStepSettingsRequestData(method: .get)
         
         TwoStepSettingsWorker().execute(requestData: requestData) { [weak self] result in
             switch result {
@@ -38,7 +35,6 @@ class TwoStepSettingsInteractor: NSObject, Interactor, TwoStepSettingsViewAction
     func toggleSetting(viewAction: TwoStepSettingsModels.ToggleSetting.ViewAction) {
         requestData = TwoStepSettingsRequestData(method: .put,
                                                  sending: viewAction.sending,
-                                                 achSell: nil,
                                                  buy: viewAction.buy)
         
         TwoStepSettingsWorker().execute(requestData: requestData) { [weak self] result in
