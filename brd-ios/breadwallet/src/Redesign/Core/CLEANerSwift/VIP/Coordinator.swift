@@ -286,7 +286,6 @@ class BaseCoordinator: NSObject, Coordinatable {
             
             if status == VerificationStatus.emailPending
                 || status == VerificationStatus.none
-                || UserManager.shared.twoStepSettings?.type == nil
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
                 

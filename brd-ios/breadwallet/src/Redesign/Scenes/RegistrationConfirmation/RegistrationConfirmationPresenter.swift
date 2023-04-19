@@ -37,7 +37,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         let instructions: String
         
         switch confirmationType {
-        case .account:
+        case .account, .acountTwoStepEmailSettings, .acountTwoStepAppSettings:
             title = L10n.AccountCreation.verifyEmail
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             

@@ -24,6 +24,8 @@ enum RegistrationConfirmationModels {
     
     enum ConfirmationType: Hashable {
         case account
+        case acountTwoStepEmailSettings
+        case acountTwoStepAppSettings
         case twoStepEmail
         case twoStepApp
     }

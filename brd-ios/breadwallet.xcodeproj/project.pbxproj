@@ -33,6 +33,7 @@
 		043DB5D229EE838400DEB8FD /* TitleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D129EE838400DEB8FD /* TitleButtonView.swift */; };
 		043DB5D429EE8B9C00DEB8FD /* PaddedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */; };
 		043DB5D629EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */; };
+		043DB5D829EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D729EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift */; };
 		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
 		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
@@ -891,6 +892,7 @@
 		043DB5D129EE838400DEB8FD /* TitleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleButtonView.swift; sourceTree = "<group>"; };
 		043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedImageView.swift; sourceTree = "<group>"; };
 		043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppCodeWorker.swift; sourceTree = "<group>"; };
+		043DB5D729EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTwoStepCodeWorker.swift; sourceTree = "<group>"; };
 		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
 		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
@@ -1723,6 +1725,7 @@
 				04185DBC29D179B600AECBFA /* TwoStepAuthenticationViewController.swift */,
 				04185DB929D179B600AECBFA /* TwoStepAuthenticationInteractor.swift */,
 				0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */,
+				043DB5D729EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift */,
 				04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */,
 				04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */,
 			);
@@ -4416,6 +4419,7 @@
 				7ED83AF9284F40EB00261565 /* CheckListModels.swift in Sources */,
 				C4CCFCE829D43DB600E38B3A /* AuthenticatorAppPresenter.swift in Sources */,
 				7CB593E122F8C8FE005A230A /* AuthenticationClient.swift in Sources */,
+				043DB5D829EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift in Sources */,
 				4F3AB12425D53F5D00B378DC /* Baker.swift in Sources */,
 				7EBC6B072848ABC5000A301F /* RegistrationConfirmationPresenter.swift in Sources */,
 				7B0418B5298A9131004A6385 /* UserInformationWorker.swift in Sources */,

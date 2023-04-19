@@ -83,6 +83,10 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
+    func presentChangeMethod(actionResponse: TwoStepAuthenticationModels.ChangeMethod.ActionResponse) {
+        viewController?.displayChangeMethod(responseDisplay: .init(indexPath: actionResponse.indexPath))
+    }
+    
     // MARK: - Additional Helpers
     
 }

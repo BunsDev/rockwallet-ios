@@ -77,25 +77,30 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showTwoStepSettings()
                 
             case .disable:
-                self.coordinator?.showAuthenticatorApp()
+                break
                 
             default:
-                self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
-                    if success {
-                        switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                        case .email:
-                            self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                if UserManager.shared.twoStepSettings?.type == nil {
+                    coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
+                        if success {
+                            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+                            case .email:
+                                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                                
+                            case .app:
+                                self.coordinator?.showAuthenticatorApp()
+                                
+                            default:
+                                break
+                            }
+                        } else {
                             
-                        case .app:
-                            self.coordinator?.showAuthenticatorApp()
-                            
-                        default:
-                            break
                         }
-                    } else {
-                        
-                    }
-                })
+                    })
+                    
+                } else {
+                    self.changeMethod(indexPath: indexPath)
+                }
             }
         }
         
@@ -104,11 +109,42 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     
     // MARK: - User Interaction
     
+    private func changeMethod(indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Change 2FA method", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+            self?.interactor?.changeMethod(viewAction: .init(indexPath: indexPath))
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        coordinator?.navigationController.present(alert, animated: true)
+    }
+    
+    private func handleFlow(indexPath: IndexPath) {
+        coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
+            if success {
+                switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+                case .email:
+                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepEmailSettings)
+                    
+                case .app:
+                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepAppSettings)
+                    
+                default:
+                    break
+                }
+                
+            } else {
+                
+            }
+        })
+    }
+    
     // MARK: - TwoStepAuthenticationResponseDisplay
+    
+    func displayChangeMethod(responseDisplay: TwoStepAuthenticationModels.ChangeMethod.ResponseDisplay) {
+        handleFlow(indexPath: responseDisplay.indexPath)
+    }
     
     // MARK: - Additional Helpers
     
-    @objc private func methodsTapped(_ sender: Any) {
-        // TODO: Finalize
-    }
 }

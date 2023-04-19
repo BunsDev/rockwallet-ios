@@ -25,4 +25,16 @@ enum TwoStepAuthenticationModels {
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
     }
+    
+    struct ChangeMethod {
+        struct ViewAction {
+            let indexPath: IndexPath
+        }
+        struct ActionResponse {
+            let indexPath: IndexPath
+        }
+        struct ResponseDisplay {
+            let indexPath: IndexPath
+        }
+    }
 }

@@ -124,12 +124,15 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             case .account:
                 self.coordinator?.dismissFlow()
                 
-            case .twoStepEmail:
+            case .acountTwoStepEmailSettings, .twoStepEmail:
                 self.coordinator?.popToRoot(completion: { [weak self] in
                     self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text("2FA Successfully set up"),
                                                                              dismissType: .auto),
                                                         configuration: Presets.InfoView.warning)
                 })
+                
+            case .acountTwoStepAppSettings:
+                self.coordinator?.showAuthenticatorApp()
                 
             case .twoStepApp:
                 self.coordinator?.showBackupCodes()
