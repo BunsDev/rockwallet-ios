@@ -18,7 +18,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
     // MARK: - AuthenticatorAppActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? SetTwoStepApp else { return }
+        guard let item = actionResponse.item as? SetTwoStepAuth else { return }
         
         let sections: [Models.Section] = [
             .importWithLink,
