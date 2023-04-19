@@ -192,6 +192,15 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             return
         }
         
+        guard presenter?.handleError(actionResponse: .init(from: dataStore?.from,
+                                                           to: dataStore?.to,
+                                                           fromFee: dataStore?.fromFeeAmount,
+                                                           toFee: dataStore?.toFeeAmount,
+                                                           baseBalance: dataStore?.from?.currency.state?.balance,
+                                                           minimumValue: dataStore?.quote?.minimumValue,
+                                                           minimumUsd: dataStore?.quote?.minimumUsd,
+                                                           handleErrors: true)) == false else { return }
+        
         // Fetching new fees
         fetchWkFee(for: from,
                    with: sender,
