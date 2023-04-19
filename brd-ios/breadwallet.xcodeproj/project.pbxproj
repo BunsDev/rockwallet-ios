@@ -38,6 +38,9 @@
 		043DB5DC29F0108D00DEB8FD /* CopyTextIconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5DB29F0108D00DEB8FD /* CopyTextIconGenerator.swift */; };
 		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
 		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
+		044C83B129F0222500A9B29F /* Dev-GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 044C83AE29F0222500A9B29F /* Dev-GoogleService-Info.plist */; };
+		044C83B229F0222500A9B29F /* Stg-GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 044C83AF29F0222500A9B29F /* Stg-GoogleService-Info.plist */; };
+		044C83B329F0222500A9B29F /* Prod-GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 044C83B029F0222500A9B29F /* Prod-GoogleService-Info.plist */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
 		044D098229C3352400C510DC /* Frames in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098129C3352400C510DC /* Frames */; };
 		044D098829C335BB00C510DC /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 044D098729C335BB00C510DC /* Lottie */; };
@@ -61,7 +64,6 @@
 		0452C93C29D42FC600CCC8DA /* WalletEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452C93429D42FC600CCC8DA /* WalletEndpoints.swift */; };
 		0452C93E29D4310100CCC8DA /* VeriffKYCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452C93D29D4310100CCC8DA /* VeriffKYCManager.swift */; };
 		0453B0BC29D22BF100BBE246 /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 0453B0BB29D22BF100BBE246 /* GoogleTagManager */; };
-		0453B0BE29D22CC700BBE246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0453B0BD29D22CC700BBE246 /* GoogleService-Info.plist */; };
 		0453B0C029D2DEB100BBE246 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		049CE73C29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */; };
@@ -898,6 +900,9 @@
 		043DB5DB29F0108D00DEB8FD /* CopyTextIconGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTextIconGenerator.swift; sourceTree = "<group>"; };
 		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
 		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
+		044C83AE29F0222500A9B29F /* Dev-GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Dev-GoogleService-Info.plist"; path = "Resources/Dev-GoogleService-Info.plist"; sourceTree = "<group>"; };
+		044C83AF29F0222500A9B29F /* Stg-GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Stg-GoogleService-Info.plist"; path = "Resources/Stg-GoogleService-Info.plist"; sourceTree = "<group>"; };
+		044C83B029F0222500A9B29F /* Prod-GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Prod-GoogleService-Info.plist"; path = "Resources/Prod-GoogleService-Info.plist"; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
 		044D099929C8525D00C510DC /* VerifyPhoneNumberPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberPresenter.swift; sourceTree = "<group>"; };
 		044D099A29C8525E00C510DC /* VerifyPhoneNumberInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberInteractor.swift; sourceTree = "<group>"; };
@@ -914,7 +919,6 @@
 		0452C93329D42FC600CCC8DA /* SardineSessionWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SardineSessionWorker.swift; sourceTree = "<group>"; };
 		0452C93429D42FC600CCC8DA /* WalletEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletEndpoints.swift; sourceTree = "<group>"; };
 		0452C93D29D4310100CCC8DA /* VeriffKYCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VeriffKYCManager.swift; sourceTree = "<group>"; };
-		0453B0BD29D22CC700BBE246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Resources/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
 		049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneCodeWorker.swift; sourceTree = "<group>"; };
@@ -2329,7 +2333,9 @@
 				71014F7B2327E49400DA1373 /* fiat_currencies.json */,
 				7B519A922835B505007AC80A /* currencies.json */,
 				049CE73D29DD5959009D0F2D /* breadwallet.entitlements */,
-				0453B0BD29D22CC700BBE246 /* GoogleService-Info.plist */,
+				044C83AE29F0222500A9B29F /* Dev-GoogleService-Info.plist */,
+				044C83B029F0222500A9B29F /* Prod-GoogleService-Info.plist */,
+				044C83AF29F0222500A9B29F /* Stg-GoogleService-Info.plist */,
 				CE473D7B1F042F1E00C0ACFD /* coinflip.aiff */,
 				CE4C1CD21ED8BCC70063E184 /* BIP39Words.plist */,
 			);
@@ -3892,16 +3898,18 @@
 				7BB3B7E029558E93006FF250 /* Roboto-Medium.otf in Resources */,
 				7BB3B7E229558E9D006FF250 /* Roboto-Regular.otf in Resources */,
 				CE4C1CD01ED8BCC70063E184 /* BIP39Words.plist in Resources */,
+				044C83B329F0222500A9B29F /* Prod-GoogleService-Info.plist in Resources */,
 				75A2A79E1DA5934300A983D8 /* LaunchScreen.storyboard in Resources */,
 				7EF36C062829893700BB43A7 /* theme.plist in Resources */,
 				7B1A4690298BEF2500A6F68F /* InfoPlist.strings in Resources */,
 				7BDB49F32806EB4C0031F015 /* AssetBundles.plist in Resources */,
 				7B519A932835B506007AC80A /* currencies.json in Resources */,
+				044C83B129F0222500A9B29F /* Dev-GoogleService-Info.plist in Resources */,
 				7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */,
 				7BB3B7E429558EA2006FF250 /* SofiaPro-Bold.otf in Resources */,
-				0453B0BE29D22CC700BBE246 /* GoogleService-Info.plist in Resources */,
 				CE473D7C1F042F1E00C0ACFD /* coinflip.aiff in Resources */,
 				CE5E6C9A1EB9135000A476DB /* Icon.xcassets in Resources */,
+				044C83B229F0222500A9B29F /* Stg-GoogleService-Info.plist in Resources */,
 				71014F7C2327E49400DA1373 /* fiat_currencies.json in Resources */,
 				CE29901A1EFD6DE50093A0F2 /* Localizable.strings in Resources */,
 				75A2A79B1DA5934300A983D8 /* Assets.xcassets in Resources */,
