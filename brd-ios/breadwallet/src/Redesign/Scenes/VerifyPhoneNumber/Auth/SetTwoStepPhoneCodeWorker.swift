@@ -14,7 +14,11 @@ struct SetTwoStepPhoneCodeRequestData: RequestModelData {
     var code: String?
     
     func getParameters() -> [String: Any] {
-        return ["code": code ?? ""]
+        let params = [
+            "code": code
+        ]
+        
+        return params.compactMapValues { $0 }
     }
 }
 
@@ -39,6 +43,10 @@ class SetTwoStepPhoneCodeWorker: BaseApiWorker<SetTwoStepPhoneCodeMapper> {
         return .post
     }
 }
+
+
+
+
 
 struct ConfirmationCodesRequestData: RequestModelData {
     func getParameters() -> [String: Any] {

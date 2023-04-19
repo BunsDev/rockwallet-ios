@@ -14,7 +14,11 @@ struct SetTwoStepAppCodeRequestData: RequestModelData {
     var code: String?
     
     func getParameters() -> [String: Any] {
-        return ["code": code ?? ""]
+        let params = [
+            "code": code
+        ]
+        
+        return params.compactMapValues { $0 }
     }
 }
 
