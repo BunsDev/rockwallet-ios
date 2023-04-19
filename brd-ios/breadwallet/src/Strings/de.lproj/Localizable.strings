@@ -94,6 +94,8 @@
 
 "Account.Email" = "Email";
 
+"Account.EmailAddress.Title" = "Email address";
+
 "Account.EnterEmail" = "Enter your e-mail";
 
 "Account.EnterPassword" = "Enter your password";
@@ -477,6 +479,8 @@
 /* Hedera Account succesfully created header alert view */
 "Alert.HederaAccount" = "Hedera Account succesfully created.";
 
+"Alert.Important" = "Important note";
+
 /* Keystore error */
 "Alert.keystore.generic.android" = "Es liegt ein Problem mit dem KeyStore Ihres Android-Betriebssystems vor, bitte wenden Sie sich an support@rockwallet.com";
 
@@ -679,6 +683,8 @@
 /* Done button title */
 "Button.done" = "Fertig";
 
+"Button.Download" = "DOWNLOAD";
+
 /* Finish button title */
 "Button.Finish" = "Finish";
 
@@ -692,6 +698,8 @@
 
 /* Ignore button label */
 "Button.ignore" = "Ignorieren";
+
+"Button.iUnderstand" = "I understand";
 
 "Button.letsGo" = "Let’s go!";
 
@@ -3196,9 +3204,21 @@
 
 "TwoStep.additionalMethodsTitle" = "";
 
+"TwoStep.App.BackupCodes.warning" = "Your backup codes are the only way to access your account if you lose access your Authenticator App";
+
+"TwoStep.App.Import.action" = "Import with link";
+
+"TwoStep.App.Import.title" = "Using an authenticator app?";
+
+"TwoStep.AuthSettings.Title" = "Two Factor Authentication Settings";
+
 "TwoStep.BuyTransactions" = "Buy transactions";
 
+"TwoStep.Change.Title" = "";
+
 "TwoStep.changePhoneNumberTitle" = "Change Phone Number";
+
+"TwoStep.Disable.Title" = "Disable 2FA";
 
 "TwoStep.getBackupCodesTitle" = "";
 
@@ -3207,6 +3227,10 @@
 "TwoStep.mainTitle" = "Two factor authentication";
 
 "TwoStep.Mandatory" = "(Mandatory)";
+
+"TwoStep.Method.App.Description" = "Two Factor Authentication in enabled with Authenticator App";
+
+"TwoStep.Method.Email.Description" = "Two Factor Authentication in enabled with Email";
 
 "TwoStep.methods.additionalGetBackupCodesAction" = "Get your backup codes";
 
@@ -3234,11 +3258,15 @@
 
 "TwoStep.settings.funds" = "Sending funds";
 
+"TwoStep.Settings.Menu.Title" = "Two-Factor Authentication (2FA)";
+
 "TwoStep.settings.recoverChangePassword" = "Recover/Changing password";
 
 "TwoStep.settings.signInNewDevice" = "Sign in into new device";
 
 "TwoStep.SignInIntoNewDevice" = "Sign in into new device";
+
+"TwoStep.Success.Message" = "2FA Successfully set up";
 
 "TwoStep.TwoStepPeriod" = "Every 90 days";
 
