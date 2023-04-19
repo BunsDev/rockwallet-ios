@@ -3092,7 +3092,6 @@ internal enum L10n {
         internal static let description = L10n.tr("Localizable", "TwoStep.Method.Email.Description", fallback: "Two Factor Authentication in enabled with Email")
       }
     }
-
     internal enum Success {
       /// 2FA Successfully set up
       internal static let message = L10n.tr("Localizable", "TwoStep.Success.Message", fallback: "2FA Successfully set up")
