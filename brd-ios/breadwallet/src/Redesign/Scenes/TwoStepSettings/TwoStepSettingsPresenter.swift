@@ -12,7 +12,10 @@ final class TwoStepSettingsPresenter: NSObject, Presenter, TwoStepSettingsAction
     typealias Models = TwoStepSettingsModels
 
     weak var viewController: TwoStepSettingsViewController?
-
+    
+    var sending: IconTitleSubtitleToggleViewModel?
+    var buy: IconTitleSubtitleToggleViewModel?
+        
     // MARK: - TwoStepSettingsActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
@@ -22,6 +25,13 @@ final class TwoStepSettingsPresenter: NSObject, Presenter, TwoStepSettingsAction
             .description,
             .settings
         ]
+        
+        sending = IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.sendingFunds),
+                                                   checkmarkToggleState: settings.sending,
+                                                   checkmarkToggle: true)
+        buy = IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.buyTransactions),
+                                               checkmarkToggleState: settings.buy,
+                                               checkmarkToggle: true)
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .description: [LabelViewModel.text(L10n.TwoStep.preferredSettings)],
@@ -35,12 +45,8 @@ final class TwoStepSettingsPresenter: NSObject, Presenter, TwoStepSettingsAction
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.twoStepPeriod),
                                                  subtitle: .text(L10n.TwoStep.mandatory),
                                                  checkmark: .image(Asset.checkboxSelectedCircle.image)),
-                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.sendingFunds),
-                                                 checkmarkToggleState: settings.sending,
-                                                 checkmarkToggle: true),
-                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.buyTransactions),
-                                                 checkmarkToggleState: settings.buy,
-                                                 checkmarkToggle: true)
+                sending,
+                buy
             ]
         ]
         

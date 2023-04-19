@@ -29,11 +29,14 @@ class TwoStepSettingsViewController: BaseTableViewController<AccountCoordinator,
             cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
             
             (cell as? WrapperTableViewCell<IconTitleSubtitleToggleView>)?.wrappedView.didToggle = { [weak self] isOn in
-                // TODO: Refactor
-                if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 2 {
-                    self?.interactor?.toggleSetting(viewAction: .init(sending: isOn, buy: nil))
-                } else if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
-                    self?.interactor?.toggleSetting(viewAction: .init(sending: nil, buy: isOn))
+                guard let buy = self?.interactor?.presenter?.buy,
+                      let sending = self?.interactor?.presenter?.sending,
+                      let sectionArray = self?.sectionRows[Models.Section.settings] as? [IconTitleSubtitleToggleViewModel] else { return }
+                
+                if sectionArray[indexPath.row] == buy {
+                    self?.interactor?.toggleSetting(viewAction: .init(buy: isOn))
+                } else if sectionArray[indexPath.row] == sending {
+                    self?.interactor?.toggleSetting(viewAction: .init(sending: isOn))
                 }
             }
             
