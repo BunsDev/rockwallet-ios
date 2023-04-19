@@ -23,6 +23,7 @@ enum TwoStepEndpoints: String, URLType {
     case totp
     case totpConfirm = "totp/confirm"
     case recovery = "totp/recovery"
+    case delete = ""
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

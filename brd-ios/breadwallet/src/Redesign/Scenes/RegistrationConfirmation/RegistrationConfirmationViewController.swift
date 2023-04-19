@@ -137,6 +137,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             case .twoStepApp:
                 self.coordinator?.showBackupCodes()
                 
+            case .disable:
+                self.coordinator?.popToRoot()
+                
             default:
                 break
             }

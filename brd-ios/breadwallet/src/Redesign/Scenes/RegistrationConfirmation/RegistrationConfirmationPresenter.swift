@@ -45,7 +45,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             title = "We’ve sent you a code"
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
-        case .twoStepApp:
+        case .twoStepApp, .disable:
             title = "Enter the code from your Authenticator app"
             instructions = ""
             
