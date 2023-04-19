@@ -42,6 +42,10 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.BackupCodes)
     }
     
+    func showTwoStepSettings() {
+        open(scene: Scenes.TwoStepSettings)
+    }
+    
     func showChangeEmail() {
         open(scene: Scenes.SignUp)
     }

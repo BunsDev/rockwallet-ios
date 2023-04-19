@@ -113,6 +113,10 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
             make.trailing.bottom.equalToSuperview().offset(Margins.medium.rawValue)
         }
         
+        titleSubtitleStack.arrangedSubviews.forEach { subView in
+            subView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        }
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         addGestureRecognizer(tapGestureRecognizer)
     }

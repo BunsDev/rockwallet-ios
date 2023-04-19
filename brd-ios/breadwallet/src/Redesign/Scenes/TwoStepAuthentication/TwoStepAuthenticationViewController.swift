@@ -74,7 +74,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showBackupCodes()
                 
             case .settings:
-                self.coordinator?.showAuthenticatorApp()
+                self.coordinator?.showTwoStepSettings()
                 
             case .disable:
                 self.coordinator?.showAuthenticatorApp()
