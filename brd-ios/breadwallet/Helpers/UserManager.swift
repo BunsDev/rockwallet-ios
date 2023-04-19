@@ -16,7 +16,7 @@ class UserManager: NSObject {
     var profile: Profile?
     var profileResult: Result<Profile?, Error>?
     
-    var hasTwoStepAuth = false
+    var twoStepSettings: TwoStepSettings?
     
     var error: Error?
     
@@ -26,11 +26,11 @@ class UserManager: NSObject {
         group.enter()
         TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData(method: .get, sending: false, achSell: false, buy: false)) { [weak self] result in
             switch result {
-            case .success:
-                self?.hasTwoStepAuth = true
+            case .success(let data):
+                self?.twoStepSettings = data
                 
-            case .failure:
-                self?.hasTwoStepAuth = false
+            default:
+                break
             }
             
             group.leave()
