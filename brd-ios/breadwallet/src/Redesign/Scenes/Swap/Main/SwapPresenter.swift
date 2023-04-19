@@ -65,8 +65,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         let toFormattedTokenString = ExchangeFormatter.createAmountString(string: toTokenValue ?? "")
         
         let toFee = actionResponse.toFee
-        let fromFee = actionResponse.fromFee
-        
         let formattedToTokenFeeString = String(format: "-%@ %@",
                                                ExchangeFormatter.crypto.string(for: toFee?.tokenValue) ?? "",
                                                toFee?.currency.code.uppercased() ?? "")
@@ -89,7 +87,19 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
+        let hasError = handleError(actionResponse: actionResponse)
+        let continueEnabled = (!hasError && actionResponse.fromFee != nil)
+        
+        viewController?.displayAmount(responseDisplay: .init(continueEnabled: continueEnabled,
+                                                             amounts: swapModel,
+                                                             rate: exchangeRateViewModel))
+    }
+    
+    func handleError(actionResponse: SwapModels.Amounts.ActionResponse) -> Bool {
+        let fromFee = actionResponse.fromFee
+        
         var hasError: Bool = actionResponse.from?.fiatValue == 0
+        
         if actionResponse.baseBalance == nil
             || actionResponse.from?.currency.code == actionResponse.to?.currency.code {
             let first = actionResponse.from?.currency.code
@@ -162,11 +172,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             }
         }
         
-        let continueEnabled = (!hasError && actionResponse.fromFee != nil)
-        
-        viewController?.displayAmount(responseDisplay: .init(continueEnabled: continueEnabled,
-                                                             amounts: swapModel,
-                                                             rate: exchangeRateViewModel))
+        return hasError
     }
     
     func presentSelectAsset(actionResponse: SwapModels.Assets.ActionResponse) {
