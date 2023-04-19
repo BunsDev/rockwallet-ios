@@ -25,8 +25,8 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
         super.setupVerticalButtons()
         
         continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.back,
-                                         enabled: true,
+        continueButton.setup(with: .init(title: dataStore?.screenType?.buttonTitle,
+                                         enabled: dataStore?.screenType == .paymailSetup,
                                          callback: { [weak self] in
             self?.buttonTapped()
         }))
@@ -53,6 +53,9 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
                 config.keyboardType = .emailAddress
                 
                 view.configure(with: config)
+                view.didTapTrailingView = { [weak self] in
+                    self?.interactor?.copyValue(viewAction: .init(value: ""))
+                }
             }
         
         case .paymail:

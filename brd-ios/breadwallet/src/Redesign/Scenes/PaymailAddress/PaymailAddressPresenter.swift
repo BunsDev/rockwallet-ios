@@ -16,6 +16,8 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     // MARK: - PaymailAddressActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
+        guard let item = actionResponse.item as? Models.Item else { return }
+        
         let sections: [Models.Section] = [
             .description,
             .emailView,
@@ -24,10 +26,12 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .description: [
-                LabelViewModel.text(L10n.PaymailAddress.description)
+                LabelViewModel.text(item?.description)
             ],
             .emailView: [
-                TextFieldModel(title: "Create your paymail", value: "@rockwallet.io")
+                TextFieldModel(title: item?.emailViewTitle,
+                               value: "@rockwallet.io",
+                               trailing: .image(item?.image))
             ],
             .paymail: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.PaymailAddress.whatIsPaymail,
@@ -46,6 +50,11 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     
     func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.Success.ActionResponse) {
         viewController?.displaySuccessBottomAlert(responseDisplay: .init())
+    }
+    
+    func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse) {
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
+                                                              config: Presets.InfoView.verification))
     }
 
     // MARK: - Additional Helpers

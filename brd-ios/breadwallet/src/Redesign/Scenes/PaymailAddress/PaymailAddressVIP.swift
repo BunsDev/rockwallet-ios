@@ -28,6 +28,7 @@ protocol PaymailAddressResponseDisplays: AnyObject, BaseResponseDisplays, FetchR
 }
 
 protocol PaymailAddressDataStore: BaseDataStore {
+    var screenType: PaymailAddressModels.ScreenType? { get set }
 }
 
 protocol PaymailAddressDataPassing {

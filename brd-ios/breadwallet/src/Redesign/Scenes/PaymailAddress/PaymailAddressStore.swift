@@ -10,6 +10,8 @@ import UIKit
 
 class PaymailAddressStore: NSObject, BaseDataStore, PaymailAddressDataStore {
     // MARK: - PaymailAddressDataStore
+    
+    var screenType: PaymailAddressModels.ScreenType?
 
     // MARK: - Aditional helpers
 }

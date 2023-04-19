@@ -17,7 +17,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     // MARK: - PaymailAddressViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: nil))
+        presenter?.presentData(actionResponse: .init(item: Models.Item(dataStore?.screenType ?? .paymailNotSetup)))
     }
     
     func showPaymailPopup(viewAction: Models.InfoPopup.ViewAction) {
@@ -27,5 +27,13 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     func showSuccessBottomAlert(viewAction: Models.Success.ViewAction) {
         presenter?.presentSuccessBottomAlert(actionResponse: .init())
     }
+    
+    func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction) {
+        let value = viewAction.value?.filter { !$0.isWhitespace } ?? ""
+        UIPasteboard.general.string = value
+        
+        presenter?.presentCopyValue(actionResponse: .init())
+    }
+    
     // MARK: - Aditional helpers
 }
