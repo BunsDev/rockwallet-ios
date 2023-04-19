@@ -16,13 +16,13 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
     var presenter: AuthenticatorAppPresenter?
     var dataStore: AuthenticatorAppStore?
     
-    private var setTwoStepAppModel: SetTwoStepApp?
+    private var setTwoStepAppModel: SetTwoStepAuth?
     
     // MARK: - AuthenticatorAppViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        let data = SetTwoStepAppRequestData(updateCode: nil)
-        SetTwoStepAppWorker().execute(requestData: data) { [weak self] result in
+        let data = SetTwoStepAuthRequestData(type: .app, updateCode: nil)
+        SetTwoStepAuthWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.setTwoStepAppModel = data

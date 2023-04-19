@@ -29,7 +29,7 @@
 		04185DC329D179B700AECBFA /* TwoStepAuthenticationVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DBD29D179B600AECBFA /* TwoStepAuthenticationVIP.swift */; };
 		04185DC529D17E4600AECBFA /* IconTitleSubtitleToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */; };
 		0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */; };
-		043DB5D029EDC7B900DEB8FD /* SetTwoStepAppWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */; };
+		043DB5D029EDC7B900DEB8FD /* SetTwoStepAuthWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5CF29EDC7B900DEB8FD /* SetTwoStepAuthWorker.swift */; };
 		043DB5D229EE838400DEB8FD /* TitleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D129EE838400DEB8FD /* TitleButtonView.swift */; };
 		043DB5D429EE8B9C00DEB8FD /* PaddedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */; };
 		043DB5D629EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */; };
@@ -61,7 +61,6 @@
 		0453B0BC29D22BF100BBE246 /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 0453B0BB29D22BF100BBE246 /* GoogleTagManager */; };
 		0453B0BE29D22CC700BBE246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0453B0BD29D22CC700BBE246 /* GoogleService-Info.plist */; };
 		0453B0C029D2DEB100BBE246 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */; };
-		045A432729EAADD400489114 /* SetTwoStepEmailWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045A432629EAADD400489114 /* SetTwoStepEmailWorker.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
 		049CE73C29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */; };
 		049CE73F29DD59C0009D0F2D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73E29DD59C0009D0F2D /* PaymailDestinationWorker.swift */; };
@@ -888,7 +887,7 @@
 		04185DBD29D179B600AECBFA /* TwoStepAuthenticationVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStepAuthenticationVIP.swift; sourceTree = "<group>"; };
 		04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleToggleView.swift; sourceTree = "<group>"; };
 		0435DE7D29B1F1080050FD3C /* BaseExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseExchangeTableViewController.swift; sourceTree = "<group>"; };
-		043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppWorker.swift; sourceTree = "<group>"; };
+		043DB5CF29EDC7B900DEB8FD /* SetTwoStepAuthWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAuthWorker.swift; sourceTree = "<group>"; };
 		043DB5D129EE838400DEB8FD /* TitleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleButtonView.swift; sourceTree = "<group>"; };
 		043DB5D329EE8B9C00DEB8FD /* PaddedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedImageView.swift; sourceTree = "<group>"; };
 		043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppCodeWorker.swift; sourceTree = "<group>"; };
@@ -913,7 +912,6 @@
 		0452C93D29D4310100CCC8DA /* VeriffKYCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VeriffKYCManager.swift; sourceTree = "<group>"; };
 		0453B0BD29D22CC700BBE246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Resources/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
-		045A432629EAADD400489114 /* SetTwoStepEmailWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetTwoStepEmailWorker.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
 		049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneCodeWorker.swift; sourceTree = "<group>"; };
 		049CE73D29DD5959009D0F2D /* breadwallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = breadwallet.entitlements; path = Resources/breadwallet.entitlements; sourceTree = "<group>"; };
@@ -1764,8 +1762,7 @@
 		045A432529EAABE400489114 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				045A432629EAADD400489114 /* SetTwoStepEmailWorker.swift */,
-				043DB5CF29EDC7B900DEB8FD /* SetTwoStepAppWorker.swift */,
+				043DB5CF29EDC7B900DEB8FD /* SetTwoStepAuthWorker.swift */,
 				049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */,
 				043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */,
 				04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */,
@@ -4065,7 +4062,6 @@
 				7EBC6B062848ABC5000A301F /* RegistrationConfirmationStore.swift in Sources */,
 				7B8CF81E28A3D0C600D54D14 /* CardDetailsFormatter.swift in Sources */,
 				7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */,
-				045A432729EAADD400489114 /* SetTwoStepEmailWorker.swift in Sources */,
 				7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */,
 				7B8CF82028A64B9300D54D14 /* ExchangeFormatter.swift in Sources */,
 				7ED83AFB284F40EB00261565 /* CheckListInteractor.swift in Sources */,
@@ -4106,7 +4102,7 @@
 				7E5CB3A62835090E00EC787E /* ThemeManager.swift in Sources */,
 				7C6ACCB61FEB345E0028ABFA /* TxStatusCell.swift in Sources */,
 				CE5393B022D7CC98000303B3 /* HistoryPeriod.swift in Sources */,
-				043DB5D029EDC7B900DEB8FD /* SetTwoStepAppWorker.swift in Sources */,
+				043DB5D029EDC7B900DEB8FD /* SetTwoStepAuthWorker.swift in Sources */,
 				7B39478E297000ED007D405E /* ForgotPasswordModels.swift in Sources */,
 				7EF45F8C284768C100D1F7B0 /* ItemSelectionModels.swift in Sources */,
 				C4CCFCEC29D43DB600E38B3A /* AuthenticatorAppInteractor.swift in Sources */,

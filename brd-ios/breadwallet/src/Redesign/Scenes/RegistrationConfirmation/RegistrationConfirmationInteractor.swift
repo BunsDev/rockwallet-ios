@@ -127,8 +127,8 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     }
     
     private func executeSetTwoStepEmail() {
-        let data = SetTwoStepEmailRequestData(updateCode: dataStore?.code)
-        SetTwoStepEmailWorker().execute(requestData: data) { [weak self] result in
+        let data = SetTwoStepAuthRequestData(type: .email, updateCode: dataStore?.code)
+        SetTwoStepAuthWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
                 UserManager.shared.refresh { _ in

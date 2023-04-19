@@ -11,7 +11,7 @@
 import UIKit
 
 enum AuthenticatorAppModels {
-    typealias Item = SetTwoStepApp?
+    typealias Item = SetTwoStepAuth?
     
     enum Section: Sectionable {
         case importWithLink
