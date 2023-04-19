@@ -24,9 +24,8 @@ struct IconTitleSubtitleToggleViewModel: ViewModel {
     var icon: ImageViewModel?
     var title: LabelViewModel
     var subtitle: LabelViewModel?
-    var checkmark: ImageViewModel? = .image(Asset.radiobutton.image)
-    var checkmarkToggleState: Bool = false
-    var checkmarkToggle: Bool = false
+    var checkmark: ImageViewModel?
+    var checkmarkToggleState: Bool?
     var isDestructive: Bool = false
     var isInteractable: Bool = true
 }
@@ -145,10 +144,12 @@ class IconTitleSubtitleToggleView: FEView<IconTitleSubtitleToggleConfiguration, 
         titleLabel.setup(with: viewModel?.title)
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.subtitle == nil
+        
         checkmarkImageView.setup(with: viewModel?.checkmark)
-        checkmarkImageView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == true
+        checkmarkImageView.isHidden = viewModel?.checkmarkToggleState != nil
+        
         checkmarkToggleView.isOn = viewModel?.checkmarkToggleState ?? false
-        checkmarkToggleView.isHidden = viewModel?.checkmark == nil || viewModel?.checkmarkToggle == false
+        checkmarkToggleView.isHidden = viewModel?.checkmarkToggleState == nil
         
         let isDestructive = viewModel?.isDestructive ?? false
         titleLabel.configure(with: isDestructive ? config?.destructiveTitle : config?.title)

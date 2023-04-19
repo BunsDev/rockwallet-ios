@@ -75,7 +75,6 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
             ],
             .disable: [
                 IconTitleSubtitleToggleViewModel(title: .text("Disable 2FA"),
-                                                 checkmark: nil,
                                                  isDestructive: true)
             ]
         ]

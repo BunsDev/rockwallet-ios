@@ -27,24 +27,23 @@ final class TwoStepSettingsPresenter: NSObject, Presenter, TwoStepSettingsAction
         ]
         
         sending = IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.sendingFunds),
-                                                   checkmarkToggleState: settings.sending,
-                                                   checkmarkToggle: true)
+                                                   checkmarkToggleState: settings.sending)
         buy = IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.buyTransactions),
-                                               checkmarkToggleState: settings.buy,
-                                               checkmarkToggle: true)
+                                               checkmarkToggleState: settings.buy)
         
+        let mandatoryCheckmark = Asset.checkboxSelectedCircle.image
         let sectionRows: [Models.Section: [any Hashable]] = [
             .description: [LabelViewModel.text(L10n.TwoStep.preferredSettings)],
             .settings: [
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.signInIntoNewDevice),
                                                  subtitle: .text(L10n.TwoStep.mandatory),
-                                                 checkmark: .image(Asset.checkboxSelectedCircle.image)),
+                                                 checkmark: .image(mandatoryCheckmark)),
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.recoverChangingPassword),
                                                  subtitle: .text(L10n.TwoStep.mandatory),
-                                                 checkmark: .image(Asset.checkboxSelectedCircle.image)),
+                                                 checkmark: .image(mandatoryCheckmark)),
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.twoStepPeriod),
                                                  subtitle: .text(L10n.TwoStep.mandatory),
-                                                 checkmark: .image(Asset.checkboxSelectedCircle.image)),
+                                                 checkmark: .image(mandatoryCheckmark)),
                 sending,
                 buy
             ]
