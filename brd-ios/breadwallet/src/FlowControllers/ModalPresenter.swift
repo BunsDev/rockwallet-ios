@@ -1108,7 +1108,7 @@ class ModalPresenter: Subscriber {
         }
         
         // Two-Factor Authentication (2FA)
-        let twoStep = MenuItem(title: L10n.TwoStep.Settings.Menu.Title) { [weak self] in
+        let twoStep = MenuItem(title: L10n.TwoStep.Settings.title) { [weak self] in
             self?.twoStepAuthCallback?()
         }
         

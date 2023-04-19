@@ -42,7 +42,7 @@ final class BackupCodesPresenter: NSObject, Presenter, BackupCodesActionResponse
     }
     
     func presentSkipSaving(actionResponse: BackupCodesModels.SkipBackupCodeSaving.ActionResponse) {
-        let popupViewModel = PopupViewModel(title: .text(L10n.Alert.Important),
+        let popupViewModel = PopupViewModel(title: .text(L10n.Alert.important),
                                             body: L10n.TwoStep.App.BackupCodes.warning,
                                             buttons: [.init(title: L10n.Button.iUnderstand)],
                                             closeButton: .init(image: Asset.close.image))

@@ -33,11 +33,11 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         var authMethodDescription: String?
         if authType == .email {
-            authMethodDescription = L10n.TwoStep.Method.Email.Description
+            authMethodDescription = L10n.TwoStep.Method.Email.description
             
             sections.removeAll(where: { $0 == .backupCodes })
         } else if authType == .authenticator {
-            authMethodDescription = L10n.TwoStep.Method.App.Description
+            authMethodDescription = L10n.TwoStep.Method.App.description
         }
         
         let isTwoStepEnabled = authExists ? LabelViewModel.text(authMethodDescription) : nil
@@ -51,7 +51,7 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
             ],
             .email: [
                 IconTitleSubtitleToggleViewModel(icon: .image(Asset.mail.image),
-                                                 title: .text(L10n.Account.EmailAddress.Title),
+                                                 title: .text(L10n.Account.EmailAddress.title),
                                                  subtitle: .text(UserDefaults.email ?? ""),
                                                  checkmark: .image(emailAuthCheckmark),
                                                  isInteractable: authType != .email)
@@ -66,15 +66,15 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                 LabelViewModel.text(L10n.MenuButton.settings)
             ],
             .backupCodes: [
-                IconTitleSubtitleToggleViewModel(title: .text(L10n.BackupCodes.Title),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.BackupCodes.title),
                                                  checkmark: .image(settingsChevron))
             ],
             .settings: [
-                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.AuthSettings.Title),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.AuthSettings.title),
                                                  checkmark: .image(settingsChevron))
             ],
             .disable: [
-                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Disable.Title),
+                IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.Disable.title),
                                                  isDestructive: true)
             ]
         ]

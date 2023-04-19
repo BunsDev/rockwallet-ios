@@ -3082,6 +3082,10 @@ internal enum L10n {
       /// Disable 2FA
       internal static let title = L10n.tr("Localizable", "TwoStep.Disable.Title", fallback: "Disable 2FA")
     }
+    internal enum Menu {
+      /// Two-Factor Authentication (2FA)
+      internal static let title = L10n.tr("Localizable", "TwoStep.Menu.Title", fallback: "Two-Factor Authentication (2FA)")
+    }
     internal enum Method {
       internal enum App {
         /// Two Factor Authentication in enabled with Authenticator App

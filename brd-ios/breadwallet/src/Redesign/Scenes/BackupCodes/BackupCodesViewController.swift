@@ -36,7 +36,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
         super.setupVerticalButtons()
         
         continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Button.Download,
+        continueButton.setup(with: .init(title: L10n.Button.download,
                                          image: Asset.download.image,
                                          enabled: true,
                                          callback: { [weak self] in
@@ -142,7 +142,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
             self?.coordinator?.hidePopup()
             
             self?.coordinator?.popToRoot(completion: { [weak self] in
-                self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.Message),
+                self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.message),
                                                                          dismissType: .auto),
                                                     configuration: Presets.InfoView.warning)
             })

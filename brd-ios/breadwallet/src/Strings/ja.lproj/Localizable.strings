@@ -3228,6 +3228,8 @@
 
 "TwoStep.Mandatory" = "(Mandatory)";
 
+"TwoStep.Menu.Title" = "Two-Factor Authentication (2FA)";
+
 "TwoStep.Method.App.Description" = "Two Factor Authentication in enabled with Authenticator App";
 
 "TwoStep.Method.Email.Description" = "Two Factor Authentication in enabled with Email";
