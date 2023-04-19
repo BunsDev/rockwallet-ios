@@ -1079,70 +1079,73 @@ class ModalPresenter: Subscriber {
         self.messagePresenter.presentEmailLogs()
     }
     
+    // MARK: Security Settings
+    
     private func prepareSecuritySettingsMenuItems(menuNav: RootNavigationController) -> [MenuItem] {
-        // MARK: Security Settings
-        var securityItems: [MenuItem] = [
-            // Unlink
-            MenuItem(title: L10n.Settings.wipe) { [weak self] in
-                guard let self = self, let vc = self.topViewController else { return }
-                RecoveryKeyFlowController.presentUnlinkWalletFlow(from: vc,
-                                                                  keyMaster: self.keyStore,
-                                                                  phraseEntryReason: .validateForWipingWallet({ [weak self] in
-                    GoogleAnalytics.logEvent(GoogleAnalytics.WipeWallet())
-                    
-                    self?.wipeWallet()
-                }))
-            },
-            
-            // Update PIN
-            MenuItem(title: L10n.UpdatePin.updateTitle) { [weak self] in
-                guard let self = self else { return }
-                let updatePin = UpdatePinViewController(keyMaster: self.keyStore, type: .update)
-                menuNav.pushViewController(updatePin, animated: true)
-            },
-            
-            // Biometrics
-            MenuItem(title: LAContext.biometricType() == .face ? L10n.SecurityCenter.faceIdTitle : L10n.SecurityCenter.touchIdTitle) { [weak self] in
-                guard let self = self else { return }
-                self.presentBiometricsMenuItem()
-            },
-            
-            // Two-Factor Authentication (2FA)
-            MenuItem(title: "Two-Factor Authentication (2FA)") { [weak self] in
-                self?.twoStepAuthCallback?()
-            },
-            
-            // Paper key
-            MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in
-                guard let self = self else { return }
-                self.presentWritePaperKey(fromViewController: menuNav, context: .viewRecoveryPhrase)
-            },
-            
-            // Portfolio data for widget
-            MenuItem(title: L10n.Settings.shareWithWidget,
-                     accessoryText: { [weak self] in
-                         self?.system.widgetDataShareService.sharingEnabled ?? false ? L10n.PushNotifications.on.uppercased() : L10n.PushNotifications.off.uppercased()
-                     },
-                     callback: { [weak self] in
-                         self?.system.widgetDataShareService.sharingEnabled.toggle()
-                         (menuNav.topViewController as? MenuViewController)?.reloadMenu()
-                     }),
-            
-            // Add iCloud backup
-            MenuItem(title: L10n.CloudBackup.backupMenuTitle) {
-                let synchronizer = BackupSynchronizer(context: .existingWallet, keyStore: self.keyStore, navController: menuNav)
-                let cloudView = CloudBackupView(synchronizer: synchronizer)
-                let hosting = UIHostingController(rootView: cloudView)
-                menuNav.pushViewController(hosting, animated: true)
-            }
-        ]
+        // Unlink
+        let unlink = MenuItem(title: L10n.Settings.wipe) { [weak self] in
+            guard let self = self, let vc = self.topViewController else { return }
+            RecoveryKeyFlowController.presentUnlinkWalletFlow(from: vc,
+                                                              keyMaster: self.keyStore,
+                                                              phraseEntryReason: .validateForWipingWallet({ [weak self] in
+                GoogleAnalytics.logEvent(GoogleAnalytics.WipeWallet())
+                
+                self?.wipeWallet()
+            }))
+        }
         
+        // Update PIN
+        let updatePin = MenuItem(title: L10n.UpdatePin.updateTitle) { [weak self] in
+            guard let self = self else { return }
+            let updatePin = UpdatePinViewController(keyMaster: self.keyStore, type: .update)
+            menuNav.pushViewController(updatePin, animated: true)
+        }
+        
+        // Biometrics
+        let biometrics = MenuItem(title: LAContext.biometricType() == .face ? L10n.SecurityCenter.faceIdTitle : L10n.SecurityCenter.touchIdTitle) { [weak self] in
+            guard let self = self else { return }
+            self.presentBiometricsMenuItem()
+        }
+        
+        // Two-Factor Authentication (2FA)
+        let twoStep = MenuItem(title: L10n.TwoStep.Menu.title) { [weak self] in
+            self?.twoStepAuthCallback?()
+        }
+        
+        // Paper key
+        let paperKey = MenuItem(title: L10n.SecurityCenter.paperKeyTitle) { [weak self] in
+            guard let self = self else { return }
+            self.presentWritePaperKey(fromViewController: menuNav, context: .viewRecoveryPhrase)
+        }
+        
+        // Portfolio data for widget
+        let widgetPortfolio = MenuItem(title: L10n.Settings.shareWithWidget,
+                                       accessoryText: { [weak self] in
+                                           self?.system.widgetDataShareService.sharingEnabled ?? false
+            ? L10n.PushNotifications.on.uppercased() : L10n.PushNotifications.off.uppercased()
+                                       },
+                                       callback: { [weak self] in
+                                           self?.system.widgetDataShareService.sharingEnabled.toggle()
+                                           (menuNav.topViewController as? MenuViewController)?.reloadMenu()
+                                       })
+        
+        // iCloud backup
+        let iCloudBackup = MenuItem(title: L10n.CloudBackup.backupMenuTitle) {
+            let synchronizer = BackupSynchronizer(context: .existingWallet, keyStore: self.keyStore, navController: menuNav)
+            let cloudView = CloudBackupView(synchronizer: synchronizer)
+            let hosting = UIHostingController(rootView: cloudView)
+            menuNav.pushViewController(hosting, animated: true)
+        }
+        
+        // Delete user account
         let deleteAccount = MenuItem(title: L10n.Account.deleteAccount, color: LightColors.Error.one) { [weak self] in
             self?.deleteAccountCallback?()
         }
         
-        if UserManager.shared.profile != nil, UserDefaults.email != nil {
-            securityItems.append(deleteAccount)
+        var securityItems: [MenuItem] = [unlink, updatePin, biometrics, twoStep, paperKey, widgetPortfolio, iCloudBackup, deleteAccount]
+        
+        if UserManager.shared.profile == nil || UserDefaults.email == nil {
+            securityItems = securityItems.filter { $0.title != twoStep.title || $0.title != deleteAccount.title }
         }
         
         return securityItems

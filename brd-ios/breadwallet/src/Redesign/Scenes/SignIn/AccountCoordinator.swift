@@ -16,8 +16,6 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
             showSetPassword()
         } else if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
-        } else if !UserManager.shared.hasTwoStepAuth {
-            showVerifyPhoneNumber()
         } else {
             showSignUp()
         }
@@ -32,6 +30,18 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     
     func showVerifyPhoneNumber() {
         open(scene: Scenes.VerifyPhoneNumber)
+    }
+    
+    func showAuthenticatorApp() {
+        open(scene: Scenes.AuthenticatorApp)
+    }
+    
+    func showBackupCodes() {
+        open(scene: Scenes.BackupCodes)
+    }
+    
+    func showTwoStepSettings() {
+        open(scene: Scenes.TwoStepSettings)
     }
     
     func showChangeEmail() {

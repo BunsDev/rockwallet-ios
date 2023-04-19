@@ -21,6 +21,11 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
         return L10n.BackupCodes.title
     }
     
+    lazy var nextButton: FEButton = {
+        let view = FEButton()
+        return view
+    }()
+    
     override func setupSubviews() {
         super.setupSubviews()
         
@@ -31,21 +36,33 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
         super.setupVerticalButtons()
         
         continueButton.configure(with: Presets.Button.primary)
-        continueButton.setup(with: .init(title: L10n.Onboarding.next,
+        continueButton.setup(with: .init(title: L10n.Button.download,
+                                         image: Asset.download.image,
                                          enabled: true,
                                          callback: { [weak self] in
+            self?.createPDF()
+        }))
+        
+        nextButton.configure(with: Presets.Button.noBorders)
+        nextButton.setup(with: .init(title: L10n.Button.continueAction,
+                                     isUnderlined: true,
+                                     enabled: true,
+                                     callback: { [weak self] in
             self?.buttonTapped()
         }))
         
-        guard let config = continueButton.config, let model = continueButton.viewModel else { return }
-        verticalButtons.wrappedView.configure(with: .init(buttons: [config]))
-        verticalButtons.wrappedView.setup(with: .init(buttons: [model]))
+        guard let continueButtonConfig = continueButton.config,
+              let continueButtonModel = continueButton.viewModel,
+              let nextButtonConfig = nextButton.config,
+              let nextButtonModel = nextButton.viewModel else { return }
+        verticalButtons.wrappedView.configure(with: .init(buttons: [continueButtonConfig, nextButtonConfig]))
+        verticalButtons.wrappedView.setup(with: .init(buttons: [continueButtonModel, nextButtonModel]))
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-        case .instructions, .description:
+        case .instructions:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             
         case .backupCodes:
@@ -103,14 +120,56 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
     override func buttonTapped() {
         super.buttonTapped()
         
-        // TODO: Add continue action
+        interactor?.skipSaving(viewAction: .init())
     }
     
     private func getCodesTapped() {
-        // TODO: Add action to get new codes from BE
+        interactor?.getBackupCodes(viewAction: .init(method: .delete))
     }
 
     // MARK: - BackupCodesResponseDisplay
-
+    
+    func displaySkipSaving(responseDisplay: BackupCodesModels.SkipBackupCodeSaving.ResponseDisplay) {
+        guard let navigationController = coordinator?.navigationController else { return }
+        
+        coordinator?.showPopup(on: navigationController,
+                               blurred: false,
+                               with: responseDisplay.popupViewModel,
+                               config: responseDisplay.popupConfig,
+                               closeButtonCallback: { [weak self] in
+            self?.coordinator?.hidePopup()
+        }, callbacks: [ { [weak self] in
+            self?.coordinator?.hidePopup()
+            
+            self?.coordinator?.popToRoot(completion: { [weak self] in
+                self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.message),
+                                                                         dismissType: .auto),
+                                                    configuration: Presets.InfoView.warning)
+            })
+        } ])
+    }
+    
     // MARK: - Additional Helpers
+    
+    private func createPDF() {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.backupCodes.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<BackupCodesView> else { return }
+        
+        let documentDirectory = FileManager.default.temporaryDirectory
+        let outputFileURL = documentDirectory.appendingPathComponent("RW_Backup_Codes_\(UserDefaults.email ?? "").pdf")
+        
+        let pdfRenderer = UIGraphicsPDFRenderer(bounds: cell.bounds)
+        
+        do {
+            try pdfRenderer.writePDF(to: outputFileURL, withActions: { context in
+                context.beginPage()
+                cell.layer.render(in: context.cgContext)
+                
+                let activityViewController = UIActivityViewController(activityItems: [outputFileURL], applicationActivities: nil)
+                present(activityViewController, animated: true, completion: nil)
+            })
+        } catch {
+            print("Could not create PDF file: \(error)")
+        }
+    }
 }

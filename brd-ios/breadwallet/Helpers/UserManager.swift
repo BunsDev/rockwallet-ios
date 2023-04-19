@@ -15,22 +15,20 @@ class UserManager: NSObject {
     
     var profile: Profile?
     var profileResult: Result<Profile?, Error>?
-    
-    var hasTwoStepAuth = false
-    
     var error: Error?
+    var twoStepSettings: TwoStepSettings?
     
     func refresh(completion: ((Result<Profile?, Error>?) -> Void)? = nil) {
         let group = DispatchGroup()
 
         group.enter()
-        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData()) { [weak self] result in
+        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData(method: .get)) { [weak self] result in
             switch result {
-            case .success:
-                self?.hasTwoStepAuth = true
+            case .success(let data):
+                self?.twoStepSettings = data
                 
-            case .failure:
-                self?.hasTwoStepAuth = false
+            default:
+                break
             }
             
             group.leave()

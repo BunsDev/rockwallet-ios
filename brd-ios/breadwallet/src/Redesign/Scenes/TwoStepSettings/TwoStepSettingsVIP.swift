@@ -13,6 +13,7 @@ extension Scenes {
 }
 
 protocol TwoStepSettingsViewActions: BaseViewActions, FetchViewActions {
+    func toggleSetting(viewAction: TwoStepSettingsModels.ToggleSetting.ViewAction)
 }
 
 protocol TwoStepSettingsActionResponses: BaseActionResponses, FetchActionResponses {

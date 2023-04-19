@@ -27,3 +27,9 @@ extension String {
         return filter { $0 != separator }.chunk(step: chunkSize).map { String($0) }.joined(separator: String(separator))
     }
 }
+
+extension String {
+    func separated(by separator: String = " ", stride: Int = 3) -> String {
+        return enumerated().map { $0.isMultiple(of: stride) && ($0 != 0) ? "\(separator)\($1)" : String($1) }.joined()
+    }
+}

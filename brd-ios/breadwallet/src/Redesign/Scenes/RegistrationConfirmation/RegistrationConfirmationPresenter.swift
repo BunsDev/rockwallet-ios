@@ -29,22 +29,24 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         
         if confirmationType == .twoStepApp {
             sections = sections.filter({ $0 != .image })
+            sections = sections.filter({ $0 != .instructions })
+            sections = sections.filter({ $0 != .help })
         }
         
         let title: String
         let instructions: String
         
         switch confirmationType {
-        case .account:
+        case .account, .acountTwoStepEmailSettings, .acountTwoStepAppSettings:
             title = L10n.AccountCreation.verifyEmail
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
-        case .twoStepEmail:
+        case .twoStepEmail, .disable:
             title = "We’ve sent you a code"
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
         case .twoStepApp:
-            title = ""
+            title = "Enter the code from your Authenticator app"
             instructions = ""
             
         }

@@ -3260,6 +3260,8 @@
 
 "TwoStep.settings.funds" = "Sending funds";
 
+
+
 "TwoStep.settings.recoverChangePassword" = "Recover/Changing password";
 
 "TwoStep.settings.signInNewDevice" = "Sign in into new device";

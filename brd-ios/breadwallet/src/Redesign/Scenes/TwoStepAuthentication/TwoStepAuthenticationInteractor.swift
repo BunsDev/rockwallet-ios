@@ -19,7 +19,27 @@ class TwoStepAuthenticationInteractor: NSObject, Interactor, TwoStepAuthenticati
     // MARK: - TwoStepAuthenticationViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: nil))
+        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData(method: .get)) { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.presenter?.presentData(actionResponse: .init(item: data?.type))
+                
+            case .failure:
+                self?.presenter?.presentData(actionResponse: .init(item: nil))
+            }
+        }
+    }
+    
+    func changeMethod(viewAction: TwoStepAuthenticationModels.ChangeMethod.ViewAction) {
+        RequestTwoStepCodeWorker().execute(requestData: RequestTwoStepCodeRequestData()) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.presentChangeMethod(actionResponse: .init(indexPath: viewAction.indexPath))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     // MARK: - Aditional helpers
