@@ -82,18 +82,33 @@ class ApplicationController: Subscriber {
     func launch(application: UIApplication, options: [UIApplication.LaunchOptionsKey: Any]?) {
         handleLaunchOptions(options)
         
-        FirebaseApp.configure()
-        
         UNUserNotificationCenter.current().delegate = notificationHandler
-
+        
         mainSetup()
         setupKeyboard()
+        setupFirebase()
         
         Reachability.addDidChangeCallback({ isReachable in
             self.isReachable = isReachable
         })
 
         WidgetCenter.shared.reloadAllTimelines()
+    }
+    
+    private func setupFirebase() {
+        var fileName: String = "GoogleService-Info"
+        if E.isDevelopment {
+            fileName = "Dev-" + fileName
+        } else if E.isStaging {
+            fileName = "Stg-" + fileName
+        } else if E.isProduction {
+            fileName = "Rls-" + fileName
+        }
+        
+        if let googleServicesFile = Bundle.main.path(forResource: fileName, ofType: "plist"),
+           let options = FirebaseOptions(contentsOfFile: googleServicesFile) {
+            FirebaseApp.configure(options: options)
+        }
     }
     
     private func bumpLaunchCount() {
