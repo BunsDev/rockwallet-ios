@@ -122,7 +122,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             guard let self = self else { return }
             switch self.dataStore?.confirmationType {
             case .account:
-                self.coordinator?.dismissFlow()
+                self.coordinator?.showVerifyPhoneNumber()
                 
             case .acountTwoStepEmailSettings, .twoStepEmail:
                 self.coordinator?.popToRoot(completion: { [weak self] in

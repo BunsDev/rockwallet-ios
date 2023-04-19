@@ -18,6 +18,8 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
                                        VerifyPhoneNumberResponseDisplays {
     typealias Models = VerifyPhoneNumberModels
     
+    override var isModalDismissableEnabled: Bool { return false }
+    
     override var sceneLeftAlignedTitle: String? {
         return L10n.VerifyPhoneNumber.title
     }

@@ -15,10 +15,8 @@ class UserManager: NSObject {
     
     var profile: Profile?
     var profileResult: Result<Profile?, Error>?
-    
-    var twoStepSettings: TwoStepSettings?
-    
     var error: Error?
+    var twoStepSettings: TwoStepSettings?
     
     func refresh(completion: ((Result<Profile?, Error>?) -> Void)? = nil) {
         let group = DispatchGroup()
