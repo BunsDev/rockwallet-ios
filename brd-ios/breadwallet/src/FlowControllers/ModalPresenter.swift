@@ -369,10 +369,9 @@ class ModalPresenter: Subscriber {
                                Currencies.shared.btc?.wallet,
                                Currencies.shared.bch?.wallet]
                 wallets.forEach { wallet in
-                    alert.addAction(UIAlertAction(title: wallet?.currency.code, style: .default, handler: { _ in
-                        if let wallet {
-                            self.presentKeyImport(wallet: wallet, scanResult: scanResult)
-                        }
+                    guard let wallet else { return }
+                    alert.addAction(UIAlertAction(title: wallet.currency.code, style: .default, handler: { _ in
+                        self.presentKeyImport(wallet: wallet, scanResult: scanResult)
                     }))
                 }
                 
