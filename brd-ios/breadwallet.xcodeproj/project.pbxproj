@@ -35,6 +35,7 @@
 		043DB5D629EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */; };
 		043DB5D829EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D729EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift */; };
 		043DB5DA29F0059700DEB8FD /* TwoStepDeleteWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5D929F0059700DEB8FD /* TwoStepDeleteWorker.swift */; };
+		043DB5DC29F0108D00DEB8FD /* CopyTextIconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DB5DB29F0108D00DEB8FD /* CopyTextIconGenerator.swift */; };
 		0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */; };
 		0441E15129CD9FBF003D870E /* TwoStepEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */; };
 		044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */ = {isa = PBXBuildFile; productRef = 044D097A29C30E8D00C510DC /* MobileIntelligence */; };
@@ -894,6 +895,7 @@
 		043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepAppCodeWorker.swift; sourceTree = "<group>"; };
 		043DB5D729EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTwoStepCodeWorker.swift; sourceTree = "<group>"; };
 		043DB5D929F0059700DEB8FD /* TwoStepDeleteWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepDeleteWorker.swift; sourceTree = "<group>"; };
+		043DB5DB29F0108D00DEB8FD /* CopyTextIconGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTextIconGenerator.swift; sourceTree = "<group>"; };
 		0441E14E29CD99F3003D870E /* TwoStepSettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsWorker.swift; sourceTree = "<group>"; };
 		0441E15029CD9FBF003D870E /* TwoStepEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepEndpoints.swift; sourceTree = "<group>"; };
 		044D099829C8525D00C510DC /* VerifyPhoneNumberModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberModels.swift; sourceTree = "<group>"; };
@@ -2737,6 +2739,7 @@
 				CEC6F8441E886723000795B8 /* PaymentRequest.swift */,
 				7B54E58727F4A2B0002DD1E4 /* PickerViewViewController.swift */,
 				CE3D4C561EF5D5740016B1C8 /* ReachabilityMonitor.swift */,
+				043DB5DB29F0108D00DEB8FD /* CopyTextIconGenerator.swift */,
 				7B54E58D27F4A2B0002DD1E4 /* Roundable.swift */,
 				754AE0BB1DFE8A46007FD001 /* SecureAllocator.swift */,
 				CE8CD8DC1E2D9EF200785E02 /* Sender.swift */,
@@ -4573,6 +4576,7 @@
 				7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */,
 				CE3D4C571EF5D5740016B1C8 /* ReachabilityMonitor.swift in Sources */,
 				7EB8FD292897F22B000FF75C /* CardSelectionView.swift in Sources */,
+				043DB5DC29F0108D00DEB8FD /* CopyTextIconGenerator.swift in Sources */,
 				7EC21A22289946C300FED711 /* CardSelectionViewController.swift in Sources */,
 				7CBA74E62022784D00FBBFA9 /* HomeScreenAssetViewModel.swift in Sources */,
 				7CA1C47420EC25B9002E9E68 /* QRCode.swift in Sources */,

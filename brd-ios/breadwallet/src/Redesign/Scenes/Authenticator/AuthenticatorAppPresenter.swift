@@ -52,7 +52,8 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
             ],
             .copyCode: [
                 OrderViewModel(title: "",
-                               value: AuthenticatorAppPresenter.generateAttributedCopyValue(with: codeFormatted, isCopyable: true),
+                               value: CopyTextIcon.generate(with: codeFormatted,
+                                                            isCopyable: true),
                                isCopyable: true)
             ]
         ]
@@ -76,25 +77,6 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
     }
     
     // MARK: - Additional Helpers
-
-    private static func generateAttributedCopyValue(with value: String, isCopyable: Bool) -> NSAttributedString {
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = Asset.copy.image.withRenderingMode(.alwaysOriginal)
-        imageAttachment.bounds = CGRect(x: 0,
-                                        y: -Margins.extraSmall.rawValue,
-                                        width: ViewSizes.extraSmall.rawValue,
-                                        height: ViewSizes.extraSmall.rawValue)
-        let attachmentString = NSAttributedString(attachment: imageAttachment)
-        let completeText = NSMutableAttributedString(string: "")
-        completeText.append(NSAttributedString(string: value))
-        
-        if isCopyable {
-            completeText.append(NSAttributedString(string: "  "))
-            completeText.append(attachmentString)
-        }
-        
-        return completeText
-    }
     
     private func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: .utf8)
