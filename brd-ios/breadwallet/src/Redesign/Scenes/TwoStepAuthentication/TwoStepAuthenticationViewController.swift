@@ -69,22 +69,34 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         
         (cell as? WrapperTableViewCell<IconTitleSubtitleToggleView>)?.wrappedView.didTap = { [weak self] in
             guard let self else { return }
-            self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
-                if success {
-                    switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                    case .email:
-                        self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+            case .backupCodes:
+                self.coordinator?.showBackupCodes()
+                
+            case .settings:
+                self.coordinator?.showAuthenticatorApp()
+                
+            case .disable:
+                self.coordinator?.showAuthenticatorApp()
+                
+            default:
+                self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
+                    if success {
+                        switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+                        case .email:
+                            self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                            
+                        case .app:
+                            self.coordinator?.showAuthenticatorApp()
+                            
+                        default:
+                            break
+                        }
+                    } else {
                         
-                    case .app:
-                        self.coordinator?.showAuthenticatorApp()
-                        
-                    default:
-                        break
                     }
-                } else {
-                    
-                }
-            })
+                })
+            }
         }
         
         return cell

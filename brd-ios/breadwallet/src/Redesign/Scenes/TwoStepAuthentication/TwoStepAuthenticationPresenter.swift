@@ -34,6 +34,8 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         var authMethodDescription: String?
         if authType == .email {
             authMethodDescription = "Two Factor Authentication in enabled with Email"
+            
+            sections.removeAll(where: { $0 == .backupCodes })
         } else if authType == .authenticator {
             authMethodDescription = "Two Factor Authentication in enabled with Authenticator App"
         }
