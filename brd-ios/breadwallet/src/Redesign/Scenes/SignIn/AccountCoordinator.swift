@@ -104,7 +104,7 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
             showRegistrationConfirmation(isModalDismissable: true,
                                          confirmationType: .twoStepEmailLogin,
                                          registrationRequestData: registrationRequestData)
-        } else if reason == .twoStepBlockedAccount {
+        } else if reason == .twoStepBlockedAccount || reason == .twoStepInvalidCodeBlockedAccount {
             showAccountBlocked()
         }
     }

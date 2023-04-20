@@ -88,29 +88,30 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         
         cell.setup { view in
             view.configure(with: .init(buttons: [Presets.Button.noBorders]))
-            
-            view.callbacks = [
-                resendCodeTapped,
-                changeEmailTapped
-            ]
         }
         
         return cell
     }
 
     // MARK: - User Interaction
+    
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         interactor?.validate(viewAction: .init(code: text))
         
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
-    private func resendCodeTapped() {
+    func resendCodeTapped() {
         interactor?.resend(viewAction: .init())
     }
     
-    private func changeEmailTapped() {
+    func changeEmailTapped() {
         coordinator?.showChangeEmail()
+    }
+    
+    func enterBackupCode() {
+        coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                  confirmationType: .twoStepEmailLogin)
     }
 
     // MARK: - RegistrationConfirmationResponseDisplay
