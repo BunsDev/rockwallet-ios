@@ -59,9 +59,14 @@ enum RegistrationConfirmationModels {
         struct ResponseDisplay {}
     }
     
-    struct Error {
-        struct ViewAction {}
-        struct ActionResponse {}
-        struct ResponseDisplay {}
+    struct NextFailure {
+        struct ActionResponse {
+            let reason: NetworkingError
+            let registrationRequestData: RegistrationRequestData?
+        }
+        struct ResponseDisplay {
+            let reason: NetworkingError
+            let registrationRequestData: RegistrationRequestData?
+        }
     }
 }

@@ -149,12 +149,21 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         })
     }
     
-    func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.input.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
-        else { return }
+    func displayNextFailure(responseDisplay: RegistrationConfirmationModels.NextFailure.ResponseDisplay) {
+        let error = responseDisplay.reason
+        let data = responseDisplay.registrationRequestData
         
-        cell.wrappedView.showErrorMessage()
+        if error == .twoStepAppRequired {
+            coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                      confirmationType: .twoStepAppLogin,
+                                                      registrationRequestData: data)
+        } else if error == .twoStepEmailRequired {
+            coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                      confirmationType: .twoStepEmailLogin,
+                                                      registrationRequestData: data)
+        } else if error == .twoStepBlockedAccount {
+            coordinator?.showAccountBlocked()
+        }
     }
     
     // MARK: - Additional Helpers
