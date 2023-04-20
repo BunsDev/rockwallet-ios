@@ -148,19 +148,24 @@ class VIPTableViewController<C: CoordinatableRoutes,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
-
+    
     // MARK: UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return .init(frame: .zero)
     }
-
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return .init(frame: .zero)
     }
-
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
-
+    
     func tableView(_ tableView: UITableView, didSelectHeaderIn section: Int) {}
-
+    
     func tableView(_ tableView: UITableView, didSelectFooterIn section: Int) {}
 }
