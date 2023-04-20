@@ -59,6 +59,7 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
                                            password: password,
                                            token: token,
                                            subscribe: nil,
+                                           secondFactorCode: nil,
                                            accountHandling: .login)
         RegistrationWorker().execute(requestData: data) { [weak self] result in
             switch result {
@@ -72,7 +73,21 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
                 }
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard let error = (error as? NetworkingError) else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                UserDefaults.email = email
+                
+                if error == .twoStepAppRequired {
+                    self?.presenter?.viewController?.coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                                                               confirmationType: .twoStepApp)
+                } else if error == .twoStepEmailRequired {
+                    self?.presenter?.viewController?.coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                                                               confirmationType: .twoStepEmailLogin,
+                                                                                               registrationRequestData: data)
+                }
             }
         }
     }

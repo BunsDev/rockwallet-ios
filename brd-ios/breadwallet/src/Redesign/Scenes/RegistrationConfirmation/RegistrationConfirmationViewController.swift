@@ -121,6 +121,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             guard let self = self else { return }
             switch self.dataStore?.confirmationType {
+            case .twoStepEmailLogin:
+                self.coordinator?.dismissFlow()
+                
             case .account:
                 self.coordinator?.showVerifyPhoneNumber()
                 

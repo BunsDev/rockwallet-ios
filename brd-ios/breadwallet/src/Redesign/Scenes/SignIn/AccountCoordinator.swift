@@ -21,9 +21,12 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         }
     }
     
-    func showRegistrationConfirmation(isModalDismissable: Bool, confirmationType: RegistrationConfirmationModels.ConfirmationType) {
+    func showRegistrationConfirmation(isModalDismissable: Bool,
+                                      confirmationType: RegistrationConfirmationModels.ConfirmationType,
+                                      registrationRequestData: RegistrationRequestData? = nil) {
         open(scene: Scenes.RegistrationConfirmation) { vc in
             vc.dataStore?.confirmationType = confirmationType
+            vc.dataStore?.registrationRequestData = registrationRequestData
             vc.isModalDismissable = isModalDismissable
         }
     }
