@@ -413,7 +413,10 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
-        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
+        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else {
+            decideFlow(completion: { _ in })
+            return
+        }
         
         switch restrictionReason {
         case .verification:

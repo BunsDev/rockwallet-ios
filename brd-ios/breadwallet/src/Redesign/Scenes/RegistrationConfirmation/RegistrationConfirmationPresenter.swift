@@ -27,7 +27,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             .help
         ]
         
-        if confirmationType == .twoStepApp {
+        if confirmationType == .twoStepApp || confirmationType == .twoStepAppLogin {
             sections = sections.filter({ $0 != .image })
             sections = sections.filter({ $0 != .instructions })
             sections = sections.filter({ $0 != .help })
@@ -41,11 +41,11 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             title = L10n.AccountCreation.verifyEmail
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
-        case .twoStepEmail, .disable:
+        case .twoStepEmail, .twoStepEmailLogin, .disable:
             title = "We’ve sent you a code"
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
-        case .twoStepApp:
+        case .twoStepApp, .twoStepAppLogin:
             title = "Enter the code from your Authenticator app"
             instructions = ""
             
