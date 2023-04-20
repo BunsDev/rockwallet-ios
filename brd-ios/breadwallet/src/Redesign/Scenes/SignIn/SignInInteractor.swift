@@ -82,7 +82,8 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
                 
                 if error == .twoStepAppRequired {
                     self?.presenter?.viewController?.coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                                                               confirmationType: .twoStepApp)
+                                                                                               confirmationType: .twoStepAppLogin,
+                                                                                               registrationRequestData: data)
                 } else if error == .twoStepEmailRequired {
                     self?.presenter?.viewController?.coordinator?.showRegistrationConfirmation(isModalDismissable: true,
                                                                                                confirmationType: .twoStepEmailLogin,

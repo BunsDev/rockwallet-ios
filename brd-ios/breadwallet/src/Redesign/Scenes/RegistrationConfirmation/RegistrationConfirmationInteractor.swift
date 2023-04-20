@@ -29,10 +29,8 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             break
         }
         
-        // TODO: REMOVE
-        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { _ in
-            
-        }
+        guard E.isDevelopment else { return }
+        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { _ in }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {
@@ -56,7 +54,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepApp, .acountTwoStepAppSettings:
             executeSetTwoStepApp()
         
-        case .twoStepEmailLogin:
+        case .twoStepEmailLogin, .twoStepAppLogin:
             executeLogin()
             
         case .disable:
@@ -69,7 +67,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     
     func resend(viewAction: RegistrationConfirmationModels.Resend.ViewAction) {
         switch dataStore?.confirmationType {
-        case .twoStepEmailLogin:
+        case .twoStepEmailLogin, .twoStepAppLogin:
             RequestTwoStepCodeWorker().execute(requestData: RequestTwoStepCodeRequestData()) { [weak self] result in
                 switch result {
                 case .success:
