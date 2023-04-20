@@ -561,7 +561,9 @@ class ModalPresenter: Subscriber {
             },
             // Paymail address
             MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) {
-                menuNav.pushViewController(PaymailAddressViewController(), animated: true)
+                let vc = PaymailAddressViewController()
+                vc.dataStore?.screenType = .paymailNotSetup
+                menuNav.pushViewController(vc, animated: true)
             },
             
             // Feedback
