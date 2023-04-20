@@ -9,7 +9,7 @@
 import UIKit
 
 enum PaymailAddressModels {
-    typealias Item = (PaymailAddressModels.ScreenType?)
+    typealias Item = PaymailAddressModels.ScreenType?
     
     enum Section: Sectionable {
         case description

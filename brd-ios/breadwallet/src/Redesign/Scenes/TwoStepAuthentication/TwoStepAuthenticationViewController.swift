@@ -80,8 +80,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .disable)
                 
             default:
-                if UserManager.shared.twoStepSettings?.type == nil {
-                    coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
+                if UserManager.shared.twoStepSettings?.type == nil { self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
                         if success {
                             switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
                             case .email:

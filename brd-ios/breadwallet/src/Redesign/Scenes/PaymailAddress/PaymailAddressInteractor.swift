@@ -17,7 +17,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     // MARK: - PaymailAddressViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: Models.Item(dataStore?.screenType ?? .paymailNotSetup)))
+        presenter?.presentData(actionResponse: .init(item: dataStore?.screenType))
     }
     
     func showPaymailPopup(viewAction: Models.InfoPopup.ViewAction) {
