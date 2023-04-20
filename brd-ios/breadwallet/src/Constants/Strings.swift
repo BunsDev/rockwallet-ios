@@ -1264,6 +1264,8 @@ internal enum L10n {
     internal static let pendingExchange = L10n.tr("Localizable", "ErrorMessages.pendingExchange", fallback: "A maximum of one swap can be active for a currency at a time.")
     /// PIN Authentication failed.
     internal static let pinConfirmationFailed = L10n.tr("Localizable", "ErrorMessages.pinConfirmationFailed", fallback: "PIN Authentication failed.")
+    /// Unfortunately, an error occurred while linking the bank account. Please contact us for further support.
+    internal static let plaidLinkToken = L10n.tr("Localizable", "ErrorMessages.PlaidLinkToken", fallback: "Unfortunately, an error occurred while linking the bank account. Please contact us for further support.")
     /// In order to succesfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.
     internal static let selectAssets = L10n.tr("Localizable", "ErrorMessages.selectAssets", fallback: "In order to succesfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.")
     /// Something went wrong message

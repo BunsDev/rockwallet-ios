@@ -1299,6 +1299,8 @@
 
 "ErrorMessages.pinConfirmationFailed" = "Error de autenticación del PIN.";
 
+"ErrorMessages.PlaidLinkToken" = "Unfortunately, an error occurred while linking the bank account. Please contact us for further support.";
+
 "ErrorMessages.selectAssets" = "Para realizar con éxito un cambio, asegúrate de tener dos o más de nuestros activos de cambio compatibles (BSV, BTC, ETH, BCH, SHIB, USDT) activados y financiados dentro de tu monedero.";
 
 /* Something went wrong message */

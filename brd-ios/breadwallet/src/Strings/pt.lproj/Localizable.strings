@@ -1299,6 +1299,8 @@
 
 "ErrorMessages.pinConfirmationFailed" = "PIN Authentication failed.";
 
+"ErrorMessages.PlaidLinkToken" = "Unfortunately, an error occurred while linking the bank account. Please contact us for further support.";
+
 "ErrorMessages.selectAssets" = "In order to succesfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.";
 
 /* Something went wrong message */
