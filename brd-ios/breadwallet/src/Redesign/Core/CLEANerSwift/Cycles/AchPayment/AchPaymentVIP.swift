@@ -117,8 +117,8 @@ extension Interactor where Self: AchViewActions,
                 self?.getPayments(viewAction: .init())
                 self?.achSuccessMessage(viewAction: .init())
                 
-            case .failure:
-                self?.presenter?.presentError(actionResponse: .init())
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
             }
         }
     }

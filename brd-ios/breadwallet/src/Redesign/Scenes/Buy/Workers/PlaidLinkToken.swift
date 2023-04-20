@@ -43,4 +43,19 @@ class PlaidLinkTokenWorker: BaseApiWorker<PlaidLinkTokenWorkerMapper> {
         
         return APIURLHandler.getUrl(ExchangeEndpoints.plaidLinkTokenId, parameters: urlParams)
     }
+    
+    override func apiCallDidFinish(response: HTTPResponse) {
+        guard response.statusCode == 403 else {
+            super.apiCallDidFinish(response: response)
+            return
+        }
+        
+        completion?(.failure(PlaidLinkError()))
+    }
+}
+
+// TODO: Localize
+struct PlaidLinkError: FEError {
+    var errorType: ServerResponse.ErrorType?
+    var errorMessage: String { return "Unfortunately, an error occurred while linking the bank account. Please contact us for further support." }
 }
