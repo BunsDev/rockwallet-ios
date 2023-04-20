@@ -180,20 +180,8 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
     }
     
     func displayNextFailure(responseDisplay: SignInModels.NextFailure.ResponseDisplay) {
-        let error = responseDisplay.reason
-        let data = responseDisplay.registrationRequestData
-        
-        if error == .twoStepAppRequired {
-            coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                      confirmationType: .twoStepAppLogin,
-                                                      registrationRequestData: data)
-        } else if error == .twoStepEmailRequired {
-            coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                      confirmationType: .twoStepEmailLogin,
-                                                      registrationRequestData: data)
-        } else if error == .twoStepBlockedAccount {
-            coordinator?.showAccountBlocked()
-        }
+        coordinator?.showTwoStepErrorFlow(reason: responseDisplay.reason,
+                                          registrationRequestData: responseDisplay.registrationRequestData)
     }
     
     // MARK: - Additional Helpers

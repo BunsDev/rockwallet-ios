@@ -95,6 +95,20 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         }
     }
     
+    func showTwoStepErrorFlow(reason: NetworkingError, registrationRequestData: RegistrationRequestData?) {
+        if reason == .twoStepAppRequired {
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: .twoStepAppLogin,
+                                         registrationRequestData: registrationRequestData)
+        } else if reason == .twoStepEmailRequired {
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: .twoStepEmailLogin,
+                                         registrationRequestData: registrationRequestData)
+        } else if reason == .twoStepBlockedAccount {
+            showAccountBlocked()
+        }
+    }
+    
     func showKYCLevelOne() {
         open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
     }
