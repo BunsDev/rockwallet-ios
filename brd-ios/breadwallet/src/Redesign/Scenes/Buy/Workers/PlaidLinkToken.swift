@@ -54,8 +54,7 @@ class PlaidLinkTokenWorker: BaseApiWorker<PlaidLinkTokenWorkerMapper> {
     }
 }
 
-// TODO: Localize
 struct PlaidLinkError: FEError {
     var errorType: ServerResponse.ErrorType?
-    var errorMessage: String { return "Unfortunately, an error occurred while linking the bank account. Please contact us for further support." }
+    var errorMessage: String { return L10n.ErrorMessages.plaidLinkToken }
 }
