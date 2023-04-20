@@ -53,6 +53,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
             
         case .emptySection:
             cell = self.tableView(tableView, emptyCellForRowAt: indexPath)
+            cell.addSeparator()
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -135,7 +136,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     // MARK: - User Interaction
     
     private func changeMethod(indexPath: IndexPath) {
-        let alert = UIAlertController(title: L10n.TwoStep.Change.title, message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: L10n.TwoStep.Change.title, message: L10n.TwoStep.Change.message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: { [weak self] _ in
             self?.interactor?.changeMethod(viewAction: .init(indexPath: indexPath))
         }))

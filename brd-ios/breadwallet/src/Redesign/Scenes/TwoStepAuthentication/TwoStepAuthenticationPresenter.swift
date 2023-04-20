@@ -21,15 +21,14 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         var sections: [Models.Section] = [
             .email,
-            .app,
-            .emptySection
+            .app
         ]
         
         let authExists = actionResponse.item != nil
         
         if authExists {
             sections.insert(.instructions, at: 0)
-            sections.append(contentsOf: [.backupCodes, .settings, .disable])
+            sections.append(contentsOf: [.emptySection, .backupCodes, .settings, .disable])
         }
         
         var authMethodDescription: String?
