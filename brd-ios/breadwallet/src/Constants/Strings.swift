@@ -1660,8 +1660,16 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "OnboardingPageTwo.title", fallback: "Join people around the world who trust RockWallet.")
   }
   internal enum PaymailAddress {
+    /// To enable quick BSV transfers you can create your unique Paymail address.
+    internal static let createAddressDescription = L10n.tr("Localizable", "PaymailAddress.createAddressDescription", fallback: "To enable quick BSV transfers you can create your unique Paymail address.")
+    /// Create your paymail
+    internal static let createAddressTitle = L10n.tr("Localizable", "PaymailAddress.createAddressTitle", fallback: "Create your paymail")
+    /// Create paymail address
+    internal static let createPaymailAddress = L10n.tr("Localizable", "PaymailAddress.createPaymailAddress", fallback: "Create paymail address")
     /// Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.
     internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
+    /// Paymail address
+    internal static let paymailAddressField = L10n.tr("Localizable", "PaymailAddress.paymailAddressField", fallback: "Paymail address")
     /// Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.
     /// The goals of the paymail protocol are:
     /// User friendly payment destinations through memorable handles

@@ -39,7 +39,7 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-        case .description:
+        case .description, .emailViewTitle:
             cell = self.tableView(tableView, descriptionLabelCellForRowAt: indexPath)
             
         case .emailView:
@@ -94,6 +94,11 @@ class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordi
     
     override func buttonTapped() {
         super.buttonTapped()
+        
+        guard dataStore?.screenType == .paymailNotSetup else {
+            coordinator?.goBack()
+            return
+        }
         
         interactor?.showSuccessBottomAlert(viewAction: .init())
     }

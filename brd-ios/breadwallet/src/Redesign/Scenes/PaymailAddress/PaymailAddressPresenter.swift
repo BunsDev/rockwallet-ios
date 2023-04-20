@@ -18,19 +18,27 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         let screenType = actionResponse.item as? PaymailAddressModels.ScreenType
         
-        let sections: [Models.Section] = [
+        var sections: [Models.Section] = [
             .description,
+            .emailViewTitle,
             .emailView,
             .paymail
         ]
+        
+        if screenType == .paymailSetup {
+            sections = sections.filter({ $0 != .emailViewTitle })
+        }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .description: [
                 LabelViewModel.text(screenType?.description)
             ],
+            .emailViewTitle: [
+                LabelViewModel.text(L10n.PaymailAddress.createAddressTitle)
+            ],
             .emailView: [
                 TextFieldModel(title: screenType?.emailViewTitle,
-                               value: "@rockwallet.io",
+                               value: Constant.paymailDomain,
                                trailing: .image(screenType?.image))
             ],
             .paymail: [

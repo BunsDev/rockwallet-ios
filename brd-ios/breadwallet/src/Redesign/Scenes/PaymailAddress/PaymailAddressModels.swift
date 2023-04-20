@@ -13,6 +13,7 @@ enum PaymailAddressModels {
     
     enum Section: Sectionable {
         case description
+        case emailViewTitle
         case emailView
         case paymail
         
@@ -27,7 +28,7 @@ enum PaymailAddressModels {
         var description: String {
             switch self {
             case .paymailNotSetup:
-                return "To enable quick BSV transfers you can create your unique Paymail address. "
+                return L10n.PaymailAddress.createAddressDescription
             case .paymailSetup:
                 return L10n.PaymailAddress.description
             }
@@ -45,9 +46,9 @@ enum PaymailAddressModels {
         var emailViewTitle: String {
             switch self {
             case .paymailSetup:
-                return "Paymail address"
-            case .paymailNotSetup:
                 return L10n.PaymailAddress.yourPaymailAddress
+            case .paymailNotSetup:
+                return L10n.PaymailAddress.paymailAddressField
             }
         }
         
@@ -56,7 +57,7 @@ enum PaymailAddressModels {
             case .paymailSetup:
                 return L10n.Button.back
             case .paymailNotSetup:
-                return "Create paymail address"
+                return L10n.PaymailAddress.createPaymailAddress
             }
         }
     }
