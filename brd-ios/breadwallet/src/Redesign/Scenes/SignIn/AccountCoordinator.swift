@@ -81,6 +81,20 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         }
     }
     
+    func showAccountBlocked() {
+        open(scene: Scenes.AccountBlocked) { vc in
+            vc.navigationItem.hidesBackButton = true
+            
+            vc.didTapMainButton = { [weak self] in
+                self?.dismissFlow()
+            }
+            
+            vc.didTapSecondayButton = { [weak self] in
+                self?.showSupport()
+            }
+        }
+    }
+    
     func showKYCLevelOne() {
         open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
     }

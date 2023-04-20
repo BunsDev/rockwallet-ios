@@ -29,6 +29,7 @@ enum NetworkingError: FEError {
     case biometricAuthenticationFailed
     case twoStepEmailRequired
     case twoStepAppRequired
+    case twoStepBlockedAccount
     
     var errorMessage: String {
         switch self {
@@ -56,6 +57,12 @@ enum NetworkingError: FEError {
             
         case .biometricAuthenticationFailed, .biometricAuthenticationRequired:
             return .biometricAuthentication
+            
+        case .twoStepAppRequired, .twoStepEmailRequired:
+            return .twoStep
+            
+        case .twoStepBlockedAccount:
+            return .twoStepBlockedAccount
             
         default:
             return nil
@@ -86,7 +93,11 @@ enum NetworkingError: FEError {
             }
             
         case 403:
-            self = .sessionNotVerified
+            if error?.serverMessage ==  ServerResponse.ErrorType.twoStepBlockedAccount.rawValue {
+                self = .twoStepBlockedAccount
+            } else {
+                self = .sessionNotVerified
+            }
             
         case 404:
             self = .dataUnavailable

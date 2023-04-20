@@ -179,6 +179,23 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
         coordinator?.dismissFlow()
     }
     
+    func displayNextFailure(responseDisplay: SignInModels.NextFailure.ResponseDisplay) {
+        let error = responseDisplay.reason
+        let data = responseDisplay.registrationRequestData
+        
+        if error == .twoStepAppRequired {
+            coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                      confirmationType: .twoStepAppLogin,
+                                                      registrationRequestData: data)
+        } else if error == .twoStepEmailRequired {
+            coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                      confirmationType: .twoStepEmailLogin,
+                                                      registrationRequestData: data)
+        } else if error == .twoStepBlockedAccount {
+            coordinator?.showAccountBlocked()
+        }
+    }
+    
     // MARK: - Additional Helpers
     
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
