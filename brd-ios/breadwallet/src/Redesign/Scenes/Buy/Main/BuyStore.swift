@@ -31,7 +31,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var paymentMethod: PaymentCard.PaymentType? {
         didSet {
             guard let currency = Store.state.currencies.first(where: {
-                $0.code.lowercased() == Constant.USDT.lowercased()
+                $0.code.lowercased() == Constant.BTC.lowercased()
             }) ?? Store.state.currencies.first  else { return  }
             
             toAmount = .zero(currency)
