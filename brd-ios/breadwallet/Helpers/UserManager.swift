@@ -28,7 +28,7 @@ class UserManager: NSObject {
                 self?.twoStepSettings = data
                 
             default:
-                break
+                self?.twoStepSettings = nil
             }
             
             group.leave()

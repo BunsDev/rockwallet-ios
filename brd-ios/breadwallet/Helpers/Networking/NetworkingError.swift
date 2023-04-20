@@ -27,6 +27,8 @@ enum NetworkingError: FEError {
     case exchangesUnavailable
     case biometricAuthenticationRequired
     case biometricAuthenticationFailed
+    case twoStepEmailRequired
+    case twoStepAppRequired
     
     var errorMessage: String {
         switch self {
@@ -70,6 +72,18 @@ enum NetworkingError: FEError {
             
         case 105:
             self = .sessionExpired
+            
+        case 401:
+            switch TwoStepSettingsResponseData.TwoStepType(rawValue: error?.serverMessage ?? "") {
+            case .authenticator:
+                self = .twoStepAppRequired
+                
+            case .email:
+                self = .twoStepEmailRequired
+            
+            default:
+                self = .accessDenied
+            }
             
         case 403:
             self = .sessionNotVerified

@@ -22,17 +22,15 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         presenter?.presentData(actionResponse: .init(item: confirmationType))
         
         switch dataStore?.confirmationType {
-        case .twoStepEmail, .disable:
+        case .twoStepEmail, .twoStepEmailLogin, .disable:
             resend(viewAction: .init())
             
         default:
             break
         }
         
-        // TODO: REMOVE
-        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { _ in
-            
-        }
+        guard E.isDevelopment else { return }
+        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { _ in }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {
@@ -56,6 +54,9 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepApp, .acountTwoStepAppSettings:
             executeSetTwoStepApp()
         
+        case .twoStepEmailLogin, .twoStepAppLogin:
+            executeLogin()
+            
         case .disable:
             executeDisable()
             
@@ -66,6 +67,17 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     
     func resend(viewAction: RegistrationConfirmationModels.Resend.ViewAction) {
         switch dataStore?.confirmationType {
+        case .twoStepEmailLogin, .twoStepAppLogin:
+            RequestTwoStepCodeWorker().execute(requestData: RequestTwoStepCodeRequestData()) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.presenter?.presentResend(actionResponse: .init())
+                    
+                case .failure(let error):
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                }
+            }
+            
         case .twoStepEmail, .twoStepApp, .acountTwoStepEmailSettings, .acountTwoStepAppSettings, .disable:
             TwoStepChangeWorker().execute(requestData: TwoStepChangeRequestData()) { [weak self] result in
                 switch result {
@@ -94,6 +106,28 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     }
 
     // MARK: - Aditional helpers
+    
+    private func executeLogin() {
+        dataStore?.registrationRequestData?.secondFactorCode = dataStore?.code
+        
+        guard let registrationRequestData = dataStore?.registrationRequestData else { return }
+        
+        RegistrationWorker().execute(requestData: registrationRequestData) { [weak self] result in
+            switch result {
+            case .success(let data):
+                guard let sessionKey = data?.sessionKey, let sessionKeyHash = data?.sessionKeyHash else { return }
+                
+                UserManager.shared.setUserCredentials(email: registrationRequestData.email ?? "", sessionToken: sessionKey, sessionTokenHash: sessionKeyHash)
+                
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
     
     private func executeSetTwoStepPhone() {
         let data = SetTwoStepPhoneCodeRequestData(code: dataStore?.code)
