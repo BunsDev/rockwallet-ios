@@ -851,7 +851,7 @@
 "Buy.BuyLimit" = "Buy limits";
 
 /* Buy min and max limit text */
-"Buy.BuyLimits" = "Actualmente, el mínimo para comprar es de %s USD/día y el máximo es de %s USD/día.";
+"Buy.BuyLimits" = "Actualmente, el mínimo para comprar es de %s USD/día y el máximo es de %s USD/día. %s";
 
 "Buy.BuyLimits.android" = "Actualmente, el mínimo para comprar es de 30,00 USD/día y el máximo es de 500,00 USD/día.";
 
