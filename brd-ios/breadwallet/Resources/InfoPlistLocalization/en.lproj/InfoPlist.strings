@@ -851,7 +851,7 @@
 "Buy.BuyLimit" = "Buy limits";
 
 /* Buy min and max limit text */
-"Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  More info";
+"Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  %s";
 
 "Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
 
@@ -3224,7 +3224,9 @@
 
 "TwoStep.BuyTransactions" = "Buy transactions";
 
-"TwoStep.Change.Title" = "";
+"TwoStep.Change.Message" = "Changing your 2FA method is an important security decision, are you sure you want to proceed?";
+
+"TwoStep.Change.Title" = "Change 2FA method";
 
 "TwoStep.changePhoneNumberTitle" = "Change Phone Number";
 
@@ -3269,8 +3271,6 @@
 "TwoStep.settings.everyNinetyDays" = "Every 90 days";
 
 "TwoStep.settings.funds" = "Sending funds";
-
-
 
 "TwoStep.settings.recoverChangePassword" = "Recover/Changing password";
 
