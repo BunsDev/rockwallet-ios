@@ -17,7 +17,7 @@ enum TwoStepAuthenticationModels {
         case instructions
         case email
         case app
-        case settingsTitle
+        case emptySection
         case backupCodes
         case settings
         case disable

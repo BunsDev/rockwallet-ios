@@ -90,6 +90,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<TitleButtonView>.self)
         tableView.register(WrapperTableViewCell<PaddedImageView>.self)
         tableView.register(WrapperTableViewCell<OrderView>.self)
+        tableView.register(WrapperTableViewCell<UIView>.self)
     }
 
     override func prepareData() {
@@ -227,6 +228,12 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     // MARK: Custom cells
+    
+    func tableView(_ tableView: UITableView, emptyCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<UIView> = tableView.dequeueReusableCell(for: indexPath) else { return UITableViewCell() }
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, coverCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: WrapperTableViewCell<FEImageView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? ImageViewModel

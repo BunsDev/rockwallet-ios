@@ -21,14 +21,15 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         var sections: [Models.Section] = [
             .email,
-            .app
+            .app,
+            .emptySection
         ]
         
         let authExists = actionResponse.item != nil
         
         if authExists {
             sections.insert(.instructions, at: 0)
-            sections.append(contentsOf: [.settingsTitle, .backupCodes, .settings, .disable])
+            sections.append(contentsOf: [.backupCodes, .settings, .disable])
         }
         
         var authMethodDescription: String?
@@ -62,13 +63,11 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                                                  checkmark: .image(appAuthCheckmark),
                                                  isInteractable: authType != .authenticator)
             ],
-            .settingsTitle: [
-                LabelViewModel.text(L10n.MenuButton.settings)
-            ],
             .backupCodes: [
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.BackupCodes.title),
                                                  checkmark: .image(settingsChevron))
             ],
+            .emptySection: [EmptyViewModel()],
             .settings: [
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.AuthSettings.title),
                                                  checkmark: .image(settingsChevron))
