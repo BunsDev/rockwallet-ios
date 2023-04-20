@@ -38,6 +38,10 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .instructions })
         }
         
+        if confirmationType == .enterAppBackupCode {
+            sections = sections.filter({ $0 != .image })
+        }
+        
         let title: String
         let instructions: String
         
@@ -51,8 +55,12 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
         case .twoStepApp, .twoStepAppLogin:
-            title = "Enter the code from your Authenticator app"
+            title = "Enter one of your backup codes"
             instructions = ""
+        
+        case .enterAppBackupCode:
+            title = "Enter the code from your Authenticator app"
+            instructions = "Confirm you’ve stored your backup codes securely by entering one of them."
             
         }
         
@@ -70,6 +78,10 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             help = [ButtonViewModel(title: "I can’t access my Authenticator App",
                                     isUnderlined: true,
                                     callback: viewController?.enterBackupCode)]
+        }
+        
+        if confirmationType == .enterAppBackupCode {
+            help.removeAll()
         }
         
         let sectionRows: [Models.Section: [any Hashable]] = [

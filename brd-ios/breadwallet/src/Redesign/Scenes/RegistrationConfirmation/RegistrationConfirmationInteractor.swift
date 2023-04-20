@@ -51,7 +51,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmail, .acountTwoStepEmailSettings:
             executeSetTwoStepEmail()
             
-        case .twoStepApp, .acountTwoStepAppSettings:
+        case .twoStepApp, .acountTwoStepAppSettings, .enterAppBackupCode:
             executeSetTwoStepApp()
         
         case .twoStepEmailLogin, .twoStepAppLogin:

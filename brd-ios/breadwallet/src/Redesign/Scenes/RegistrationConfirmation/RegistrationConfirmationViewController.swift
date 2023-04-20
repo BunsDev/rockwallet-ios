@@ -111,7 +111,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     
     func enterBackupCode() {
         coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                  confirmationType: .twoStepEmailLogin)
+                                                  confirmationType: .enterAppBackupCode)
     }
 
     // MARK: - RegistrationConfirmationResponseDisplay
@@ -122,7 +122,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             guard let self = self else { return }
             switch self.dataStore?.confirmationType {
-            case .twoStepEmailLogin, .twoStepAppLogin:
+            case .twoStepEmailLogin, .twoStepAppLogin, .enterAppBackupCode:
                 self.coordinator?.dismissFlow()
                 
             case .account:

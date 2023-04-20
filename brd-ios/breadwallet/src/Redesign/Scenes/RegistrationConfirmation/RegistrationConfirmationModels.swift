@@ -30,6 +30,7 @@ enum RegistrationConfirmationModels {
         case twoStepEmailLogin
         case twoStepAppLogin
         case twoStepApp
+        case enterAppBackupCode
         case disable
     }
     
