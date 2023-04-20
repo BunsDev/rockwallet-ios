@@ -51,8 +51,8 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         case .email, .app, .backupCodes, .settings, .disable:
             cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
             
-        case .settingsTitle:
-            cell = self.tableView(tableView, titleLabelCellForRowAt: indexPath)
+        case .emptySection:
+            cell = self.tableView(tableView, emptyCellForRowAt: indexPath)
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -105,6 +105,31 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         }
         
         return cell
+    }
+    
+    // TODO: This creates an empty space between cells to make the "toCell" stick to bottom. Make this reusable
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.app.hashValue }),
+              let toSection = sections.firstIndex(where: { $0.hashValue == sections.last?.hashValue }) else {
+            return UITableView.automaticDimension
+        }
+        
+        let fromCell = tableView.rect(forSection: fromSection)
+        let toCell = tableView.rect(forSection: toSection)
+        
+        let fromCellConverted = tableView.convert(fromCell, to: tableView.superview)
+        let toCellConverted = tableView.convert(toCell, to: tableView.superview)
+        
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
+              section == .emptySection else { return UITableView.automaticDimension }
+        
+        return tableView.bounds.height
+        - tableView.contentInset.top
+        - tableView.contentInset.bottom
+        - fromCellConverted.maxY
+        - toCellConverted.height
+        - UIDevice.current.bottomNotch
+        - UIDevice.current.topNotch
     }
     
     // MARK: - User Interaction

@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		040C09F329F13BC90011308B /* EmptyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040C09F229F13BC90011308B /* EmptyViewModel.swift */; };
 		04185DBE29D179B700AECBFA /* TwoStepAuthenticationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DB829D179B600AECBFA /* TwoStepAuthenticationPresenter.swift */; };
 		04185DBF29D179B700AECBFA /* TwoStepAuthenticationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DB929D179B600AECBFA /* TwoStepAuthenticationInteractor.swift */; };
 		04185DC029D179B700AECBFA /* TwoStepAuthenticationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04185DBA29D179B600AECBFA /* TwoStepAuthenticationModels.swift */; };
@@ -883,6 +884,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		040C09F229F13BC90011308B /* EmptyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewModel.swift; sourceTree = "<group>"; };
 		04185DB829D179B600AECBFA /* TwoStepAuthenticationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStepAuthenticationPresenter.swift; sourceTree = "<group>"; };
 		04185DB929D179B600AECBFA /* TwoStepAuthenticationInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStepAuthenticationInteractor.swift; sourceTree = "<group>"; };
 		04185DBA29D179B600AECBFA /* TwoStepAuthenticationModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStepAuthenticationModels.swift; sourceTree = "<group>"; };
@@ -2715,6 +2717,7 @@
 				7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */,
 				7EDDB82528C8684900C287CB /* Amount+Init.swift */,
 				D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */,
+				040C09F229F13BC90011308B /* EmptyViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4479,6 +4482,7 @@
 				3AFAD94825698A74005853E8 /* Gift.swift in Sources */,
 				CE4DFB2C1E9BE5880014009E /* ReScanSyncViewController.swift in Sources */,
 				7ECCA9642875A77300617067 /* OrderView.swift in Sources */,
+				040C09F329F13BC90011308B /* EmptyViewModel.swift in Sources */,
 				7B39478C297000ED007D405E /* ForgotPasswordStore.swift in Sources */,
 				7E5CB3A22835090E00EC787E /* Marginable.swift in Sources */,
 				7C9724661FF07B9A004248C4 /* StatusPip.swift in Sources */,
