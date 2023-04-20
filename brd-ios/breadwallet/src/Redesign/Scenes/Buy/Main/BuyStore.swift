@@ -46,39 +46,18 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
               let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description else { return nil }
         
         let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
-        let limitsString = NSMutableAttributedString(string: L10n.Buy.buyLimits(minText, maxText))
-        let linkRange = limitsString.mutableString.range(of: L10n.Button.moreInfo)
+        let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
         
-        if isCustomLimits && linkRange.location != NSNotFound {
-            limitsString.addAttribute(.underlineStyle, value: 1, range: linkRange)
-            limitsString.addAttribute(.font, value: Fonts.Subtitle.three, range: linkRange)
-            limitsString.addAttribute(.foregroundColor, value: LightColors.secondary, range: linkRange)
-        } else {
-            limitsString.replaceCharacters(in: linkRange, with: "")
-        }
+        var limitsString = NSMutableAttributedString(string: L10n.Buy.buyLimits(minText, maxText, moreInfo))
+        
+        guard isCustomLimits else { return limitsString }
+        
+        let moreInfoRange = limitsString.mutableString.range(of: moreInfo)
+        limitsString.addAttribute(.underlineStyle, value: 1, range: moreInfoRange)
+        limitsString.addAttribute(.font, value: Fonts.Subtitle.three, range: moreInfoRange)
+        limitsString.addAttribute(.foregroundColor, value: LightColors.secondary, range: moreInfoRange)
         
         return limitsString
-    }
-    
-    var buyLimits: NSMutableAttributedString? {
-        guard let quote = quote,
-              let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxText = UserManager.shared.profile?.buyAllowanceDailyMax.description else { return nil }
-        
-        let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
-        
-        return NSMutableAttributedString(string: L10n.Buy.buyLimits(minText, maxText))
-    }
-    
-    var achLimits: NSMutableAttributedString? {
-        guard let quote = quote,
-              let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxText = UserManager.shared.profile?.achAllowanceDailyMax.description,
-              let lifetime = UserManager.shared.profile?.achAllowanceLifetime.description else { return nil }
-        
-        let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
-        
-        return NSMutableAttributedString(string: L10n.Buy.achLimits(minText, maxText, lifetime, moreInfo))
     }
     
     var feeAmount: Amount? {
