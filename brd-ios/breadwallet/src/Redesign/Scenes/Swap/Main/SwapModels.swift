@@ -103,6 +103,23 @@ enum SwapModels {
         }
     }
     
+    struct AssetSelectionMessage {
+        struct ViewAction {
+            var selectedDisabledAsset: AssetViewModel?
+        }
+        
+        struct ActionResponse {
+            var from: Currency?
+            var to: Currency?
+            var selectedDisabledAsset: AssetViewModel?
+        }
+        
+        struct ResponseDisplay {
+            var model: InfoViewModel?
+            var config: InfoViewConfiguration?
+        }
+    }
+    
     struct Confirm {
         struct ViewAction {
         }

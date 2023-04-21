@@ -15,12 +15,12 @@ struct SupportedCurrenciesResponseData: ModelResponse {
 }
 
 struct SupportedCurrency: Model {
-    var name: String
+    var code: String
 }
 
 class SupportedCurrenciesWorkerMapper: ModelMapper<SupportedCurrenciesResponseData, [SupportedCurrency]> {
     override func getModel(from response: SupportedCurrenciesResponseData?) -> [SupportedCurrency]? {
-        return response?.supportedCurrencies.compactMap { return .init(name: $0.uppercased()) }
+        return response?.supportedCurrencies.compactMap { return .init(code: $0.uppercased()) }
     }
 }
 

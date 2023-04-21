@@ -459,8 +459,7 @@ class ApplicationController: Subscriber {
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
-            self.coordinator?.showSwap(currencies: Store.state.currencies,
-                                       coreSystem: self.coreSystem,
+            self.coordinator?.showSwap(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         

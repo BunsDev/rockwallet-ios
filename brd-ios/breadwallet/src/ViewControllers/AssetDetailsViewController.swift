@@ -58,8 +58,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
 //                toggleDrawer()
                 
             case .swap:
-                self.coordinator?.showSwap(currencies: Store.state.currencies,
-                                           coreSystem: coreSystem,
+                self.coordinator?.showSwap(coreSystem: coreSystem,
                                            keyStore: keyStore)
                 
             }
