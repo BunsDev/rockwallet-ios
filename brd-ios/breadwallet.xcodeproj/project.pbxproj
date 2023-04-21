@@ -632,6 +632,7 @@
 		C491ABFC28A6395D00E79954 /* OrderPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF528A6395C00E79954 /* OrderPreviewViewController.swift */; };
 		C491ABFD28A6395D00E79954 /* OrderPreviewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF628A6395C00E79954 /* OrderPreviewInteractor.swift */; };
 		C491AC0028A6432500E79954 /* BuyOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABFF28A6432500E79954 /* BuyOrderView.swift */; };
+		C49BEBA829F2C54C002C8B7E /* ConvertBchWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BEBA729F2C54C002C8B7E /* ConvertBchWorker.swift */; };
 		C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */; };
 		C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */; };
 		C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */; };
@@ -1475,6 +1476,7 @@
 		C491ABF528A6395C00E79954 /* OrderPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewViewController.swift; sourceTree = "<group>"; };
 		C491ABF628A6395C00E79954 /* OrderPreviewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewInteractor.swift; sourceTree = "<group>"; };
 		C491ABFF28A6432500E79954 /* BuyOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOrderView.swift; sourceTree = "<group>"; };
+		C49BEBA729F2C54C002C8B7E /* ConvertBchWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertBchWorker.swift; sourceTree = "<group>"; };
 		C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeHistoryWorker.swift; sourceTree = "<group>"; };
 		C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesWorker.swift; sourceTree = "<group>"; };
 		C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidLinkToken.swift; sourceTree = "<group>"; };
@@ -3154,6 +3156,7 @@
 				7E2E1A40284E267000E56E69 /* ProfileWorker.swift */,
 				7B0418B4298A9131004A6385 /* UserInformationWorker.swift */,
 				C43EFBE729DC33620067FE70 /* LogoutWorker.swift */,
+				C49BEBA729F2C54C002C8B7E /* ConvertBchWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -4268,6 +4271,7 @@
 				CEE20C2F1EA3E5820086F724 /* BlinkingView.swift in Sources */,
 				04E0131929ED524600743954 /* TwoStepExchangeWorker.swift in Sources */,
 				04185DC529D17E4600AECBFA /* IconTitleSubtitleToggleView.swift in Sources */,
+				C49BEBA829F2C54C002C8B7E /* ConvertBchWorker.swift in Sources */,
 				04E0131729ED30AA00743954 /* TwoStepChangeWorker.swift in Sources */,
 				7B2E5055289A5F02008CACD8 /* AddCardVIP.swift in Sources */,
 				3A6C13FF257D463300EA0689 /* GiftHeaderView.swift in Sources */,
