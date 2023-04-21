@@ -30,19 +30,19 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             case .success(let currencies):
                 ExchangeManager.shared.reload()
                 
-                guard let currencies = currencies,
+                guard let currencies,
                       currencies.count >= 2 else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
+                
                 self?.dataStore?.supportedCurrencies = currencies
+                self?.dataStore?.currencies = self?.dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
                 
-                let enabled = self?.dataStore?.currencies.filter { cur in currencies.map { $0.name }.contains(cur.code) }
-                
-                let fromCurrency: Currency? = self?.dataStore?.from != nil ? self?.dataStore?.from?.currency : enabled?.first
+                let fromCurrency: Currency? = self?.dataStore?.from != nil ? self?.dataStore?.from?.currency : self?.dataStore?.currencies.first
                 
                 guard let fromCurrency,
-                      let toCurrency = enabled?.first(where: { $0.code != fromCurrency.code })
+                      let toCurrency = self?.dataStore?.currencies.first(where: { $0.code != fromCurrency.code })
                 else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
@@ -309,6 +309,12 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     
     func showAssetInfoPopup(viewAction: SwapModels.AssetInfoPopup.ViewAction) {
         presenter?.presentAssetInfoPopup(actionResponse: .init())
+    }
+    
+    func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction) {
+        presenter?.presentAssetSelectionMessage(actionResponse: .init(from: dataStore?.from?.currency,
+                                                                      to: dataStore?.to?.currency,
+                                                                      selectedDisabledAsset: viewAction.selectedDisabledAsset))
     }
     
     // MARK: - Aditional helpers

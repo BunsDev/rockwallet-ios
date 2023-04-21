@@ -233,19 +233,31 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         switch dataStore?.paymentMethod {
         case .ach:
-            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: {$0.name == Constant.USDT }) {
+            if let usdCurrency = dataStore?.supportedCurrencies?.first(where: { $0.code == Constant.USDT }) {
                 supportedCurrencies = [usdCurrency]
             }
+            
         default:
             supportedCurrencies = dataStore?.supportedCurrencies
         }
         
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: dataStore?.currencies,
-                                       supportedCurrencies: supportedCurrencies) { [weak self] item in
-            guard let item = item as? AssetViewModel else { return }
-            self?.interactor?.setAssets(viewAction: .init(currency: item.subtitle))
+                                       supportedCurrencies: supportedCurrencies) { [weak self] model in
+            guard let model = model as? AssetViewModel else { return }
+            
+            guard !model.isDisabled else {
+                self?.interactor?.showAssetSelectionMessage(viewAction: .init())
+                
+                return
+            }
+            
+            self?.interactor?.setAssets(viewAction: .init(currency: model.subtitle))
         }
+    }
+    
+    func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
     func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay) {

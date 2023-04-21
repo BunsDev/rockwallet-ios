@@ -174,4 +174,15 @@ enum BuyModels {
             var viewModel: WrapperPopupViewModel<LimitsPopupViewModel>
         }
     }
+    
+    struct AssetSelectionMessage {
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {
+            var model: InfoViewModel?
+            var config: InfoViewConfiguration?
+        }
+    }
 }

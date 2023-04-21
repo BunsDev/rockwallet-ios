@@ -25,6 +25,7 @@ protocol BuyViewActions: BaseViewActions,
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
     func retryPaymentMethod(viewAction: BuyModels.RetryPaymentMethod.ViewAction)
     func showLimitsInfo(viewAction: BuyModels.LimitsInfo.ViewAction)
+    func showAssetSelectionMessage(viewAction: BuyModels.AssetSelectionMessage.ViewAction)
 }
 
 protocol BuyActionResponses: BaseActionResponses,
@@ -39,6 +40,7 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
     func presentAchSuccess(actionResponse: BuyModels.AchSuccess.ActionResponse)
     func presentLimitsInfo(actionResponse: BuyModels.LimitsInfo.ActionResponse)
+    func presentAssetSelectionMessage(actionResponse: BuyModels.AssetSelectionMessage.ActionResponse)
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays, AchResponseDisplays {
@@ -49,6 +51,7 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay)
     func displayManageAssetsMessage(responseDisplay: BuyModels.AchData.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay)
+    func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay)
 }
 
 protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {

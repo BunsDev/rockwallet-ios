@@ -181,6 +181,12 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                        selected: { [weak self] model in
             guard let model = model as? AssetViewModel else { return }
             
+            guard !model.isDisabled else {
+                self?.interactor?.showAssetSelectionMessage(viewAction: .init(selectedDisabledAsset: model))
+                
+                return
+            }
+            
             guard responseDisplay.from?.isEmpty == false else {
                 self?.interactor?.assetSelected(viewAction: .init(to: model.subtitle))
                 return
@@ -224,6 +230,10 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                callbacks: [ { [weak self] in
             self?.coordinator?.dismissFlow()
         }])
+    }
+    
+    func displayAssetSelectionMessage(responseDisplay: SwapModels.AssetSelectionMessage.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
     // MARK: - Additional Helpers

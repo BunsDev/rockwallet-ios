@@ -33,12 +33,12 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
             guard toAmount == nil else { return }
             let selectedCurrency: Currency
             if paymentMethod == .ach {
-                guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else { return }
+                guard let currency = currencies.first(where: { $0.code == Constant.USDT }) else { return }
                 selectedCurrency = currency
             } else {
-                guard let currency = Store.state.currencies.first(where: {
+                guard let currency = currencies.first(where: {
                     $0.code.lowercased() == Constant.BTC.lowercased()
-                }) ?? Store.state.currencies.first  else { return  }
+                }) ?? currencies.first  else { return  }
                 selectedCurrency = currency
             }
             
@@ -89,7 +89,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var quote: Quote?
     
-    var currencies: [Currency] = Store.state.currencies
+    var currencies: [Currency] = []
     var supportedCurrencies: [SupportedCurrency]?
     
     var coreSystem: CoreSystem?

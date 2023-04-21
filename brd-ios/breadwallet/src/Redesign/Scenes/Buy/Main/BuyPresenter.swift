@@ -254,6 +254,14 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
     }
     
+    func presentAssetSelectionMessage(actionResponse: BuyModels.AssetSelectionMessage.ActionResponse) {
+        let message = L10n.Swap.enableAssetFirst
+        let model = InfoViewModel(description: .text(message), dismissType: .auto)
+        let config = Presets.InfoView.warning
+        
+        viewController?.displayAssetSelectionMessage(responseDisplay: .init(model: model, config: config))
+    }
+    
     // MARK: - Additional Helpers
     
 }

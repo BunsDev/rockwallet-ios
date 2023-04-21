@@ -31,7 +31,12 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             case .success(let currencies):
                 ExchangeManager.shared.reload()
                 
+                guard let currencies, !currencies.isEmpty else {
+                    return
+                }
+                
                 self?.dataStore?.supportedCurrencies = currencies
+                self?.dataStore?.currencies = self?.dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
                 
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item(type: self?.dataStore?.paymentMethod,
                                                                                      achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
@@ -98,7 +103,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func setAssets(viewAction: BuyModels.Assets.ViewAction) {
         if let value = viewAction.currency?.lowercased(),
-           let currency = Store.state.currencies.first(where: { $0.code.lowercased() == value }) {
+           let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == value }) {
             dataStore?.toAmount = .zero(currency)
         } else if let value = viewAction.card {
             dataStore?.selected = value
@@ -138,7 +143,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         switch viewAction.method {
         case .ach:
-            guard let currency = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else {
+            guard let currency = dataStore?.currencies.first(where: { $0.code == Constant.USDT }) else {
                 presenter?.presentDisabledCurrencyMessage(actionResponse: .init(currencyCode: Constant.USDT))
                 return
             }
@@ -171,7 +176,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             if dataStore?.autoSelectDefaultPaymentMethod == true {
                 if dataStore?.availablePayments.contains(.card) == true {
                     dataStore?.selected = dataStore?.cards.first(where: { $0.cardType == .debit })
-                    guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
+                    guard let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
                     selectedCurrency = .zero(currency)
                 } else {
                     dataStore?.selected = dataStore?.cards.first
@@ -194,6 +199,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func showLimitsInfo(viewAction: BuyModels.LimitsInfo.ViewAction) {
         presenter?.presentLimitsInfo(actionResponse: .init(paymentMethod: dataStore?.paymentMethod))
+    }
+    
+    func showAssetSelectionMessage(viewAction: BuyModels.AssetSelectionMessage.ViewAction) {
+        presenter?.presentAssetSelectionMessage(actionResponse: .init())
     }
     
     // MARK: - Aditional helpers
