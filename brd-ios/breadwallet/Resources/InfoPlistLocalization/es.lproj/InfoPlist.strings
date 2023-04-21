@@ -855,6 +855,8 @@
 
 "Buy.BuyLimits.android" = "Actualmente, el mínimo para comprar es de 30,00 USD/día y el máximo es de 500,00 USD/día.";
 
+"Buy.buyWithAch" = "BUY WITH ACH";
+
 "Buy.buyWithCard" = "Comprar con tarjeta";
 
 "Buy.BuyWithCardButton" = "Buy with card";

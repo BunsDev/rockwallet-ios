@@ -39,7 +39,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
                                                      segments: [.init(image: nil, title: L10n.Buy.buyWithCard),
-                                                                .init(image: nil, title: L10n.Buy.fundWithAch)])
+                                                                .init(image: nil, title: L10n.Buy.buyWithAch)])
         let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
         limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
