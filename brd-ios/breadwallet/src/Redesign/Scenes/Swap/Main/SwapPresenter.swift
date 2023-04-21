@@ -256,6 +256,20 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                                      popupConfig: Presets.Popup.white))
     }
     
+    func presentAssetSelectionMessage(actionResponse: SwapModels.AssetSelectionMessage.ActionResponse) {
+        let message: String
+        if actionResponse.from?.code == actionResponse.selectedDisabledAsset?.subtitle || actionResponse.to?.code == actionResponse.selectedDisabledAsset?.subtitle {
+            message = L10n.Swap.sameAssetMessage
+        } else {
+            message = L10n.Swap.enableAssetFirst
+        }
+        
+        let model = InfoViewModel(description: .text(message), dismissType: .auto)
+        let config = Presets.InfoView.warning
+        
+        viewController?.displayAssetSelectionMessage(responseDisplay: .init(model: model, config: config))
+    }
+    
     // MARK: - Additional Helpers
     
     private func setupMainSwapViewModel(from: Currency, to: Currency) -> MainSwapViewModel {

@@ -13,7 +13,8 @@ import WalletKit
 
 class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
-    // ExchangeRateDaatStore
+    // MARK: - ExchangeRateDataStore
+    
     var fromCode: String { from?.currency.code ?? "" }
     var toCode: String { to?.currency.code ?? "" }
     var showTimer: Bool = true
@@ -37,6 +38,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var fromRate: Decimal?
     var toRate: Decimal?
     
+    var currencies: [Currency] = []
     var supportedCurrencies: [SupportedCurrency]?
     
     var defaultCurrencyCode: String?
@@ -47,7 +49,6 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var swap: Swap?
     
-    var currencies: [Currency] = []
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     
