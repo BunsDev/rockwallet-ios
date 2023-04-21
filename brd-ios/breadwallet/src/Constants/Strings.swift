@@ -768,6 +768,8 @@ internal enum L10n {
     internal static func buyLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, p3, fallback: "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  %s")
     }
+    /// BUY WITH ACH
+    internal static let buyWithAch = L10n.tr("Localizable", "Buy.buyWithAch", fallback: "BUY WITH ACH")
     /// BUY WITH CARD
     internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARD")
     /// Buy with card
