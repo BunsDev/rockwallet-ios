@@ -188,6 +188,8 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                 return
             }
             
+            self?.coordinator?.dismissFlow()
+            
             guard responseDisplay.from?.isEmpty == false else {
                 self?.interactor?.assetSelected(viewAction: .init(to: model.subtitle))
                 return

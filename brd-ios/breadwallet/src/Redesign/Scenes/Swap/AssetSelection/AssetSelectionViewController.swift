@@ -42,10 +42,7 @@ class AssetSelectionViewController: ItemSelectionViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let model = dataSource?.itemIdentifier(for: indexPath) as? AssetViewModel else { return }
-        
         itemSelected?(model)
-        
-        coordinator?.dismissFlow()
     }
 
     // MARK: - User Interaction

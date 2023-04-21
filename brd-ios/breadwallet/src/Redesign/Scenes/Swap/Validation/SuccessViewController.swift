@@ -67,9 +67,12 @@ class SuccessViewController: BaseInfoViewController {
         
         coordinator.showAssetSelector(title: responseDisplay.title ?? "",
                                                             currencies: responseDisplay.currencies,
-                                                            supportedCurrencies: responseDisplay.supportedCurrencies) { selectedCurrency in
+                                      supportedCurrencies: responseDisplay.supportedCurrencies) { [weak self] selectedCurrency in
             guard let model = selectedCurrency as? AssetViewModel,
-                    let currency = Store.state.currencies.first(where: { $0.code == model.subtitle }) else { return }
+                  let currency = Store.state.currencies.first(where: { $0.code == model.subtitle }) else { return }
+            
+            self?.coordinator?.dismissFlow()
+            
             let wallet = Store.state.wallets[currency.uid]?.wallet
             let accountViewController = AssetDetailsViewController(currency: currency, wallet: wallet)
             coordinator.navigationController.pushViewController(accountViewController, animated: true)
