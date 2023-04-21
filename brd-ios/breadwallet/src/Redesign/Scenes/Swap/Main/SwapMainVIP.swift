@@ -22,6 +22,7 @@ protocol SwapViewActions: BaseViewActions, FetchViewActions, FeeFetchable, Excha
     func showConfirmation(viewAction: SwapModels.ShowConfirmDialog.ViewAction)
     func confirm(viewAction: SwapModels.Confirm.ViewAction)
     func showAssetInfoPopup(viewAction: SwapModels.AssetInfoPopup.ViewAction)
+    func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction)
 }
 
 protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, ExchangeRateActionResponses {
@@ -30,6 +31,7 @@ protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, Exchang
     func presentConfirmation(actionResponse: SwapModels.ShowConfirmDialog.ActionResponse)
     func presentConfirm(actionResponse: SwapModels.Confirm.ActionResponse)
     func presentAssetInfoPopup(actionResponse: SwapModels.AssetInfoPopup.ActionResponse)
+    func presentAssetSelectionMessage(actionResponse: SwapModels.AssetSelectionMessage.ActionResponse)
 }
 
 protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays {
@@ -38,6 +40,7 @@ protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDis
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay)
     func displayAssetInfoPopup(responseDisplay: SwapModels.AssetInfoPopup.ResponseDisplay)
     func displayError(responseDisplay: SwapModels.ErrorPopup.ResponseDisplay)
+    func displayAssetSelectionMessage(responseDisplay: SwapModels.AssetSelectionMessage.ResponseDisplay)
 }
 
 protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
@@ -58,6 +61,8 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var baseAndTermCurrencies: [[String]] { get set }
     
     var currencies: [Currency] { get set }
+    var supportedCurrencies: [SupportedCurrency]? { get set }
+    
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
 }

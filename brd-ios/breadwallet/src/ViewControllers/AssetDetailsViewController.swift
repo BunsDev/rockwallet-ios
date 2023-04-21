@@ -60,7 +60,6 @@ class AssetDetailsViewController: UIViewController, Subscriber {
                 
             case .swap:
                 self.coordinator?.showSwap(selectedCurrency: currency,
-                                           currencies: Store.state.currencies,
                                            coreSystem: coreSystem,
                                            keyStore: keyStore)
                 
