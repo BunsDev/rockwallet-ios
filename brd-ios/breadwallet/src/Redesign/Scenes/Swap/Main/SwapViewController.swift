@@ -182,12 +182,24 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                        selected: { [weak self] model in
             guard let model = model as? AssetViewModel else { return }
             
+            guard !model.isDisabled else {
+                self?.interactor?.showAssetSelectionMessage(viewAction: .init(selectedDisabledAsset: model))
+                
+                return
+            }
+            
+            self?.coordinator?.dismissFlow()
+            
             guard responseDisplay.from?.isEmpty == false else {
                 self?.interactor?.assetSelected(viewAction: .init(to: model.subtitle))
                 return
             }
             self?.interactor?.assetSelected(viewAction: .init(from: model.subtitle))
         })
+    }
+    
+    func displayAssetSelectionMessage(responseDisplay: SwapModels.AssetSelectionMessage.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
     func displayConfirmation(responseDisplay: SwapModels.ShowConfirmDialog.ResponseDisplay) {

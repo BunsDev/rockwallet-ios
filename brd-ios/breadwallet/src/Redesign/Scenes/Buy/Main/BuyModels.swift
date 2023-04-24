@@ -174,4 +174,15 @@ enum BuyModels {
             var model: PopupViewModel
         }
     }
+    
+    struct AssetSelectionMessage {
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {
+            var model: InfoViewModel?
+            var config: InfoViewConfiguration?
+        }
+    }
 }

@@ -24,6 +24,8 @@ class BaseInfoInteractor: NSObject, Interactor, BaseInfoViewActions {
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
+                ExchangeManager.shared.reload()
+                
                 self?.presenter?.presentAssetSelectionData(actionResponse: .init(supportedCurrencies: currencies))
                 
             case .failure(let error):
