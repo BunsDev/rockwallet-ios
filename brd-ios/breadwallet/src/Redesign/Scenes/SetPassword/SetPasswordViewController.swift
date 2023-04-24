@@ -133,6 +133,12 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
         }
     }
     
+    func displayNextFailure(responseDisplay: SetPasswordModels.NextFailure.ResponseDisplay) {
+        coordinator?.showTwoStepErrorFlow(reason: responseDisplay.reason,
+                                          registrationRequestData: nil,
+                                          setPasswordRequestData: responseDisplay.setPasswordRequestData)
+    }
+    
     // MARK: - Additional Helpers
     
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {

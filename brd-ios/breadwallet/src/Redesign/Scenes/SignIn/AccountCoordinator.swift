@@ -23,10 +23,12 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     
     func showRegistrationConfirmation(isModalDismissable: Bool,
                                       confirmationType: RegistrationConfirmationModels.ConfirmationType,
-                                      registrationRequestData: RegistrationRequestData? = nil) {
+                                      registrationRequestData: RegistrationRequestData? = nil,
+                                      setPasswordRequestData: SetPasswordRequestData? = nil) {
         open(scene: Scenes.RegistrationConfirmation) { vc in
             vc.dataStore?.confirmationType = confirmationType
             vc.dataStore?.registrationRequestData = registrationRequestData
+            vc.dataStore?.setPasswordRequestData = setPasswordRequestData
             vc.isModalDismissable = isModalDismissable
         }
     }
@@ -95,15 +97,23 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         }
     }
     
-    func showTwoStepErrorFlow(reason: NetworkingError, registrationRequestData: RegistrationRequestData?) {
+    func showTwoStepErrorFlow(reason: NetworkingError,
+                              registrationRequestData: RegistrationRequestData?,
+                              setPasswordRequestData: SetPasswordRequestData?) {
         if reason == .twoStepAppRequired {
+            let type: RegistrationConfirmationModels.ConfirmationType = registrationRequestData == nil ? .twoStepAppResetPassword : .twoStepAppLogin
+            
             showRegistrationConfirmation(isModalDismissable: true,
-                                         confirmationType: .twoStepAppLogin,
-                                         registrationRequestData: registrationRequestData)
+                                         confirmationType: type,
+                                         registrationRequestData: registrationRequestData,
+                                         setPasswordRequestData: setPasswordRequestData)
         } else if reason == .twoStepEmailRequired {
+            let type: RegistrationConfirmationModels.ConfirmationType = registrationRequestData == nil ? .twoStepEmailResetPassword : .twoStepEmailLogin
+            
             showRegistrationConfirmation(isModalDismissable: true,
-                                         confirmationType: .twoStepEmailLogin,
-                                         registrationRequestData: registrationRequestData)
+                                         confirmationType: type,
+                                         registrationRequestData: registrationRequestData,
+                                         setPasswordRequestData: setPasswordRequestData)
         } else if reason == .twoStepBlockedAccount || reason == .twoStepInvalidCodeBlockedAccount {
             showAccountBlocked()
         }

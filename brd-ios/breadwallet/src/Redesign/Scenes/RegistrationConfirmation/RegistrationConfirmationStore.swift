@@ -15,6 +15,7 @@ class RegistrationConfirmationStore: NSObject, BaseDataStore, RegistrationConfir
     
     var confirmationType: RegistrationConfirmationModels.ConfirmationType = .account
     var registrationRequestData: RegistrationRequestData?
+    var setPasswordRequestData: SetPasswordRequestData?
     var code: String?
     
     // MARK: - Aditional helpers
