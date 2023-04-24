@@ -10,7 +10,6 @@
 
 import Foundation
 
-// TODO: Replace direct usage of supported currencies worker across app
 class SupportedCurrenciesManager {
     static let shared = SupportedCurrenciesManager()
     
@@ -23,7 +22,6 @@ class SupportedCurrenciesManager {
                 self?.supportedCurrencies = currencies ?? []
                 
             case .failure(let error):
-                // TODO: Add some other form of error handling
                 print(error.localizedDescription)
             }
             
