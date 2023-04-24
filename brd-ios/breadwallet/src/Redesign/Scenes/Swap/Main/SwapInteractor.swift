@@ -49,7 +49,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         dataStore?.to = .zero(toCurrency)
         
         presenter?.presentData(actionResponse: .init(item: Models.Item(from: dataStore?.from,
-                                                                             to: dataStore?.to)))
+                                                                       to: dataStore?.to)))
         setInitialData(getFees: true)
     }
     

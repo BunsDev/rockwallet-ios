@@ -22,7 +22,7 @@ class BaseInfoInteractor: NSObject, Interactor, BaseInfoViewActions {
     
     func getAssetSelectionData(viewModel: BaseInfoModels.Assets.ViewAction) {
         let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
-        self.presenter?.presentAssetSelectionData(actionResponse: .init(supportedCurrencies: currencies))
+        presenter?.presentAssetSelectionData(actionResponse: .init(supportedCurrencies: currencies))
     }
 
     // MARK: - Aditional helpers

@@ -15,16 +15,17 @@ class SupportedCurrenciesManager {
     
     var supportedCurrencies: [SupportedCurrency] = []
     
-    func getSupportedCurrencies() {
+    func getSupportedCurrencies(completion: (() -> Void)?) {
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
                 self?.supportedCurrencies = currencies ?? []
+                completion?()
                 
             case .failure(let error):
                 print(error.localizedDescription)
+                completion?()
             }
-            
         }
     }
 }
