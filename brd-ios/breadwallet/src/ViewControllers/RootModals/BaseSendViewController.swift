@@ -30,6 +30,12 @@ class BaseSendViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func handlePinInputSuccess(pin: String, pinValidationCallback: (String) -> Void) {
+        parent?.view.isFrameChangeBlocked = false
+        pinValidationCallback(pin)
+        present(sendingActivity, animated: false)
+    }
+    
     func send() {
         let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
             guard let self = self else { return }
@@ -37,21 +43,17 @@ class BaseSendViewController: UIViewController {
                 self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
                     if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.sending {
                         self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
-                            vc?.dataStore?.confirmationType = UserManager.shared.twoStepSettings?.type == .authenticator ? .twoStepApp : .twoStepEmail
+                            vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepApp : .twoStepEmail
                             vc?.isModalDismissable = true
                             
-                            vc?.didDismiss = { success in
-                                guard success else { return }
+                            vc?.didDismiss = { didDismissSuccessfully in
+                                guard didDismissSuccessfully else { return }
                                 
-                                self.parent?.view.isFrameChangeBlocked = false
-                                pinValidationCallback(pin)
-                                self.present(self.sendingActivity, animated: false)
+                                self.handlePinInputSuccess(pin: pin, pinValidationCallback: pinValidationCallback)
                             }
                         }
                     } else {
-                        self.parent?.view.isFrameChangeBlocked = false
-                        pinValidationCallback(pin)
-                        self.present(self.sendingActivity, animated: false)
+                        self.handlePinInputSuccess(pin: pin, pinValidationCallback: pinValidationCallback)
                     }
                 }
             }
