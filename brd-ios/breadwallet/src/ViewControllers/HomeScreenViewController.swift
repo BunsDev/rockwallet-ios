@@ -188,6 +188,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 self.notificationHandler.checkForInAppNotifications()
             })
         }
+        
+        SupportedCurrenciesManager.shared.getSupportedCurrencies()
     }
     
     // MARK: Setup
