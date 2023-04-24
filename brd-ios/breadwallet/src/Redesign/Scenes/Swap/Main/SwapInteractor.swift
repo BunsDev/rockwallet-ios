@@ -30,21 +30,21 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             case .success(let currencies):
                 ExchangeManager.shared.reload()
                 
-                guard let currencies = currencies,
+                guard let currencies,
                       currencies.count >= 2 else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
+                
                 self?.dataStore?.supportedCurrencies = currencies
+                self?.dataStore?.currencies = self?.dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
                 
-                let enabled = self?.dataStore?.currencies.filter { cur in currencies.map { $0.name }.contains(cur.code) }
-                
-                guard let from = enabled?.first,
-                      let to = enabled?.first(where: { $0.code != from.code })
-                else {
+                guard let from = self?.dataStore?.currencies.first,
+                      let to = self?.dataStore?.currencies.first(where: { $0.code != from.code }) else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
                     return
                 }
+                
                 self?.dataStore?.from = .zero(from)
                 self?.dataStore?.to = .zero(to)
                 
@@ -314,6 +314,12 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     
     func showAssetInfoPopup(viewAction: SwapModels.AssetInfoPopup.ViewAction) {
         presenter?.presentAssetInfoPopup(actionResponse: .init())
+    }
+    
+    func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction) {
+        presenter?.presentAssetSelectionMessage(actionResponse: .init(from: dataStore?.from?.currency,
+                                                                      to: dataStore?.to?.currency,
+                                                                      selectedDisabledAsset: viewAction.selectedDisabledAsset))
     }
     
     // MARK: - Aditional helpers

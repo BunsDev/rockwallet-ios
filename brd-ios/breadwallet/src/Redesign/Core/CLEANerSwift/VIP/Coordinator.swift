@@ -79,7 +79,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
+    func showSwap(coreSystem: CoreSystem, keyStore: KeyStore) {
         guard let profile = UserManager.shared.profile,
               profile.kycAccessRights.hasSwapAccess else {
             handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
@@ -91,7 +91,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
-                    vc?.dataStore?.currencies = currencies
+                    vc?.dataStore?.currencies = Store.state.currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
                 }
@@ -111,6 +111,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
+                    vc?.dataStore?.currencies = Store.state.currencies
                     vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
@@ -689,7 +690,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 return
             }
             
-            showSwap(currencies: Store.state.currencies, coreSystem: coreSystem, keyStore: keyStore)
+            showSwap(coreSystem: coreSystem, keyStore: keyStore)
             
         case .setPassword:
             handleUserAccount()
