@@ -566,7 +566,6 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) { [weak self] in
                 self?.paymailCallback?()
             },
-            
             // Feedback
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
                 guard let topVc = self?.topViewController else { return }

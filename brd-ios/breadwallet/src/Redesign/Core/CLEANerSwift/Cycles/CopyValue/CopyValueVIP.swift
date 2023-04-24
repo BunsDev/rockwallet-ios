@@ -8,7 +8,6 @@
 //  See the LICENSE file at the project root for license information.
 //
 
-import Foundation
 import UIKit
 
 protocol CopyValueActions {
