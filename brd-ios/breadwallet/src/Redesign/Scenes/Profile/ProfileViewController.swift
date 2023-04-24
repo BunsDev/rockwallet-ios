@@ -151,6 +151,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
             
         case .logout:
             LoadingView.show()
+            
             interactor?.logout(viewAction: .init())
             
         }
@@ -162,8 +163,8 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                                       fromBuy: false)
     }
     
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        super.displayMessage(responseDisplay: responseDisplay)
+    func displayLogout(responseDisplay: ProfileModels.Logout.ResponseDisplay) {
+        LoadingView.hideIfNeeded()
         
         coordinator?.dismissFlow()
     }
