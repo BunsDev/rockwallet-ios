@@ -155,16 +155,11 @@ class VIPViewController<C: CoordinatableRoutes,
         
         if let coordinator {
             let error = responseDisplay.error as? NetworkingError
+            
             switch error {
-            case .twoStepAppRequired:
+            case .twoStepAppRequired, .twoStepEmailRequired:
                 (coordinator as? BaseCoordinator)?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
-                    vc?.dataStore?.confirmationType = .twoStepAppLogin
-                    vc?.isModalDismissable = true
-                }
-                
-            case .twoStepEmailRequired:
-                (coordinator as? BaseCoordinator)?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
-                    vc?.dataStore?.confirmationType = .twoStepEmailLogin
+                    vc?.dataStore?.confirmationType = error == .twoStepAppRequired ? .twoStepAppLogin : .twoStepEmailLogin
                     vc?.isModalDismissable = true
                 }
                 
