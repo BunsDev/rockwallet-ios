@@ -32,6 +32,7 @@ protocol RegistrationConfirmationResponseDisplays: AnyObject, BaseResponseDispla
 protocol RegistrationConfirmationDataStore: BaseDataStore, FetchDataStore {
     var confirmationType: RegistrationConfirmationModels.ConfirmationType { get set }
     var registrationRequestData: RegistrationRequestData? { get set }
+    var setPasswordRequestData: SetPasswordRequestData? { get set }
     var code: String? { get set }
 }
 

@@ -181,7 +181,8 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
     
     func displayNextFailure(responseDisplay: SignInModels.NextFailure.ResponseDisplay) {
         coordinator?.showTwoStepErrorFlow(reason: responseDisplay.reason,
-                                          registrationRequestData: responseDisplay.registrationRequestData)
+                                          registrationRequestData: responseDisplay.registrationRequestData,
+                                          setPasswordRequestData: nil)
     }
     
     // MARK: - Additional Helpers
