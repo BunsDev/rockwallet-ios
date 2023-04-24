@@ -392,7 +392,6 @@ class ApplicationController: Subscriber {
             self.coordinator?.prepareForDeeplinkHandling(coreSystem: self.coreSystem, keyStore: self.keyStore)
         }
         
-        UserManager.shared.coordinator = coordinator
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success:
