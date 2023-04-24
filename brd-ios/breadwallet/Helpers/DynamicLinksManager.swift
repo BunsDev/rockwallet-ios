@@ -26,6 +26,7 @@ class DynamicLinksManager {
     
     var dynamicLinkType: DynamicLinkType?
     var code: String?
+    var email: String?
     
     static func getDynamicLinkType(from url: URL) -> DynamicLinkType? {
         let url = url.absoluteString
@@ -68,11 +69,13 @@ class DynamicLinksManager {
     
     private static func handleReSetPassword(with url: URL) {
         guard let parameters = url.queryParameters,
-              let code = parameters["code"] else {
+              let code = parameters["code"],
+              let email = parameters["email"] else {
             return
         }
         
         DynamicLinksManager.shared.dynamicLinkType = .setPassword
         DynamicLinksManager.shared.code = code
+        DynamicLinksManager.shared.email = email
     }
 }

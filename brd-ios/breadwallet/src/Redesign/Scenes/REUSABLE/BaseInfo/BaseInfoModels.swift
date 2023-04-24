@@ -106,7 +106,7 @@ enum BaseInfoModels {
                 return L10n.Button.buyDigitalAssets
                 
             default:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
             }
         }
         
@@ -119,7 +119,7 @@ enum BaseInfoModels {
                 return L10n.Button.receiveDigitalAssets
                 
             case .limitsAuthentication:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
                 
             default:
                 return L10n.Buy.details
@@ -279,7 +279,7 @@ enum BaseInfoModels {
         var secondButtonTitle: String? {
             switch self {
             case .swap:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
                 
             case .documentVerification, .documentVerificationRetry, .limitsAuthentication:
                 return L10n.Button.tryLater
@@ -329,7 +329,7 @@ enum BaseInfoModels {
         var firstButtonTitle: String? {
             switch self {
             case .swap, .buy, .sell:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
                 
             case .buyAch:
                 return L10n.Buy.buyWithCardButton
@@ -342,7 +342,7 @@ enum BaseInfoModels {
                 return L10n.ComingSoon.Buttons.contactSupport
                 
             case .buyAch:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
                 
             case .sell:
                 return nil

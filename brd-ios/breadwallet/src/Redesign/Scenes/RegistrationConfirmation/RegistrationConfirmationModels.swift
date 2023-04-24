@@ -29,6 +29,8 @@ enum RegistrationConfirmationModels {
         case twoStepEmail
         case twoStepEmailLogin
         case twoStepAppLogin
+        case twoStepEmailResetPassword
+        case twoStepAppResetPassword
         case twoStepApp
         case enterAppBackupCode
         case disable
@@ -63,11 +65,13 @@ enum RegistrationConfirmationModels {
     struct NextFailure {
         struct ActionResponse {
             let reason: NetworkingError
-            let registrationRequestData: RegistrationRequestData?
+            var registrationRequestData: RegistrationRequestData?
+            var setPasswordRequestData: SetPasswordRequestData?
         }
         struct ResponseDisplay {
             let reason: NetworkingError
-            let registrationRequestData: RegistrationRequestData?
+            var registrationRequestData: RegistrationRequestData?
+            var setPasswordRequestData: SetPasswordRequestData?
         }
     }
 }

@@ -55,6 +55,7 @@
 		044D09A229C8525E00C510DC /* VerifyPhoneNumberVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099C29C8525E00C510DC /* VerifyPhoneNumberVIP.swift */; };
 		044D09A329C8525E00C510DC /* VerifyPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */; };
 		044D09A529C8561A00C510DC /* PhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D09A429C8561A00C510DC /* PhoneNumberView.swift */; };
+		0452716929F678BF0070D9F7 /* CaseIterable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452716829F678BF0070D9F7 /* CaseIterable+Extensions.swift */; };
 		0452C93529D42FC600CCC8DA /* LoqateEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452C92D29D42FC600CCC8DA /* LoqateEndpoints.swift */; };
 		0452C93629D42FC600CCC8DA /* ExchangeEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452C92E29D42FC600CCC8DA /* ExchangeEndpoints.swift */; };
 		0452C93729D42FC600CCC8DA /* BlocksatoshiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452C92F29D42FC600CCC8DA /* BlocksatoshiEndpoints.swift */; };
@@ -921,6 +922,7 @@
 		044D099C29C8525E00C510DC /* VerifyPhoneNumberVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberVIP.swift; sourceTree = "<group>"; };
 		044D099D29C8525E00C510DC /* VerifyPhoneNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		044D09A429C8561A00C510DC /* PhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberView.swift; sourceTree = "<group>"; };
+		0452716829F678BF0070D9F7 /* CaseIterable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Extensions.swift"; sourceTree = "<group>"; };
 		0452C92D29D42FC600CCC8DA /* LoqateEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoqateEndpoints.swift; sourceTree = "<group>"; };
 		0452C92E29D42FC600CCC8DA /* ExchangeEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeEndpoints.swift; sourceTree = "<group>"; };
 		0452C92F29D42FC600CCC8DA /* BlocksatoshiEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocksatoshiEndpoints.swift; sourceTree = "<group>"; };
@@ -2772,6 +2774,7 @@
 				043DB5DB29F0108D00DEB8FD /* CopyTextIconGenerator.swift */,
 				7B54E58D27F4A2B0002DD1E4 /* Roundable.swift */,
 				754AE0BB1DFE8A46007FD001 /* SecureAllocator.swift */,
+				0452716829F678BF0070D9F7 /* CaseIterable+Extensions.swift */,
 				CE8CD8DC1E2D9EF200785E02 /* Sender.swift */,
 				7B54E57327F4A2B0002DD1E4 /* Shadowable.swift */,
 				7B8FAF00299B898D002EB972 /* TouchSpamPreventer.swift */,
@@ -4426,6 +4429,7 @@
 				7E5CB3902835090E00EC787E /* AlertModels.swift in Sources */,
 				CE4CA7BC1EE3649100373F11 /* BRActivityView.swift in Sources */,
 				E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */,
+				0452716929F678BF0070D9F7 /* CaseIterable+Extensions.swift in Sources */,
 				7EC0F8AC2887D8C40037145C /* SwapWorker.swift in Sources */,
 				7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */,
 				7E383B4928AE1AFD00A5339F /* AssetSelectionDisplayable.swift in Sources */,

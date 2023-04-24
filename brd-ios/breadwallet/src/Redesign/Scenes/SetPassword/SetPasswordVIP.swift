@@ -22,11 +22,13 @@ protocol SetPasswordViewActions: BaseViewActions, FetchViewActions {
 protocol SetPasswordActionResponses: BaseActionResponses, FetchActionResponses {
     func presentValidate(actionResponse: SetPasswordModels.Validate.ActionResponse)
     func presentNext(actionResponse: SetPasswordModels.Next.ActionResponse)
+    func presentNextFailure(actionResponse: SetPasswordModels.NextFailure.ActionResponse)
 }
 
 protocol SetPasswordResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
     func displayValidate(responseDisplay: SetPasswordModels.Validate.ResponseDisplay)
     func displayNext(responseDisplay: SetPasswordModels.Next.ResponseDisplay)
+    func displayNextFailure(responseDisplay: SetPasswordModels.NextFailure.ResponseDisplay)
 }
 
 protocol SetPasswordDataStore: BaseDataStore, FetchDataStore {
