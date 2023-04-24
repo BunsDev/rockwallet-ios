@@ -34,11 +34,11 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
         presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
-                                                                             achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
+                                                                       achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
-                                                             card: dataStore?.selected,
-                                                             type: dataStore?.paymentMethod,
-                                                             quote: dataStore?.quote))
+                                                       card: dataStore?.selected,
+                                                       type: dataStore?.paymentMethod,
+                                                       quote: dataStore?.quote))
         getPayments(viewAction: .init())
     }
     
