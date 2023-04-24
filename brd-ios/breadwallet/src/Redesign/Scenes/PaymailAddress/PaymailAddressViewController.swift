@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
+class PaymailAddressViewController: BaseTableViewController<BaseCoordinator,
                                     PaymailAddressInteractor,
                                     PaymailAddressPresenter,
                                     PaymailAddressStore>,
@@ -96,7 +96,7 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
         super.buttonTapped()
         
         guard dataStore?.screenType == .paymailNotSetup else {
-            coordinator?.goBack()
+            coordinator?.popViewController()
             return
         }
         
@@ -115,7 +115,7 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     
     func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.Success.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.goBack()
+            self?.coordinator?.popViewController()
         })
     }
 
