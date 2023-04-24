@@ -63,6 +63,8 @@ class UserManager: NSObject {
             group.leave()
         }
         
+        SupportedCurrenciesManager.shared.getSupportedCurrencies()
+        
         group.notify(queue: DispatchQueue.main) { [weak self] in
             completion?(self?.profileResult)
         }

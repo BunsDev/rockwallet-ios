@@ -21,17 +21,8 @@ class BaseInfoInteractor: NSObject, Interactor, BaseInfoViewActions {
     }
     
     func getAssetSelectionData(viewModel: BaseInfoModels.Assets.ViewAction) {
-        SupportedCurrenciesWorker().execute { [weak self] result in
-            switch result {
-            case .success(let currencies):
-                ExchangeManager.shared.reload()
-                
-                self?.presenter?.presentAssetSelectionData(actionResponse: .init(supportedCurrencies: currencies))
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
-            }
-        }
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
+        self.presenter?.presentAssetSelectionData(actionResponse: .init(supportedCurrencies: currencies))
     }
 
     // MARK: - Aditional helpers
