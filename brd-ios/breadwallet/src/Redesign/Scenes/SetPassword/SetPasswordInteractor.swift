@@ -64,7 +64,13 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
                 }
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard let error = (error as? NetworkingError) else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
+                                                                          setPasswordRequestData: data))
             }
         }
     }

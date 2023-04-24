@@ -122,7 +122,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             guard let self = self else { return }
             switch self.dataStore?.confirmationType {
-            case .twoStepEmailLogin, .twoStepAppLogin, .enterAppBackupCode:
+            case .twoStepEmailLogin, .twoStepAppLogin, .enterAppBackupCode, .twoStepEmailResetPassword, .twoStepAppResetPassword:
                 self.coordinator?.dismissFlow()
                 
             case .account:
@@ -152,7 +152,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     
     func displayNextFailure(responseDisplay: RegistrationConfirmationModels.NextFailure.ResponseDisplay) {
         coordinator?.showTwoStepErrorFlow(reason: responseDisplay.reason,
-                                          registrationRequestData: responseDisplay.registrationRequestData)
+                                          registrationRequestData: responseDisplay.registrationRequestData,
+                                          setPasswordRequestData: responseDisplay.setPasswordRequestData)
     }
     
     // MARK: - Additional Helpers

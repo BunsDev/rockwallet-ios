@@ -22,7 +22,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         presenter?.presentData(actionResponse: .init(item: confirmationType))
         
         switch dataStore?.confirmationType {
-        case .twoStepEmail, .twoStepEmailLogin, .disable:
+        case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .disable:
             resend(viewAction: .init())
             
         default:
@@ -57,6 +57,9 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmailLogin, .twoStepAppLogin:
             executeLogin()
             
+        case .twoStepEmailResetPassword, .twoStepAppResetPassword:
+            executeResetPassword()
+            
         case .disable:
             executeDisable()
             
@@ -67,8 +70,10 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     
     func resend(viewAction: RegistrationConfirmationModels.Resend.ViewAction) {
         switch dataStore?.confirmationType {
-        case .twoStepEmailLogin, .twoStepAppLogin:
-            RequestTwoStepCodeWorker().execute(requestData: RequestTwoStepCodeRequestData()) { [weak self] result in
+        case .twoStepEmailLogin, .twoStepAppLogin, .twoStepEmailResetPassword:
+            let email = dataStore?.registrationRequestData?.email ?? DynamicLinksManager.shared.email
+            
+            RequestTwoStepCodeWorker().execute(requestData: RequestTwoStepCodeRequestData(email: email)) { [weak self] result in
                 switch result {
                 case .success:
                     self?.presenter?.presentResend(actionResponse: .init())
@@ -106,6 +111,28 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     }
 
     // MARK: - Aditional helpers
+    
+    private func executeResetPassword() {
+        dataStore?.setPasswordRequestData?.secondFactorCode = dataStore?.code
+        
+        guard let setPasswordRequestData = dataStore?.setPasswordRequestData else { return }
+        
+        SetPasswordWorker().execute(requestData: setPasswordRequestData) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.presentConfirm(actionResponse: .init())
+                
+            case .failure(let error):
+                guard let error = (error as? NetworkingError) else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
+                                                                          setPasswordRequestData: setPasswordRequestData))
+            }
+        }
+    }
     
     private func executeLogin() {
         dataStore?.registrationRequestData?.secondFactorCode = dataStore?.code

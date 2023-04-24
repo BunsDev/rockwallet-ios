@@ -33,20 +33,25 @@ struct ProfileResponseData: ModelResponse {
         let limit: Decimal?
         let isCustom: Bool?
         
-        enum ExchangeType: String, Codable {
+        enum ExchangeType: String, Codable, CaseIterableDefaultsLast {
             case swap = "SWAP"
             case buyCard = "BUY_CARD"
             case buyAch = "BUY_ACH"
             case sell = "SELL_ACH"
+            case instantAch = "INSTANT_ACH"
+            
+            case unknown
         }
         
-        enum Interval: String, Codable {
+        enum Interval: String, Codable, CaseIterableDefaultsLast {
             case daily = "DAILY"
             case weekly = "WEEKLY"
             case monthly = "MONTHLY"
             case lifetime = "LIFETIME"
             case perExchange = "PER_EXCHANGE"
             case minimum = "MINIMUM"
+            
+            case unknown
         }
     }
 }
