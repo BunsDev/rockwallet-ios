@@ -22,9 +22,9 @@ class SupportedCurrenciesManager {
             case .success(let currencies):
                 self?.supportedCurrencies = currencies ?? []
                 
-            case .failure:
+            case .failure(let error):
                 // TODO: Add some other form of error handling
-                print("Failed to fetch supported currencies")
+                print(error.localizedDescription)
             }
             
         }
