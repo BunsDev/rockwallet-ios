@@ -59,11 +59,6 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.Success.ActionResponse) {
         viewController?.displaySuccessBottomAlert(responseDisplay: .init())
     }
-    
-    func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse) {
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
-                                                              config: Presets.InfoView.verification))
-    }
 
     // MARK: - Additional Helpers
 

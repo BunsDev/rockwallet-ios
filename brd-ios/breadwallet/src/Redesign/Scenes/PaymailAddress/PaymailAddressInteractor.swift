@@ -28,12 +28,5 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         presenter?.presentSuccessBottomAlert(actionResponse: .init())
     }
     
-    func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction) {
-        let value = viewAction.value?.filter { !$0.isWhitespace } ?? ""
-        UIPasteboard.general.string = value
-        
-        presenter?.presentCopyValue(actionResponse: .init())
-    }
-    
     // MARK: - Aditional helpers
 }

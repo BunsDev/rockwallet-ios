@@ -29,8 +29,10 @@ enum PaymailAddressModels {
             switch self {
             case .paymailNotSetup:
                 return L10n.PaymailAddress.createAddressDescription
+                
             case .paymailSetup:
                 return L10n.PaymailAddress.description
+                
             }
         }
         
@@ -38,8 +40,10 @@ enum PaymailAddressModels {
             switch self {
             case .paymailSetup:
                 return Asset.copyIcon.image
+                
             case .paymailNotSetup:
                 return Asset.cancel.image
+                
             }
         }
         
@@ -47,8 +51,10 @@ enum PaymailAddressModels {
             switch self {
             case .paymailSetup:
                 return L10n.PaymailAddress.yourPaymailAddress
+                
             case .paymailNotSetup:
                 return L10n.PaymailAddress.paymailAddressField
+                
             }
         }
         
@@ -56,8 +62,10 @@ enum PaymailAddressModels {
             switch self {
             case .paymailSetup:
                 return L10n.Button.back
+                
             case .paymailNotSetup:
                 return L10n.PaymailAddress.createPaymailAddress
+                
             }
         }
     }

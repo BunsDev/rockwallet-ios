@@ -12,12 +12,12 @@ extension Scenes {
     static let PaymailAddress = PaymailAddressViewController.self
 }
 
-protocol PaymailAddressViewActions: BaseViewActions, FetchViewActions {
+protocol PaymailAddressViewActions: BaseViewActions, FetchViewActions, CopyValueActions {
     func showPaymailPopup(viewAction: PaymailAddressModels.InfoPopup.ViewAction)
     func showSuccessBottomAlert(viewAction: PaymailAddressModels.Success.ViewAction)
 }
 
-protocol PaymailAddressActionResponses: BaseActionResponses, FetchActionResponses {
+protocol PaymailAddressActionResponses: BaseActionResponses, FetchActionResponses, CopyValueResponses {
     func presentPaymailPopup(actionResponse: PaymailAddressModels.InfoPopup.ActionResponse)
     func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.Success.ActionResponse)
 }

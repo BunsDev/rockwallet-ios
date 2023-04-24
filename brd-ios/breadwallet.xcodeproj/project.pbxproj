@@ -616,7 +616,6 @@
 		A2439D7BB746E6CFC3F9B64A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2439F5D8263945E73EFF4A3 /* CacheService.swift */; };
 		C43EFBE829DC33620067FE70 /* LogoutWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43EFBE729DC33620067FE70 /* LogoutWorker.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
-		C458C7CA29E6D22E00146C0D /* PaymailAddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458C7C329E6D22E00146C0D /* PaymailAddressCoordinator.swift */; };
 		C458C7CB29E6D22E00146C0D /* PaymailAddressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458C7C429E6D22E00146C0D /* PaymailAddressStore.swift */; };
 		C458C7CC29E6D22E00146C0D /* PaymailAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458C7C529E6D22E00146C0D /* PaymailAddressPresenter.swift */; };
 		C458C7CD29E6D22F00146C0D /* PaymailAddressModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458C7C629E6D22E00146C0D /* PaymailAddressModels.swift */; };
@@ -641,6 +640,8 @@
 		C491AC0028A6432500E79954 /* BuyOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABFF28A6432500E79954 /* BuyOrderView.swift */; };
 		C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */; };
 		C4BD1C69284A16E000AFA2A6 /* CountriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */; };
+		C4C553D829F677B3002D9A47 /* CopyValueVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C553D729F677B3002D9A47 /* CopyValueVIP.swift */; };
+		C4C553DA29F677D4002D9A47 /* CopyValueModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C553D929F677D4002D9A47 /* CopyValueModels.swift */; };
 		C4C7299F29225CCB00A3CE24 /* PlaidLinkToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */; };
 		C4C729A129225F3A00A3CE24 /* PlaidPublicToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */; };
 		C4CCFCE729D43DB600E38B3A /* AuthenticatorAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */; };
@@ -1466,7 +1467,6 @@
 		A2439F5D8263945E73EFF4A3 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		C43EFBE729DC33620067FE70 /* LogoutWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWorker.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
-		C458C7C329E6D22E00146C0D /* PaymailAddressCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressCoordinator.swift; sourceTree = "<group>"; };
 		C458C7C429E6D22E00146C0D /* PaymailAddressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressStore.swift; sourceTree = "<group>"; };
 		C458C7C529E6D22E00146C0D /* PaymailAddressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressPresenter.swift; sourceTree = "<group>"; };
 		C458C7C629E6D22E00146C0D /* PaymailAddressModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressModels.swift; sourceTree = "<group>"; };
@@ -1491,6 +1491,8 @@
 		C491ABFF28A6432500E79954 /* BuyOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyOrderView.swift; sourceTree = "<group>"; };
 		C49E6176288EC4BF00910D01 /* ExchangeHistoryWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeHistoryWorker.swift; sourceTree = "<group>"; };
 		C4BD1C68284A16E000AFA2A6 /* CountriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesWorker.swift; sourceTree = "<group>"; };
+		C4C553D729F677B3002D9A47 /* CopyValueVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyValueVIP.swift; sourceTree = "<group>"; };
+		C4C553D929F677D4002D9A47 /* CopyValueModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyValueModels.swift; sourceTree = "<group>"; };
 		C4C7299E29225CCB00A3CE24 /* PlaidLinkToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidLinkToken.swift; sourceTree = "<group>"; };
 		C4C729A029225F3A00A3CE24 /* PlaidPublicToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaidPublicToken.swift; sourceTree = "<group>"; };
 		C4CCFCE029D43DB600E38B3A /* AuthenticatorAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatorAppStore.swift; sourceTree = "<group>"; };
@@ -2569,6 +2571,7 @@
 				7E75AD472943296500E54DEF /* ExchangeRate */,
 				7E5CB34C2835090D00EC787E /* Alerts */,
 				7E5CB34F2835090D00EC787E /* Fetch */,
+				C4C553D629F67741002D9A47 /* CopyValue */,
 				7E5CB3522835090D00EC787E /* Message */,
 			);
 			path = Cycles;
@@ -3184,7 +3187,6 @@
 		C458C7C229E6D1F900146C0D /* PaymailAddress */ = {
 			isa = PBXGroup;
 			children = (
-				C458C7C329E6D22E00146C0D /* PaymailAddressCoordinator.swift */,
 				C458C7C429E6D22E00146C0D /* PaymailAddressStore.swift */,
 				C458C7C529E6D22E00146C0D /* PaymailAddressPresenter.swift */,
 				C458C7C629E6D22E00146C0D /* PaymailAddressModels.swift */,
@@ -3226,6 +3228,15 @@
 				7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C4C553D629F67741002D9A47 /* CopyValue */ = {
+			isa = PBXGroup;
+			children = (
+				C4C553D929F677D4002D9A47 /* CopyValueModels.swift */,
+				C4C553D729F677B3002D9A47 /* CopyValueVIP.swift */,
+			);
+			path = CopyValue;
 			sourceTree = "<group>";
 		};
 		C4CCFCDE29D43D6100E38B3A /* Authenticator */ = {
@@ -4378,6 +4389,7 @@
 				7EBC6B092848ABC5000A301F /* RegistrationConfirmationVIP.swift in Sources */,
 				7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */,
 				7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */,
+				C4C553D829F677B3002D9A47 /* CopyValueVIP.swift in Sources */,
 				7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */,
 				7E8E97A0283F48EE008606B0 /* NavigationItemView.swift in Sources */,
 				22A9A9461DF61945000F0016 /* BRAPIClient.swift in Sources */,
@@ -4421,7 +4433,6 @@
 				3A69885E24591F890084953D /* Paymail.swift in Sources */,
 				7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */,
 				7B9434352886A7FA00638703 /* DeleteProfileInfoStore.swift in Sources */,
-				C458C7CA29E6D22E00146C0D /* PaymailAddressCoordinator.swift in Sources */,
 				D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */,
 				7BF5D4FB296D4FC900942ADB /* SignUpVIP.swift in Sources */,
 				7B9434362886A7FA00638703 /* DeleteProfileInfoPresenter.swift in Sources */,
@@ -4452,6 +4463,7 @@
 				7B0418B5298A9131004A6385 /* UserInformationWorker.swift in Sources */,
 				71988B0821EF8A0E008B8EA0 /* BRUserAgentHeaderGenerator.swift in Sources */,
 				7EC0F8BA28881C680037145C /* TitleValueView.swift in Sources */,
+				C4C553DA29F677D4002D9A47 /* CopyValueModels.swift in Sources */,
 				CEE20C361EA5B4620086F724 /* Constants.swift in Sources */,
 				7BDB49F72806F0BA0031F015 /* BRTar.swift in Sources */,
 				7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */,

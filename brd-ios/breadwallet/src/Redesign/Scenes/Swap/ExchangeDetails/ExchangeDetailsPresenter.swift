@@ -129,11 +129,6 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentCopyValue(actionResponse: ExchangeDetailsModels.CopyValue.ActionResponse) {
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
-                                                              config: Presets.InfoView.verification))
-    }
-    
     func presentInfoPopup(actionResponse: ExchangeDetailsModels.InfoPopup.ActionResponse) {
         let model: PopupViewModel = .init(title: .text(L10n.Buy.networkFees),
                                           body: L10n.Buy.networkFeeMessage)

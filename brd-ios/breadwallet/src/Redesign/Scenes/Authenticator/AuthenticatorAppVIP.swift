@@ -14,14 +14,12 @@ extension Scenes {
     static let AuthenticatorApp = AuthenticatorAppViewController.self
 }
 
-protocol AuthenticatorAppViewActions: BaseViewActions, FetchViewActions {
-    func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction)
+protocol AuthenticatorAppViewActions: BaseViewActions, FetchViewActions, CopyValueActions {
     func openTotpUrl(viewAction: AuthenticatorAppModels.OpenTotpUrl.ViewAction)
     func next(viewAction: AuthenticatorAppModels.Next.ViewAction)
 }
 
-protocol AuthenticatorAppActionResponses: BaseActionResponses, FetchActionResponses {
-    func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse)
+protocol AuthenticatorAppActionResponses: BaseActionResponses, FetchActionResponses, CopyValueResponses {
     func presentOpenTotpUrl(actionResponse: AuthenticatorAppModels.OpenTotpUrl.ActionResponse)
     func presentNext(actionResponse: AuthenticatorAppModels.Next.ActionResponse)
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymailAddressViewController: BaseTableViewController<PaymailAddressCoordinator,
+class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
                                     PaymailAddressInteractor,
                                     PaymailAddressPresenter,
                                     PaymailAddressStore>,
