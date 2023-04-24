@@ -49,9 +49,7 @@ enum NetworkingError: FEError {
             return L10n.ErrorMessages.somethingWentWrong
             
         case .twoStepInvalid:
-            return """
-Invalid code. You have 3 more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
-"""
+            return L10n.TwoStep.Error.attempts
             
         default:
             return L10n.ErrorMessages.unknownError

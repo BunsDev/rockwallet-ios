@@ -51,16 +51,16 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
         case .twoStepEmail, .twoStepEmailLogin, .disable:
-            title = "We’ve sent you a code"
+            title = L10n.TwoStep.Email.Confirmation.title
             instructions = "\(L10n.AccountCreation.enterCode)\(email)"
             
         case .twoStepApp, .twoStepAppLogin:
-            title = "Enter one of your backup codes"
+            title = L10n.TwoStep.App.Confirmation.title
             instructions = ""
         
         case .enterAppBackupCode:
-            title = "Enter the code from your Authenticator app"
-            instructions = "Confirm you’ve stored your backup codes securely by entering one of them."
+            title = L10n.TwoStep.App.Confirmation.BackupCode.title
+            instructions = L10n.TwoStep.App.Confirmation.BackupCode.instructions
             
         }
         
@@ -75,7 +75,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         }
         
         if confirmationType == .twoStepAppLogin {
-            help = [ButtonViewModel(title: "I can’t access my Authenticator App",
+            help = [ButtonViewModel(title: L10n.TwoStep.App.CantAccess.title,
                                     isUnderlined: true,
                                     callback: viewController?.enterBackupCode)]
         }
