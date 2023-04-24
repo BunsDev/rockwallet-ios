@@ -47,6 +47,10 @@
 /* Before confirm photo label in create account screen */
 "Account.BeforeConfirm" = "Avant de confirmer, veuillez :";
 
+"Account.BlockedAccount.Description" = "It appears that you're unable to verify your account. For security reasons, we have temporarily disabled it.\n\nDon't worry, your data is safe, and you can still access your self-custodial funds from your homepage. For more information, please contact support.";
+
+"Account.BlockedAccount.Title" = "Your RockWallet account is currently disabled.";
+
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Modifier votre adresse e-mail";
 
@@ -3218,6 +3222,14 @@
 
 "TwoStep.App.BackupCodes.warning" = "Your backup codes are the only way to access your account if you lose access your Authenticator App";
 
+"TwoStep.App.CantAccess.Title" = "I can’t access my Authenticator App";
+
+"TwoStep.App.Confirmation.BackupCode.Instructions" = "Confirm you’ve stored your backup codes securely by entering one of them.";
+
+"TwoStep.App.Confirmation.BackupCode.Title" = "Enter the code from your Authenticator app";
+
+"TwoStep.App.Confirmation.Title" = "Enter one of your backup codes";
+
 "TwoStep.App.Import.action" = "Import with link";
 
 "TwoStep.App.Import.title" = "Using an authenticator app?";
@@ -3233,6 +3245,10 @@
 "TwoStep.changePhoneNumberTitle" = "Change Phone Number";
 
 "TwoStep.Disable.Title" = "Disable 2FA";
+
+"TwoStep.Email.Confirmation.Title" = "We’ve sent you a code";
+
+"TwoStep.Error.Attempts" = "Invalid code. You have 3 more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.";
 
 "TwoStep.getBackupCodesTitle" = "";
 

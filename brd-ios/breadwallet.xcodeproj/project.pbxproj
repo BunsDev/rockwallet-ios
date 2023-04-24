@@ -303,6 +303,7 @@
 		7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */; };
 		7BE9CB75292242290016C0F4 /* VerticalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */; };
 		7BEF9B4D29EEEC590073186E /* RecoveryCodesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF9B4C29EEEC590073186E /* RecoveryCodesWorker.swift */; };
+		7BEF9B4F29F1A52A0073186E /* AccountBlockedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF9B4E29F1A52A0073186E /* AccountBlockedViewController.swift */; };
 		7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */; };
 		7BF5D4EB296BFC8D00942ADB /* SignInInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */; };
 		7BF5D4EC296BFC8D00942ADB /* SignInModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */; };
@@ -1187,6 +1188,7 @@
 		7BDE6DFF289BAFB10060C09A /* BankCardInputDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardInputDetailsView.swift; sourceTree = "<group>"; };
 		7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalButtonsView.swift; sourceTree = "<group>"; };
 		7BEF9B4C29EEEC590073186E /* RecoveryCodesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryCodesWorker.swift; sourceTree = "<group>"; };
+		7BEF9B4E29F1A52A0073186E /* AccountBlockedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBlockedViewController.swift; sourceTree = "<group>"; };
 		7BF5D4E4296BFC8C00942ADB /* SignInVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVIP.swift; sourceTree = "<group>"; };
 		7BF5D4E5296BFC8C00942ADB /* SignInInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInInteractor.swift; sourceTree = "<group>"; };
 		7BF5D4E6296BFC8C00942ADB /* SignInModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInModels.swift; sourceTree = "<group>"; };
@@ -2451,6 +2453,7 @@
 				7E5B305F28A680300065D2D8 /* SuccessViewController.swift */,
 				7E5B306128A681760065D2D8 /* FailureViewController.swift */,
 				7B62ACF828B381BE00CE81E7 /* TimeoutViewController.swift */,
+				7BEF9B4E29F1A52A0073186E /* AccountBlockedViewController.swift */,
 			);
 			path = Validation;
 			sourceTree = "<group>";
@@ -4613,6 +4616,7 @@
 				7E5B305B28A67FC60065D2D8 /* SwapInfoViewController.swift in Sources */,
 				7C72D134226625130091B185 /* CoreSystem.swift in Sources */,
 				7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */,
+				7BEF9B4F29F1A52A0073186E /* AccountBlockedViewController.swift in Sources */,
 				CE3D4C571EF5D5740016B1C8 /* ReachabilityMonitor.swift in Sources */,
 				7EB8FD292897F22B000FF75C /* CardSelectionView.swift in Sources */,
 				043DB5DC29F0108D00DEB8FD /* CopyTextIconGenerator.swift in Sources */,

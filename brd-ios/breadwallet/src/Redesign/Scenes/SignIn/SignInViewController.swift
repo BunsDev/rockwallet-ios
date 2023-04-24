@@ -179,6 +179,11 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
         coordinator?.dismissFlow()
     }
     
+    func displayNextFailure(responseDisplay: SignInModels.NextFailure.ResponseDisplay) {
+        coordinator?.showTwoStepErrorFlow(reason: responseDisplay.reason,
+                                          registrationRequestData: responseDisplay.registrationRequestData)
+    }
+    
     // MARK: - Additional Helpers
     
     private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {

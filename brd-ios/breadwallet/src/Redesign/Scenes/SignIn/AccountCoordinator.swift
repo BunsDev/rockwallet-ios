@@ -81,6 +81,34 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         }
     }
     
+    func showAccountBlocked() {
+        open(scene: Scenes.AccountBlocked) { vc in
+            vc.navigationItem.hidesBackButton = true
+            
+            vc.didTapMainButton = { [weak self] in
+                self?.dismissFlow()
+            }
+            
+            vc.didTapSecondayButton = { [weak self] in
+                self?.showSupport()
+            }
+        }
+    }
+    
+    func showTwoStepErrorFlow(reason: NetworkingError, registrationRequestData: RegistrationRequestData?) {
+        if reason == .twoStepAppRequired {
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: .twoStepAppLogin,
+                                         registrationRequestData: registrationRequestData)
+        } else if reason == .twoStepEmailRequired {
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: .twoStepEmailLogin,
+                                         registrationRequestData: registrationRequestData)
+        } else if reason == .twoStepBlockedAccount || reason == .twoStepInvalidCodeBlockedAccount {
+            showAccountBlocked()
+        }
+    }
+    
     func showKYCLevelOne() {
         open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
     }
