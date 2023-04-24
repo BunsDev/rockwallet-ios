@@ -29,6 +29,10 @@ enum NetworkingError: FEError {
     case biometricAuthenticationFailed
     case twoStepEmailRequired
     case twoStepAppRequired
+    case twoStepInvalid
+    case twoStepInvalidRetryable
+    case twoStepBlockedAccount
+    case twoStepInvalidCodeBlockedAccount
     
     var errorMessage: String {
         switch self {
@@ -44,6 +48,9 @@ enum NetworkingError: FEError {
         case .serverAtCapacity:
             return L10n.ErrorMessages.somethingWentWrong
             
+        case .twoStepInvalid:
+            return L10n.TwoStep.Error.attempts
+            
         default:
             return L10n.ErrorMessages.unknownError
         }
@@ -56,6 +63,21 @@ enum NetworkingError: FEError {
             
         case .biometricAuthenticationFailed, .biometricAuthenticationRequired:
             return .biometricAuthentication
+            
+        case .twoStepAppRequired, .twoStepEmailRequired:
+            return .twoStepRequired
+            
+        case .twoStepBlockedAccount:
+            return .twoStepBlockedAccount
+            
+        case .twoStepInvalidCodeBlockedAccount:
+            return .twoStepInvalidCodeBlockedAccount
+            
+        case .twoStepInvalid:
+            return .twoStepInvalid
+            
+        case .twoStepInvalidRetryable:
+            return .twoStepInvalidRetryable
             
         default:
             return nil
@@ -72,6 +94,13 @@ enum NetworkingError: FEError {
             
         case 105:
             self = .sessionExpired
+        
+        case 400:
+            if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalidRetryable.rawValue {
+                self = .twoStepInvalidRetryable
+            } else {
+                self = .general
+            }
             
         case 401:
             switch TwoStepSettingsResponseData.TwoStepType(rawValue: error?.serverMessage ?? "") {
@@ -82,11 +111,21 @@ enum NetworkingError: FEError {
                 self = .twoStepEmailRequired
             
             default:
-                self = .accessDenied
+                if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalid.rawValue {
+                    self = .twoStepInvalid
+                } else {
+                    self = .accessDenied
+                }
             }
             
         case 403:
-            self = .sessionNotVerified
+            if error?.serverMessage == ServerResponse.ErrorType.twoStepBlockedAccount.rawValue {
+                self = .twoStepBlockedAccount
+            } else if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalidCodeBlockedAccount.rawValue {
+                self = .twoStepInvalidCodeBlockedAccount
+            } else {
+                self = .sessionNotVerified
+            }
             
         case 404:
             self = .dataUnavailable

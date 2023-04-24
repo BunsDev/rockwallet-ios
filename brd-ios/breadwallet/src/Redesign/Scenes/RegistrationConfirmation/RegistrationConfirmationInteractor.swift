@@ -51,7 +51,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmail, .acountTwoStepEmailSettings:
             executeSetTwoStepEmail()
             
-        case .twoStepApp, .acountTwoStepAppSettings:
+        case .twoStepApp, .acountTwoStepAppSettings, .enterAppBackupCode:
             executeSetTwoStepApp()
         
         case .twoStepEmailLogin, .twoStepAppLogin:
@@ -124,7 +124,13 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                 }
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard let error = (error as? NetworkingError) else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
+                                                                          registrationRequestData: registrationRequestData))
             }
         }
     }

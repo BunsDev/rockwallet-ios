@@ -22,11 +22,13 @@ protocol SignInViewActions: BaseViewActions, FetchViewActions {
 protocol SignInActionResponses: BaseActionResponses, FetchActionResponses {
     func presentValidate(actionResponse: SignInModels.Validate.ActionResponse)
     func presentNext(actionResponse: SignInModels.Next.ActionResponse)
+    func presentNextFailure(actionResponse: SignInModels.NextFailure.ActionResponse)
 }
 
 protocol SignInResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
     func displayValidate(responseDisplay: SignInModels.Validate.ResponseDisplay)
     func displayNext(responseDisplay: SignInModels.Next.ResponseDisplay)
+    func displayNextFailure(responseDisplay: SignInModels.NextFailure.ResponseDisplay)
 }
 
 protocol SignInDataStore: BaseDataStore, FetchDataStore {
