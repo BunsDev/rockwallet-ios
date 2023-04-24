@@ -52,6 +52,8 @@ extension Interactor where Self: ExchangeRateViewActions,
             case .success(let quote):
                 self?.dataStore?.quote = quote
                 
+                self?.presenter?.presentError(actionResponse: .init(error: NetworkingError.twoStepAppRequired))
+                
                 self?.presenter?.presentExchangeRate(actionResponse: .init(quote: quote,
                                                                            from: fromCurrency,
                                                                            to: toCurrency,
@@ -75,6 +77,8 @@ extension Interactor where Self: ExchangeRateViewActions,
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.quoteFail))
                     return
                 }
+                
+                self?.presenter?.presentError(actionResponse: .init(error: error))
             }
         }
     }

@@ -273,18 +273,6 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         coordinator?.showThreeDSecure(url: responseDisplay.url)
     }
     
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hideIfNeeded()
-        }
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        coordinator?.showToastMessage(with: responseDisplay.error,
-                                      model: responseDisplay.model,
-                                      configuration: responseDisplay.config)
-    }
-    
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.submit.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }

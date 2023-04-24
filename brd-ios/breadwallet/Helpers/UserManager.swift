@@ -13,6 +13,8 @@ import Foundation
 class UserManager: NSObject {
     static var shared = UserManager()
     
+    var coordinator: BaseCoordinator?
+    
     var profile: Profile?
     var profileResult: Result<Profile?, Error>?
     var error: Error?

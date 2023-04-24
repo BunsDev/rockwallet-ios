@@ -414,6 +414,7 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
+        // TODO: this doesn't have "manually_configured". Add it.
         let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason
         
         switch restrictionReason {
@@ -424,8 +425,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             showComingSoon(reason: reason)
         
         default:
-            // TODO: Figure out "manually_configured"
-            showVerifyAccount(flow: flow)
+            showComingSoon(reason: reason)
         }
     }
     

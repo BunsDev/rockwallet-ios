@@ -163,13 +163,9 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        LoadingView.hideIfNeeded()
+        super.displayMessage(responseDisplay: responseDisplay)
         
         coordinator?.dismissFlow()
-        
-        UIApplication.topViewController()?.showToastMessage(model: responseDisplay.model,
-                                                            configuration: responseDisplay.config,
-                                                            onTapCallback: nil)
     }
     
     // MARK: - Additional Helpers
