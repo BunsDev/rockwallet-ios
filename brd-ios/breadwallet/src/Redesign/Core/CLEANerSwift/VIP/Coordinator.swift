@@ -172,6 +172,12 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
+    func showPaymailAddress() {
+        openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
+            vc?.dataStore?.screenType = .paymailNotSetup
+        }
+    }
+    
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
         open(scene: Scenes.ExchangeDetails) { vc in
             vc.navigationItem.hidesBackButton = true

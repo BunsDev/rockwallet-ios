@@ -20,12 +20,14 @@ class ModalPresenter: Subscriber {
     
     init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?,
          deleteAccountCallback: (() -> Void)?,
-         twoStepAuthCallback: (() -> Void)?) {
+         twoStepAuthCallback: (() -> Void)?,
+         paymailCallback: (() -> Void)?) {
         self.system = system
         self.window = window
         self.alertPresenter = alertPresenter
         self.deleteAccountCallback = deleteAccountCallback
         self.twoStepAuthCallback = twoStepAuthCallback
+        self.paymailCallback = paymailCallback
         self.keyStore = keyStore
         self.modalTransitionDelegate = ModalTransitionDelegate(type: .regular)
         
@@ -42,6 +44,7 @@ class ModalPresenter: Subscriber {
     private var alertPresenter: AlertPresenter?
     private var deleteAccountCallback: (() -> Void)?
     private var twoStepAuthCallback: (() -> Void)?
+    private var paymailCallback: (() -> Void)?
     private let modalTransitionDelegate: ModalTransitionDelegate
     private let messagePresenter = MessageUIPresenter()
     private let verifyPinTransitionDelegate = PinTransitioningDelegate()
@@ -560,10 +563,8 @@ class ModalPresenter: Subscriber {
                 self?.presentLoginScan()
             },
             // Paymail address
-            MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) {
-                let vc = PaymailAddressViewController()
-                vc.dataStore?.screenType = .paymailNotSetup
-                menuNav.pushViewController(vc, animated: true)
+            MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) { [weak self] in
+                self?.paymailCallback?()
             },
             
             // Feedback
