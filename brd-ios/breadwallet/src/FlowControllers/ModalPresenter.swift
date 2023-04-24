@@ -219,8 +219,8 @@ class ModalPresenter: Subscriber {
         switch type {
         case .none:
             return nil
-        case .send(let currency):
-            return makeSendView(currency: currency)
+        case .send(let currency, let coordinator):
+            return makeSendView(currency: currency, coordinator: coordinator)
         case .receive(let currency):
             return makeReceiveView(currency: currency, isRequestAmountVisible: (currency.urlSchemes?.first != nil))
         case .loginScan:
@@ -295,7 +295,7 @@ class ModalPresenter: Subscriber {
         return ModalViewController(childViewController: stakeView)
     }
     
-    private func makeSendView(currency: Currency) -> UIViewController? {
+    private func makeSendView(currency: Currency, coordinator: BaseCoordinator?) -> UIViewController? {
         guard let wallet = system.wallet(for: currency),
               let kvStore = Backend.kvStore else { return nil }
         guard !(currency.state?.isRescanning ?? false) else {
@@ -311,6 +311,7 @@ class ModalPresenter: Subscriber {
         currentRequest = nil
         
         let root = ModalViewController(childViewController: sendVC)
+        sendVC.coordinator = coordinator
         sendVC.presentScan = presentScan(parent: root, currency: currency)
         sendVC.presentVerifyPin = { [weak self, weak root] bodyText, success in
             guard let self = self, let root = root else { return }
@@ -358,7 +359,7 @@ class ModalPresenter: Subscriber {
                 let message = L10n.Scanner.paymentPromptMessage(request.currency.name)
                 let alert = UIAlertController.confirmationAlert(title: L10n.Scanner.paymentPromptTitle, message: message) {
                     self.currentRequest = request
-                    self.presentModal(.send(currency: request.currency))
+                    self.presentModal(.send(currency: request.currency, coordinator: nil))
                 }
                 top.present(alert, animated: true)
                 
@@ -938,13 +939,13 @@ class ModalPresenter: Subscriber {
         self.currentRequest = request
         
         guard !Store.state.isLoginRequired else {
-            presentModal(.send(currency: request.currency))
+            presentModal(.send(currency: request.currency, coordinator: nil))
             
             return
         }
         
         showAccountView(currency: request.currency, animated: false) {
-            self.presentModal(.send(currency: request.currency))
+            self.presentModal(.send(currency: request.currency, coordinator: nil))
         }
     }
     

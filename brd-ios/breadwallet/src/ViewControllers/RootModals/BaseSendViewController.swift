@@ -19,6 +19,8 @@ class BaseSendViewController: UIViewController {
     let sendingActivity = BRActivityViewController(message: L10n.TransactionDetails.titleSending)
     let sender: Sender
     
+    weak var coordinator: BaseCoordinator?
+    
     init(sender: Sender) {
         self.sender = sender
         super.init(nibName: nil, bundle: nil)
@@ -33,9 +35,24 @@ class BaseSendViewController: UIViewController {
             guard let self = self else { return }
             self.sendingActivity.dismiss(animated: false) {
                 self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
-                    self.parent?.view.isFrameChangeBlocked = false
-                    pinValidationCallback(pin)
-                    self.present(self.sendingActivity, animated: false)
+                    if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.sending {
+                        self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                            vc?.dataStore?.confirmationType = UserManager.shared.twoStepSettings?.type == .authenticator ? .twoStepApp : .twoStepEmail
+                            vc?.isModalDismissable = true
+                            
+                            vc?.didDismiss = { success in
+                                guard success else { return }
+                                
+                                self.parent?.view.isFrameChangeBlocked = false
+                                pinValidationCallback(pin)
+                                self.present(self.sendingActivity, animated: false)
+                            }
+                        }
+                    } else {
+                        self.parent?.view.isFrameChangeBlocked = false
+                        pinValidationCallback(pin)
+                        self.present(self.sendingActivity, animated: false)
+                    }
                 }
             }
         }

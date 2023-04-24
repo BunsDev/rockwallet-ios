@@ -43,7 +43,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             
             switch action {
             case .send:
-                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency)))
+                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency, coordinator: self.coordinator)))
                 
             case .receive:
                 Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
