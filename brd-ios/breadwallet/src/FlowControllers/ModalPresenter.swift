@@ -367,7 +367,8 @@ class ModalPresenter: Subscriber {
                 
                 let wallets = [Currencies.shared.bsv?.wallet,
                                Currencies.shared.btc?.wallet,
-                               Currencies.shared.bch?.wallet]
+                               Currencies.shared.bch?.wallet,
+                               Currencies.shared.ltc?.wallet]
                 wallets.forEach { wallet in
                     guard let wallet else { return }
                     alert.addAction(UIAlertAction(title: wallet.currency.code, style: .default, handler: { _ in
@@ -491,6 +492,26 @@ class ModalPresenter: Subscriber {
         var bsvMenu = MenuItem(title: L10n.Settings.currencyPageTitle(Currencies.shared.bsv?.name ?? ""), subMenu: bsvItems, rootNav: menuNav)
         bsvMenu.shouldShow = { return !bsvItems.isEmpty }
         
+        // MARK: Litecoin Menu
+        var ltcItems: [MenuItem] = []
+        if let ltc = Currencies.shared.ltc, let ltcWallet = ltc.wallet {
+            if system.connectionMode(for: ltc) == .p2p_only {
+                // Rescan
+                ltcItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
+                    guard let self = self else { return }
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: ltcWallet), animated: true)
+                }))
+            }
+            ltcItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
+                menuNav.dismiss(animated: true, completion: { [unowned self] in
+                    self.presentKeyImport(wallet: ltcWallet)
+                })
+            }))
+
+        }
+        var ltcMenu = MenuItem(title: L10n.Settings.currencyPageTitle(Currencies.shared.ltc?.name ?? ""), subMenu: ltcItems, rootNav: menuNav)
+        ltcMenu.shouldShow = { return !ltcItems.isEmpty }
+        
         // MARK: Ethereum Menu
         var ethItems: [MenuItem] = []
         if let eth = Currencies.shared.eth, let ethWallet = eth.wallet {
@@ -520,6 +541,7 @@ class ModalPresenter: Subscriber {
             bsvMenu,
             btcMenu,
             bchMenu,
+            ltcMenu,
             ethMenu,
             
             // Share Anonymous Data
