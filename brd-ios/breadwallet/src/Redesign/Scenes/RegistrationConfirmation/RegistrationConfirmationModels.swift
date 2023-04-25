@@ -9,7 +9,7 @@
 import UIKit
 
 enum RegistrationConfirmationModels {
-    typealias Item = RegistrationConfirmationModels.ConfirmationType
+    typealias Item = (type: RegistrationConfirmationModels.ConfirmationType, email: String?)
     
     enum Section: Sectionable {
         case image
