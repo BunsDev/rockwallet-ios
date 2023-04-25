@@ -94,7 +94,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
         cell.wrappedView.selectSegment(index: segment)
         
-        interactor?.changeAchDeliveryType(viewAction: .init(achDeliveryType: segment == 0 ? .instant : .normal))
+        interactor?.changeAchDeliveryType(viewAction: .init(achDeliveryType: Models.AchDeliveryType.allCases[segment]))
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -311,26 +311,6 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         
         tableView.invalidateTableViewIntrinsicContentSize()
     }
-    
-//    func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-//        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
-//              let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
-//              let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-//              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
-//            continueButton.viewModel?.enabled = false
-//            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-//
-//            return
-//        }
-//
-//        fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
-//        toCell.wrappedView.setup(with: actionResponse.cardModel)
-//
-//        tableView.invalidateTableViewIntrinsicContentSize()
-//
-//        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
-//        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-//    }
     
     // MARK: - Additional Helpers
 }

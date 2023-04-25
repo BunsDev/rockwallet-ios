@@ -66,7 +66,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             sections.insert(.achSegment, at: 0)
         }
         
-        let achSegment = SegmentControlViewModel(selectedIndex: item.achDeliveryType == .instant ? 0 : 1,
+        let selectedSegment = Models.AchDeliveryType.allCases.firstIndex(where: { $0.hashValue == item.achDeliveryType?.hashValue})
+        let achSegment = SegmentControlViewModel(selectedIndex: selectedSegment,
                                                  segments: [.init(image: Asset.flash.image, title: L10n.Buy.Ach.Instant.title),
                                                             .init(image: Asset.timelapse.image, title: L10n.Buy.Ach.Hybrid.title)])
         
@@ -205,7 +206,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
         let networkFee = item.networkFee?.fiatValue ?? 0
         let fiatCurrency = (quote.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
-        let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0)/100
+        let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0) / 100
         let instantAchLimit = item.quote?.instantAch?.limitUsd ?? 0
         
         let currencyFormat = "%@ %@"
@@ -222,10 +223,10 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         
-        let buyFee = (quote.buyFee ?? 0)/100 + 1
+        let buyFee = ((quote.buyFee ?? 0) / 100) + 1
         let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
         
-        var isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
+        let isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
         let achFeeDescription: String = instantAchFeeUsd.description
         let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
                                                                        value: .text(achFeeDescription + " " + fiatCurrency)) : nil

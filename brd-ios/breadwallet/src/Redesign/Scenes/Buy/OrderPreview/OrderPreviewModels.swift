@@ -196,7 +196,7 @@ enum OrderPreviewModels {
         struct ResponseDisplay {}
     }
     
-    enum AchDeliveryType {
+    enum AchDeliveryType: CaseIterable {
         case instant
         case normal
     }
