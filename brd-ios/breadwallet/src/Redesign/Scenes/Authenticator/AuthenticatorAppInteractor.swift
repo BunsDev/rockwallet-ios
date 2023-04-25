@@ -16,19 +16,23 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
     var presenter: AuthenticatorAppPresenter?
     var dataStore: AuthenticatorAppStore?
     
-    private var setTwoStepAppModel: SetTwoStepAuth?
-    
     // MARK: - AuthenticatorAppViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
+        guard dataStore?.setTwoStepAppModel == nil else {
+            presenter?.presentData(actionResponse: .init(item: dataStore?.setTwoStepAppModel))
+            
+            return
+        }
+        
         let data = SetTwoStepAuthRequestData(type: .app, updateCode: nil)
         SetTwoStepAuthWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.setTwoStepAppModel = data
+                self?.dataStore?.setTwoStepAppModel = data
                 
-                self?.presenter?.presentData(actionResponse: .init(item: self?.setTwoStepAppModel))
-                
+                self?.presenter?.presentData(actionResponse: .init(item: data))
+
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
@@ -36,7 +40,7 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
     }
     
     func openTotpUrl(viewAction: AuthenticatorAppModels.OpenTotpUrl.ViewAction) {
-        presenter?.presentOpenTotpUrl(actionResponse: .init(url: setTwoStepAppModel?.url))
+        presenter?.presentOpenTotpUrl(actionResponse: .init(url: dataStore?.setTwoStepAppModel?.url))
     }
     
     func next(viewAction: AuthenticatorAppModels.Next.ViewAction) {

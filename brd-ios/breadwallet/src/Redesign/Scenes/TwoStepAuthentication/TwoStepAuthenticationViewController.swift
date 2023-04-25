@@ -81,27 +81,25 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .disable)
                 
             default:
-                if UserManager.shared.twoStepSettings?.type == nil {
-                    self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
-                        if success {
-                            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                            case .email:
-                                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
-                                
-                            case .app:
-                                self.coordinator?.showAuthenticatorApp()
-                                
-                            default:
-                                break
-                            }
-                        } else {
-                            
-                        }
-                    })
-                    
-                } else {
+                guard UserManager.shared.twoStepSettings?.type == nil else {
                     self.changeMethod(indexPath: indexPath)
+                    return
                 }
+                
+                self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
+                    guard success else { return }
+                    
+                    switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+                    case .email:
+                        self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                        
+                    case .app:
+                        self.coordinator?.showAuthenticatorApp()
+                        
+                    default:
+                        break
+                    }
+                })
             }
         }
         
@@ -124,7 +122,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         let fromCellConverted = tableView.convert(fromCell, to: tableView.superview)
         let toCellConverted = tableView.convert(toCell, to: tableView.superview)
         
-        let bottomElementsHeight = toCellConverted.height * CGFloat(sections.suffix(emptySection).count)
+        let bottomElementsHeight = toCellConverted.height * CGFloat(sections[emptySection..<sections.count - 1].count)
         let insetsHeight = tableView.contentInset.top + tableView.contentInset.bottom
         
         return tableView.bounds.height
@@ -147,20 +145,17 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     
     private func handleFlow(indexPath: IndexPath) {
         coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
-            if success {
-                switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                case .email:
-                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepEmailSettings)
-                    
-                case .app:
-                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepAppSettings)
-                    
-                default:
-                    break
-                }
+            guard success else { return }
+            
+            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+            case .email:
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepEmailSettings)
                 
-            } else {
+            case .app:
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepAppSettings)
                 
+            default:
+                break
             }
         })
     }

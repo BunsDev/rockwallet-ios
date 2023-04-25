@@ -30,7 +30,7 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
     private lazy var mainStack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = Margins.small.rawValue
+        view.spacing = Margins.medium.rawValue
         return view
     }()
     
@@ -39,13 +39,7 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
         return view
     }()
     
-    private lazy var scrollView: UIScrollView = {
-        let view = UIScrollView()
-        view.isScrollEnabled = false
-        return view
-    }()
-    
-    private lazy var scrollingStack: UIStackView = {
+    private lazy var buttonsStack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = Margins.small.rawValue
@@ -110,29 +104,18 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
             make.width.height.equalTo(ViewSizes.small.rawValue)
         }
         
-        mainStack.addArrangedSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.leading.trailing.top.equalToSuperview().inset(Margins.small.rawValue)
-        }
-        
         mainStack.addArrangedSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().priority(.low)
         }
         
-        mainStack.addArrangedSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.height.equalTo(Int.max).priority(.low)
+        mainStack.addArrangedSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.leading.trailing.top.equalToSuperview().inset(Margins.small.rawValue)
         }
         
-        scrollView.addSubview(scrollingStack)
-        scrollingStack.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(mainStack).inset(Margins.small.rawValue)
-            make.top.equalToSuperview().inset(Margins.medium.rawValue)
-            make.bottom.equalToSuperview()
-        }
-        
-        scrollingStack.addArrangedSubview(textView)
+        mainStack.addArrangedSubview(textView)
+        mainStack.addArrangedSubview(buttonsStack)
     }
     
     override func configure(with config: PopupConfiguration?) {
@@ -189,20 +172,13 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
                     make.height.equalTo(buttonHeight)
                 }
                 button.setup(with: model)
-                scrollingStack.addArrangedSubview(button)
+                buttonsStack.addArrangedSubview(button)
                 buttons.append(button)
                 button.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
             }
         }
         
-        scrollingStack.layoutIfNeeded()
-        
-        var newHeight = textView.contentSize.height
-        newHeight += (CGFloat(viewModel.buttons.count) * buttonHeight) + Margins.extraHuge.rawValue
-        
-        scrollView.snp.makeConstraints { make in
-            make.height.equalTo(newHeight)
-        }
+        layoutIfNeeded()
     }
     
     @objc private func closeTapped() {

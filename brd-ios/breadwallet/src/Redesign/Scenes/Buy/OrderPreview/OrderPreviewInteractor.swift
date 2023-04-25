@@ -29,7 +29,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                      quote: dataStore?.quote,
                                      networkFee: dataStore?.networkFee,
                                      card: dataStore?.card,
-                                     isAchAccount: dataStore?.isAchAccount)
+                                     isAchAccount: dataStore?.isAchAccount,
+                                     achDeliveryType: dataStore?.achDeliveryType)
             presenter?.presentData(actionResponse: .init(item: item))
             return
         }
@@ -229,5 +230,19 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
             }
         }
+    }
+    
+    func changeAchDeliveryType(viewAction: OrderPreviewModels.SelectAchDeliveryType.ViewAction) {
+        dataStore?.achDeliveryType = viewAction.achDeliveryType
+        
+        let item: Models.Item = (type: dataStore?.type,
+                                 to: dataStore?.to,
+                                 from: dataStore?.from,
+                                 quote: dataStore?.quote,
+                                 networkFee: dataStore?.networkFee,
+                                 card: dataStore?.card,
+                                 isAchAccount: dataStore?.isAchAccount,
+                                 achDeliveryType: dataStore?.achDeliveryType)
+        presenter?.presentPreview(actionRespone: .init(item: item))
     }
 }
