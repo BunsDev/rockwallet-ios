@@ -20,12 +20,12 @@ class SupportedCurrenciesManager {
             switch result {
             case .success(let currencies):
                 self?.supportedCurrencies = currencies ?? []
-                completion?()
                 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion?()
             }
+            
+            completion?()
         }
     }
 }
