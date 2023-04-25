@@ -66,7 +66,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             sections.insert(.achSegment, at: 0)
         }
         
-        let achSegment = SegmentControlViewModel(selectedIndex: 0,
+        let achSegment = SegmentControlViewModel(selectedIndex: item.achDeliveryType == .instant ? 0 : 1,
                                                  segments: [.init(image: Asset.flash.image, title: L10n.Buy.Ach.Instant.title),
                                                             .init(image: Asset.timelapse.image, title: L10n.Buy.Ach.Hybrid.title)])
         
@@ -179,6 +179,10 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         viewController?.displayContinueEnabled(responseDisplay: .init(continueEnabled: actionResponse.value))
     }
     
+    func presentPreview(actionRespone: OrderPreviewModels.Preview.ActionResponse) {
+        viewController?.displayPreview(responseDisplay: .init(infoModel: prepareOrderPreviewViewModel(for: actionRespone.item)))
+    }
+    
     // MARK: - Additional Helpers
     
     private func prepareOrderPreviewViewModel(for item: Models.Item) -> BuyOrderViewModel {
@@ -201,6 +205,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
         let networkFee = item.networkFee?.fiatValue ?? 0
         let fiatCurrency = (quote.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
+        let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0)/100
+        let instantAchLimit = item.quote?.instantAch?.limitUsd ?? 0
         
         let currencyFormat = "%@ %@"
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)
@@ -208,7 +214,6 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: networkFee) ?? "", fiatCurrency)
         
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
-        let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue + networkFee + cardFee) ?? "", fiatCurrency)
         
         let cardAchFee: TitleValueViewModel = isAchAccount ?
             .init(title: .text(L10n.Buy.achFee("$\(String(format: "%.2f", quote.buyFeeUsd?.doubleValue ?? 0.0)) + \(quote.buyFee ?? 0)%")),
@@ -217,9 +222,13 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         
-        // TODO: Update fee
-        let instantBuyFee: TitleValueViewModel? = isAchAccount ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
-                                                                       value: .text("$0.55 USD")) : nil
+        let buyFee = (quote.buyFee ?? 0)/100 + 1
+        let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
+        
+        var isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
+        let achFeeDescription: String = instantAchFeeUsd.description
+        let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
+                                                                       value: .text(achFeeDescription + " " + fiatCurrency)) : nil
         
         switch item.type {
         case .sell:
@@ -233,8 +242,13 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           totalCost: .init(title: .text(L10n.Swap.youReceive), value: .text(totalText)))
             
         default:
-            // TODO: Update amount
-            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice("000")),
+            var totalFee = toFiatValue + networkFee + cardFee
+            if isInstantAch {
+                totalFee += instantAchFeeUsd
+            }
+            let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: totalFee) ?? "", fiatCurrency)
+            let instantAchLimit: String = item.quote?.instantAch?.limitUsd?.description ?? ""
+            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice(instantAchLimit + " " + fiatCurrency)),
                           currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),

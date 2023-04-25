@@ -31,7 +31,14 @@ enum PreviewType {
 
 enum OrderPreviewModels {
     
-    typealias Item = (type: PreviewType?, to: Amount?, from: Decimal?, quote: Quote?, networkFee: Amount?, card: PaymentCard?, isAchAccount: Bool?)
+    typealias Item = (type: PreviewType?,
+                      to: Amount?,
+                      from: Decimal?,
+                      quote: Quote?,
+                      networkFee: Amount?,
+                      card: PaymentCard?,
+                      isAchAccount: Bool?,
+                      achDeliveryType: AchDeliveryType?)
     
     enum Section: Sectionable {
         case achSegment
@@ -187,5 +194,25 @@ enum OrderPreviewModels {
         }
         
         struct ResponseDisplay {}
+    }
+    
+    enum AchDeliveryType {
+        case instant
+        case normal
+    }
+    
+    struct SelectAchDeliveryType {
+        struct ViewAction {
+            var achDeliveryType: AchDeliveryType
+        }
+    }
+    
+    struct Preview {
+        struct ActionResponse {
+            var item: Item
+        }
+        struct ResponseDsiaply {
+            var infoModel: BuyOrderViewModel
+        }
     }
 }

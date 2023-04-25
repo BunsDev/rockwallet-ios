@@ -82,10 +82,19 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeValue = { [weak self] segment in
+                self?.setSegment(segment)
             }
         }
         
         return cell
+    }
+    
+    private func setSegment(_ segment: Int) {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.achSegment.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
+        cell.wrappedView.selectSegment(index: segment)
+        
+        interactor?.changeAchDeliveryType(viewAction: .init(achDeliveryType: segment == 0 ? .instant : .normal))
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -291,6 +300,37 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         
         cell.wrappedView.isEnabled = responseDisplay.continueEnabled
     }
+    
+    func displayPreview(responseDisplay: OrderPreviewModels.Preview.ResponseDsiaply) {
+        guard let previewSection = sections.firstIndex(where: { $0.hashValue == Models.Section.orderInfoCard.hashValue }),
+                let previewCell = tableView.cellForRow(at: IndexPath(row: 0, section: previewSection)) as? WrapperTableViewCell<BuyOrderView> else {
+            return
+        }
+        
+        previewCell.wrappedView.setup(with: responseDisplay.infoModel)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
+    }
+    
+//    func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
+//        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
+//              let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+//              let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
+//              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+//            continueButton.viewModel?.enabled = false
+//            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+//
+//            return
+//        }
+//
+//        fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
+//        toCell.wrappedView.setup(with: actionResponse.cardModel)
+//
+//        tableView.invalidateTableViewIntrinsicContentSize()
+//
+//        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
+//        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+//    }
     
     // MARK: - Additional Helpers
 }
