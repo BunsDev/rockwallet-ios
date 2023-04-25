@@ -3228,7 +3228,7 @@
 
 "TwoStep.App.Confirmation.BackupCode.Title" = "Enter the code from your Authenticator app";
 
-"TwoStep.App.Confirmation.Title" = "Enter one of your backup codes";
+"TwoStep.App.Confirmation.Title" = "Enter the code from your Authenticator app";
 
 "TwoStep.App.Import.action" = "Import with link";
 
