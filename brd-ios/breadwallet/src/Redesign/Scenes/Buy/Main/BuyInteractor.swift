@@ -25,30 +25,21 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             getExchangeRate(viewAction: .init(), completion: {})
             return
         }
+
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
         
-        SupportedCurrenciesWorker().execute { [weak self] result in
-            switch result {
-            case .success(let currencies):
-                ExchangeManager.shared.reload()
-                
-                guard let currencies, !currencies.isEmpty else {
-                    return
-                }
-                
-                self?.dataStore?.supportedCurrencies = currencies
-                self?.dataStore?.currencies = self?.dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
-                
-                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(type: self?.dataStore?.paymentMethod,
-                                                                                     achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
-                self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
-                                                                     card: self?.dataStore?.selected,
-                                                                     type: self?.dataStore?.paymentMethod,
-                                                                     quote: self?.dataStore?.quote))
-                self?.getPayments(viewAction: .init())
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
-            }
-        }
+        guard !currencies.isEmpty else { return }
+        
+        dataStore?.supportedCurrencies = currencies
+        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
+        
+        presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
+                                                                       achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
+        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
+                                                       card: dataStore?.selected,
+                                                       type: dataStore?.paymentMethod,
+                                                       quote: dataStore?.quote))
+        getPayments(viewAction: .init())
     }
     
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
