@@ -20,6 +20,7 @@ struct MenuItem {
         static let about = Asset.info.image
         static let atmMap = Asset.placemark.image
         static let export = Asset.withdrawal.image
+        static let paymailAddress = Asset.paymailAddress.image
     }
     
     var title: String
