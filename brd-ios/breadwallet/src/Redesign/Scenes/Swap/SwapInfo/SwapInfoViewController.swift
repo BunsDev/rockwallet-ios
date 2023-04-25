@@ -26,7 +26,7 @@ class SwapInfoViewController: BaseInfoViewController {
     }
     override var buttonViewModels: [ButtonViewModel] {
         return [
-            .init(title: L10n.Swap.backToHome, callback: { [weak self] in
+            .init(title: L10n.Button.back, callback: { [weak self] in
                 self?.shouldDismiss = true
                 
                 self?.didTapMainButton?()
