@@ -117,7 +117,7 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
             return
         }
         
-        interactor?.showSuccessBottomAlert(viewAction: .init())
+        interactor?.createPaymailAddress(viewAction: .init())
     }
     
     private func showPaymailPopup() {
@@ -126,11 +126,15 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
 
     // MARK: - PaymailAddressResponseDisplay
     
+    func displayPaymailSuccess(responseDisplay: PaymailAddressModels.CreatePaymail.ResponseDisplay) {
+        interactor?.showSuccessBottomAlert(viewAction: .init())
+    }
+    
     func displayPaymailPopup(responseDisplay: PaymailAddressModels.InfoPopup.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
     }
     
-    func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.Success.ResponseDisplay) {
+    func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.BottomAlert.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             self?.coordinator?.dismissFlow()
         })

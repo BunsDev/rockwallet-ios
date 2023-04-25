@@ -24,7 +24,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         presenter?.presentPaymailPopup(actionResponse: .init())
     }
 
-    func showSuccessBottomAlert(viewAction: Models.Success.ViewAction) {
+    func showSuccessBottomAlert(viewAction: Models.BottomAlert.ViewAction) {
         presenter?.presentSuccessBottomAlert(actionResponse: .init())
     }
     
@@ -41,6 +41,21 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
                                                          isEmailValid: isEmailValid,
                                                          isEmailEmpty: isEmailEmpty,
                                                          emailState: emailState))
+    }
+    
+    func createPaymailAddress(viewAction: Models.CreatePaymail.ViewAction) {
+        guard let email = dataStore?.paymailAddress else { return }
+        
+        let data = PaymailRequestData(paymail: email, xpub: "")
+        PaymailWorker().execute(requestData: data) { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.presenter?.presentPaymailSuccess(actionResponse: .init())
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
     }
     
     // MARK: - Aditional helpers

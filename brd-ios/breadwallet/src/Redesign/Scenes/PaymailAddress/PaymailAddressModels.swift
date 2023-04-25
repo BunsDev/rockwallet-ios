@@ -70,6 +70,12 @@ enum PaymailAddressModels {
         }
     }
     
+    struct CreatePaymail {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
+    }
+    
     struct InfoPopup {
         struct ViewAction {}
         struct ActionResponse {}
@@ -78,7 +84,7 @@ enum PaymailAddressModels {
         }
     }
     
-    struct Success {
+    struct BottomAlert {
         struct ViewAction {}
         struct ActionResponse {}
         struct ResponseDisplay {}
