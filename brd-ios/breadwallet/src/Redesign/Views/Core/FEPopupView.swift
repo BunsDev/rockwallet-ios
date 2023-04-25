@@ -30,7 +30,7 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
     private lazy var mainStack: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = Margins.small.rawValue
+        view.spacing = Margins.medium.rawValue
         return view
     }()
     
@@ -111,8 +111,7 @@ class FEPopupView: FEView<PopupConfiguration, PopupViewModel> {
         
         mainStack.addArrangedSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(Margins.medium.rawValue)
-            make.leading.trailing.equalToSuperview().inset(Margins.small.rawValue)
+            make.leading.trailing.top.equalToSuperview().inset(Margins.small.rawValue)
         }
         
         mainStack.addArrangedSubview(textView)
