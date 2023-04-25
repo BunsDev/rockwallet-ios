@@ -28,5 +28,20 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         presenter?.presentSuccessBottomAlert(actionResponse: .init())
     }
     
+    func validate(viewAction: Models.Validate.ViewAction) {
+        if let email = viewAction.email {
+            dataStore?.paymailAddress = email
+        }
+        
+        let isEmailValid = dataStore?.paymailAddress?.isValidEmailAddress ?? false
+        let isEmailEmpty = dataStore?.paymailAddress?.isEmpty == true
+        let emailState: DisplayState? = isEmailEmpty || isEmailValid ? nil : .error
+        
+        presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
+                                                         isEmailValid: isEmailValid,
+                                                         isEmailEmpty: isEmailEmpty,
+                                                         emailState: emailState))
+    }
+    
     // MARK: - Aditional helpers
 }

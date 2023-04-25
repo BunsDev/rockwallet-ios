@@ -59,6 +59,20 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.Success.ActionResponse) {
         viewController?.displaySuccessBottomAlert(responseDisplay: .init())
     }
+    
+    func presentValidate(actionResponse: PaymailAddressModels.Validate.ActionResponse) {
+        let isValid = actionResponse.isEmailValid
+        
+        viewController?.displayValidate(responseDisplay:
+                .init(email: actionResponse.email,
+                      isEmailValid: actionResponse.isEmailValid,
+                      isEmailEmpty: actionResponse.isEmailEmpty,
+                      emailModel: .init(title: L10n.Account.email,
+                                        hint: actionResponse.emailState == .error ? L10n.Account.invalidEmail : nil,
+                                        trailing: actionResponse.emailState == .error ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
+                                        displayState: actionResponse.emailState),
+                      isValid: isValid))
+    }
 
     // MARK: - Additional Helpers
 
