@@ -18,7 +18,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         guard let item = actionResponse.item as? Models.Item else { return }
         
         let confirmationType = item.type
-        let email = "\(": \n")\(String(describing: item.email))"
+        let email = item.email ?? ""
+        let emailString = ":\n\(email)"
         
         var sections: [Models.Section] = [
             .image,
@@ -49,11 +50,11 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         switch confirmationType {
         case .account, .acountTwoStepEmailSettings, .acountTwoStepAppSettings:
             title = L10n.AccountCreation.verifyEmail
-            instructions = "\(L10n.AccountCreation.enterCode)\(email)"
+            instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
         case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .disable:
             title = L10n.TwoStep.Email.Confirmation.title
-            instructions = "\(L10n.AccountCreation.enterCode)\(email)"
+            instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
         case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword:
             title = L10n.TwoStep.App.Confirmation.title
