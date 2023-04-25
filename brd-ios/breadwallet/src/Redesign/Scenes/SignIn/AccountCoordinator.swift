@@ -37,8 +37,10 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.VerifyPhoneNumber)
     }
     
-    func showAuthenticatorApp() {
-        open(scene: Scenes.AuthenticatorApp)
+    func showAuthenticatorApp(setTwoStepAppModel: SetTwoStepAuth? = nil) {
+        open(scene: Scenes.AuthenticatorApp) { vc in
+            vc.dataStore?.setTwoStepAppModel = setTwoStepAppModel
+        }
     }
     
     func showBackupCodes() {

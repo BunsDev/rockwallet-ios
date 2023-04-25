@@ -30,6 +30,7 @@ protocol AuthenticatorAppResponseDisplays: AnyObject, BaseResponseDisplays, Fetc
 }
 
 protocol AuthenticatorAppDataStore: BaseDataStore, FetchDataStore {
+    var setTwoStepAppModel: SetTwoStepAuth? { get set }
 }
 
 protocol AuthenticatorAppDataPassing {

@@ -17,8 +17,6 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let confirmationType = actionResponse.item as? Models.Item else { return }
         
-        let email = "\(": \n")\(UserDefaults.email ?? "")"
-        
         var sections: [Models.Section] = [
             .image,
             .title,
@@ -44,6 +42,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         
         let title: String
         let instructions: String
+        let email = "\(": \n")\(UserDefaults.email ?? "")"
         
         switch confirmationType {
         case .account, .acountTwoStepEmailSettings, .acountTwoStepAppSettings:

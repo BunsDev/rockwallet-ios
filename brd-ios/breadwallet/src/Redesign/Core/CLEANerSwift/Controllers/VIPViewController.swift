@@ -117,6 +117,7 @@ class VIPViewController<C: CoordinatableRoutes,
         super.didMove(toParent: parent)
 
         parent?.presentationController?.delegate = self
+        
         guard parent == nil else { return }
 
         coordinator?.goBack()
