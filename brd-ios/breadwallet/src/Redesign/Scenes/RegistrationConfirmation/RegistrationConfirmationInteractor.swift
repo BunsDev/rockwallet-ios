@@ -19,7 +19,8 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard let confirmationType = dataStore?.confirmationType else { return }
         
-        presenter?.presentData(actionResponse: .init(item: confirmationType))
+        presenter?.presentData(actionResponse: .init(item: Models.Item(type: confirmationType,
+                                                                       email: UserDefaults.email ?? dataStore?.registrationRequestData?.email)))
         
         switch dataStore?.confirmationType {
         case .twoStepEmail,

@@ -18,7 +18,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         guard let item = actionResponse.item as? Models.Item else { return }
         
         let confirmationType = item.type
-        let email = "\(": \n")\(String(describing: UserDefaults.email ?? item.email))"
+        let email = "\(": \n")\(String(describing: item.email))"
         
         var sections: [Models.Section] = [
             .image,
