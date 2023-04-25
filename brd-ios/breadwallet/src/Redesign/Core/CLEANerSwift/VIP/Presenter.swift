@@ -15,10 +15,23 @@ protocol Presenter: NSObject, BaseActionResponses {
 
 extension Presenter {
     func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
-        let responseDisplay: MessageModels.ResponseDisplays
-        let error = actionResponse.error
-        
         guard !isAccessDenied(error: actionResponse.error) else { return }
+        
+        if let error = actionResponse.error as? NetworkingError, (error == .twoStepEmailRequired || error == .twoStepAppRequired) {
+            let responseDisplay: MessageModels.ResponseDisplays = .init(error: error)
+            
+            viewController?.displayMessage(responseDisplay: responseDisplay)
+        } else if self.isKind(of: SwapPresenter.self) {
+            handleSwapErrors(actionResponse: actionResponse)
+        } else if self.isKind(of: BuyPresenter.self) {
+            handleBuyErrors(actionResponse: actionResponse)
+        } else {
+            handleGeneralErrors(error: actionResponse.error)
+        }
+    }
+    
+    private func handleGeneralErrors(error: Error?) {
+        let responseDisplay: MessageModels.ResponseDisplays
         
         if let error = error as? NetworkingError, error == .sessionExpired {
             responseDisplay = .init(error: error)
@@ -41,8 +54,41 @@ extension Presenter {
             let config = Presets.InfoView.error
             responseDisplay = .init(model: model, config: config)
         }
-    
+        
         viewController?.displayMessage(responseDisplay: responseDisplay)
+    }
+    
+    private func handleSwapErrors(actionResponse: MessageModels.Errors.ActionResponse) {
+        if let error = actionResponse.error as? ExchangeErrors, error.errorMessage == ExchangeErrors.selectAssets.errorMessage {
+            (self as? SwapPresenter)?.presentAssetInfoPopup(actionResponse: .init())
+        } else if let error = actionResponse.error as? FEError {
+            let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
+            let config: InfoViewConfiguration
+            
+            switch error as? ExchangeErrors {
+            case .highFees:
+                config = Presets.InfoView.warning
+
+            default:
+                config = Presets.InfoView.error
+            }
+            
+            viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
+        } else {
+            viewController?.displayMessage(responseDisplay: .init())
+        }
+    }
+    
+    func handleBuyErrors(actionResponse: MessageModels.Errors.ActionResponse) {
+        guard let error = actionResponse.error as? FEError else {
+            viewController?.displayMessage(responseDisplay: .init())
+            return
+        }
+        
+        let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
+        let config = Presets.InfoView.error
+        
+        viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
     }
     
     func isAccessDenied(error: Error?) -> Bool {

@@ -19,6 +19,8 @@ class BaseSendViewController: UIViewController {
     let sendingActivity = BRActivityViewController(message: L10n.TransactionDetails.titleSending)
     let sender: Sender
     
+    weak var coordinator: BaseCoordinator?
+    
     init(sender: Sender) {
         self.sender = sender
         super.init(nibName: nil, bundle: nil)
@@ -28,14 +30,31 @@ class BaseSendViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func handlePinInputSuccess(pin: String, pinValidationCallback: (String) -> Void) {
+        parent?.view.isFrameChangeBlocked = false
+        pinValidationCallback(pin)
+        present(sendingActivity, animated: false)
+    }
+    
     func send() {
         let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
             guard let self = self else { return }
             self.sendingActivity.dismiss(animated: false) {
                 self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
-                    self.parent?.view.isFrameChangeBlocked = false
-                    pinValidationCallback(pin)
-                    self.present(self.sendingActivity, animated: false)
+                    if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.sending {
+                        self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                            vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepApp : .twoStepEmail
+                            vc?.isModalDismissable = true
+                            
+                            vc?.didDismiss = { didDismissSuccessfully in
+                                guard didDismissSuccessfully else { return }
+                                
+                                self.handlePinInputSuccess(pin: pin, pinValidationCallback: pinValidationCallback)
+                            }
+                        }
+                    } else {
+                        self.handlePinInputSuccess(pin: pin, pinValidationCallback: pinValidationCallback)
+                    }
                 }
             }
         }

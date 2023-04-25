@@ -82,6 +82,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: (() -> Void)?
+    var didTapTwoStepFromPrompt: (() -> Void)?
     var didTapCreateAccountFromPrompt: (() -> Void)?
     var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
@@ -382,7 +383,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         })
         
         Store.subscribe(self, name: .promptTwoStep, callback: { _ in
-            // TODO: ENABLE 2FA
+            self.didTapTwoStepFromPrompt?()
         })
         
         Store.subscribe(self, name: .promptLimitsAuthentication, callback: { _ in
@@ -411,6 +412,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 
             case .noAccount:
                 self?.didTapCreateAccountFromPrompt?()
+                
+            case .twoStep:
+                self?.didTapTwoStepFromPrompt?()
                 
             default:
                 break
