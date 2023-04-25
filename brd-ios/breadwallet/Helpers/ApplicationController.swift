@@ -487,6 +487,10 @@ class ApplicationController: Subscriber {
             self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
         }
         
+        homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
+            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication)
+        }
+        
         homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
             LoadingView.show()
             veriffKYCManager = VeriffKYCManager(navigationController: coordinator?.navigationController)

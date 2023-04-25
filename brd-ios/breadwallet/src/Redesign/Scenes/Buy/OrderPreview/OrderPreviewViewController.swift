@@ -201,11 +201,28 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     func showPinInput() {
         coordinator?.showPinInput(keyStore: dataStore?.keyStore) { [weak self] success in
-            if success {
-                self?.interactor?.checkTimeOut(viewAction: .init())
+            if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.buy {
+                self?.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                    vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepApp : .twoStepEmail
+                    vc?.isModalDismissable = true
+                    
+                    vc?.didDismiss = { didDismissSuccessfully in
+                        guard didDismissSuccessfully else { return }
+                        
+                        self?.handlePinInputSuccess(didDismissSuccessfully)
+                    }
+                }
             } else {
-                self?.coordinator?.dismissFlow()
+                self?.handlePinInputSuccess(success)
             }
+        }
+    }
+    
+    private func handlePinInputSuccess(_ bool: Bool) {
+        if bool {
+            interactor?.checkTimeOut(viewAction: .init())
+        } else {
+            coordinator?.dismissFlow()
         }
     }
     
@@ -280,18 +297,6 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {
         coordinator?.showThreeDSecure(url: responseDisplay.url)
-    }
-    
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hideIfNeeded()
-        }
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        coordinator?.showToastMessage(with: responseDisplay.error,
-                                      model: responseDisplay.model,
-                                      configuration: responseDisplay.config)
     }
     
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {

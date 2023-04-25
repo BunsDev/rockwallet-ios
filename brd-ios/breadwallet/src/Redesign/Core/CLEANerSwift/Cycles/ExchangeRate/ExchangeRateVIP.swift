@@ -75,6 +75,8 @@ extension Interactor where Self: ExchangeRateViewActions,
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.quoteFail))
                     return
                 }
+                
+                self?.presenter?.presentError(actionResponse: .init(error: error))
             }
         }
     }

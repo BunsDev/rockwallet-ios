@@ -171,14 +171,6 @@ class BillingAddressViewController: BaseTableViewController<ItemSelectionCoordin
         coordinator?.showThreeDSecure(url: responseDisplay.url)
     }
     
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        DispatchQueue.main.async {
-            self.coordinator?.showToastMessage(with: responseDisplay.error,
-                                               model: responseDisplay.model,
-                                               configuration: responseDisplay.config)
-        }
-    }
-    
     // MARK: - Additional Helpers
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {

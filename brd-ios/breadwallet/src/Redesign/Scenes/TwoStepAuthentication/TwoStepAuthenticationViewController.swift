@@ -111,7 +111,10 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     // TODO: This creates an empty space between cells to make the "toCell" stick to bottom. Make this reusable
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.app.hashValue }),
-              let toSection = sections.firstIndex(where: { $0.hashValue == sections.last?.hashValue }) else {
+              let toSection = sections.firstIndex(where: { $0.hashValue == sections.last?.hashValue }),
+              let emptySection = sections.firstIndex(where: { $0.hashValue == Models.Section.emptySection.hashValue }),
+              let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
+              section == .emptySection else {
             return UITableView.automaticDimension
         }
         
@@ -121,16 +124,13 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         let fromCellConverted = tableView.convert(fromCell, to: tableView.superview)
         let toCellConverted = tableView.convert(toCell, to: tableView.superview)
         
-        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
-              section == .emptySection else { return UITableView.automaticDimension }
+        let bottomElementsHeight = toCellConverted.height * CGFloat(sections.suffix(emptySection).count)
+        let insetsHeight = tableView.contentInset.top + tableView.contentInset.bottom
         
         return tableView.bounds.height
-        - tableView.contentInset.top
-        - tableView.contentInset.bottom
+        - insetsHeight
+        - bottomElementsHeight
         - fromCellConverted.maxY
-        - toCellConverted.height
-        - UIDevice.current.bottomNotch
-        - UIDevice.current.topNotch
     }
     
     // MARK: - User Interaction

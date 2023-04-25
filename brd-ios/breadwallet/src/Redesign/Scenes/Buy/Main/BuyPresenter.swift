@@ -182,20 +182,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                                               config: Presets.InfoView.verification))
     }
     
-    func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
-        guard !isAccessDenied(error: actionResponse.error) else { return }
-        
-        guard let error = actionResponse.error as? FEError else {
-            viewController?.displayMessage(responseDisplay: .init())
-            return
-        }
-        
-        let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
-        let config = Presets.InfoView.error
-        
-        viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
-    }
-    
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse) {
         let message = actionResponse.method == .card ? L10n.Buy.switchedToDebitCard : L10n.Buy.switchedToAch
         viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(message)),

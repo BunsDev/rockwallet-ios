@@ -110,7 +110,7 @@ extension State {
 
 enum RootModal {
     case none
-    case send(currency: Currency)
+    case send(currency: Currency, coordinator: BaseCoordinator?)
     case receive(currency: Currency)
     case loginScan
     case requestAmount(currency: Currency, address: String)
