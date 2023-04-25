@@ -66,7 +66,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             sections.insert(.achSegment, at: 0)
         }
         
-        let selectedSegment = Models.AchDeliveryType.allCases.firstIndex(where: { $0.hashValue == item.achDeliveryType?.hashValue})
+        let selectedSegment = Models.AchDeliveryType.allCases.firstIndex(where: { $0.hashValue == item.achDeliveryType?.hashValue })
         let achSegment = SegmentControlViewModel(selectedIndex: selectedSegment,
                                                  segments: [.init(image: Asset.flash.image, title: L10n.Buy.Ach.Instant.title),
                                                             .init(image: Asset.timelapse.image, title: L10n.Buy.Ach.Hybrid.title)])
