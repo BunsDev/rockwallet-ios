@@ -117,7 +117,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         dataSource?.apply(snapshot, completion: { [weak self] in
+            self?.tableView.beginUpdates()
             self?.tableView.invalidateIntrinsicContentSize()
+            self?.tableView.endUpdates()
         })
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
