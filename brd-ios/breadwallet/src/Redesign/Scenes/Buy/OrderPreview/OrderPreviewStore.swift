@@ -45,6 +45,8 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
         return card?.type == .ach
     }
     
+    var achDeliveryType: OrderPreviewModels.AchDeliveryType? = .instant
+    
     // MARK: - Aditional helpers
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
