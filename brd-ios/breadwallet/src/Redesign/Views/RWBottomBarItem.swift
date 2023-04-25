@@ -25,6 +25,7 @@ struct RWBottomBarItemViewModel: ViewModel {
     
     var title: String
     var image: UIImage?
+    var enabled: Bool = true
     var callback: (() -> Void)?
 }
 
@@ -96,6 +97,8 @@ class RWBottomBarItem: FEView<RWBottomBarItemConfiguration, RWBottomBarItemViewM
         
         imageView.image = viewModel.image
         label.setup(with: .text(viewModel.title))
+        content.isUserInteractionEnabled = viewModel.enabled
+        content.alpha = viewModel.enabled ? 1.0 : 0.5
         onTap = viewModel.callback
     }
     

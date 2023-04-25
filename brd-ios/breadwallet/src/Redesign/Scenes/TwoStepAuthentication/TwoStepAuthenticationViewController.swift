@@ -82,7 +82,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 
             default:
                 if UserManager.shared.twoStepSettings?.type == nil {
-                    coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
+                    self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
                         if success {
                             switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
                             case .email:

@@ -79,7 +79,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showSwap(coreSystem: CoreSystem, keyStore: KeyStore) {
+    func showSwap(selectedCurrency: Currency? = nil, coreSystem: CoreSystem, keyStore: KeyStore) {
         guard let profile = UserManager.shared.profile,
               profile.kycAccessRights.hasSwapAccess else {
             handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
@@ -94,12 +94,14 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.currencies = Store.state.currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    guard let selectedCurrency else { return }
+                    vc?.dataStore?.from = .zero(selectedCurrency)
                 }
             }
         }
     }
     
-    func showBuy(type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showBuy(selectedCurrency: Currency? = nil, type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         guard let profile = UserManager.shared.profile,
               ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
             handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
@@ -115,6 +117,8 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    guard let selectedCurrency else { return }
+                    vc?.dataStore?.toAmount = .zero(selectedCurrency)
                 }
             }
         }
@@ -169,6 +173,12 @@ class BaseCoordinator: NSObject, Coordinatable {
     func showTwoStepAuthentication(keyStore: KeyStore?) {
         openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
             vc?.dataStore?.keyStore = keyStore
+        }
+    }
+    
+    func showPaymailAddress() {
+        openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
+            vc?.dataStore?.screenType = .paymailNotSetup
         }
     }
     

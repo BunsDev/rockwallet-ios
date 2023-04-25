@@ -50,7 +50,8 @@ class AssetDetailsViewController: UIViewController, Subscriber {
                 
             // TODO: Replace buy with buySell for drawer
             case .buy:
-                self.coordinator?.showBuy(type: .card,
+                self.coordinator?.showBuy(selectedCurrency: currency,
+                                          type: .card,
                                           coreSystem: coreSystem,
                                           keyStore: keyStore)
                 
@@ -58,7 +59,8 @@ class AssetDetailsViewController: UIViewController, Subscriber {
 //                toggleDrawer()
                 
             case .swap:
-                self.coordinator?.showSwap(coreSystem: coreSystem,
+                self.coordinator?.showSwap(selectedCurrency: currency,
+                                           coreSystem: coreSystem,
                                            keyStore: keyStore)
                 
             }

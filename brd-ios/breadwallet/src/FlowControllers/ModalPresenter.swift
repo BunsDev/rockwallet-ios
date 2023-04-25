@@ -20,12 +20,14 @@ class ModalPresenter: Subscriber {
     
     init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?,
          deleteAccountCallback: (() -> Void)?,
-         twoStepAuthCallback: (() -> Void)?) {
+         twoStepAuthCallback: (() -> Void)?,
+         paymailCallback: (() -> Void)?) {
         self.system = system
         self.window = window
         self.alertPresenter = alertPresenter
         self.deleteAccountCallback = deleteAccountCallback
         self.twoStepAuthCallback = twoStepAuthCallback
+        self.paymailCallback = paymailCallback
         self.keyStore = keyStore
         self.modalTransitionDelegate = ModalTransitionDelegate(type: .regular)
         
@@ -42,6 +44,7 @@ class ModalPresenter: Subscriber {
     private var alertPresenter: AlertPresenter?
     private var deleteAccountCallback: (() -> Void)?
     private var twoStepAuthCallback: (() -> Void)?
+    private var paymailCallback: (() -> Void)?
     private let modalTransitionDelegate: ModalTransitionDelegate
     private let messagePresenter = MessageUIPresenter()
     private let verifyPinTransitionDelegate = PinTransitioningDelegate()
@@ -559,6 +562,10 @@ class ModalPresenter: Subscriber {
             // Scan QR Code
             MenuItem(title: L10n.MenuButton.scan, icon: MenuItem.Icon.scan) { [weak self] in
                 self?.presentLoginScan()
+            },
+            // Paymail address
+            MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) { [weak self] in
+                self?.paymailCallback?()
             },
             // Feedback
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in

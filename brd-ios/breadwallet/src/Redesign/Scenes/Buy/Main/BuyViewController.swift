@@ -245,7 +245,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             self?.coordinator?.dismissFlow()
-            
             self?.interactor?.setAssets(viewAction: .init(currency: model.subtitle))
         }
     }

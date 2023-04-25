@@ -35,13 +35,6 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
         }
     }
     
-    func copyValue(viewAction: AuthenticatorAppModels.CopyValue.ViewAction) {
-        let value = viewAction.value?.filter { !$0.isWhitespace } ?? ""
-        UIPasteboard.general.string = value
-        
-        presenter?.presentCopyValue(actionResponse: .init())
-    }
-    
     func openTotpUrl(viewAction: AuthenticatorAppModels.OpenTotpUrl.ViewAction) {
         presenter?.presentOpenTotpUrl(actionResponse: .init(url: setTwoStepAppModel?.url))
     }
