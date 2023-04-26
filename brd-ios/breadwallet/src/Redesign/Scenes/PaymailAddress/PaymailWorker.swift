@@ -24,6 +24,11 @@ struct PaymailRequestData: RequestModelData {
 }
 
 class PaymailWorker: BaseApiWorker<PlainMapper> {
+    override func getHeaders() -> [String: String] {
+        return UserSignature().getHeaders(nonce: (getParameters()["paymail"] as? String),
+                                          token: (getParameters()["xpub"] as? String))
+    }
+    
     override func getUrl() -> String {
         return PaymailEndpoints.paymail.url
     }
