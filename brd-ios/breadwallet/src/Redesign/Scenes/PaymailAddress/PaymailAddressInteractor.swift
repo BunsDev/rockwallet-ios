@@ -17,7 +17,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     // MARK: - PaymailAddressViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        presenter?.presentData(actionResponse: .init(item: dataStore?.screenType))
+        presenter?.presentData(actionResponse: .init(item: dataStore))
     }
     
     func showPaymailPopup(viewAction: Models.InfoPopup.ViewAction) {
@@ -25,6 +25,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     }
 
     func showSuccessBottomAlert(viewAction: Models.BottomAlert.ViewAction) {
+        dataStore?.screenType = .paymailSetup
         presenter?.presentSuccessBottomAlert(actionResponse: .init())
     }
     

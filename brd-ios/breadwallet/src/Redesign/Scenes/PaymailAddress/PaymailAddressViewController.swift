@@ -136,7 +136,8 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     
     func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.BottomAlert.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.dismissFlow()
+            self?.setupVerticalButtons()
+            self?.interactor?.getData(viewAction: .init())
         })
     }
     
