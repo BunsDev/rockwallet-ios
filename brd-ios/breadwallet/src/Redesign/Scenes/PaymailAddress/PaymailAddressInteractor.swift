@@ -28,5 +28,16 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         presenter?.presentSuccessBottomAlert(actionResponse: .init())
     }
     
+    func getXPub(code: String) -> String {
+        var keyStore: KeyStore
+        do {
+            keyStore = try KeyStore.create()
+        } catch { 
+            fatalError("error initializing key store")
+        }
+        let xpub = keyStore.getXPubFromAccount(code: code)
+        return xpub
+    }
+    
     // MARK: - Aditional helpers
 }
