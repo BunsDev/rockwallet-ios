@@ -24,6 +24,7 @@ protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions {
     func showAchInstantDrawer(viewAction: OrderPreviewModels.AchInstantDrawer.ViewAction)
     func submit(viewAction: OrderPreviewModels.Submit.ViewAction)
     func toggleTickbox(viewAction: OrderPreviewModels.Tickbox.ViewAction)
+    func changeAchDeliveryType(viewAction: OrderPreviewModels.SelectAchDeliveryType.ViewAction)
 }
 
 protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses {
@@ -38,6 +39,7 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse)
     func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse)
     func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse)
+    func presentPreview(actionRespone: OrderPreviewModels.Preview.ActionResponse)
 }
 
 protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
@@ -52,6 +54,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay)
     func displayAchInstantDrawer(responseDisplay: OrderPreviewModels.AchInstantDrawer.ResponseDisplay)
     func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay)
+    func displayPreview(responseDisplay: OrderPreviewModels.Preview.ResponseDsiaply)
 }
 
 protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {

@@ -47,12 +47,16 @@ class AssetDetailsFooterView: UIView, Subscriber {
         setupToolbarButtons()
     }
     
+    var isSupported: Bool {
+        SupportedCurrenciesManager.shared.supportedCurrencies.first(where: { $0.code == currency.code }) != nil
+    }
+    
     private func setupToolbarButtons() {
         let bottomButtonModels: [RWBottomBarItemViewModel] = [
             .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
             .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
-            .init(title: L10n.Button.buy, image: Asset.buy.image, callback: { self.buy() }),
-            .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, callback: { self.swap() })
+            .init(title: L10n.Button.buy, image: Asset.buy.image, enabled: isSupported, callback: { self.buy() }),
+            .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, enabled: isSupported, callback: { self.swap() })
         ]
         
         let buttons = bottomButtonModels.compactMap { model -> RWBottomBarItem in

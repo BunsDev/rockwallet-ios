@@ -151,6 +151,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
             
         case .logout:
             LoadingView.show()
+            
             interactor?.logout(viewAction: .init())
             
         }
@@ -162,14 +163,10 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                                       fromBuy: false)
     }
     
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+    func displayLogout(responseDisplay: ProfileModels.Logout.ResponseDisplay) {
         LoadingView.hideIfNeeded()
         
         coordinator?.dismissFlow()
-        
-        UIApplication.topViewController()?.showToastMessage(model: responseDisplay.model,
-                                                            configuration: responseDisplay.config,
-                                                            onTapCallback: nil)
     }
     
     // MARK: - Additional Helpers

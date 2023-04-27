@@ -21,6 +21,10 @@ struct ServerResponse: Decodable {
         case twoStepInvalidCodeBlockedAccount = "Invalid 2FA code, account blocked"
     }
     
+    enum ErrorCategory: Decodable {
+        case twoStep
+    }
+    
     var result: String?
     var error: ServerError?
     var errorType: String?

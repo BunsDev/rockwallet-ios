@@ -62,11 +62,11 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                                                  checkmark: .image(appAuthCheckmark),
                                                  isInteractable: authType != .authenticator)
             ],
+            .emptySection: [EmptyViewModel()],
             .backupCodes: [
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.BackupCodes.title),
                                                  checkmark: .image(settingsChevron))
             ],
-            .emptySection: [EmptyViewModel()],
             .settings: [
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.TwoStep.AuthSettings.title),
                                                  checkmark: .image(settingsChevron))

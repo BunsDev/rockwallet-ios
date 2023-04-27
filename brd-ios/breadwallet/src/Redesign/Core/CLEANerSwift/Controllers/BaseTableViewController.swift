@@ -95,6 +95,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
 
     override func prepareData() {
         super.prepareData()
+        
         (interactor as? (any FetchViewActions))?.getData(viewAction: .init())
     }
 
@@ -117,10 +118,12 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         dataSource?.apply(snapshot, completion: { [weak self] in
+            self?.tableView.reloadData()
             self?.tableView.invalidateIntrinsicContentSize()
         })
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
+        
         LoadingView.hideIfNeeded()
     }
 

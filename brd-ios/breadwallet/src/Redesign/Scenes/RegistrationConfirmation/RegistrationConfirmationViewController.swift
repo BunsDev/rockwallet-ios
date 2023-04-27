@@ -18,7 +18,15 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     override var isModalDismissableEnabled: Bool { return isModalDismissable }
     var isModalDismissable = true
     
+    var didDismiss: ((Bool) -> Void)?
+    
     // MARK: - Overrides
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        didDismiss?(false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,6 +128,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         view.endEditing(true)
         
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
+            self?.didDismiss?(true)
+            
             guard let self = self else { return }
             switch self.dataStore?.confirmationType {
             case .twoStepEmailLogin, .twoStepAppLogin, .enterAppBackupCode, .twoStepEmailResetPassword, .twoStepAppResetPassword:
@@ -136,7 +146,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
                 })
                 
             case .acountTwoStepAppSettings:
-                self.coordinator?.showAuthenticatorApp()
+                self.coordinator?.showAuthenticatorApp(setTwoStepAppModel: dataStore?.setTwoStepAppModel)
                 
             case .twoStepApp:
                 self.coordinator?.showBackupCodes()
