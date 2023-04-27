@@ -700,6 +700,13 @@ extension KeyStore: WalletAuthenticator {
             }
         }
     }
+    
+    func getXPubFromAccount(code: String) -> String {
+        guard let seedPhrase: String = try? keychainItem(key: KeychainKey.mnemonic),
+            let accountData = serializedAccountData else { return "" }
+        let xpub = Account.getXPubFromSerialization(serialization: accountData, code: code, phrase: seedPhrase)
+        return xpub
+    }
 }
 
 // MARK: - TransactionAuthenticator
