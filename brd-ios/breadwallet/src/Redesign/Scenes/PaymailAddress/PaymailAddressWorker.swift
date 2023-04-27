@@ -1,5 +1,5 @@
 // 
-//  PaymailWorker.swift
+//  PaymailAddressWorker.swift
 //  breadwallet
 //
 //  Created by Dijana Angelovska on 25.4.23.
@@ -23,7 +23,7 @@ struct PaymailRequestData: RequestModelData {
     }
 }
 
-class PaymailWorker: BaseApiWorker<PlainMapper> {
+class PaymailAddressWorker: BaseApiWorker<PlainMapper> {
     override func getHeaders() -> [String: String] {
         return UserSignature().getHeaders(nonce: (getParameters()["paymail"] as? String),
                                           token: (getParameters()["xpub"] as? String))

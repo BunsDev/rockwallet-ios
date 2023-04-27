@@ -633,7 +633,7 @@
 		C46C2903287EBF4F0035C843 /* BaseInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46C28FC287EBF4F0035C843 /* BaseInfoInteractor.swift */; };
 		C47671AA29CD9AF4008A2F94 /* BackupCodesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */; };
 		C4842F1529939F4100915BA4 /* UnlinkWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4842F1429939F4100915BA4 /* UnlinkWalletViewController.swift */; };
-		C489928229F7FF43005A987C /* PaymailWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489928129F7FF43005A987C /* PaymailWorker.swift */; };
+		C489928229F7FF43005A987C /* PaymailAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489928129F7FF43005A987C /* PaymailAddressWorker.swift */; };
 		C489928429F80105005A987C /* PaymailEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489928329F80105005A987C /* PaymailEndpoints.swift */; };
 		C491ABF828A6395D00E79954 /* OrderPreviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF128A6395C00E79954 /* OrderPreviewStore.swift */; };
 		C491ABF928A6395D00E79954 /* OrderPreviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491ABF228A6395C00E79954 /* OrderPreviewPresenter.swift */; };
@@ -1489,7 +1489,7 @@
 		C46C28FC287EBF4F0035C843 /* BaseInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoInteractor.swift; sourceTree = "<group>"; };
 		C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCodesView.swift; sourceTree = "<group>"; };
 		C4842F1429939F4100915BA4 /* UnlinkWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlinkWalletViewController.swift; sourceTree = "<group>"; };
-		C489928129F7FF43005A987C /* PaymailWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailWorker.swift; sourceTree = "<group>"; };
+		C489928129F7FF43005A987C /* PaymailAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressWorker.swift; sourceTree = "<group>"; };
 		C489928329F80105005A987C /* PaymailEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailEndpoints.swift; sourceTree = "<group>"; };
 		C491ABF128A6395C00E79954 /* OrderPreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewStore.swift; sourceTree = "<group>"; };
 		C491ABF228A6395C00E79954 /* OrderPreviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPreviewPresenter.swift; sourceTree = "<group>"; };
@@ -3207,7 +3207,7 @@
 				C458C7C729E6D22E00146C0D /* PaymailAddressVIP.swift */,
 				C458C7C829E6D22E00146C0D /* PaymailAddressViewController.swift */,
 				C458C7C929E6D22E00146C0D /* PaymailAddressInteractor.swift */,
-				C489928129F7FF43005A987C /* PaymailWorker.swift */,
+				C489928129F7FF43005A987C /* PaymailAddressWorker.swift */,
 			);
 			path = PaymailAddress;
 			sourceTree = "<group>";
@@ -4630,7 +4630,7 @@
 				7E5B305B28A67FC60065D2D8 /* SwapInfoViewController.swift in Sources */,
 				7C72D134226625130091B185 /* CoreSystem.swift in Sources */,
 				7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */,
-				C489928229F7FF43005A987C /* PaymailWorker.swift in Sources */,
+				C489928229F7FF43005A987C /* PaymailAddressWorker.swift in Sources */,
 				7BEF9B4F29F1A52A0073186E /* AccountBlockedViewController.swift in Sources */,
 				CE3D4C571EF5D5740016B1C8 /* ReachabilityMonitor.swift in Sources */,
 				7EB8FD292897F22B000FF75C /* CardSelectionView.swift in Sources */,
