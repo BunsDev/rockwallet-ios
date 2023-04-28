@@ -529,6 +529,18 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
+        guard address.starts(with: "bitcoincash") else {
+            let model = PopupViewModel(title: .text("BCH Legacy address"),
+                                       body: "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.",
+                                       buttons: [.init(title: "Convert"),
+                                                 .init(title: L10n.LinkWallet.decline)],
+                                       closeButton: .init(image: Asset.close.image))
+            
+            showInfoPopup(with: model, callbacks: [ { [weak self] in
+                self?.hidePopup()
+            } ])
+            return false
+        }
         //Having an invalid address will cause fee estimation to fail,
         //so we need to display this error before the fee estimate error.
         //Without this, the fee estimate error will be shown and the user won't
