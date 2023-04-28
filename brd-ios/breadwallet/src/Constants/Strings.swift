@@ -264,6 +264,14 @@ internal enum L10n {
     internal static let whyVerify = L10n.tr("Localizable", "Account.WhyVerify", fallback: "Why should I verify my identity?")
     /// Write your name as it appears on your ID label in create account
     internal static let writeYourName = L10n.tr("Localizable", "Account.WriteYourName", fallback: "Write your name as it appears on your ID")
+    internal enum BlockedAccount {
+      /// It appears that you're unable to verify your account. For security reasons, we have temporarily disabled it.
+      /// 
+      /// Don't worry, your data is safe, and you can still access your self-custodial funds from your homepage. For more information, please contact support.
+      internal static let description = L10n.tr("Localizable", "Account.BlockedAccount.Description", fallback: "It appears that you're unable to verify your account. For security reasons, we have temporarily disabled it.\n\nDon't worry, your data is safe, and you can still access your self-custodial funds from your homepage. For more information, please contact support.")
+      /// Your RockWallet account is currently disabled.
+      internal static let title = L10n.tr("Localizable", "Account.BlockedAccount.Title", fallback: "Your RockWallet account is currently disabled.")
+    }
     internal enum EmailAddress {
       /// Email address
       internal static let title = L10n.tr("Localizable", "Account.EmailAddress.Title", fallback: "Email address")
@@ -3075,6 +3083,20 @@ internal enum L10n {
         /// Your backup codes are the only way to access your account if you lose access your Authenticator App
         internal static let warning = L10n.tr("Localizable", "TwoStep.App.BackupCodes.warning", fallback: "Your backup codes are the only way to access your account if you lose access your Authenticator App")
       }
+      internal enum CantAccess {
+        /// I can’t access my Authenticator App
+        internal static let title = L10n.tr("Localizable", "TwoStep.App.CantAccess.Title", fallback: "I can’t access my Authenticator App")
+      }
+      internal enum Confirmation {
+        /// Enter the code from your Authenticator app
+        internal static let title = L10n.tr("Localizable", "TwoStep.App.Confirmation.Title", fallback: "Enter the code from your Authenticator app")
+        internal enum BackupCode {
+          /// Confirm you’ve stored your backup codes securely by entering one of them.
+          internal static let instructions = L10n.tr("Localizable", "TwoStep.App.Confirmation.BackupCode.Instructions", fallback: "Confirm you’ve stored your backup codes securely by entering one of them.")
+          /// Enter the code from your Authenticator app
+          internal static let title = L10n.tr("Localizable", "TwoStep.App.Confirmation.BackupCode.Title", fallback: "Enter the code from your Authenticator app")
+        }
+      }
       internal enum Import {
         /// Import with link
         internal static let action = L10n.tr("Localizable", "TwoStep.App.Import.action", fallback: "Import with link")
@@ -3095,6 +3117,16 @@ internal enum L10n {
     internal enum Disable {
       /// Disable 2FA
       internal static let title = L10n.tr("Localizable", "TwoStep.Disable.Title", fallback: "Disable 2FA")
+    }
+    internal enum Email {
+      internal enum Confirmation {
+        /// We’ve sent you a code
+        internal static let title = L10n.tr("Localizable", "TwoStep.Email.Confirmation.Title", fallback: "We’ve sent you a code")
+      }
+    }
+    internal enum Error {
+      /// Invalid code. You have 3 more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
+      internal static let attempts = L10n.tr("Localizable", "TwoStep.Error.Attempts", fallback: "Invalid code. You have 3 more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.")
     }
     internal enum Menu {
       /// Two-Factor Authentication (2FA)

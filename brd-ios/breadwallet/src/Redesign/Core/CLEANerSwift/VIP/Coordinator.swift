@@ -79,7 +79,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showSwap(currencies: [Currency], coreSystem: CoreSystem, keyStore: KeyStore) {
+    func showSwap(selectedCurrency: Currency? = nil, coreSystem: CoreSystem, keyStore: KeyStore) {
         guard let profile = UserManager.shared.profile,
               profile.kycAccessRights.hasSwapAccess else {
             handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
@@ -91,15 +91,17 @@ class BaseCoordinator: NSObject, Coordinatable {
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
-                    vc?.dataStore?.currencies = currencies
+                    vc?.dataStore?.currencies = Store.state.currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    guard let selectedCurrency else { return }
+                    vc?.dataStore?.from = .zero(selectedCurrency)
                 }
             }
         }
     }
     
-    func showBuy(type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showBuy(selectedCurrency: Currency? = nil, type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         guard let profile = UserManager.shared.profile,
               ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
             handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
@@ -111,9 +113,12 @@ class BaseCoordinator: NSObject, Coordinatable {
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
+                    vc?.dataStore?.currencies = Store.state.currencies
                     vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    guard let selectedCurrency else { return }
+                    vc?.dataStore?.toAmount = .zero(selectedCurrency)
                 }
             }
         }
@@ -168,6 +173,12 @@ class BaseCoordinator: NSObject, Coordinatable {
     func showTwoStepAuthentication(keyStore: KeyStore?) {
         openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
             vc?.dataStore?.keyStore = keyStore
+        }
+    }
+    
+    func showPaymailAddress() {
+        openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
+            vc?.dataStore?.screenType = .paymailNotSetup
         }
     }
     
@@ -413,10 +424,8 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
-        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else {
-            decideFlow(completion: { _ in })
-            return
-        }
+        // TODO: this doesn't have "manually_configured". Add it.
+        let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason
         
         switch restrictionReason {
         case .verification:
@@ -424,7 +433,9 @@ class BaseCoordinator: NSObject, Coordinatable {
             
         case .location:
             showComingSoon(reason: reason)
-            
+        
+        default:
+            showComingSoon(reason: reason)
         }
     }
     
@@ -689,7 +700,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 return
             }
             
-            showSwap(currencies: Store.state.currencies, coreSystem: coreSystem, keyStore: keyStore)
+            showSwap(coreSystem: coreSystem, keyStore: keyStore)
             
         case .setPassword:
             handleUserAccount()

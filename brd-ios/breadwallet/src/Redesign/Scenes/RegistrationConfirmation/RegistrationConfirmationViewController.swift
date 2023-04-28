@@ -18,7 +18,15 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     override var isModalDismissableEnabled: Bool { return isModalDismissable }
     var isModalDismissable = true
     
+    var didDismiss: ((Bool) -> Void)?
+    
     // MARK: - Overrides
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        didDismiss?(false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,29 +96,30 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         
         cell.setup { view in
             view.configure(with: .init(buttons: [Presets.Button.noBorders]))
-            
-            view.callbacks = [
-                resendCodeTapped,
-                changeEmailTapped
-            ]
         }
         
         return cell
     }
 
     // MARK: - User Interaction
+    
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         interactor?.validate(viewAction: .init(code: text))
         
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
-    private func resendCodeTapped() {
+    func resendCodeTapped() {
         interactor?.resend(viewAction: .init())
     }
     
-    private func changeEmailTapped() {
+    func changeEmailTapped() {
         coordinator?.showChangeEmail()
+    }
+    
+    func enterBackupCode() {
+        coordinator?.showRegistrationConfirmation(isModalDismissable: true,
+                                                  confirmationType: .enterAppBackupCode)
     }
 
     // MARK: - RegistrationConfirmationResponseDisplay
@@ -119,9 +128,11 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         view.endEditing(true)
         
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
+            self?.didDismiss?(true)
+            
             guard let self = self else { return }
             switch self.dataStore?.confirmationType {
-            case .twoStepEmailLogin, .twoStepAppLogin:
+            case .twoStepEmailLogin, .twoStepAppLogin, .enterAppBackupCode, .twoStepEmailResetPassword, .twoStepAppResetPassword:
                 self.coordinator?.dismissFlow()
                 
             case .account:
@@ -135,7 +146,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
                 })
                 
             case .acountTwoStepAppSettings:
-                self.coordinator?.showAuthenticatorApp()
+                self.coordinator?.showAuthenticatorApp(setTwoStepAppModel: dataStore?.setTwoStepAppModel)
                 
             case .twoStepApp:
                 self.coordinator?.showBackupCodes()
@@ -149,12 +160,10 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         })
     }
     
-    func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.input.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
-        else { return }
-        
-        cell.wrappedView.showErrorMessage()
+    func displayNextFailure(responseDisplay: RegistrationConfirmationModels.NextFailure.ResponseDisplay) {
+        coordinator?.showTwoStepErrorFlow(reason: responseDisplay.reason,
+                                          registrationRequestData: responseDisplay.registrationRequestData,
+                                          setPasswordRequestData: responseDisplay.setPasswordRequestData)
     }
     
     // MARK: - Additional Helpers

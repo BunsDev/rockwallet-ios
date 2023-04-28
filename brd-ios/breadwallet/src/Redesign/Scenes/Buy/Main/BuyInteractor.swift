@@ -25,25 +25,21 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             getExchangeRate(viewAction: .init(), completion: {})
             return
         }
+
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
         
-        SupportedCurrenciesWorker().execute { [weak self] result in
-            switch result {
-            case .success(let currencies):
-                ExchangeManager.shared.reload()
-                
-                self?.dataStore?.supportedCurrencies = currencies
-                
-                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(type: self?.dataStore?.paymentMethod,
-                                                                                     achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
-                self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.toAmount,
-                                                                     card: self?.dataStore?.selected,
-                                                                     type: self?.dataStore?.paymentMethod,
-                                                                     quote: self?.dataStore?.quote))
-                self?.getPayments(viewAction: .init())
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
-            }
-        }
+        guard !currencies.isEmpty else { return }
+        
+        dataStore?.supportedCurrencies = currencies
+        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
+        
+        presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
+                                                                       achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
+        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
+                                                       card: dataStore?.selected,
+                                                       type: dataStore?.paymentMethod,
+                                                       quote: dataStore?.quote))
+        getPayments(viewAction: .init())
     }
     
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
@@ -98,7 +94,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func setAssets(viewAction: BuyModels.Assets.ViewAction) {
         if let value = viewAction.currency?.lowercased(),
-           let currency = Store.state.currencies.first(where: { $0.code.lowercased() == value }) {
+           let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == value }) {
             dataStore?.toAmount = .zero(currency)
         } else if let value = viewAction.card {
             dataStore?.selected = value
@@ -164,7 +160,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         case .card:
             if dataStore?.availablePayments.contains(.card) == true {
                 dataStore?.selected = dataStore?.cards.first(where: { $0.cardType == .debit })
-                guard let currency = Store.state.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
+                guard let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
                 selectedCurrency = .zero(currency)
             } else {
                 dataStore?.selected = dataStore?.cards.first
@@ -191,6 +187,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     
     func showInstantAchPopup(viewAction: BuyModels.InstantAchPopup.ViewAction) {
         presenter?.presentInstantAchPopup(actionResponse: .init())
+    }
+    
+    func showAssetSelectionMessage(viewAction: BuyModels.AssetSelectionMessage.ViewAction) {
+        presenter?.presentAssetSelectionMessage(actionResponse: .init())
     }
     
     // MARK: - Aditional helpers

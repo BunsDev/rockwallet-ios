@@ -23,10 +23,12 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     
     func showRegistrationConfirmation(isModalDismissable: Bool,
                                       confirmationType: RegistrationConfirmationModels.ConfirmationType,
-                                      registrationRequestData: RegistrationRequestData? = nil) {
+                                      registrationRequestData: RegistrationRequestData? = nil,
+                                      setPasswordRequestData: SetPasswordRequestData? = nil) {
         open(scene: Scenes.RegistrationConfirmation) { vc in
             vc.dataStore?.confirmationType = confirmationType
             vc.dataStore?.registrationRequestData = registrationRequestData
+            vc.dataStore?.setPasswordRequestData = setPasswordRequestData
             vc.isModalDismissable = isModalDismissable
         }
     }
@@ -35,8 +37,10 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.VerifyPhoneNumber)
     }
     
-    func showAuthenticatorApp() {
-        open(scene: Scenes.AuthenticatorApp)
+    func showAuthenticatorApp(setTwoStepAppModel: SetTwoStepAuth? = nil) {
+        open(scene: Scenes.AuthenticatorApp) { vc in
+            vc.dataStore?.setTwoStepAppModel = setTwoStepAppModel
+        }
     }
     
     func showBackupCodes() {
@@ -78,6 +82,42 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     func showDeleteProfile(with keyMaster: KeyStore) {
         open(scene: Scenes.DeleteProfileInfo) { vc in
             vc.dataStore?.keyMaster = keyMaster
+        }
+    }
+    
+    func showAccountBlocked() {
+        open(scene: Scenes.AccountBlocked) { vc in
+            vc.navigationItem.hidesBackButton = true
+            
+            vc.didTapMainButton = { [weak self] in
+                self?.dismissFlow()
+            }
+            
+            vc.didTapSecondayButton = { [weak self] in
+                self?.showSupport()
+            }
+        }
+    }
+    
+    func showTwoStepErrorFlow(reason: NetworkingError,
+                              registrationRequestData: RegistrationRequestData?,
+                              setPasswordRequestData: SetPasswordRequestData?) {
+        if reason == .twoStepAppRequired {
+            let type: RegistrationConfirmationModels.ConfirmationType = registrationRequestData == nil ? .twoStepAppResetPassword : .twoStepAppLogin
+            
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: type,
+                                         registrationRequestData: registrationRequestData,
+                                         setPasswordRequestData: setPasswordRequestData)
+        } else if reason == .twoStepEmailRequired {
+            let type: RegistrationConfirmationModels.ConfirmationType = registrationRequestData == nil ? .twoStepEmailResetPassword : .twoStepEmailLogin
+            
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: type,
+                                         registrationRequestData: registrationRequestData,
+                                         setPasswordRequestData: setPasswordRequestData)
+        } else if reason == .twoStepBlockedAccount || reason == .twoStepInvalidCodeBlockedAccount {
+            showAccountBlocked()
         }
     }
     

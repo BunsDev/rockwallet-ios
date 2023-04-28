@@ -43,14 +43,15 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             
             switch action {
             case .send:
-                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency)))
+                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency, coordinator: self.coordinator)))
                 
             case .receive:
                 Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
                 
             // TODO: Replace buy with buySell for drawer
             case .buy:
-                self.coordinator?.showBuy(type: .card,
+                self.coordinator?.showBuy(selectedCurrency: currency,
+                                          type: .card,
                                           coreSystem: coreSystem,
                                           keyStore: keyStore)
                 
@@ -58,7 +59,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
 //                toggleDrawer()
                 
             case .swap:
-                self.coordinator?.showSwap(currencies: Store.state.currencies,
+                self.coordinator?.showSwap(selectedCurrency: currency,
                                            coreSystem: coreSystem,
                                            keyStore: keyStore)
                 

@@ -73,22 +73,13 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
                 }
                 
             case .failure(let error):
-                guard let error = (error as? NetworkingError) else {
+                guard let error = (error as? NetworkingError), error.errorCategory == .twoStep else {
                     self?.presenter?.presentError(actionResponse: .init(error: error))
                     return
                 }
                 
-                UserDefaults.email = email
-                
-                if error == .twoStepAppRequired {
-                    self?.presenter?.viewController?.coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                                                               confirmationType: .twoStepAppLogin,
-                                                                                               registrationRequestData: data)
-                } else if error == .twoStepEmailRequired {
-                    self?.presenter?.viewController?.coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                                                               confirmationType: .twoStepEmailLogin,
-                                                                                               registrationRequestData: data)
-                }
+                self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
+                                                                          registrationRequestData: data))
             }
         }
     }

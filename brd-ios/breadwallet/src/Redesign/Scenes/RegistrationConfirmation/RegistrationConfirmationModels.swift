@@ -9,7 +9,7 @@
 import UIKit
 
 enum RegistrationConfirmationModels {
-    typealias Item = RegistrationConfirmationModels.ConfirmationType
+    typealias Item = (type: RegistrationConfirmationModels.ConfirmationType, email: String?)
     
     enum Section: Sectionable {
         case image
@@ -23,13 +23,29 @@ enum RegistrationConfirmationModels {
     }
     
     enum ConfirmationType: Hashable {
+        // Regular Login/Register
         case account
+        
+        // Change method
         case acountTwoStepEmailSettings
         case acountTwoStepAppSettings
+        
+        // First time setup
         case twoStepEmail
+        case twoStepApp
+        
+        // Login
         case twoStepEmailLogin
         case twoStepAppLogin
-        case twoStepApp
+        
+        // Reset password
+        case twoStepEmailResetPassword
+        case twoStepAppResetPassword
+        
+        // App backup code
+        case enterAppBackupCode
+        
+        // Disable 2FA
         case disable
     }
     
@@ -59,9 +75,16 @@ enum RegistrationConfirmationModels {
         struct ResponseDisplay {}
     }
     
-    struct Error {
-        struct ViewAction {}
-        struct ActionResponse {}
-        struct ResponseDisplay {}
+    struct NextFailure {
+        struct ActionResponse {
+            let reason: NetworkingError
+            var registrationRequestData: RegistrationRequestData?
+            var setPasswordRequestData: SetPasswordRequestData?
+        }
+        struct ResponseDisplay {
+            let reason: NetworkingError
+            var registrationRequestData: RegistrationRequestData?
+            var setPasswordRequestData: SetPasswordRequestData?
+        }
     }
 }

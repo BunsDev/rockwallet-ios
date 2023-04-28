@@ -63,6 +63,11 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
         viewController?.displayNext(responseDisplay: .init())
     }
     
+    func presentNextFailure(actionResponse: SignInModels.NextFailure.ActionResponse) {
+        viewController?.displayNextFailure(responseDisplay: .init(reason: actionResponse.reason,
+                                                                  registrationRequestData: actionResponse.registrationRequestData))
+    }
+    
     // MARK: - Additional Helpers
     
 }

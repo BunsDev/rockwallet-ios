@@ -117,6 +117,7 @@ class VIPViewController<C: CoordinatableRoutes,
         super.didMove(toParent: parent)
 
         parent?.presentationController?.delegate = self
+        
         guard parent == nil else { return }
 
         coordinator?.goBack()
@@ -149,13 +150,27 @@ class VIPViewController<C: CoordinatableRoutes,
     // MARK: BaseResponseDisplay
     
     func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        LoadingView.hideIfNeeded()
+        
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
         if let coordinator {
-            coordinator.showToastMessage(with: responseDisplay.error,
-                                         model: responseDisplay.model,
-                                         configuration: responseDisplay.config,
-                                         onTapCallback: nil)
+            let error = responseDisplay.error as? NetworkingError
+            
+            switch error {
+            case .twoStepAppRequired, .twoStepEmailRequired:
+                (coordinator as? BaseCoordinator)?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                    vc?.dataStore?.confirmationType = error == .twoStepAppRequired ? .twoStepAppLogin : .twoStepEmailLogin
+                    vc?.isModalDismissable = true
+                }
+                
+            default:
+                coordinator.showToastMessage(with: responseDisplay.error,
+                                             model: responseDisplay.model,
+                                             configuration: responseDisplay.config,
+                                             onTapCallback: nil)
+            }
+            
         } else {
             navigationController?.showToastMessage(model: responseDisplay.model,
                                                    configuration: responseDisplay.config,

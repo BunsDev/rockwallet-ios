@@ -235,10 +235,22 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: dataStore?.currencies,
-                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] item in
-            guard let item = item as? AssetViewModel else { return }
-            self?.interactor?.setAssets(viewAction: .init(currency: item.subtitle))
+                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] model in
+            guard let model = model as? AssetViewModel else { return }
+            
+            guard !model.isDisabled else {
+                self?.interactor?.showAssetSelectionMessage(viewAction: .init())
+                
+                return
+            }
+            
+            self?.coordinator?.dismissFlow()
+            self?.interactor?.setAssets(viewAction: .init(currency: model.subtitle))
         }
+    }
+    
+    func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
     func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay) {
@@ -295,9 +307,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
         }
         
-        coordinator?.showToastMessage(with: responseDisplay.error,
-                                      model: responseDisplay.model,
-                                      configuration: responseDisplay.config)
+        super.displayMessage(responseDisplay: responseDisplay)
     }
     
     func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay) {

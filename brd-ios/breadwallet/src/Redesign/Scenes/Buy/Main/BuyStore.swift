@@ -30,9 +30,9 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var values: BuyModels.Amounts.ViewAction = .init()
     var paymentMethod: PaymentCard.PaymentType? {
         didSet {
-            guard let currency = Store.state.currencies.first(where: {
+            guard toAmount == nil, let currency = currencies.first(where: {
                 $0.code.lowercased() == Constant.BTC.lowercased()
-            }) ?? Store.state.currencies.first  else { return  }
+            }) ?? currencies.first else { return }
             
             toAmount = .zero(currency)
         }
@@ -77,7 +77,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var quote: Quote?
     
-    var currencies: [Currency] = Store.state.currencies
+    var currencies: [Currency] = []
     var supportedCurrencies: [SupportedCurrency]?
     
     var coreSystem: CoreSystem?

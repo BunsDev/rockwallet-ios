@@ -65,11 +65,6 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         viewController?.displayNext(responseDisplay: .init())
     }
     
-    func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse) {
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
-                                                              config: Presets.InfoView.verification))
-    }
-    
     func presentOpenTotpUrl(actionResponse: AuthenticatorAppModels.OpenTotpUrl.ActionResponse) {
         guard let urlString = actionResponse.url, let url = URL(string: urlString) else { return }
         

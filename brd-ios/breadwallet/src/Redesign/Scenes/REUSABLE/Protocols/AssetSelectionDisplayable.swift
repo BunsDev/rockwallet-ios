@@ -11,15 +11,21 @@
 import Foundation
 
 protocol AssetSelectionDisplayable {
-    func showAssetSelector(title: String, currencies: [Currency]?, supportedCurrencies: [SupportedCurrency]?, selected: ((Any?) -> Void)?)
+    func showAssetSelector(title: String,
+                           currencies: [Currency]?,
+                           supportedCurrencies: [SupportedCurrency]?,
+                           selected: ((Any?) -> Void)?)
     func isDisabledAsset(code: String?, supportedCurrencies: [SupportedCurrency]?) -> Bool?
 }
 
 extension AssetSelectionDisplayable where Self: BaseCoordinator {
-    func showAssetSelector(title: String, currencies: [Currency]?, supportedCurrencies: [SupportedCurrency]?, selected: ((Any?) -> Void)?) {
+    func showAssetSelector(title: String,
+                           currencies: [Currency]?,
+                           supportedCurrencies: [SupportedCurrency]?,
+                           selected: ((Any?) -> Void)?) {
         let allCurrencies = Currencies.shared.currencies
         
-        let supportedAssets = allCurrencies.filter { item in supportedCurrencies?.contains(where: { $0.name.lowercased() == item.code}) ?? false }
+        let supportedAssets = allCurrencies.filter { item in supportedCurrencies?.contains(where: { $0.code.lowercased() == item.code }) ?? false }
         
         var data: [AssetViewModel]? = currencies?.compactMap {
             let topRightText = String(format: "%@ %@",
@@ -29,23 +35,25 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
                                          ExchangeFormatter.fiat.string(for: $0.state?.balance?.fiatValue) ?? "",
                                          Constant.usdCurrencyCode)
             
+            let isDisabledAsset = isDisabledAsset(code: $0.code, supportedCurrencies: supportedCurrencies) ?? false
+            
             return AssetViewModel(icon: $0.imageSquareBackground,
                                   title: $0.name,
                                   subtitle: $0.code,
                                   topRightText: topRightText,
                                   bottomRightText: bottomRightText,
-                                  isDisabled: isDisabledAsset(code: $0.code, supportedCurrencies: supportedCurrencies) ?? false,
-                                  isDisabledReason: L10n.Swap.assetSelectionMessage)
+                                  isDisabled: isDisabledAsset)
         }
         
         let unsupportedAssets = supportedAssets.filter { item in !(data?.contains(where: { $0.subtitle?.lowercased() == item.code }) ?? false) }
         
         let disabledData: [AssetViewModel]? = unsupportedAssets.compactMap {
+            let isDisabledAsset = isDisabledAsset(code: $0.code, supportedCurrencies: supportedCurrencies) ?? false
+            
             return AssetViewModel(icon: $0.imageSquareBackground,
                                   title: $0.name,
                                   subtitle: $0.code.uppercased(),
-                                  isDisabled: true,
-                                  isDisabledReason: L10n.Swap.sameAssetMessage)
+                                  isDisabled: isDisabledAsset)
         }
         
         data?.append(contentsOf: disabledData ?? [])
@@ -64,6 +72,6 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
     func isDisabledAsset(code: String?, supportedCurrencies: [SupportedCurrency]?) -> Bool? {
         guard let assetCode = code else { return false }
         
-        return !(supportedCurrencies?.contains(where: { $0.name == assetCode}) ?? false)
+        return !(supportedCurrencies?.contains(where: { $0.code == assetCode}) ?? false)
     }
 }

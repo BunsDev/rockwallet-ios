@@ -15,9 +15,11 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
 
     // MARK: - RegistrationConfirmationActionResponses
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let confirmationType = actionResponse.item as? Models.Item else { return }
+        guard let item = actionResponse.item as? Models.Item else { return }
         
-        let email = "\(": \n")\(UserDefaults.email ?? "")"
+        let confirmationType = item.type
+        let email = item.email ?? ""
+        let emailString = ":\n\(email)"
         
         var sections: [Models.Section] = [
             .image,
@@ -27,10 +29,19 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             .help
         ]
         
-        if confirmationType == .twoStepApp || confirmationType == .twoStepAppLogin {
+        if confirmationType == .twoStepApp {
             sections = sections.filter({ $0 != .image })
             sections = sections.filter({ $0 != .instructions })
             sections = sections.filter({ $0 != .help })
+        }
+        
+        if confirmationType == .twoStepAppLogin {
+            sections = sections.filter({ $0 != .image })
+            sections = sections.filter({ $0 != .instructions })
+        }
+        
+        if confirmationType == .enterAppBackupCode {
+            sections = sections.filter({ $0 != .image })
         }
         
         let title: String
@@ -39,23 +50,40 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         switch confirmationType {
         case .account, .acountTwoStepEmailSettings, .acountTwoStepAppSettings:
             title = L10n.AccountCreation.verifyEmail
-            instructions = "\(L10n.AccountCreation.enterCode)\(email)"
+            instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
-        case .twoStepEmail, .twoStepEmailLogin, .disable:
-            title = "We’ve sent you a code"
-            instructions = "\(L10n.AccountCreation.enterCode)\(email)"
+        case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .disable:
+            title = L10n.TwoStep.Email.Confirmation.title
+            instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
-        case .twoStepApp, .twoStepAppLogin:
-            title = "Enter the code from your Authenticator app"
+        case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword:
+            title = L10n.TwoStep.App.Confirmation.title
             instructions = ""
+        
+        case .enterAppBackupCode:
+            title = L10n.TwoStep.App.Confirmation.BackupCode.title
+            instructions = L10n.TwoStep.App.Confirmation.BackupCode.instructions
             
         }
         
         var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
-                                                       isUnderlined: true)]
+                                                       isUnderlined: true,
+                                                       callback: viewController?.resendCodeTapped)]
         
         if UserManager.shared.profile?.status == .emailPending {
-            help.append(ButtonViewModel(title: L10n.AccountCreation.changeEmail, isUnderlined: true))
+            help.append(ButtonViewModel(title: L10n.AccountCreation.changeEmail,
+                                        isUnderlined: true,
+                                        callback: viewController?.changeEmailTapped))
+        }
+        
+        if confirmationType == .twoStepAppLogin, confirmationType == .twoStepAppResetPassword {
+            help = [ButtonViewModel(title: L10n.TwoStep.App.CantAccess.title,
+                                    isUnderlined: true,
+                                    callback: viewController?.enterBackupCode)]
+        }
+        
+        if confirmationType == .enterAppBackupCode {
+            help.removeAll()
         }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
@@ -88,8 +116,9 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                                                               config: Presets.InfoView.verification))
     }
     
-    func presentError(actionResponse: RegistrationConfirmationModels.Error.ActionResponse) {
-        viewController?.displayError(responseDisplay: .init())
+    func presentNextFailure(actionResponse: RegistrationConfirmationModels.NextFailure.ActionResponse) {
+        viewController?.displayNextFailure(responseDisplay: .init(reason: actionResponse.reason,
+                                                                  registrationRequestData: actionResponse.registrationRequestData))
     }
     
     // MARK: - Additional Helpers

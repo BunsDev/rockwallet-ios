@@ -11,9 +11,11 @@
 import Foundation
 
 struct RequestTwoStepCodeRequestData: RequestModelData {
+    var email: String?
+    
     func getParameters() -> [String: Any] {
         let params = [
-            "email": UserDefaults.email
+            "email": email ?? UserDefaults.email
         ]
         
         return params.compactMapValues { $0 }

@@ -25,37 +25,32 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard dataStore?.currencies.isEmpty == false else { return }
         
-        SupportedCurrenciesWorker().execute { [weak self] result in
-            switch result {
-            case .success(let currencies):
-                ExchangeManager.shared.reload()
-                
-                guard let currencies = currencies,
-                      currencies.count >= 2 else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-                    return
-                }
-                self?.dataStore?.supportedCurrencies = currencies
-                
-                let enabled = self?.dataStore?.currencies.filter { cur in currencies.map { $0.name }.contains(cur.code) }
-                
-                guard let from = enabled?.first,
-                      let to = enabled?.first(where: { $0.code != from.code })
-                else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-                    return
-                }
-                self?.dataStore?.from = .zero(from)
-                self?.dataStore?.to = .zero(to)
-                
-                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(from: self?.dataStore?.from,
-                                                                                     to: self?.dataStore?.to)))
-                self?.setInitialData(getFees: true)
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
-            }
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
+        
+        guard currencies.count >= 2 else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
         }
+        
+        dataStore?.supportedCurrencies = currencies
+        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
+        
+        let fromCurrency: Currency? = dataStore?.from != nil ? dataStore?.from?.currency : dataStore?.currencies.first
+        
+        guard let fromCurrency,
+              let toCurrency = dataStore?.currencies.first(where: { $0.code != fromCurrency.code })
+        else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
+        }
+        if dataStore?.from == nil {
+            dataStore?.from = .zero(fromCurrency)
+        }
+        dataStore?.to = .zero(toCurrency)
+        
+        presenter?.presentData(actionResponse: .init(item: Models.Item(from: dataStore?.from,
+                                                                       to: dataStore?.to)))
+        setInitialData(getFees: true)
     }
     
     func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {
@@ -314,6 +309,12 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     
     func showAssetInfoPopup(viewAction: SwapModels.AssetInfoPopup.ViewAction) {
         presenter?.presentAssetInfoPopup(actionResponse: .init())
+    }
+    
+    func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction) {
+        presenter?.presentAssetSelectionMessage(actionResponse: .init(from: dataStore?.from?.currency,
+                                                                      to: dataStore?.to?.currency,
+                                                                      selectedDisabledAsset: viewAction.selectedDisabledAsset))
     }
     
     // MARK: - Aditional helpers

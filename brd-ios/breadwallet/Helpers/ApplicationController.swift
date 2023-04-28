@@ -65,6 +65,7 @@ class ApplicationController: Subscriber {
 
     var didTapDeleteAccount: (() -> Void)?
     var didTapTwoStepAuth: (() -> Void)?
+    var didTapPaymail: (() -> Void)?
     
     // MARK: - Init/Launch
 
@@ -128,7 +129,8 @@ class ApplicationController: Subscriber {
                                         window: window,
                                         alertPresenter: alertPresenter,
                                         deleteAccountCallback: didTapDeleteAccount,
-                                        twoStepAuthCallback: didTapTwoStepAuth)
+                                        twoStepAuthCallback: didTapTwoStepAuth,
+                                        paymailCallback: didTapPaymail)
         appRatingManager.start()
         setupSubscribers()
         
@@ -229,7 +231,8 @@ class ApplicationController: Subscriber {
                                                          window: self.window,
                                                          alertPresenter: self.alertPresenter,
                                                          deleteAccountCallback: self.didTapDeleteAccount,
-                                                         twoStepAuthCallback: self.didTapTwoStepAuth)
+                                                         twoStepAuthCallback: self.didTapTwoStepAuth,
+                                                         paymailCallback: self.didTapPaymail)
                     self.coreSystem.connect()
                     
                     self.wipeWalletIfNeeded()
@@ -412,7 +415,10 @@ class ApplicationController: Subscriber {
     
     private func triggerDeeplinkHandling() {
         guard UserManager.shared.profile != nil else {
-            coordinator?.handleUserAccount()
+            DispatchQueue.main.async { [weak self] in
+                self?.coordinator?.handleUserAccount()
+            }
+            
             return
         }
         
@@ -459,8 +465,7 @@ class ApplicationController: Subscriber {
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
-            self.coordinator?.showSwap(currencies: Store.state.currencies,
-                                       coreSystem: self.coreSystem,
+            self.coordinator?.showSwap(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         
@@ -480,6 +485,10 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
             self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
+        }
+        
+        homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
+            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication)
         }
         
         homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
@@ -516,6 +525,10 @@ class ApplicationController: Subscriber {
         
         didTapTwoStepAuth = { [unowned self] in
             coordinator?.showTwoStepAuthentication(keyStore: keyStore)
+        }
+        
+        didTapPaymail = { [unowned self] in
+            coordinator?.showPaymailAddress()
         }
     }
     

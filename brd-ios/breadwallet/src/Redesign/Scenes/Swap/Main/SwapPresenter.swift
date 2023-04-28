@@ -181,29 +181,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         viewController?.displaySelectAsset(responseDisplay: .init(title: title, from: actionResponse.from, to: actionResponse.to))
     }
     
-    func presentError(actionResponse: MessageModels.Errors.ActionResponse) {
-        guard !isAccessDenied(error: actionResponse.error) else { return }
-        
-        if let error = actionResponse.error as? ExchangeErrors, error.errorMessage == ExchangeErrors.selectAssets.errorMessage {
-            presentAssetInfoPopup(actionResponse: .init())
-        } else if let error = actionResponse.error as? FEError {
-            let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
-            let config: InfoViewConfiguration
-            
-            switch error as? ExchangeErrors {
-            case .highFees:
-                config = Presets.InfoView.warning
-
-            default:
-                config = Presets.InfoView.error
-            }
-            
-            viewController?.displayMessage(responseDisplay: .init(error: error, model: model, config: config))
-        } else {
-            viewController?.displayMessage(responseDisplay: .init())
-        }
-    }
-    
     func presentConfirmation(actionResponse: SwapModels.ShowConfirmDialog.ActionResponse) {
         guard let from = actionResponse.from,
               let to = actionResponse.to,
@@ -260,6 +237,20 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         viewController?.displayAssetInfoPopup(responseDisplay: .init(popupViewModel: popupViewModel,
                                                                      popupConfig: Presets.Popup.white))
+    }
+    
+    func presentAssetSelectionMessage(actionResponse: SwapModels.AssetSelectionMessage.ActionResponse) {
+        let message: String
+        if actionResponse.from?.code == actionResponse.selectedDisabledAsset?.subtitle || actionResponse.to?.code == actionResponse.selectedDisabledAsset?.subtitle {
+            message = L10n.Swap.sameAssetMessage
+        } else {
+            message = L10n.Swap.enableAssetFirst
+        }
+        
+        let model = InfoViewModel(description: .text(message), dismissType: .auto)
+        let config = Presets.InfoView.warning
+        
+        viewController?.displayAssetSelectionMessage(responseDisplay: .init(model: model, config: config))
     }
     
     // MARK: - Additional Helpers

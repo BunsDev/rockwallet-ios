@@ -14,6 +14,15 @@ struct ServerResponse: Decodable {
     enum ErrorType: String, Decodable {
         case exchangesUnavailable = "Exchanges unavailable"
         case biometricAuthentication = "Biometric authentication"
+        case twoStepRequired = "Required 2FA"
+        case twoStepInvalid = "Invalid 2FA code"
+        case twoStepInvalidRetryable = "Invalid code"
+        case twoStepBlockedAccount = "Account blocked"
+        case twoStepInvalidCodeBlockedAccount = "Invalid 2FA code, account blocked"
+    }
+    
+    enum ErrorCategory: Decodable {
+        case twoStep
     }
     
     var result: String?

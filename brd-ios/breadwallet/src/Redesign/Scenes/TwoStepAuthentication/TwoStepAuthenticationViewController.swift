@@ -81,27 +81,25 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .disable)
                 
             default:
-                if UserManager.shared.twoStepSettings?.type == nil {
-                    coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
-                        if success {
-                            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                            case .email:
-                                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
-                                
-                            case .app:
-                                self.coordinator?.showAuthenticatorApp()
-                                
-                            default:
-                                break
-                            }
-                        } else {
-                            
-                        }
-                    })
-                    
-                } else {
+                guard UserManager.shared.twoStepSettings?.type == nil else {
                     self.changeMethod(indexPath: indexPath)
+                    return
                 }
+                
+                self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
+                    guard success else { return }
+                    
+                    switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+                    case .email:
+                        self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                        
+                    case .app:
+                        self.coordinator?.showAuthenticatorApp()
+                        
+                    default:
+                        break
+                    }
+                })
             }
         }
         
@@ -111,7 +109,10 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     // TODO: This creates an empty space between cells to make the "toCell" stick to bottom. Make this reusable
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.app.hashValue }),
-              let toSection = sections.firstIndex(where: { $0.hashValue == sections.last?.hashValue }) else {
+              let toSection = sections.firstIndex(where: { $0.hashValue == sections.last?.hashValue }),
+              let emptySection = sections.firstIndex(where: { $0.hashValue == Models.Section.emptySection.hashValue }),
+              let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
+              section == .emptySection else {
             return UITableView.automaticDimension
         }
         
@@ -121,16 +122,13 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         let fromCellConverted = tableView.convert(fromCell, to: tableView.superview)
         let toCellConverted = tableView.convert(toCell, to: tableView.superview)
         
-        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
-              section == .emptySection else { return UITableView.automaticDimension }
+        let bottomElementsHeight = toCellConverted.height * CGFloat(sections[emptySection..<sections.count - 1].count)
+        let insetsHeight = tableView.contentInset.top + tableView.contentInset.bottom
         
         return tableView.bounds.height
-        - tableView.contentInset.top
-        - tableView.contentInset.bottom
+        - insetsHeight
+        - bottomElementsHeight
         - fromCellConverted.maxY
-        - toCellConverted.height
-        - UIDevice.current.bottomNotch
-        - UIDevice.current.topNotch
     }
     
     // MARK: - User Interaction
@@ -147,20 +145,17 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
     
     private func handleFlow(indexPath: IndexPath) {
         coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
-            if success {
-                switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                case .email:
-                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepEmailSettings)
-                    
-                case .app:
-                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepAppSettings)
-                    
-                default:
-                    break
-                }
+            guard success else { return }
+            
+            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+            case .email:
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepEmailSettings)
                 
-            } else {
+            case .app:
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepAppSettings)
                 
+            default:
+                break
             }
         })
     }
