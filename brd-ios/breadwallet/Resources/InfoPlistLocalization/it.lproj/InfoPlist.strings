@@ -617,6 +617,10 @@
 /* Confirmation alert title */
 "BCH.confirmationTitle" = "Conferma";
 
+"BCH.ConverterDescription" = "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.";
+
+"BCH.ConverterTitle" = "BCH Legacy address";
+
 /* Generic bch erorr message */
 "BCH.genericError" = "Il tuo account non contiene alcun BCH, oppure hai ricevuto BCH dopo il fork.";
 
@@ -680,6 +684,8 @@
 
 /* prompt continue button */
 "Button.continueAction" = "Continua";
+
+"Button.Convert" = "Convert";
 
 /* prompt dismiss button */
 "Button.dismiss" = "Ignora";

@@ -530,9 +530,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
         
         guard address.starts(with: "bitcoincash") else {
-            let model = PopupViewModel(title: .text("BCH Legacy address"),
-                                       body: "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.",
-                                       buttons: [.init(title: "Convert"),
+            let model = PopupViewModel(title: .text(L10n.Bch.converterTitle),
+                                       body: L10n.Bch.converterDescription,
+                                       buttons: [.init(title: L10n.Button.convert),
                                                  .init(title: L10n.LinkWallet.decline)],
                                        closeButton: .init(image: Asset.close.image))
             

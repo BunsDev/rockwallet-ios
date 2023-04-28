@@ -590,6 +590,10 @@ internal enum L10n {
     }
     /// Confirmation alert title
     internal static let confirmationTitle = L10n.tr("Localizable", "BCH.confirmationTitle", fallback: "Confirmation")
+    /// You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.
+    internal static let converterDescription = L10n.tr("Localizable", "BCH.ConverterDescription", fallback: "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.")
+    /// BCH Legacy address
+    internal static let converterTitle = L10n.tr("Localizable", "BCH.ConverterTitle", fallback: "BCH Legacy address")
     /// Generic bch erorr message
     internal static let genericError = L10n.tr("Localizable", "BCH.genericError", fallback: "Your account does not contain any BCH, or you received BCH after the fork.")
     /// Transaction ID copied message
@@ -648,6 +652,8 @@ internal enum L10n {
     internal static let confirm = L10n.tr("Localizable", "Button.confirm", fallback: "Confirm")
     /// prompt continue button
     internal static let continueAction = L10n.tr("Localizable", "Button.continueAction", fallback: "Continue")
+    /// Convert
+    internal static let convert = L10n.tr("Localizable", "Button.Convert", fallback: "Convert")
     /// prompt dismiss button
     internal static let dismiss = L10n.tr("Localizable", "Button.dismiss", fallback: "Dismiss")
     /// Done button title
