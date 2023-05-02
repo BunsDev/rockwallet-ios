@@ -537,7 +537,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                                        closeButton: .init(image: Asset.close.image))
             
             showInfoPopup(with: model, callbacks: [ { [weak self] in
-                self?.convertBCH()
+                self?.convertBCH(address: address)
             } ])
             return false
         }
@@ -612,8 +612,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
     }
     
-    func convertBCH() {
-        ConvertBchWorker().execute(requestData: ConvertBchRequestData(address: "1JYkhSzmQEWzdU9k1d1K8y9QrMiT1jHFcu")) { result in
+    func convertBCH(address: String) {
+        ConvertBchWorker().execute(requestData: ConvertBchRequestData(address: address)) { result in
             switch result {
             case .success(let data):
                 self.addressCell.setContent(data?.cashAddress)
