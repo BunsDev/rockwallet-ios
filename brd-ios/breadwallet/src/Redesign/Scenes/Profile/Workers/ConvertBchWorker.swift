@@ -40,10 +40,8 @@ class ConvertBchWorkerWorkerMapper: ModelMapper<ConvertBchResponseData, ConvertB
 
 class ConvertBchWorker: BaseApiWorker<ConvertBchWorkerWorkerMapper> {
     override func getUrl() -> String {
-        return BlocksatoshiEndpoints.convertBchAddress.url
-    }
-    
-    override func getParameters() -> [String: Any] {
-        return requestData?.getParameters() ?? [:]
+        guard let urlParams = (requestData as? ConvertBchRequestData)?.address else { return "" }
+        
+        return APIURLHandler.getUrl(BlocksatoshiEndpoints.convertBchAddress, parameters: urlParams)
     }
 }

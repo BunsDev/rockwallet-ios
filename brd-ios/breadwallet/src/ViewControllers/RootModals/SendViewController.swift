@@ -529,7 +529,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        guard address.starts(with: "bitcoincash") else {
+        guard !address.starts(with: "bitcoincash") else {
             let model = PopupViewModel(title: .text(L10n.Bch.converterTitle),
                                        body: L10n.Bch.converterDescription,
                                        buttons: [.init(title: L10n.Button.convert),
@@ -537,7 +537,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                                        closeButton: .init(image: Asset.close.image))
             
             showInfoPopup(with: model, callbacks: [ { [weak self] in
-                self?.hidePopup()
+                self?.convertBCH()
             } ])
             return false
         }
@@ -609,6 +609,19 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             alertController.addAction(UIAlertAction(title: L10n.Button.no, style: .cancel))
 
             present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func convertBCH() {
+        ConvertBchWorker().execute(requestData: ConvertBchRequestData(address: "1JYkhSzmQEWzdU9k1d1K8y9QrMiT1jHFcu")) { result in
+            switch result {
+            case .success(let data):
+                self.addressCell.setContent(data?.cashAddress)
+                self.hidePopup()
+                
+            case .failure:
+                print("error")
+            }
         }
     }
     
