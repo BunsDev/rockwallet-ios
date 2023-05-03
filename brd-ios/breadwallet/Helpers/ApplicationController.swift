@@ -508,8 +508,8 @@ class ApplicationController: Subscriber {
             }
         }
         
-        homeScreen.didTapMenu = { [unowned self] in
-            self.modalPresenter?.presentMenu(didDismiss: {
+        homeScreen.didTapMenu = { [weak self] in
+            self?.modalPresenter?.presentMenu(didDismiss: {
                 homeScreen.viewDidAppear(true)
             })
         }

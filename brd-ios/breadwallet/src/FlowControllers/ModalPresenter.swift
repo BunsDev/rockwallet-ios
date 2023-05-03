@@ -805,10 +805,9 @@ class ModalPresenter: Subscriber {
         
         let rootMenu = MenuViewController(items: rootItems,
                                           title: L10n.Settings.title)
-        rootMenu.addCloseNavigationItem(side: .right, didDismiss: { [weak self] in
+        rootMenu.addCloseNavigationItem(side: .right, didDismiss: {
             didDismiss?()
         })
-        
         
         menuNav.viewControllers = [rootMenu]
         
