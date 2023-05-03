@@ -154,17 +154,19 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             return
         }
         
-        // TODO: Update this when BE is ready.
-        let buyAchSuccessReason = Int.random(in: 0...1) == 0
-        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(buyAchSuccessReason)) : .buyCard
+        let isInstantAch = actionResponse.achDeliveryType == .instant
+        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(isInstantAch)) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     
     func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse) {
-        // TODO: Update amount
+        guard let instantLimit = actionResponse.quote?.instantAch?.limitUsd?.description else { return }
+        let fiatCurrency = (actionResponse.quote?.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
+        
+        let amount = instantLimit + " " + fiatCurrency
         let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
         let drawerViewModel = DrawerViewModel(title: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.title),
-                                              description: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.description("YYY")),
+                                              description: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.description(amount)),
                                               buttons: [.init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.confirmAction)],
                                               notice: .init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.notice, image: Asset.flash.image))
         let drawerCallbacks: [ (() -> Void) ] = [ { [weak self] in
@@ -204,10 +206,19 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let toCryptoDisplayName = item.to?.currency.displayName ?? ""
         let from = item.from ?? 0
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
-        let networkFee = item.networkFee?.fiatValue ?? 0
+
         let fiatCurrency = (quote.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
         let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0) / 100
         let instantAchLimit = item.quote?.instantAch?.limitUsd ?? 0
+        
+        // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
+        var networkFee: Decimal {
+            guard isAchAccount, toFiatValue >= instantAchLimit else {
+                return item.networkFee?.fiatValue ?? 0
+            }
+            
+            return 2 * (item.networkFee?.fiatValue ?? 0)
+        }
         
         let currencyFormat = "%@ %@"
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)
@@ -227,9 +238,9 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
         
         let isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
-        let achFeeDescription: String = instantAchFeeUsd.description
+        let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
         let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
-                                                                       value: .text(achFeeDescription + " " + fiatCurrency)) : nil
+                                                                       value: .text(achFeeDescription)) : nil
         
         switch item.type {
         case .sell:
@@ -244,12 +255,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             
         default:
             var totalFee = toFiatValue + networkFee + cardFee
+            // Opting for instant ach adds instant ach fee
             if isInstantAch {
                 totalFee += instantAchFeeUsd
             }
+            
             let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: totalFee) ?? "", fiatCurrency)
-            let instantAchLimit: String = item.quote?.instantAch?.limitUsd?.description ?? ""
-            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice(instantAchLimit + " " + fiatCurrency)),
+            let instantAchLimitText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchLimit) ?? "", fiatCurrency)
+            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice(instantAchLimitText)),
                           currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
