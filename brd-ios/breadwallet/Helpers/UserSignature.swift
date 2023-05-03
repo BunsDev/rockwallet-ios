@@ -28,16 +28,17 @@ struct UserSignature {
               let signature = CoreSigner.basicDER.sign(data32: data, using: apiKey)?.base64EncodedString()
         else { return [:] }
         
-        guard UserManager.shared.profile != nil else {
+        if UserManager.shared.profile != nil {
+            return [
+                "Authorization": sessionKey,
+                "Date": dateString,
+                "Signature": signature
+            ]
+        } else {
             return [
                 "Date": dateString,
                 "Signature": signature
             ]
         }
-        return [
-            "Authorization": sessionKey,
-            "Date": dateString,
-            "Signature": signature
-        ]
     }
 }
