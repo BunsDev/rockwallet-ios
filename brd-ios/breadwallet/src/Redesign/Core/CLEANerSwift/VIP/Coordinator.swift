@@ -72,7 +72,6 @@ class BaseCoordinator: NSObject, Coordinatable {
     func handleUserAccount() {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
-        
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
@@ -685,7 +684,6 @@ class BaseCoordinator: NSObject, Coordinatable {
         popToRoot()
         
         guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
-        DynamicLinksManager.shared.dynamicLinkType = nil
         
         switch deeplink {
         case .home:

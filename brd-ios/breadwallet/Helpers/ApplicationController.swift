@@ -295,7 +295,6 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
                 self.triggerDeeplinkHandling()
             }
         }
@@ -414,16 +413,13 @@ class ApplicationController: Subscriber {
     }
     
     private func triggerDeeplinkHandling() {
-        guard UserManager.shared.profile != nil else {
+        if UserManager.shared.profile == nil {
             DispatchQueue.main.async { [weak self] in
                 self?.coordinator?.handleUserAccount()
             }
-            
-            return
+        } else if DynamicLinksManager.shared.shouldHandleDynamicLink {
+            Store.trigger(name: .handleDeeplink)
         }
-        
-        guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
-        Store.trigger(name: .handleDeeplink)
     }
     
     private func addHomeScreenHandlers(homeScreen: HomeScreenViewController,
