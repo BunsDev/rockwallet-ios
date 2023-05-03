@@ -572,7 +572,8 @@ class ModalPresenter: Subscriber {
     
     func presentMenu() {
         let menuNav = RootNavigationController()
-        menuNav.modalPresentationStyle = .overFullScreen
+        menuNav.modalPresentationStyle = .fullScreen
+        
         // MARK: Preferences
         let preferencesItems = preparePreferencesMenuItems(menuNav: menuNav)
         
