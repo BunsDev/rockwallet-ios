@@ -366,9 +366,9 @@ class BaseCoordinator: NSObject, Coordinatable {
         guard let model = model,
               let configuration = configuration else { return }
         
-        navigationController.showToastMessage(model: model,
-                                              configuration: configuration,
-                                              onTapCallback: onTapCallback)
+        ToastMessageManager.shared.show(model: model,
+                                        configuration: configuration,
+                                        onTapCallback: onTapCallback)
     }
     
     func showOverlay(with viewModel: TransparentViewModel, completion: (() -> Void)? = nil) {
