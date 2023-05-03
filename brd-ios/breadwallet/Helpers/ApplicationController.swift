@@ -509,7 +509,9 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapMenu = { [unowned self] in
-            self.modalPresenter?.presentMenu()
+            self.modalPresenter?.presentMenu(didDismiss: {
+                homeScreen.viewDidAppear(true)
+            })
         }
         
         homeScreen.didTapManageWallets = { [unowned self] in
