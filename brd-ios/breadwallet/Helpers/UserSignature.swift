@@ -21,13 +21,21 @@ struct UserSignature {
         guard let nonce = nonce,
               let token = token,
               let data = (dateString + token + nonce).data(using: .utf8)?.sha256,
+              let sessionKey = UserDefaults.sessionToken,
               let apiKeyString = try? keychainItem(key: KeychainKey.apiAuthKey) as String?,
               !apiKeyString.isEmpty,
               let apiKey = Key.createFromString(asPrivate: apiKeyString),
               let signature = CoreSigner.basicDER.sign(data32: data, using: apiKey)?.base64EncodedString()
         else { return [:] }
-
+        
+        guard UserManager.shared.profile != nil else {
+            return [
+                "Date": dateString,
+                "Signature": signature
+            ]
+        }
         return [
+            "Authorization": sessionKey,
             "Date": dateString,
             "Signature": signature
         ]
