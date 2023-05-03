@@ -50,7 +50,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         let data = PaymailRequestData(paymail: paymailEmail, xpub: getXPub(code: "bsv"))
         PaymailAddressWorker().execute(requestData: data) { [weak self] result in
             switch result {
-            case .success(let data):
+            case .success:
                 self?.presenter?.presentPaymailSuccess(actionResponse: .init())
                 
             case .failure(let error):
