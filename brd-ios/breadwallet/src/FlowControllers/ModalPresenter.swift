@@ -573,6 +573,7 @@ class ModalPresenter: Subscriber {
     func presentMenu() {
         let menuNav = RootNavigationController()
         menuNav.modalPresentationStyle = .fullScreen
+        menuNav.modalPresentationCapturesStatusBarAppearance = true
         
         // MARK: Preferences
         let preferencesItems = preparePreferencesMenuItems(menuNav: menuNav)
@@ -810,7 +811,7 @@ class ModalPresenter: Subscriber {
         
         self.menuNavController = menuNav
         
-        self.topViewController?.present(menuNav, animated: true)
+        self.topViewController?.show(menuNav, sender: self)
     }
     
     private func presentConnectionModeScreen(menuNav: UINavigationController) {
