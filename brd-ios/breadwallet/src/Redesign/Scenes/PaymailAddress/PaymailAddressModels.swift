@@ -9,7 +9,7 @@
 import UIKit
 
 enum PaymailAddressModels {
-    typealias Item = PaymailAddressModels.ScreenType?
+    typealias Item = PaymailAddressDataStore
     
     enum Section: Sectionable {
         case description
@@ -70,6 +70,12 @@ enum PaymailAddressModels {
         }
     }
     
+    struct CreatePaymail {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {}
+    }
+    
     struct InfoPopup {
         struct ViewAction {}
         struct ActionResponse {}
@@ -78,9 +84,32 @@ enum PaymailAddressModels {
         }
     }
     
-    struct Success {
+    struct BottomAlert {
         struct ViewAction {}
         struct ActionResponse {}
         struct ResponseDisplay {}
+    }
+    
+    struct Validate {
+        struct ViewAction {
+            var email: String?
+        }
+        
+        struct ActionResponse {
+            var email: String?
+            
+            var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailState: DisplayState?
+        }
+        
+        struct ResponseDisplay {
+            var email: String?
+            
+            var isEmailValid: Bool
+            var isEmailEmpty: Bool
+            var emailModel: TextFieldModel
+            var isValid: Bool
+        }
     }
 }

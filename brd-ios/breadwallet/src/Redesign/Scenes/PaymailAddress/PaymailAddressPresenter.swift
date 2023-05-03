@@ -16,7 +16,7 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     // MARK: - PaymailAddressActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let screenType = actionResponse.item as? PaymailAddressModels.ScreenType
+        let item = actionResponse.item as? (any Models.Item)
         
         var sections: [Models.Section] = [
             .description,
@@ -25,21 +25,23 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
             .paymail
         ]
         
-        if screenType == .paymailSetup {
+        if item?.screenType == .paymailSetup {
             sections = sections.filter({ $0 != .emailViewTitle })
         }
         
+        let emailValue = item?.paymailAddress != nil ? item?.paymailAddress : Constant.paymailDomain
+        
         let sectionRows: [Models.Section: [any Hashable]] = [
             .description: [
-                LabelViewModel.text(screenType?.description)
+                LabelViewModel.text(item?.screenType?.description)
             ],
             .emailViewTitle: [
                 LabelViewModel.text(L10n.PaymailAddress.createAddressTitle)
             ],
             .emailView: [
-                TextFieldModel(title: screenType?.emailViewTitle,
-                               value: Constant.paymailDomain,
-                               trailing: .image(screenType?.image))
+                TextFieldModel(title: item?.screenType?.emailViewTitle,
+                               value: emailValue,
+                               trailing: .image(item?.screenType?.image))
             ],
             .paymail: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.PaymailAddress.whatIsPaymail,
@@ -56,8 +58,26 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
         viewController?.displayPaymailPopup(responseDisplay: .init(model: model))
     }
     
-    func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.Success.ActionResponse) {
+    func presentPaymailSuccess(actionResponse: PaymailAddressModels.CreatePaymail.ActionResponse) {
+        viewController?.displayPaymailSuccess(responseDisplay: .init())
+    }
+    
+    func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.BottomAlert.ActionResponse) {
         viewController?.displaySuccessBottomAlert(responseDisplay: .init())
+    }
+    
+    func presentValidate(actionResponse: PaymailAddressModels.Validate.ActionResponse) {
+        let isValid = actionResponse.isEmailValid
+        
+        viewController?.displayValidate(responseDisplay:
+                .init(email: actionResponse.email,
+                      isEmailValid: actionResponse.isEmailValid,
+                      isEmailEmpty: actionResponse.isEmailEmpty,
+                      emailModel: .init(title: L10n.PaymailAddress.paymailAddressField,
+                                        hint: actionResponse.emailState == .error ? L10n.Account.invalidEmail : nil,
+                                        trailing: actionResponse.emailState == .error ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
+                                        displayState: actionResponse.emailState),
+                      isValid: isValid))
     }
 
     // MARK: - Additional Helpers

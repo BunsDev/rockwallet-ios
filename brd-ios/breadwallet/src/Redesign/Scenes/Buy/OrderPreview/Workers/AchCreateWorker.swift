@@ -18,6 +18,7 @@ struct AchRequestData: RequestModelData {
     var destination: String?
     var accountId: String?
     var nologCvv: String?
+    var useInstantAch: Bool?
     
     func getParameters() -> [String: Any] {
         let params: [String: Any?] = [
@@ -27,7 +28,8 @@ struct AchRequestData: RequestModelData {
             "withdrawal_quantity": withdrawalQuantity,
             "destination": destination,
             "account_id": accountId,
-            "nolog_cvv": nologCvv
+            "nolog_cvv": nologCvv,
+            "use_instant_ach": useInstantAch
         ]
         
         return params.compactMapValues { $0 }

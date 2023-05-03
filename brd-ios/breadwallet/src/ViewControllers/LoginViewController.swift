@@ -339,7 +339,7 @@ class LoginViewController: UIViewController, Subscriber {
     }
 
     private func authenticationSucceded(forLoginWithAccount account: Account? = nil, pin: String? = nil) {
-        hideToastMessage()
+        ToastMessageManager.shared.hide()
         
         let label = UILabel(font: Fonts.Body.one)
         label.textColor = LightColors.Text.two
@@ -395,9 +395,10 @@ class LoginViewController: UIViewController, Subscriber {
         
         let attempts = keyMaster.pinAttemptsRemaining == 7 ? L10n.UpdatePin.twoAttempts : L10n.UpdatePin.oneAttempt
         let message = "\(L10n.UpdatePin.incorrectPin) \(attempts)"
-        
         let model: InfoViewModel = .init(description: .text(message), dismissType: .auto)
-        showToastMessage(model: model, configuration: Presets.InfoView.error)
+        
+        ToastMessageManager.shared.show(model: model,
+                                        configuration: Presets.InfoView.error)
     }
 
     private var shouldUseBiometrics: Bool {
