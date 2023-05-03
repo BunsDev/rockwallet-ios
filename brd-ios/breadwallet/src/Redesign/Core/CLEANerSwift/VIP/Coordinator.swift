@@ -178,7 +178,9 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showPaymailAddress() {
         openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
-            vc?.dataStore?.screenType = .paymailNotSetup
+            let paymail = UserManager.shared.profile?.paymail
+            vc?.dataStore?.screenType = paymail == nil ? .paymailNotSetup : .paymailSetup
+            vc?.dataStore?.paymailAddress = "\(paymail ?? "")\(Constant.paymailDomain)"
         }
     }
     

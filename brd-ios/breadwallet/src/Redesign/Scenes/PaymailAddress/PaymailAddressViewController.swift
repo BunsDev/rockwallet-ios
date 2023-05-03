@@ -54,7 +54,9 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
                 
                 view.configure(with: config)
                 view.didTapTrailingView = { [weak self] in
-                    self?.interactor?.copyValue(viewAction: .init(value: ""))
+                    if self?.dataStore?.screenType == .paymailSetup {
+                        self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
+                    }
                 }
             }
         
@@ -92,15 +94,29 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
 
     // MARK: - User Interaction
     
+    override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
+        let section = dataSource?.sectionIdentifier(for: indexPath.section)
+        
+        switch section as? Models.Section {
+        case .emailView:
+            interactor?.validate(viewAction: .init(email: text))
+            
+        default:
+            break
+        }
+        
+        super.textFieldDidFinish(for: indexPath, with: text)
+    }
+    
     override func buttonTapped() {
         super.buttonTapped()
         
         guard dataStore?.screenType == .paymailNotSetup else {
-            coordinator?.popViewController()
+            coordinator?.dismissFlow()
             return
         }
         
-        interactor?.showSuccessBottomAlert(viewAction: .init())
+        interactor?.createPaymailAddress(viewAction: .init())
     }
     
     private func showPaymailPopup() {
@@ -109,15 +125,40 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
 
     // MARK: - PaymailAddressResponseDisplay
     
+    func displayPaymailSuccess(responseDisplay: PaymailAddressModels.CreatePaymail.ResponseDisplay) {
+        interactor?.showSuccessBottomAlert(viewAction: .init())
+    }
+    
     func displayPaymailPopup(responseDisplay: PaymailAddressModels.InfoPopup.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
     }
     
-    func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.Success.ResponseDisplay) {
+    func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.BottomAlert.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.coordinator?.popViewController()
+            self?.setupVerticalButtons()
+            self?.interactor?.getData(viewAction: .init())
         })
+    }
+    
+    func displayValidate(responseDisplay: PaymailAddressModels.Validate.ResponseDisplay) {
+        let isValid = responseDisplay.isValid
+        
+        continueButton.viewModel?.enabled = isValid
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+        
+        _ = getFieldCell(for: .emailView)?.setup { view in
+            view.setup(with: responseDisplay.emailModel)
+        }
     }
 
     // MARK: - Additional Helpers
+    
+    private func getFieldCell(for section: Models.Section) -> WrapperTableViewCell<FETextField>? {
+        guard let section = sections.firstIndex(where: { $0.hashValue == section.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FETextField> else {
+            return nil
+        }
+        
+        return cell
+    }
 }
