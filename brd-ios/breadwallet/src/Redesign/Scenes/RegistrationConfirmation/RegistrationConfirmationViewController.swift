@@ -95,7 +95,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: .horizontal))
         }
         
         return cell
