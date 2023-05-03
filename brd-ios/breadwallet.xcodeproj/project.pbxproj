@@ -72,6 +72,7 @@
 		049CE73F29DD59C0009D0F2D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73E29DD59C0009D0F2D /* PaymailDestinationWorker.swift */; };
 		049CE74529DD5A90009D0F2D /* FEButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */; };
 		049CE74829DDACDE009D0F2D /* GoogleDataTransport in Frameworks */ = {isa = PBXBuildFile; productRef = 049CE74729DDACDE009D0F2D /* GoogleDataTransport */; };
+		04DD285E2A02522E00A70C09 /* ToastMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */; };
 		04E0131729ED30AA00743954 /* TwoStepChangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */; };
 		04E0131929ED524600743954 /* TwoStepExchangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */; };
 		04FE239629D6F49300838DB6 /* SetTwoStepPhoneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */; };
@@ -939,6 +940,7 @@
 		049CE73D29DD5959009D0F2D /* breadwallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = breadwallet.entitlements; path = Resources/breadwallet.entitlements; sourceTree = "<group>"; };
 		049CE73E29DD59C0009D0F2D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymailDestinationWorker.swift; path = src/ViewControllers/PaymailDestinationWorker.swift; sourceTree = "<group>"; };
 		049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FEButton+Extensions.swift"; sourceTree = "<group>"; };
+		04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageManager.swift; sourceTree = "<group>"; };
 		04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepChangeWorker.swift; sourceTree = "<group>"; };
 		04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepExchangeWorker.swift; sourceTree = "<group>"; };
 		04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneWorker.swift; sourceTree = "<group>"; };
@@ -2755,6 +2757,7 @@
 				7EC37907281C096F00028CA1 /* Errors */,
 				7B54E58E27F4A2B0002DD1E4 /* Views */,
 				7B54E57127F4A2B0002DD1E4 /* AlertHelper.swift */,
+				04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */,
 				75A2A7931DA5934300A983D8 /* AppDelegate.swift */,
 				CE20C8F11DBAF71500C8397A /* ApplicationController.swift */,
 				7C0F3DC32124A81100531E54 /* Backend.swift */,
@@ -4181,6 +4184,7 @@
 				7CCD9F6C1FEC1FA300175E64 /* TxAmountCell.swift in Sources */,
 				3A6CA703244239FD001833CA /* WalletInitializer.swift in Sources */,
 				3AEA2C9C24D122EA00DA4C3A /* CloudBackupView.swift in Sources */,
+				04DD285E2A02522E00A70C09 /* ToastMessageManager.swift in Sources */,
 				3A188FEC257FF1A300957819 /* GiftCurrencyCell.swift in Sources */,
 				CE8644251F2C160200033129 /* ConfirmationViewController.swift in Sources */,
 				7CBA74E820227D1300FBBFA9 /* MenuCell.swift in Sources */,
@@ -6283,7 +6287,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/wallet-kit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 5.0.16;
+				version = 5.0.18;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {

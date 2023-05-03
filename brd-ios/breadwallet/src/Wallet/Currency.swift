@@ -122,6 +122,9 @@ class Currency: SharedCurrency, CurrencyWithIcon, ItemSelectable {
         if isBitcoinSV {
             return ["bitcoinsv"]
         }
+        if isLitecoin {
+            return ["litecoin"]
+        }
         
         return nil
     }
@@ -342,6 +345,10 @@ extension Currencies {
     
     var xrp: Currency? {
         return walletState(for: AssetCodes.xrp.value)?.currency
+    }
+    
+    var ltc: Currency? {
+        return walletState(for: AssetCodes.ltc.value)?.currency
     }
     
     func walletState(for code: String) -> WalletState? {

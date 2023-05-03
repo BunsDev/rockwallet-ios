@@ -3088,8 +3088,8 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "TwoStep.App.CantAccess.Title", fallback: "I can’t access my Authenticator App")
       }
       internal enum Confirmation {
-        /// Enter one of your backup codes
-        internal static let title = L10n.tr("Localizable", "TwoStep.App.Confirmation.Title", fallback: "Enter one of your backup codes")
+        /// Enter the code from your Authenticator app
+        internal static let title = L10n.tr("Localizable", "TwoStep.App.Confirmation.Title", fallback: "Enter the code from your Authenticator app")
         internal enum BackupCode {
           /// Confirm you’ve stored your backup codes securely by entering one of them.
           internal static let instructions = L10n.tr("Localizable", "TwoStep.App.Confirmation.BackupCode.Instructions", fallback: "Confirm you’ve stored your backup codes securely by entering one of them.")
