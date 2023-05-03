@@ -30,11 +30,12 @@ class PaymailAddressWorker: BaseApiWorker<PlainMapper> {
     }
     
     override func getUrl() -> String {
-        return PaymailEndpoints.paymail.url
-    }
-
-    override func getParameters() -> [String: Any] {
-        return requestData?.getParameters() ?? [:]
+        guard let urlParams = (requestData as? PaymailRequestData),
+              let paymail = urlParams.paymail,
+              let xpub = urlParams.xpub
+        else { return "" }
+        
+        return APIURLHandler.getUrl(PaymailEndpoints.paymail, parameters: paymail, xpub)
     }
 
     override func getMethod() -> HTTPMethod {

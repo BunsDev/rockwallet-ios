@@ -13,7 +13,7 @@ import Foundation
 enum PaymailEndpoints: String, URLType {
     static var baseURL: String = "https://"  + E.apiUrl + "blocksatoshi/wallet/%@"
     
-    case paymail = "paymail"
+    case paymail = "paymail?paymail=%@&xpub=%@"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)
