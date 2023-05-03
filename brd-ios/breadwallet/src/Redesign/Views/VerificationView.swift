@@ -23,7 +23,7 @@ enum Kyc2: String, Equatable {
 }
 
 enum TradeRestrictionReason {
-    case verification, location
+    case verification, location, manuallyConfigured
 }
 
 struct TradeStatus {
@@ -73,7 +73,10 @@ enum VerificationStatus: Hashable {
             return .init(canTrade: false, restrictionReason: .location)
             
         case (false, _):
-            return .init(canTrade: false, restrictionReason: .verification)
+            let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason
+            
+            return .init(canTrade: false,
+                         restrictionReason: restrictionReason == .kyc ? .verification : .manuallyConfigured)
         }
     }
     
