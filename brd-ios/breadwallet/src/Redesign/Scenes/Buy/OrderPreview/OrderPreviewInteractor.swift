@@ -44,6 +44,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                     self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                          previewType: self?.dataStore?.type,
                                                                          isAch: self?.dataStore?.isAchAccount,
+                                                                         achDeliveryType: self?.dataStore?.achDeliveryType,
                                                                          failed: true,
                                                                          responseCode: data?.responseCode,
                                                                          errorDescription: data?.errorMessage))
@@ -52,6 +53,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                      previewType: self?.dataStore?.type,
                                                                      isAch: self?.dataStore?.isAchAccount,
+                                                                     achDeliveryType: self?.dataStore?.achDeliveryType,
                                                                      failed: false,
                                                                      responseCode: nil,
                                                                      errorDescription: nil))
@@ -156,7 +158,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     }
     
     func showAchInstantDrawer(viewAction: OrderPreviewModels.AchInstantDrawer.ViewAction) {
-        presenter?.presentAchInstantDrawer(actionResponse: .init())
+        presenter?.presentAchInstantDrawer(actionResponse: .init(quote: dataStore?.quote))
     }
     
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
@@ -179,7 +181,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         guard let currency = dataStore?.to?.currency,
               let address = currency.wallet?.defaultReceiveAddress,
               let to = dataStore?.to?.tokenValue,
-              let from = dataStore?.from
+              let from = dataStore?.from,
+              let networkFee = dataStore?.networkFee
         else { return }
         
         let cryptoFormatter = ExchangeFormatter.crypto
@@ -192,11 +195,28 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
         
-        let fromAmount = from * (1 + (dataStore?.quote?.buyFee ?? 0) / 100)
-        let networkFee = dataStore?.networkFee?.fiatValue ?? 0
+        let buyFee = ((dataStore?.quote?.buyFee ?? 0) / 100) + 1
+        let fromAmount = from * buyFee
+        
         let achFee = dataStore?.quote?.buyFeeUsd ?? 0
         
-        let depositQuantity = fromAmount + networkFee + achFee
+        let instantAchFee = (dataStore?.quote?.instantAch?.feePercentage ?? 0) / 100
+        let instantAchLimit = dataStore?.quote?.instantAch?.limitUsd ?? 0
+        let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
+        
+        // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
+        var networkFeeValue: Decimal {
+            guard from >= instantAchLimit else {
+                return networkFee.fiatValue
+            }
+            
+            return 2 * networkFee.fiatValue
+        }
+        
+        var depositQuantity = fromAmount + networkFeeValue + achFee
+        if dataStore?.achDeliveryType == .instant {
+            depositQuantity +=  instantAchFeeUsd
+        }
         let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
         let data = AchRequestData(quoteId: dataStore?.quote?.quoteId,
@@ -204,7 +224,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                   withdrawalQuantity: toTokenValue,
                                   destination: address,
                                   accountId: dataStore?.card?.id,
-                                  nologCvv: dataStore?.cvv?.description)
+                                  nologCvv: dataStore?.cvv?.description,
+                                  useInstantAch: dataStore?.achDeliveryType == .instant)
         
         AchWorker().execute(requestData: data) { [weak self] result in
             switch result {
