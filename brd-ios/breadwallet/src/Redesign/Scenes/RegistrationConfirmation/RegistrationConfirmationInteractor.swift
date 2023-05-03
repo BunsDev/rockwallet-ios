@@ -28,7 +28,6 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                 .acountTwoStepEmailSettings,
                 .acountTwoStepAppSettings,
                 .twoStepEmailResetPassword,
-                .twoStepAppResetPassword,
                 .disable:
             resend(viewAction: .init())
             
