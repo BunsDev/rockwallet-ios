@@ -66,7 +66,9 @@ enum OrderPreviewModels {
     
     struct AchInstantDrawer {
         struct ViewAction {}
-        struct ActionResponse {}
+        struct ActionResponse {
+            var quote: Quote?
+        }
         struct ResponseDisplay {
             var model: DrawerViewModel
             var config: DrawerConfiguration
@@ -167,6 +169,7 @@ enum OrderPreviewModels {
             var paymentReference: String?
             var previewType: PreviewType?
             var isAch: Bool?
+            var achDeliveryType: AchDeliveryType?
             var failed: Bool?
             var responseCode: String?
             var errorDescription: String?
