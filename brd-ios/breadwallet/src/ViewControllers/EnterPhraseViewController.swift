@@ -361,10 +361,10 @@ class EnterPhraseViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func showErrorMessage() {
-        nextButton.isEnabled = true
         let model: InfoViewModel = .init(description: .text(L10n.RecoverWallet.invalid), dismissType: .auto)
-        showToastMessage(model: model, configuration: Presets.InfoView.error)
+        ToastMessageManager.shared.show(model: model, configuration: Presets.InfoView.error)
         
+        nextButton.isEnabled = true
         contactSupportButton.isHidden = false
     }
 

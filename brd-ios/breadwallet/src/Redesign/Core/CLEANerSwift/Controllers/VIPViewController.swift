@@ -172,9 +172,8 @@ class VIPViewController<C: CoordinatableRoutes,
             }
             
         } else {
-            navigationController?.showToastMessage(model: responseDisplay.model,
-                                                   configuration: responseDisplay.config,
-                                                   onTapCallback: nil)
+            ToastMessageManager.shared.show(model: responseDisplay.model,
+                                            configuration: responseDisplay.config)
         }
     }
     

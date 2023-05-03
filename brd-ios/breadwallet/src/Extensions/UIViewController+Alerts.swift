@@ -21,53 +21,6 @@ extension UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    // MARK: - Toast Message
-    
-    func showToastMessage(model: InfoViewModel? = nil,
-                          configuration: InfoViewConfiguration? = nil,
-                          onTapCallback: (() -> Void)? = nil) {
-        guard let activeWindow = UIApplication.shared.activeWindow else { return }
-        
-        let notification: FEInfoView = (activeWindow.subviews.first(where: { $0 is FEInfoView }) as? FEInfoView) ?? FEInfoView()
-        
-        notification.didFinish = { [weak self] in
-            self?.hideToastMessage(notificationView: notification)
-            
-            onTapCallback?()
-        }
-        
-        if notification.superview == nil {
-            notification.setupCustomMargins(all: .extraLarge)
-            notification.configure(with: configuration)
-            activeWindow.addSubview(notification)
-            notification.alpha = 0
-            
-            notification.snp.makeConstraints { make in
-                make.top.equalTo(activeWindow.safeAreaLayoutGuide.snp.top)
-                make.leading.equalToSuperview().offset(Margins.medium.rawValue)
-                make.centerX.equalToSuperview()
-            }
-        }
-        
-        notification.setup(with: model)
-        notification.layoutIfNeeded()
-        
-        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
-            notification.alpha = 1
-        }
-    }
-    
-    func hideToastMessage(notificationView: FEInfoView? = nil) {
-        guard let activeWindow = UIApplication.shared.activeWindow,
-              let view = notificationView ?? activeWindow.subviews.first(where: { $0 is FEInfoView }) else { return }
-        
-        UIView.animate(withDuration: Presets.Animation.short.rawValue) {
-            view.alpha = 0
-        } completion: { _ in
-            view.removeFromSuperview()
-        }
-    }
-    
     // MARK: - Info Popup
     // TODO: Unify / cleanup the logic with BaseCoordinator
     
