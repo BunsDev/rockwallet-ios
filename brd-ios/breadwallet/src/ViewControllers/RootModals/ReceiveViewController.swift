@@ -105,19 +105,19 @@ class ReceiveViewController: UIViewController, Subscriber {
             addressPopout.constraint(.centerX, toView: view),
             addressPopout.constraint(.width, toView: view),
             addressPopout.heightConstraint ])
-        
         buttonsStack.constrain([
             buttonsStack.constraint(.centerX, toView: view),
-            buttonsStack.constraint(toBottom: addressPopout, constant: Margins.large.rawValue)
-        ])
+            buttonsStack.constraint(toBottom: addressPopout, constant: Margins.large.rawValue) ])
         buttonsStack.addArrangedSubview(share)
         share.constrain([
             share.constraint(.width, constant: ViewSizes.Common.hugeCommon.rawValue * 2),
             share.constraint(.height, constant: smallButtonHeight) ])
-        buttonsStack.addArrangedSubview(paymail)
-        paymail.constrain([
-            paymail.constraint(.width, constant: ViewSizes.Common.hugeCommon.rawValue * 2),
-            paymail.constraint(.height, constant: smallButtonHeight) ])
+        if currency == Currencies.shared.bsv {
+            buttonsStack.addArrangedSubview(paymail)
+            paymail.constrain([
+                paymail.constraint(.width, constant: ViewSizes.Common.hugeCommon.rawValue * 2),
+                paymail.constraint(.height, constant: smallButtonHeight) ])
+        }
         sharePopout.heightConstraint = sharePopout.constraint(.height)
         topSharePopoutConstraint = sharePopout.constraint(toBottom: share, constant: largeSharePadding)
         sharePopout.constrain([
