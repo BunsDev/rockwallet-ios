@@ -39,7 +39,7 @@ class ReceiveViewController: UIViewController, Subscriber {
     private let address = UILabel(font: Fonts.Body.one, color: LightColors.Text.one)
     private let addressPopout = InViewAlert(type: .primary)
     private let share = BRDButton(title: L10n.Receive.share.uppercased(), type: .tertiary, image: Asset.share.image)
-    private let paymail = BRDButton(title: "@ PAYMAIL", type: .secondary)
+    private let paymail = BRDButton(title: "@ \(L10n.PaymailAddress.paymailButton)".uppercased(), type: .secondary)
     private let sharePopout = InViewAlert(type: .secondary)
     private let border = UIView()
     private let request = BRDButton(title: L10n.Receive.request.uppercased(), type: .secondary)
@@ -214,8 +214,7 @@ class ReceiveViewController: UIViewController, Subscriber {
             let paymailAddress = "\(paymail)\(Constant.paymailDomain)"
             let value = paymailAddress.filter { !$0.isWhitespace }
             UIPasteboard.general.string = value
-            let message = "Paymail address \(paymailAddress) copied to clipboard"
-            let model: InfoViewModel = .init(description: .text(message), dismissType: .auto)
+            let model: InfoViewModel = .init(description: .text(L10n.PaymailAddress.copyMessage(paymailAddress)))
             ToastMessageManager.shared.show(model: model,
                                             configuration: Presets.InfoView.verification)
         } else {
