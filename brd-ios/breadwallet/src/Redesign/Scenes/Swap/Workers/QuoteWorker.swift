@@ -10,7 +10,7 @@
 
 import Foundation
 
-enum QuoteType {
+enum QuoteType: Equatable {
     case swap
     case sell
     case buy(PaymentCard.PaymentType?)
@@ -38,12 +38,14 @@ struct QuoteRequestData: RequestModelData {
     var from: String?
     var to: String?
     var type: QuoteType = .swap
+    var accountId: String?
     
     func getParameters() -> [String: Any] {
         let params = [
             "from": from,
             "to": to,
-            "type": type.value
+            "type": type.value,
+            "account_id": accountId
         ]
         return params.compactMapValues { $0 }
     }
@@ -153,6 +155,9 @@ class QuoteWorker: BaseApiWorker<QuoteMapper> {
               let to = urlParams.to
         else { return "" }
         let type = urlParams.type.value
-        return APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, type)
+        var url = APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, type)
+        guard let accountId = urlParams.accountId else { return url }
+        url.append(String(format: "&account_id=%@", accountId))
+        return url
     }
 }
