@@ -617,6 +617,10 @@
 /* Confirmation alert title */
 "BCH.confirmationTitle" = "확정";
 
+"BCH.ConverterDescription" = "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.";
+
+"BCH.ConverterTitle" = "BCH Legacy address";
+
 /* Generic bch erorr message */
 "BCH.genericError" = "귀하의 계정에는 BCH가 없거나, 분기 이후에 BCH를 받으셨습니다.";
 
@@ -680,6 +684,8 @@
 
 /* prompt continue button */
 "Button.continueAction" = "계획하기";
+
+"Button.Convert" = "Convert";
 
 /* prompt dismiss button */
 "Button.dismiss" = "해제";
@@ -1744,6 +1750,8 @@
 /* Onboarding screen Page 2 title */
 "OnboardingPageTwo.title" = "BRD를 신뢰하는 전 세계 수백만 명과 함께 하십시오.";
 
+"PaymailAddress.CopyMessage" = "Paymail address %s copied to clipboard";
+
 "PaymailAddress.createAddressDescription" = "To enable quick BSV transfers you can create your unique Paymail address.";
 
 "PaymailAddress.createAddressTitle" = "Create your paymail";
@@ -1753,6 +1761,8 @@
 "PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
 
 "PaymailAddress.paymailAddressField" = "Paymail address";
+
+"PaymailAddress.PaymailButton" = "Paymail";
 
 "PaymailAddress.popupDescription" = "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles";
 

@@ -590,6 +590,10 @@ internal enum L10n {
     }
     /// Confirmation alert title
     internal static let confirmationTitle = L10n.tr("Localizable", "BCH.confirmationTitle", fallback: "Confirmation")
+    /// You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.
+    internal static let converterDescription = L10n.tr("Localizable", "BCH.ConverterDescription", fallback: "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.")
+    /// BCH Legacy address
+    internal static let converterTitle = L10n.tr("Localizable", "BCH.ConverterTitle", fallback: "BCH Legacy address")
     /// Generic bch erorr message
     internal static let genericError = L10n.tr("Localizable", "BCH.genericError", fallback: "Your account does not contain any BCH, or you received BCH after the fork.")
     /// Transaction ID copied message
@@ -648,6 +652,8 @@ internal enum L10n {
     internal static let confirm = L10n.tr("Localizable", "Button.confirm", fallback: "Confirm")
     /// prompt continue button
     internal static let continueAction = L10n.tr("Localizable", "Button.continueAction", fallback: "Continue")
+    /// Convert
+    internal static let convert = L10n.tr("Localizable", "Button.Convert", fallback: "Convert")
     /// prompt dismiss button
     internal static let dismiss = L10n.tr("Localizable", "Button.dismiss", fallback: "Dismiss")
     /// Done button title
@@ -1670,6 +1676,10 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "OnboardingPageTwo.title", fallback: "Join people around the world who trust RockWallet.")
   }
   internal enum PaymailAddress {
+    /// Paymail address %s copied to clipboard
+    internal static func copyMessage(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "PaymailAddress.CopyMessage", p1, fallback: "Paymail address %s copied to clipboard")
+    }
     /// To enable quick BSV transfers you can create your unique Paymail address.
     internal static let createAddressDescription = L10n.tr("Localizable", "PaymailAddress.createAddressDescription", fallback: "To enable quick BSV transfers you can create your unique Paymail address.")
     /// Create your paymail
@@ -1680,6 +1690,8 @@ internal enum L10n {
     internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
     /// Paymail address
     internal static let paymailAddressField = L10n.tr("Localizable", "PaymailAddress.paymailAddressField", fallback: "Paymail address")
+    /// Paymail
+    internal static let paymailButton = L10n.tr("Localizable", "PaymailAddress.PaymailButton", fallback: "Paymail")
     /// Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.
     /// The goals of the paymail protocol are:
     /// User friendly payment destinations through memorable handles
