@@ -209,17 +209,17 @@ class ReceiveViewController: UIViewController, Subscriber {
     }
     
     @objc private func paymailTapped() {
-        let paymail = UserManager.shared.profile?.paymail ?? ""
-        if !paymail.isEmpty {
-            let paymailAddress = "\(paymail)\(Constant.paymailDomain)"
-            let value = paymailAddress.filter { !$0.isWhitespace }
-            UIPasteboard.general.string = value
-            let model: InfoViewModel = .init(description: .text(L10n.PaymailAddress.copyMessage(paymailAddress)))
-            ToastMessageManager.shared.show(model: model,
-                                            configuration: Presets.InfoView.verification)
-        } else {
+        guard let paymail = UserManager.shared.profile?.paymail else {
             paymailCallback?()
+            return
         }
+        
+        let paymailAddress = "\(paymail)\(Constant.paymailDomain)"
+        let value = paymailAddress.filter { !$0.isWhitespace }
+        UIPasteboard.general.string = value
+        let model: InfoViewModel = .init(description: .text(L10n.PaymailAddress.copyMessage(paymailAddress)))
+        ToastMessageManager.shared.show(model: model,
+                                        configuration: Presets.InfoView.verification)
     }
 
     @objc private func addressTapped() {
