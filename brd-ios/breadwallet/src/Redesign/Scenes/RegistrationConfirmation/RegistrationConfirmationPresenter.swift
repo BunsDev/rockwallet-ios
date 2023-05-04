@@ -30,7 +30,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             .help
         ]
         
-        // TODO: Check the designs and clean the whole presentData up.
+        // TODO: Check the designs and clean the whole presentData mess.
         
         if confirmationType == .twoStepApp {
             sections = sections.filter({ $0 != .image })
@@ -38,7 +38,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .help })
         }
         
-        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword {
+        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds {
             sections = sections.filter({ $0 != .image })
             sections = sections.filter({ $0 != .instructions })
         }

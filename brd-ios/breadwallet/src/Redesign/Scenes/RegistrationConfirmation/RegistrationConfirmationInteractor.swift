@@ -71,11 +71,8 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmailResetPassword, .twoStepAppResetPassword:
             executeResetPassword()
             
-        case .twoStepAppBuy, .twoStepEmailBuy, .twoStepAppBackupCode:
+        case .twoStepAppBuy, .twoStepEmailBuy, .twoStepAppBackupCode, .twoStepAppSendFunds, .twoStepEmailSendFunds:
             presentConfirm()
-            
-        case .twoStepAppSendFunds, .twoStepEmailSendFunds:
-            break
             
         case .twoStepDisable:
             executeDisable()

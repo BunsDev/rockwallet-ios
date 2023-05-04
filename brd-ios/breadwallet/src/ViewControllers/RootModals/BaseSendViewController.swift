@@ -15,14 +15,18 @@ class BaseSendViewController: UIViewController {
     
     var presentVerifyPin: ((String, @escaping ((String) -> Void)) -> Void)?
     var onPublishSuccess: (() -> Void)?
-    
+
     let sendingActivity = BRActivityViewController(message: L10n.TransactionDetails.titleSending)
     let sender: Sender
+    
+    var secondFactorBackup: String?
+    var secondFactorCode: String?
     
     weak var coordinator: BaseCoordinator?
     
     init(sender: Sender) {
         self.sender = sender
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,37 +34,55 @@ class BaseSendViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func handlePinInputSuccess(pin: String, twoStepCode: String?, pinValidationCallback: (String) -> Void) {
-        parent?.view.isFrameChangeBlocked = false
-        pinValidationCallback(pin)
-        present(sendingActivity, animated: false)
+    func send() {
+        if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.sending {
+            coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepAppSendFunds : .twoStepEmailSendFunds
+                vc?.isModalDismissable = true
+                
+                vc?.didDismiss = { didDismissSuccessfully in
+                    guard didDismissSuccessfully else { return }
+                    
+                    switch vc?.dataStore?.confirmationType {
+                    case .twoStepAppBackupCode:
+                        self.secondFactorBackup = vc?.dataStore?.code
+                        
+                    default:
+                        self.secondFactorCode = vc?.dataStore?.code
+                    }
+                    
+                    _ = self.validateSendForm()
+                    
+                    DispatchQueue.main.async {
+                        self.executeSend()
+                    }
+                }
+            }
+        } else {
+            _ = validateSendForm()
+            
+            DispatchQueue.main.async {
+                self.executeSend()
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.present(self.sendingActivity, animated: true)
+        }
     }
     
-    func send() {
+    private func executeSend() {
         let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
             guard let self = self else { return }
             
             self.sendingActivity.dismiss(animated: false) {
                 self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
-                    if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.sending {
-                        self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
-                            vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepAppSendFunds : .twoStepEmailSendFunds
-                            vc?.isModalDismissable = true
-                            
-                            vc?.didDismiss = { didDismissSuccessfully in
-                                guard didDismissSuccessfully else { return }
-                                
-                                self.handlePinInputSuccess(pin: pin, twoStepCode: vc?.dataStore?.code, pinValidationCallback: pinValidationCallback)
-                            }
-                        }
-                    } else {
-                        self.handlePinInputSuccess(pin: pin, twoStepCode: nil, pinValidationCallback: pinValidationCallback)
-                    }
+                    self.parent?.view.isFrameChangeBlocked = false
+                    pinValidationCallback(pin)
+                    self.present(self.sendingActivity, animated: false)
                 }
             }
         }
-        
-        present(sendingActivity, animated: true)
         
         sender.sendTransaction(allowBiometrics: true, pinVerifier: pinVerifier) { [weak self] result in
             guard let self = self else { return }
@@ -84,6 +106,8 @@ class BaseSendViewController: UIViewController {
     }
     
     func showInsufficientGasError() {}
+    
+    func validateSendForm() -> Bool { return false }
     
     func onSuccess() {
         onPublishSuccess?()
