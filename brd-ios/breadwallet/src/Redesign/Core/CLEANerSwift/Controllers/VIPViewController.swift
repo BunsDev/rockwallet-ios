@@ -117,6 +117,7 @@ class VIPViewController<C: CoordinatableRoutes,
         super.didMove(toParent: parent)
 
         parent?.presentationController?.delegate = self
+        
         guard parent == nil else { return }
 
         coordinator?.goBack()
@@ -171,9 +172,8 @@ class VIPViewController<C: CoordinatableRoutes,
             }
             
         } else {
-            navigationController?.showToastMessage(model: responseDisplay.model,
-                                                   configuration: responseDisplay.config,
-                                                   onTapCallback: nil)
+            ToastMessageManager.shared.show(model: responseDisplay.model,
+                                            configuration: responseDisplay.config)
         }
     }
     

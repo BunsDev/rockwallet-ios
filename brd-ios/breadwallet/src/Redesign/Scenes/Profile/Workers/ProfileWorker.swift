@@ -19,6 +19,7 @@ struct ProfileResponseData: ModelResponse {
     let kycFailureReason: String?
     let isRegistered: Bool?
     let hasPendingLimits: Bool?
+    let paymail: String?
     
     struct AccessRights: Codable {
         let hasSwapAccess: Bool
@@ -65,6 +66,7 @@ struct Profile: Model {
     let isMigrated: Bool
     let kycFailureReason: String?
     let hasPendingLimits: Bool
+    let paymail: String?
     
     struct AccessRights {
         let hasSwapAccess: Bool
@@ -151,7 +153,8 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
                                               restrictionReason: .init(rawValue: response.kycAccessRights?.restrictionReason ?? "")),
                        isMigrated: response.isRegistered ?? false,
                        kycFailureReason: response.kycFailureReason,
-                       hasPendingLimits: response.hasPendingLimits ?? false)
+                       hasPendingLimits: response.hasPendingLimits ?? false,
+                       paymail: response.paymail)
     }
 }
 

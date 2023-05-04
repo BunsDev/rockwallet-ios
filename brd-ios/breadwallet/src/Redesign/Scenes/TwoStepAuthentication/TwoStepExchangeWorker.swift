@@ -14,7 +14,11 @@ struct TwoStepExchangeRequestData: RequestModelData {
     let code: String?
     
     func getParameters() -> [String: Any] {
-        return ["code": code ?? ""]
+        let params = [
+            "code": code
+        ]
+        
+        return params.compactMapValues { $0 }
     }
 }
 
@@ -23,13 +27,13 @@ struct TwoStepExchangeResponseData: ModelResponse {
 }
 
 struct TwoStepExchange: Model {
-    let updateCode: String
+    let updateCode: String?
     
 }
 
 class TwoStepExchangeMapper: ModelMapper<TwoStepExchangeResponseData, TwoStepExchange> {
     override func getModel(from response: TwoStepExchangeResponseData?) -> TwoStepExchange? {
-        return .init(updateCode: response?.updateCode ?? "")
+        return .init(updateCode: response?.updateCode)
     }
 }
 

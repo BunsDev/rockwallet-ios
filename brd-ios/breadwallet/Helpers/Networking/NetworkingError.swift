@@ -56,6 +56,17 @@ enum NetworkingError: FEError {
         }
     }
     
+    var errorCategory: ServerResponse.ErrorCategory? {
+        switch self {
+        case .twoStepEmailRequired, .twoStepAppRequired, .twoStepInvalid,
+                .twoStepInvalidRetryable, .twoStepBlockedAccount, .twoStepInvalidCodeBlockedAccount:
+            return .twoStep
+            
+        default:
+            return nil
+        }
+    }
+    
     var errorType: ServerResponse.ErrorType? {
         switch self {
         case .exchangesUnavailable:

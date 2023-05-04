@@ -146,7 +146,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
                 })
                 
             case .acountTwoStepAppSettings:
-                self.coordinator?.showAuthenticatorApp()
+                self.coordinator?.showAuthenticatorApp(setTwoStepAppModel: self.dataStore?.setTwoStepAppModel)
                 
             case .twoStepApp:
                 self.coordinator?.showBackupCodes()

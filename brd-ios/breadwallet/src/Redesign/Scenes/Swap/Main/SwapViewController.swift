@@ -141,7 +141,8 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
-        hideToastMessage()
+        ToastMessageManager.shared.hide()
+        
         interactor?.showConfirmation(viewAction: .init())
     }
     
@@ -173,7 +174,8 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {
         view.endEditing(true)
-        hideToastMessage()
+        
+        ToastMessageManager.shared.hide()
         
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: responseDisplay.to ?? responseDisplay.from,
