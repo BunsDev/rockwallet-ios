@@ -303,7 +303,7 @@ enum BaseInfoModels {
         var title: String {
             switch self {
             case .swap, .buy:
-                return L10n.ComingSoon.swapBuyTitle
+                return L10n.ComingSoon.title
                 
             case .buyAch, .sell:
                 return L10n.Buy.Ach.notAvailableTitle
@@ -312,14 +312,8 @@ enum BaseInfoModels {
         
         var description: String {
             switch self {
-            case .swap:
-                return  L10n.ComingSoon.swapDescription
-                
-            case .buy:
-                return L10n.ComingSoon.buyDescription
-                
-            case .buyAch:
-                return L10n.Buy.Ach.notAvailableBody
+            case .swap, .buy, .buyAch:
+                return  L10n.ComingSoon.body
                 
             case .sell:
                 return L10n.Sell.notAvailableBody
