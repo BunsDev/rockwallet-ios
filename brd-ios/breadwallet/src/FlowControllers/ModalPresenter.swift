@@ -339,6 +339,7 @@ class ModalPresenter: Subscriber {
     
     private func makeReceiveView(currency: Currency, isRequestAmountVisible: Bool, isBTCLegacy: Bool = false) -> UIViewController? {
         let receiveVC = ReceiveViewController(currency: currency, isRequestAmountVisible: isRequestAmountVisible, isBTCLegacy: isBTCLegacy)
+        receiveVC.paymailCallback = paymailCallback
         let root = ModalViewController(childViewController: receiveVC)
         
         receiveVC.shareAddress = { [weak self, weak root] address, qrCode in

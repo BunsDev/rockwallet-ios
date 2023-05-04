@@ -617,6 +617,10 @@
 /* Confirmation alert title */
 "BCH.confirmationTitle" = "Conferma";
 
+"BCH.ConverterDescription" = "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.";
+
+"BCH.ConverterTitle" = "BCH Legacy address";
+
 /* Generic bch erorr message */
 "BCH.genericError" = "Il tuo account non contiene alcun BCH, oppure hai ricevuto BCH dopo il fork.";
 
@@ -680,6 +684,8 @@
 
 /* prompt continue button */
 "Button.continueAction" = "Continua";
+
+"Button.Convert" = "Convert";
 
 /* prompt dismiss button */
 "Button.dismiss" = "Ignora";
@@ -1744,6 +1750,8 @@
 /* Onboarding screen Page 2 title */
 "OnboardingPageTwo.title" = "Unisciti a milioni di persone che in tutto il mondo si fidano di RockWallet.";
 
+"PaymailAddress.CopyMessage" = "Paymail address %s copied to clipboard";
+
 "PaymailAddress.createAddressDescription" = "To enable quick BSV transfers you can create your unique Paymail address.";
 
 "PaymailAddress.createAddressTitle" = "Create your paymail";
@@ -1753,6 +1761,8 @@
 "PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
 
 "PaymailAddress.paymailAddressField" = "Paymail address";
+
+"PaymailAddress.PaymailButton" = "Paymail";
 
 "PaymailAddress.popupDescription" = "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles";
 
