@@ -21,7 +21,7 @@ struct SetPasswordRequestData: RequestModelData {
             "code": code,
             "password": password,
             "second_factor_code": secondFactorCode,
-            "second_factor_backup": secondFactorBackup // TODO: Handle this case
+            "second_factor_backup": secondFactorBackup // TODO: Handle this 2FA case
         ]
         return params.compactMapValues { $0 }
     }

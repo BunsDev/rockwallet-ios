@@ -30,7 +30,7 @@ class BaseSendViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func handlePinInputSuccess(pin: String, pinValidationCallback: (String) -> Void) {
+    private func handlePinInputSuccess(pin: String, twoStepCode: String?, pinValidationCallback: (String) -> Void) {
         parent?.view.isFrameChangeBlocked = false
         pinValidationCallback(pin)
         present(sendingActivity, animated: false)
@@ -39,29 +39,32 @@ class BaseSendViewController: UIViewController {
     func send() {
         let pinVerifier: PinVerifier = { [weak self] pinValidationCallback in
             guard let self = self else { return }
+            
             self.sendingActivity.dismiss(animated: false) {
                 self.presentVerifyPin?(L10n.VerifyPin.authorize) { pin in
                     if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.sending {
                         self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
-                            vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepApp : .twoStepEmail
+                            vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepAppSendFunds : .twoStepEmailSendFunds
                             vc?.isModalDismissable = true
                             
                             vc?.didDismiss = { didDismissSuccessfully in
                                 guard didDismissSuccessfully else { return }
                                 
-                                self.handlePinInputSuccess(pin: pin, pinValidationCallback: pinValidationCallback)
+                                self.handlePinInputSuccess(pin: pin, twoStepCode: vc?.dataStore?.code, pinValidationCallback: pinValidationCallback)
                             }
                         }
                     } else {
-                        self.handlePinInputSuccess(pin: pin, pinValidationCallback: pinValidationCallback)
+                        self.handlePinInputSuccess(pin: pin, twoStepCode: nil, pinValidationCallback: pinValidationCallback)
                     }
                 }
             }
         }
         
         present(sendingActivity, animated: true)
+        
         sender.sendTransaction(allowBiometrics: true, pinVerifier: pinVerifier) { [weak self] result in
             guard let self = self else { return }
+            
             self.sendingActivity.dismiss(animated: true) {
                 defer { self.sender.reset() }
                 switch result {

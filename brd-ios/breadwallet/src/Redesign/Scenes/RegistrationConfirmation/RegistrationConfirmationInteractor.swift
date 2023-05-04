@@ -25,10 +25,12 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         switch dataStore?.confirmationType {
         case .twoStepEmail,
                 .twoStepEmailLogin,
-                .acountTwoStepEmailSettings,
-                .acountTwoStepAppSettings,
+                .twoStepAccountEmailSettings,
+                .twoStepEmailSendFunds,
+                .twoStepEmailBuy,
+                .twoStepAccountAppSettings,
                 .twoStepEmailResetPassword,
-                .disable:
+                .twoStepDisable:
             resend(viewAction: .init())
             
         default:
@@ -54,13 +56,13 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .account:
             executeRegistrationConfirmation()
             
-        case .twoStepEmail, .acountTwoStepEmailSettings:
+        case .twoStepEmail, .twoStepAccountEmailSettings:
             executeSetTwoStepEmail(type: .email, updateCode: dataStore?.code)
             
-        case .acountTwoStepAppSettings:
+        case .twoStepAccountAppSettings:
             executeExchange(type: .app)
             
-        case .twoStepApp, .enterAppBackupCode:
+        case .twoStepApp, .twoStepAppBackupCode:
             executeSetTwoStepApp()
         
         case .twoStepEmailLogin, .twoStepAppLogin:
@@ -68,8 +70,17 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             
         case .twoStepEmailResetPassword, .twoStepAppResetPassword:
             executeResetPassword()
+        
+        case .twoStepAppBuy, .twoStepEmailBuy:
+            confirm(viewAction: .init())
             
-        case .disable:
+        case .twoStepAppSendFunds:
+            break
+            
+        case .twoStepEmailSendFunds:
+            break
+            
+        case .twoStepDisable:
             executeDisable()
             
         default:
@@ -82,7 +93,8 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmailLogin, .twoStepAppLogin, .twoStepEmailResetPassword, .twoStepAppResetPassword:
             executeCodeEmailRequest()
             
-        case .twoStepEmail, .twoStepApp, .acountTwoStepEmailSettings, .acountTwoStepAppSettings, .disable:
+        case .twoStepEmail, .twoStepEmailSendFunds, .twoStepApp, .twoStepAccountEmailSettings,
+                .twoStepAccountAppSettings, .twoStepEmailBuy, .twoStepDisable:
             executeChangeRequest()
             
         case .account:

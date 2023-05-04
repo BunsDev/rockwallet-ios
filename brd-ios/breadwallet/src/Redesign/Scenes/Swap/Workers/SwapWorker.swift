@@ -18,6 +18,8 @@ struct SwapRequestData: RequestModelData {
     var destination: String?
     var sourceInstrumentId: String?
     var nologCvv: String?
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     func getParameters() -> [String: Any] {
         let params: [String: Any?] = [
@@ -27,7 +29,9 @@ struct SwapRequestData: RequestModelData {
             "withdrawal_quantity": withdrawalQuantity,
             "destination": destination,
             "source_instrument_id": sourceInstrumentId,
-            "nolog_cvv": nologCvv
+            "nolog_cvv": nologCvv,
+            "second_factor_code": secondFactorCode,
+            "second_factor_backup": secondFactorBackup // TODO: Handle this 2FA case
         ]
         
         return params.compactMapValues { $0 }

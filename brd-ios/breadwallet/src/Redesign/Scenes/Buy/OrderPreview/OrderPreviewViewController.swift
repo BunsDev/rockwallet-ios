@@ -203,11 +203,13 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         coordinator?.showPinInput(keyStore: dataStore?.keyStore) { [weak self] success in
             if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.buy {
                 self?.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
-                    vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepApp : .twoStepEmail
+                    vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepAppBuy : .twoStepEmailBuy
                     vc?.isModalDismissable = true
                     
                     vc?.didDismiss = { didDismissSuccessfully in
                         guard didDismissSuccessfully else { return }
+                        
+                        self?.dataStore?.secondFactorCode = vc?.dataStore?.code
                         
                         self?.handlePinInputSuccess(didDismissSuccessfully)
                     }

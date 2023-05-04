@@ -129,7 +129,9 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                    withdrawalQuantity: toTokenValue,
                                    destination: address,
                                    sourceInstrumentId: dataStore?.card?.id,
-                                   nologCvv: dataStore?.cvv?.description)
+                                   nologCvv: dataStore?.cvv?.description,
+                                   secondFactorCode: dataStore?.secondFactorCode,
+                                   secondFactorBackup: dataStore?.secondFactorBackup)
         
         SwapWorker().execute(requestData: data) { [weak self] result in
             switch result {
@@ -225,7 +227,9 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                   destination: address,
                                   accountId: dataStore?.card?.id,
                                   nologCvv: dataStore?.cvv?.description,
-                                  useInstantAch: dataStore?.achDeliveryType == .instant)
+                                  useInstantAch: dataStore?.achDeliveryType == .instant,
+                                  secondFactorCode: dataStore?.secondFactorCode,
+                                  secondFactorBackup: dataStore?.secondFactorBackup)
         
         AchWorker().execute(requestData: data) { [weak self] result in
             switch result {

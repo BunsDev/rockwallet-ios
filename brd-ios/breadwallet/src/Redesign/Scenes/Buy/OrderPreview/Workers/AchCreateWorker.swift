@@ -19,6 +19,8 @@ struct AchRequestData: RequestModelData {
     var accountId: String?
     var nologCvv: String?
     var useInstantAch: Bool?
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     func getParameters() -> [String: Any] {
         let params: [String: Any?] = [
@@ -29,7 +31,9 @@ struct AchRequestData: RequestModelData {
             "destination": destination,
             "account_id": accountId,
             "nolog_cvv": nologCvv,
-            "use_instant_ach": useInstantAch
+            "use_instant_ach": useInstantAch,
+            "second_factor_code": secondFactorCode,
+            "second_factor_backup": secondFactorBackup // TODO: Handle this 2FA case
         ]
         
         return params.compactMapValues { $0 }
@@ -79,6 +83,6 @@ class AchWorker: BaseApiWorker<AchWorkerMapper> {
     }
     
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(ExchangeEndpoints.ach)
+        return APIURLHandler.getUrl(ExchangeEndpoints.achCreate)
     }
 }

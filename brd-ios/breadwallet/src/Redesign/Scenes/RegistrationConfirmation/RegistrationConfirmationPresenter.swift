@@ -14,6 +14,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
     weak var viewController: RegistrationConfirmationViewController?
 
     // MARK: - RegistrationConfirmationActionResponses
+    
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
         
@@ -29,6 +30,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             .help
         ]
         
+        // TODO: Check the designs and clean the whole presentData up.
+        
         if confirmationType == .twoStepApp {
             sections = sections.filter({ $0 != .image })
             sections = sections.filter({ $0 != .instructions })
@@ -40,7 +43,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .instructions })
         }
         
-        if confirmationType == .enterAppBackupCode {
+        if confirmationType == .twoStepAppBackupCode || confirmationType == .twoStepAppBuy {
             sections = sections.filter({ $0 != .image })
         }
         
@@ -48,19 +51,19 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         let instructions: String
         
         switch confirmationType {
-        case .account, .acountTwoStepEmailSettings, .acountTwoStepAppSettings:
+        case .account, .twoStepAccountEmailSettings, .twoStepAccountAppSettings:
             title = L10n.AccountCreation.verifyEmail
             instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
-        case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .disable:
+        case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .twoStepEmailSendFunds, .twoStepEmailBuy, .twoStepDisable:
             title = L10n.TwoStep.Email.Confirmation.title
             instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
-        case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword:
+        case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy:
             title = L10n.TwoStep.App.Confirmation.title
             instructions = ""
         
-        case .enterAppBackupCode:
+        case .twoStepAppBackupCode:
             title = L10n.TwoStep.App.Confirmation.BackupCode.title
             instructions = L10n.TwoStep.App.Confirmation.BackupCode.instructions
             
@@ -76,13 +79,13 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                                         callback: viewController?.changeEmailTapped))
         }
         
-        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword {
+        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds || confirmationType == .twoStepAppBuy {
             help = [ButtonViewModel(title: L10n.TwoStep.App.CantAccess.title,
                                     isUnderlined: true,
                                     callback: viewController?.enterBackupCode)]
         }
         
-        if confirmationType == .enterAppBackupCode {
+        if confirmationType == .twoStepAppBackupCode {
             help.removeAll()
         }
         

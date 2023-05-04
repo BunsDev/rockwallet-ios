@@ -30,6 +30,7 @@ enum NetworkingError: FEError {
     case twoStepEmailRequired
     case twoStepAppRequired
     case twoStepInvalid
+    case twoStepInvalidCode
     case twoStepInvalidRetryable
     case twoStepBlockedAccount
     case twoStepInvalidCodeBlockedAccount
@@ -48,7 +49,7 @@ enum NetworkingError: FEError {
         case .serverAtCapacity:
             return L10n.ErrorMessages.somethingWentWrong
             
-        case .twoStepInvalid:
+        case .twoStepInvalidCode:
             return L10n.TwoStep.Error.attempts
             
         default:
@@ -58,8 +59,8 @@ enum NetworkingError: FEError {
     
     var errorCategory: ServerResponse.ErrorCategory? {
         switch self {
-        case .twoStepEmailRequired, .twoStepAppRequired, .twoStepInvalid,
-                .twoStepInvalidRetryable, .twoStepBlockedAccount, .twoStepInvalidCodeBlockedAccount:
+        case .twoStepEmailRequired, .twoStepAppRequired, .twoStepInvalidCode,
+                .twoStepInvalidRetryable, .twoStepBlockedAccount, .twoStepInvalidCodeBlockedAccount, .twoStepInvalid:
             return .twoStep
             
         default:
@@ -84,11 +85,14 @@ enum NetworkingError: FEError {
         case .twoStepInvalidCodeBlockedAccount:
             return .twoStepInvalidCodeBlockedAccount
             
-        case .twoStepInvalid:
-            return .twoStepInvalid
+        case .twoStepInvalidCode:
+            return .twoStepInvalidCode
             
         case .twoStepInvalidRetryable:
             return .twoStepInvalidRetryable
+            
+        case .twoStepInvalid:
+            return .twoStepInvalid
             
         default:
             return nil
@@ -122,8 +126,8 @@ enum NetworkingError: FEError {
                 self = .twoStepEmailRequired
             
             default:
-                if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalid.rawValue {
-                    self = .twoStepInvalid
+                if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
+                    self = .twoStepInvalidCode
                 } else {
                     self = .accessDenied
                 }

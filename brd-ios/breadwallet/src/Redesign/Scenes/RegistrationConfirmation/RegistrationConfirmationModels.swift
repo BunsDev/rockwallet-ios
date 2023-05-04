@@ -23,30 +23,38 @@ enum RegistrationConfirmationModels {
     }
     
     enum ConfirmationType: Hashable {
-        // Regular Login/Register
+        // Regular Login/Register without 2FA
         case account
         
-        // Change method
-        case acountTwoStepEmailSettings
-        case acountTwoStepAppSettings
+        // Change 2FA method
+        case twoStepAccountEmailSettings
+        case twoStepAccountAppSettings
         
-        // First time setup
+        // First time 2FA setup
         case twoStepEmail
         case twoStepApp
         
-        // Login
+        // Login with 2FA
         case twoStepEmailLogin
         case twoStepAppLogin
         
-        // Reset password
+        // Send funds with 2FA
+        case twoStepEmailSendFunds
+        case twoStepAppSendFunds
+        
+        // Buy with 2FA
+        case twoStepEmailBuy
+        case twoStepAppBuy
+        
+        // Reset password with 2FA
         case twoStepEmailResetPassword
         case twoStepAppResetPassword
         
-        // App backup code
-        case enterAppBackupCode
+        // 2FA app backup code
+        case twoStepAppBackupCode
         
         // Disable 2FA
-        case disable
+        case twoStepDisable
     }
     
     struct Validate {
