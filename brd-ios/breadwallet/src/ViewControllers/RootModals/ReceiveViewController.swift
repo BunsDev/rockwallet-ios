@@ -39,14 +39,22 @@ class ReceiveViewController: UIViewController, Subscriber {
     private let address = UILabel(font: Fonts.Body.one, color: LightColors.Text.one)
     private let addressPopout = InViewAlert(type: .primary)
     private let share = BRDButton(title: L10n.Receive.share.uppercased(), type: .tertiary, image: Asset.share.image)
+    private let paymail = BRDButton(title: "@ PAYMAIL", type: .secondary)
     private let sharePopout = InViewAlert(type: .secondary)
     private let border = UIView()
-    private let request = BRDButton(title: L10n.Receive.request, type: .secondary)
+    private let request = BRDButton(title: L10n.Receive.request.uppercased(), type: .secondary)
     private let addressButton = UIButton(type: .system)
     private var topSharePopoutConstraint: NSLayoutConstraint?
     fileprivate let isRequestAmountVisible: Bool
     private var requestTop: NSLayoutConstraint?
     private var requestBottom: NSLayoutConstraint?
+    private var coordinator: BaseCoordinator?
+    
+    private lazy var buttonsStack: UIStackView = {
+        let view = UIStackView()
+        view.spacing = Margins.large.rawValue
+        return view
+    }()
 
     override func viewDidLoad() {
         addSubviews()
@@ -74,7 +82,7 @@ class ReceiveViewController: UIViewController, Subscriber {
         view.addSubview(qrCode)
         view.addSubview(address)
         view.addSubview(addressPopout)
-        view.addSubview(share)
+        view.addSubview(buttonsStack)
         view.addSubview(sharePopout)
         view.addSubview(border)
         view.addSubview(request)
@@ -97,11 +105,19 @@ class ReceiveViewController: UIViewController, Subscriber {
             addressPopout.constraint(.centerX, toView: view),
             addressPopout.constraint(.width, toView: view),
             addressPopout.heightConstraint ])
+        
+        buttonsStack.constrain([
+            buttonsStack.constraint(.centerX, toView: view),
+            buttonsStack.constraint(toBottom: addressPopout, constant: Margins.large.rawValue)
+        ])
+        buttonsStack.addArrangedSubview(share)
         share.constrain([
-            share.constraint(toBottom: addressPopout, constant: Margins.large.rawValue),
-            share.constraint(.centerX, toView: view),
-            share.constraint(.width, constant: ViewSizes.extraExtraHuge.rawValue),
+            share.constraint(.width, constant: ViewSizes.Common.hugeCommon.rawValue * 2),
             share.constraint(.height, constant: smallButtonHeight) ])
+        buttonsStack.addArrangedSubview(paymail)
+        paymail.constrain([
+            paymail.constraint(.width, constant: ViewSizes.Common.hugeCommon.rawValue * 2),
+            paymail.constraint(.height, constant: smallButtonHeight) ])
         sharePopout.heightConstraint = sharePopout.constraint(.height)
         topSharePopoutConstraint = sharePopout.constraint(toBottom: share, constant: largeSharePadding)
         sharePopout.constrain([
@@ -177,6 +193,7 @@ class ReceiveViewController: UIViewController, Subscriber {
             })
         }
         share.addTarget(self, action: #selector(ReceiveViewController.shareTapped), for: .touchUpInside)
+        paymail.addTarget(self, action: #selector(ReceiveViewController.paymailTapped), for: .touchUpInside)
     }
 
     private func setupCopiedMessage() {
@@ -190,6 +207,8 @@ class ReceiveViewController: UIViewController, Subscriber {
         guard let text = address.text, let image = qrCode.image else { return }
         shareAddress?(text, image)
     }
+    
+    @objc private func paymailTapped() {}
 
     @objc private func addressTapped() {
         guard let text = address.text else { return }
