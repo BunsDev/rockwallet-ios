@@ -48,7 +48,7 @@ class ReceiveViewController: UIViewController, Subscriber {
     fileprivate let isRequestAmountVisible: Bool
     private var requestTop: NSLayoutConstraint?
     private var requestBottom: NSLayoutConstraint?
-    private var coordinator: BaseCoordinator?
+    var paymailCallback: (() -> Void)?
     
     private lazy var buttonsStack: UIStackView = {
         let view = UIStackView()
@@ -218,7 +218,7 @@ class ReceiveViewController: UIViewController, Subscriber {
             ToastMessageManager.shared.show(model: model,
                                             configuration: Presets.InfoView.verification)
         } else {
-            // open paymail screen
+            paymailCallback?()
         }
     }
 
