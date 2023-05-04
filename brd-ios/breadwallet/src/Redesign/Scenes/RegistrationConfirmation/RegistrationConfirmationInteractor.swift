@@ -74,10 +74,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepAppBuy, .twoStepEmailBuy:
             presentConfirm()
             
-        case .twoStepAppSendFunds:
-            break
-            
-        case .twoStepEmailSendFunds:
+        case .twoStepAppSendFunds, .twoStepEmailSendFunds:
             break
             
         case .twoStepDisable:
