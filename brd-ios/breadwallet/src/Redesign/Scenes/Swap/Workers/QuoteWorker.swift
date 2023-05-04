@@ -156,8 +156,9 @@ class QuoteWorker: BaseApiWorker<QuoteMapper> {
         else { return "" }
         let type = urlParams.type.value
         var url = APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, type)
-        guard let accountId = urlParams.accountId else { return url }
-        url.append(String(format: "&account_id=%@", accountId))
+        if let accountId = urlParams.accountId {
+            url.append(String(format: "&account_id=%@", accountId))
+        }
         return url
     }
 }
