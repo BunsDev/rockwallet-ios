@@ -15,10 +15,12 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var fromCode: String { return Constant.usdCurrencyCode }
     var toCode: String { toAmount?.currency.code ?? "" }
     var showTimer: Bool = false
+    var accountId: String? { return ach?.id }
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode.lowercased(),
                      to: toCode,
-                     type: .buy(paymentMethod))
+                     type: .buy(paymentMethod),
+                     accountId: paymentMethod == .ach ? accountId : nil)
     }
     
     // MARK: - BuyDataStore
