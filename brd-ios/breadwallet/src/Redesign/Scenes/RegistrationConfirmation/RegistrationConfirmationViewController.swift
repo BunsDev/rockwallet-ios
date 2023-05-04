@@ -119,8 +119,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     }
     
     func enterBackupCode() {
-        coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                  confirmationType: .twoStepAppBackupCode)
+        dataStore?.confirmationType = .twoStepAppBackupCode
+        
+        prepareData()
     }
     
     // MARK: - RegistrationConfirmationResponseDisplay

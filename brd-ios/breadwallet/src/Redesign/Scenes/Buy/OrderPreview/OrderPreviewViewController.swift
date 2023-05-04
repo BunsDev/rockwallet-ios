@@ -209,7 +209,13 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
                     vc?.didDismiss = { didDismissSuccessfully in
                         guard didDismissSuccessfully else { return }
                         
-                        self?.dataStore?.secondFactorCode = vc?.dataStore?.code
+                        switch vc?.dataStore?.confirmationType {
+                        case .twoStepAppBackupCode:
+                            self?.dataStore?.secondFactorBackup = vc?.dataStore?.code
+                        
+                        default:
+                            self?.dataStore?.secondFactorCode = vc?.dataStore?.code
+                        }
                         
                         self?.handlePinInputSuccess(didDismissSuccessfully)
                     }

@@ -62,7 +62,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepAccountAppSettings:
             executeExchange(type: .app)
             
-        case .twoStepApp, .twoStepAppBackupCode:
+        case .twoStepApp:
             executeSetTwoStepApp()
             
         case .twoStepEmailLogin, .twoStepAppLogin:
@@ -71,7 +71,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmailResetPassword, .twoStepAppResetPassword:
             executeResetPassword()
             
-        case .twoStepAppBuy, .twoStepEmailBuy:
+        case .twoStepAppBuy, .twoStepEmailBuy, .twoStepAppBackupCode:
             presentConfirm()
             
         case .twoStepAppSendFunds, .twoStepEmailSendFunds:
@@ -160,7 +160,13 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     
     /// Reset
     private func executeResetPassword() {
-        dataStore?.setPasswordRequestData?.secondFactorCode = dataStore?.code
+        switch dataStore?.confirmationType {
+        case .twoStepAppBackupCode:
+            dataStore?.setPasswordRequestData?.secondFactorBackup = dataStore?.code
+            
+        default:
+            dataStore?.setPasswordRequestData?.secondFactorCode = dataStore?.code
+        }
         
         guard let setPasswordRequestData = dataStore?.setPasswordRequestData else { return }
         
@@ -183,7 +189,13 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     
     /// Register/Login
     private func executeLogin() {
-        dataStore?.registrationRequestData?.secondFactorCode = dataStore?.code
+        switch dataStore?.confirmationType {
+        case .twoStepAppBackupCode:
+            dataStore?.registrationRequestData?.secondFactorBackup = dataStore?.code
+            
+        default:
+            dataStore?.registrationRequestData?.secondFactorCode = dataStore?.code
+        }
         
         guard let registrationRequestData = dataStore?.registrationRequestData else { return }
         
