@@ -208,7 +208,20 @@ class ReceiveViewController: UIViewController, Subscriber {
         shareAddress?(text, image)
     }
     
-    @objc private func paymailTapped() {}
+    @objc private func paymailTapped() {
+        let paymail = UserManager.shared.profile?.paymail ?? ""
+        if !paymail.isEmpty {
+            let paymailAddress = "\(paymail)\(Constant.paymailDomain)"
+            let value = paymailAddress.filter { !$0.isWhitespace }
+            UIPasteboard.general.string = value
+            let message = "Paymail address \(paymailAddress) copied to clipboard"
+            let model: InfoViewModel = .init(description: .text(message), dismissType: .auto)
+            ToastMessageManager.shared.show(model: model,
+                                            configuration: Presets.InfoView.verification)
+        } else {
+            // open paymail screen
+        }
+    }
 
     @objc private func addressTapped() {
         guard let text = address.text else { return }
