@@ -55,11 +55,11 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             title = L10n.AccountCreation.verifyEmail
             instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
-        case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .twoStepEmailSendFunds, .twoStepEmailBuy, .twoStepDisable:
+        case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .twoStepEmailSendFunds, .twoStepEmailBuy, .twoStepEmailRequired, .twoStepDisable:
             title = L10n.TwoStep.Email.Confirmation.title
             instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
             
-        case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy:
+        case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy, .twoStepAppRequired:
             title = L10n.TwoStep.App.Confirmation.title
             instructions = ""
         
@@ -79,7 +79,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                                         callback: viewController?.changeEmailTapped))
         }
         
-        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds || confirmationType == .twoStepAppBuy {
+        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds
+            || confirmationType == .twoStepAppBuy || confirmationType == .twoStepEmailRequired {
             help = [ButtonViewModel(title: L10n.TwoStep.App.CantAccess.title,
                                     isUnderlined: true,
                                     callback: viewController?.enterBackupCode)]

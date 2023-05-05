@@ -30,6 +30,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                 .twoStepEmailBuy,
                 .twoStepAccountAppSettings,
                 .twoStepEmailResetPassword,
+                .twoStepEmailRequired,
                 .twoStepDisable:
             resend(viewAction: .init())
             
@@ -77,6 +78,9 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepDisable:
             executeDisable()
             
+        case .twoStepAppRequired, .twoStepEmailRequired:
+            executeRefreshUserWithCode()
+            
         default:
             break
         }
@@ -88,7 +92,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             executeCodeEmailRequest()
             
         case .twoStepEmail, .twoStepEmailSendFunds, .twoStepApp, .twoStepAccountEmailSettings,
-                .twoStepAccountAppSettings, .twoStepEmailBuy, .twoStepDisable:
+                .twoStepAccountAppSettings, .twoStepEmailBuy, .twoStepEmailRequired, .twoStepDisable:
             executeChangeRequest()
             
         case .account:
@@ -108,6 +112,33 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
+    /// Account 2FA required
+    private func executeRefreshUserWithCode() {
+        var secondFactorCode: String?
+        var secondFactorBackup: String?
+        
+        switch dataStore?.confirmationType {
+        case .twoStepAppBackupCode:
+            secondFactorBackup = dataStore?.code
+            
+        default:
+            secondFactorCode = dataStore?.code
+        }
+        
+        UserManager.shared.refresh(secondFactorCode: secondFactorCode, secondFactorBackup: secondFactorBackup) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.presentConfirm(actionResponse: .init())
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+                
+            default:
+                return
             }
         }
     }

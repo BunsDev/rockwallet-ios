@@ -31,7 +31,7 @@ struct SwapRequestData: RequestModelData {
             "source_instrument_id": sourceInstrumentId,
             "nolog_cvv": nologCvv,
             "second_factor_code": secondFactorCode,
-            "second_factor_backup": secondFactorBackup // TODO: Handle this 2FA case
+            "second_factor_backup": secondFactorBackup
         ]
         
         return params.compactMapValues { $0 }

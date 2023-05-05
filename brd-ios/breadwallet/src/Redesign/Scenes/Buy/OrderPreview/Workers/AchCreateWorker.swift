@@ -33,7 +33,7 @@ struct AchRequestData: RequestModelData {
             "nolog_cvv": nologCvv,
             "use_instant_ach": useInstantAch,
             "second_factor_code": secondFactorCode,
-            "second_factor_backup": secondFactorBackup // TODO: Handle this 2FA case
+            "second_factor_backup": secondFactorBackup
         ]
         
         return params.compactMapValues { $0 }

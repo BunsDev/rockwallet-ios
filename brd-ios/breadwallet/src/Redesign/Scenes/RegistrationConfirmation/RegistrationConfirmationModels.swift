@@ -46,6 +46,10 @@ enum RegistrationConfirmationModels {
         case twoStepEmailBuy
         case twoStepAppBuy
         
+        // 2FA required
+        case twoStepEmailRequired
+        case twoStepAppRequired
+        
         // Reset password with 2FA
         case twoStepEmailResetPassword
         case twoStepAppResetPassword

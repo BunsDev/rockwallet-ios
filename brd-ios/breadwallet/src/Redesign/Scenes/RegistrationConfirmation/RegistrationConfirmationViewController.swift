@@ -135,7 +135,7 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
             switch self.dataStore?.confirmationType {
             case .twoStepEmailLogin, .twoStepAppLogin, .twoStepAppBackupCode, .twoStepEmailResetPassword,
                     .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepEmailSendFunds,
-                    .twoStepEmailBuy, .twoStepAppBuy:
+                    .twoStepEmailBuy, .twoStepAppBuy, .twoStepAppRequired, .twoStepEmailRequired:
                 self.didDismiss?(true)
                 
                 self.coordinator?.dismissFlow()
