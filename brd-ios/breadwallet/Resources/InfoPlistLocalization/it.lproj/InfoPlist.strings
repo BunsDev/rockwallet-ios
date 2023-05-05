@@ -1750,6 +1750,8 @@
 /* Onboarding screen Page 2 title */
 "OnboardingPageTwo.title" = "Unisciti a milioni di persone che in tutto il mondo si fidano di RockWallet.";
 
+"PaymailAddress.CopyMessage" = "Paymail address %s copied to clipboard";
+
 "PaymailAddress.createAddressDescription" = "To enable quick BSV transfers you can create your unique Paymail address.";
 
 "PaymailAddress.createAddressTitle" = "Create your paymail";
@@ -1759,6 +1761,8 @@
 "PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
 
 "PaymailAddress.paymailAddressField" = "Paymail address";
+
+"PaymailAddress.PaymailButton" = "Paymail";
 
 "PaymailAddress.popupDescription" = "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles";
 

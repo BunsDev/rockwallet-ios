@@ -1750,6 +1750,8 @@
 /* Onboarding screen Page 2 title */
 "OnboardingPageTwo.title" = "BRD를 신뢰하는 전 세계 수백만 명과 함께 하십시오.";
 
+"PaymailAddress.CopyMessage" = "Paymail address %s copied to clipboard";
+
 "PaymailAddress.createAddressDescription" = "To enable quick BSV transfers you can create your unique Paymail address.";
 
 "PaymailAddress.createAddressTitle" = "Create your paymail";
@@ -1759,6 +1761,8 @@
 "PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
 
 "PaymailAddress.paymailAddressField" = "Paymail address";
+
+"PaymailAddress.PaymailButton" = "Paymail";
 
 "PaymailAddress.popupDescription" = "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles";
 
