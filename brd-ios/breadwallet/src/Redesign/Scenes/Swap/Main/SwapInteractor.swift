@@ -196,13 +196,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                           address: fromAddress) { [weak self] fee in
             self?.dataStore?.fromFeeBasis = fee
             
-            guard let fromFeeBasis = self?.dataStore?.fromFeeBasis else {
-                self?.setPresentAmountData(handleErrors: true)
-                
-                return
-            }
-            
-            self?.dataStore?.senderValidationResult = sender.validate(address: fromAddress, amount: from, feeBasis: fromFeeBasis)
+            self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
             switch self?.dataStore?.senderValidationResult {
             case .ok:
                 guard self?.dataStore?.fromFeeBasis != nil, self?.dataStore?.quote != nil else { return }

@@ -112,10 +112,14 @@ class Sender: Subscriber {
         wallet.estimateLimitMinimum(address: address, fee: fee, completion: completion)
     }
 
-    func validate(address: String, amount: Amount, feeBasis: TransferFeeBasis? = nil) -> SenderValidationResult {
+    private func validate(address: String, amount: Amount, feeBasis: TransferFeeBasis? = nil) -> SenderValidationResult {
         guard wallet.currency.isValidAddress(address) else { return .invalidAddress }
         guard !wallet.isOwnAddress(address) else { return .ownAddress }
 
+        return validate(amount: amount, feeBasis: feeBasis)
+    }
+    
+    func validate(amount: Amount, feeBasis: TransferFeeBasis? = nil) -> SenderValidationResult {
         if let minOutput = minimum {
             guard amount >= minOutput else { return .outputTooSmall(minOutput) }
         }
