@@ -529,19 +529,23 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        guard !address.starts(with: "bitcoincash") else {
-            let model = PopupViewModel(title: .text(L10n.Bch.converterTitle),
-                                       body: L10n.Bch.converterDescription,
-                                       buttons: [.init(title: L10n.Button.convert),
-                                                 .init(title: L10n.LinkWallet.decline)],
-                                       closeButton: .init(image: Asset.close.image))
+        if currency == Currencies.shared.bch {
+            var isLegacyAddress = address.first == "1" || address.first == "3"
             
-            showInfoPopup(with: model, callbacks: [ { [weak self] in
-                self?.convertBCH(address: address)
-            }, { [weak self] in
-                self?.declineConversion()
-            }])
-            return false
+            guard !isLegacyAddress else {
+                let model = PopupViewModel(title: .text(L10n.Bch.converterTitle),
+                                           body: L10n.Bch.converterDescription,
+                                           buttons: [.init(title: L10n.Button.convert),
+                                                     .init(title: L10n.LinkWallet.decline)],
+                                           closeButton: .init(image: Asset.close.image))
+                
+                showInfoPopup(with: model, callbacks: [ { [weak self] in
+                    self?.convertBCH(address: address)
+                }, { [weak self] in
+                    self?.declineConversion()
+                }])
+                return false
+            }
         }
         //Having an invalid address will cause fee estimation to fail,
         //so we need to display this error before the fee estimate error.
