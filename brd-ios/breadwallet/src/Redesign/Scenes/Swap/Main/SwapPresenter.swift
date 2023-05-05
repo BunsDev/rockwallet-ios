@@ -83,6 +83,10 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                     feeDescription: .text(receivingFee)))
         
         guard actionResponse.handleErrors else {
+            if actionResponse.quote?.isMinimumImpactedByWithdrawal == true {
+                presentError(actionResponse: .init(error: ExchangeErrors.highFees))
+            }
+            
             viewController?.displayAmount(responseDisplay: .init(continueEnabled: false,
                                                                  amounts: swapModel,
                                                                  rate: exchangeRateViewModel))
@@ -174,6 +178,10 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 // Remove presented error
                 presentError(actionResponse: .init(error: nil))
             }
+        }
+        
+        if !hasError, actionResponse.quote?.isMinimumImpactedByWithdrawal == true {
+            presentError(actionResponse: .init(error: ExchangeErrors.highFees))
         }
         
         let continueEnabled = (!hasError && actionResponse.fromFee != nil)

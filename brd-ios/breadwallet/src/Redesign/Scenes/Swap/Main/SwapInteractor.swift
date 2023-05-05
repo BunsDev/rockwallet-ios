@@ -169,7 +169,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     }
     
     private func setPresentAmountData(handleErrors: Bool) {
-        let isNotZero = !(dataStore?.from?.tokenValue ?? 0).isZero && !(dataStore?.to?.tokenValue ?? 0).isZero
+        let isNotZero = !(dataStore?.from?.tokenValue ?? 0).isZero || !(dataStore?.to?.tokenValue ?? 0).isZero
         
         presenter?.presentAmount(actionResponse: .init(from: dataStore?.from,
                                                        to: dataStore?.to,
@@ -204,9 +204,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 guard self?.dataStore?.fromFeeBasis != nil, self?.dataStore?.quote != nil else { return }
                 
                 self?.setPresentAmountData(handleErrors: true)
-                
-                guard self?.dataStore?.quote?.isMinimumImpactedByWithdrawal == true else { return }
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.highFees))
                 
             default:
                 self?.setPresentAmountData(handleErrors: true)
