@@ -538,7 +538,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             
             showInfoPopup(with: model, callbacks: [ { [weak self] in
                 self?.convertBCH(address: address)
-            } ])
+            }, { [weak self] in
+                self?.declineConversion()
+            }])
             return false
         }
         //Having an invalid address will cause fee estimation to fail,
@@ -618,11 +620,21 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             case .success(let data):
                 self.addressCell.setContent(data?.cashAddress)
                 self.hidePopup()
-                
+                let model: InfoViewModel = .init(description: .text("The legacy BCH address has been converted to Cashaddr format."))
+                ToastMessageManager.shared.show(model: model,
+                                                configuration: Presets.InfoView.verification)
             case .failure:
                 print("error")
             }
         }
+    }
+    
+    func declineConversion() {
+        hidePopup()
+        addressCell.setContent(nil)
+        let model: InfoViewModel = .init(description: .text("The BCH address must be in Cashaddr format to send."))
+        ToastMessageManager.shared.show(model: model,
+                                        configuration: Presets.InfoView.error)
     }
     
     private func handleValidationResult(_ result: SenderValidationResult, protocolRequest: PaymentProtocolRequest? = nil) -> Bool {
