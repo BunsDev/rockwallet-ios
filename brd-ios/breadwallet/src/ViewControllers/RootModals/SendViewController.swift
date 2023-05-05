@@ -620,11 +620,13 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             case .success(let data):
                 self.addressCell.setContent(data?.cashAddress)
                 self.hidePopup()
-                let model: InfoViewModel = .init(description: .text("The legacy BCH address has been converted to Cashaddr format."))
-                ToastMessageManager.shared.show(model: model,
-                                                configuration: Presets.InfoView.verification)
-            case .failure:
-                print("error")
+                let model: InfoViewModel = .init(description: .text(L10n.Bch.conversionMessage))
+                self.showToastMessage(model: model, configuration: Presets.InfoView.verification)
+                
+            case .failure(let error):
+                let error = error as? NetworkingError
+                let model: InfoViewModel = .init(description: .text(error?.errorMessage))
+                self.showToastMessage(model: model, configuration: Presets.InfoView.error)
             }
         }
     }
@@ -632,9 +634,13 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     func declineConversion() {
         hidePopup()
         addressCell.setContent(nil)
-        let model: InfoViewModel = .init(description: .text("The BCH address must be in Cashaddr format to send."))
+        let model: InfoViewModel = .init(description: .text(L10n.Bch.errorMessage))
+        showToastMessage(model: model, configuration: Presets.InfoView.error)
+    }
+    
+    func showToastMessage(model: InfoViewModel, configuration: InfoViewConfiguration) {
         ToastMessageManager.shared.show(model: model,
-                                        configuration: Presets.InfoView.error)
+                                        configuration: configuration)
     }
     
     private func handleValidationResult(_ result: SenderValidationResult, protocolRequest: PaymentProtocolRequest? = nil) -> Bool {

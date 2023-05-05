@@ -617,9 +617,13 @@
 /* Confirmation alert title */
 "BCH.confirmationTitle" = "Confirmation";
 
+"BCH.conversionMessage" = "The legacy BCH address has been converted to Cashaddr format.";
+
 "BCH.ConverterDescription" = "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.";
 
 "BCH.ConverterTitle" = "BCH Legacy address";
+
+"BCH.errorMessage" = "The BCH address must be in Cashaddr format to send.";
 
 /* Generic bch erorr message */
 "BCH.genericError" = "Votre compte ne contient aucun BCH ou vous avez reçu le BCH après la fourchette.";
