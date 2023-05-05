@@ -201,16 +201,17 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             case .ok:
                 guard self?.dataStore?.fromFeeBasis != nil, self?.dataStore?.quote != nil else { return }
                 
-                self?.setPresentAmountData(handleErrors: true)
+                if !from.tokenValue.isZero {
+                    self?.setPresentAmountData(handleErrors: true)
+                }
                 
                 guard self?.dataStore?.quote?.isMinimumImpactedByWithdrawal == true else { return }
-                
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.highFees))
                 
             default:
-                guard !from.tokenValue.isZero else { return }
-                
-                self?.setPresentAmountData(handleErrors: true)
+                if !from.tokenValue.isZero {
+                    self?.setPresentAmountData(handleErrors: true)
+                }
             }
         }
     }
