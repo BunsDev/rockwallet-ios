@@ -169,6 +169,8 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     }
     
     private func setPresentAmountData(handleErrors: Bool) {
+        let isNotZero = !(dataStore?.from?.tokenValue ?? 0).isZero && !(dataStore?.to?.tokenValue ?? 0).isZero
+        
         presenter?.presentAmount(actionResponse: .init(from: dataStore?.from,
                                                        to: dataStore?.to,
                                                        fromFee: dataStore?.fromFeeAmount,
@@ -179,7 +181,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                        baseBalance: dataStore?.from?.currency.state?.balance,
                                                        minimumValue: dataStore?.quote?.minimumValue,
                                                        minimumUsd: dataStore?.quote?.minimumUsd,
-                                                       handleErrors: handleErrors))
+                                                       handleErrors: handleErrors && isNotZero))
     }
     
     func getFees(viewAction: Models.Fee.ViewAction) {
@@ -201,17 +203,13 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             case .ok:
                 guard self?.dataStore?.fromFeeBasis != nil, self?.dataStore?.quote != nil else { return }
                 
-                if !from.tokenValue.isZero {
-                    self?.setPresentAmountData(handleErrors: true)
-                }
+                self?.setPresentAmountData(handleErrors: true)
                 
                 guard self?.dataStore?.quote?.isMinimumImpactedByWithdrawal == true else { return }
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.highFees))
                 
             default:
-                if !from.tokenValue.isZero {
-                    self?.setPresentAmountData(handleErrors: true)
-                }
+                self?.setPresentAmountData(handleErrors: true)
             }
         }
     }
