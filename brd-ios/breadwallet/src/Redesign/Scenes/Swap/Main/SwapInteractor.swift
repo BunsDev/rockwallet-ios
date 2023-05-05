@@ -205,9 +205,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 
                 self?.setPresentAmountData(handleErrors: true)
                 
-                guard self?.dataStore?.quote?.isMinimumImpactedByWithdrawal == true else { return }
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.highFees))
-                
             default:
                 self?.setPresentAmountData(handleErrors: true)
             }
