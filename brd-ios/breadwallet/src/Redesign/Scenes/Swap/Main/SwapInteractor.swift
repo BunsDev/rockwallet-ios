@@ -169,7 +169,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     }
     
     private func setPresentAmountData(handleErrors: Bool) {
-        let isNotZero = !(dataStore?.from?.tokenValue ?? 0).isZero && !(dataStore?.to?.tokenValue ?? 0).isZero
+        let isNotZero = !(dataStore?.from?.tokenValue ?? 0).isZero || !(dataStore?.to?.tokenValue ?? 0).isZero
         
         presenter?.presentAmount(actionResponse: .init(from: dataStore?.from,
                                                        to: dataStore?.to,
