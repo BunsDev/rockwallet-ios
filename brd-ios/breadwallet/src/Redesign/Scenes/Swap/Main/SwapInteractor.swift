@@ -197,7 +197,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             self?.dataStore?.fromFeeBasis = fee
             
             guard let fromFeeBasis = self?.dataStore?.fromFeeBasis else {
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
+                self?.setPresentAmountData(handleErrors: true)
                 
                 return
             }
