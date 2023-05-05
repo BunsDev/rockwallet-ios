@@ -90,7 +90,21 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         }
         
         var hasError: Bool = actionResponse.from?.fiatValue == 0
-        if actionResponse.baseBalance == nil
+        let senderValidationResult = actionResponse.senderValidationResult ?? .ok
+        
+        if case .insufficientFunds = senderValidationResult {
+            // Not enough ETH for fee
+            let value = actionResponse.from?.tokenValue ?? 0
+            let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.from?.currency.code ?? "")
+            presentError(actionResponse: .init(error: error))
+            hasError = true
+        } else if case .insufficientGas = senderValidationResult {
+            // Not enough ETH for Swap + Fee
+            let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
+            let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.from?.currency.code ?? "")
+            presentError(actionResponse: .init(error: error))
+            hasError = true
+        } else if actionResponse.baseBalance == nil
             || actionResponse.from?.currency.code == actionResponse.to?.currency.code {
             let first = actionResponse.from?.currency.code
             let second = actionResponse.to?.currency.code

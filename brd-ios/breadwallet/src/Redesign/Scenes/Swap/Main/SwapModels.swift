@@ -40,6 +40,10 @@ enum SwapModels {
             var fromFee: Amount?
             var toFee: Amount?
             
+            var senderValidationResult: SenderValidationResult?
+            var fromFeeAmount: Amount?
+            var quote: Quote?
+            
             var baseBalance: Amount?
             var minimumValue: Decimal?
             var minimumUsd: Decimal?

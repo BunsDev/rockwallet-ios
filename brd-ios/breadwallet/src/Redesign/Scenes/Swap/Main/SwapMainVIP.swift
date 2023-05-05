@@ -49,7 +49,8 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     
     var values: SwapModels.Amounts.ViewAction { get set }
     
-    var fromFee: TransferFeeBasis? { get set }
+    var fromFeeBasis: TransferFeeBasis? { get set }
+    var senderValidationResult: SenderValidationResult? { get set }
     
     var quote: Quote? { get set }
     
