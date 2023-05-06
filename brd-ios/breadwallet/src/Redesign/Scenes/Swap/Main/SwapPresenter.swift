@@ -18,7 +18,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     
     // MARK: - SwapActionResponses
     
-    private var exchangeRateViewModel = ExchangeRateViewModel()
+    private var exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
     private var mainSwapViewModel = MainSwapViewModel()
     private var fromCurrencyCode: String?
     private var toCurrencyCode: String?
