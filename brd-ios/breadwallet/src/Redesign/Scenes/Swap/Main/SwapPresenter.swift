@@ -19,6 +19,9 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     // MARK: - SwapActionResponses
     
     private var exchangeRateViewModel = ExchangeRateViewModel()
+    private var mainSwapViewModel = MainSwapViewModel()
+    private var fromCurrencyCode: String?
+    private var toCurrencyCode: String?
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
@@ -35,6 +38,14 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
+        mainSwapViewModel = MainSwapViewModel(from: .init(amount: .zero(from),
+                                                          fee: .zero(from),
+                                                          formattedTokenFeeString: nil,
+                                                          title: .text(String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: 0) ?? "", from.code)))),
+                                              to: .init(amount: .zero(to),
+                                                        fee: .zero(to),
+                                                        formattedTokenFeeString: nil,
+                                                        title: .text(L10n.Buy.iWant)))
         
         let sectionRows: [ExchangeModels.Section: [any Hashable]] = [
             .rateAndTimer: [
@@ -44,7 +55,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 LabelViewModel.text("")
             ],
             .swapCard: [
-                setupMainSwapViewModel(from: from, to: to)
+                mainSwapViewModel
             ]
         ]
         
@@ -71,24 +82,31 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                ExchangeFormatter.crypto.string(for: toFee?.tokenValue) ?? "",
                                                toFee?.currency.code.uppercased() ?? "")
         
-        let swapModel = MainSwapViewModel(from: .init(amount: actionResponse.from,
-                                                      formattedFiatString: fromFormattedFiatString,
-                                                      formattedTokenString: fromFormattedTokenString,
-                                                      title: .text(balanceText)),
-                                          to: .init(amount: actionResponse.to,
-                                                    formattedTokenString: toFormattedTokenString,
-                                                    fee: actionResponse.toFee,
-                                                    formattedTokenFeeString: formattedToTokenFeeString,
-                                                    title: .text(L10n.Buy.iWant),
-                                                    feeDescription: .text(receivingFee)))
+        mainSwapViewModel = MainSwapViewModel(from: .init(amount: actionResponse.from,
+                                                          formattedFiatString: fromFormattedFiatString,
+                                                          formattedTokenString: fromFormattedTokenString,
+                                                          title: .text(balanceText)),
+                                              to: .init(amount: actionResponse.to,
+                                                        formattedTokenString: toFormattedTokenString,
+                                                        fee: actionResponse.toFee,
+                                                        formattedTokenFeeString: formattedToTokenFeeString,
+                                                        title: .text(L10n.Buy.iWant),
+                                                        feeDescription: .text(receivingFee)))
+        
+        // Remove presented error
+        presentError(actionResponse: .init(error: nil))
         
         guard actionResponse.handleErrors else {
-            if actionResponse.quote?.isMinimumImpactedByWithdrawal == true {
-                presentError(actionResponse: .init(error: ExchangeErrors.highFees))
-            }
+            if actionResponse.quote?.isMinimumImpactedByWithdrawal == true
+                && (fromCurrencyCode != actionResponse.from?.currency.code || toCurrencyCode != actionResponse.to?.currency.code) {
+                    fromCurrencyCode = actionResponse.from?.currency.code
+                    toCurrencyCode = actionResponse.to?.currency.code
+                    
+                    presentError(actionResponse: .init(error: ExchangeErrors.highFees))
+                }
             
             viewController?.displayAmount(responseDisplay: .init(continueEnabled: false,
-                                                                 amounts: swapModel,
+                                                                 amounts: mainSwapViewModel,
                                                                  rate: exchangeRateViewModel))
             return
         }
@@ -180,14 +198,10 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             }
         }
         
-        if !hasError, actionResponse.quote?.isMinimumImpactedByWithdrawal == true {
-            presentError(actionResponse: .init(error: ExchangeErrors.highFees))
-        }
-        
         let continueEnabled = (!hasError && actionResponse.fromFee != nil)
         
         viewController?.displayAmount(responseDisplay: .init(continueEnabled: continueEnabled,
-                                                             amounts: swapModel,
+                                                             amounts: mainSwapViewModel,
                                                              rate: exchangeRateViewModel))
     }
     
@@ -209,7 +223,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             switch error as? ExchangeErrors {
             case .highFees:
                 config = Presets.InfoView.warning
-
+                
             default:
                 config = Presets.InfoView.error
             }
@@ -293,16 +307,5 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     }
     
     // MARK: - Additional Helpers
-    
-    private func setupMainSwapViewModel(from: Currency, to: Currency) -> MainSwapViewModel {
-        return MainSwapViewModel(from: .init(amount: .zero(from),
-                                             fee: .zero(from),
-                                             formattedTokenFeeString: nil,
-                                             title: .text(String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: 0) ?? "", from.code)))),
-                                 to: .init(amount: .zero(to),
-                                           fee: .zero(to),
-                                           formattedTokenFeeString: nil,
-                                           title: .text(L10n.Buy.iWant)))
-    }
     
 }
