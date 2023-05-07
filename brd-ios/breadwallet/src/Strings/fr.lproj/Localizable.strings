@@ -617,9 +617,13 @@
 /* Confirmation alert title */
 "BCH.confirmationTitle" = "Confirmation";
 
+"BCH.conversionMessage" = "The legacy BCH address has been converted to Cashaddr format.";
+
 "BCH.ConverterDescription" = "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.";
 
 "BCH.ConverterTitle" = "BCH Legacy address";
+
+"BCH.errorMessage" = "The BCH address must be in Cashaddr format to send.";
 
 /* Generic bch erorr message */
 "BCH.genericError" = "Votre compte ne contient aucun BCH ou vous avez reçu le BCH après la fourchette.";
@@ -1113,6 +1117,8 @@
 "ComingSoon.SwapDescription" = "You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.";
 
 "ComingSoon.title" = "À venir !";
+
+"CommonString.Or.label" = "Or";
 
 /* Amount to Send: ($1.00) */
 "Confirmation.amountLabel" = "Montant à envoyer :";
