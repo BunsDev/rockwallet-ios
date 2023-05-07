@@ -72,7 +72,6 @@ class BaseCoordinator: NSObject, Coordinatable {
     func handleUserAccount() {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
-        
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
@@ -80,14 +79,14 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showSwap(selectedCurrency: Currency? = nil, coreSystem: CoreSystem, keyStore: KeyStore) {
-        guard let profile = UserManager.shared.profile,
-              profile.kycAccessRights.hasSwapAccess else {
-            handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
-            return
-        }
-        
         decideFlow { [weak self] showScene in
-            guard showScene else { return }
+            guard showScene,
+                  let profile = UserManager.shared.profile,
+                  profile.kycAccessRights.hasSwapAccess == true else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
+
+                return
+            }
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
@@ -102,14 +101,14 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showBuy(selectedCurrency: Currency? = nil, type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
-        guard let profile = UserManager.shared.profile,
-              ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
-            handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
-            return
-        }
-        
         decideFlow { [weak self] showScene in
-            guard showScene else { return }
+            guard showScene,
+                  let profile = UserManager.shared.profile,
+                  ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
+
+                return
+            }
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
@@ -125,13 +124,14 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
-        guard let profile = UserManager.shared.profile, profile.status.tradeStatus.canTrade else {
-            handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
-            return
-        }
-        
         decideFlow { [weak self] showScene in
-            guard showScene else { return }
+            guard showScene,
+                  let profile = UserManager.shared.profile,
+                  profile.status.tradeStatus.canTrade else {
+                self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+
+                return
+            }
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
@@ -289,7 +289,6 @@ class BaseCoordinator: NSObject, Coordinatable {
 //              || !UserManager.shared.hasTwoStepAuth
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
-                
             } else {
                 completion?(true)
                 return
@@ -414,15 +413,17 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
-        guard let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason else { return }
+        let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason
         
         switch restrictionReason {
-        case .verification:
+        case .kyc:
             showVerifyAccount(flow: flow)
             
-        case .location:
+        case .country, .state, .manuallyConfigured:
             showComingSoon(reason: reason)
-            
+        
+        default:
+            break
         }
     }
     
