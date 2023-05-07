@@ -74,9 +74,9 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
     // MARK: - Additional Helpers
     
     private func generateQRCode(from string: String) -> UIImage? {
-        let data = string.data(using: .utf8)
-        
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+        
+        let data = string.data(using: .utf8)
         filter.setValue(data, forKey: "inputMessage")
         
         let transform = CGAffineTransform(scaleX: 30, y: 30)
