@@ -47,7 +47,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var termCurrencies: [String] = []
     var baseAndTermCurrencies: [[String]] = []
     
-    var swap: Swap?
+    var swap: Exchange?
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?

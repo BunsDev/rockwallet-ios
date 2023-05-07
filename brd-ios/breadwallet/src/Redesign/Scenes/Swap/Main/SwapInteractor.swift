@@ -277,10 +277,10 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         let fromTokenValue = formatter.string(for: from) ?? ""
         let toTokenValue = formatter.string(for: to) ?? ""
         
-        let data = SwapRequestData(quoteId: dataStore?.quote?.quoteId,
-                                   depositQuantity: fromTokenValue,
-                                   withdrawalQuantity: toTokenValue,
-                                   destination: address)
+        let data = ExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
+                                       depositQuantity: fromTokenValue,
+                                       withdrawalQuantity: toTokenValue,
+                                       destination: address)
         
         // We need to make sure the swap from amount is still less than the balance
         if let balance = sender?.wallet.currency.state?.balance,
@@ -338,7 +338,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         return sender
     }
     
-    private func createTransaction(from swap: Swap?) {
+    private func createTransaction(from swap: Exchange?) {
         guard let dataStore = dataStore,
               let currency = dataStore.currencies.first(where: { $0.code == swap?.currency }),
               let wallet = dataStore.coreSystem?.wallet(for: currency),
