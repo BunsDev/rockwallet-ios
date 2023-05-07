@@ -1,5 +1,5 @@
 // 
-//  SwapWorker.swift
+//  ExchangeWorker.swift
 //  breadwallet
 //
 //  Created by Rok on 20/07/2022.
@@ -10,7 +10,7 @@
 
 import UIKit
 
-struct SwapRequestData: RequestModelData {
+struct ExchangeRequestData: RequestModelData {
     var deviceId: String?
     var quoteId: Int?
     var depositQuantity: String
@@ -38,7 +38,7 @@ struct SwapRequestData: RequestModelData {
     }
 }
 
-struct SwapResponseData: ModelResponse {
+struct ExchangeResponseData: ModelResponse {
     var exchangeId: Int?
     var currency: String?
     var amount: String?
@@ -48,7 +48,7 @@ struct SwapResponseData: ModelResponse {
     var redirectUrl: String?
 }
 
-struct Swap: Model {
+struct Exchange: Model {
     var exchangeId: String?
     var currency: String?
     var amount: Decimal?
@@ -58,8 +58,8 @@ struct Swap: Model {
     var redirectUrl: String?
 }
 
-class SwapMapper: ModelMapper<SwapResponseData, Swap> {
-    override func getModel(from response: SwapResponseData?) -> Swap? {
+class ExchangeMapper: ModelMapper<ExchangeResponseData, Exchange> {
+    override func getModel(from response: ExchangeResponseData?) -> Exchange? {
         guard let response = response,
               let amount = Decimal(string: response.amount ?? "")
         else {
@@ -75,7 +75,7 @@ class SwapMapper: ModelMapper<SwapResponseData, Swap> {
     }
 }
 
-class SwapWorker: BaseApiWorker<SwapMapper> {
+class ExchangeWorker: BaseApiWorker<ExchangeMapper> {
     override func getMethod() -> HTTPMethod {
         return .post
     }

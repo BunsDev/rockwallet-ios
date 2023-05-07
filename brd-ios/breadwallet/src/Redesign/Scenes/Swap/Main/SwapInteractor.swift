@@ -295,7 +295,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             }
         }
         
-        SwapWorker().execute(requestData: data) { [weak self] result in
+        ExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.dataStore?.swap = data

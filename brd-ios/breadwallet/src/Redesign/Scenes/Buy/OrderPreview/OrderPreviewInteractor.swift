@@ -133,7 +133,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                    secondFactorCode: dataStore?.secondFactorCode,
                                    secondFactorBackup: dataStore?.secondFactorBackup)
         
-        SwapWorker().execute(requestData: data) { [weak self] result in
+        ExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference
@@ -231,7 +231,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                   secondFactorCode: dataStore?.secondFactorCode,
                                   secondFactorBackup: dataStore?.secondFactorBackup)
         
-        AchWorker().execute(requestData: data) { [weak self] result in
+        AchExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference

@@ -1,5 +1,5 @@
 // 
-//  AchWorker.swift
+//  AchExchangeWorker.swift
 //  breadwallet
 //
 //  Created by Rok on 18/11/2022.
@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct AchRequestData: RequestModelData {
+struct AchExchangeRequestData: RequestModelData {
     var deviceId: String?
     var quoteId: Int?
     var depositQuantity: String
@@ -40,7 +40,7 @@ struct AchRequestData: RequestModelData {
     }
 }
 
-struct AchResponseData: ModelResponse {
+struct AchExchangeResponseData: ModelResponse {
     var exchangeId: Int?
     var currency: String?
     var amount: String?
@@ -50,7 +50,7 @@ struct AchResponseData: ModelResponse {
     var redirectUrl: String?
 }
 
-struct Ach: Model {
+struct AchExchange: Model {
     var exchangeId: String?
     var currency: String?
     var amount: Decimal?
@@ -60,8 +60,8 @@ struct Ach: Model {
     var redirectUrl: String?
 }
 
-class AchWorkerMapper: ModelMapper<AchResponseData, Swap> {
-    override func getModel(from response: AchResponseData?) -> Swap? {
+class AchExchangeWorkerMapper: ModelMapper<AchExchangeResponseData, Exchange> {
+    override func getModel(from response: AchExchangeResponseData?) -> Exchange? {
         guard let response = response,
               let amount = Decimal(string: response.amount ?? "")
         else {
@@ -77,7 +77,7 @@ class AchWorkerMapper: ModelMapper<AchResponseData, Swap> {
     }
 }
 
-class AchWorker: BaseApiWorker<AchWorkerMapper> {
+class AchExchangeWorker: BaseApiWorker<AchExchangeWorkerMapper> {
     override func getMethod() -> HTTPMethod {
         return .post
     }
