@@ -22,11 +22,6 @@ enum Kyc2: String, Equatable {
     case kycWithoutSsn = "KYC_WITHOUT_SSN"
 }
 
-struct TradeStatus {
-    var canTrade: Bool
-    var restrictionReason: Profile.AccessRights.RestrictionReason?
-}
-
 enum VerificationStatus: Hashable {
     case none
     case emailPending
@@ -51,19 +46,6 @@ enum VerificationStatus: Hashable {
             
         default:
             return false
-        }
-    }
-    
-    var tradeStatus: TradeStatus {
-        switch (hasKYCLevelTwo, UserManager.shared.profile?.kycAccessRights.restrictionReason) {
-        case (true, nil):
-            return .init(canTrade: true, restrictionReason: nil)
-            
-        case (true, _):
-            return .init(canTrade: false, restrictionReason: UserManager.shared.profile?.kycAccessRights.restrictionReason)
-            
-        case (false, _):
-            return .init(canTrade: false, restrictionReason: UserManager.shared.profile?.kycAccessRights.restrictionReason)
         }
     }
     

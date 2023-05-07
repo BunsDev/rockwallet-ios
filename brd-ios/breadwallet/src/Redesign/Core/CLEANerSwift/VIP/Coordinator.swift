@@ -125,11 +125,11 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         decideFlow { [weak self] showScene in
+            // TODO: This logic will need to be updated.
             guard showScene,
-                  let profile = UserManager.shared.profile,
-                  profile.status.tradeStatus.canTrade else {
+                  let profile = UserManager.shared.profile else {
                 self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
-
+                
                 return
             }
             
@@ -413,7 +413,7 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
-        let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason
+        let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason
         
         switch restrictionReason {
         case .kyc:
