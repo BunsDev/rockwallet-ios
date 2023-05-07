@@ -39,7 +39,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
                                      button: .init(title: L10n.TwoStep.App.Import.action, isUnderlined: true))
             ],
             .divider: [
-                LabelViewModel.text("OR")
+                LabelViewModel.text(L10n.CommonString.Or.label.uppercased())
             ],
             .instructions: [
                 LabelViewModel.text(L10n.Authentication.instructions)
