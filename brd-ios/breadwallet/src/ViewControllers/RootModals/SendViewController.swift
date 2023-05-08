@@ -440,8 +440,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
         
         if isLegacyAddress(currency: currency, address: pasteboard) {
-                addressCell.setContent(pasteboard)
-                sendButton.isEnabled = true
+            addressCell.setContent(pasteboard)
+            sendButton.isEnabled = true
             return
         }
         
