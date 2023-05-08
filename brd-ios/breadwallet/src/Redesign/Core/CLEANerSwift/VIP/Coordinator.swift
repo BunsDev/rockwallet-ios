@@ -79,14 +79,14 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showSwap(selectedCurrency: Currency? = nil, coreSystem: CoreSystem, keyStore: KeyStore) {
+        guard let profile = UserManager.shared.profile,
+              profile.kycAccessRights.hasSwapAccess else {
+            handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
+            return
+        }
+        
         decideFlow { [weak self] showScene in
-            guard showScene,
-                  let profile = UserManager.shared.profile,
-                  profile.kycAccessRights.hasSwapAccess == true else {
-                self?.handleUnverifiedOrRestrictedUser(flow: .swap, reason: .swap)
-                
-                return
-            }
+            guard showScene else { return }
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
@@ -101,14 +101,14 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showBuy(selectedCurrency: Currency? = nil, type: PaymentCard.PaymentType, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+        guard let profile = UserManager.shared.profile,
+              ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
+            handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
+            return
+        }
+        
         decideFlow { [weak self] showScene in
-            guard showScene,
-                  let profile = UserManager.shared.profile,
-                  ((type == .card && profile.kycAccessRights.hasBuyAccess) || (type == .ach && profile.kycAccessRights.hasAchAccess)) else {
-                self?.handleUnverifiedOrRestrictedUser(flow: .buy, reason: type == .card ? .buy : .buyAch)
-                
-                return
-            }
+            guard showScene else { return }
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
@@ -124,14 +124,13 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+        guard let profile = UserManager.shared.profile, profile.status.tradeStatus.canTrade else {
+            handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
+            return
+        }
+        
         decideFlow { [weak self] showScene in
-            guard showScene,
-                  let profile = UserManager.shared.profile,
-                  profile.status.tradeStatus.canTrade else {
-                self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
-                
-                return
-            }
+            guard showScene else { return }
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
@@ -429,15 +428,18 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
-        guard let profile = UserManager.shared.profile, let restrictionReason = profile.status.tradeStatus.restrictionReason else { return }
+        // TODO: this doesn't have "manually_configured". Add it.
+        let restrictionReason = UserManager.shared.profile?.status.tradeStatus.restrictionReason
         
         switch restrictionReason {
         case .verification:
             showVerifyAccount(flow: flow)
             
-        case .location, .manuallyConfigured:
+        case .location:
             showComingSoon(reason: reason)
             
+        default:
+            showComingSoon(reason: reason)
         }
     }
     
