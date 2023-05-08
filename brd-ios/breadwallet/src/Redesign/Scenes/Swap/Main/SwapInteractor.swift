@@ -194,7 +194,14 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             return
         }
         
-        guard case .ok = sender.validate(amount: from) else { return }
+        let senderValidationResult = sender.validate(amount: from)
+        guard case .ok = senderValidationResult else {
+            setPresentAmountData(handleErrors: true)
+            
+            return
+        }
+        
+        dataStore?.senderValidationResult = senderValidationResult
         
         fetchWalletKitFee(for: from,
                           with: sender,
