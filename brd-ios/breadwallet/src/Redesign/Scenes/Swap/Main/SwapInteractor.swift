@@ -194,14 +194,12 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             return
         }
         
-        let senderValidationResult = sender.validate(amount: from)
-        guard case .ok = senderValidationResult else {
+        dataStore?.senderValidationResult = nil
+        
+        guard let profile = UserManager.shared.profile, from.fiatValue < profile.swapAllowanceLifetime else {
             setPresentAmountData(handleErrors: true)
-            
             return
         }
-        
-        dataStore?.senderValidationResult = senderValidationResult
         
         fetchWalletKitFee(for: from,
                           with: sender,

@@ -169,6 +169,24 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             let exchangeLimit = profile?.swapAllowancePerExchange ?? 0
             
             switch (fiatValue, tokenValue) {
+            case _ where fiatValue > dailyLimit:
+                // Over daily limit
+                let limit = dailyLimit
+                let error = profile?.status == .levelTwo(.levelTwo) ? ExchangeErrors.overDailyLimitLevel2(limit: limit) : ExchangeErrors.overDailyLimit(limit: limit)
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+                
+            case _ where fiatValue > lifetimeLimit:
+                // Over lifetime limit
+                let limit = lifetimeLimit
+                presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
+                hasError = true
+                
+            case _ where fiatValue > exchangeLimit:
+                // Over exchange limit
+                presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
+                hasError = true
+                
             case _ where fiatValue <= 0:
                 // Fiat value is below 0
                 presentError(actionResponse: .init(error: nil))
@@ -188,24 +206,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             case _ where tokenValue < minimumValue:
                 // Value below minimum crypto
                 presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: Constant.usdCurrencyCode, reason: .swap)))
-                hasError = true
-                
-            case _ where fiatValue > dailyLimit:
-                // Over daily limit
-                let limit = profile?.swapAllowanceDaily ?? 0
-                let error = profile?.status == .levelTwo(.levelTwo) ? ExchangeErrors.overDailyLimitLevel2(limit: limit) : ExchangeErrors.overDailyLimit(limit: limit)
-                presentError(actionResponse: .init(error: error))
-                hasError = true
-                
-            case _ where fiatValue > lifetimeLimit:
-                // Over lifetime limit
-                let limit = profile?.swapAllowanceLifetime ?? 0
-                presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
-                hasError = true
-                
-            case _ where fiatValue > exchangeLimit:
-                // Over exchange limit
-                presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
                 hasError = true
                 
             default:
