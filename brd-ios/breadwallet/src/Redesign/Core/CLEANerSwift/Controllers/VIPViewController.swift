@@ -155,21 +155,10 @@ class VIPViewController<C: CoordinatableRoutes,
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
         if let coordinator {
-            let error = responseDisplay.error as? NetworkingError
-            
-            switch error?.errorType {
-            case .twoStepRequired:
-                (coordinator as? BaseCoordinator)?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
-                    vc?.dataStore?.confirmationType = error == .twoStepAppRequired ? .twoStepAppLogin : .twoStepEmailLogin
-                    vc?.isModalDismissable = true
-                }
-                
-            default:
-                coordinator.showToastMessage(with: responseDisplay.error,
-                                             model: responseDisplay.model,
-                                             configuration: responseDisplay.config,
-                                             onTapCallback: nil)
-            }
+            coordinator.showToastMessage(with: responseDisplay.error,
+                                         model: responseDisplay.model,
+                                         configuration: responseDisplay.config,
+                                         onTapCallback: nil)
             
         } else {
             ToastMessageManager.shared.show(model: responseDisplay.model,

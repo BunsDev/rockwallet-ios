@@ -86,6 +86,9 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var keyStore: KeyStore?
     var canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess
     
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
     // MARK: - Aditional helpers
     
     var isFormValid: Bool {

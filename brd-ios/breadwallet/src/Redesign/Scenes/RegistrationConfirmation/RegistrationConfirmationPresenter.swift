@@ -38,7 +38,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .help })
         }
         
-        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds {
+        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds || confirmationType == .twoStepAppRequired {
             sections = sections.filter({ $0 != .image })
             sections = sections.filter({ $0 != .instructions })
         }
@@ -80,7 +80,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         }
         
         if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds
-            || confirmationType == .twoStepAppBuy || confirmationType == .twoStepEmailRequired {
+            || confirmationType == .twoStepAppBuy || confirmationType == .twoStepAppRequired {
             help = [ButtonViewModel(title: L10n.TwoStep.App.CantAccess.title,
                                     isUnderlined: true,
                                     callback: viewController?.enterBackupCode)]

@@ -149,18 +149,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     // MARK: - SwapResponseDisplay
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hideIfNeeded()
-        }
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        guard let error = responseDisplay.error as? ExchangeErrors else {
-            super.displayMessage(responseDisplay: responseDisplay)
-            return
-        }
-        
-        switch error {
+        switch responseDisplay.error as? ExchangeErrors {
         case .noQuote:
             displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
