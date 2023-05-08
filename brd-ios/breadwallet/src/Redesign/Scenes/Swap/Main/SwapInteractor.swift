@@ -176,6 +176,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                        fromFee: dataStore?.fromFeeAmount,
                                                        toFee: dataStore?.toFeeAmount,
                                                        senderValidationResult: dataStore?.senderValidationResult,
+                                                       fromFeeBasis: dataStore?.fromFeeBasis,
                                                        fromFeeAmount: dataStore?.fromFeeAmount,
                                                        quote: dataStore?.quote,
                                                        baseBalance: dataStore?.from?.currency.state?.balance,
