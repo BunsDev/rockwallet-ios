@@ -117,7 +117,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                              rate: exchangeRateViewModel))
     }
     
-    func handleError(actionResponse: SwapModels.Amounts.ActionResponse) -> Bool {
+    private func handleError(actionResponse: SwapModels.Amounts.ActionResponse) -> Bool {
         let fromFee = actionResponse.fromFee
         
         var hasError: Bool = actionResponse.from?.fiatValue == 0
