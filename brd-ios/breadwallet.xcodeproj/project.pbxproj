@@ -458,7 +458,7 @@
 		7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E41293F6AE50058019B /* SellVIP.swift */; };
 		7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E42293F6AE50058019B /* SellViewController.swift */; };
 		7E8F7E4A293F6AE50058019B /* SellInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F7E43293F6AE50058019B /* SellInteractor.swift */; };
-		7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */; };
+		7E9FADBE2927AA0A00B471A7 /* AchExchangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FADBD2927AA0A00B471A7 /* AchExchangeWorker.swift */; };
 		7EA9F7B329683A91000F45B6 /* CountriesAndStatesVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9F7B229683A91000F45B6 /* CountriesAndStatesVIP.swift */; };
 		7EA9F7B529683A9D000F45B6 /* CountriesAndStatesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */; };
 		7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */; };
@@ -1342,7 +1342,7 @@
 		7E8F7E41293F6AE50058019B /* SellVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellVIP.swift; sourceTree = "<group>"; };
 		7E8F7E42293F6AE50058019B /* SellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
 		7E8F7E43293F6AE50058019B /* SellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellInteractor.swift; sourceTree = "<group>"; };
-		7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchCreateWorker.swift; sourceTree = "<group>"; };
+		7E9FADBD2927AA0A00B471A7 /* AchExchangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchExchangeWorker.swift; sourceTree = "<group>"; };
 		7EA9F7B229683A91000F45B6 /* CountriesAndStatesVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesAndStatesVIP.swift; sourceTree = "<group>"; };
 		7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesAndStatesModels.swift; sourceTree = "<group>"; };
 		7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrowToX.json; sourceTree = "<group>"; };
@@ -2869,7 +2869,7 @@
 		7E9FADBF2927AA1F00B471A7 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				7E9FADBD2927AA0A00B471A7 /* AchCreateWorker.swift */,
+				7E9FADBD2927AA0A00B471A7 /* AchExchangeWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -4409,7 +4409,7 @@
 				7E8F7E48293F6AE50058019B /* SellVIP.swift in Sources */,
 				7B2BF28929659D850037E731 /* RecoveryKeyIntroViewController.swift in Sources */,
 				C4C553D829F677B3002D9A47 /* CopyValueVIP.swift in Sources */,
-				7E9FADBE2927AA0A00B471A7 /* AchCreateWorker.swift in Sources */,
+				7E9FADBE2927AA0A00B471A7 /* AchExchangeWorker.swift in Sources */,
 				7E8E97A0283F48EE008606B0 /* NavigationItemView.swift in Sources */,
 				22A9A9461DF61945000F0016 /* BRAPIClient.swift in Sources */,
 				043DB5DA29F0059700DEB8FD /* TwoStepDeleteWorker.swift in Sources */,
