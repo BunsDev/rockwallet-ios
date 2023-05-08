@@ -176,6 +176,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                        fromFee: dataStore?.fromFeeAmount,
                                                        toFee: dataStore?.toFeeAmount,
                                                        senderValidationResult: dataStore?.senderValidationResult,
+                                                       fromFeeBasis: dataStore?.fromFeeBasis,
                                                        fromFeeAmount: dataStore?.fromFeeAmount,
                                                        quote: dataStore?.quote,
                                                        baseBalance: dataStore?.from?.currency.state?.balance,
@@ -199,15 +200,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             self?.dataStore?.fromFeeBasis = fee
             
             self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
-            switch self?.dataStore?.senderValidationResult {
-            case .ok:
-                guard self?.dataStore?.fromFeeBasis != nil, self?.dataStore?.quote != nil else { return }
-                
-                self?.setPresentAmountData(handleErrors: true)
-                
-            default:
-                self?.setPresentAmountData(handleErrors: true)
-            }
+            self?.setPresentAmountData(handleErrors: true)
         }
     }
     

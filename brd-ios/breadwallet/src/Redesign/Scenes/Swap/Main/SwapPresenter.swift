@@ -115,17 +115,24 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         let senderValidationResult = actionResponse.senderValidationResult ?? .ok
         
         if case .insufficientFunds = senderValidationResult {
-            // Not enough ETH for fee
-            let value = actionResponse.from?.tokenValue ?? 0
-            let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.from?.currency.code ?? "")
-            presentError(actionResponse: .init(error: error))
-            hasError = true
-        } else if case .insufficientGas = senderValidationResult {
-            // Not enough ETH for Swap + Fee
             let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
             let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.from?.currency.code ?? "")
             presentError(actionResponse: .init(error: error))
             hasError = true
+        } else if case .insufficientGas = senderValidationResult {
+            if actionResponse.from?.currency.isEthereum == true {
+                let error = ExchangeErrors.insufficientGas
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+            } else if actionResponse.from?.currency.isERC20Token == true {
+                let error = ExchangeErrors.insufficientGasERC20(currency: actionResponse.from?.currency.code ?? "")
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+            } else if let feeAmount = actionResponse.fromFeeBasis?.fee {
+                let error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+            }
         } else if actionResponse.baseBalance == nil
             || actionResponse.from?.currency.code == actionResponse.to?.currency.code {
             let first = actionResponse.from?.currency.code
