@@ -16,25 +16,10 @@ class UserManager: NSObject {
     var profile: Profile?
     var profileResult: Result<Profile?, Error>?
     
-    var hasTwoStepAuth = false
-    
     var error: Error?
     
     func refresh(completion: ((Result<Profile?, Error>?) -> Void)? = nil) {
         let group = DispatchGroup()
-
-        group.enter()
-        TwoStepSettingsWorker().execute(requestData: TwoStepSettingsRequestData()) { [weak self] result in
-            switch result {
-            case .success:
-                self?.hasTwoStepAuth = true
-                
-            case .failure:
-                self?.hasTwoStepAuth = false
-            }
-            
-            group.leave()
-        }
         
         group.enter()
         ProfileWorker().execute { [weak self] result in
@@ -64,7 +49,7 @@ class UserManager: NSObject {
         }
         
         group.enter()
-        SupportedCurrenciesManager.shared.getSupportedCurrencies() {
+        SupportedCurrenciesManager.shared.getSupportedCurrencies {
             group.leave()
         }
         
