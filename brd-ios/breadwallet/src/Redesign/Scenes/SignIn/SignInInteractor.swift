@@ -59,7 +59,6 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
                                            password: password,
                                            token: token,
                                            subscribe: nil,
-                                           secondFactorCode: nil,
                                            accountHandling: .login)
         RegistrationWorker().execute(requestData: data) { [weak self] result in
             switch result {

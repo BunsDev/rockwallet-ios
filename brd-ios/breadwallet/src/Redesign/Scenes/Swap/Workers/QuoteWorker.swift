@@ -39,6 +39,8 @@ struct QuoteRequestData: RequestModelData {
     var to: String?
     var type: QuoteType = .swap
     var accountId: String?
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     func getParameters() -> [String: Any] {
         let params = [
@@ -152,13 +154,22 @@ class QuoteWorker: BaseApiWorker<QuoteMapper> {
     override func getUrl() -> String {
         guard let urlParams = (requestData as? QuoteRequestData),
               let from = urlParams.from,
-              let to = urlParams.to
-        else { return "" }
-        let type = urlParams.type.value
-        var url = APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, type)
+              let to = urlParams.to else { return "" }
+        
+        var url: String
+        
+        if let code = urlParams.secondFactorCode {
+            url = APIURLHandler.getUrl(ExchangeEndpoints.quoteSecondFactorCode, parameters: from, to, urlParams.type.value, code)
+        } else if let code = urlParams.secondFactorBackup {
+            url = APIURLHandler.getUrl(ExchangeEndpoints.quoteSecondFactorBackup, parameters: from, to, urlParams.type.value, code)
+        } else {
+            url = APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, urlParams.type.value)
+        }
+        
         if let accountId = urlParams.accountId {
             url.append(String(format: "&account_id=%@", accountId))
         }
+        
         return url
     }
 }

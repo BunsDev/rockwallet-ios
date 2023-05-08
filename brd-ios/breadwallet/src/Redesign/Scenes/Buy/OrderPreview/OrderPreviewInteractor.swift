@@ -124,14 +124,16 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let depositQuantity = from + (dataStore?.networkFee?.fiatValue ?? 0) + from * (dataStore?.quote?.buyFee ?? 1) / 100
         let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
-        let data = SwapRequestData(quoteId: dataStore?.quote?.quoteId,
-                                   depositQuantity: formattedDepositQuantity,
-                                   withdrawalQuantity: toTokenValue,
-                                   destination: address,
-                                   sourceInstrumentId: dataStore?.card?.id,
-                                   nologCvv: dataStore?.cvv?.description)
+        let data = ExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
+                                       depositQuantity: formattedDepositQuantity,
+                                       withdrawalQuantity: toTokenValue,
+                                       destination: address,
+                                       sourceInstrumentId: dataStore?.card?.id,
+                                       nologCvv: dataStore?.cvv?.description,
+                                       secondFactorCode: dataStore?.secondFactorCode,
+                                       secondFactorBackup: dataStore?.secondFactorBackup)
         
-        SwapWorker().execute(requestData: data) { [weak self] result in
+        ExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference
@@ -219,15 +221,17 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         }
         let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
-        let data = AchRequestData(quoteId: dataStore?.quote?.quoteId,
-                                  depositQuantity: formattedDepositQuantity,
-                                  withdrawalQuantity: toTokenValue,
-                                  destination: address,
-                                  accountId: dataStore?.card?.id,
-                                  nologCvv: dataStore?.cvv?.description,
-                                  useInstantAch: dataStore?.achDeliveryType == .instant)
+        let data = AchExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
+                                          depositQuantity: formattedDepositQuantity,
+                                          withdrawalQuantity: toTokenValue,
+                                          destination: address,
+                                          accountId: dataStore?.card?.id,
+                                          nologCvv: dataStore?.cvv?.description,
+                                          useInstantAch: dataStore?.achDeliveryType == .instant,
+                                          secondFactorCode: dataStore?.secondFactorCode,
+                                          secondFactorBackup: dataStore?.secondFactorBackup)
         
-        AchWorker().execute(requestData: data) { [weak self] result in
+        AchExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference

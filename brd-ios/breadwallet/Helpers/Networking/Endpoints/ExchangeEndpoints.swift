@@ -13,10 +13,13 @@ import Foundation
 enum ExchangeEndpoints: String, URLType {
     static var baseURL: String = "https://" + E.apiUrl + "blocksatoshi/exchange/%@"
     
-    case supportedCurrencies = "supported-currencies"
     case quote = "quote?from=%@&to=%@&type=%@"
+    case quoteSecondFactorCode = "quote?from=%@&to=%@&type=%@&second_factor_code=%@"
+    case quoteSecondFactorBackup = "quote?from=%@&to=%@&type=%@&second_factor_backup=%@"
+    
+    case supportedCurrencies = "supported-currencies"
     case create = "create"
-    case ach = "ach/create"
+    case achCreate = "ach/create"
     case details = "exchange/%@"
     case history = "exchanges"
     case paymentInstruments = "v2/payment-instruments"

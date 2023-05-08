@@ -95,7 +95,8 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: .horizontal))
         }
         
         return cell
@@ -118,40 +119,44 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     }
     
     func enterBackupCode() {
-        coordinator?.showRegistrationConfirmation(isModalDismissable: true,
-                                                  confirmationType: .enterAppBackupCode)
+        dataStore?.confirmationType = .twoStepAppBackupCode
+        
+        prepareData()
     }
-
+    
     // MARK: - RegistrationConfirmationResponseDisplay
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
         view.endEditing(true)
         
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
-            self?.didDismiss?(true)
-            
             guard let self = self else { return }
+            
             switch self.dataStore?.confirmationType {
-            case .twoStepEmailLogin, .twoStepAppLogin, .enterAppBackupCode, .twoStepEmailResetPassword, .twoStepAppResetPassword:
+            case .twoStepEmailLogin, .twoStepAppLogin, .twoStepAppBackupCode, .twoStepEmailResetPassword,
+                    .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepEmailSendFunds,
+                    .twoStepEmailBuy, .twoStepAppBuy, .twoStepAppRequired, .twoStepEmailRequired:
+                self.didDismiss?(true)
+                
                 self.coordinator?.dismissFlow()
                 
             case .account:
                 self.coordinator?.showVerifyPhoneNumber()
                 
-            case .acountTwoStepEmailSettings, .twoStepEmail:
+            case .twoStepAccountEmailSettings, .twoStepEmail:
                 self.coordinator?.popToRoot(completion: { [weak self] in
                     self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.message),
                                                                              dismissType: .auto),
                                                         configuration: Presets.InfoView.warning)
                 })
                 
-            case .acountTwoStepAppSettings:
+            case .twoStepAccountAppSettings:
                 self.coordinator?.showAuthenticatorApp(setTwoStepAppModel: self.dataStore?.setTwoStepAppModel)
                 
             case .twoStepApp:
                 self.coordinator?.showBackupCodes()
-                
-            case .disable:
+            
+            case .twoStepDisable:
                 self.coordinator?.popToRoot()
                 
             default:

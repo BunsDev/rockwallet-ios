@@ -571,9 +571,10 @@ class ModalPresenter: Subscriber {
         return preferencesItems
     }
     
-    func presentMenu() {
+    func presentMenu(didDismiss: (() -> Void)?) {
         let menuNav = RootNavigationController()
         menuNav.modalPresentationStyle = .overFullScreen
+        
         // MARK: Preferences
         let preferencesItems = preparePreferencesMenuItems(menuNav: menuNav)
         
@@ -805,7 +806,10 @@ class ModalPresenter: Subscriber {
         
         let rootMenu = MenuViewController(items: rootItems,
                                           title: L10n.Settings.title)
-        rootMenu.addCloseNavigationItem(side: .right)
+        rootMenu.addCloseNavigationItem(side: .right, didDismiss: {
+            didDismiss?()
+        })
+        
         menuNav.viewControllers = [rootMenu]
         
         self.menuNavController = menuNav

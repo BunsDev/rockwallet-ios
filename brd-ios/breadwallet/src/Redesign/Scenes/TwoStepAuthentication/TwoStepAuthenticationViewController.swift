@@ -78,7 +78,7 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showTwoStepSettings()
                 
             case .disable:
-                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .disable)
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepDisable)
                 
             default:
                 guard UserManager.shared.twoStepSettings?.type == nil else {
@@ -149,10 +149,10 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
             
             switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
             case .email:
-                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepEmailSettings)
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepAccountEmailSettings)
                 
             case .app:
-                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepAppSettings)
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepAccountAppSettings)
                 
             default:
                 break

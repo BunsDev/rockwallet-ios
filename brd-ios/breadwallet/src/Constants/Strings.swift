@@ -590,10 +590,14 @@ internal enum L10n {
     }
     /// Confirmation alert title
     internal static let confirmationTitle = L10n.tr("Localizable", "BCH.confirmationTitle", fallback: "Confirmation")
+    /// The legacy BCH address has been converted to Cashaddr format.
+    internal static let conversionMessage = L10n.tr("Localizable", "BCH.conversionMessage", fallback: "The legacy BCH address has been converted to Cashaddr format.")
     /// You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.
     internal static let converterDescription = L10n.tr("Localizable", "BCH.ConverterDescription", fallback: "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.")
     /// BCH Legacy address
     internal static let converterTitle = L10n.tr("Localizable", "BCH.ConverterTitle", fallback: "BCH Legacy address")
+    /// The BCH address must be in Cashaddr format to send.
+    internal static let errorMessage = L10n.tr("Localizable", "BCH.errorMessage", fallback: "The BCH address must be in Cashaddr format to send.")
     /// Generic bch erorr message
     internal static let genericError = L10n.tr("Localizable", "BCH.genericError", fallback: "Your account does not contain any BCH, or you received BCH after the fork.")
     /// Transaction ID copied message
@@ -1077,6 +1081,12 @@ internal enum L10n {
       internal static let backHome = L10n.tr("Localizable", "ComingSoon.buttons.backHome", fallback: "BACK TO HOME")
       /// Contact support
       internal static let contactSupport = L10n.tr("Localizable", "ComingSoon.buttons.contactSupport", fallback: "Contact support")
+    }
+  }
+  internal enum CommonString {
+    internal enum Or {
+      /// Or
+      internal static let label = L10n.tr("Localizable", "CommonString.Or.label", fallback: "Or")
     }
   }
   internal enum ConfirmGift {

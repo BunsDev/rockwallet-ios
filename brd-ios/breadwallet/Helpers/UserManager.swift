@@ -18,7 +18,9 @@ class UserManager: NSObject {
     var error: Error?
     var twoStepSettings: TwoStepSettings?
     
-    func refresh(completion: ((Result<Profile?, Error>?) -> Void)? = nil) {
+    func refresh(secondFactorCode: String? = nil,
+                 secondFactorBackup: String? = nil,
+                 completion: ((Result<Profile?, Error>?) -> Void)? = nil) {
         let group = DispatchGroup()
 
         group.enter()
@@ -35,7 +37,8 @@ class UserManager: NSObject {
         }
         
         group.enter()
-        ProfileWorker().execute { [weak self] result in
+        ProfileWorker().execute(requestData: ProfileRequestData(secondFactorCode: secondFactorCode,
+                                                                secondFactorBackup: secondFactorBackup)) { [weak self] result in
             self?.profileResult = result
             
             switch result {

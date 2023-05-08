@@ -37,6 +37,9 @@ protocol ExchangeDataStore: NSObject {
     var quote: Quote? { get set }
     var showTimer: Bool { get set }
     var fromBuy: Bool { get set }
+    
+    var secondFactorCode: String? { get set }
+    var secondFactorBackup: String? { get set }
 }
 
 extension Interactor where Self: ExchangeRateViewActions,
@@ -45,7 +48,10 @@ extension Interactor where Self: ExchangeRateViewActions,
     func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction, completion: (() -> Void)?) {
         guard let fromCurrency = dataStore?.fromCode.uppercased(),
               let toCurrency = dataStore?.toCode.uppercased(),
-              let data = dataStore?.quoteRequestData else { return }
+              var data = dataStore?.quoteRequestData else { return }
+        
+        data.secondFactorCode = dataStore?.secondFactorCode
+        data.secondFactorBackup = dataStore?.secondFactorBackup
         
         QuoteWorker().execute(requestData: data) { [weak self] result in
             switch result {
@@ -69,12 +75,6 @@ extension Interactor where Self: ExchangeRateViewActions,
                 self?.dataStore?.quote = nil
                 
                 completion?()
-                
-                guard let error = error as? NetworkingError,
-                      error == .accessDenied else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.quoteFail))
-                    return
-                }
                 
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }

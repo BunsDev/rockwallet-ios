@@ -72,7 +72,6 @@ class BaseCoordinator: NSObject, Coordinatable {
     func handleUserAccount() {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
-        
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
@@ -301,26 +300,29 @@ class BaseCoordinator: NSObject, Coordinatable {
                 || status == VerificationStatus.none
                 || profile?.isMigrated == false {
                 coordinator = AccountCoordinator(navigationController: nvc)
-                
             } else {
                 completion?(true)
                 return
             }
             
         case .failure(let error):
-            guard error as? NetworkingError == .sessionExpired || error as? NetworkingError == .parameterMissing else {
+            let error = error as? NetworkingError
+            
+            if error == .sessionExpired || error == .parameterMissing {
+                coordinator = AccountCoordinator(navigationController: nvc)
+            } else if error?.errorType == .twoStepRequired {
+                coordinator = AccountCoordinator(navigationController: nvc)
+            } else {
                 completion?(false)
                 return
             }
-            
-            coordinator = AccountCoordinator(navigationController: RootNavigationController())
             
         default:
             completion?(false)
             return
         }
         
-        guard let coordinator = coordinator else {
+        guard let coordinator else {
             completion?(false)
             return
         }
@@ -435,7 +437,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             
         case .location:
             showComingSoon(reason: reason)
-        
+            
         default:
             showComingSoon(reason: reason)
         }
@@ -687,7 +689,6 @@ class BaseCoordinator: NSObject, Coordinatable {
         popToRoot()
         
         guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
-        DynamicLinksManager.shared.dynamicLinkType = nil
         
         switch deeplink {
         case .home:

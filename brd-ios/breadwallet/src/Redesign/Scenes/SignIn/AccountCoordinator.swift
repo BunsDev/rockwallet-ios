@@ -12,10 +12,15 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     // MARK: - RegistrationRoutes
     
     override func start() {
+        let error = UserManager.shared.error as? NetworkingError
+        
         if DynamicLinksManager.shared.code != nil {
             showSetPassword()
         } else if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
+        } else if error?.errorType == .twoStepRequired {
+            let confirmationType: RegistrationConfirmationModels.ConfirmationType = error == .twoStepAppRequired ? .twoStepAppRequired : .twoStepEmailRequired
+            showRegistrationConfirmation(isModalDismissable: true, confirmationType: confirmationType)
         } else {
             showSignUp()
         }

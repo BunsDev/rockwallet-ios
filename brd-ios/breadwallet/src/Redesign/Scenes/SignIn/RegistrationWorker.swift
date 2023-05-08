@@ -61,7 +61,7 @@ struct RegistrationRequestData: RequestModelData {
             "token": token,
             "subscribe": subscribe,
             "second_factor_code": secondFactorCode,
-            "second_factor_backup": secondFactorBackup // TODO: Handle this case
+            "second_factor_backup": secondFactorBackup
         ]
         
         return params.compactMapValues { $0 }

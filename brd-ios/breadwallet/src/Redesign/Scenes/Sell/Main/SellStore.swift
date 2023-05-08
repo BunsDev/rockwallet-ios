@@ -53,6 +53,9 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var fromAmount: Amount?
     var toAmount: Decimal? { return fromAmount?.fiatValue }
     
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
     // MARK: - Aditional helpers
     var isFormValid: Bool {
         // TODO: remove after BE is ready
