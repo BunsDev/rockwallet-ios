@@ -91,7 +91,7 @@ struct Profile: Model {
             case kyc
             case country
             case state
-            case manuallyConfigured
+            case manuallyConfigured = "manually_configured"
         }
     }
     

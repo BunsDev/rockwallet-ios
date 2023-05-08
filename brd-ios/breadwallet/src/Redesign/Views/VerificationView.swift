@@ -22,27 +22,12 @@ enum Kyc2: String, Equatable {
     case kycWithoutSsn = "KYC_WITHOUT_SSN"
 }
 
-enum TradeRestrictionReason {
-    case verification, location, manuallyConfigured
-}
-
-struct TradeStatus {
-    var canTrade: Bool
-    var restrictionReason: TradeRestrictionReason?
-}
-
 enum VerificationStatus: Hashable {
     case none
     case emailPending
     case email
     case levelOne
     case levelTwo(Kyc2)
-    
-    var isKYCLocationRestricted: Bool {
-        guard let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason else { return false }
-        
-        return restrictionReason == .country || restrictionReason == .state || restrictionReason == .manuallyConfigured
-    }
     
     var hasKYCLevelTwo: Bool {
         switch self {
@@ -61,22 +46,6 @@ enum VerificationStatus: Hashable {
             
         default:
             return false
-        }
-    }
-    
-    var tradeStatus: TradeStatus {
-        switch (hasKYCLevelTwo, isKYCLocationRestricted) {
-        case (true, false):
-            return .init(canTrade: true, restrictionReason: nil)
-            
-        case (true, true):
-            return .init(canTrade: false, restrictionReason: .location)
-            
-        case (false, _):
-            let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason
-            
-            return .init(canTrade: false,
-                         restrictionReason: restrictionReason == .kyc ? .verification : .manuallyConfigured)
         }
     }
     
