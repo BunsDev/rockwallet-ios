@@ -32,7 +32,8 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var values: SwapModels.Amounts.ViewAction = .init()
     
-    var fromFee: TransferFeeBasis?
+    var fromFeeBasis: TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
     
     var quote: Quote?
     var fromRate: Decimal?
@@ -67,7 +68,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     // MARK: - Additional helpers
     
     var fromFeeAmount: Amount? {
-        guard let value = fromFee,
+        guard let value = fromFeeBasis,
               let currency = currencies.first(where: { $0.code == value.fee.currency.code.uppercased() }) else {
             return nil
         }
