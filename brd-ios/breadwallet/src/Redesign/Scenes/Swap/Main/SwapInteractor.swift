@@ -73,7 +73,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 completion?()
                 
                 guard viewAction.getFees else {
-                    self?.setAmountSuccess()
+                    self?.setPresentAmountData(handleErrors: true)
                     
                     return
                 }
@@ -106,7 +106,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         dataStore?.quote = nil
         dataStore?.fromRate = nil
         dataStore?.toRate = nil
-        dataStore?.fromFee = nil
+        dataStore?.fromFeeBasis = nil
         
         presenter?.presentError(actionResponse: .init(error: nil))
         
@@ -169,21 +169,28 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     }
     
     private func setPresentAmountData(handleErrors: Bool) {
+        let isNotZero = !(dataStore?.from?.tokenValue ?? 0).isZero || !(dataStore?.to?.tokenValue ?? 0).isZero
+        
         presenter?.presentAmount(actionResponse: .init(from: dataStore?.from,
                                                        to: dataStore?.to,
                                                        fromFee: dataStore?.fromFeeAmount,
                                                        toFee: dataStore?.toFeeAmount,
+                                                       senderValidationResult: dataStore?.senderValidationResult,
+                                                       fromFeeBasis: dataStore?.fromFeeBasis,
+                                                       fromFeeAmount: dataStore?.fromFeeAmount,
+                                                       quote: dataStore?.quote,
                                                        baseBalance: dataStore?.from?.currency.state?.balance,
                                                        minimumValue: dataStore?.quote?.minimumValue,
                                                        minimumUsd: dataStore?.quote?.minimumUsd,
-                                                       handleErrors: handleErrors))
+                                                       handleErrors: handleErrors && isNotZero))
     }
     
     func getFees(viewAction: Models.Fee.ViewAction) {
         guard let from = dataStore?.from,
               let fromAddress = from.currency.wallet?.defaultReceiveAddress,
-              let sender = sender else {
+              let sender else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
+            
             return
         }
         
@@ -196,31 +203,13 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                            minimumUsd: dataStore?.quote?.minimumUsd,
                                                            handleErrors: true)) == false else { return }
         
-        // Fetching new fees
-        fetchWkFee(for: from,
-                   with: sender,
-                   address: fromAddress) { [weak self] fee in
-            self?.dataStore?.fromFee = fee
+        fetchWalletKitFee(for: from,
+                          with: sender,
+                          address: fromAddress) { [weak self] fee in
+            self?.dataStore?.fromFeeBasis = fee
             
-            if self?.dataStore?.fromFee != nil,
-               self?.dataStore?.quote != nil {
-                // All good
-                self?.setAmountSuccess()
-                if self?.dataStore?.quote?.isMinimumImpactedByWithdrawal == true {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.highFees))
-                }
-            } else if self?.dataStore?.quote?.fromFee?.fee != nil,
-                      from.currency.isEthereum {
-                // Not enough ETH for Swap + Fee
-                let value = self?.dataStore?.fromFeeAmount?.tokenValue ?? self?.dataStore?.quote?.fromFee?.fee ?? 0
-                let error = ExchangeErrors.balanceTooLow(balance: value, currency: from.currency.code)
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            } else if self?.dataStore?.quote?.fromFee?.fee != nil {
-                // Not enough ETH for fee
-                let value = self?.dataStore?.from?.tokenValue ?? 0
-                let error = ExchangeErrors.balanceTooLow(balance: value, currency: from.currency.code)
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
+            self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
+            self?.setPresentAmountData(handleErrors: true)
         }
     }
     
@@ -282,19 +271,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                        withdrawalQuantity: toTokenValue,
                                        destination: address)
         
-        // We need to make sure the swap from amount is still less than the balance
-        if let balance = sender?.wallet.currency.state?.balance,
-           let minimumValue = dataStore?.quote?.minimumValue,
-           let minimumUsd = dataStore?.quote?.minimumUsd,
-           let amount = dataStore?.from,
-           let fee = dataStore?.fromFeeAmount {
-            if (amount + fee) > balance || amount.tokenValue < minimumValue || amount.fiatValue < minimumUsd {
-                let error = ExchangeErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
-                self.presenter?.presentError(actionResponse: .init(error: error))
-                return
-            }
-        }
-        
         ExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
@@ -318,12 +294,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     }
     
     // MARK: - Aditional helpers
-    
-    private func setAmountSuccess() {
-        var model: Models.Amounts.ViewAction = dataStore?.values ?? .init()
-        model.handleErrors = true
-        setAmount(viewAction: model)
-    }
     
     private func generateSender() -> Sender? {
         guard let fromCurrency = dataStore?.from?.currency,
@@ -349,7 +319,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         
         guard let destination = swap?.address,
               let amountValue = swap?.amount,
-              let fee = dataStore.fromFee,
+              let fee = dataStore.fromFeeBasis,
               let exchangeId = dataStore.swap?.exchangeId
         else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
