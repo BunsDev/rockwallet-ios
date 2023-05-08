@@ -1,5 +1,5 @@
 // 
-//  AchWorker.swift
+//  AchExchangeWorker.swift
 //  breadwallet
 //
 //  Created by Rok on 18/11/2022.
@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct AchRequestData: RequestModelData {
+struct AchExchangeRequestData: RequestModelData {
     var deviceId: String?
     var quoteId: Int?
     var depositQuantity: String
@@ -19,6 +19,8 @@ struct AchRequestData: RequestModelData {
     var accountId: String?
     var nologCvv: String?
     var useInstantAch: Bool?
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     func getParameters() -> [String: Any] {
         let params: [String: Any?] = [
@@ -29,14 +31,16 @@ struct AchRequestData: RequestModelData {
             "destination": destination,
             "account_id": accountId,
             "nolog_cvv": nologCvv,
-            "use_instant_ach": useInstantAch
+            "use_instant_ach": useInstantAch,
+            "second_factor_code": secondFactorCode,
+            "second_factor_backup": secondFactorBackup
         ]
         
         return params.compactMapValues { $0 }
     }
 }
 
-struct AchResponseData: ModelResponse {
+struct AchExchangeResponseData: ModelResponse {
     var exchangeId: Int?
     var currency: String?
     var amount: String?
@@ -46,7 +50,7 @@ struct AchResponseData: ModelResponse {
     var redirectUrl: String?
 }
 
-struct Ach: Model {
+struct AchExchange: Model {
     var exchangeId: String?
     var currency: String?
     var amount: Decimal?
@@ -56,8 +60,8 @@ struct Ach: Model {
     var redirectUrl: String?
 }
 
-class AchWorkerMapper: ModelMapper<AchResponseData, Swap> {
-    override func getModel(from response: AchResponseData?) -> Swap? {
+class AchExchangeWorkerMapper: ModelMapper<AchExchangeResponseData, Exchange> {
+    override func getModel(from response: AchExchangeResponseData?) -> Exchange? {
         guard let response = response,
               let amount = Decimal(string: response.amount ?? "")
         else {
@@ -73,12 +77,12 @@ class AchWorkerMapper: ModelMapper<AchResponseData, Swap> {
     }
 }
 
-class AchWorker: BaseApiWorker<AchWorkerMapper> {
+class AchExchangeWorker: BaseApiWorker<AchExchangeWorkerMapper> {
     override func getMethod() -> HTTPMethod {
         return .post
     }
     
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(ExchangeEndpoints.ach)
+        return APIURLHandler.getUrl(ExchangeEndpoints.achCreate)
     }
 }

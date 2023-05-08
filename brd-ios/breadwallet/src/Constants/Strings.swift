@@ -1083,6 +1083,12 @@ internal enum L10n {
       internal static let contactSupport = L10n.tr("Localizable", "ComingSoon.buttons.contactSupport", fallback: "Contact support")
     }
   }
+  internal enum CommonString {
+    internal enum Or {
+      /// Or
+      internal static let label = L10n.tr("Localizable", "CommonString.Or.label", fallback: "Or")
+    }
+  }
   internal enum ConfirmGift {
     /// Paper Wallet Amount
     internal static let paperWalletAmount = L10n.tr("Localizable", "ConfirmGift.paperWalletAmount", fallback: "Paper Wallet Amount")

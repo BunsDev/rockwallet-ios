@@ -89,7 +89,6 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
                                            password: password,
                                            token: token,
                                            subscribe: dataStore?.promotionsTickbox ?? false,
-                                           secondFactorCode: nil,
                                            accountHandling: .register)
         RegistrationWorker().execute(requestData: data) { [weak self] result in
             switch result {

@@ -296,18 +296,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hideIfNeeded()
-        }
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        if responseDisplay.error != nil {
-            continueButton.viewModel?.enabled = false
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        }
-        
         super.displayMessage(responseDisplay: responseDisplay)
+        
+        continueButton.viewModel?.enabled = responseDisplay.error == nil
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay) {

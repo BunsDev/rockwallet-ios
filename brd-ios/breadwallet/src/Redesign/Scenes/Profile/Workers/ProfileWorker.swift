@@ -10,6 +10,19 @@
 
 import Foundation
 
+struct ProfileRequestData: RequestModelData {
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
+    func getParameters() -> [String: Any] {
+        let params = [
+            "second_factor_code": secondFactorCode,
+            "second_factor_backup": secondFactorBackup
+        ]
+        return params.compactMapValues { $0 }
+    }
+}
+
 struct ProfileResponseData: ModelResponse {
     let email: String?
     var country: UserInformationResponseData.UserPlace?
@@ -160,6 +173,14 @@ class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
 
 class ProfileWorker: BaseApiWorker<ProfileMapper> {
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(WalletEndpoints.profile)
+        guard let urlParams = (requestData as? ProfileRequestData) else { return "" }
+        
+        if let code = urlParams.secondFactorCode {
+            return APIURLHandler.getUrl(WalletEndpoints.profileSecondFactorCode, parameters: [code])
+        } else if let code = urlParams.secondFactorBackup {
+            return APIURLHandler.getUrl(WalletEndpoints.profileSecondFactorBackup, parameters: [code])
+        } else {
+            return APIURLHandler.getUrl(WalletEndpoints.profile)
+        }
     }
 }

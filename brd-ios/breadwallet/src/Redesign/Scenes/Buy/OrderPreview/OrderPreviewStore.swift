@@ -40,6 +40,9 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var paymentstatus: AddCard.Status?
     var availablePayments: [PaymentCard.PaymentType]?
     
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
     // TODO: update it according to BE data
     var isAchAccount: Bool {
         return card?.type == .ach

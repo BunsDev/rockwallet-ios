@@ -47,10 +47,13 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var termCurrencies: [String] = []
     var baseAndTermCurrencies: [[String]] = []
     
-    var swap: Swap?
+    var swap: Exchange?
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
@@ -61,7 +64,8 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
         return NSMutableAttributedString(string: L10n.Swap.swapLimits(minText, maxText))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
+    
     var fromFeeAmount: Amount? {
         guard let value = fromFee,
               let currency = currencies.first(where: { $0.code == value.fee.currency.code.uppercased() }) else {

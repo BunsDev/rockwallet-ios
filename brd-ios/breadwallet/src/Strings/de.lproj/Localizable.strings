@@ -1118,6 +1118,8 @@
 
 "ComingSoon.title" = "Coming soon!";
 
+"CommonString.Or.label" = "Or";
+
 /* Amount to Send: ($1.00) */
 "Confirmation.amountLabel" = "Betrag, welcher versendet werden soll:";
 

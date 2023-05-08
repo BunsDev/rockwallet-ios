@@ -526,7 +526,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
     }
     
-    private func validateSendForm() -> Bool {
+    internal override func validateSendForm() -> Bool {
         //Payment Protocol Requests do their own validation
         guard paymentProtocolRequest == nil else { return true }
         
@@ -586,7 +586,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                                                                amount: amount,
                                                                feeBasis: feeBasis,
                                                                comment: memoCell.textView.text,
-                                                               attribute: attributeText))
+                                                               attribute: attributeText,
+                                                               secondFactorCode: secondFactorCode,
+                                                               secondFactorBackup: secondFactorBackup))
     }
     
     private func handleEstimateFeeError(error: Error) {
@@ -717,8 +719,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             attributeCell?.textField.resignFirstResponder()
         }
         
-        guard validateSendForm(),
-              let amount = amount,
+        guard let amount = amount,
               let address = address,
               let feeBasis = currentFeeBasis else { return }
         

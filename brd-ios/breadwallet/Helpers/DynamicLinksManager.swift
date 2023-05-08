@@ -14,14 +14,18 @@ class DynamicLinksManager {
     static var shared = DynamicLinksManager()
     
     var shouldHandleDynamicLink: Bool {
-        return DynamicLinksManager.shared.dynamicLinkType != nil
+        let type = DynamicLinksManager.shared.dynamicLinkType
+        
+        DynamicLinksManager.shared.dynamicLinkType = nil
+        
+        return type != nil
     }
     
     enum DynamicLinkType: String {
         case setPassword = "op=password"
-        case home = "home"
-        case profile = "profile"
-        case swap = "swap"
+        case home
+        case profile
+        case swap
     }
     
     var dynamicLinkType: DynamicLinkType?

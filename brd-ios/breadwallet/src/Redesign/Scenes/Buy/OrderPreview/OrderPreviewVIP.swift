@@ -69,6 +69,8 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
     var paymentReference: String? { get set }
     var paymentstatus: AddCard.Status? { get set }
     var isAchAccount: Bool { get }
+    var secondFactorCode: String? { get set }
+    var secondFactorBackup: String? { get set }
 }
 
 protocol OrderPreviewDataPassing {

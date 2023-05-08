@@ -104,6 +104,37 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         }
     }
     
+    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        super.displayMessage(responseDisplay: responseDisplay)
+        
+        let error = responseDisplay.error as? NetworkingError
+        
+        switch error?.errorType {
+        case .twoStepRequired:
+            (coordinator as? BaseCoordinator)?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                vc?.dataStore?.confirmationType = error == .twoStepAppRequired ? .twoStepAppRequired : .twoStepEmailRequired
+                vc?.isModalDismissable = true
+                
+                vc?.didDismiss = { didDismissSuccessfully in
+                    guard didDismissSuccessfully else { return }
+                    
+                    switch vc?.dataStore?.confirmationType {
+                    case .twoStepAppBackupCode:
+                        (self.dataStore as? ExchangeDataStore)?.secondFactorBackup = vc?.dataStore?.code
+                        
+                    default:
+                        (self.dataStore as? ExchangeDataStore)?.secondFactorCode = vc?.dataStore?.code
+                    }
+                    
+                    (self.interactor as? ExchangeRateViewActions)?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
+                }
+            }
+            
+        default:
+            break
+        }
+    }
+    
     // MARK: Exchange response displays
     
     func displayAmount(responseDisplay: ExchangeModels.Amounts.ResponseDisplay) {

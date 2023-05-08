@@ -24,7 +24,6 @@ enum ExchangeErrors: FEError {
     case notEnoughEthForFee(currency: String)
     case failed(error: Error?)
     case supportedCurrencies(error: Error?)
-    case quoteFail
     case noFees
     case networkFee
     case overExchangeLimit
@@ -88,9 +87,6 @@ enum ExchangeErrors: FEError {
         case .networkFee:
             return L10n.ErrorMessages.networkFee
             
-        case .quoteFail:
-            return L10n.ErrorMessages.exchangeQuoteFailed
-        
         case .noQuote(let from, let to):
             let from = from ?? "/"
             let to = to ?? "/"
