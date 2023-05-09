@@ -131,6 +131,8 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
         return true
     case (.didCreateAccount, .didCreateAccount):
         return true
+    case (.didSetTwoStep, .didSetTwoStep):
+        return true
     case (.txMetaDataUpdated, .txMetaDataUpdated):
         return true
     case (.promptShareData, .promptShareData):
