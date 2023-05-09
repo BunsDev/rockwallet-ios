@@ -75,6 +75,7 @@
 		04DD285E2A02522E00A70C09 /* ToastMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */; };
 		04E0131729ED30AA00743954 /* TwoStepChangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */; };
 		04E0131929ED524600743954 /* TwoStepExchangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */; };
+		04E815982A0A2FB00008AF03 /* ConfirmationCodesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E815972A0A2FB00008AF03 /* ConfirmationCodesWorker.swift */; };
 		04FE239629D6F49300838DB6 /* SetTwoStepPhoneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */; };
 		1B1AFFA01FB7EF7C00E61908 /* BiometricsSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */; };
 		222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */; };
@@ -946,6 +947,7 @@
 		04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageManager.swift; sourceTree = "<group>"; };
 		04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepChangeWorker.swift; sourceTree = "<group>"; };
 		04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepExchangeWorker.swift; sourceTree = "<group>"; };
+		04E815972A0A2FB00008AF03 /* ConfirmationCodesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationCodesWorker.swift; sourceTree = "<group>"; };
 		04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneWorker.swift; sourceTree = "<group>"; };
 		1B1AFF9E1FB7EF7C00E61908 /* BiometricsSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BiometricsSettingsViewController.swift; path = src/ViewControllers/BiometricsSettingsViewController.swift; sourceTree = "<group>"; };
 		222C424F1E90492800078EB5 /* BRAPIClient+KV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+KV.swift"; path = "src/Platform/BRAPIClient+KV.swift"; sourceTree = "<group>"; };
@@ -1806,6 +1808,7 @@
 			children = (
 				043DB5CF29EDC7B900DEB8FD /* SetTwoStepAuthWorker.swift */,
 				049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */,
+				04E815972A0A2FB00008AF03 /* ConfirmationCodesWorker.swift */,
 				043DB5D529EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift */,
 				04FE239529D6F49300838DB6 /* SetTwoStepPhoneWorker.swift */,
 			);
@@ -4135,6 +4138,7 @@
 				7EF45F512845352400D1F7B0 /* KYCBasicViewController.swift in Sources */,
 				7EF2999127E3B8D200A2238A /* MarketChart.swift in Sources */,
 				CEA9178620C07FBB00F29B31 /* SyncingHeaderView.swift in Sources */,
+				04E815982A0A2FB00008AF03 /* ConfirmationCodesWorker.swift in Sources */,
 				7BDB49F92806F1090031F015 /* PlatformAuthResult.swift in Sources */,
 				7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */,
 				CEC6AA3B1DEE4EB000EE5AFD /* CGRect+Additions.swift in Sources */,

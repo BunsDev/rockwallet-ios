@@ -43,15 +43,3 @@ class SetTwoStepPhoneCodeWorker: BaseApiWorker<SetTwoStepPhoneCodeMapper> {
         return .post
     }
 }
-
-struct ConfirmationCodesRequestData: RequestModelData {
-    func getParameters() -> [String: Any] {
-        return [:]
-    }
-}
-
-class ConfirmationCodesWorker: BaseApiWorker<PlainMapper> {
-    override func getUrl() -> String {
-        return KYCAuthEndpoints.confirmationCodes.url
-    }
-}

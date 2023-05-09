@@ -485,7 +485,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
-            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication)
+            self.coordinator?.showTwoStepAuthentication(keyStore: keyStore)
         }
         
         homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in

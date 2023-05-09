@@ -39,7 +39,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         }
         
         guard E.isDevelopment else { return }
-        ConfirmationCodesWorker().execute(requestData: ConfirmationCodesRequestData()) { _ in }
+        ConfirmationCodesWorker().execute { _ in }
     }
     
     func validate(viewAction: RegistrationConfirmationModels.Validate.ViewAction) {

@@ -29,6 +29,8 @@ class UserManager: NSObject {
             case .success(let data):
                 self?.twoStepSettings = data
                 
+                Store.trigger(name: .didSetTwoStep)
+                
             default:
                 self?.twoStepSettings = nil
             }

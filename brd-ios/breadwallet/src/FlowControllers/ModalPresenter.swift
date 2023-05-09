@@ -1179,7 +1179,7 @@ class ModalPresenter: Subscriber {
         var securityItems: [MenuItem] = [unlink, updatePin, biometrics, twoStep, paperKey, widgetPortfolio, iCloudBackup, deleteAccount]
         
         if UserManager.shared.profile == nil || UserDefaults.email == nil {
-            securityItems = securityItems.filter { $0.title != twoStep.title || $0.title != deleteAccount.title }
+            securityItems = securityItems.filter { $0.title != twoStep.title && $0.title != deleteAccount.title }
         }
         
         return securityItems
