@@ -34,6 +34,7 @@ enum NetworkingError: FEError {
     case twoStepInvalidRetryable
     case twoStepBlockedAccount
     case twoStepInvalidCodeBlockedAccount
+    case inappropriatePaymail
     
     var errorMessage: String {
         switch self {
@@ -51,6 +52,9 @@ enum NetworkingError: FEError {
             
         case .twoStepInvalidCode:
             return L10n.TwoStep.Error.attempts
+            
+        case .inappropriatePaymail:
+            return L10n.PaymailAddress.inappropriateWordsMessage
             
         default:
             return L10n.ErrorMessages.unknownError
@@ -113,6 +117,8 @@ enum NetworkingError: FEError {
         case 400:
             if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalidRetryable.rawValue {
                 self = .twoStepInvalidRetryable
+            } else if error?.serverMessage == ServerResponse.ErrorType.inappropriatePaymail.rawValue {
+                self = .inappropriatePaymail
             } else {
                 self = .general
             }

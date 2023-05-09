@@ -1766,6 +1766,8 @@
 
 "PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
 
+"PaymailAddress.InappropriateWordsMessage" = "Sorry. Inappropriate language detected. Please choose a different paymail address.";
+
 "PaymailAddress.paymailAddressField" = "Paymail address";
 
 "PaymailAddress.PaymailButton" = "Paymail";

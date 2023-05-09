@@ -1698,6 +1698,8 @@ internal enum L10n {
     internal static let createPaymailAddress = L10n.tr("Localizable", "PaymailAddress.createPaymailAddress", fallback: "Create paymail address")
     /// Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.
     internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
+    /// Sorry. Inappropriate language detected. Please choose a different paymail address.
+    internal static let inappropriateWordsMessage = L10n.tr("Localizable", "PaymailAddress.InappropriateWordsMessage", fallback: "Sorry. Inappropriate language detected. Please choose a different paymail address.")
     /// Paymail address
     internal static let paymailAddressField = L10n.tr("Localizable", "PaymailAddress.paymailAddressField", fallback: "Paymail address")
     /// Paymail
