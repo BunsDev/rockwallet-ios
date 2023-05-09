@@ -20,6 +20,7 @@ struct ServerResponse: Decodable {
         case twoStepInvalidRetryable = "Invalid code"
         case twoStepBlockedAccount = "Account blocked"
         case twoStepInvalidCodeBlockedAccount = "Invalid 2FA code, account blocked"
+        case inappropriatePaymail = "Bad word in handle"
     }
     
     enum ErrorCategory: Decodable {

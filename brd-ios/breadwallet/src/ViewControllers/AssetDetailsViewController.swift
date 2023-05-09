@@ -16,6 +16,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     var currency: Currency
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
+    var paymailCallback: (() -> Void)?
     
     weak var coordinator: BaseCoordinator?
     
@@ -175,6 +176,10 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         transactionsTableView?.view.layer.cornerRadius = CornerRadius.large.rawValue
         transactionsTableView?.view.layer.masksToBounds = true
         transactionsTableView?.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        if currency == Currencies.shared.bsv {
+            paymailCallback?()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

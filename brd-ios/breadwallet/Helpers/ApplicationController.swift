@@ -430,6 +430,7 @@ class ApplicationController: Subscriber {
             assetDetailsViewController.coordinator = self.coordinator
             assetDetailsViewController.keyStore = self.keyStore
             assetDetailsViewController.coreSystem = self.coreSystem
+            assetDetailsViewController.paymailCallback = self.didTapPaymail
             navigationController.pushViewController(assetDetailsViewController, animated: true)
         }
         
