@@ -176,16 +176,15 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             presentError(actionResponse: .init(error: error))
             hasError = true
             
-        } else {
+        } else if let profile = UserManager.shared.profile {
             let fiatValue = from.fiatValue.round(to: 2)
             let tokenValue = from.tokenValue
             let minimumValue = actionResponse.minimumValue ?? 0
             let minimumUsd = actionResponse.minimumUsd ?? 0
             
-            let profile = UserManager.shared.profile
-            let dailyLimit = profile?.swapAllowanceDaily ?? 0
-            let lifetimeLimit = profile?.swapAllowanceLifetime ?? 0
-            let exchangeLimit = profile?.swapAllowancePerExchange ?? 0
+            let dailyLimit = profile.swapAllowanceDaily
+            let lifetimeLimit = profile.swapAllowanceLifetime
+            let exchangeLimit = profile.swapAllowancePerExchange
             
             switch (fiatValue, tokenValue) {
             case _ where fiatValue <= 0:
@@ -214,13 +213,13 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 // Over daily limit
                 let level2 = ExchangeErrors.overDailyLimitLevel2(limit: dailyLimit)
                 let level1 = ExchangeErrors.overDailyLimit(limit: dailyLimit)
-                let error = profile?.status == .levelTwo(.levelTwo) ? level2 : level1
+                let error = profile.status == .levelTwo(.levelTwo) ? level2 : level1
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
             case _ where fiatValue > lifetimeLimit:
                 // Over lifetime limit
-                let limit = profile?.swapAllowanceLifetime ?? 0
+                let limit = profile.swapAllowanceLifetime
                 presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
                 hasError = true
                 
