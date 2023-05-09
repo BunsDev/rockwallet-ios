@@ -44,6 +44,18 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
                                                          emailState: emailState))
     }
     
+    func clearPaymail(viewAction: Models.ClearPaymail.ViewAction) {
+        dataStore?.paymailAddress = viewAction.email
+        let isEmailValid = false
+        let isEmailEmpty = true
+        let emailState: DisplayState? = isEmailEmpty || isEmailValid ? nil : .error
+        
+        presenter?.presentValidate(actionResponse: .init(email: dataStore?.paymailAddress,
+                                                         isEmailValid: isEmailValid,
+                                                         isEmailEmpty: isEmailEmpty,
+                                                         emailState: emailState))
+    }
+    
     func createPaymailAddress(viewAction: Models.CreatePaymail.ViewAction) {
         guard let email = dataStore?.paymailAddress else { return }
         let paymailEmail = email.replacingOccurrences(of: Constant.paymailDomain, with: "")

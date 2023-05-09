@@ -10,9 +10,9 @@ import UIKit
 
 final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionResponses {
     typealias Models = PaymailAddressModels
-
+    
     weak var viewController: PaymailAddressViewController?
-
+    
     // MARK: - PaymailAddressActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
@@ -41,7 +41,7 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
             .emailView: [
                 TextFieldModel(title: item?.screenType?.emailViewTitle,
                                value: emailValue,
-                               trailing: .image(item?.screenType?.image))
+                               trailing: item?.screenType?.image)
             ],
             .paymail: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.PaymailAddress.whatIsPaymail,
@@ -74,12 +74,15 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
                       isEmailValid: actionResponse.isEmailValid,
                       isEmailEmpty: actionResponse.isEmailEmpty,
                       emailModel: .init(title: L10n.PaymailAddress.paymailAddressField,
+                                        value: actionResponse.email,
                                         hint: actionResponse.emailState == .error ? L10n.Account.invalidEmail : nil,
-                                        trailing: actionResponse.emailState == .error ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
+                                        trailing: actionResponse.emailState == .error ?
+                        .image(Asset.warning.image.tinted(with: LightColors.Error.one)) :
+                            .image(Asset.cancel.image.tinted(with: LightColors.Text.three)),
                                         displayState: actionResponse.emailState),
                       isValid: isValid))
     }
-
+    
     // MARK: - Additional Helpers
-
+    
 }

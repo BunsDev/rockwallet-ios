@@ -56,6 +56,8 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
                 view.didTapTrailingView = { [weak self] in
                     if self?.dataStore?.screenType == .paymailSetup {
                         self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
+                    } else {
+                        self?.interactor?.clearPaymail(viewAction: .init(email: Constant.paymailDomain))
                     }
                 }
             }
