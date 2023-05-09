@@ -161,7 +161,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 hasError = true
                 
             }
-        } else if actionResponse.baseBalance == nil || fromCode == toCode {
+        } else if actionResponse.baseBalance == nil || actionResponse.quote == nil {
             presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: fromCode, to: toCode)))
             hasError = true
             
