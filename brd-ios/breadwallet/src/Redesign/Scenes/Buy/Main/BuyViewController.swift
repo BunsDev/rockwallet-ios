@@ -265,7 +265,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
               let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
