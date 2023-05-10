@@ -67,7 +67,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
             
-        case .from:
+        case .swapCard:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
             
         case .paymentMethod:
