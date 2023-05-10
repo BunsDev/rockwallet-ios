@@ -67,7 +67,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
         presenter?.presentNavigation(actionResponse: .init(index: viewAction.index))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     private func fetchCards(completion: ((Result<[PaymentCard]?, Error>) -> Void)?) {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {

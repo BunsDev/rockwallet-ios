@@ -193,5 +193,5 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentAssetSelectionMessage(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

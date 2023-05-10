@@ -50,5 +50,5 @@ class ForgotPasswordInteractor: NSObject, Interactor, ForgotPasswordViewActions 
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

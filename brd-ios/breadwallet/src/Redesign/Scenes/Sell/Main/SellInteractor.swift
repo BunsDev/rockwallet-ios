@@ -11,10 +11,10 @@ import UIKit
 class SellInteractor: NSObject, Interactor, SellViewActions {
     
     typealias Models = SellModels
-
+    
     var presenter: SellPresenter?
     var dataStore: SellStore?
-
+    
     // MARK: - SellViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
@@ -23,13 +23,13 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         presenter?.presentData(actionResponse: .init(item: dataStore?.currency))
     }
-
+    
     func setAmount(viewAction: Models.Amounts.ViewAction) {
         guard let rate = dataStore?.quote?.exchangeRate,
               let currency = dataStore?.currency
         else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: dataStore?.fromCode,
-                                                                                   to: dataStore?.toCode)))
+                                                                                        to: dataStore?.toCode)))
             return
         }
         
@@ -49,5 +49,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
         presenter?.presentData(actionResponse: .init(item: dataStore?.currency))
     }
-    // MARK: - Aditional helpers
+    
+    // MARK: - Additional helpers
 }

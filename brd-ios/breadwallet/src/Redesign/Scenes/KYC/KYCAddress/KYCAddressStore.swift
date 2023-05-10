@@ -15,7 +15,6 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
     var countries: [Country] = []
     var states: [Place] = []
     
-    var itemId: String?
     var firstName: String?
     var lastName: String?
     var birthDateString: String?
@@ -44,5 +43,5 @@ class KYCAddressStore: NSObject, BaseDataStore, KYCAddressDataStore {
         return true
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

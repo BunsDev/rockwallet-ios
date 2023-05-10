@@ -9,11 +9,11 @@
 import UIKit
 
 class ExchangeDetailsStore: NSObject, BaseDataStore, ExchangeDetailsDataStore {
-    var itemId: String?
     
     // MARK: - ExchangeDetailsDataStore
     
     var transactionType: TransactionType = .base
+    var exchangeId: String?
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

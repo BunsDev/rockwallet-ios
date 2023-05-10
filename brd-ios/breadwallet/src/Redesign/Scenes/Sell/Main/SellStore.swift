@@ -10,9 +10,9 @@ import UIKit
 
 class SellStore: NSObject, BaseDataStore, SellDataStore {
     
-    // MARK: - SellDataStore
+    // MARK: - ExchangeRateDataStore
     
-    // ExchangeRateDaatStore
+    // WHAT
     var quote: Quote? = .init(quoteId: 5,
                               exchangeRate: 0.99,
                               timestamp: Date().timeIntervalSince1970,
@@ -23,7 +23,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var fromCode: String { currency?.code ?? "" }
     var toCode: String { Constant.usdCurrencyCode }
-    var fromBuy = false
+    var fromBuy: Bool = false
     var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
@@ -31,11 +31,15 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
                      type: .sell)
     }
     
-    // MARK: - AchDataStore
+    // MARK: - SellDataStore
+    
     var ach: PaymentCard?
     var selected: PaymentCard?
     var cards: [PaymentCard] = []
     var paymentMethod: PaymentCard.PaymentType? = .ach
+    
+    var currencies: [Currency] = []
+    var supportedCurrencies: [SupportedCurrency]?
     
     var currency: Currency?
     var coreSystem: CoreSystem?
@@ -56,7 +60,8 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var secondFactorCode: String?
     var secondFactorBackup: String?
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
+    
     var isFormValid: Bool {
         // TODO: remove after BE is ready
         return true

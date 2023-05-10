@@ -11,9 +11,7 @@
 import UIKit
 
 class RecoveryKeyIntroStore: NSObject, BaseDataStore, RecoveryKeyIntroDataStore {
-    var itemId: String?
-    
     // MARK: - ProfileDataStore
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

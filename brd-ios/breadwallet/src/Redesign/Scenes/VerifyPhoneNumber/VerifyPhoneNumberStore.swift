@@ -11,15 +11,14 @@
 import UIKit
 
 class VerifyPhoneNumberStore: NSObject, BaseDataStore, VerifyPhoneNumberDataStore {
+    
+    // MARK: - VerifyPhoneNumberDataStore
+    
+    var phoneNumber: String?
     var country: Country?
     var countries: [Country] = []
     var states: [Place] = []
     var state: Place?
     
-    // MARK: - VerifyPhoneNumberDataStore
-    
-    var itemId: String?
-    var phoneNumber: String?
-    
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

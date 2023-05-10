@@ -47,5 +47,5 @@ class AuthenticatorAppInteractor: NSObject, Interactor, AuthenticatorAppViewActi
         presenter?.presentNext(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

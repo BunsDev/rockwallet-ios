@@ -30,7 +30,7 @@ protocol PaymailAddressResponseDisplays: AnyObject, BaseResponseDisplays, FetchR
     func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.BottomAlert.ResponseDisplay)
 }
 
-protocol PaymailAddressDataStore: BaseDataStore {
+protocol PaymailAddressDataStore: BaseDataStore, FetchDataStore {
     var screenType: PaymailAddressModels.ScreenType? { get set }
     var paymailAddress: String? { get set }
 }

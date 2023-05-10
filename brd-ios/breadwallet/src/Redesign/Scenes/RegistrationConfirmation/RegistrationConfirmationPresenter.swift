@@ -38,7 +38,8 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .help })
         }
         
-        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword || confirmationType == .twoStepAppSendFunds || confirmationType == .twoStepAppRequired {
+        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword
+            || confirmationType == .twoStepAppSendFunds || confirmationType == .twoStepAppRequired {
             sections = sections.filter({ $0 != .image })
             sections = sections.filter({ $0 != .instructions })
         }

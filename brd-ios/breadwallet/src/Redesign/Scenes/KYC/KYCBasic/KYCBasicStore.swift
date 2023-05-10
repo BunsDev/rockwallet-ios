@@ -10,7 +10,7 @@ import UIKit
 
 class KYCBasicStore: NSObject, BaseDataStore, KYCBasicDataStore {
     // MARK: - KYCBasicDataStore
-    var itemId: String?
+    
     var firstName: String?
     var lastName: String?
     var birthdate: Date?

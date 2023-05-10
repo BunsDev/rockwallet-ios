@@ -34,5 +34,5 @@ class TwoStepAuthenticationInteractor: NSObject, Interactor, TwoStepAuthenticati
         presenter?.presentChangeMethod(actionResponse: .init(indexPath: viewAction.indexPath))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

@@ -24,7 +24,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     }
     
     // MARK: - BuyDataStore
-    var itemId: String?
     
     var from: Decimal?
     var to: Decimal?
@@ -89,7 +88,9 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var secondFactorCode: String?
     var secondFactorBackup: String?
     
-    // MARK: - Aditional helpers
+    var availablePayments: [PaymentCard.PaymentType] = []
+    
+    // MARK: - Additional helpers
     
     var isFormValid: Bool {
         guard let amount = toAmount,
@@ -112,6 +113,4 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         
         return isCustom
     }
-    
-    var availablePayments: [PaymentCard.PaymentType] = []
 }

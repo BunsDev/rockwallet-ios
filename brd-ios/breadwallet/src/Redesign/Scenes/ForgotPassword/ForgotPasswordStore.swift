@@ -11,11 +11,9 @@
 import UIKit
 
 class ForgotPasswordStore: NSObject, BaseDataStore, ForgotPasswordDataStore {
-    var itemId: String?
-    
     // MARK: - ProfileDataStore
     
     var email: String = ""
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

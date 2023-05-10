@@ -26,6 +26,7 @@ protocol ExchangeDetailsResponseDisplays: AnyObject, BaseResponseDisplays, Fetch
 
 protocol ExchangeDetailsDataStore: BaseDataStore, FetchDataStore {
     var transactionType: TransactionType { get set }
+    var exchangeId: String? { get set }
 }
 
 protocol ExchangeDetailsDataPassing {

@@ -14,7 +14,6 @@ import UIKit
 class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     // MARK: - BillingAddressDataStore
     
-    var itemId: String?
     var firstName: String?
     var lastName: String?
     var country: Country?
@@ -33,7 +32,7 @@ class BillingAddressStore: NSObject, BaseDataStore, BillingAddressDataStore {
     var expYear: String?
     var cvv: String?
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     var isValid: Bool {
         return FieldValidator.validate(fields: [firstName,

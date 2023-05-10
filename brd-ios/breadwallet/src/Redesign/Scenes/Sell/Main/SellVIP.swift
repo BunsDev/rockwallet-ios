@@ -33,7 +33,29 @@ protocol SellResponseDisplays: AnyObject,
                                AchResponseDisplays {
 }
 
-protocol SellDataStore: BaseDataStore, ExchangeDataStore, AchDataStore {
+protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
+    var quote: Quote? { get set }
+    
+    var fromBuy: Bool { get set }
+    var showTimer: Bool { get set }
+    
+    // MARK: - SellDataStore
+    
+    var ach: PaymentCard? { get set }
+    var selected: PaymentCard? { get set }
+    var cards: [PaymentCard] { get set }
+    var paymentMethod: PaymentCard.PaymentType? { get set }
+    
+    var currencies: [Currency] { get set }
+    var supportedCurrencies: [SupportedCurrency]? { get set }
+    var currency: Currency? { get set }
+    var coreSystem: CoreSystem? { get set }
+    var keyStore: KeyStore? { get set }
+    
+    var fromAmount: Amount? { get set }
+    
+    var secondFactorCode: String? { get set }
+    var secondFactorBackup: String? { get set }
 }
 
 protocol SellDataPassing {

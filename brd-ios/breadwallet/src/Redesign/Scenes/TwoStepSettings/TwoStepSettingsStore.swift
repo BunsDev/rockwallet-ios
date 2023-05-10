@@ -10,7 +10,6 @@ import UIKit
 
 class TwoStepSettingsStore: NSObject, BaseDataStore, TwoStepSettingsDataStore {
     // MARK: - TwoStepSettingsDataStore
-    var itemId: String?
-
-    // MARK: - Aditional helpers
+    
+    // MARK: - Additional helpers
 }

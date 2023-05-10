@@ -70,7 +70,7 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }
 
 extension BaseCoordinator {

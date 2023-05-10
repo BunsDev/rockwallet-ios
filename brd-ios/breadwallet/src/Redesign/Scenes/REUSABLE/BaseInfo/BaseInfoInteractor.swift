@@ -25,5 +25,5 @@ class BaseInfoInteractor: NSObject, Interactor, BaseInfoViewActions {
         presenter?.presentAssetSelectionData(actionResponse: .init(supportedCurrencies: currencies))
     }
 
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }
