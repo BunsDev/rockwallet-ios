@@ -12,10 +12,13 @@ import Foundation
 
 struct ExchangeModels {
     enum Section: Sectionable {
+        case segment
         case rateAndTimer
         case accountLimits
-        case payoutMethod
+        case increaseLimits
+        case paymentMethod
         case swapCard
+        case from
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }

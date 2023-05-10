@@ -57,7 +57,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .swapCard:
             cell = self.tableView(tableView, swapMainCellForRowAt: indexPath)
             
-        case .payoutMethod:
+        case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
         default:
@@ -118,6 +118,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     // MARK: - User Interaction
+    
     @objc override func buttonTapped() {
         super.buttonTapped()
         
@@ -133,8 +134,12 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     // MARK: - SellResponseDisplay
     
+    func displayAssets(responseDisplay: BuyModels.Assets.ResponseDisplay) {
+        
+    }
+    
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.payoutMethod.hashValue }),
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.viewModel)

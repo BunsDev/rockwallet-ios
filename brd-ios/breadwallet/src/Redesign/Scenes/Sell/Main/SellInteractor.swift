@@ -18,10 +18,27 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     // MARK: - SellViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        if dataStore?.ach == nil {
-            getPayments(viewAction: .init())
+        guard dataStore?.fromAmount?.currency != nil,
+              dataStore?.paymentMethod != nil,
+              dataStore?.supportedCurrencies?.isEmpty != false else {
+            getExchangeRate(viewAction: .init(), completion: {})
+            return
         }
-        presenter?.presentData(actionResponse: .init(item: dataStore?.currency))
+
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
+        
+        guard !currencies.isEmpty else { return }
+        
+        dataStore?.supportedCurrencies = currencies
+        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
+        
+        presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
+                                                                       achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
+        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.toAmount,
+                                                       card: dataStore?.selected,
+                                                       type: dataStore?.paymentMethod,
+                                                       quote: dataStore?.quote))
+        getPayments(viewAction: .init())
     }
     
     func setAmount(viewAction: Models.Amounts.ViewAction) {

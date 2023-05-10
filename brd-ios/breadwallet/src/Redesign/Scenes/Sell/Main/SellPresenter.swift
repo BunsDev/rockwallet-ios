@@ -16,13 +16,14 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     weak var viewController: SellViewController?
 
     // MARK: - SellActionResponses
+    
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
 
         let sections: [ExchangeModels.Section] = [
             .rateAndTimer,
             .swapCard,
-            .payoutMethod,
+            .paymentMethod,
             .accountLimits
         ]
 
@@ -42,7 +43,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                             title: .text("I receive"),
                                             selectionDisabled: true))
             ],
-            .payoutMethod: [
+            .paymentMethod: [
                 paymentModel ?? CardSelectionViewModel(userInteractionEnabled: true)
             ],
             .accountLimits: [
@@ -52,8 +53,13 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
+    func presentAssets(actionResponse: SellModels.Assets.ActionResponse) {
+        
+    }
+    
     func presentAmount(actionResponse: Models.Amounts.ActionResponse) {
         guard let from = actionResponse.from else { return }
+        
         let toFiatValue = from.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: from.fiatValue)
         let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: from.tokenValue)
         

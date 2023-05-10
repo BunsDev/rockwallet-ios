@@ -14,12 +14,6 @@ import WalletKit
 enum SwapModels {
     typealias Item = (from: Amount?, to: Amount?)
     
-    enum EstimateFeeResult {
-        case successFee(TransferFeeBasis)
-        case successEthFee(Decimal)
-        case failure(Error)
-    }
-    
     struct SwitchPlaces {
         struct ViewAction {}
     }
