@@ -57,7 +57,7 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
                     if self?.dataStore?.screenType == .paymailSetup {
                         self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
                     } else {
-                        self?.interactor?.clearPaymail(viewAction: .init(email: Constant.paymailDomain))
+                        self?.interactor?.validate(viewAction: .init(email: Constant.paymailDomain))
                     }
                 }
             }

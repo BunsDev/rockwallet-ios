@@ -112,12 +112,4 @@ enum PaymailAddressModels {
             var isValid: Bool
         }
     }
-    
-    struct ClearPaymail {
-        struct ViewAction {
-            var email: String?
-        }
-        struct ActionResponse {}
-        struct ResponseDisplay {}
-    }
 }

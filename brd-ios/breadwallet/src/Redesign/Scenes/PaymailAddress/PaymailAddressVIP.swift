@@ -16,7 +16,6 @@ protocol PaymailAddressViewActions: BaseViewActions, FetchViewActions, CopyValue
     func createPaymailAddress(viewAction: PaymailAddressModels.CreatePaymail.ViewAction)
     func showPaymailPopup(viewAction: PaymailAddressModels.InfoPopup.ViewAction)
     func showSuccessBottomAlert(viewAction: PaymailAddressModels.BottomAlert.ViewAction)
-    func clearPaymail(viewAction: PaymailAddressModels.ClearPaymail.ViewAction)
 }
 
 protocol PaymailAddressActionResponses: BaseActionResponses, FetchActionResponses, CopyValueResponses {
