@@ -2340,6 +2340,8 @@ internal enum L10n {
     internal static let payIdRetrievalError = L10n.tr("Localizable", "Send.payId_retrievalError", fallback: "There was an error retrieving the address for this PayString. Please try again later.")
     /// PayID label
     internal static let payIdToLabel = L10n.tr("Localizable", "Send.payId_toLabel", fallback: "PayString")
+    /// Enter wallet address or Paymail
+    internal static let placeholderText = L10n.tr("Localizable", "Send.placeholderText", fallback: "Enter wallet address or Paymail")
     /// Could not publish transaction alert title
     internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Your transaction request couldn’t be completed. Please try again.")
     /// Could not load remote request error message

@@ -2465,6 +2465,8 @@
 /* PayID label */
 "Send.payId_toLabel" = "PayID";
 
+"Send.placeholderText" = "Enter wallet address or Paymail";
+
 /* Could not publish transaction alert title */
 "Send.publishTransactionError" = "Kon de transactie niet publiceren.";
 
