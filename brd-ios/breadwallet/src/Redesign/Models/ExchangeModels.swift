@@ -18,7 +18,6 @@ struct ExchangeModels {
         case increaseLimits
         case paymentMethod
         case swapCard
-        case from
         
         var header: AccessoryType? { return nil }
         var footer: AccessoryType? { return nil }
