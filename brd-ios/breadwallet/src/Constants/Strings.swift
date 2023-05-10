@@ -1710,6 +1710,8 @@ internal enum L10n {
     internal static let popupDescription = L10n.tr("Localizable", "PaymailAddress.popupDescription", fallback: "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles")
     /// Paymail Address
     internal static let title = L10n.tr("Localizable", "PaymailAddress.title", fallback: "Paymail Address")
+    /// Transfer BSV easier!
+    internal static let transferBsvTitle = L10n.tr("Localizable", "PaymailAddress.TransferBsvTitle", fallback: "Transfer BSV easier!")
     /// What is Paymail?
     internal static let whatIsPaymail = L10n.tr("Localizable", "PaymailAddress.whatIsPaymail", fallback: "What is Paymail?")
     /// Your Paymail address:

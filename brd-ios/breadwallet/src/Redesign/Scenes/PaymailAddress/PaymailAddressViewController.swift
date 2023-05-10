@@ -18,7 +18,7 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - Overrides
     
     override var sceneLeftAlignedTitle: String? {
-        return L10n.PaymailAddress.title
+        return UserDefaults.paymailFromAssets ? L10n.PaymailAddress.transferBsvTitle : L10n.PaymailAddress.title
     }
     
     override func setupVerticalButtons() {

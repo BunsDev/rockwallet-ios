@@ -178,6 +178,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         transactionsTableView?.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         if currency == Currencies.shared.bsv {
+            UserDefaults.paymailFromAssets = true
             paymailCallback?()
         }
     }

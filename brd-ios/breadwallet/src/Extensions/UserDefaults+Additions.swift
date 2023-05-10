@@ -55,6 +55,7 @@ private let kycSessionKey = "kycSessionKey"
 private let cachedErrors = "cachedErrors"
 private let userEmail = "registrationEmail"
 private let userPhoneNumber = "phoneNumber"
+private let paymailFromAssetsKey = "paymailFromAssets"
 
 typealias ResettableBooleanSetting = [String: Bool]
 typealias ResettableObjectSetting = String
@@ -196,6 +197,12 @@ extension UserDefaults {
         get { return defaults.bool(forKey: showFiatAmountsKey)
         }
         set { defaults.set(newValue, forKey: showFiatAmountsKey) }
+    }
+    
+    static var paymailFromAssets: Bool {
+        get { return defaults.bool(forKey: paymailFromAssetsKey)
+        }
+        set { defaults.set(newValue, forKey: paymailFromAssetsKey) }
     }
 
     static var pushToken: Data? {

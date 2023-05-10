@@ -589,6 +589,7 @@ class ModalPresenter: Subscriber {
             },
             // Paymail address
             MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) { [weak self] in
+                UserDefaults.paymailFromAssets = false
                 self?.paymailCallback?()
             },
             // Feedback
