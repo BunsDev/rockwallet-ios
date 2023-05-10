@@ -23,7 +23,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         var sections: [ExchangeModels.Section] = [
             .rateAndTimer,
-            .from,
+            .swapCard,
             .paymentMethod,
             .accountLimits,
             .increaseLimits
@@ -55,7 +55,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let sectionRows: [ExchangeModels.Section: [any Hashable]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
-            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
+            .swapCard: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
                 LabelViewModel.text("")
