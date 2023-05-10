@@ -30,7 +30,7 @@ enum SellModels {
         
         struct ResponseDisplay {
             var cryptoModel: MainSwapViewModel?
-            var cardModel: MainSwapViewModel?
+            var cardModel: CardSelectionViewModel?
         }
     }
     

@@ -23,6 +23,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                          Subscriber {
     typealias Models = ExchangeModels
     
+    override var sceneLeftAlignedTitle: String? {
+        return dataStore?.canUseAch == true ? nil : L10n.Button.buy
+    }
+    
     var plaidHandler: LinkKit.Handler?
     
     // MARK: - Overrides
@@ -41,10 +45,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         super.viewWillDisappear(animated)
         
         getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
-    override var sceneLeftAlignedTitle: String? {
-        return dataStore?.canUseAch == true ? nil : L10n.Button.buy
     }
     
     override func setupSubviews() {

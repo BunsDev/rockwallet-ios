@@ -13,7 +13,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     weak var viewController: BuyViewController?
     
-    var paymentModel: CardSelectionViewModel?
+    var achPaymentModel: CardSelectionViewModel?
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
     
     // MARK: - BuyActionResponses

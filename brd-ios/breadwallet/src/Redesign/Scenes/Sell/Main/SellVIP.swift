@@ -69,6 +69,7 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     var selected: PaymentCard? { get set }
     var cards: [PaymentCard] { get set }
     var paymentMethod: PaymentCard.PaymentType? { get set }
+    var availablePayments: [PaymentCard.PaymentType] { get set }
     
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }
@@ -77,6 +78,7 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     var keyStore: KeyStore? { get set }
     
     var fromAmount: Amount? { get set }
+    var values: SellModels.Amounts.ViewAction { get set }
     
     var secondFactorCode: String? { get set }
     var secondFactorBackup: String? { get set }

@@ -116,6 +116,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    
                     guard let selectedCurrency else { return }
                     vc?.dataStore?.toAmount = .zero(selectedCurrency)
                 }
@@ -137,6 +138,10 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.currencies = Store.state.currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    
+                    // TODO: This logic will need to be updated.
+                    guard let selectedCurrency = Currencies.shared.bsv else { return }
+                    vc?.dataStore?.fromAmount = .zero(selectedCurrency)
                 }
             }
         }

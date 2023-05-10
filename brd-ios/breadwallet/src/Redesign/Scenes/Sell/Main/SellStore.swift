@@ -25,6 +25,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var toCode: String { Constant.usdCurrencyCode }
     var fromBuy: Bool = false
     var showTimer: Bool = false
+    var values: SellModels.Amounts.ViewAction = .init()
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
                      to: toCode,
@@ -37,6 +38,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var selected: PaymentCard?
     var cards: [PaymentCard] = []
     var paymentMethod: PaymentCard.PaymentType? = .ach
+    var availablePayments: [PaymentCard.PaymentType] = []
     
     var currencies: [Currency] = []
     var supportedCurrencies: [SupportedCurrency]?
