@@ -86,19 +86,19 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFromCryptoAmount = { [weak self] amount in
-//                self?.interactor?.setAmount(viewAction: .init(from: amount))
+                self?.interactor?.setAmount(viewAction: .init(tokenValue: amount))
             }
             
             view.didChangeToCryptoAmount = { [weak self] amount in
-//                self?.interactor?.setAmount(viewAction: .init(to: amount))
+                self?.interactor?.setAmount(viewAction: .init(fiatValue: amount))
             }
             
             view.didFinish = { [weak self] _ in
-//                self?.interactor?.setAmount(viewAction: .init())
+                self?.interactor?.setAmount(viewAction: .init())
             }
             
-            view.didTapToAssetsSelection = { [weak self] in
-//                self?.interactor?.navigateAssetSelector(viewAction: .init())
+            view.didTapFromAssetsSelection = { [weak self] in
+                self?.interactor?.navigateAssetSelector(viewAction: .init())
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -217,7 +217,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayAssets(responseDisplay actionResponse: SellModels.Assets.ResponseDisplay) {
-        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<MainSwapView>,
               let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
