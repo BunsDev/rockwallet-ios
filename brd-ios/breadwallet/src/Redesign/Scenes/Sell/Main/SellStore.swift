@@ -12,16 +12,9 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     // MARK: - ExchangeRateDataStore
     
-    // WHAT
-    var quote: Quote? = .init(quoteId: 5,
-                              exchangeRate: 0.99,
-                              timestamp: Date().timeIntervalSince1970,
-                              minimumValue: 100,
-                              maximumValue: 200,
-                              minimumUsd: 100,
-                              maximumUsd: 200)
+    var quote: Quote?
     
-    var fromCode: String { currency?.code ?? "" }
+    var fromCode: String { "BSV" }
     var toCode: String { Constant.usdCurrencyCode }
     var fromBuy: Bool = false
     var showTimer: Bool = false
