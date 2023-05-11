@@ -49,16 +49,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                 exchangeRateViewModel
             ],
             .swapCard: [
-                MainSwapViewModel(from: .init(amount: .zero(Currencies.shared.btc!),
-                                              formattedTokenString: .init(string: ""),
-                                              title: .text("I have 10.12000473 USDC"),
-                                              selectionDisabled: false),
-                                  
-                                  to: .init(currencyCode: Constant.usdCurrencyCode,
-                                            currencyImage: Asset.us.image,
-                                            formattedTokenString: .init(string: ""),
-                                            title: .text("I receive"),
-                                            selectionDisabled: true))
+                MainSwapViewModel(from: .init(selectionDisabled: false),
+                                  to: .init(selectionDisabled: true))
             ],
             .paymentMethod: [
                 achPaymentModel ?? paymentMethodViewModel
