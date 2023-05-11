@@ -16,7 +16,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var fromCode: String { fromAmount?.currency.code ?? "" }
     var toCode: String { Constant.usdCurrencyCode }
-    var fromBuy: Bool = false
+    var fromBuyOrSell: Bool = true
     var showTimer: Bool = false
     var values: SellModels.Amounts.ViewAction = .init()
     var quoteRequestData: QuoteRequestData {

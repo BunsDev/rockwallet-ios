@@ -60,7 +60,7 @@ protocol SellResponseDisplays: AnyObject,
 protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
     var quote: Quote? { get set }
     
-    var fromBuy: Bool { get set }
+    var fromBuyOrSell: Bool { get set }
     var showTimer: Bool { get set }
     
     // MARK: - SellDataStore

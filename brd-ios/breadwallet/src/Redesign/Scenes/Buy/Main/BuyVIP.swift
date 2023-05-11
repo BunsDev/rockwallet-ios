@@ -59,7 +59,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchData
     var showTimer: Bool { get set }
     var from: Decimal? { get set }
     var to: Decimal? { get set }
-    var fromBuy: Bool { get set }
+    var fromBuyOrSell: Bool { get set }
     var values: BuyModels.Amounts.ViewAction { get set }
     var toAmount: Amount? { get set }
     var currencies: [Currency] { get set }
