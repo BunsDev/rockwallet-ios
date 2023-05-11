@@ -91,7 +91,7 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
         }        
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     private func fetchCards(completion: ((Result<[PaymentCard]?, Error>) -> Void)?) {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in

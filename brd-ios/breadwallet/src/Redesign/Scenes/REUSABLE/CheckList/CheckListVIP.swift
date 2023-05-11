@@ -24,7 +24,7 @@ protocol CheckListResponseDisplays: AnyObject, BaseResponseDisplays {
     func displayVerificationProgress(responseDisplay: CheckListModels.VerificationInProgress.ResponseDisplay)
 }
 
-protocol CheckListDataStore: BaseDataStore {
+protocol CheckListDataStore: BaseDataStore, FetchDataStore {
 }
 
 protocol CheckListDataPassing {

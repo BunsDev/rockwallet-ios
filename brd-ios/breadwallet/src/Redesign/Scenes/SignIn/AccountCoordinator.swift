@@ -130,5 +130,5 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

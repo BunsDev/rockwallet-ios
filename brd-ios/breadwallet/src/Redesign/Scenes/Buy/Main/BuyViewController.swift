@@ -21,7 +21,11 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                          BuyStore>,
                          BuyResponseDisplays,
                          Subscriber {
-    typealias Models = BuyModels
+    typealias Models = ExchangeModels
+    
+    override var sceneLeftAlignedTitle: String? {
+        return dataStore?.canUseAch == true ? nil : L10n.Button.buy
+    }
     
     var plaidHandler: LinkKit.Handler?
     
@@ -41,10 +45,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         super.viewWillDisappear(animated)
         
         getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
-    override var sceneLeftAlignedTitle: String? {
-        return dataStore?.canUseAch == true ? nil : L10n.Button.buy
     }
     
     override func setupSubviews() {
@@ -67,7 +67,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
             
-        case .from:
+        case .swapCard:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
             
         case .paymentMethod:
@@ -265,7 +265,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
               let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {

@@ -11,10 +11,9 @@
 import UIKit
 
 class AuthenticatorAppStore: NSObject, BaseDataStore, AuthenticatorAppDataStore {
-    var itemId: String?
-    
     // MARK: - AuthenticatorAppDataStore
+    
     var setTwoStepAppModel: SetTwoStepAuth?
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

@@ -83,5 +83,5 @@ class SignInInteractor: NSObject, Interactor, SignInViewActions {
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

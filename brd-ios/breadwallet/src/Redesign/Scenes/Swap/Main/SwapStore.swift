@@ -24,11 +24,10 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     }
     
     // MARK: - SwapDataStore
-    var itemId: String?
     
     var from: Amount?
     var to: Amount?
-    var fromBuy = false
+    var fromBuy: Bool = false
     
     var values: SwapModels.Amounts.ViewAction = .init()
     
@@ -41,8 +40,6 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var currencies: [Currency] = []
     var supportedCurrencies: [SupportedCurrency]?
-    
-    var defaultCurrencyCode: String?
     
     var baseCurrencies: [String] = []
     var termCurrencies: [String] = []

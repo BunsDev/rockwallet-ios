@@ -11,7 +11,5 @@ import UIKit
 class BackupCodesStore: NSObject, BaseDataStore, BackupCodesDataStore {
     // MARK: - BackupCodesDataStore
     
-    var itemId: String?
-
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

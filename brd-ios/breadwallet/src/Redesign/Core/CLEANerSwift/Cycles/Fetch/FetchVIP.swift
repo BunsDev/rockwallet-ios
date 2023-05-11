@@ -19,9 +19,7 @@ protocol FetchResponseDisplays: Hashable {
     func displayData(responseDisplay: FetchModels.Get.ResponseDisplay)
 }
 
-protocol FetchDataStore: Hashable {
-    var itemId: String? { get set }
-}
+protocol FetchDataStore: Hashable {}
 
 protocol FetchDataPassing: Hashable {
     var dataStore: (any FetchDataStore)? { get }

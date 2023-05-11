@@ -10,12 +10,13 @@ import UIKit
 
 class BaseInfoStore: NSObject, BaseDataStore, BaseInfoDataStore {
     
-    var itemId: String?
+    // MARK: - BaseInfoDataStore
+    
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
-    
-    // MARK: - BaseInfoDataStore
+    var id: String?
+
     var item: Any?
 
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

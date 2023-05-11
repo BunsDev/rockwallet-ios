@@ -196,7 +196,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         
         dataStore?.senderValidationResult = nil
         
-        guard let profile = UserManager.shared.profile, from.fiatValue < profile.swapAllowanceLifetime else {
+        guard let profile = UserManager.shared.profile, from.fiatValue <= profile.swapAllowanceLifetime else {
             setPresentAmountData(handleErrors: true)
             return
         }
@@ -291,7 +291,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                                       selectedDisabledAsset: viewAction.selectedDisabledAsset))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     private func generateSender() -> Sender? {
         guard let fromCurrency = dataStore?.from?.currency,

@@ -75,5 +75,5 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }
