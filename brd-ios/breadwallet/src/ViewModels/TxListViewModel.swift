@@ -102,7 +102,7 @@ struct TxListViewModel: TxViewModel, Hashable {
     
         case .complete, .manuallySettled, .confirmed:
             if let hybridTransaction, hybridTransaction == .instant {
-                return "Purchased with Instant Buy"
+                return L10n.Transaction.purchasedWithInstantBy
             }
             return isBuy ? L10n.Transaction.purchased : L10n.Transaction.purchasedWithAch
             

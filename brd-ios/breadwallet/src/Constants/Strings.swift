@@ -1710,6 +1710,8 @@ internal enum L10n {
     internal static let popupDescription = L10n.tr("Localizable", "PaymailAddress.popupDescription", fallback: "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles")
     /// Paymail Address
     internal static let title = L10n.tr("Localizable", "PaymailAddress.title", fallback: "Paymail Address")
+    /// Transfer BSV easier!
+    internal static let transferBsvTitle = L10n.tr("Localizable", "PaymailAddress.TransferBsvTitle", fallback: "Transfer BSV easier!")
     /// What is Paymail?
     internal static let whatIsPaymail = L10n.tr("Localizable", "PaymailAddress.whatIsPaymail", fallback: "What is Paymail?")
     /// Your Paymail address:
@@ -2338,6 +2340,8 @@ internal enum L10n {
     internal static let payIdRetrievalError = L10n.tr("Localizable", "Send.payId_retrievalError", fallback: "There was an error retrieving the address for this PayString. Please try again later.")
     /// PayID label
     internal static let payIdToLabel = L10n.tr("Localizable", "Send.payId_toLabel", fallback: "PayString")
+    /// Enter wallet address or Paymail
+    internal static let placeholderText = L10n.tr("Localizable", "Send.placeholderText", fallback: "Enter wallet address or Paymail")
     /// Could not publish transaction alert title
     internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Your transaction request couldn’t be completed. Please try again.")
     /// Could not load remote request error message
@@ -2860,6 +2864,8 @@ internal enum L10n {
     internal static let purchased = L10n.tr("Localizable", "Transaction.Purchased", fallback: "Purchased")
     /// Purchased with ACH
     internal static let purchasedWithAch = L10n.tr("Localizable", "Transaction.PurchasedWithAch", fallback: "Purchased with ACH")
+    /// Purchased with Instant Buy
+    internal static let purchasedWithInstantBy = L10n.tr("Localizable", "Transaction.purchasedWithInstantBy", fallback: "Purchased with Instant Buy")
     /// Purchase failed label in transaction view
     internal static let purchaseFailed = L10n.tr("Localizable", "Transaction.PurchaseFailed", fallback: "Purchase failed")
     /// Purchase with ACH failed
