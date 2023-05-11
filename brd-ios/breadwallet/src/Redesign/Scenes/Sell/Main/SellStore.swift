@@ -14,7 +14,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var quote: Quote?
     
-    var fromCode: String { "BSV" }
+    var fromCode: String { fromAmount?.currency.code ?? "" }
     var toCode: String { Constant.usdCurrencyCode }
     var fromBuy: Bool = false
     var showTimer: Bool = false
@@ -36,7 +36,6 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var currencies: [Currency] = []
     var supportedCurrencies: [SupportedCurrency]?
     
-    var currency: Currency?
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var limits: NSMutableAttributedString? {

@@ -73,7 +73,6 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }
-    var currency: Currency? { get set }
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     
