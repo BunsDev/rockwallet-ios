@@ -27,6 +27,7 @@ struct ExchangeDetailsResponseData: ModelResponse {
     var statusDetails: String?
     var source: SourceDestination?
     var destination: SourceDestination?
+    var instantDestination: SourceDestination?
     var rate: Decimal?
     var timestamp: Int?
     var type: String?
@@ -49,6 +50,7 @@ struct SwapDetail: Model, Hashable {
     var statusDetails: String
     var source: SourceDestination
     var destination: SourceDestination
+    var instantDestination: SourceDestination
     var rate: Decimal
     var timestamp: Int
     var type: TransactionType
@@ -60,6 +62,8 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
         let sourceCard = response?.source?.paymentInstrument
         let destination = response?.destination
         let destinationCard = response?.destination?.paymentInstrument
+        let instantDestination = response?.instantDestination
+        let instantDestinationCard = instantDestination?.paymentInstrument
         let sourceData = SwapDetail.SourceDestination(currency: source?.currency?.uppercased() ?? "",
                                                       currencyAmount: source?.currencyAmount ?? 0,
                                                       usdAmount: source?.usdAmount ?? 0,
@@ -94,12 +98,31 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                                                                                           cardType: PaymentCard.CardType(rawValue: sourceCard?.cardType ?? "") ?? .none),
                                                            feeRate: source?.feeRate,
                                                            feeFixedRate: source?.feeFixedRate)
+        let instantDestinationData = SwapDetail
+            .SourceDestination(currency: instantDestination?.currency?.uppercased() ?? "",
+                               currencyAmount: instantDestination?.currencyAmount ?? 0,
+                               usdAmount: instantDestination?.usdAmount ?? 0,
+                               transactionId: instantDestination?.transactionId,
+                               usdFee: instantDestination?.usdFee ?? 0,
+                               paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: sourceCard?.type ?? "") ?? .card,
+                                                              id: instantDestinationCard?.id ?? "",
+                                                              fingerprint: instantDestinationCard?.fingerprint ?? "",
+                                                              expiryMonth: instantDestinationCard?.expiryMonth ?? 0,
+                                                              expiryYear: instantDestinationCard?.expiryYear ?? 0,
+                                                              scheme: PaymentCard.Scheme(rawValue: instantDestinationCard?.scheme ?? "") ?? .none,
+                                                              last4: instantDestinationCard?.last4 ?? "",
+                                                              accountName: sourceCard?.accountName ?? "",
+                                                              status: PaymentCard.Status(rawValue: sourceCard?.status ?? "") ?? .none,
+                                                              cardType: PaymentCard.CardType(rawValue: sourceCard?.cardType ?? "") ?? .none),
+                               feeRate: source?.feeRate,
+                               feeFixedRate: source?.feeFixedRate)
 
         return SwapDetail(orderId: Int(response?.orderId ?? 0),
                           status: .init(string: response?.status) ?? .failed,
                           statusDetails: response?.statusDetails ?? "",
                           source: sourceData,
                           destination: destinationData,
+                          instantDestination: instantDestinationData,
                           rate: response?.rate ?? 0,
                           timestamp: Int(response?.timestamp ?? 0),
                           type: TransactionType(rawValue: response?.type ?? "") ?? .base)
