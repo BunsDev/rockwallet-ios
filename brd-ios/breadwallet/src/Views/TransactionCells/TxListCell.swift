@@ -49,7 +49,7 @@ class TxListCell: UITableViewCell, Identifiable {
         amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
         if let hybridTransaction = viewModel.hybridTransaction {
             let hybridPart: Int = hybridTransaction.rawValue
-            titleLabel.text = viewModel.shortTimestamp + " - \(hybridPart)/2"
+            titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(hybridPart.description)
         } else {
             titleLabel.text = viewModel.shortTimestamp
         }

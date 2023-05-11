@@ -2844,6 +2844,10 @@ internal enum L10n {
     internal static func fee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Transaction.fee", p1, fallback: "(%s fee)")
     }
+    ///  - %s/2
+    internal static func hybridPart(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Transaction.HybridPart", p1, fallback: " - %s/2")
+    }
     /// Invalid transaction
     internal static let invalid = L10n.tr("Localizable", "Transaction.invalid", fallback: "INVALID")
     /// Timestamp label for event that just happened
