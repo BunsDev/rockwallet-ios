@@ -78,9 +78,6 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     
     var fromAmount: Amount? { get set }
     var values: SellModels.Amounts.ViewAction { get set }
-    
-    var secondFactorCode: String? { get set }
-    var secondFactorBackup: String? { get set }
 }
 
 protocol SellDataPassing {

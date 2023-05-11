@@ -70,9 +70,6 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
-    
-    var secondFactorCode: String? { get set }
-    var secondFactorBackup: String? { get set }
 }
 
 protocol SwapDataPassing {
