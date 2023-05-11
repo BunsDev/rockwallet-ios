@@ -47,7 +47,12 @@ class TxListCell: UITableViewCell, Identifiable {
         iconImageView.backgroundColor = status.backgroundColor
         
         amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
-        titleLabel.text = viewModel.shortTimestamp
+        if let hybridTransaction = viewModel.hybridTransaction {
+            let hybridPart: Int = hybridTransaction.rawValue
+            titleLabel.text = viewModel.shortTimestamp + " - \(hybridPart)/2"
+        } else {
+            titleLabel.text = viewModel.shortTimestamp
+        }
         descriptionLabel.text = viewModel.shortDescription(for: currency)
         
         layoutSubviews()

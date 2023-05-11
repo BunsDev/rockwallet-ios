@@ -65,6 +65,7 @@ extension TxViewModel {
         }
         return .base
     }
+    
     var direction: TransferDirection {
         if let tx = tx {
             return tx.direction

@@ -292,7 +292,15 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     
     private func transactionCell(_ indexPath: IndexPath) -> UITableViewCell {
         guard let cell: TxListCell = tableView.dequeueReusableCell(for: indexPath),
-              let viewModel = dataSource?.itemIdentifier(for: indexPath) as? TxListViewModel else { return UITableViewCell() }
+              var viewModel = dataSource?.itemIdentifier(for: indexPath) as? TxListViewModel else { return UITableViewCell() }
+        
+        if let transaction = remainingExchanges.first(where: { $0.orderId == viewModel.tx?.swapOrderId }) {
+            if let transactionId = transaction.instantDestination.transactionId, transactionId == viewModel.transactionId {
+                viewModel.hybridTransaction = .instant
+            } else if let transactionId = transaction.destination.transactionId, transactionId == viewModel.transactionId {
+                viewModel.hybridTransaction = .regular
+            }
+        }
         
         cell.setTransaction(viewModel,
                             currency: currency,
