@@ -26,5 +26,5 @@ class ItemSelectionCoordinator: ExchangeCoordinator, ItemSelectionRoutes {
         navigationController.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

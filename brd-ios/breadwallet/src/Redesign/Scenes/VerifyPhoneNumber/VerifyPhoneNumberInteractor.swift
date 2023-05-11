@@ -63,5 +63,5 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

@@ -13,7 +13,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     weak var viewController: BuyViewController?
     
-    var paymentModel: CardSelectionViewModel?
+    var achPaymentModel: CardSelectionViewModel?
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
     
     // MARK: - BuyActionResponses
@@ -21,9 +21,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item else { return }
         
-        var sections: [Models.Section] = [
+        var sections: [ExchangeModels.Section] = [
             .rateAndTimer,
-            .from,
+            .swapCard,
             .paymentMethod,
             .accountLimits,
             .increaseLimits
@@ -52,10 +52,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             paymentMethodViewModel = CardSelectionViewModel()
         }
         
-        let sectionRows: [Models.Section: [any Hashable]] =  [
+        let sectionRows: [ExchangeModels.Section: [any Hashable]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
-            .from: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
+            .swapCard: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
             .paymentMethod: [paymentMethodViewModel],
             .accountLimits: [
                 LabelViewModel.text("")

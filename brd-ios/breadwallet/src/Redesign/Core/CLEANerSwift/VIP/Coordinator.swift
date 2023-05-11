@@ -116,6 +116,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.paymentMethod = type
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    
                     guard let selectedCurrency else { return }
                     vc?.dataStore?.toAmount = .zero(selectedCurrency)
                 }
@@ -123,11 +124,10 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showSell(for currency: Currency, coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showSell(coreSystem: CoreSystem?, keyStore: KeyStore?) {
         decideFlow { [weak self] showScene in
             // TODO: This logic will need to be updated.
-            guard showScene,
-                  let profile = UserManager.shared.profile else {
+            guard showScene else {
                 self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
                 
                 return
@@ -135,9 +135,13 @@ class BaseCoordinator: NSObject, Coordinatable {
             
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
-                    vc?.dataStore?.currency = currency
+                    vc?.dataStore?.currencies = Store.state.currencies
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
+                    
+                    // TODO: This logic will need to be updated.
+                    guard let selectedCurrency = Currencies.shared.bsv else { return }
+                    vc?.dataStore?.fromAmount = .zero(selectedCurrency)
                 }
             }
         }
@@ -177,17 +181,21 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showPaymailAddress() {
-        openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
-            let paymail = UserManager.shared.profile?.paymail
-            vc?.dataStore?.screenType = paymail == nil ? .paymailNotSetup : .paymailSetup
-            vc?.dataStore?.paymailAddress = "\(paymail ?? "")\(Constant.paymailDomain)"
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            self?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
+                let paymail = UserManager.shared.profile?.paymail
+                vc?.dataStore?.screenType = paymail == nil ? .paymailNotSetup : .paymailSetup
+                vc?.dataStore?.paymailAddress = "\(paymail ?? "")\(Constant.paymailDomain)"
+            }
         }
     }
     
     func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
         open(scene: Scenes.ExchangeDetails) { vc in
             vc.navigationItem.hidesBackButton = true
-            vc.dataStore?.itemId = exchangeId
+            vc.dataStore?.exchangeId = exchangeId
             vc.dataStore?.transactionType = type
         }
     }
@@ -508,7 +516,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.isModalDismissable = isModalDismissable
             vc.navigationItem.hidesBackButton = hidesBackButton
             vc.navigationItem.rightBarButtonItem = nil
-            vc.dataStore?.itemId = itemId
+            vc.dataStore?.id = itemId
             vc.transactionType = transactionType ?? .base
         }
     }
@@ -577,7 +585,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 vc.coordinator?.popToRoot()
                 
             default:
-                vc.coordinator?.showExchangeDetails(with: vc.dataStore?.itemId,
+                vc.coordinator?.showExchangeDetails(with: vc.dataStore?.id,
                                                     type: vc.transactionType)
             }
         }
@@ -590,7 +598,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                                         keyStore: vc.dataStore?.keyStore)
                 
             default:
-                vc.coordinator?.showExchangeDetails(with: vc.dataStore?.itemId,
+                vc.coordinator?.showExchangeDetails(with: vc.dataStore?.id,
                                                     type: vc.transactionType)
             }
         }

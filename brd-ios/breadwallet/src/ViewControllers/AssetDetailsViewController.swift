@@ -386,7 +386,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         default:
             let vc = ExchangeDetailsViewController()
             vc.isModalDismissable = false
-            vc.dataStore?.itemId = String(transaction.tx?.swapOrderId ?? transaction.swap?.orderId ?? -1)
+            vc.dataStore?.exchangeId = String(transaction.tx?.swapOrderId ?? transaction.swap?.orderId ?? -1)
             vc.dataStore?.transactionType = transaction.transactionType
             
             LoadingView.show()

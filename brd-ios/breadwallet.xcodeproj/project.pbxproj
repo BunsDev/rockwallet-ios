@@ -2861,8 +2861,8 @@
 		7E8F7E4B293F6B190058019B /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				7E8F7E3E293F6AE50058019B /* SellStore.swift */,
 				7E8F7E3F293F6AE50058019B /* SellPresenter.swift */,
+				7E8F7E3E293F6AE50058019B /* SellStore.swift */,
 				7E8F7E40293F6AE50058019B /* SellModels.swift */,
 				7E8F7E41293F6AE50058019B /* SellVIP.swift */,
 				7E8F7E42293F6AE50058019B /* SellViewController.swift */,

@@ -11,7 +11,6 @@ import UIKit
 class ItemSelectionStore: NSObject, BaseDataStore, ItemSelectionDataStore {
     // MARK: - ItemSelectionDataStore
     
-    var itemId: String?
     var items: [any ItemSelectable]?
     var instrumentID: String?
     
@@ -21,5 +20,5 @@ class ItemSelectionStore: NSObject, BaseDataStore, ItemSelectionDataStore {
     var isAddingEnabled: Bool? = false
     var isSelectingEnabled: Bool? = true
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

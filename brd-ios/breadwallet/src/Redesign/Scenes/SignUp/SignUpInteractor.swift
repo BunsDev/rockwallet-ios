@@ -107,5 +107,5 @@ class SignUpInteractor: NSObject, Interactor, SignUpViewActions {
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

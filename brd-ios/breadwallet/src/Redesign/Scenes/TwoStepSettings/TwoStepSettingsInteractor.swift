@@ -48,5 +48,5 @@ class TwoStepSettingsInteractor: NSObject, Interactor, TwoStepSettingsViewAction
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

@@ -66,7 +66,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
     func showSwapInfo(from: String, to: String, exchangeId: String) {
         open(scene: Scenes.SwapInfo) { vc in
             vc.navigationItem.hidesBackButton = true
-            vc.dataStore?.itemId = exchangeId
+            vc.dataStore?.id = exchangeId
             vc.dataStore?.item = (from: from, to: to)
             
             vc.didTapMainButton = {
@@ -74,7 +74,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             }
             
             vc.didTapSecondayButton = {
-                (vc.coordinator as? ExchangeCoordinator)?.showExchangeDetails(with: vc.dataStore?.itemId, type: .swap)
+                (vc.coordinator as? ExchangeCoordinator)?.showExchangeDetails(with: vc.dataStore?.id, type: .swap)
             }
         }
     }

@@ -11,13 +11,11 @@ import UIKit
 class RegistrationConfirmationStore: NSObject, BaseDataStore, RegistrationConfirmationDataStore {
     // MARK: - RegistrationConfirmationDataStore
     
-    var itemId: String?
-    
     var confirmationType: RegistrationConfirmationModels.ConfirmationType = .account
     var registrationRequestData: RegistrationRequestData?
     var setPasswordRequestData: SetPasswordRequestData?
     var setTwoStepAppModel: SetTwoStepAuth?
     var code: String?
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

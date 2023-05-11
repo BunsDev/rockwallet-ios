@@ -445,15 +445,13 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapSell = { [weak self] in
-            guard let self = self,
-                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else {
+            guard let self = self else {
                 return
             }
             
             self.homeScreenViewController?.isInExchangeFlow = true
             
-            self.coordinator?.showSell(for: token,
-                                       coreSystem: self.coreSystem,
+            self.coordinator?.showSell(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         

@@ -3004,6 +3004,8 @@
 /* (b600 fee) */
 "Transaction.fee" = "(cuota de %s )";
 
+"Transaction.HybridPart" = " - %s/2";
+
 /* Invalid transaction */
 "Transaction.invalid" = "INVÁLIDO";
 
@@ -3029,6 +3031,8 @@
 "Transaction.Purchased" = "Comprado";
 
 "Transaction.PurchasedWithAch" = "Comprado con ACH";
+
+"Transaction.purchasedWithInstantBy" = "Purchased with Instant Buy";
 
 /* Purchase failed label in transaction view */
 "Transaction.PurchaseFailed" = "Error de compra";

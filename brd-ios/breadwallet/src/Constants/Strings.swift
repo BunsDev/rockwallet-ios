@@ -2844,6 +2844,10 @@ internal enum L10n {
     internal static func fee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Transaction.fee", p1, fallback: "(%s fee)")
     }
+    ///  - %s/2
+    internal static func hybridPart(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "Transaction.HybridPart", p1, fallback: " - %s/2")
+    }
     /// Invalid transaction
     internal static let invalid = L10n.tr("Localizable", "Transaction.invalid", fallback: "INVALID")
     /// Timestamp label for event that just happened
@@ -2864,6 +2868,8 @@ internal enum L10n {
     internal static let purchased = L10n.tr("Localizable", "Transaction.Purchased", fallback: "Purchased")
     /// Purchased with ACH
     internal static let purchasedWithAch = L10n.tr("Localizable", "Transaction.PurchasedWithAch", fallback: "Purchased with ACH")
+    /// Purchased with Instant Buy
+    internal static let purchasedWithInstantBy = L10n.tr("Localizable", "Transaction.purchasedWithInstantBy", fallback: "Purchased with Instant Buy")
     /// Purchase failed label in transaction view
     internal static let purchaseFailed = L10n.tr("Localizable", "Transaction.PurchaseFailed", fallback: "Purchase failed")
     /// Purchase with ACH failed

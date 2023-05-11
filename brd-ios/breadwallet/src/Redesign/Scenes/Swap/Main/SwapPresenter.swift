@@ -37,15 +37,15 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             .accountLimits
         ]
         
-        exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
-        mainSwapViewModel = MainSwapViewModel(from: .init(amount: .zero(from),
-                                                                  fee: .zero(from),
-                                                                  formattedTokenFeeString: nil,
-                                                                  title: .text(String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: 0) ?? "", from.code)))),
-                                                      to: .init(amount: .zero(to),
-                                                                fee: .zero(to),
-                                                                formattedTokenFeeString: nil,
-                                                                title: .text(L10n.Buy.iWant)))
+        exchangeRateViewModel = .init(timer: TimerViewModel())
+        mainSwapViewModel = .init(from: .init(amount: .zero(from),
+                                              fee: .zero(from),
+                                              formattedTokenFeeString: nil,
+                                              title: .text(String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: 0) ?? "", from.code)))),
+                                  to: .init(amount: .zero(to),
+                                            fee: .zero(to),
+                                            formattedTokenFeeString: nil,
+                                            title: .text(L10n.Buy.iWant)))
         
         let sectionRows: [ExchangeModels.Section: [any Hashable]] = [
             .rateAndTimer: [

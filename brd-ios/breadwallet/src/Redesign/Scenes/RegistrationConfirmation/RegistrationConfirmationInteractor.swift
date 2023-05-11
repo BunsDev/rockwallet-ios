@@ -320,7 +320,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     private func presentConfirm() {
         UserManager.shared.refresh { [weak self] _ in
