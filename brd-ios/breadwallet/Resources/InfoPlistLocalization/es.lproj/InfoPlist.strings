@@ -804,7 +804,11 @@
 
 "Buy.Ach.Instant.Fee.Title" = "Instant Buy fee";
 
+"Buy.Ach.Instant.HybridConfirmationDrawer" = "With Instant buy, %s (%s) will show in your in your account instantly. The remaining %s (%s) will arrive\n in 3-5 days.";
+
 "Buy.Ach.Instant.InfoButtonTitle" = "\"Receive up to $500.00 instantly\"";
+
+"Buy.Ach.Instant.OrderPreview.HybridNotice" = "With Instant Buy %s will be settled immediately. Remaining %s will settle in 3-5 days.";
 
 "Buy.Ach.Instant.OrderPreview.Notice" = "With Instant Buy, %s will be settled immediately.";
 
@@ -3004,7 +3008,7 @@
 /* (b600 fee) */
 "Transaction.fee" = "(cuota de %s )";
 
-"Transaction.HybridPart" = " - %s/2";
+"Transaction.HybridPart" = "- %s/2";
 
 /* Invalid transaction */
 "Transaction.invalid" = "INVÁLIDO";
