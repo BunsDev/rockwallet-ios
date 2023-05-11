@@ -48,5 +48,5 @@ class CheckListInteractor: NSObject, Interactor, CheckListViewActions {
         }
     }
 
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

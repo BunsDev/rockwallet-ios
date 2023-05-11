@@ -103,7 +103,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         presenter?.presentToggleTickbox(actionResponse: .init(value: viewAction.value))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     private func submitBuy() {
         guard let currency = dataStore?.to?.currency,

@@ -12,7 +12,6 @@ import UIKit
 import WalletKit
 
 class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
-    var itemId: String?
     
     // MARK: - OrderPreviewDataStore
     var type: PreviewType?
@@ -50,7 +49,7 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     
     var achDeliveryType: OrderPreviewModels.AchDeliveryType? = .instant
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
 }

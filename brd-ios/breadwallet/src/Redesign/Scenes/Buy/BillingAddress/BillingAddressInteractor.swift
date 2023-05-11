@@ -149,5 +149,5 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

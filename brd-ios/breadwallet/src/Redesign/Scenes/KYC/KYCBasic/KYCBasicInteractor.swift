@@ -74,7 +74,7 @@ class KYCBasicInteractor: NSObject, Interactor, KYCBasicViewActions {
         presenter?.presentSubmit(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     func getBirthDateFormatter() -> DateFormatter {
         let dateFormatter = DateFormatter()

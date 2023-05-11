@@ -70,5 +70,5 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         return xpub
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

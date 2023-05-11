@@ -17,10 +17,7 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
     // MARK: - ExchangeDetailsViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard let itemId = dataStore?.itemId,
-              !itemId.isEmpty else {
-            return
-        }
+        guard let itemId = dataStore?.exchangeId, !itemId.isEmpty else { return }
         
         let data = ExchangeDetailsRequestData(exchangeId: itemId)
         ExchangeDetailsWorker().execute(requestData: data) { [weak self] result in
@@ -40,5 +37,5 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
         presenter?.presentInfoPopup(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

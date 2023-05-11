@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum HybridTransaction: Int {
+    case instant = 1
+    case regular = 2
+}
+
 /// View model of a transaction in list view
 struct TxListViewModel: TxViewModel, Hashable {
     
@@ -15,6 +20,8 @@ struct TxListViewModel: TxViewModel, Hashable {
     
     var tx: Transaction?
     var swap: SwapDetail?
+    
+    var hybridTransaction: HybridTransaction?
 
     func amount(showFiatAmounts: Bool, rate: Rate) -> String {
         if let tx = tx {
@@ -86,6 +93,9 @@ struct TxListViewModel: TxViewModel, Hashable {
             return isBuy ? L10n.Transaction.purchaseFailed : L10n.Transaction.purchaseFailedWithAch
     
         case .complete, .manuallySettled, .confirmed:
+            if let hybridTransaction, hybridTransaction == .instant {
+                return L10n.Transaction.purchasedWithInstantBy
+            }
             return isBuy ? L10n.Transaction.purchased : L10n.Transaction.purchasedWithAch
             
         default:

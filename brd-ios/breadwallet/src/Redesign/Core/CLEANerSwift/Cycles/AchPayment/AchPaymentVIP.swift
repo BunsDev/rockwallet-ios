@@ -13,16 +13,17 @@ import LinkKit
 
 protocol AchViewActions {
     func getPayments(viewAction: AchPaymentModels.Get.ViewAction)
-    // implement if needed in adaptor class
+    // Implement if needed in adaptor class
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction)
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction)
-    //    // TODO: maybe reuse link?
-    //    func relink(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
+    
+    //  TODO: maybe reuse link?
+    //  func relink(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
 }
 
 protocol AchActionResponses: AnyObject {
-    var paymentModel: CardSelectionViewModel? { get set }
+    var achPaymentModel: CardSelectionViewModel? { get set }
     
     func presentAch(actionResponse: AchPaymentModels.Get.ActionResponse)
     func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse)
@@ -141,24 +142,24 @@ extension Presenter where Self: AchActionResponses,
                           Self.ResponseDisplays: AchResponseDisplays {
     func presentAch(actionResponse: AchPaymentModels.Get.ActionResponse) {
         guard let item = actionResponse.item else {
-            paymentModel = .init(title: .text(L10n.Sell.achWithdrawal),
-                                 subtitle: .text(L10n.Buy.linkBankAccount),
-                                 userInteractionEnabled: true)
+            achPaymentModel = .init(title: .text(L10n.Sell.achWithdrawal),
+                                    subtitle: .text(L10n.Buy.linkBankAccount),
+                                    userInteractionEnabled: true)
             return
         }
         
         switch item.status {
         case .statusOk:
-            paymentModel = .init(title: .text(L10n.Sell.widrawToBank),
-                                 subtitle: nil,
-                                 logo: .image(Asset.bank.image),
-                                 cardNumber: .text(item.displayName),
-                                 userInteractionEnabled: false)
+            achPaymentModel = .init(title: .text(L10n.Sell.widrawToBank),
+                                    subtitle: nil,
+                                    logo: .image(Asset.bank.image),
+                                    cardNumber: .text(item.displayName),
+                                    userInteractionEnabled: false)
             
         default:
-            paymentModel = .init(title: .text(L10n.Sell.achWithdrawal),
-                                 subtitle: .text(L10n.Buy.relinkBankAccount),
-                                 userInteractionEnabled: true)
+            achPaymentModel = .init(title: .text(L10n.Sell.achWithdrawal),
+                                    subtitle: .text(L10n.Buy.relinkBankAccount),
+                                    userInteractionEnabled: true)
         }
     }
     

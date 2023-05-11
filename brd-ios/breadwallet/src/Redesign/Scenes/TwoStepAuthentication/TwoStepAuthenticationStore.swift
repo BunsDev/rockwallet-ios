@@ -13,9 +13,7 @@ import UIKit
 class TwoStepAuthenticationStore: NSObject, BaseDataStore, TwoStepAuthenticationDataStore {
     // MARK: - TwoStepAuthenticationDataStore
     
-    var itemId: String?
-    
     var keyStore: KeyStore?
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

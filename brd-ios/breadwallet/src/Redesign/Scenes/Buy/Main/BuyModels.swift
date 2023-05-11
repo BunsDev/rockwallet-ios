@@ -9,22 +9,9 @@
 import UIKit
 
 enum BuyModels {
-    
     struct Item: Hashable {
         var type: PaymentCard.PaymentType?
         var achEnabled: Bool?
-    }
-    
-    enum Section: Sectionable {
-        case segment
-        case rateAndTimer
-        case accountLimits
-        case from
-        case paymentMethod
-        case increaseLimits
-        
-        var header: AccessoryType? { return nil }
-        var footer: AccessoryType? { return nil }
     }
     
     struct Assets {
