@@ -188,7 +188,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 let paymail = UserManager.shared.profile?.paymail
                 vc?.dataStore?.screenType = paymail == nil ? .paymailNotSetup : .paymailSetup
                 vc?.dataStore?.paymailAddress = "\(paymail ?? "")\(Constant.paymailDomain)"
-                vc?.isPaymailFromAssets = isPaymailFromAssets
+                vc?.dataStore?.isPaymailFromAssets = isPaymailFromAssets
             }
         }
     }

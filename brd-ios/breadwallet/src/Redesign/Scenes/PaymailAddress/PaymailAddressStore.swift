@@ -13,6 +13,7 @@ class PaymailAddressStore: NSObject, BaseDataStore, PaymailAddressDataStore {
     
     var screenType: PaymailAddressModels.ScreenType?
     var paymailAddress: String?
+    var isPaymailFromAssets: Bool = false
 
     // MARK: - Additional helpers
 }

@@ -18,6 +18,7 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - Overrides
     
     override var sceneLeftAlignedTitle: String? {
+        let isPaymailFromAssets = dataStore?.isPaymailFromAssets ?? false
         return isPaymailFromAssets ? L10n.PaymailAddress.transferBsvTitle : L10n.PaymailAddress.title
     }
     
