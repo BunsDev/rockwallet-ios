@@ -177,10 +177,14 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showPaymailAddress() {
-        openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
-            let paymail = UserManager.shared.profile?.paymail
-            vc?.dataStore?.screenType = paymail == nil ? .paymailNotSetup : .paymailSetup
-            vc?.dataStore?.paymailAddress = "\(paymail ?? "")\(Constant.paymailDomain)"
+        decideFlow { [weak self] showScene in
+            guard showScene else { return }
+            
+            self?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.PaymailAddress) { vc in
+                let paymail = UserManager.shared.profile?.paymail
+                vc?.dataStore?.screenType = paymail == nil ? .paymailNotSetup : .paymailSetup
+                vc?.dataStore?.paymailAddress = "\(paymail ?? "")\(Constant.paymailDomain)"
+            }
         }
     }
     
