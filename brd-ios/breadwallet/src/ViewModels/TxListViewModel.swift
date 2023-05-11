@@ -21,14 +21,6 @@ struct TxListViewModel: TxViewModel, Hashable {
     var tx: Transaction?
     var swap: SwapDetail?
     
-    var transactionId: String {
-        guard let tx = tx,
-              let currency = currency
-        else { return "" }
-        
-        return currency.isEthereumCompatible ? tx.hash : tx.hash.removing(prefix: "0x")
-    }
-    
     var hybridTransaction: HybridTransaction?
 
     func amount(showFiatAmounts: Bool, rate: Rate) -> String {

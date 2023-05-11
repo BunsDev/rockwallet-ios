@@ -162,7 +162,7 @@ extension TxDetailDataSource: UITableViewDataSource {
             
         case .transactionId:
             guard let addressCell = cell as? TxAddressCell else { return cell }
-            addressCell.set(address: viewModel.transactionHash)
+            addressCell.set(address: viewModel.transactionId)
             
         case .confirmations:
             guard let labelCell = cell as? TxLabelCell else { return cell }

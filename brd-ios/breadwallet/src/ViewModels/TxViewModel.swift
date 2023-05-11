@@ -48,6 +48,14 @@ extension TxViewModel {
         return Store.state.currencies.first(where: { $0.code.lowercased() == destinationCurrency })
     }
     
+    var transactionId: String {
+        guard let tx = tx,
+              let currency = currency
+        else { return "" }
+        
+        return currency.isEthereumCompatible ? tx.hash : tx.hash.removing(prefix: "0x")
+    }
+    
     var status: TransactionStatus {
         if let tx = tx {
             return tx.status
