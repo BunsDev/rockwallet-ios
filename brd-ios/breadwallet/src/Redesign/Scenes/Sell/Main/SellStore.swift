@@ -12,18 +12,11 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     // MARK: - ExchangeRateDataStore
     
-    // WHAT
-    var quote: Quote? = .init(quoteId: 5,
-                              exchangeRate: 0.99,
-                              timestamp: Date().timeIntervalSince1970,
-                              minimumValue: 100,
-                              maximumValue: 200,
-                              minimumUsd: 100,
-                              maximumUsd: 200)
+    var quote: Quote?
     
-    var fromCode: String { currency?.code ?? "" }
+    var fromCode: String { fromAmount?.currency.code ?? "" }
     var toCode: String { Constant.usdCurrencyCode }
-    var fromBuy: Bool = false
+    var fromBuyOrSell: Bool = true
     var showTimer: Bool = false
     var values: SellModels.Amounts.ViewAction = .init()
     var quoteRequestData: QuoteRequestData {
@@ -43,7 +36,6 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var currencies: [Currency] = []
     var supportedCurrencies: [SupportedCurrency]?
     
-    var currency: Currency?
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var limits: NSMutableAttributedString? {
@@ -65,7 +57,12 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     // MARK: - Additional helpers
     
     var isFormValid: Bool {
-        // TODO: remove after BE is ready
+        guard let amount = fromAmount,
+              amount.tokenValue > 0,
+              selected != nil
+        else {
+            return false
+        }
         return true
     }
 }

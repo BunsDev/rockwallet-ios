@@ -32,11 +32,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         
-        let selectedPaymentType = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == item.type })
-        
-        let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
-                                                     segments: [.init(image: nil, title: L10n.Buy.buyWithCard),
-                                                                .init(image: nil, title: L10n.Buy.buyWithAch)])
         let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
         limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
@@ -88,12 +83,14 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         cryptoModel = MainSwapViewModel(from: .init(amount: actionResponse.amount,
                                                     formattedTokenString: fromFormattedTokenString,
-                                                    title: .text("I have 10.12000473 USDC")),
+                                                    title: .text("I have 10.12000473 USDC"),
+                                                    selectionDisabled: false),
                                         
                                         to: .init(currencyCode: Constant.usdCurrencyCode,
                                                   currencyImage: Asset.us.image,
                                                   formattedTokenString: toFormattedFiatString,
-                                                  title: .text("I receive")))
+                                                  title: .text("I receive"),
+                                                  selectionDisabled: true))
         
         switch actionResponse.type {
         case .ach:
@@ -138,41 +135,40 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
-//        handleError(actionResponse: actionResponse)
+        handleError(actionResponse: actionResponse)
     }
     
     private func handleError(actionResponse: SellModels.Assets.ActionResponse) {
-//        let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
-//        let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
-//        let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
-//
-//        let profile = UserManager.shared.profile
-//        let lifetimeLimit = profile?.buyAllowanceLifetime ?? 0
-//
-//        switch fiat {
-//        case _ where fiat <= 0:
-//            // Fiat value is below 0
-//            presentError(actionResponse: .init(error: nil))
-//
-//        case _ where fiat < minimumAmount:
-//            // Value below minimum Fiat
-//            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
-//
-//        case _ where fiat > lifetimeLimit,
-//            _ where minimumAmount > lifetimeLimit:
-//            // Over lifetime limit
-//            let limit = profile?.buyAllowanceLifetime ?? 0
-//            presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
-//
-//        case _ where fiat > maximumAmount,
-//            _ where minimumAmount > maximumAmount:
-//            // Over exchange limit
-//            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
-//
-//        default:
-//            // Remove error
-//            presentError(actionResponse: .init(error: nil))
-//        }
+        let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
+        let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
+        let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
+        
+        let profile = UserManager.shared.profile
+        let lifetimeLimit = profile?.sellAllowanceLifetime ?? 0
+        
+        switch fiat {
+        case _ where fiat <= 0:
+            // Fiat value is below 0
+            presentError(actionResponse: .init(error: nil))
+            
+        case _ where fiat < minimumAmount:
+            // Value below minimum Fiat
+            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
+            
+        case _ where fiat > lifetimeLimit,
+            _ where minimumAmount > lifetimeLimit:
+            // Over lifetime limit
+            presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
+            
+        case _ where fiat > maximumAmount,
+            _ where minimumAmount > maximumAmount:
+            // Over exchange limit
+            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
+            
+        default:
+            // Remove error
+            presentError(actionResponse: .init(error: nil))
+        }
     }
     
     func presentPaymentCards(actionResponse: SellModels.PaymentCards.ActionResponse) {

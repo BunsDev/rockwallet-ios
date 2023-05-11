@@ -27,7 +27,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var from: Amount?
     var to: Amount?
-    var fromBuy: Bool = false
+    var fromBuyOrSell: Bool = false
     
     var values: SwapModels.Amounts.ViewAction = .init()
     

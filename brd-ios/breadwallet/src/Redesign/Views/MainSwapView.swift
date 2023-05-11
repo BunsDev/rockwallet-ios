@@ -165,7 +165,7 @@ class MainSwapView: FEView<MainSwapConfiguration, MainSwapViewModel> {
         termSwapCurrencyView.didChangeContent = contentSizeChanged
         termSwapCurrencyView.didFinish = didFinish
         
-        switchPlacesButton.isHidden = viewModel.to?.selectionDisabled == true && viewModel.from?.selectionDisabled == true
+        switchPlacesButton.isHidden = viewModel.to?.selectionDisabled == true || viewModel.from?.selectionDisabled == true
         setToggleSwitchPlacesButtonState(viewModel.from?.formattedFiatString != nil)
         
         contentSizeChanged?()

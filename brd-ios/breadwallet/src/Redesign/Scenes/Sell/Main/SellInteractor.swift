@@ -32,14 +32,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         dataStore?.supportedCurrencies = currencies
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
-        dataStore?.quote = .init(quoteId: 5,
-                                 exchangeRate: 0.99,
-                                 timestamp: Date().timeIntervalSince1970,
-                                 minimumValue: 100,
-                                 maximumValue: 200,
-                                 minimumUsd: 100,
-                                 maximumUsd: 200)
-        
         presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
                                                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
         presenter?.presentAssets(actionResponse: .init(amount: dataStore?.fromAmount,
@@ -64,14 +56,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     }
     
     func setAmount(viewAction: SellModels.Amounts.ViewAction) {
-        dataStore?.quote = .init(quoteId: 5,
-                                 exchangeRate: 0.12,
-                                 timestamp: Date().timeIntervalSince1970,
-                                 minimumValue: 100,
-                                 maximumValue: 200,
-                                 minimumUsd: 100,
-                                 maximumUsd: 200)
-        
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.fromAmount?.currency else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: Constant.usdCurrencyCode,
@@ -113,14 +97,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
-            self?.dataStore?.quote = .init(quoteId: 5,
-                                           exchangeRate: 0.99,
-                                           timestamp: Date().timeIntervalSince1970,
-                                           minimumValue: 100,
-                                           maximumValue: 200,
-                                           minimumUsd: 100,
-                                           maximumUsd: 200)
-            
             self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.fromAmount,
                                                                  card: self?.dataStore?.selected,
                                                                  type: self?.dataStore?.paymentMethod,
@@ -194,14 +170,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         dataStore?.fromAmount = selectedCurrency == nil ? dataStore?.fromAmount : selectedCurrency
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
-            self?.dataStore?.quote = .init(quoteId: 5,
-                                           exchangeRate: 0.99,
-                                           timestamp: Date().timeIntervalSince1970,
-                                           minimumValue: 100,
-                                           maximumValue: 200,
-                                           minimumUsd: 100,
-                                           maximumUsd: 200)
-            
             self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.fromAmount,
                                                                  card: self?.dataStore?.selected,
                                                                  type: self?.dataStore?.paymentMethod,

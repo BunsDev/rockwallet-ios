@@ -2626,11 +2626,11 @@
 		7E5CB3582835090D00EC787E /* VIP */ = {
 			isa = PBXGroup;
 			children = (
-				7E5CB3592835090D00EC787E /* Controller.swift */,
-				7E5CB35A2835090D00EC787E /* Interactor.swift */,
+				7E5CB35D2835090D00EC787E /* Coordinator.swift */,
 				7E5CB35B2835090D00EC787E /* Presenter.swift */,
 				7E5CB35C2835090D00EC787E /* BaseVIP.swift */,
-				7E5CB35D2835090D00EC787E /* Coordinator.swift */,
+				7E5CB3592835090D00EC787E /* Controller.swift */,
+				7E5CB35A2835090D00EC787E /* Interactor.swift */,
 			);
 			path = VIP;
 			sourceTree = "<group>";
