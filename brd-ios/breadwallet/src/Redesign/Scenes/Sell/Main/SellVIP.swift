@@ -58,17 +58,8 @@ protocol SellResponseDisplays: AnyObject,
 }
 
 protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
-    var quote: Quote? { get set }
-    
-    var fromBuyOrSell: Bool { get set }
-    var showTimer: Bool { get set }
-    
     // MARK: - SellDataStore
     
-    var ach: PaymentCard? { get set }
-    var selected: PaymentCard? { get set }
-    var cards: [PaymentCard] { get set }
-    var paymentMethod: PaymentCard.PaymentType? { get set }
     var availablePayments: [PaymentCard.PaymentType] { get set }
     
     var currencies: [Currency] { get set }

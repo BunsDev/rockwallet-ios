@@ -57,7 +57,12 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     // MARK: - Additional helpers
     
     var isFormValid: Bool {
-        // TODO: remove after BE is ready
+        guard let amount = fromAmount,
+              amount.tokenValue > 0,
+              selected != nil
+        else {
+            return false
+        }
         return true
     }
 }

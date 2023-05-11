@@ -45,7 +45,6 @@ protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDis
 
 protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var showTimer: Bool { get set }
-    var fromBuyOrSell: Bool { get set }
     
     var from: Amount? { get set }
     var to: Amount? { get set }
@@ -55,7 +54,6 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var fromFeeBasis: TransferFeeBasis? { get set }
     var senderValidationResult: SenderValidationResult? { get set }
     
-    var quote: Quote? { get set }
     var swap: Exchange? { get set }
     
     var fromRate: Decimal? { get set }
