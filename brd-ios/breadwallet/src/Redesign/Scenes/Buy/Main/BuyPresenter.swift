@@ -148,8 +148,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         case _ where fiat > lifetimeLimit,
             _ where minimumAmount > lifetimeLimit:
             // Over lifetime limit
-            let limit = profile?.buyAllowanceLifetime ?? 0
-            presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: limit)))
+            presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
             
         case _ where fiat > maximumAmount,
             _ where minimumAmount > maximumAmount:

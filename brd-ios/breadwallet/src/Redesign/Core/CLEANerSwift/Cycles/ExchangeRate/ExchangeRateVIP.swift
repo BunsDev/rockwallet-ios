@@ -36,7 +36,7 @@ protocol ExchangeDataStore: NSObject {
     var quoteRequestData: QuoteRequestData { get }
     var quote: Quote? { get set }
     var showTimer: Bool { get set }
-    var fromBuy: Bool { get set }
+    var fromBuyOrSell: Bool { get set }
     
     var secondFactorCode: String? { get set }
     var secondFactorBackup: String? { get set }
@@ -63,8 +63,8 @@ extension Interactor where Self: ExchangeRateViewActions,
                                                                            to: toCurrency,
                                                                            limits: self?.dataStore?.limits,
                                                                            showTimer: self?.dataStore?.showTimer,
-                                                                           fromBuy: self?.dataStore?.fromBuy), completion: {
-                    if self?.dataStore?.fromBuy == true {
+                                                                           fromBuyOrSell: self?.dataStore?.fromBuyOrSell), completion: {
+                    if self?.dataStore?.fromBuyOrSell == true {
                         completion?()
                     } else {
                         self?.getCoingeckoExchangeRate(viewAction: .init(getFees: viewAction.getFees), completion: completion)
@@ -92,9 +92,9 @@ extension Presenter where Self: ExchangeRateActionResponses,
            let to = actionResponse.to,
            let quote = actionResponse.quote,
            let showTimer = actionResponse.showTimer,
-           let fromBuy = actionResponse.fromBuy {
+           let fromBuyOrSell = actionResponse.fromBuyOrSell {
             var text: String
-            if fromBuy {
+            if fromBuyOrSell {
                 text = String(format: "1 %@ = $%@ %@", to, RWFormatter().string(for: 1 / quote.exchangeRate) ?? "", from.uppercased())
             } else {
                 text = String(format: "1 %@ = %@ %@", from.uppercased(), RWFormatter().string(for: quote.exchangeRate) ?? "", to)

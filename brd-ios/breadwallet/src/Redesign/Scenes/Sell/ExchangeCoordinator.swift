@@ -88,7 +88,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
         }
     }
     
-    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, fromBuy: Bool = true, completion: (() -> Void)? = nil) {
+    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, fromBuyOrSell: Bool = true, completion: (() -> Void)? = nil) {
         guard !cards.isEmpty else {
             openModally(coordinator: ItemSelectionCoordinator.self,
                         scene: Scenes.AddCard)
@@ -98,7 +98,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                     scene: Scenes.CardSelection,
                     presentationStyle: .currentContext) { vc in
             vc?.dataStore?.isAddingEnabled = true
-            vc?.dataStore?.isSelectingEnabled = fromBuy
+            vc?.dataStore?.isSelectingEnabled = fromBuyOrSell
             vc?.dataStore?.items = cards
             let backButtonVisible = self.navigationController.children.last is BillingAddressViewController
             vc?.navigationItem.hidesBackButton = backButtonVisible
