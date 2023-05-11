@@ -32,8 +32,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         
-        let selectedPaymentType = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == item.type })
-        
         let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
         limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
@@ -85,12 +83,14 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         cryptoModel = MainSwapViewModel(from: .init(amount: actionResponse.amount,
                                                     formattedTokenString: fromFormattedTokenString,
-                                                    title: .text("I have 10.12000473 USDC")),
+                                                    title: .text("I have 10.12000473 USDC"),
+                                                    selectionDisabled: false),
                                         
                                         to: .init(currencyCode: Constant.usdCurrencyCode,
                                                   currencyImage: Asset.us.image,
                                                   formattedTokenString: toFormattedFiatString,
-                                                  title: .text("I receive")))
+                                                  title: .text("I receive"),
+                                                  selectionDisabled: true))
         
         switch actionResponse.type {
         case .ach:
