@@ -3004,6 +3004,8 @@
 /* (b600 fee) */
 "Transaction.fee" = "(%s 手数料)";
 
+"Transaction.HybridPart" = " - %s/2";
+
 /* Invalid transaction */
 "Transaction.invalid" = "無効";
 
