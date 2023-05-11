@@ -180,7 +180,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showPaymailAddress() {
+    func showPaymailAddress(isPaymailFromAssets: Bool) {
         decideFlow { [weak self] showScene in
             guard showScene else { return }
             
@@ -188,6 +188,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 let paymail = UserManager.shared.profile?.paymail
                 vc?.dataStore?.screenType = paymail == nil ? .paymailNotSetup : .paymailSetup
                 vc?.dataStore?.paymailAddress = "\(paymail ?? "")\(Constant.paymailDomain)"
+                vc?.isPaymailFromAssets = isPaymailFromAssets
             }
         }
     }

@@ -49,6 +49,8 @@ class VIPViewController<C: CoordinatableRoutes,
     var isModalDismissableEnabled: Bool { return false }
     var dismissText: String { return "" }
     var closeImage: UIImage? { return nil }
+    
+    var isPaymailFromAssets: Bool = false
 
     var isRootInNavigationController: Bool {
         guard let navigationController = navigationController else { return true }

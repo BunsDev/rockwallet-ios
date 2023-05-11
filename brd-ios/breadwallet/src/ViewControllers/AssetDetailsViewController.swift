@@ -16,7 +16,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     var currency: Currency
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
-    var paymailCallback: (() -> Void)?
+    var paymailCallback: ((Bool) -> Void)?
     
     weak var coordinator: BaseCoordinator?
     
@@ -178,8 +178,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         transactionsTableView?.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         if currency == Currencies.shared.bsv {
-            UserDefaults.paymailFromAssets = true
-            paymailCallback?()
+            paymailCallback?(true)
         }
     }
     

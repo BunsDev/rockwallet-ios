@@ -48,7 +48,7 @@ class ReceiveViewController: UIViewController, Subscriber {
     fileprivate let isRequestAmountVisible: Bool
     private var requestTop: NSLayoutConstraint?
     private var requestBottom: NSLayoutConstraint?
-    var paymailCallback: (() -> Void)?
+    var paymailCallback: ((Bool) -> Void)?
     
     private lazy var buttonsStack: UIStackView = {
         let view = UIStackView()
@@ -210,7 +210,7 @@ class ReceiveViewController: UIViewController, Subscriber {
     
     @objc private func paymailTapped() {
         guard let paymail = UserManager.shared.profile?.paymail else {
-            paymailCallback?()
+            paymailCallback?(true)
             return
         }
         
