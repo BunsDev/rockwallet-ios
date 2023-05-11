@@ -21,7 +21,7 @@ enum ExchangeEndpoints: String, URLType {
     case create = "create"
     case achCreate = "ach/create"
     case details = "exchange/%@"
-    case history = "exchanges"
+    case history = "v2/exchanges"
     case paymentInstruments = "v2/payment-instruments"
     case paymentInstrument = "payment-instrument"
     case paymentInstrumentId = "payment-instrument?instrument_id=%@"

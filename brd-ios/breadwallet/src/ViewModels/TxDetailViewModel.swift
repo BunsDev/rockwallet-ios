@@ -81,14 +81,6 @@ struct TxDetailViewModel: TxViewModel, Hashable {
         }
         return ""
     }
-    
-    var transactionHash: String {
-        guard let tx = tx,
-              let currency = currency
-        else { return "" }
-        
-        return currency.isEthereumCompatible ? tx.hash : tx.hash.removing(prefix: "0x")
-    }
 }
 
 extension TxDetailViewModel {

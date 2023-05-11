@@ -1776,6 +1776,8 @@
 
 "PaymailAddress.title" = "Paymail Address";
 
+"PaymailAddress.TransferBsvTitle" = "Transfer BSV easier!";
+
 "PaymailAddress.whatIsPaymail" = "What is Paymail?";
 
 "PaymailAddress.yourPaymailAddress" = "Your Paymail address:";
@@ -2463,6 +2465,8 @@
 /* PayID label */
 "Send.payId_toLabel" = "PayID";
 
+"Send.placeholderText" = "Enter wallet address or Paymail";
+
 /* Could not publish transaction alert title */
 "Send.publishTransactionError" = "Não foi possível publicar a transação.";
 
@@ -3000,6 +3004,8 @@
 /* (b600 fee) */
 "Transaction.fee" = "(taxa de %s)";
 
+"Transaction.HybridPart" = " - %s/2";
+
 /* Invalid transaction */
 "Transaction.invalid" = "INVÁLIDA";
 
@@ -3025,6 +3031,8 @@
 "Transaction.Purchased" = "Purchased";
 
 "Transaction.PurchasedWithAch" = "Purchased with ACH";
+
+"Transaction.purchasedWithInstantBy" = "Purchased with Instant Buy";
 
 /* Purchase failed label in transaction view */
 "Transaction.PurchaseFailed" = "Purchase failed";
