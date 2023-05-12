@@ -159,6 +159,10 @@ class AddressCell: UIView {
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
         textField.keyboardType = .emailAddress
+        textField.attributedPlaceholder = NSAttributedString(string: L10n.Send.placeholderText, attributes: [
+            .foregroundColor: LightColors.Text.two,
+            .font: Fonts.Body.three
+        ])
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         contentLabel.lineBreakMode = .byTruncatingMiddle
 
