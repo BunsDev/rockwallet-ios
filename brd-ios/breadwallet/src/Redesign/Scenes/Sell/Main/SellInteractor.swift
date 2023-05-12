@@ -268,8 +268,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     
     private func createTransaction(from swap: Exchange?) {
         guard let dataStore = dataStore,
-              let currency = dataStore.currencies.first(where: { $0.code == swap?.currency }),
-              let sender else {
+              let currency = dataStore.currencies.first(where: { $0.code == swap?.currency }) else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
             return
         }
@@ -284,16 +283,16 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
-        let transaction = sender.createTransaction(address: destination,
-                                                   amount: amount,
-                                                   feeBasis: fee,
-                                                   comment: nil,
-                                                   exchangeId: exchangeId)
+        let transaction = sender?.createTransaction(address: destination,
+                                                    amount: amount,
+                                                    feeBasis: fee,
+                                                    comment: nil,
+                                                    exchangeId: exchangeId)
         
         var error: FEError?
         switch transaction {
         case .ok:
-            sender.sendTransaction(allowBiometrics: false, exchangeId: exchangeId) { [weak self] data in
+            sender?.sendTransaction(allowBiometrics: false, exchangeId: exchangeId) { [weak self] data in
                 guard let pin: String = try? keychainItem(key: KeychainKey.pin) else {
                     self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.pinConfirmation))
                     return
@@ -361,6 +360,9 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             
         case .insufficientGas:
             error = ExchangeErrors.networkFee
+            
+        default:
+            break
         }
         
         guard let error = error else { return }
