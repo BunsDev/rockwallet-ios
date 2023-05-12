@@ -309,7 +309,8 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
                     let from = self?.dataStore?.fromAmount?.currency.code
                     let to = Constant.usdCurrencyCode
                     
-                    self?.presenter?.presentConfirm(actionResponse: .init(from: from, to: to, exchangeId: exchangeId))
+                    // TODO: Complete this.
+//                    self?.presenter?.presentConfirm(actionResponse: .init(from: from, to: to, exchangeId: exchangeId))
                     
                 case .creationError(let message):
                     error = GeneralError(errorMessage: message)
