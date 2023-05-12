@@ -306,8 +306,8 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
                 case .success:
                     ExchangeManager.shared.reload()
                     
-                    let from = self?.dataStore?.from?.currency.code
-                    let to = self?.dataStore?.to?.currency.code
+                    let from = self?.dataStore?.fromAmount?.currency.code
+                    let to = self?.dataStore?.toAmount?.currency.code
                     
                     self?.presenter?.presentConfirm(actionResponse: .init(from: from, to: to, exchangeId: exchangeId))
                     
