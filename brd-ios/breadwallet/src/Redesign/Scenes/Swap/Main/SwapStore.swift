@@ -15,8 +15,8 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     // MARK: - ExchangeRateDataStore
     
-    var fromCode: String { from?.currency.code ?? "" }
-    var toCode: String { to?.currency.code ?? "" }
+    var fromCode: String { fromAmount?.currency.code ?? "" }
+    var toCode: String { toAmount?.currency.code ?? "" }
     var showTimer: Bool = true
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
@@ -25,9 +25,9 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     // MARK: - SwapDataStore
     
-    var from: Amount?
-    var to: Amount?
-    var fromBuyOrSell: Bool = false
+    var fromAmount: Amount?
+    var toAmount: Amount?
+    var isFromBuy: Bool = false
     
     var values: SwapModels.Amounts.ViewAction = .init()
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WalletKit
 
 extension Scenes {
     static let Sell = SellViewController.self
@@ -15,6 +16,7 @@ extension Scenes {
 protocol SellViewActions: BaseViewActions,
                           FetchViewActions,
                           ExchangeRateViewActions,
+                          FeeFetchable,
                           AchViewActions {
     func setAmount(viewAction: SellModels.Amounts.ViewAction)
     func setAssets(viewAction: SellModels.Assets.ViewAction)
@@ -67,8 +69,15 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     
+    var fromRate: Decimal? { get set }
+    
+    var fromFeeBasis: TransferFeeBasis? { get set }
+    var senderValidationResult: SenderValidationResult? { get set }
+    
     var fromAmount: Amount? { get set }
     var values: SellModels.Amounts.ViewAction { get set }
+    
+    var swap: Exchange? { get set }
 }
 
 protocol SellDataPassing {

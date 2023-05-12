@@ -25,8 +25,8 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
-              let from = item.from?.currency,
-              let to = item.to?.currency else {
+              let fromAmount = item.fromAmount?.currency,
+              let toAmount = item.toAmount?.currency else {
             viewController?.displayError(responseDisplay: .init())
             return
         }
@@ -38,12 +38,12 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         ]
         
         exchangeRateViewModel = .init(timer: TimerViewModel())
-        mainSwapViewModel = .init(from: .init(amount: .zero(from),
-                                              fee: .zero(from),
+        mainSwapViewModel = .init(from: .init(amount: .zero(fromAmount),
+                                              fee: .zero(fromAmount),
                                               formattedTokenFeeString: nil,
-                                              title: .text(String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: 0) ?? "", from.code)))),
-                                  to: .init(amount: .zero(to),
-                                            fee: .zero(to),
+                                              title: .text(String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: 0) ?? "", fromAmount.code)))),
+                                  to: .init(amount: .zero(toAmount),
+                                            fee: .zero(toAmount),
                                             formattedTokenFeeString: nil,
                                             title: .text(L10n.Buy.iWant)))
         
@@ -67,9 +67,9 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
         let receivingFee = L10n.Swap.receiveNetworkFee
         
-        let fromFiatValue = actionResponse.from?.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: actionResponse.from?.fiatValue)
-        let fromTokenValue = actionResponse.from?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.from?.tokenValue)
-        let toTokenValue = actionResponse.to?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.to?.tokenValue)
+        let fromFiatValue = actionResponse.fromAmount?.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: actionResponse.fromAmount?.fiatValue)
+        let fromTokenValue = actionResponse.fromAmount?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.fromAmount?.tokenValue)
+        let toTokenValue = actionResponse.toAmount?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.toAmount?.tokenValue)
         
         let fromFormattedFiatString = ExchangeFormatter.createAmountString(string: fromFiatValue ?? "")
         let fromFormattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
@@ -80,11 +80,11 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                ExchangeFormatter.crypto.string(for: toFee?.tokenValue) ?? "",
                                                toFee?.currency.code.uppercased() ?? "")
         
-        mainSwapViewModel = MainSwapViewModel(from: .init(amount: actionResponse.from,
+        mainSwapViewModel = MainSwapViewModel(from: .init(amount: actionResponse.fromAmount,
                                                           formattedFiatString: fromFormattedFiatString,
                                                           formattedTokenString: fromFormattedTokenString,
                                                           title: .text(balanceText)),
-                                              to: .init(amount: actionResponse.to,
+                                              to: .init(amount: actionResponse.toAmount,
                                                         formattedTokenString: toFormattedTokenString,
                                                         fee: actionResponse.toFee,
                                                         formattedTokenFeeString: formattedToTokenFeeString,
@@ -96,9 +96,9 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         guard actionResponse.handleErrors else {
             if actionResponse.quote?.isMinimumImpactedByWithdrawal == true
-                && (fromCurrencyCode != actionResponse.from?.currency.code || toCurrencyCode != actionResponse.to?.currency.code) {
-                fromCurrencyCode = actionResponse.from?.currency.code
-                toCurrencyCode = actionResponse.to?.currency.code
+                && (fromCurrencyCode != actionResponse.fromAmount?.currency.code || toCurrencyCode != actionResponse.toAmount?.currency.code) {
+                fromCurrencyCode = actionResponse.fromAmount?.currency.code
+                toCurrencyCode = actionResponse.toAmount?.currency.code
                 
                 presentError(actionResponse: .init(error: ExchangeErrors.highFees))
             }
@@ -120,21 +120,21 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     private func handleError(actionResponse: SwapModels.Amounts.ActionResponse) -> Bool {
         let fromFee = actionResponse.fromFee
         
-        var hasError: Bool = actionResponse.from?.fiatValue == 0
+        var hasError: Bool = actionResponse.fromAmount?.fiatValue == 0
         let senderValidationResult = actionResponse.senderValidationResult ?? .ok
         
         if case .insufficientFunds = senderValidationResult {
             let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
-            let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.from?.currency.code ?? "")
+            let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.fromAmount?.currency.code ?? "")
             presentError(actionResponse: .init(error: error))
             hasError = true
         } else if case .insufficientGas = senderValidationResult {
-            if actionResponse.from?.currency.isEthereum == true {
+            if actionResponse.fromAmount?.currency.isEthereum == true {
                 let error = ExchangeErrors.insufficientGas
                 presentError(actionResponse: .init(error: error))
                 hasError = true
-            } else if actionResponse.from?.currency.isERC20Token == true {
-                let error = ExchangeErrors.insufficientGasERC20(currency: actionResponse.from?.currency.code ?? "")
+            } else if actionResponse.fromAmount?.currency.isERC20Token == true {
+                let error = ExchangeErrors.insufficientGasERC20(currency: actionResponse.fromAmount?.currency.code ?? "")
                 presentError(actionResponse: .init(error: error))
                 hasError = true
             } else if let feeAmount = actionResponse.fromFeeBasis?.fee {
@@ -143,12 +143,12 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 hasError = true
             }
         } else if actionResponse.baseBalance == nil
-                    || actionResponse.from?.currency.code == actionResponse.to?.currency.code {
-            let first = actionResponse.from?.currency.code
-            let second = actionResponse.to?.currency.code
+                    || actionResponse.fromAmount?.currency.code == actionResponse.toAmount?.currency.code {
+            let first = actionResponse.fromAmount?.currency.code
+            let second = actionResponse.toAmount?.currency.code
             presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: first, to: second)))
             hasError = true
-        } else if ExchangeManager.shared.canSwap(actionResponse.from?.currency) == false {
+        } else if ExchangeManager.shared.canSwap(actionResponse.fromAmount?.currency) == false {
             presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
             hasError = true
         } else if let feeAmount = fromFee,
@@ -158,8 +158,8 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             presentError(actionResponse: .init(error: error))
             hasError = true
         } else {
-            let fiatValue = (actionResponse.from?.fiatValue ?? 0).round(to: 2)
-            let tokenValue = actionResponse.from?.tokenValue ?? 0
+            let fiatValue = (actionResponse.fromAmount?.fiatValue ?? 0).round(to: 2)
+            let tokenValue = actionResponse.fromAmount?.tokenValue ?? 0
             let minimumValue = actionResponse.minimumValue ?? 0
             let minimumUsd = actionResponse.minimumUsd ?? 0
             
@@ -194,13 +194,13 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 
             case _ where fiatValue > (actionResponse.baseBalance?.fiatValue ?? 0):
                 // Value higher than balance
-                let error = ExchangeErrors.balanceTooLow(balance: fromFee?.tokenValue ?? 0, currency: actionResponse.from?.currency.code ?? "")
+                let error = ExchangeErrors.balanceTooLow(balance: fromFee?.tokenValue ?? 0, currency: actionResponse.fromAmount?.currency.code ?? "")
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
             case _ where fiatValue < minimumUsd:
                 // Value below minimum fiat
-                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumUsd, currency: actionResponse.from?.currency.code ?? "", reason: .swap)))
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumUsd, currency: actionResponse.fromAmount?.currency.code ?? "", reason: .swap)))
                 hasError = true
                 
             case _ where tokenValue < minimumValue:
@@ -224,8 +224,8 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     }
     
     func presentConfirmation(actionResponse: SwapModels.ShowConfirmDialog.ActionResponse) {
-        guard let from = actionResponse.from,
-              let to = actionResponse.to,
+        guard let from = actionResponse.fromAmount,
+              let to = actionResponse.toAmount,
               let rate = actionResponse.quote?.exchangeRate.doubleValue else {
             return
         }

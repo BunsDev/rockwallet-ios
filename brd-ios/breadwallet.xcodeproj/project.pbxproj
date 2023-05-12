@@ -2299,8 +2299,8 @@
 			children = (
 				7BBBF4D8287421CF00E4D36B /* SwapPresenter.swift */,
 				7BBBF4D9287421CF00E4D36B /* SwapStore.swift */,
-				7BBBF4DA287421CF00E4D36B /* SwapMainVIP.swift */,
 				7BBBF4D6287421CE00E4D36B /* SwapModels.swift */,
+				7BBBF4DA287421CF00E4D36B /* SwapMainVIP.swift */,
 				7BBBF4D7287421CF00E4D36B /* SwapViewController.swift */,
 				7BBBF4D5287421CE00E4D36B /* SwapInteractor.swift */,
 				7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */,

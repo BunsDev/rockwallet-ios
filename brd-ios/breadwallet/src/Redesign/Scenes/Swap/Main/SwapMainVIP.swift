@@ -46,8 +46,8 @@ protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDis
 protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var showTimer: Bool { get set }
     
-    var from: Amount? { get set }
-    var to: Amount? { get set }
+    var fromAmount: Amount? { get set }
+    var toAmount: Amount? { get set }
     
     var values: SwapModels.Amounts.ViewAction { get set }
     
