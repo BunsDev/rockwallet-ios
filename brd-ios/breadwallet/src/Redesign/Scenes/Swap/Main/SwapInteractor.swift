@@ -339,7 +339,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 }
                 data(pin)
             } completion: { [weak self] result in
-                defer { sender.reset() }
+                defer { self?.sender?.reset() }
                 
                 var error: FEError?
                 switch result {
