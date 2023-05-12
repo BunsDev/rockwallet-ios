@@ -269,8 +269,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     private func createTransaction(from swap: Exchange?) {
         guard let dataStore = dataStore,
               let currency = dataStore.currencies.first(where: { $0.code == swap?.currency }),
-              let wallet = dataStore.coreSystem?.wallet(for: currency),
-              let kvStore = Backend.kvStore, let keyStore = dataStore.keyStore else {
+              let sender else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
             return
         }
@@ -284,7 +283,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             return
         }
         
-        let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
         let transaction = sender.createTransaction(address: destination,
                                                    amount: amount,

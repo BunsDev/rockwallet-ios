@@ -72,7 +72,6 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
         return .init(cryptoAmount: value.fee, currency: currency)
     }
     
-    
     var isFormValid: Bool {
         guard let amount = fromAmount,
               amount.tokenValue > 0,
