@@ -36,13 +36,13 @@ enum PaymailAddressModels {
             }
         }
         
-        var image: UIImage {
+        var image: ImageViewModel {
             switch self {
             case .paymailSetup:
-                return Asset.copyIcon.image
+                return .image(Asset.copyIcon.image)
                 
             case .paymailNotSetup:
-                return Asset.cancel.image
+                return .image(Asset.cancel.image.tinted(with: LightColors.Text.three))
                 
             }
         }

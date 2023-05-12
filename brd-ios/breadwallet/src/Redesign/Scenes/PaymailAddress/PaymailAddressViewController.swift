@@ -18,7 +18,8 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     // MARK: - Overrides
     
     override var sceneLeftAlignedTitle: String? {
-        return L10n.PaymailAddress.title
+        let isPaymailFromAssets = dataStore?.isPaymailFromAssets ?? false
+        return isPaymailFromAssets ? L10n.PaymailAddress.transferBsvTitle : L10n.PaymailAddress.title
     }
     
     override func setupVerticalButtons() {
@@ -56,6 +57,8 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
                 view.didTapTrailingView = { [weak self] in
                     if self?.dataStore?.screenType == .paymailSetup {
                         self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
+                    } else {
+                        self?.interactor?.validate(viewAction: .init(email: Constant.paymailDomain))
                     }
                 }
             }

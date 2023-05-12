@@ -65,7 +65,7 @@ class ApplicationController: Subscriber {
 
     var didTapDeleteAccount: (() -> Void)?
     var didTapTwoStepAuth: (() -> Void)?
-    var didTapPaymail: (() -> Void)?
+    var didTapPaymail: ((Bool) -> Void)?
     
     // MARK: - Init/Launch
 
@@ -524,8 +524,8 @@ class ApplicationController: Subscriber {
             coordinator?.showTwoStepAuthentication(keyStore: keyStore)
         }
         
-        didTapPaymail = { [unowned self] in
-            coordinator?.showPaymailAddress()
+        didTapPaymail = { [unowned self] isPaymailFromAssets in
+            coordinator?.showPaymailAddress(isPaymailFromAssets: isPaymailFromAssets)
         }
     }
     
