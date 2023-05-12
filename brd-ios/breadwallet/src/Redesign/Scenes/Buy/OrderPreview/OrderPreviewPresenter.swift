@@ -160,13 +160,35 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     }
     
     func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse) {
-        guard let instantLimit = actionResponse.quote?.instantAch?.limitUsd?.description else { return }
+        guard let instantLimit = actionResponse.quote?.instantAch?.limitUsd,
+              let cryptoLimit = actionResponse.quote?.instantAch?.limitInToCurrency,
+              let toAmount = actionResponse.to else { return }
         let fiatCurrency = (actionResponse.quote?.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
+        let cryptoCurrency = toAmount.currency.code.uppercased()
+        let currencyFormat = "%@ %@"
         
-        let amount = instantLimit + " " + fiatCurrency
+        var description: String {
+            if toAmount.fiatValue > instantLimit {
+                let regularCrypto = toAmount.tokenValue - cryptoLimit
+                let regularFiat = toAmount.fiatValue - instantLimit
+                
+                let cryptoInstantAmount = String(format: currencyFormat, ExchangeFormatter.crypto.string(for: cryptoLimit) ?? "", cryptoCurrency)
+                let cryptoRegularAmount = String(format: currencyFormat, ExchangeFormatter.crypto.string(for: regularCrypto) ?? "", cryptoCurrency)
+                let fiatInstantAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantLimit) ?? "", fiatCurrency)
+                let fiatRegularAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: regularFiat) ?? "", fiatCurrency)
+
+                return L10n.Buy.Ach.Instant.hybridConfirmationDrawer(cryptoInstantAmount, fiatInstantAmount, cryptoRegularAmount, fiatRegularAmount)
+            } else {
+                let cryptoAmount = String(format: currencyFormat, ExchangeFormatter.crypto.string(for: toAmount.tokenValue) ?? "", cryptoCurrency)
+                let fiatAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toAmount.fiatValue) ?? "", fiatCurrency)
+                
+                return L10n.Buy.Ach.Instant.ConfirmationDrawer.description(fiatAmount)
+            }
+        }
+        let amount = instantLimit.description + " " + fiatCurrency
         let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
         let drawerViewModel = DrawerViewModel(title: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.title),
-                                              description: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.description(amount)),
+                                              description: .text(description),
                                               buttons: [.init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.confirmAction)],
                                               notice: .init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.notice, image: Asset.flash.image))
         let drawerCallbacks: [ (() -> Void) ] = [ { [weak self] in
@@ -241,6 +263,19 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
         let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
                                                                        value: .text(achFeeDescription)) : nil
+        let exceedsInstantBuyLimit: Bool = toFiatValue > instantAchLimit
+        
+        var instantAchNoticeText: String {
+            if exceedsInstantBuyLimit {
+                let regularPart = toFiatValue - instantAchLimit
+                let instantAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchLimit) ?? "", fiatCurrency)
+                let regularAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: regularPart) ?? "", fiatCurrency)
+                return L10n.Buy.Ach.Instant.OrderPreview.hybridNotice(instantAmount, regularAmount)
+            } else {
+                let formatedAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue) ?? "", fiatCurrency)
+                return L10n.Buy.Ach.Instant.OrderPreview.notice(formatedAmount)
+            }
+        }
         
         switch item.type {
         case .sell:
@@ -261,8 +296,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             }
             
             let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: totalFee) ?? "", fiatCurrency)
-            let instantAchLimitText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchLimit) ?? "", fiatCurrency)
-            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice(instantAchLimitText)),
+            model = .init(notice: .text(instantAchNoticeText),
                           currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
@@ -272,7 +306,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           networkFee: .init(title: .text(L10n.Swap.miningNetworkFee),
                                             value: .text(networkFeeText),
                                             infoImage: .image(infoImage)),
-                          totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)))
+                          totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)),
+            exceedInstantBuyLimit: exceedsInstantBuyLimit)
         }
         
         return model
