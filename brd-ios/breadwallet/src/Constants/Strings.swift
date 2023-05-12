@@ -942,9 +942,9 @@ internal enum L10n {
         internal enum ConfirmationDrawer {
           /// Confirm purchase
           internal static let confirmAction = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.ConfirmAction", fallback: "Confirm purchase")
-          /// $%s assets will settle immediately.
-          internal static func description(_ p1: UnsafePointer<CChar>) -> String {
-            return L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Description", p1, fallback: "$%s assets will settle immediately.")
+          /// %s (%s) assets will settle immediately.
+          internal static func description(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Description", p1, p2, fallback: "%s (%s) assets will settle immediately.")
           }
           /// Instant purchase
           internal static let notice = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Notice", fallback: "Instant purchase")

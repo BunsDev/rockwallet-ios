@@ -182,7 +182,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                 let cryptoAmount = String(format: currencyFormat, ExchangeFormatter.crypto.string(for: toAmount.tokenValue) ?? "", cryptoCurrency)
                 let fiatAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toAmount.fiatValue) ?? "", fiatCurrency)
                 
-                return L10n.Buy.Ach.Instant.ConfirmationDrawer.description(fiatAmount)
+                return L10n.Buy.Ach.Instant.ConfirmationDrawer.description(cryptoAmount, fiatAmount)
             }
         }
         let amount = instantLimit.description + " " + fiatCurrency
@@ -296,7 +296,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             }
             
             let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: totalFee) ?? "", fiatCurrency)
-            model = .init(notice: .text(instantAchNoticeText),
+            model = .init(notice: isInstantAch ? .text(instantAchNoticeText) : nil,
                           currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),

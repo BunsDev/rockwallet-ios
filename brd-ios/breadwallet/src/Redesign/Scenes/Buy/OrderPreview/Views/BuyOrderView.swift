@@ -236,6 +236,8 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         super.setup(with: viewModel)
         
         noticeLabel.setup(with: viewModel?.notice)
+        noticeContainer.isHidden = viewModel?.notice == nil
+        
         titleLabel.setup(with: viewModel?.title)
         currencyIconImageView.wrappedView.setup(with: viewModel?.currencyIcon)
         currencyNameLabel.setup(with: viewModel?.currencyAmountName)
