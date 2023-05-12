@@ -307,7 +307,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
                     ExchangeManager.shared.reload()
                     
                     let from = self?.dataStore?.fromAmount?.currency.code
-                    let to = self?.dataStore?.toAmount?.currency.code
+                    let to = Constant.usdCurrencyCode
                     
                     self?.presenter?.presentConfirm(actionResponse: .init(from: from, to: to, exchangeId: exchangeId))
                     
