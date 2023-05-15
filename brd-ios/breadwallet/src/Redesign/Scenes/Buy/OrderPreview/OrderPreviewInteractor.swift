@@ -191,17 +191,20 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
         
-        let buyFee = ((dataStore?.quote?.buyFee ?? 0) / 100) + 1
-        let fromAmount = (dataStore?.from ?? 0) * buyFee
-        
         let formattedDepositQuantity: String
         let formattedWithdrawalQuantity: String
         
         if dataStore?.type == .sell {
+            let sellFee = 1 - ((dataStore?.quote?.buyFee ?? 0) / 100)
+            let fromAmount = (dataStore?.from ?? 0) * sellFee
+            
             formattedDepositQuantity = cryptoFormatter.string(for: dataStore?.to?.tokenValue ?? 0) ?? ""
             formattedWithdrawalQuantity = fiatFormatter.string(from: (fromAmount) as NSNumber) ?? ""
         } else {
             let achFee = dataStore?.quote?.buyFeeUsd ?? 0
+            
+            let buyFee = ((dataStore?.quote?.buyFee ?? 0) / 100) + 1
+            let fromAmount = (dataStore?.from ?? 0) * buyFee
             
             let instantAchFee = (dataStore?.quote?.instantAch?.feePercentage ?? 0) / 100
             let instantAchLimit = dataStore?.quote?.instantAch?.limitUsd ?? 0
