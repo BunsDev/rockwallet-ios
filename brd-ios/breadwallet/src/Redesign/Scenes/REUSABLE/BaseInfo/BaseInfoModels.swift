@@ -312,8 +312,11 @@ enum BaseInfoModels {
         
         var description: String {
             switch self {
-            case .swap, .buy, .buyAch:
+            case .swap, .buy:
                 return  L10n.ComingSoon.body
+                
+            case .buyAch:
+                return L10n.Buy.Ach.notAvailableBody
                 
             case .sell:
                 return L10n.Sell.notAvailableBody
