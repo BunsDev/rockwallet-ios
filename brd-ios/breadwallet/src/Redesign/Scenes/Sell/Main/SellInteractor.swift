@@ -47,6 +47,20 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         })
         
         getPayments(viewAction: .init())
+        
+        // TODO: Where to use this?
+//        guard let from = self?.dataStore?.fromAmount,
+//              let profile = UserManager.shared.profile else {
+//            return
+//        }
+//
+//        self?.getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] error in
+//            if let error {
+//                self?.presenter?.presentError(actionResponse: .init(error: error))
+//            } else {
+//                self?.setPresentAmountData(handleErrors: true)
+//            }
+//        })
     }
     
     private func setPresentAmountData(handleErrors: Bool) {
@@ -57,32 +71,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
                                                        type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote,
                                                        handleErrors: handleErrors && isNotZero))
-    }
-    
-    func getFees(viewAction: SellModels.Fee.ViewAction) {
-        guard let from = dataStore?.fromAmount,
-              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
-              let sender = dataStore?.sender else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
-            
-            return
-        }
-        
-        dataStore?.senderValidationResult = nil
-        
-        guard let profile = UserManager.shared.profile, from.fiatValue <= profile.sellAllowanceLifetime else {
-            setPresentAmountData(handleErrors: true)
-            return
-        }
-        
-        fetchWalletKitFee(for: from,
-                          with: sender,
-                          address: fromAddress) { [weak self] fee in
-            self?.dataStore?.fromFeeBasis = fee
-            
-            self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
-            self?.setPresentAmountData(handleErrors: true)
-        }
     }
     
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {

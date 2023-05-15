@@ -13,7 +13,8 @@ import WalletKit
 
 class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     // MARK: - CreateTransactionDataStore
-    
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
     var sender: Sender?
     
     // MARK: - ExchangeRateDataStore
@@ -33,9 +34,6 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var isFromBuy: Bool = false
     
     var values: SwapModels.Amounts.ViewAction = .init()
-    
-    var fromFeeBasis: TransferFeeBasis?
-    var senderValidationResult: SenderValidationResult?
     
     var quote: Quote?
     var fromRate: Decimal?

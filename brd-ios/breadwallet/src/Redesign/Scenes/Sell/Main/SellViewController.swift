@@ -242,7 +242,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                                   fromFeeBasis: dataStore?.fromFeeBasis,
                                                   fromFeeAmount: dataStore?.fromFeeAmount,
                                                   fromAmount: dataStore?.fromAmount,
-                                                  toAmount: nil)
+                                                  toAmountCode: Constant.usdCurrencyCode)
         
         coordinator?.showOrderPreview(type: .sell,
                                       coreSystem: dataStore?.coreSystem,

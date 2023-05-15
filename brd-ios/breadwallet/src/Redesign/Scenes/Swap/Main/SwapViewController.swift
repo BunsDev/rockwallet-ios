@@ -104,7 +104,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                     
                     self?.interactor?.switchPlaces(viewAction: .init())
                 } else {
-                    self?.interactor?.getFees(viewAction: .init())
+                    self?.interactor?.prepareFees(viewAction: .init())
                 }
             }
             

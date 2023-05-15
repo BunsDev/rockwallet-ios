@@ -16,7 +16,6 @@ extension Scenes {
 protocol SellViewActions: BaseViewActions,
                           FetchViewActions,
                           ExchangeRateViewActions,
-                          FeeFetchable,
                           AchViewActions,
                           CreateTransactionViewActions {
     func setAmount(viewAction: SellModels.Amounts.ViewAction)
@@ -28,7 +27,6 @@ protocol SellViewActions: BaseViewActions,
     func showLimitsInfo(viewAction: SellModels.LimitsInfo.ViewAction)
     func showInstantAchPopup(viewAction: SellModels.InstantAchPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SellModels.AssetSelectionMessage.ViewAction)
-    func getFees(viewAction: SellModels.Fee.ViewAction)
 }
 
 protocol SellActionResponses: BaseActionResponses,
@@ -72,9 +70,6 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     var keyStore: KeyStore? { get set }
     
     var fromRate: Decimal? { get set }
-    
-    var fromFeeBasis: TransferFeeBasis? { get set }
-    var senderValidationResult: SenderValidationResult? { get set }
     
     var fromAmount: Amount? { get set }
     var values: SellModels.Amounts.ViewAction { get set }

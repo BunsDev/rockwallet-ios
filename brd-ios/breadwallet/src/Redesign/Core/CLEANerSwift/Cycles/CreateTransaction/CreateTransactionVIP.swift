@@ -9,14 +9,18 @@
 //
 
 import Foundation
+import WalletKit
 
-protocol CreateTransactionViewActions {
+protocol CreateTransactionViewActions: FeeFetchable {
     func createTransaction(viewAction: CreateTransactionModels.Transaction.ViewAction?, completion: ((FEError?) -> Void)?)
+    func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((FEError?) -> Void)?)
     func generateSender(viewAction: CreateTransactionModels.Sender.ViewAction)
 }
 
 protocol CreateTransactionDataStore: NSObject {
     var sender: Sender? { get set }
+    var fromFeeBasis: TransferFeeBasis? { get set }
+    var senderValidationResult: SenderValidationResult? { get set }
 }
 
 extension Interactor where Self: CreateTransactionViewActions,
@@ -28,7 +32,7 @@ extension Interactor where Self: CreateTransactionViewActions,
               let fromFeeBasis = viewAction.fromFeeBasis,
               let fromFeeAmount = viewAction.fromFeeAmount,
               let fromAmount = viewAction.fromAmount,
-              let toAmount = viewAction.toAmount,
+              let toAmountCode = viewAction.toAmountCode,
               let destination = viewAction.exchange?.address,
               let amountValue = viewAction.exchange?.amount,
               let exchangeId = viewAction.exchange?.exchangeId,
@@ -91,14 +95,14 @@ extension Interactor where Self: CreateTransactionViewActions,
             
         case .noExchangeRate:
             error = ExchangeErrors.noQuote(from: fromAmount.currency.code,
-                                           to: Constant.usdCurrencyCode)
+                                           to: toAmountCode)
             
         case .noFees:
             error = ExchangeErrors.noFees
             
         case .outputTooSmall(let amount):
             error = ExchangeErrors.tooLow(amount: amount.tokenValue,
-                                          currency: Constant.usdCurrencyCode,
+                                          currency: toAmountCode,
                                           reason: .swap)
             
         case .invalidRequest(let string):
@@ -106,7 +110,7 @@ extension Interactor where Self: CreateTransactionViewActions,
             
         case .paymentTooSmall(let amount):
             error = ExchangeErrors.tooLow(amount: amount.tokenValue,
-                                          currency: Constant.usdCurrencyCode,
+                                          currency: toAmountCode,
                                           reason: .swap)
             
         case .usedAddress:
@@ -133,5 +137,32 @@ extension Interactor where Self: CreateTransactionViewActions,
         sender.updateNetworkFees()
         
         dataStore?.sender = sender
+    }
+    
+    func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((FEError?) -> Void)?) {
+        guard let from = viewAction.fromAmount,
+              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
+              let sender = dataStore?.sender else {
+            completion?(ExchangeErrors.noFees)
+            
+            return
+        }
+        
+        dataStore?.senderValidationResult = nil
+        
+        guard from.fiatValue <= viewAction.limit ?? 0 else {
+            completion?(nil)
+            
+            return
+        }
+        
+        fetchWalletKitFee(for: from,
+                          with: sender,
+                          address: fromAddress) { [weak self] fee in
+            self?.dataStore?.fromFeeBasis = fee
+            self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
+            
+            completion?(nil)
+        }
     }
 }

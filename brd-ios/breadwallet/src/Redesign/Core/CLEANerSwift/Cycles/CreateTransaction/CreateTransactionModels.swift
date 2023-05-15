@@ -19,7 +19,7 @@ struct CreateTransactionModels {
             var fromFeeBasis: TransferFeeBasis?
             var fromFeeAmount: Amount?
             var fromAmount: Amount?
-            var toAmount: Amount?
+            var toAmountCode: String?
         }
     }
     
@@ -32,6 +32,9 @@ struct CreateTransactionModels {
     }
     
     struct Fee {
-        struct ViewAction {}
+        struct ViewAction {
+            var fromAmount: Amount?
+            var limit: Decimal?
+        }
     }
 }

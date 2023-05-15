@@ -11,7 +11,8 @@ import WalletKit
 
 class SellStore: NSObject, BaseDataStore, SellDataStore {
     // MARK: - CreateTransactionDataStore
-    
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
     var sender: Sender?
     
     // MARK: - ExchangeRateDataStore
@@ -56,9 +57,6 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var toAmount: Decimal? { return fromAmount?.fiatValue }
     
     var fromRate: Decimal?
-    
-    var fromFeeBasis: TransferFeeBasis?
-    var senderValidationResult: SenderValidationResult?
     
     var exchange: Exchange?
     

@@ -76,7 +76,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                     return
                 }
                 
-                self?.getFees(viewAction: .init())
+                self?.prepareFees(viewAction: .init())
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -89,6 +89,21 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
                                          coreSystem: dataStore?.coreSystem,
                                          keyStore: dataStore?.keyStore))
+    }
+    
+    func prepareFees(viewAction: SwapModels.Fee.ViewAction) {
+        guard let from = dataStore?.fromAmount,
+              let profile = UserManager.shared.profile else {
+            return
+        }
+        
+        getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] error in
+            if let error {
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            } else {
+                self?.setPresentAmountData(handleErrors: true)
+            }
+        })
     }
     
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction) {
@@ -185,32 +200,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                        handleErrors: handleErrors && isNotZero))
     }
     
-    func getFees(viewAction: SwapModels.Fee.ViewAction) {
-        guard let from = dataStore?.fromAmount,
-              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
-              let sender = dataStore?.sender else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
-            
-            return
-        }
-        
-        dataStore?.senderValidationResult = nil
-        
-        guard let profile = UserManager.shared.profile, from.fiatValue <= profile.swapAllowanceLifetime else {
-            setPresentAmountData(handleErrors: true)
-            return
-        }
-        
-        fetchWalletKitFee(for: from,
-                          with: sender,
-                          address: fromAddress) { [weak self] fee in
-            self?.dataStore?.fromFeeBasis = fee
-            
-            self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
-            self?.setPresentAmountData(handleErrors: true)
-        }
-    }
-    
     func assetSelected(viewAction: SwapModels.SelectedAsset.ViewAction) {
         guard let from = dataStore?.fromAmount?.currency,
               let to = dataStore?.toAmount?.currency else { return }
@@ -278,7 +267,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                           fromFeeBasis: self?.dataStore?.fromFeeBasis,
                                                           fromFeeAmount: self?.dataStore?.fromFeeAmount,
                                                           fromAmount: self?.dataStore?.fromAmount,
-                                                          toAmount: self?.dataStore?.toAmount), completion: { [weak self] error in
+                                                          toAmountCode: self?.dataStore?.toAmount?.currency.code.uppercased()), completion: { [weak self] error in
                     if let error {
                         self?.presenter?.presentError(actionResponse: .init(error: error))
                     } else {

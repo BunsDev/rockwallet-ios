@@ -34,10 +34,6 @@ enum SellModels {
         }
     }
     
-    struct Fee {
-        struct ViewAction {}
-    }
-    
     struct PaymentCards {
         struct ViewAction {
             var getCards: Bool?

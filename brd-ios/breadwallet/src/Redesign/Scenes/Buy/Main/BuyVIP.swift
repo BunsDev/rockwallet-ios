@@ -15,7 +15,6 @@ extension Scenes {
 
 protocol BuyViewActions: BaseViewActions,
                          FetchViewActions,
-                         FeeFetchable,
                          ExchangeRateViewActions,
                          AchViewActions {
     func setAmount(viewAction: BuyModels.Amounts.ViewAction)

@@ -15,7 +15,7 @@ extension Scenes {
     static let Swap = SwapViewController.self
 }
 
-protocol SwapViewActions: BaseViewActions, FetchViewActions, FeeFetchable, ExchangeRateViewActions, CreateTransactionViewActions {
+protocol SwapViewActions: BaseViewActions, FetchViewActions, ExchangeRateViewActions, CreateTransactionViewActions {
     func setAmount(viewAction: SwapModels.Amounts.ViewAction)
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction)
     func selectAsset(viewAction: SwapModels.Assets.ViewAction)
@@ -23,7 +23,7 @@ protocol SwapViewActions: BaseViewActions, FetchViewActions, FeeFetchable, Excha
     func confirm(viewAction: SwapModels.Confirm.ViewAction)
     func showAssetInfoPopup(viewAction: SwapModels.AssetInfoPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction)
-    func getFees(viewAction: SwapModels.Fee.ViewAction)
+    func prepareFees(viewAction: SwapModels.Fee.ViewAction)
 }
 
 protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, ExchangeRateActionResponses {
@@ -51,9 +51,6 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, Create
     var toAmount: Amount? { get set }
     
     var values: SwapModels.Amounts.ViewAction { get set }
-    
-    var fromFeeBasis: TransferFeeBasis? { get set }
-    var senderValidationResult: SenderValidationResult? { get set }
     
     var exchange: Exchange? { get set }
     
