@@ -146,7 +146,9 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         }
         
         cell.setup { view in
-            view.configure(with: .init())
+            view.configure(with: .init(notice: .init(font: Fonts.Body.three,
+                                                     textColor: LightColors.instantPurple,
+                                                     textAlignment: model.exceedInstantBuyLimit == true ? .left : .center)))
             view.setup(with: model)
             
             view.cardFeeInfoTapped = { [weak self] in
@@ -192,7 +194,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
-        if let store = dataStore, store.isAchAccount, store.type != .sell {
+        if let store = dataStore, store.isAchAccount && store.achDeliveryType == .instant && store.type != .sell {
             interactor?.showAchInstantDrawer(viewAction: .init())
         } else {
             showPinInput()

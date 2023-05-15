@@ -161,7 +161,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     }
     
     func showAchInstantDrawer(viewAction: OrderPreviewModels.AchInstantDrawer.ViewAction) {
-        presenter?.presentAchInstantDrawer(actionResponse: .init(quote: dataStore?.quote))
+        presenter?.presentAchInstantDrawer(actionResponse: .init(quote: dataStore?.quote, to: dataStore?.to))
     }
     
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {

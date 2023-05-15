@@ -38,6 +38,7 @@ struct BuyOrderViewModel: ViewModel {
     var networkFee: TitleValueViewModel
     var totalCost: TitleValueViewModel
     var paymentMethod: PaymentMethodViewModel?
+    var exceedInstantBuyLimit: Bool?
 }
 
 class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
@@ -149,7 +150,8 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         noticeContainer.addSubview(noticeLabel)
         
         noticeLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(Margins.small.rawValue)
         }
         
         mainStack.addArrangedSubview(titleLabel)
@@ -234,6 +236,8 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         super.setup(with: viewModel)
         
         noticeLabel.setup(with: viewModel?.notice)
+        noticeContainer.isHidden = viewModel?.notice == nil
+        
         titleLabel.setup(with: viewModel?.title)
         currencyIconImageView.wrappedView.setup(with: viewModel?.currencyIcon)
         currencyNameLabel.setup(with: viewModel?.currencyAmountName)

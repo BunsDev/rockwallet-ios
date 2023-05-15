@@ -68,6 +68,7 @@ enum OrderPreviewModels {
         struct ViewAction {}
         struct ActionResponse {
             var quote: Quote?
+            var to: Amount?
         }
         struct ResponseDisplay {
             var model: DrawerViewModel

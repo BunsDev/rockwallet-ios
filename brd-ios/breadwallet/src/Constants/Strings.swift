@@ -926,6 +926,11 @@ internal enum L10n {
         internal static let title = L10n.tr("Localizable", "Buy.Ach.Hybrid.Title", fallback: "3-5 days")
       }
       internal enum Instant {
+        /// With Instant buy, %s (%s) will show in your in your account instantly. The remaining %s (%s) will arrive
+        ///  in 3-5 days.
+        internal static func hybridConfirmationDrawer(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>, _ p4: UnsafePointer<CChar>) -> String {
+          return L10n.tr("Localizable", "Buy.Ach.Instant.HybridConfirmationDrawer", p1, p2, p3, p4, fallback: "With Instant buy, %s (%s) will show in your in your account instantly. The remaining %s (%s) will arrive\n in 3-5 days.")
+        }
         /// Receive up to $500.00 instantly
         internal static let infoButtonTitle = L10n.tr("Localizable", "Buy.Ach.Instant.InfoButtonTitle", fallback: "Receive up to $500.00 instantly")
         /// Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!
@@ -937,9 +942,9 @@ internal enum L10n {
         internal enum ConfirmationDrawer {
           /// Confirm purchase
           internal static let confirmAction = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.ConfirmAction", fallback: "Confirm purchase")
-          /// $%s assets will settle immediately.
-          internal static func description(_ p1: UnsafePointer<CChar>) -> String {
-            return L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Description", p1, fallback: "$%s assets will settle immediately.")
+          /// %s (%s) assets will settle immediately.
+          internal static func description(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Description", p1, p2, fallback: "%s (%s) assets will settle immediately.")
           }
           /// Instant purchase
           internal static let notice = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Notice", fallback: "Instant purchase")
@@ -951,6 +956,10 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Title", fallback: "Instant Buy fee")
         }
         internal enum OrderPreview {
+          /// With Instant Buy %s will be settled immediately. Remaining %s will settle in 3-5 days.
+          internal static func hybridNotice(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.OrderPreview.HybridNotice", p1, p2, fallback: "With Instant Buy %s will be settled immediately. Remaining %s will settle in 3-5 days.")
+          }
           /// With Instant Buy, %s will be settled immediately.
           internal static func notice(_ p1: UnsafePointer<CChar>) -> String {
             return L10n.tr("Localizable", "Buy.Ach.Instant.OrderPreview.Notice", p1, fallback: "With Instant Buy, %s will be settled immediately.")
@@ -2844,9 +2853,9 @@ internal enum L10n {
     internal static func fee(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "Transaction.fee", p1, fallback: "(%s fee)")
     }
-    ///  - %s/2
+    /// - %s/2
     internal static func hybridPart(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.HybridPart", p1, fallback: " - %s/2")
+      return L10n.tr("Localizable", "Transaction.HybridPart", p1, fallback: "- %s/2")
     }
     /// Invalid transaction
     internal static let invalid = L10n.tr("Localizable", "Transaction.invalid", fallback: "INVALID")

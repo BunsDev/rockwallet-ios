@@ -48,7 +48,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     private lazy var headerStack: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.distribution = .equalSpacing
+        view.distribution = .fill
         view.spacing = Margins.small.rawValue
         return view
     }()
@@ -189,6 +189,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
             make.height.equalTo(ViewSizes.small.rawValue)
         }
         headerStack.addArrangedSubview(headerTitleLabel)
+        headerStack.addArrangedSubview(UIView())
         headerStack.addArrangedSubview(headerInfoButton)
         
         mainStack.addArrangedSubview(cryptoStack)
@@ -300,7 +301,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         super.setup(with: viewModel)
         
         headerTitleLabel.setup(with: viewModel.title)
-        headerInfoButton.setup(with: .init(title: viewModel.headerInfoButtonTitle))
+        headerInfoButton.setup(with: .init(title: viewModel.headerInfoButtonTitle, shouldCapitalize: true))
         headerInfoButton.isHidden = viewModel.headerInfoButtonTitle == nil
         
         if !fiatAmountField.isFirstResponder {
