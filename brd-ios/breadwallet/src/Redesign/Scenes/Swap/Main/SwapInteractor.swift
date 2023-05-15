@@ -18,8 +18,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     var presenter: SwapPresenter?
     var dataStore: SwapStore?
     
-    private var sender: Sender?
-    
     // MARK: - SwapViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
@@ -88,7 +86,9 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         }
         
         CoinGeckoClient().load(resource)
-        _ = generateSender()
+        generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
+                                         coreSystem: dataStore?.coreSystem,
+                                         keyStore: dataStore?.keyStore))
     }
     
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction) {
@@ -188,7 +188,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     func getFees(viewAction: SwapModels.Fee.ViewAction) {
         guard let from = dataStore?.fromAmount,
               let fromAddress = from.currency.wallet?.defaultReceiveAddress,
-              let sender else {
+              let sender = dataStore?.sender else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
             
             return
@@ -272,8 +272,24 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         ExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.dataStore?.swap = data
-                self?.createTransaction(from: data)
+                self?.dataStore?.exchange = data
+                self?.createTransaction(viewAction: .init(exchange: self?.dataStore?.exchange,
+                                                          currencies: self?.dataStore?.currencies,
+                                                          fromFeeBasis: self?.dataStore?.fromFeeBasis,
+                                                          fromFeeAmount: self?.dataStore?.fromFeeAmount,
+                                                          fromAmount: self?.dataStore?.fromAmount,
+                                                          toAmount: self?.dataStore?.toAmount), completion: { [weak self] error in
+                    if let error {
+                        self?.presenter?.presentError(actionResponse: .init(error: error))
+                    } else {
+                        let from = self?.dataStore?.fromAmount?.currency.code
+                        let to = self?.dataStore?.toAmount?.currency.code
+                        
+                        self?.presenter?.presentConfirm(actionResponse: .init(from: from,
+                                                                              to: to,
+                                                                              exchangeId: self?.dataStore?.exchange?.exchangeId))
+                    }
+                })
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.failed(error: error)))
@@ -293,119 +309,4 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     
     // MARK: - Additional helpers
     
-    private func generateSender() -> Sender? {
-        guard let fromCurrency = dataStore?.fromAmount?.currency,
-              let wallet = dataStore?.coreSystem?.wallet(for: fromCurrency),
-              let keyStore = dataStore?.keyStore,
-              let kvStore = Backend.kvStore else { return nil }
-        
-        sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
-        
-        sender?.updateNetworkFees()
-        
-        return sender
-    }
-    
-    private func createTransaction(from swap: Exchange?) {
-        guard let dataStore = dataStore,
-              let currency = dataStore.currencies.first(where: { $0.code == swap?.currency }) else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
-            return
-        }
-        
-        guard let destination = swap?.address,
-              let amountValue = swap?.amount,
-              let fee = dataStore.fromFeeBasis,
-              let exchangeId = dataStore.swap?.exchangeId
-        else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
-            return
-        }
-        
-        let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
-        let transaction = sender?.createTransaction(address: destination,
-                                                    amount: amount,
-                                                    feeBasis: fee,
-                                                    comment: nil,
-                                                    exchangeId: exchangeId)
-        
-        var error: FEError?
-        switch transaction {
-        case .ok:
-            sender?.sendTransaction(allowBiometrics: false, exchangeId: exchangeId) { [weak self] data in
-                guard let pin: String = try? keychainItem(key: KeychainKey.pin) else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.pinConfirmation))
-                    return
-                }
-                data(pin)
-            } completion: { [weak self] result in
-                defer { self?.sender?.reset() }
-                
-                var error: FEError?
-                switch result {
-                case .success:
-                    ExchangeManager.shared.reload()
-                    
-                    let from = self?.dataStore?.fromAmount?.currency.code
-                    let to = self?.dataStore?.toAmount?.currency.code
-                    
-                    self?.presenter?.presentConfirm(actionResponse: .init(from: from, to: to, exchangeId: exchangeId))
-                    
-                case .creationError(let message):
-                    error = GeneralError(errorMessage: message)
-                    
-                case .insufficientGas:
-                    error = ExchangeErrors.networkFee
-                    
-                case .publishFailure(let code, let message):
-                    error = GeneralError(errorMessage: "Error \(code): \(message)")
-                }
-                
-                guard let error = error else { return }
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.failed(error: error)))
-            }
-            
-        case .failed:
-            error = GeneralError(errorMessage: "Unknown error")
-            
-        case .invalidAddress:
-            error = GeneralError(errorMessage: "Invalid address")
-            
-        case .ownAddress:
-            error = GeneralError(errorMessage: "Own address")
-            
-        case .insufficientFunds:
-            error = ExchangeErrors.balanceTooLow(balance: dataStore.fromFeeAmount?.tokenValue ?? dataStore.quote?.fromFee?.fee ?? 0, currency: currency.code)
-            
-        case .noExchangeRate:
-            error = ExchangeErrors.noQuote(from: dataStore.fromAmount?.currency.code, to: dataStore.toAmount?.currency.code)
-            
-        case .noFees:
-            error = ExchangeErrors.noFees
-            
-        case .outputTooSmall(let amount):
-            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: Constant.usdCurrencyCode, reason: .swap)
-            
-        case .invalidRequest(let string):
-            error = GeneralError(errorMessage: string)
-            
-        case .paymentTooSmall(let amount):
-            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: Constant.usdCurrencyCode, reason: .swap)
-            
-        case .usedAddress:
-            error = GeneralError(errorMessage: "Used address")
-            
-        case .identityNotCertified(let string):
-            error = GeneralError(errorMessage: "Not certified \(string)")
-            
-        case .insufficientGas:
-            error = ExchangeErrors.networkFee
-            
-        default:
-            break
-        }
-        
-        guard let error = error else { return }
-        presenter?.presentError(actionResponse: .init(error: error))
-    }
 }

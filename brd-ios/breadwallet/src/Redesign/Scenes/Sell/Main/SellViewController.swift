@@ -237,6 +237,13 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay) {
+        dataStore?.createTransactionModel = .init(exchange: dataStore?.exchange,
+                                                  currencies: dataStore?.currencies,
+                                                  fromFeeBasis: dataStore?.fromFeeBasis,
+                                                  fromFeeAmount: dataStore?.fromFeeAmount,
+                                                  fromAmount: dataStore?.fromAmount,
+                                                  toAmount: nil)
+        
         coordinator?.showOrderPreview(type: .sell,
                                       coreSystem: dataStore?.coreSystem,
                                       keyStore: dataStore?.keyStore,

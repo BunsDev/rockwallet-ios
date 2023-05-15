@@ -67,6 +67,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         var cryptoModel: MainSwapViewModel
         let cardModel: CardSelectionViewModel
         
+        let balance = actionResponse.amount?.currency.state?.balance
+        let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
+        
         let fromTokenValue = actionResponse.amount?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.amount?.tokenValue)
         let toFiatValue = actionResponse.amount?.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: actionResponse.amount?.fiatValue)
         
@@ -75,13 +78,13 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         cryptoModel = MainSwapViewModel(from: .init(amount: actionResponse.amount,
                                                     formattedTokenString: fromFormattedTokenString,
-                                                    title: .text("I have 10.12000473 USDC"),
+                                                    title: .text(balanceText),
                                                     selectionDisabled: false),
                                         
                                         to: .init(currencyCode: Constant.usdCurrencyCode,
                                                   currencyImage: Asset.us.image,
                                                   formattedTokenString: toFormattedFiatString,
-                                                  title: .text("I receive"),
+                                                  title: .text(L10n.Sell.iReceive),
                                                   selectionDisabled: true))
         
         switch actionResponse.type {

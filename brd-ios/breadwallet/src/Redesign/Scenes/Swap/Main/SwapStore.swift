@@ -12,6 +12,9 @@ import UIKit
 import WalletKit
 
 class SwapStore: NSObject, BaseDataStore, SwapDataStore {
+    // MARK: - CreateTransactionDataStore
+    
+    var sender: Sender?
     
     // MARK: - ExchangeRateDataStore
     
@@ -45,7 +48,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var termCurrencies: [String] = []
     var baseAndTermCurrencies: [[String]] = []
     
-    var swap: Exchange?
+    var exchange: Exchange?
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?

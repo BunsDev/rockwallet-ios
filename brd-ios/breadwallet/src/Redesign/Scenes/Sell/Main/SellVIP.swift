@@ -17,7 +17,8 @@ protocol SellViewActions: BaseViewActions,
                           FetchViewActions,
                           ExchangeRateViewActions,
                           FeeFetchable,
-                          AchViewActions {
+                          AchViewActions,
+                          CreateTransactionViewActions {
     func setAmount(viewAction: SellModels.Amounts.ViewAction)
     func setAssets(viewAction: SellModels.Assets.ViewAction)
     func showOrderPreview(viewAction: SellModels.OrderPreview.ViewAction)
@@ -27,6 +28,7 @@ protocol SellViewActions: BaseViewActions,
     func showLimitsInfo(viewAction: SellModels.LimitsInfo.ViewAction)
     func showInstantAchPopup(viewAction: SellModels.InstantAchPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SellModels.AssetSelectionMessage.ViewAction)
+    func getFees(viewAction: SellModels.Fee.ViewAction)
 }
 
 protocol SellActionResponses: BaseActionResponses,
@@ -59,7 +61,7 @@ protocol SellResponseDisplays: AnyObject,
     func displayAssetSelectionMessage(responseDisplay: SellModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
+protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore, CreateTransactionDataStore {
     // MARK: - SellDataStore
     
     var availablePayments: [PaymentCard.PaymentType] { get set }
@@ -77,7 +79,9 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     var fromAmount: Amount? { get set }
     var values: SellModels.Amounts.ViewAction { get set }
     
-    var swap: Exchange? { get set }
+    var exchange: Exchange? { get set }
+    
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction? { get set }
 }
 
 protocol SellDataPassing {

@@ -14,7 +14,7 @@ extension Scenes {
     static let OrderPreview = OrderPreviewViewController.self
 }
 
-protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions {
+protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions, CreateTransactionViewActions {
     func showTermsAndConditions(viewAction: OrderPreviewModels.TermsAndConditions.ViewAction)
     func checkTimeOut(viewAction: OrderPreviewModels.ExpirationValidations.ViewAction)
     func showInfoPopup(viewAction: OrderPreviewModels.InfoPopup.ViewAction)
@@ -57,7 +57,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayPreview(responseDisplay: OrderPreviewModels.Preview.ResponseDsiaply)
 }
 
-protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
+protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore, CreateTransactionDataStore {
     var type: PreviewType? { get set }
     var to: Amount? { get set }
     var from: Decimal? { get set }
@@ -69,6 +69,7 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
     var paymentReference: String? { get set }
     var paymentstatus: AddCard.Status? { get set }
     var isAchAccount: Bool { get }
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction? { get set }
     var secondFactorCode: String? { get set }
     var secondFactorBackup: String? { get set }
 }
@@ -85,7 +86,8 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
                           from: Decimal?,
                           card: PaymentCard?,
                           quote: Quote?,
-                          availablePayments: [PaymentCard.PaymentType]?)
+                          availablePayments: [PaymentCard.PaymentType]?,
+                          createTransactionModel: CreateTransactionModels.Transaction.ViewAction?)
     func showTermsAndConditions(url: URL)
     func showTimeout(type: PreviewType?)
     func showThreeDSecure(url: URL)

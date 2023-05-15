@@ -144,7 +144,7 @@ class Sender: Subscriber {
                            address: String,
                            amount: Amount,
                            feeBasis: TransferFeeBasis,
-                           comment: String?,
+                           comment: String? = nil,
                            attribute: String? = nil,
                            gift: Gift? = nil,
                            exchangeId: String? = nil,

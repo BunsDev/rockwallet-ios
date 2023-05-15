@@ -15,7 +15,7 @@ extension Scenes {
     static let Swap = SwapViewController.self
 }
 
-protocol SwapViewActions: BaseViewActions, FetchViewActions, FeeFetchable, ExchangeRateViewActions {
+protocol SwapViewActions: BaseViewActions, FetchViewActions, FeeFetchable, ExchangeRateViewActions, CreateTransactionViewActions {
     func setAmount(viewAction: SwapModels.Amounts.ViewAction)
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction)
     func selectAsset(viewAction: SwapModels.Assets.ViewAction)
@@ -23,6 +23,7 @@ protocol SwapViewActions: BaseViewActions, FetchViewActions, FeeFetchable, Excha
     func confirm(viewAction: SwapModels.Confirm.ViewAction)
     func showAssetInfoPopup(viewAction: SwapModels.AssetInfoPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction)
+    func getFees(viewAction: SwapModels.Fee.ViewAction)
 }
 
 protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, ExchangeRateActionResponses {
@@ -43,7 +44,7 @@ protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDis
     func displayAssetSelectionMessage(responseDisplay: SwapModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
+protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, CreateTransactionDataStore {
     var showTimer: Bool { get set }
     
     var fromAmount: Amount? { get set }
@@ -54,7 +55,7 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore {
     var fromFeeBasis: TransferFeeBasis? { get set }
     var senderValidationResult: SenderValidationResult? { get set }
     
-    var swap: Exchange? { get set }
+    var exchange: Exchange? { get set }
     
     var fromRate: Decimal? { get set }
     var toRate: Decimal? { get set }

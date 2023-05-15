@@ -10,6 +10,9 @@ import UIKit
 import WalletKit
 
 class SellStore: NSObject, BaseDataStore, SellDataStore {
+    // MARK: - CreateTransactionDataStore
+    
+    var sender: Sender?
     
     // MARK: - ExchangeRateDataStore
     
@@ -17,7 +20,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var fromCode: String { fromAmount?.currency.code ?? "" }
     var toCode: String { Constant.usdCurrencyCode }
-    var isFromBuy: Bool = false
+    var isFromBuy: Bool = true
     var showTimer: Bool = false
     var values: SellModels.Amounts.ViewAction = .init()
     var quoteRequestData: QuoteRequestData {
@@ -57,7 +60,9 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var fromFeeBasis: TransferFeeBasis?
     var senderValidationResult: SenderValidationResult?
     
-    var swap: Exchange?
+    var exchange: Exchange?
+    
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction?
     
     var secondFactorCode: String?
     var secondFactorBackup: String?

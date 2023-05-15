@@ -36,14 +36,6 @@ enum SellModels {
     
     struct Fee {
         struct ViewAction {}
-        
-        struct ActionResponse {
-            var to: Decimal?
-        }
-        
-        struct ResponseDisplay {
-            var to: String?
-        }
     }
     
     struct PaymentCards {

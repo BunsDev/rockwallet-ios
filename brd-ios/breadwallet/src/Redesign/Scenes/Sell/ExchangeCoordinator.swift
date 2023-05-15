@@ -18,7 +18,8 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                           from: Decimal?,
                           card: PaymentCard?,
                           quote: Quote?,
-                          availablePayments: [PaymentCard.PaymentType]?) {
+                          availablePayments: [PaymentCard.PaymentType]?,
+                          createTransactionModel: CreateTransactionModels.Transaction.ViewAction? = nil) {
         open(scene: Scenes.OrderPreview) { vc in
             vc.dataStore?.type = type
             vc.dataStore?.coreSystem = coreSystem
@@ -28,6 +29,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.dataStore?.card = card
             vc.dataStore?.quote = quote
             vc.dataStore?.availablePayments = availablePayments
+            vc.dataStore?.createTransactionModel = createTransactionModel
         }
     }
     

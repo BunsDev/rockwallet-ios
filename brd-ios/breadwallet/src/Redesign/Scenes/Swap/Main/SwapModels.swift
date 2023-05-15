@@ -73,16 +73,6 @@ enum SwapModels {
     
     struct Fee {
         struct ViewAction {}
-        
-        struct ActionResponse {
-            var from: Decimal?
-            var to: Decimal?
-        }
-        
-        struct ResponseDisplay {
-            var from: String?
-            var to: String?
-        }
     }
     
     struct ShowConfirmDialog {

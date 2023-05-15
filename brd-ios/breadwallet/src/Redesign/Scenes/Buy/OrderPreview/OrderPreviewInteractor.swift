@@ -22,6 +22,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard dataStore?.type != nil else { return }
+        
         guard let reference = dataStore?.paymentReference else {
             let item: Models.Item = (type: dataStore?.type,
                                      to: dataStore?.to,
@@ -75,7 +76,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     func submit(viewAction: OrderPreviewModels.Submit.ViewAction) {
         switch dataStore?.isAchAccount {
         case true:
-            submitAchBuy()
+            submitAch()
+            
         default:
             submitBuy()
         }
@@ -137,8 +139,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference
-                guard let redirectUrlString = exchangeData?.redirectUrl, let
-                        redirectUrl = URL(string: redirectUrlString) else {
+                guard let redirectUrlString = exchangeData?.redirectUrl, let redirectUrl = URL(string: redirectUrlString) else {
                     self?.getData(viewAction: .init())
                     return
                 }
@@ -175,17 +176,14 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.submitBuy()
                 return
             }
-            self?.submitAchBuy()
+            self?.submitAch()
         }
     }
     
-    private func submitAchBuy() {
+    private func submitAch() {
         guard let currency = dataStore?.to?.currency,
-              let address = currency.wallet?.defaultReceiveAddress,
               let to = dataStore?.to?.tokenValue,
-              let from = dataStore?.from,
-              let networkFee = dataStore?.networkFee
-        else { return }
+              let from = dataStore?.from else { return }
         
         let cryptoFormatter = ExchangeFormatter.crypto
         cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
@@ -208,26 +206,26 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         
         // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
         var networkFeeValue: Decimal {
-            guard from >= instantAchLimit else {
-                return networkFee.fiatValue
+            guard from >= instantAchLimit && dataStore?.type != .sell else {
+                return dataStore?.networkFee?.fiatValue ?? 0
             }
             
-            return 2 * networkFee.fiatValue
+            return 2 * (dataStore?.networkFee?.fiatValue ?? 0)
         }
         
         var depositQuantity = fromAmount + networkFeeValue + achFee
         if dataStore?.achDeliveryType == .instant {
-            depositQuantity +=  instantAchFeeUsd
+            depositQuantity += instantAchFeeUsd
         }
         let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
         let data = AchExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
                                           depositQuantity: formattedDepositQuantity,
                                           withdrawalQuantity: toTokenValue,
-                                          destination: address,
+                                          destination: dataStore?.type == .sell ? nil : currency.wallet?.defaultReceiveAddress,
                                           accountId: dataStore?.card?.id,
-                                          nologCvv: dataStore?.cvv?.description,
-                                          useInstantAch: dataStore?.achDeliveryType == .instant,
+                                          nologCvv: dataStore?.type == .sell ? nil : dataStore?.cvv?.description,
+                                          useInstantAch: dataStore?.type == .sell ? nil : dataStore?.achDeliveryType == .instant,
                                           secondFactorCode: dataStore?.secondFactorCode,
                                           secondFactorBackup: dataStore?.secondFactorBackup)
         
@@ -235,9 +233,16 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference
-                guard let redirectUrlString = exchangeData?.redirectUrl, let
-                        redirectUrl = URL(string: redirectUrlString) else {
-                    self?.getData(viewAction: .init())
+                guard let redirectUrlString = exchangeData?.redirectUrl, let redirectUrl = URL(string: redirectUrlString) else {
+                    if self?.dataStore?.type == .sell {
+                        self?.createTransaction(viewAction: self?.dataStore?.createTransactionModel,
+                                                completion: { [weak self] error in
+                            self?.getData(viewAction: .init())
+                        })
+                    } else {
+                        self?.getData(viewAction: .init())
+                    }
+                    
                     return
                 }
                 
