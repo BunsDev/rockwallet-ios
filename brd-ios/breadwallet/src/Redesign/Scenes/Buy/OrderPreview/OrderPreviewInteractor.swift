@@ -181,48 +181,54 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     }
     
     private func submitAch() {
-        guard let currency = dataStore?.to?.currency,
-              let to = dataStore?.to?.tokenValue,
-              let from = dataStore?.from else { return }
+        let currency = dataStore?.to?.currency
         
         let cryptoFormatter = ExchangeFormatter.crypto
         cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
-        
-        let toTokenValue = cryptoFormatter.string(for: to) ?? ""
         
         let fiatFormatter = ExchangeFormatter.fiat
         fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
         
         let buyFee = ((dataStore?.quote?.buyFee ?? 0) / 100) + 1
-        let fromAmount = from * buyFee
+        let fromAmount = (dataStore?.from ?? 0) * buyFee
         
-        let achFee = dataStore?.quote?.buyFeeUsd ?? 0
+        let formattedDepositQuantity: String
+        let formattedWithdrawalQuantity: String
         
-        let instantAchFee = (dataStore?.quote?.instantAch?.feePercentage ?? 0) / 100
-        let instantAchLimit = dataStore?.quote?.instantAch?.limitUsd ?? 0
-        let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
-        
-        // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
-        var networkFeeValue: Decimal {
-            guard from >= instantAchLimit && dataStore?.type != .sell else {
-                return dataStore?.networkFee?.fiatValue ?? 0
+        if dataStore?.type == .sell {
+            formattedDepositQuantity = cryptoFormatter.string(for: dataStore?.to?.tokenValue ?? 0) ?? ""
+            formattedWithdrawalQuantity = fiatFormatter.string(from: (fromAmount) as NSNumber) ?? ""
+        } else {
+            let achFee = dataStore?.quote?.buyFeeUsd ?? 0
+            
+            let instantAchFee = (dataStore?.quote?.instantAch?.feePercentage ?? 0) / 100
+            let instantAchLimit = dataStore?.quote?.instantAch?.limitUsd ?? 0
+            let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
+            
+            // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
+            var networkFeeValue: Decimal {
+                guard dataStore?.from ?? 0 >= instantAchLimit && dataStore?.type != .sell else {
+                    return dataStore?.networkFee?.fiatValue ?? 0
+                }
+                
+                return 2 * (dataStore?.networkFee?.fiatValue ?? 0)
             }
             
-            return 2 * (dataStore?.networkFee?.fiatValue ?? 0)
+            var depositQuantity = fromAmount + networkFeeValue + achFee
+            if dataStore?.achDeliveryType == .instant {
+                depositQuantity += instantAchFeeUsd
+            }
+            
+            formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
+            formattedWithdrawalQuantity = cryptoFormatter.string(for: dataStore?.from ?? 0) ?? ""
         }
-        
-        var depositQuantity = fromAmount + networkFeeValue + achFee
-        if dataStore?.achDeliveryType == .instant {
-            depositQuantity += instantAchFeeUsd
-        }
-        let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
         let data = AchExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
                                           depositQuantity: formattedDepositQuantity,
-                                          withdrawalQuantity: toTokenValue,
-                                          destination: dataStore?.type == .sell ? nil : currency.wallet?.defaultReceiveAddress,
+                                          withdrawalQuantity: formattedWithdrawalQuantity,
+                                          destination: dataStore?.type == .sell ? nil : currency?.wallet?.defaultReceiveAddress,
                                           accountId: dataStore?.card?.id,
                                           nologCvv: dataStore?.type == .sell ? nil : dataStore?.cvv?.description,
                                           useInstantAch: dataStore?.type == .sell ? nil : dataStore?.achDeliveryType == .instant,
