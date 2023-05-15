@@ -119,7 +119,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
         }
         
-        cell.setupCustomMargins(vertical: .large, horizontal: .large)
+        cell.setupCustomMargins(vertical: .small, horizontal: .large)
         
         return cell
     }
