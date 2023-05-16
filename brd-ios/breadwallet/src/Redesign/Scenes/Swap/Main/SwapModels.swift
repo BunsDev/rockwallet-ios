@@ -26,25 +26,6 @@ enum SwapModels {
             var toCryptoAmount: String?
             var handleErrors = false
         }
-        
-        struct ActionResponse {
-            var fromAmount: Amount?
-            var toAmount: Amount?
-            
-            var fromFee: Amount?
-            var toFee: Amount?
-            
-            var senderValidationResult: SenderValidationResult?
-            var fromFeeBasis: TransferFeeBasis?
-            var fromFeeAmount: Amount?
-            var fromFeeCurrency: Currency?
-            var quote: Quote?
-            
-            var baseBalance: Amount?
-            var minimumValue: Decimal?
-            var minimumUsd: Decimal?
-            var handleErrors = false
-        }
     }
     
     struct SelectedAsset {

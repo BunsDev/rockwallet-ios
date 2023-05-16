@@ -15,19 +15,6 @@ enum BuyModels {
     }
     
     struct Assets {
-        struct ViewAction {
-            var currency: String?
-            var card: PaymentCard?
-        }
-        
-        struct ActionResponse {
-            var amount: Amount?
-            var card: PaymentCard?
-            var type: PaymentCard.PaymentType?
-            var quote: Quote?
-            var handleErrors = false
-        }
-        
         struct ResponseDisplay {
             var cryptoModel: SwapCurrencyViewModel?
             var cardModel: CardSelectionViewModel?
@@ -57,13 +44,6 @@ enum BuyModels {
         
         struct ResponseDisplay {
             var allPaymentCards: [PaymentCard]
-        }
-    }
-    
-    struct Amounts {
-        struct ViewAction {
-            var fiatValue: String?
-            var tokenValue: String?
         }
     }
     

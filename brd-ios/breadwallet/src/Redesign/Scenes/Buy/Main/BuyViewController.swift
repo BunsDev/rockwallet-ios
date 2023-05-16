@@ -245,7 +245,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             self?.coordinator?.dismissFlow()
-            self?.interactor?.setAssets(viewAction: .init(currency: model.subtitle))
+            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle))
         }
     }
     
@@ -258,13 +258,13 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
             guard let selectedCard = selectedCard else { return }
-            self?.interactor?.setAssets(viewAction: .init(card: selectedCard))
+            self?.interactor?.setAmount(viewAction: .init(card: selectedCard))
         }, completion: { [weak self] in
             self?.interactor?.getPayments(viewAction: .init())
         })
     }
     
-    func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
+    func displayAmount(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,

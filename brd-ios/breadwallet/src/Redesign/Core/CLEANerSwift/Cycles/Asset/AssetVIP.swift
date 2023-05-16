@@ -1,5 +1,5 @@
 // 
-//  ExchangeRateVIP.swift
+//  AsstetVIP.swift
 //  breadwallet
 //
 //  Created by Rok on 09/12/2022.
@@ -10,26 +10,26 @@
 
 import UIKit
 
-protocol ExchangeRateViewActions {
-    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
-    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
+protocol AssetViewActions {
+    func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
+    func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
 }
 
-protocol ExchangeRateActionResponses {
-    func presentExchangeRate(actionResponse: ExchangeRateModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
+protocol AssetActionResponses {
+    func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
 }
 
-protocol ExchangeRateResponseDisplays {
+protocol AssetResponseDisplays {
     var tableView: ContentSizedTableView { get set }
     var continueButton: FEButton { get set }
     
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>?
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>?
     
-    func displayExchangeRate(responseDisplay: ExchangeRateModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?)
+    func displayExchangeRate(responseDisplay: AssetModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?)
 }
 
-protocol ExchangeDataStore: NSObject {
+protocol AssetDataStore: NSObject {
     var limits: NSMutableAttributedString? { get }
     var fromCode: String { get }
     var toCode: String { get }
@@ -42,10 +42,10 @@ protocol ExchangeDataStore: NSObject {
     var secondFactorBackup: String? { get set }
 }
 
-extension Interactor where Self: ExchangeRateViewActions,
-                           Self.DataStore: ExchangeDataStore,
-                           Self.ActionResponses: ExchangeRateActionResponses {
-    func getExchangeRate(viewAction: ExchangeRateModels.ExchangeRate.ViewAction, completion: (() -> Void)?) {
+extension Interactor where Self: AssetViewActions,
+                           Self.DataStore: AssetDataStore,
+                           Self.ActionResponses: AssetActionResponses {
+    func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?) {
         guard let fromCurrency = dataStore?.fromCode.uppercased(),
               let toCurrency = dataStore?.toCode.uppercased(),
               var data = dataStore?.quoteRequestData else { return }
@@ -81,12 +81,12 @@ extension Interactor where Self: ExchangeRateViewActions,
         }
     }
     
-    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}
+    func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}
 }
 
-extension Presenter where Self: ExchangeRateActionResponses,
-                          Self.ResponseDisplays: ExchangeRateResponseDisplays {
-    func presentExchangeRate(actionResponse: ExchangeRateModels.ExchangeRate.ActionResponse, completion: (() -> Void)?) {
+extension Presenter where Self: AssetActionResponses,
+                          Self.ResponseDisplays: AssetResponseDisplays {
+    func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?) {
         var exchangeRateViewModel: ExchangeRateViewModel
         if let from = actionResponse.from,
            let to = actionResponse.to,
@@ -113,9 +113,9 @@ extension Presenter where Self: ExchangeRateActionResponses,
     }
 }
 
-extension Controller where Self: ExchangeRateResponseDisplays,
-                           Self.ViewActions: ExchangeRateViewActions {
-    func displayExchangeRate(responseDisplay: ExchangeRateModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?) {
+extension Controller where Self: AssetResponseDisplays,
+                           Self.ViewActions: AssetViewActions {
+    func displayExchangeRate(responseDisplay: AssetModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?) {
         if let cell = getRateAndTimerCell(), let rateAndTimer = responseDisplay.rateAndTimer {
             cell.wrappedView.invalidate()
             

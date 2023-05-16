@@ -62,7 +62,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             .submit
         ]
         
-        if isAchAccount {
+        if isAchAccount && item.type != .sell {
             sections.insert(.achSegment, at: 0)
         }
         

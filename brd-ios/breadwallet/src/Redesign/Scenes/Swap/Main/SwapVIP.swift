@@ -15,7 +15,7 @@ extension Scenes {
     static let Swap = SwapViewController.self
 }
 
-protocol SwapViewActions: BaseViewActions, FetchViewActions, ExchangeRateViewActions, CreateTransactionViewActions {
+protocol SwapViewActions: BaseViewActions, FetchViewActions, AssetViewActions, CreateTransactionViewActions {
     func setAmount(viewAction: SwapModels.Amounts.ViewAction)
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction)
     func selectAsset(viewAction: SwapModels.Assets.ViewAction)
@@ -26,8 +26,8 @@ protocol SwapViewActions: BaseViewActions, FetchViewActions, ExchangeRateViewAct
     func prepareFees(viewAction: SwapModels.Fee.ViewAction)
 }
 
-protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, ExchangeRateActionResponses {
-    func presentAmount(actionResponse: SwapModels.Amounts.ActionResponse)
+protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, AssetActionResponses {
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentSelectAsset(actionResponse: SwapModels.Assets.ActionResponse)
     func presentConfirmation(actionResponse: SwapModels.ShowConfirmDialog.ActionResponse)
     func presentConfirm(actionResponse: SwapModels.Confirm.ActionResponse)
@@ -35,7 +35,7 @@ protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, Exchang
     func presentAssetSelectionMessage(actionResponse: SwapModels.AssetSelectionMessage.ActionResponse)
 }
 
-protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays {
+protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays {
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay)
     func displayConfirmation(responseDisplay: SwapModels.ShowConfirmDialog.ResponseDisplay)
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay)
@@ -44,7 +44,7 @@ protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDis
     func displayAssetSelectionMessage(responseDisplay: SwapModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol SwapDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, CreateTransactionDataStore {
+protocol SwapDataStore: BaseDataStore, FetchDataStore, AssetDataStore, CreateTransactionDataStore {
     var showTimer: Bool { get set }
     
     var fromAmount: Amount? { get set }
