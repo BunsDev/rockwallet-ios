@@ -62,13 +62,16 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentAmount(actionResponse: SwapModels.Amounts.ActionResponse) {
-        guard let from = actionResponse.fromAmount, let to = actionResponse.toAmount else { return }
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse) {
+        guard let from = actionResponse.fromAmount,
+              let to = actionResponse.toAmount else { return }
+        
+        let quote = actionResponse.quote
         
         let fromCode = from.currency.code.uppercased()
         let toCode = to.currency.code.uppercased()
         
-        let balance = actionResponse.baseBalance
+        let balance = from.currency.state?.balance
         let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
         let receivingFee = L10n.Swap.receiveNetworkFee
         
@@ -100,7 +103,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         presentError(actionResponse: .init(error: nil))
         
         guard actionResponse.handleErrors else {
-            if actionResponse.quote?.isMinimumImpactedByWithdrawal == true
+            if quote?.isMinimumImpactedByWithdrawal == true
                 && (fromCurrencyCode != fromCode || toCurrencyCode != toCode) {
                 fromCurrencyCode = fromCode
                 toCurrencyCode = toCode
@@ -137,7 +140,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         }
         
         if case .insufficientFunds = senderValidationResult {
-            let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
+            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
             let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
             presentError(actionResponse: .init(error: error))
             hasError = true
@@ -154,13 +157,13 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 hasError = true
                 
             } else if actionResponse.fromFeeBasis?.fee != nil {
-                let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
+                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
                 let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
                 presentError(actionResponse: .init(error: error))
                 hasError = true
                 
             }
-        } else if actionResponse.baseBalance == nil || actionResponse.quote == nil {
+        } else if quote == nil {
             presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: fromCode, to: toCode)))
             hasError = true
         } else if ExchangeManager.shared.canSwap(from.currency) == false {
@@ -177,8 +180,9 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         } else if let profile = UserManager.shared.profile {
             let fiatValue = from.fiatValue.round(to: 2)
             let tokenValue = from.tokenValue
-            let minimumValue = actionResponse.minimumValue ?? 0
-            let minimumUsd = actionResponse.minimumUsd ?? 0
+            
+            let minimumValue = quote?.minimumValue ?? 0
+            let minimumUsd = quote?.minimumUsd ?? 0
             
             let dailyLimit = profile.swapAllowanceDaily
             let lifetimeLimit = profile.swapAllowanceLifetime
@@ -190,7 +194,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                 presentError(actionResponse: .init(error: nil))
                 hasError = true
                 
-            case _ where fiatValue > (actionResponse.baseBalance?.fiatValue ?? 0):
+            case _ where fiatValue > (balance?.fiatValue ?? 0):
                 // Value higher than balance
                 let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
                 let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.fromFeeAmount?.currency.code.uppercased() ?? "")

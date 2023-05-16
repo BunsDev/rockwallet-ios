@@ -23,7 +23,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var toCode: String { Constant.usdCurrencyCode }
     var isFromBuy: Bool = true
     var showTimer: Bool = false
-    var values: SellModels.Amounts.ViewAction = .init()
+    var values: AssetModels.Asset.ViewAction = .init()
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
                      to: toCode,

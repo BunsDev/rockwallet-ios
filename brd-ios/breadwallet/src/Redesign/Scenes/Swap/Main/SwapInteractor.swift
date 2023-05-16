@@ -51,7 +51,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         setInitialData(getFees: true)
     }
     
-    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {
+    func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {
         guard let baseCurrency = dataStore?.fromAmount?.currency.coinGeckoId,
               let termCurrency = dataStore?.toAmount?.currency.coinGeckoId else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: dataStore?.fromCode, to: dataStore?.toCode)))
@@ -195,9 +195,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                        fromFeeAmount: dataStore?.fromFeeAmount,
                                                        fromFeeCurrency: dataStore?.sender?.wallet.feeCurrency,
                                                        quote: dataStore?.quote,
-                                                       baseBalance: dataStore?.fromAmount?.currency.state?.balance,
-                                                       minimumValue: dataStore?.quote?.minimumValue,
-                                                       minimumUsd: dataStore?.quote?.minimumUsd,
                                                        handleErrors: handleErrors && isNotZero))
     }
     

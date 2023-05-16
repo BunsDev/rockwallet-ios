@@ -63,25 +63,34 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentAssets(actionResponse: SellModels.Assets.ActionResponse) {
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse) {
+        guard let from = actionResponse.fromAmount else { return }
+        
+        let quote = actionResponse.quote
+        
+        let fromCode = from.currency.code.uppercased()
+        let toCode = Constant.usdCurrencyCode
+        
+        let fromFee = actionResponse.fromFee
+        
         var cryptoModel: MainSwapViewModel
         let cardModel: CardSelectionViewModel
         
-        let balance = actionResponse.amount?.currency.state?.balance
+        let balance = from.currency.state?.balance
         let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
         
-        let fromTokenValue = actionResponse.amount?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.amount?.tokenValue)
-        let toFiatValue = actionResponse.amount?.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: actionResponse.amount?.fiatValue)
+        let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: from.tokenValue)
+        let toFiatValue = from.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: from.fiatValue)
         
         let fromFormattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
         let toFormattedFiatString = ExchangeFormatter.createAmountString(string: toFiatValue ?? "")
         
-        cryptoModel = MainSwapViewModel(from: .init(amount: actionResponse.amount,
+        cryptoModel = MainSwapViewModel(from: .init(amount: from,
                                                     formattedTokenString: fromFormattedTokenString,
                                                     title: .text(balanceText),
                                                     selectionDisabled: false),
                                         
-                                        to: .init(currencyCode: Constant.usdCurrencyCode,
+                                        to: .init(currencyCode: toCode,
                                                   currencyImage: Asset.us.image,
                                                   formattedTokenString: toFormattedFiatString,
                                                   title: .text(L10n.Sell.iReceive),
@@ -127,43 +136,91 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             }
         }
         
-        viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
+        viewController?.displayAmount(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
-        handleError(actionResponse: actionResponse)
-    }
-    
-    // TODO: Make SWAP BUY SELL errors reusable.
-    private func handleError(actionResponse: SellModels.Assets.ActionResponse) {
-        let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
-        let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
-        let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
         
-        let profile = UserManager.shared.profile
-        let lifetimeLimit = profile?.sellAllowanceLifetime ?? 0
+        var senderValidationResult = actionResponse.senderValidationResult ?? .ok
         
-        switch fiat {
-        case _ where fiat <= 0:
-            // Fiat value is below 0
-            presentError(actionResponse: .init(error: nil))
+        if let feeCurrency = actionResponse.fromFeeCurrency,
+           let feeCurrencyWalletBalance = feeCurrency.wallet?.balance,
+           let fee = actionResponse.fromFeeBasis?.fee {
+            let feeAmount = Amount(cryptoAmount: fee, currency: feeCurrency)
+
+            if feeCurrency.isEthereum, feeAmount > feeCurrencyWalletBalance {
+                senderValidationResult = .insufficientGas
+            }
+
+            if let balance = from.currency.state?.balance,
+               from.currency == feeAmount.currency {
+                if from + feeAmount > balance {
+                    senderValidationResult = .insufficientGas
+                }
+            }
+        }
+        
+        if case .insufficientFunds = senderValidationResult {
+            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+            let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
+            presentError(actionResponse: .init(error: error))
             
-        case _ where fiat < minimumAmount:
-            // Value below minimum Fiat
-            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
+        } else if case .insufficientGas = senderValidationResult {
+            if from.currency.isEthereum {
+                let error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
+                presentError(actionResponse: .init(error: error))
+                
+            } else if from.currency.isERC20Token {
+                let error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
+                presentError(actionResponse: .init(error: error))
+                
+            } else if actionResponse.fromFeeBasis?.fee != nil {
+                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+                let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
+                presentError(actionResponse: .init(error: error))
+                
+            }
+        } else if quote == nil {
+            presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: fromCode, to: toCode)))
             
-        case _ where fiat > lifetimeLimit,
-            _ where minimumAmount > lifetimeLimit:
-            // Over lifetime limit
-            presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
+        } else if ExchangeManager.shared.canSwap(from.currency) == false {
+            presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
             
-        case _ where fiat > maximumAmount,
-            _ where minimumAmount > maximumAmount:
-            // Over exchange limit
-            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
+        } else if let feeAmount = fromFee,
+                  let feeWallet = feeAmount.currency.wallet,
+                  feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
+            let error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
+            presentError(actionResponse: .init(error: error))
             
-        default:
-            // Remove error
-            presentError(actionResponse: .init(error: nil))
+        } else if let profile = UserManager.shared.profile {
+            let fiat = from.fiatValue.round(to: 2)
+            let minimumAmount = quote?.minimumUsd ?? 0
+            let maximumAmount = quote?.maximumUsd ?? 0
+            
+            let lifetimeLimit = profile.sellAllowanceLifetime
+            
+            switch fiat {
+            case _ where fiat <= 0:
+                // Fiat value is below 0
+                presentError(actionResponse: .init(error: nil))
+                
+            case _ where fiat < minimumAmount:
+                // Value below minimum Fiat
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: toCode, reason: .buyCard(nil))))
+                
+            case _ where fiat > lifetimeLimit,
+                _ where minimumAmount > lifetimeLimit:
+                // Over lifetime limit
+                presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
+                
+            case _ where fiat > maximumAmount,
+                _ where minimumAmount > maximumAmount:
+                // Over exchange limit
+                presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: toCode, reason: .buyCard(nil))))
+                
+            default:
+                // Remove error
+                presentError(actionResponse: .init(error: nil))
+            }
         }
     }
     

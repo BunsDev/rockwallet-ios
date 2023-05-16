@@ -28,7 +28,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var isFromBuy = true
-    var values: BuyModels.Amounts.ViewAction = .init()
+    var values: AssetModels.Asset.ViewAction = .init()
     var paymentMethod: PaymentCard.PaymentType? {
         didSet {
             guard toAmount == nil, let currency = currencies.first(where: {

@@ -120,13 +120,13 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                     
                     switch vc?.dataStore?.confirmationType {
                     case .twoStepAppBackupCode:
-                        (self.dataStore as? ExchangeDataStore)?.secondFactorBackup = vc?.dataStore?.code
+                        (self.dataStore as? AssetDataStore)?.secondFactorBackup = vc?.dataStore?.code
                         
                     default:
-                        (self.dataStore as? ExchangeDataStore)?.secondFactorCode = vc?.dataStore?.code
+                        (self.dataStore as? AssetDataStore)?.secondFactorCode = vc?.dataStore?.code
                     }
                     
-                    (self.interactor as? ExchangeRateViewActions)?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
+                    (self.interactor as? AssetViewActions)?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
                 }
             }
             
