@@ -71,7 +71,7 @@ extension Interactor where Self: AssetViewActions,
                     }
                 })
                 
-            case .failure(let error):
+            case .failure:
                 self?.dataStore?.quote = nil
                 
                 completion?()
