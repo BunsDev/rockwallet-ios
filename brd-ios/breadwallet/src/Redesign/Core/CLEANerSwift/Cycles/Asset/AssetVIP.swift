@@ -76,7 +76,8 @@ extension Interactor where Self: AssetViewActions,
                 
                 completion?()
                 
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: fromCurrency,
+                                                                                                  to: toCurrency)))
             }
         }
     }
