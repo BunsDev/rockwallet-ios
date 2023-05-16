@@ -111,11 +111,11 @@ struct Profile: Model {
     var achAllowanceDaily: Decimal {
         return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyAch })?.limit ?? 0
     }
-    var achAllowancePerPurchase: Decimal {
+    var achAllowancePerExchange: Decimal {
         return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyAch })?.limit ?? 0
     }
     
-    var buyAllowancePerPurchase: Decimal {
+    var buyAllowancePerExchange: Decimal {
         return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyCard })?.limit ?? 0
     }
     var buyAllowanceDaily: Decimal {
@@ -152,6 +152,12 @@ struct Profile: Model {
     
     var sellAllowanceLifetime: Decimal {
         return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .sell })?.limit ?? 0
+    }
+    var sellAllowanceDaily: Decimal {
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .sell })?.limit ?? 0
+    }
+    var sellAllowancePerExchange: Decimal {
+        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .sell })?.limit ?? 0
     }
 }
 

@@ -17,6 +17,7 @@ protocol AssetViewActions {
 
 protocol AssetActionResponses {
     func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
+    func handleError(actionResponse: AssetModels.Asset.ActionResponse) -> Bool
 }
 
 protocol AssetResponseDisplays {
@@ -111,6 +112,163 @@ extension Presenter where Self: AssetActionResponses,
         viewController?.displayExchangeRate(responseDisplay: .init(rateAndTimer: exchangeRateViewModel,
                                                                    accountLimits: .attributedText(actionResponse.limits)),
                                             completion: completion)
+    }
+    
+    func handleError(actionResponse: AssetModels.Asset.ActionResponse) -> Bool {
+        guard let from = actionResponse.fromAmount else { return true }
+        
+        let quote = actionResponse.quote
+        
+        let balance = from.currency.state?.balance
+        
+        let fromCode = from.currency.code.uppercased()
+        let toCode = Constant.usdCurrencyCode
+        
+        let fromFee = actionResponse.fromFee
+        
+        var senderValidationResult = actionResponse.senderValidationResult ?? .ok
+        var hasError = false
+        
+        if let feeCurrency = actionResponse.fromFeeCurrency,
+           let feeCurrencyWalletBalance = feeCurrency.wallet?.balance,
+           let fee = actionResponse.fromFeeBasis?.fee {
+            let feeAmount = Amount(cryptoAmount: fee, currency: feeCurrency)
+
+            if feeCurrency.isEthereum, feeAmount > feeCurrencyWalletBalance {
+                senderValidationResult = .insufficientGas
+            }
+
+            if from.currency == feeAmount.currency {
+                if let balance, from + feeAmount > balance {
+                    senderValidationResult = .insufficientGas
+                }
+            }
+        }
+        
+        if case .insufficientFunds = senderValidationResult {
+            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+            let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
+            presentError(actionResponse: .init(error: error))
+            hasError = true
+            
+        } else if case .insufficientGas = senderValidationResult {
+            if from.currency.isEthereum {
+                let error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+                
+            } else if from.currency.isERC20Token {
+                let error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+                
+            } else if actionResponse.fromFeeBasis?.fee != nil {
+                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+                let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+                
+            }
+        } else if quote == nil {
+            presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: fromCode, to: toCode)))
+            hasError = true
+            
+        } else if ExchangeManager.shared.canSwap(from.currency) == false {
+            presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
+            hasError = true
+            
+        } else if let feeAmount = fromFee,
+                  let feeWallet = feeAmount.currency.wallet,
+                  feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
+            let error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
+            presentError(actionResponse: .init(error: error))
+            hasError = true
+            
+        } else if let profile = UserManager.shared.profile {
+            let fiat = from.fiatValue.round(to: 2)
+            let token = from.tokenValue
+            
+            let minimumValue = quote?.minimumValue ?? 0
+            let minimumUsd = quote?.minimumUsd ?? 0
+            let maximumUsd = quote?.maximumUsd ?? 0
+            
+            var lifetimeLimit: Decimal = 0
+            var dailyLimit: Decimal = 0
+            var perExchangeLimit: Decimal = 0
+            var reason: BaseInfoModels.FailureReason = .swap
+            
+            if self.isKind(of: BuyPresenter.self) {
+                lifetimeLimit = profile.buyAllowanceLifetime
+                dailyLimit = profile.buyAllowanceDaily
+                perExchangeLimit = profile.buyAllowancePerExchange
+                reason = .buyCard(nil)
+            } else if self.isKind(of: SellPresenter.self) {
+                lifetimeLimit = profile.sellAllowanceLifetime
+                dailyLimit = profile.sellAllowanceDaily
+                perExchangeLimit = profile.sellAllowancePerExchange
+                reason = .sell
+            } else if self.isKind(of: SwapPresenter.self) {
+                lifetimeLimit = profile.swapAllowanceLifetime
+                dailyLimit = profile.swapAllowanceDaily
+                perExchangeLimit = profile.swapAllowancePerExchange
+                reason = .swap
+            }
+            
+            switch fiat {
+            case _ where fiat <= 0:
+                // Fiat value is below 0
+                presentError(actionResponse: .init(error: nil))
+                hasError = true
+                
+            case _ where fiat < minimumUsd:
+                // Value below minimum Fiat
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumUsd, currency: toCode, reason: reason)))
+                hasError = true
+                
+            case _ where token < minimumValue:
+                // Value below minimum crypto
+                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: toCode, reason: reason)))
+                hasError = true
+                
+            case _ where fiat > lifetimeLimit,
+                _ where minimumUsd > lifetimeLimit:
+                // Over lifetime limit
+                presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
+                hasError = true
+                
+            case _ where fiat > dailyLimit:
+                // Over daily limit
+                let level2 = ExchangeErrors.overDailyLimitLevel2(limit: dailyLimit)
+                let level1 = ExchangeErrors.overDailyLimit(limit: dailyLimit)
+                let error = profile.status == .levelTwo(.levelTwo) ? level2 : level1
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+                
+            case _ where fiat > perExchangeLimit:
+                // Over exchange limit
+                presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
+                hasError = true
+                
+            case _ where fiat > maximumUsd,
+                _ where minimumUsd > maximumUsd:
+                // Over exchange limit
+                presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumUsd, currency: toCode, reason: reason)))
+                hasError = true
+                
+            case _ where fiat > (balance?.fiatValue ?? 0):
+                // Value higher than balance
+                let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
+                let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.fromFeeAmount?.currency.code.uppercased() ?? "")
+                presentError(actionResponse: .init(error: error))
+                hasError = true
+                
+            default:
+                // Remove error
+                presentError(actionResponse: .init(error: nil))
+            }
+        }
+        
+        return hasError
     }
 }
 
