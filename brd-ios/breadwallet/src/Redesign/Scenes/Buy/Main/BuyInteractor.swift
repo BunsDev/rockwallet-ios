@@ -28,7 +28,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
 
         let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
         
-        guard !currencies.isEmpty else { return }
+        guard !currencies.isEmpty else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
+        }
         
         dataStore?.supportedCurrencies = currencies
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []

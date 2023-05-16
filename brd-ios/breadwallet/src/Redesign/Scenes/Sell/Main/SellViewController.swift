@@ -94,7 +94,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didFinish = { [weak self] _ in
-                self?.interactor?.setAmount(viewAction: .init())
+                self?.interactor?.prepareFees(viewAction: .init())
             }
             
             view.didTapFromAssetsSelection = { [weak self] in
@@ -237,6 +237,13 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay) {
+        dataStore?.createTransactionModel = .init(exchange: dataStore?.exchange,
+                                                  currencies: dataStore?.currencies,
+                                                  fromFeeBasis: dataStore?.fromFeeBasis,
+                                                  fromFeeAmount: dataStore?.fromFeeAmount,
+                                                  fromAmount: dataStore?.fromAmount,
+                                                  toAmountCode: Constant.usdCurrencyCode)
+        
         coordinator?.showOrderPreview(type: .sell,
                                       coreSystem: dataStore?.coreSystem,
                                       keyStore: dataStore?.keyStore,

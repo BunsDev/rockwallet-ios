@@ -94,7 +94,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
                     guard let selectedCurrency else { return }
-                    vc?.dataStore?.from = .zero(selectedCurrency)
+                    vc?.dataStore?.fromAmount = .zero(selectedCurrency)
                 }
             }
         }

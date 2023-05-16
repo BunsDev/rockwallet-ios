@@ -12,7 +12,7 @@ import UIKit
 import WalletKit
 
 enum SwapModels {
-    typealias Item = (from: Amount?, to: Amount?)
+    typealias Item = (fromAmount: Amount?, toAmount: Amount?)
     
     struct SwitchPlaces {
         struct ViewAction {}
@@ -28,8 +28,8 @@ enum SwapModels {
         }
         
         struct ActionResponse {
-            var from: Amount?
-            var to: Amount?
+            var fromAmount: Amount?
+            var toAmount: Amount?
             
             var fromFee: Amount?
             var toFee: Amount?
@@ -37,6 +37,7 @@ enum SwapModels {
             var senderValidationResult: SenderValidationResult?
             var fromFeeBasis: TransferFeeBasis?
             var fromFeeAmount: Amount?
+            var fromFeeCurrency: Currency?
             var quote: Quote?
             
             var baseBalance: Amount?
@@ -73,24 +74,14 @@ enum SwapModels {
     
     struct Fee {
         struct ViewAction {}
-        
-        struct ActionResponse {
-            var from: Decimal?
-            var to: Decimal?
-        }
-        
-        struct ResponseDisplay {
-            var from: String?
-            var to: String?
-        }
     }
     
     struct ShowConfirmDialog {
         struct ViewAction {}
         
         struct ActionResponse {
-            var from: Amount?
-            var to: Amount?
+            var fromAmount: Amount?
+            var toAmount: Amount?
             var quote: Quote?
             var fromFee: Amount?
             var toFee: Amount?

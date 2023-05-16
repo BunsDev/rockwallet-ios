@@ -18,7 +18,8 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                           from: Decimal?,
                           card: PaymentCard?,
                           quote: Quote?,
-                          availablePayments: [PaymentCard.PaymentType]?) {
+                          availablePayments: [PaymentCard.PaymentType]?,
+                          createTransactionModel: CreateTransactionModels.Transaction.ViewAction? = nil) {
         open(scene: Scenes.OrderPreview) { vc in
             vc.dataStore?.type = type
             vc.dataStore?.coreSystem = coreSystem
@@ -28,6 +29,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.dataStore?.card = card
             vc.dataStore?.quote = quote
             vc.dataStore?.availablePayments = availablePayments
+            vc.dataStore?.createTransactionModel = createTransactionModel
         }
     }
     
@@ -88,7 +90,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
         }
     }
     
-    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, fromBuyOrSell: Bool = true, completion: (() -> Void)? = nil) {
+    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, isFromBuy: Bool = true, completion: (() -> Void)? = nil) {
         guard !cards.isEmpty else {
             openModally(coordinator: ItemSelectionCoordinator.self,
                         scene: Scenes.AddCard)
@@ -98,7 +100,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                     scene: Scenes.CardSelection,
                     presentationStyle: .currentContext) { vc in
             vc?.dataStore?.isAddingEnabled = true
-            vc?.dataStore?.isSelectingEnabled = fromBuyOrSell
+            vc?.dataStore?.isSelectingEnabled = isFromBuy
             vc?.dataStore?.items = cards
             let backButtonVisible = self.navigationController.children.last is BillingAddressViewController
             vc?.navigationItem.hidesBackButton = backButtonVisible

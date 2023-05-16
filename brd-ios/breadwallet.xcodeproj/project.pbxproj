@@ -72,6 +72,8 @@
 		049CE73F29DD59C0009D0F2D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73E29DD59C0009D0F2D /* PaymailDestinationWorker.swift */; };
 		049CE74529DD5A90009D0F2D /* FEButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */; };
 		049CE74829DDACDE009D0F2D /* GoogleDataTransport in Frameworks */ = {isa = PBXBuildFile; productRef = 049CE74729DDACDE009D0F2D /* GoogleDataTransport */; };
+		04B05FF22A120B6000EA7591 /* CreateTransactionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B05FF12A120B6000EA7591 /* CreateTransactionModels.swift */; };
+		04B05FF42A120B7500EA7591 /* CreateTransactionVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B05FF32A120B7500EA7591 /* CreateTransactionVIP.swift */; };
 		04DD285E2A02522E00A70C09 /* ToastMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */; };
 		04E0131729ED30AA00743954 /* TwoStepChangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */; };
 		04E0131929ED524600743954 /* TwoStepExchangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */; };
@@ -944,6 +946,8 @@
 		049CE73D29DD5959009D0F2D /* breadwallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = breadwallet.entitlements; path = Resources/breadwallet.entitlements; sourceTree = "<group>"; };
 		049CE73E29DD59C0009D0F2D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymailDestinationWorker.swift; path = src/ViewControllers/PaymailDestinationWorker.swift; sourceTree = "<group>"; };
 		049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FEButton+Extensions.swift"; sourceTree = "<group>"; };
+		04B05FF12A120B6000EA7591 /* CreateTransactionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTransactionModels.swift; sourceTree = "<group>"; };
+		04B05FF32A120B7500EA7591 /* CreateTransactionVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTransactionVIP.swift; sourceTree = "<group>"; };
 		04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageManager.swift; sourceTree = "<group>"; };
 		04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepChangeWorker.swift; sourceTree = "<group>"; };
 		04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepExchangeWorker.swift; sourceTree = "<group>"; };
@@ -1822,6 +1826,15 @@
 			name = Send;
 			sourceTree = "<group>";
 		};
+		04B05FF02A120B5000EA7591 /* CreateTransaction */ = {
+			isa = PBXGroup;
+			children = (
+				04B05FF12A120B6000EA7591 /* CreateTransactionModels.swift */,
+				04B05FF32A120B7500EA7591 /* CreateTransactionVIP.swift */,
+			);
+			path = CreateTransaction;
+			sourceTree = "<group>";
+		};
 		22A9A9311DF61930000F0016 /* Platform */ = {
 			isa = PBXGroup;
 			children = (
@@ -2299,8 +2312,8 @@
 			children = (
 				7BBBF4D8287421CF00E4D36B /* SwapPresenter.swift */,
 				7BBBF4D9287421CF00E4D36B /* SwapStore.swift */,
-				7BBBF4DA287421CF00E4D36B /* SwapMainVIP.swift */,
 				7BBBF4D6287421CE00E4D36B /* SwapModels.swift */,
+				7BBBF4DA287421CF00E4D36B /* SwapMainVIP.swift */,
 				7BBBF4D7287421CF00E4D36B /* SwapViewController.swift */,
 				7BBBF4D5287421CE00E4D36B /* SwapInteractor.swift */,
 				7EC0F8A92886D9B90037145C /* ExchangeErrors.swift */,
@@ -2588,6 +2601,7 @@
 				7EA9F7B129683A78000F45B6 /* CountriesAndStates */,
 				7E67A78B294734E40012FB3F /* AchPayment */,
 				7E75AD472943296500E54DEF /* ExchangeRate */,
+				04B05FF02A120B5000EA7591 /* CreateTransaction */,
 				7E5CB34C2835090D00EC787E /* Alerts */,
 				7E5CB34F2835090D00EC787E /* Fetch */,
 				C4C553D629F67741002D9A47 /* CopyValue */,
@@ -4244,6 +4258,7 @@
 				0435DE7E29B1F1080050FD3C /* BaseExchangeTableViewController.swift in Sources */,
 				7B8FAF01299B898D002EB972 /* TouchSpamPreventer.swift in Sources */,
 				CE20C8F21DBAF71500C8397A /* ApplicationController.swift in Sources */,
+				04B05FF42A120B7500EA7591 /* CreateTransactionVIP.swift in Sources */,
 				7E8F7E49293F6AE50058019B /* SellViewController.swift in Sources */,
 				7B54E5A527F4A2B0002DD1E4 /* Generic.swift in Sources */,
 				C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */,
@@ -4613,6 +4628,7 @@
 				7B39478B297000ED007D405E /* ForgotPasswordPresenter.swift in Sources */,
 				CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */,
 				0452C93E29D4310100CCC8DA /* VeriffKYCManager.swift in Sources */,
+				04B05FF22A120B6000EA7591 /* CreateTransactionModels.swift in Sources */,
 				CEBF32F21DDCE10D00348FC6 /* AssetDetailsHeaderView.swift in Sources */,
 				CECCE5B21E04B00D00D99448 /* SendCell.swift in Sources */,
 				7B2E5053289A5F02008CACD8 /* AddCardViewController.swift in Sources */,

@@ -12,11 +12,15 @@ import UIKit
 import WalletKit
 
 class SwapStore: NSObject, BaseDataStore, SwapDataStore {
+    // MARK: - CreateTransactionDataStore
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
+    var sender: Sender?
     
     // MARK: - ExchangeRateDataStore
     
-    var fromCode: String { from?.currency.code ?? "" }
-    var toCode: String { to?.currency.code ?? "" }
+    var fromCode: String { fromAmount?.currency.code ?? "" }
+    var toCode: String { toAmount?.currency.code ?? "" }
     var showTimer: Bool = true
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
@@ -25,14 +29,11 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     // MARK: - SwapDataStore
     
-    var from: Amount?
-    var to: Amount?
-    var fromBuyOrSell: Bool = false
+    var fromAmount: Amount?
+    var toAmount: Amount?
+    var isFromBuy: Bool = false
     
     var values: SwapModels.Amounts.ViewAction = .init()
-    
-    var fromFeeBasis: TransferFeeBasis?
-    var senderValidationResult: SenderValidationResult?
     
     var quote: Quote?
     var fromRate: Decimal?
@@ -45,7 +46,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var termCurrencies: [String] = []
     var baseAndTermCurrencies: [[String]] = []
     
-    var swap: Exchange?
+    var exchange: Exchange?
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?

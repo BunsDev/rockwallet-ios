@@ -49,16 +49,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                 exchangeRateViewModel
             ],
             .swapCard: [
-                MainSwapViewModel(from: .init(amount: .zero(Currencies.shared.btc!),
-                                              formattedTokenString: .init(string: ""),
-                                              title: .text("I have 10.12000473 USDC"),
-                                              selectionDisabled: false),
-                                  
-                                  to: .init(currencyCode: Constant.usdCurrencyCode,
-                                            currencyImage: Asset.us.image,
-                                            formattedTokenString: .init(string: ""),
-                                            title: .text("I receive"),
-                                            selectionDisabled: true))
+                MainSwapViewModel(from: .init(selectionDisabled: false),
+                                  to: .init(selectionDisabled: true))
             ],
             .paymentMethod: [
                 achPaymentModel ?? paymentMethodViewModel
@@ -75,6 +67,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         var cryptoModel: MainSwapViewModel
         let cardModel: CardSelectionViewModel
         
+        let balance = actionResponse.amount?.currency.state?.balance
+        let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
+        
         let fromTokenValue = actionResponse.amount?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.amount?.tokenValue)
         let toFiatValue = actionResponse.amount?.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: actionResponse.amount?.fiatValue)
         
@@ -83,13 +78,13 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         cryptoModel = MainSwapViewModel(from: .init(amount: actionResponse.amount,
                                                     formattedTokenString: fromFormattedTokenString,
-                                                    title: .text("I have 10.12000473 USDC"),
+                                                    title: .text(balanceText),
                                                     selectionDisabled: false),
                                         
                                         to: .init(currencyCode: Constant.usdCurrencyCode,
                                                   currencyImage: Asset.us.image,
                                                   formattedTokenString: toFormattedFiatString,
-                                                  title: .text("I receive"),
+                                                  title: .text(L10n.Sell.iReceive),
                                                   selectionDisabled: true))
         
         switch actionResponse.type {
@@ -138,6 +133,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         handleError(actionResponse: actionResponse)
     }
     
+    // TODO: Make SWAP BUY SELL errors reusable.
     private func handleError(actionResponse: SellModels.Assets.ActionResponse) {
         let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
         let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
@@ -198,35 +194,35 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     }
     
     func presentLimitsInfo(actionResponse: SellModels.LimitsInfo.ActionResponse) {
-//        let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
-//        let profile = UserManager.shared.profile
-//
-//        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
-//        let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
-//        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
-//        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
-//
-//        let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
-//        let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
-//        let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
-//        let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
-//
-//        let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
-//        let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
-//                                                           perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
-//                                                                                 value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
-//                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
-//                                                                           value: .text("$\(dailyMaxLimitText) \(Constant.usdCurrencyCode)")),
-//                                                           weekly: .init(title: .text(L10n.Account.weekly),
-//                                                                         value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
-//                                                           monthly: .init(title: .text(L10n.Account.monthly),
-//                                                                          value: .text("$\(monthlyLimitText) \(Constant.usdCurrencyCode)")))
-//
-//        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(trailing: .init(image: Asset.close.image),
-//                                                                           wrappedView: wrappedViewModel,
-//                                                                           hideSeparator: true)
-//
-//        viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
+        let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
+        let profile = UserManager.shared.profile
+        
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
+        let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
+        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
+        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
+        
+        let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
+        let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
+        let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
+        let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
+        
+        let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
+        let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
+                                                           perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
+                                                                                 value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
+                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
+                                                                           value: .text("$\(dailyMaxLimitText) \(Constant.usdCurrencyCode)")),
+                                                           weekly: .init(title: .text(L10n.Account.weekly),
+                                                                         value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
+                                                           monthly: .init(title: .text(L10n.Account.monthly),
+                                                                          value: .text("$\(monthlyLimitText) \(Constant.usdCurrencyCode)")))
+        
+        let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(trailing: .init(image: Asset.close.image),
+                                                                           wrappedView: wrappedViewModel,
+                                                                           hideSeparator: true)
+        
+        viewController?.displayLimitsInfo(responseDisplay: .init(config: config, viewModel: viewModel))
     }
     
     func presentInstantAchPopup(actionResponse: SellModels.InstantAchPopup.ActionResponse) {

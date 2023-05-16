@@ -194,7 +194,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
-        if let store = dataStore, store.isAchAccount && store.achDeliveryType == .instant {
+        if let store = dataStore, store.isAchAccount && store.achDeliveryType == .instant && store.type != .sell {
             interactor?.showAchInstantDrawer(viewAction: .init())
         } else {
             showPinInput()

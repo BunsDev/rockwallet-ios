@@ -34,18 +34,6 @@ enum SellModels {
         }
     }
     
-    struct Fee {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var to: Decimal?
-        }
-        
-        struct ResponseDisplay {
-            var to: String?
-        }
-    }
-    
     struct PaymentCards {
         struct ViewAction {
             var getCards: Bool?
@@ -58,6 +46,10 @@ enum SellModels {
         struct ResponseDisplay {
             var allPaymentCards: [PaymentCard]
         }
+    }
+    
+    struct Fee {
+        struct ViewAction {}
     }
     
     struct Amounts {
