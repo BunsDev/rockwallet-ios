@@ -48,6 +48,10 @@ enum SellModels {
         }
     }
     
+    struct Fee {
+        struct ViewAction {}
+    }
+    
     struct Amounts {
         struct ViewAction {
             var fiatValue: String?

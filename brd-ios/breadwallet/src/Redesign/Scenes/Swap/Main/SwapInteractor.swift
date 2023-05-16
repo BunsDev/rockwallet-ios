@@ -193,6 +193,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                                                        senderValidationResult: dataStore?.senderValidationResult,
                                                        fromFeeBasis: dataStore?.fromFeeBasis,
                                                        fromFeeAmount: dataStore?.fromFeeAmount,
+                                                       fromFeeCurrency: dataStore?.sender?.wallet.feeCurrency,
                                                        quote: dataStore?.quote,
                                                        baseBalance: dataStore?.fromAmount?.currency.state?.balance,
                                                        minimumValue: dataStore?.quote?.minimumValue,

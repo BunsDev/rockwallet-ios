@@ -37,6 +37,7 @@ enum SwapModels {
             var senderValidationResult: SenderValidationResult?
             var fromFeeBasis: TransferFeeBasis?
             var fromFeeAmount: Amount?
+            var fromFeeCurrency: Currency?
             var quote: Quote?
             
             var baseBalance: Amount?

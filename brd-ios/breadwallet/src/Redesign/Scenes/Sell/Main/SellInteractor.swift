@@ -36,10 +36,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         dataStore?.supportedCurrencies = currencies
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
-        generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
-                                         coreSystem: dataStore?.coreSystem,
-                                         keyStore: dataStore?.keyStore))
-        
         presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
                                                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
@@ -48,19 +44,26 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         getPayments(viewAction: .init())
         
-        // TODO: Where to use this?
-//        guard let from = self?.dataStore?.fromAmount,
-//              let profile = UserManager.shared.profile else {
-//            return
-//        }
-//
-//        self?.getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] error in
-//            if let error {
-//                self?.presenter?.presentError(actionResponse: .init(error: error))
-//            } else {
-//                self?.setPresentAmountData(handleErrors: true)
-//            }
-//        })
+        prepareFees(viewAction: .init())
+    }
+    
+    func prepareFees(viewAction: SellModels.Fee.ViewAction) {
+        guard let from = dataStore?.fromAmount,
+              let profile = UserManager.shared.profile else {
+            return
+        }
+        
+        generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
+                                         coreSystem: dataStore?.coreSystem,
+                                         keyStore: dataStore?.keyStore))
+        
+        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAllowanceLifetime), completion: { [weak self] error in
+            if let error {
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            } else {
+                self?.setPresentAmountData(handleErrors: true)
+            }
+        })
     }
     
     private func setPresentAmountData(handleErrors: Bool) {

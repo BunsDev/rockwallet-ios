@@ -68,6 +68,7 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore, CreateTransaction
     var cvv: String? { get set }
     var paymentReference: String? { get set }
     var paymentstatus: AddCard.Status? { get set }
+    var availablePayments: [PaymentCard.PaymentType]? { get set }
     var isAchAccount: Bool { get }
     var createTransactionModel: CreateTransactionModels.Transaction.ViewAction? { get set }
     var secondFactorCode: String? { get set }

@@ -94,7 +94,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didFinish = { [weak self] _ in
-                self?.interactor?.setAmount(viewAction: .init())
+                self?.interactor?.prepareFees(viewAction: .init())
             }
             
             view.didTapFromAssetsSelection = { [weak self] in
