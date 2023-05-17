@@ -241,12 +241,12 @@
 
 "Account.VerifiedAccountTitle" = "Your account is verified!";
 
-"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations.";
+"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.";
 
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
 
-"Account.VerifyAccountTitle" = "Verify your identity to get full access to your RockWallet!";
+"Account.VerifyAccountTitle" = "To start using 'Swap' or 'Buy', your wallet must be verified.";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
@@ -1108,7 +1108,7 @@
 
 "CloudBackup.warningBody" = "Your iCloud backup will be erased after %s more incorrect PIN attempts.";
 
-"ComingSoon.body" = "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
+"ComingSoon.body" = "Buy, Swap and Sell are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.";
 
 "ComingSoon.buttons.backHome" = "BACK TO HOME";
 
@@ -2310,7 +2310,7 @@
 
 "Sell.iReceive" = "I receive";
 
-"Sell.NotAvailableBody" = "This feature is not available in your region. We will notify you when it becomes available.\n\nYou can still Swap, Store, Send and Receive digital assets in your RockWallet.";
+"Sell.NotAvailableBody" = "Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.";
 
 "Sell.OrderPreview" = "Withdrawal preview";
 

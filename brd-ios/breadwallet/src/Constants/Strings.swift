@@ -234,12 +234,12 @@ internal enum L10n {
     internal static let verifiedAccountText = L10n.tr("Localizable", "Account.VerifiedAccountText", fallback: "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Your account is verified!
     internal static let verifiedAccountTitle = L10n.tr("Localizable", "Account.VerifiedAccountTitle", fallback: "Your account is verified!")
-    /// Verification helps keep your funds and information secure and ensures we comply with regulations.
-    internal static let verifyAccountDescription = L10n.tr("Localizable", "Account.VerifyAccountDescription", fallback: "Verification helps keep your funds and information secure and ensures we comply with regulations.")
+    /// Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.
+    internal static let verifyAccountDescription = L10n.tr("Localizable", "Account.VerifyAccountDescription", fallback: "Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.")
     /// Verify account text in popup
     internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
-    /// Verify your identity to get full access to your RockWallet!
-    internal static let verifyAccountTitle = L10n.tr("Localizable", "Account.VerifyAccountTitle", fallback: "Verify your identity to get full access to your RockWallet!")
+    /// To start using 'Swap' or 'Buy', your wallet must be verified.
+    internal static let verifyAccountTitle = L10n.tr("Localizable", "Account.VerifyAccountTitle", fallback: "To start using 'Swap' or 'Buy', your wallet must be verified.")
     /// Enter and verify your email address for your account label in registration flow
     internal static let verifyEmail = L10n.tr("Localizable", "Account.VerifyEmail", fallback: "Enter and verify your new email address for your RockWallet account.")
     /// We need to verify your identity before you can %s assets.
@@ -1073,10 +1073,10 @@ internal enum L10n {
     }
   }
   internal enum ComingSoon {
-    /// Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.
+    /// Buy, Swap and Sell are not available in your state. We will notify you when they become available. 
     /// 
-    /// You can still safely send and receive digital assets to your wallet in the meantime.
-    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
+    /// You can still Store, Send and Receive digital assets in your RockWallet.
+    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy, Swap and Sell are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.")
     /// You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.
     internal static let buyDescription = L10n.tr("Localizable", "ComingSoon.BuyDescription", fallback: "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.")
     /// This feature is not available for your account at this time.
@@ -2219,10 +2219,8 @@ internal enum L10n {
     }
     /// I receive
     internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
-    /// This feature is not available in your region. We will notify you when it becomes available.
-    /// 
-    /// You can still Swap, Store, Send and Receive digital assets in your RockWallet.
-    internal static let notAvailableBody = L10n.tr("Localizable", "Sell.NotAvailableBody", fallback: "This feature is not available in your region. We will notify you when it becomes available.\n\nYou can still Swap, Store, Send and Receive digital assets in your RockWallet.")
+    /// Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.
+    internal static let notAvailableBody = L10n.tr("Localizable", "Sell.NotAvailableBody", fallback: "Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.")
     /// Withdrawal preview
     internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
     /// Conversion rate
