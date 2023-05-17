@@ -252,6 +252,30 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                 assetListTableView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
         })
         
+        let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary,
+                                                         Presets.Button.primary,
+                                                         Presets.Button.whiteBorderless])
+        let drawerViewModel = DrawerViewModel(title: .text(L10n.Drawer.title),
+                                              buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+                                                        .init(title: L10n.Buy.buyWithAch, image: Asset.bank.image),
+                                                        .init(title: L10n.Button.sell, image: Asset.remove.image)],
+                                              viewController: self,
+                                              hasBottomTollbar: true)
+        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
+            self?.didTapDrawerButton(.card)
+        }, { [weak self] in
+            self?.didTapDrawerButton(.ach)
+        }, { [weak self]
+            in self?.didTapDrawerButton()
+        }]
+        
+        drawerManager = BottomDrawerManager()
+        drawerManager?.setupDrawer(on: self, config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
+            drawer.dismissActionPublisher.sink { [weak self] _ in
+                self?.animationView.play(fromProgress: 1, toProgress: 0)
+            }.store(in: &self.observers)
+        }
+        
         view.addSubview(tabBarContainerView)
         tabBarContainerView.addSubview(tabBar)
         
@@ -270,28 +294,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         animationView.snp.makeConstraints { make in
             make.centerX.equalTo(tabBar.snp.centerX)
             make.top.equalTo(tabBarContainerView.snp.top).offset(-Margins.small.rawValue)
-        }
-        
-        let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary,
-                                                         Presets.Button.primary,
-                                                         Presets.Button.secondary])
-        let drawerViewModel = DrawerViewModel(title: .text(L10n.Drawer.title),
-                                              buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
-                                                        .init(title: L10n.Buy.buyWithAch, image: Asset.bank.image),
-                                                        .init(title: L10n.Button.sell, image: Asset.remove.image)])
-        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
-            self?.didTapDrawerButton(.card)
-        }, { [weak self] in
-            self?.didTapDrawerButton(.ach)
-        }, { [weak self]
-            in self?.didTapDrawerButton()
-        }]
-        
-        drawerManager = BottomDrawerManager()
-        drawerManager?.setupDrawer(on: self, config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
-            drawer.dismissActionPublisher.sink { [weak self] _ in
-                self?.animationView.play(fromProgress: 1, toProgress: 0)
-            }.store(in: &self.observers)
         }
     }
     

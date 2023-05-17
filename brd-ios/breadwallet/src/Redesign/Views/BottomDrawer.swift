@@ -13,7 +13,7 @@ import UIKit
 import SnapKit
 
 struct DrawerConfiguration: Configurable {
-    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.one)
+    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.two)
     var titleConfig = LabelConfiguration(font: Fonts.Subtitle.one,
                                          textColor: LightColors.secondary,
                                          textAlignment: .center)
@@ -28,6 +28,8 @@ struct DrawerViewModel: ViewModel {
     var description: LabelViewModel?
     var buttons: [ButtonViewModel] = []
     var notice: ButtonViewModel?
+    var viewController: UIViewController?
+    var hasBottomTollbar: Bool = false
 }
 
 class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
@@ -106,7 +108,9 @@ class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecog
         
         isUserInteractionEnabled = false
         
-        UIApplication.shared.activeWindow?.addSubview(containerView)
+        containerView.removeFromSuperview()
+        
+        (viewModel?.viewController?.view ?? UIApplication.shared.activeWindow)?.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -132,7 +136,9 @@ class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecog
             make.top.equalToSuperview().offset(Margins.huge.rawValue)
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().inset(Margins.huge.rawValue)
-            make.bottom.equalToSuperview()
+            
+            let inset = viewModel?.hasBottomTollbar == true ? BottomDrawer.bottomToolbarHeight + UIDevice.current.bottomNotch : 0
+            make.bottom.equalToSuperview().inset(inset)
         }
         stack.addArrangedSubview(grabberImage)
         grabberImage.snp.makeConstraints { make in
@@ -188,6 +194,8 @@ class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecog
         
         super.setup(with: viewModel)
         
+        setupSubviews()
+        
         title.setup(with: viewModel.title)
         title.isHidden = viewModel.title == nil
         
@@ -203,11 +211,6 @@ class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecog
         }
         
         notice.isHidden = viewModel.notice == nil
-        
-        stack.snp.updateConstraints { make in
-            let bottomOffset = UIDevice.current.hasNotch ? UIDevice.current.bottomNotch : Margins.large.rawValue
-            make.bottom.equalToSuperview().inset(bottomOffset)
-        }
         
         buttonStack.arrangedSubviews.forEach({ $0.removeFromSuperview() })
         for ((vm, conf), callback) in zip(zip(viewModel.buttons, config.buttons), callbacks) {

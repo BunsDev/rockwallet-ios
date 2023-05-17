@@ -30,11 +30,6 @@ class BottomDrawerManager: NSObject {
         drawer.setup(with: viewModel)
         viewController.view.addSubview(drawer)
         
-        drawer.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(-ViewSizes.extraExtraHuge.rawValue)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-        
         dismissSetup?(drawer)
     }
     
