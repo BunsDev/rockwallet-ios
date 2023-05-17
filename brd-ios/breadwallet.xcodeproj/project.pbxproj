@@ -6135,7 +6135,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/veriff-ios-spm.git";
 			requirement = {
 				kind = exactVersion;
-				version = 4.51.0;
+				version = 6.8.0;
 			};
 		};
 		0453B0BA29D22BF100BBE246 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */ = {
@@ -6167,7 +6167,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/wallet-kit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 5.0.16;
+				version = 5.0.21;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
