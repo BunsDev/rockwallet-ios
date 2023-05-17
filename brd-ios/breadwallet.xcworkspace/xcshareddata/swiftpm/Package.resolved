@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/veriff-ios-spm.git",
       "state" : {
-        "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205",
-        "version" : "4.51.0"
+        "revision" : "b8b0e948fb6c34048a7fa87c77541ff822a08305",
+        "version" : "6.8.0"
       }
     },
     {
@@ -212,8 +212,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit.git",
       "state" : {
-        "revision" : "847befdc6984f4003656da2cfea44f911b0f8be6",
-        "version" : "5.0.16"
+        "revision" : "21c16db734b249be1f018995b2018ac7e87bc129",
+        "version" : "5.0.21"
       }
     },
     {
@@ -221,8 +221,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit-core.git",
       "state" : {
-        "revision" : "a61e037393d5d2ec727f8702a1400be3de5689cd",
-        "version" : "5.0.16"
+        "revision" : "5e55a8a5d1abca01948c29a6a37e51f4942da3f7",
+        "version" : "5.0.21"
       }
     }
   ],
