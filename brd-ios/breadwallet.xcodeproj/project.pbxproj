@@ -6287,7 +6287,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/veriff-ios-spm.git";
 			requirement = {
 				kind = exactVersion;
-				version = 4.51.0;
+				version = 6.8.0;
 			};
 		};
 		0453B0BA29D22BF100BBE246 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */ = {
