@@ -52,15 +52,15 @@ class AssetDetailsFooterView: UIView, Subscriber {
     }
     
     private func setupToolbarButtons() {
-        let bottomButtonModels: [RWBottomBarItemViewModel] = [
+        let bottomButtonModels: [BottomBarItemViewModel] = [
             .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
             .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
             .init(title: L10n.Button.buy, image: Asset.buy.image, enabled: isSupported, callback: { self.buy() }),
             .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, enabled: isSupported, callback: { self.swap() })
         ]
         
-        let buttons = bottomButtonModels.compactMap { model -> RWBottomBarItem in
-            let button = RWBottomBarItem()
+        let buttons = bottomButtonModels.compactMap { model -> BottomBarItem in
+            let button = BottomBarItem()
             button.setup(with: model)
             return button
         }
@@ -74,7 +74,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
         addSubview(buttonsView)
         buttonsView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.medium.rawValue)
-            make.height.equalTo(RWBottomBarItem.defaultheight)
+            make.height.equalTo(BottomBarItem.defaultheight)
             make.leading.equalToSuperview().offset(Margins.huge.rawValue)
             make.trailing.equalToSuperview().offset(-Margins.huge.rawValue)
             make.bottom.equalToSuperview().inset(bottomMargin.rawValue)

@@ -97,6 +97,8 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
            let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == value }) {
             dataStore?.fromAmount = .zero(currency)
             
+            prepareFees(viewAction: .init())
+            
             getExchangeRate(viewAction: .init(), completion: { [weak self] in
                 self?.setPresentAmountData(handleErrors: false)
             })

@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/veriff-ios-spm.git",
       "state" : {
-        "revision" : "12403e2bb60e13aed3dada22b26bd200c0715205",
-        "version" : "4.51.0"
+        "revision" : "b8b0e948fb6c34048a7fa87c77541ff822a08305",
+        "version" : "6.8.0"
       }
     },
     {

@@ -25,7 +25,7 @@ struct MarketDataViewModel {
     }
     
     private func formatter(decimals: Int) -> NumberFormatter {
-        let nf = RWFormatter()
+        let nf = ExchangeNumberFormatter()
         nf.numberStyle = .currency
         nf.currencySymbol = Rate.symbolMap[Store.state.defaultCurrencyCode]
         return nf

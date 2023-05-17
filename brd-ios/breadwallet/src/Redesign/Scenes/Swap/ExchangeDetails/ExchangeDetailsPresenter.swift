@@ -150,7 +150,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         
         let currencyFormat = "%@ %@"
-        let rate = String(format: "1 %@ = %@ %@", detail.destination.currency, RWFormatter().string(for: 1 / detail.rate) ?? "",
+        let rate = String(format: "1 %@ = %@ %@", detail.destination.currency, ExchangeNumberFormatter().string(for: 1 / detail.rate) ?? "",
                           currencyCode)
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: detail.source.currencyAmount) ?? "",
                                currencyCode)

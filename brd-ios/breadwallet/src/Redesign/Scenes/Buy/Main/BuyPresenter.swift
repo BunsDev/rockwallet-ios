@@ -127,7 +127,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayAmount(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
-        handleError(actionResponse: actionResponse)
+        _ = handleError(actionResponse: actionResponse)
     }
     
     func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse) {
