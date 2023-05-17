@@ -1108,7 +1108,7 @@
 
 "CloudBackup.warningBody" = "Your iCloud backup will be erased after %s more incorrect PIN attempts.";
 
-"ComingSoon.body" = "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
+"ComingSoon.body" = "Buy, Swap and Sell are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.";
 
 "ComingSoon.buttons.backHome" = "BACK TO HOME";
 
