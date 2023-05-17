@@ -28,8 +28,8 @@ struct DrawerViewModel: ViewModel {
     var description: LabelViewModel?
     var buttons: [ButtonViewModel] = []
     var notice: ButtonViewModel?
-    var viewController: UIViewController?
-    var hasBottomTollbar: Bool = false
+    var onView: UIView?
+    var bottomInset: CGFloat = 0
 }
 
 class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
@@ -110,7 +110,7 @@ class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecog
         
         containerView.removeFromSuperview()
         
-        (viewModel?.viewController?.view ?? UIApplication.shared.activeWindow)?.addSubview(containerView)
+        (viewModel?.onView ?? UIApplication.shared.activeWindow)?.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -137,7 +137,11 @@ class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecog
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().inset(Margins.huge.rawValue)
             
-            let inset = viewModel?.hasBottomTollbar == true ? BottomDrawer.bottomToolbarHeight + UIDevice.current.bottomNotch : 0
+            var inset: CGFloat = 0
+            if let bottomInset = viewModel?.bottomInset {
+                inset = bottomInset + UIDevice.current.bottomNotch
+            }
+            
             make.bottom.equalToSuperview().inset(inset)
         }
         stack.addArrangedSubview(grabberImage)
