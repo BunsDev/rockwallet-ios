@@ -14,16 +14,15 @@ import Veriff
 extension Presets {
     static var veriff: VeriffSdk.Configuration {
         let branding = VeriffSdk.Branding()
-        branding.backgroundColor = LightColors.Background.one
-        branding.primaryTextColor = LightColors.Text.three
-        branding.secondaryTextColor = LightColors.Text.one
-        branding.primaryButtonBackgroundColor = LightColors.primary
-        branding.buttonCornerRadius = CornerRadius.large.rawValue * 5
-        branding.bulletPoint = Asset.bullet.image
-        branding.font = VeriffSdk.Branding.Font(regularFontName: Fonts.Secondary,
-                                                lightFontName: Fonts.Secondary,
-                                                semiBoldFontName: Fonts.Tertiary,
-                                                boldFontName: Fonts.Primary)
+        branding.background = LightColors.Background.one
+        branding.onBackground = LightColors.Text.three
+        branding.onBackgroundSecondary = LightColors.Text.one
+        branding.primary = LightColors.primary
+        branding.onPrimary = LightColors.Contrast.one
+        branding.buttonRadius = CornerRadius.large.rawValue * 5
+        branding.font = VeriffSdk.Branding.Font(regular: Fonts.Secondary,
+                                                medium: Fonts.Tertiary,
+                                                bold: Fonts.Primary)
         let locale = Locale.current
         
         return .init(branding: branding, languageLocale: locale)
