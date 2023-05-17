@@ -14,8 +14,8 @@ import WalletKit
 enum AssetModels {
     enum Asset {
         struct ViewAction {
-            var fiatValue: String?
-            var tokenValue: String?
+            var fiatValue: String? = "0"
+            var tokenValue: String? = "0"
             
             var currency: String?
             var card: PaymentCard?
