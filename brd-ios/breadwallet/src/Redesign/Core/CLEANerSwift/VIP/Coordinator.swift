@@ -445,7 +445,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             showVerifyAccount(flow: flow)
             
         case .country, .state, .manuallyConfigured:
-            showComingSoon(reason: reason)
+            showComingSoon(reason: reason, restrictionReason: restrictionReason)
             
         default:
             break
@@ -526,7 +526,8 @@ class BaseCoordinator: NSObject, Coordinatable {
                         isModalDismissable: Bool = false,
                         hidesBackButton: Bool = true,
                         coreSystem: CoreSystem? = nil,
-                        keyStore: KeyStore? = nil) {
+                        keyStore: KeyStore? = nil,
+                        restrictionReason: Profile.AccessRights.RestrictionReason?) {
         open(scene: Scenes.ComingSoon) { [weak self] vc in
             self?.handleComingSoonNavigation(vc)
             
@@ -536,6 +537,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.navigationItem.rightBarButtonItem = nil
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
+            vc.dataStore?.restrictionReason = restrictionReason
         }
     }
     
