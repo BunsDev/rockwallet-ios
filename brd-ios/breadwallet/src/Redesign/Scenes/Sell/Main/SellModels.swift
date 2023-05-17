@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WalletKit
 
 enum SellModels {
     struct Item: Hashable {
@@ -15,34 +16,9 @@ enum SellModels {
     }
     
     struct Assets {
-        struct ViewAction {
-            var currency: String?
-            var card: PaymentCard?
-        }
-        
-        struct ActionResponse {
-            var amount: Amount?
-            var card: PaymentCard?
-            var type: PaymentCard.PaymentType?
-            var quote: Quote?
-            var handleErrors = false
-        }
-        
         struct ResponseDisplay {
             var cryptoModel: MainSwapViewModel?
             var cardModel: CardSelectionViewModel?
-        }
-    }
-    
-    struct Fee {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var to: Decimal?
-        }
-        
-        struct ResponseDisplay {
-            var to: String?
         }
     }
     
@@ -60,11 +36,8 @@ enum SellModels {
         }
     }
     
-    struct Amounts {
-        struct ViewAction {
-            var fiatValue: String?
-            var tokenValue: String?
-        }
+    struct Fee {
+        struct ViewAction {}
     }
     
     struct Limits {

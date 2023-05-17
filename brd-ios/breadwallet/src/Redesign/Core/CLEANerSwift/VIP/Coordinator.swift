@@ -94,7 +94,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                     vc?.dataStore?.coreSystem = coreSystem
                     vc?.dataStore?.keyStore = keyStore
                     guard let selectedCurrency else { return }
-                    vc?.dataStore?.from = .zero(selectedCurrency)
+                    vc?.dataStore?.fromAmount = .zero(selectedCurrency)
                 }
             }
         }
@@ -445,7 +445,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             showVerifyAccount(flow: flow)
             
         case .country, .state, .manuallyConfigured:
-            showComingSoon(reason: reason, restrictionReason: restrictionReason)
+            showComingSoon(reason: reason)
             
         default:
             break
@@ -526,8 +526,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                         isModalDismissable: Bool = false,
                         hidesBackButton: Bool = true,
                         coreSystem: CoreSystem? = nil,
-                        keyStore: KeyStore? = nil,
-                        restrictionReason: Profile.AccessRights.RestrictionReason?) {
+                        keyStore: KeyStore? = nil) {
         open(scene: Scenes.ComingSoon) { [weak self] vc in
             self?.handleComingSoonNavigation(vc)
             
@@ -537,7 +536,6 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.navigationItem.rightBarButtonItem = nil
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
-            vc.dataStore?.restrictionReason = restrictionReason
         }
     }
     

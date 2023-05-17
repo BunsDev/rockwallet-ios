@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WalletKit
 
 class SellInteractor: NSObject, Interactor, SellViewActions {
     
@@ -18,27 +19,63 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     // MARK: - SellViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard dataStore?.fromAmount?.currency != nil,
-              dataStore?.paymentMethod != nil,
-              dataStore?.supportedCurrencies?.isEmpty != false else {
-            getExchangeRate(viewAction: .init(), completion: {})
-            return
-        }
-
         let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
         
-        guard !currencies.isEmpty else { return }
+        guard !currencies.isEmpty else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
+        }
         
         dataStore?.supportedCurrencies = currencies
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
         presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
                                                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
-        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.fromAmount,
+        
+        getPayments(viewAction: .init())
+        
+        guard dataStore?.fromAmount?.currency != nil,
+              dataStore?.paymentMethod != nil,
+              dataStore?.supportedCurrencies?.isEmpty != false else {
+            setAmount(viewAction: .init(currency: dataStore?.currencies.first?.code))
+            return
+        }
+        
+        setAmount(viewAction: .init())
+    }
+    
+    func prepareFees(viewAction: SellModels.Fee.ViewAction) {
+        guard let from = dataStore?.fromAmount,
+              let profile = UserManager.shared.profile else {
+            return
+        }
+        
+        generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
+                                         coreSystem: dataStore?.coreSystem,
+                                         keyStore: dataStore?.keyStore))
+        
+        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAllowanceLifetime), completion: { [weak self] error in
+            if let error {
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            } else {
+                self?.setPresentAmountData(handleErrors: true)
+            }
+        })
+    }
+    
+    private func setPresentAmountData(handleErrors: Bool) {
+        let isNotZero = !(dataStore?.fromAmount?.tokenValue ?? 0).isZero
+        
+        presenter?.presentAmount(actionResponse: .init(fromAmount: dataStore?.fromAmount,
                                                        card: dataStore?.selected,
                                                        type: dataStore?.paymentMethod,
-                                                       quote: dataStore?.quote))
-        getPayments(viewAction: .init())
+                                                       fromFee: dataStore?.fromFeeAmount,
+                                                       senderValidationResult: dataStore?.senderValidationResult,
+                                                       fromFeeBasis: dataStore?.fromFeeBasis,
+                                                       fromFeeAmount: dataStore?.fromFeeAmount,
+                                                       fromFeeCurrency: dataStore?.sender?.wallet.feeCurrency,
+                                                       quote: dataStore?.quote,
+                                                       handleErrors: handleErrors && isNotZero))
     }
     
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
@@ -46,7 +83,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
         } else {
             dataStore?.selected = dataStore?.paymentMethod == .ach ? dataStore?.ach : dataStore?.cards.first
-            setAssets(viewAction: .init(card: dataStore?.selected))
+            setAmount(viewAction: .init(card: dataStore?.selected))
         }
     }
     
@@ -55,11 +92,25 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
     }
     
-    func setAmount(viewAction: SellModels.Amounts.ViewAction) {
+    func setAmount(viewAction: AssetModels.Asset.ViewAction) {
+        if let value = viewAction.currency?.lowercased(),
+           let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == value }) {
+            dataStore?.fromAmount = .zero(currency)
+            
+            getExchangeRate(viewAction: .init(), completion: { [weak self] in
+                self?.setPresentAmountData(handleErrors: false)
+            })
+            
+            return
+        } else if let value = viewAction.card {
+            dataStore?.selected = value
+            
+            return
+        }
+        
         guard let rate = dataStore?.quote?.exchangeRate,
               let toCurrency = dataStore?.fromAmount?.currency else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: Constant.usdCurrencyCode,
-                                                                                        to: dataStore?.fromAmount?.currency.code)))
+            setPresentAmountData(handleErrors: true)
             return
         }
                 
@@ -67,41 +118,18 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         let to: Amount
         
-        if let crypto = ExchangeFormatter.current.number(from: viewAction.tokenValue ?? "")?.decimalValue {
-            to = .init(decimalAmount: crypto, isFiat: false, currency: toCurrency, exchangeRate: 1 / rate)
-        } else if let fiat = ExchangeFormatter.current.number(from: viewAction.fiatValue ?? "")?.decimalValue {
-            to = .init(decimalAmount: fiat, isFiat: true, currency: toCurrency, exchangeRate: 1 / rate)
+        if let fiat = ExchangeFormatter.current.number(from: viewAction.fiatValue ?? "")?.decimalValue {
+            to = .init(decimalAmount: fiat, isFiat: true, currency: toCurrency, exchangeRate: rate)
+        } else if let crypto = ExchangeFormatter.current.number(from: viewAction.tokenValue ?? "")?.decimalValue {
+            to = .init(decimalAmount: crypto, isFiat: false, currency: toCurrency, exchangeRate: rate)
         } else {
-            presenter?.presentAssets(actionResponse: .init(amount: dataStore?.fromAmount,
-                                                           card: dataStore?.selected,
-                                                           type: dataStore?.paymentMethod,
-                                                           quote: dataStore?.quote,
-                                                           handleErrors: true))
+            setPresentAmountData(handleErrors: true)
             return
         }
         
         dataStore?.fromAmount = to
         
-        presenter?.presentAssets(actionResponse: .init(amount: dataStore?.fromAmount,
-                                                       card: dataStore?.selected,
-                                                       type: dataStore?.paymentMethod,
-                                                       quote: dataStore?.quote))
-    }
-    
-    func setAssets(viewAction: SellModels.Assets.ViewAction) {
-        if let value = viewAction.currency?.lowercased(),
-           let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == value }) {
-            dataStore?.fromAmount = .zero(currency)
-        } else if let value = viewAction.card {
-            dataStore?.selected = value
-        }
-        
-        getExchangeRate(viewAction: .init(), completion: { [weak self] in
-            self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.fromAmount,
-                                                                 card: self?.dataStore?.selected,
-                                                                 type: self?.dataStore?.paymentMethod,
-                                                                 quote: self?.dataStore?.quote))
-        })
+        setPresentAmountData(handleErrors: false)
     }
     
     func showOrderPreview(viewAction: SellModels.OrderPreview.ViewAction) {
@@ -138,10 +166,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
-            self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.fromAmount,
-                                                                 card: self?.dataStore?.selected,
-                                                                 type: self?.dataStore?.paymentMethod,
-                                                                 quote: self?.dataStore?.quote))
+            self?.setPresentAmountData(handleErrors: false)
         })
     }
     
@@ -170,10 +195,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         dataStore?.fromAmount = selectedCurrency == nil ? dataStore?.fromAmount : selectedCurrency
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
-            self?.presenter?.presentAssets(actionResponse: .init(amount: self?.dataStore?.fromAmount,
-                                                                 card: self?.dataStore?.selected,
-                                                                 type: self?.dataStore?.paymentMethod,
-                                                                 quote: self?.dataStore?.quote))
+            self?.setPresentAmountData(handleErrors: false)
         })
     }
     
@@ -190,4 +212,5 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     }
     
     // MARK: - Additional helpers
+    
 }

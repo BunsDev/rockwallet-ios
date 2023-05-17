@@ -73,6 +73,7 @@ struct QuoteModelResponse: ModelResponse {
     struct AchFee: Codable {
         var achFeeFixedUsd: Decimal?
         var achFeePercentage: Decimal?
+        var achSellFeePercentage: Decimal?
     }
     
     var fromFeeCurrency: Fee?
@@ -83,6 +84,7 @@ struct QuoteModelResponse: ModelResponse {
     var achFees: AchFee?
     var isMinimumImpactedByWithdrawal: Bool?
     var instantAch: InstantAchQuote?
+    var type: String?
 }
 
 struct Quote {
@@ -143,7 +145,7 @@ class QuoteMapper: ModelMapper<QuoteModelResponse, Quote> {
                      toFeeRate: response.toFeeCurrency?.rate,
                      fromFee: fromFee,
                      toFee: toFee,
-                     buyFee: response.buyFees ?? response.achFees?.achFeePercentage,
+                     buyFee: response.buyFees ?? (response.type == QuoteType.sell.value ? response.achFees?.achSellFeePercentage : response.achFees?.achFeePercentage),
                      buyFeeUsd: response.achFees?.achFeeFixedUsd,
                      isMinimumImpactedByWithdrawal: response.isMinimumImpactedByWithdrawal,
                      instantAch: response.instantAch)

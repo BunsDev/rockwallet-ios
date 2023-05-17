@@ -22,12 +22,8 @@ class ComingSoonViewController: BaseInfoViewController {
     }
     
     override var imageName: String? { return reason?.iconName }
-    override var titleText: String? {
-        return dataStore?.restrictionReason == .manuallyConfigured ? "This feature is not available for your account at this time." : reason?.title ?? ""
-    }
-    override var descriptionText: String? { dataStore?.restrictionReason == .manuallyConfigured ?
-        reason == .swap ? L10n.ComingSoon.swapDescription : L10n.ComingSoon.buyDescription :
-        reason?.description ?? "" }
+    override var titleText: String? { return reason?.title }
+    override var descriptionText: String? { return reason?.description }
     
     override var buttonViewModels: [ButtonViewModel] {
         return [

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WalletKit
 
 extension Scenes {
     static let Sell = SellViewController.self
@@ -14,10 +15,10 @@ extension Scenes {
 
 protocol SellViewActions: BaseViewActions,
                           FetchViewActions,
-                          ExchangeRateViewActions,
-                          AchViewActions {
-    func setAmount(viewAction: SellModels.Amounts.ViewAction)
-    func setAssets(viewAction: SellModels.Assets.ViewAction)
+                          AssetViewActions,
+                          AchViewActions,
+                          CreateTransactionViewActions {
+    func setAmount(viewAction: AssetModels.Asset.ViewAction)
     func showOrderPreview(viewAction: SellModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: SellModels.AssetSelector.ViewAction)
     func selectPaymentMethod(viewAction: SellModels.PaymentMethod.ViewAction)
@@ -25,14 +26,15 @@ protocol SellViewActions: BaseViewActions,
     func showLimitsInfo(viewAction: SellModels.LimitsInfo.ViewAction)
     func showInstantAchPopup(viewAction: SellModels.InstantAchPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SellModels.AssetSelectionMessage.ViewAction)
+    func prepareFees(viewAction: SellModels.Fee.ViewAction)
 }
 
 protocol SellActionResponses: BaseActionResponses,
                               FetchActionResponses,
-                              ExchangeRateActionResponses,
+                              AssetActionResponses,
                               AchActionResponses {
     func presentPaymentCards(actionResponse: SellModels.PaymentCards.ActionResponse)
-    func presentAssets(actionResponse: SellModels.Assets.ActionResponse)
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentOrderPreview(actionResponse: SellModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: SellModels.AssetSelector.ActionResponse)
     func presentMessage(actionResponse: SellModels.RetryPaymentMethod.ActionResponse)
@@ -45,10 +47,10 @@ protocol SellActionResponses: BaseActionResponses,
 protocol SellResponseDisplays: AnyObject,
                                BaseResponseDisplays,
                                FetchResponseDisplays,
-                               ExchangeRateResponseDisplays,
+                               AssetResponseDisplays,
                                AchResponseDisplays {
     func displayPaymentCards(responseDisplay: SellModels.PaymentCards.ResponseDisplay)
-    func displayAssets(responseDisplay: SellModels.Assets.ResponseDisplay)
+    func displayAmount(responseDisplay: SellModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: SellModels.AssetSelector.ResponseDisplay)
     func displayAchData(responseDisplay: SellModels.AchData.ResponseDisplay)
@@ -57,7 +59,7 @@ protocol SellResponseDisplays: AnyObject,
     func displayAssetSelectionMessage(responseDisplay: SellModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
+protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, CreateTransactionDataStore {
     // MARK: - SellDataStore
     
     var availablePayments: [PaymentCard.PaymentType] { get set }
@@ -67,8 +69,14 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDat
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     
+    var fromRate: Decimal? { get set }
+    
     var fromAmount: Amount? { get set }
-    var values: SellModels.Amounts.ViewAction { get set }
+    var values: AssetModels.Asset.ViewAction { get set }
+    
+    var exchange: Exchange? { get set }
+    
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction? { get set }
 }
 
 protocol SellDataPassing {

@@ -15,7 +15,6 @@ class BaseInfoStore: NSObject, BaseDataStore, BaseInfoDataStore {
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var id: String?
-    var restrictionReason: Profile.AccessRights.RestrictionReason?
 
     var item: Any?
 

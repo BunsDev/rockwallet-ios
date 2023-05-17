@@ -12,6 +12,10 @@ import UIKit
 import WalletKit
 
 class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
+    // MARK: - CreateTransactionDataStore
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
+    var sender: Sender?
     
     // MARK: - OrderPreviewDataStore
     var type: PreviewType?
@@ -41,6 +45,8 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     
     var secondFactorCode: String?
     var secondFactorBackup: String?
+    
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction?
     
     // TODO: update it according to BE data
     var isAchAccount: Bool {

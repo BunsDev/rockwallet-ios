@@ -160,7 +160,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     func displayPaymentCards(responseDisplay: ProfileModels.PaymentCards.ResponseDisplay) {
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards,
                                       selected: nil,
-                                      fromBuyOrSell: false)
+                                      isFromBuy: false)
     }
     
     func displayLogout(responseDisplay: ProfileModels.Logout.ResponseDisplay) {

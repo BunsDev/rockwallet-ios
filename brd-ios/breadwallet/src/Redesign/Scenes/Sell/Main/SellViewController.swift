@@ -94,7 +94,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didFinish = { [weak self] _ in
-                self?.interactor?.setAmount(viewAction: .init())
+                self?.interactor?.prepareFees(viewAction: .init())
             }
             
             view.didTapFromAssetsSelection = { [weak self] in
@@ -197,7 +197,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             self?.coordinator?.dismissFlow()
-            self?.interactor?.setAssets(viewAction: .init(currency: model.subtitle))
+            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle))
         }
     }
     
@@ -210,13 +210,13 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
             guard let selectedCard = selectedCard else { return }
-            self?.interactor?.setAssets(viewAction: .init(card: selectedCard))
+            self?.interactor?.setAmount(viewAction: .init(card: selectedCard))
         }, completion: { [weak self] in
             self?.interactor?.getPayments(viewAction: .init())
         })
     }
     
-    func displayAssets(responseDisplay actionResponse: SellModels.Assets.ResponseDisplay) {
+    func displayAmount(responseDisplay actionResponse: SellModels.Assets.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<MainSwapView>,
@@ -237,6 +237,13 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay) {
+        dataStore?.createTransactionModel = .init(exchange: dataStore?.exchange,
+                                                  currencies: dataStore?.currencies,
+                                                  fromFeeBasis: dataStore?.fromFeeBasis,
+                                                  fromFeeAmount: dataStore?.fromFeeAmount,
+                                                  fromAmount: dataStore?.fromAmount,
+                                                  toAmountCode: Constant.usdCurrencyCode)
+        
         coordinator?.showOrderPreview(type: .sell,
                                       coreSystem: dataStore?.coreSystem,
                                       keyStore: dataStore?.keyStore,

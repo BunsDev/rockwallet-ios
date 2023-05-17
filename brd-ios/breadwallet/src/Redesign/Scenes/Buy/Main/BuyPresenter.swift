@@ -66,17 +66,19 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
-    func presentAssets(actionResponse: BuyModels.Assets.ActionResponse) {
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse) {
+        guard let from = actionResponse.fromAmount else { return }
+        
         var cryptoModel: SwapCurrencyViewModel
         let cardModel: CardSelectionViewModel
         
-        let fromFiatValue = actionResponse.amount?.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: actionResponse.amount?.fiatValue)
-        let fromTokenValue = actionResponse.amount?.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: actionResponse.amount?.tokenValue)
+        let fromFiatValue = from.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: from.fiatValue)
+        let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: from.tokenValue)
         
         let formattedFiatString = ExchangeFormatter.createAmountString(string: fromFiatValue ?? "")
         let formattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
         
-        cryptoModel = .init(amount: actionResponse.amount,
+        cryptoModel = .init(amount: from,
                             headerInfoButtonTitle: actionResponse.type == .ach ? L10n.Buy.Ach.Instant.infoButtonTitle : nil,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
@@ -122,43 +124,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             }
         }
         
-        viewController?.displayAssets(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
+        viewController?.displayAmount(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
         handleError(actionResponse: actionResponse)
-    }
-    
-    private func handleError(actionResponse: BuyModels.Assets.ActionResponse) {
-        let fiat = (actionResponse.amount?.fiatValue ?? 0).round(to: 2)
-        let minimumAmount = actionResponse.quote?.minimumUsd ?? 0
-        let maximumAmount = actionResponse.quote?.maximumUsd ?? 0
-        
-        let profile = UserManager.shared.profile
-        let lifetimeLimit = profile?.buyAllowanceLifetime ?? 0
-        
-        switch fiat {
-        case _ where fiat <= 0:
-            // Fiat value is below 0
-            presentError(actionResponse: .init(error: nil))
-            
-        case _ where fiat < minimumAmount:
-            // Value below minimum Fiat
-            presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
-            
-        case _ where fiat > lifetimeLimit,
-            _ where minimumAmount > lifetimeLimit:
-            // Over lifetime limit
-            presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
-            
-        case _ where fiat > maximumAmount,
-            _ where minimumAmount > maximumAmount:
-            // Over exchange limit
-            presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: Constant.usdCurrencyCode, reason: .buyCard(nil))))
-            
-        default:
-            // Remove error
-            presentError(actionResponse: .init(error: nil))
-        }
     }
     
     func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse) {
@@ -191,7 +160,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
         let profile = UserManager.shared.profile
         
-        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
         let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly

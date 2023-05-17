@@ -1073,10 +1073,10 @@ internal enum L10n {
     }
   }
   internal enum ComingSoon {
-    /// Buy, Swap and Sell are not available in your state. We will notify you when they become available. 
+    /// Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.
     /// 
-    /// You can still Store, Send and Receive digital assets in your RockWallet.
-    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy, Swap and Sell are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.")
+    /// You can still safely send and receive digital assets to your wallet in the meantime.
+    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
     /// You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.
     internal static let buyDescription = L10n.tr("Localizable", "ComingSoon.BuyDescription", fallback: "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.")
     /// This feature is not available for your account at this time.

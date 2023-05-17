@@ -44,10 +44,7 @@ enum NetworkingError: FEError {
         case .noConnection:
             return L10n.ErrorMessages.checkInternet
             
-        case .accessDenied:
-            return L10n.ErrorMessages.accessDenied
-            
-        case .serverAtCapacity:
+        case .serverAtCapacity, .accessDenied:
             return L10n.ErrorMessages.somethingWentWrong
             
         case .twoStepInvalidCode:

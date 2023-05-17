@@ -15,11 +15,9 @@ extension Scenes {
 
 protocol BuyViewActions: BaseViewActions,
                          FetchViewActions,
-                         FeeFetchable,
-                         ExchangeRateViewActions,
+                         AssetViewActions,
                          AchViewActions {
-    func setAmount(viewAction: BuyModels.Amounts.ViewAction)
-    func setAssets(viewAction: BuyModels.Assets.ViewAction)
+    func setAmount(viewAction: AssetModels.Asset.ViewAction)
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
@@ -31,10 +29,10 @@ protocol BuyViewActions: BaseViewActions,
 
 protocol BuyActionResponses: BaseActionResponses,
                              FetchActionResponses,
-                             ExchangeRateActionResponses,
+                             AssetActionResponses,
                              AchActionResponses {
     func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse)
-    func presentAssets(actionResponse: BuyModels.Assets.ActionResponse)
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
@@ -44,9 +42,9 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentAssetSelectionMessage(actionResponse: BuyModels.AssetSelectionMessage.ActionResponse)
 }
 
-protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, ExchangeRateResponseDisplays, AchResponseDisplays {
+protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays, AchResponseDisplays {
     func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay)
-    func displayAssets(responseDisplay: BuyModels.Assets.ResponseDisplay)
+    func displayAmount(responseDisplay: BuyModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay)
@@ -55,10 +53,10 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol BuyDataStore: BaseDataStore, FetchDataStore, ExchangeDataStore, AchDataStore {
+protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore {
     var from: Decimal? { get set }
     var to: Decimal? { get set }
-    var values: BuyModels.Amounts.ViewAction { get set }
+    var values: AssetModels.Asset.ViewAction { get set }
     var toAmount: Amount? { get set }
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }

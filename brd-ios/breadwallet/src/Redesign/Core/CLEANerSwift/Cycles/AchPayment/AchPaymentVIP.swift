@@ -13,13 +13,9 @@ import LinkKit
 
 protocol AchViewActions {
     func getPayments(viewAction: AchPaymentModels.Get.ViewAction)
-    // Implement if needed in adaptor class
     func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction)
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction)
-    
-    //  TODO: maybe reuse link?
-    //  func relink(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction)
 }
 
 protocol AchActionResponses: AnyObject {
