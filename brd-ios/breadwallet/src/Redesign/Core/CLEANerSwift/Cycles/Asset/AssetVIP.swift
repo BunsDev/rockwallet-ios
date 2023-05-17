@@ -241,6 +241,13 @@ extension Presenter where Self: AssetActionResponses,
                 
                 error = ExchangeErrors.tooLow(amount: minimumUsd, currency: toCode, reason: reason)
                 
+            case _ where token < minimumValue && fiat >= minimumUsd:
+                // Value below minimum crypto and fiat is equal or above minimum because of the fees
+                
+                if isSwap {
+                    error = ExchangeErrors.networkFee
+                }
+                
             case _ where token < minimumValue:
                 // Value below minimum crypto
                 
