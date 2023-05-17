@@ -152,6 +152,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         if paymentTypes.count >= segment {
             let paymentType = paymentTypes[segment]
             interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
+            interactor?.setAmount(viewAction: .init(fiatValue: "0", tokenValue: "0"))
         }
     }
     
