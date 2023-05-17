@@ -66,13 +66,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     func presentAmount(actionResponse: AssetModels.Asset.ActionResponse) {
         guard let from = actionResponse.fromAmount else { return }
         
-        let quote = actionResponse.quote
-        
-        let fromCode = from.currency.code.uppercased()
-        let toCode = Constant.usdCurrencyCode
-        
-        let fromFee = actionResponse.fromFee
-        
         var cryptoModel: MainSwapViewModel
         let cardModel: CardSelectionViewModel
         
@@ -90,7 +83,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                                     title: .text(balanceText),
                                                     selectionDisabled: false),
                                         
-                                        to: .init(currencyCode: toCode,
+                                        to: .init(currencyCode: Constant.usdCurrencyCode,
                                                   currencyImage: Asset.us.image,
                                                   formattedTokenString: toFormattedFiatString,
                                                   title: .text(L10n.Sell.iReceive),
@@ -139,89 +132,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         viewController?.displayAmount(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
-        
-        var senderValidationResult = actionResponse.senderValidationResult ?? .ok
-        
-        if let feeCurrency = actionResponse.fromFeeCurrency,
-           let feeCurrencyWalletBalance = feeCurrency.wallet?.balance,
-           let fee = actionResponse.fromFeeBasis?.fee {
-            let feeAmount = Amount(cryptoAmount: fee, currency: feeCurrency)
-
-            if feeCurrency.isEthereum, feeAmount > feeCurrencyWalletBalance {
-                senderValidationResult = .insufficientGas
-            }
-
-            if let balance = from.currency.state?.balance,
-               from.currency == feeAmount.currency {
-                if from + feeAmount > balance {
-                    senderValidationResult = .insufficientGas
-                }
-            }
-        }
-        
-        if case .insufficientFunds = senderValidationResult {
-            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
-            let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
-            presentError(actionResponse: .init(error: error))
-            
-        } else if case .insufficientGas = senderValidationResult {
-            if from.currency.isEthereum {
-                let error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
-                presentError(actionResponse: .init(error: error))
-                
-            } else if from.currency.isERC20Token {
-                let error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
-                presentError(actionResponse: .init(error: error))
-                
-            } else if actionResponse.fromFeeBasis?.fee != nil {
-                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
-                let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
-                presentError(actionResponse: .init(error: error))
-                
-            }
-        } else if quote == nil {
-            presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: fromCode, to: toCode)))
-            
-        } else if ExchangeManager.shared.canSwap(from.currency) == false {
-            presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
-            
-        } else if let feeAmount = fromFee,
-                  let feeWallet = feeAmount.currency.wallet,
-                  feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
-            let error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
-            presentError(actionResponse: .init(error: error))
-            
-        } else if let profile = UserManager.shared.profile {
-            let fiat = from.fiatValue.round(to: 2)
-            let minimumAmount = quote?.minimumUsd ?? 0
-            let maximumAmount = quote?.maximumUsd ?? 0
-            
-            let lifetimeLimit = profile.sellAllowanceLifetime
-            
-            switch fiat {
-            case _ where fiat <= 0:
-                // Fiat value is below 0
-                presentError(actionResponse: .init(error: nil))
-                
-            case _ where fiat < minimumAmount:
-                // Value below minimum Fiat
-                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumAmount, currency: toCode, reason: .buyCard(nil))))
-                
-            case _ where fiat > lifetimeLimit,
-                _ where minimumAmount > lifetimeLimit:
-                // Over lifetime limit
-                presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
-                
-            case _ where fiat > maximumAmount,
-                _ where minimumAmount > maximumAmount:
-                // Over exchange limit
-                presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumAmount, currency: toCode, reason: .buyCard(nil))))
-                
-            default:
-                // Remove error
-                presentError(actionResponse: .init(error: nil))
-            }
-        }
+        handleError(actionResponse: actionResponse)
     }
     
     func presentPaymentCards(actionResponse: SellModels.PaymentCards.ActionResponse) {
@@ -254,7 +165,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
         let profile = UserManager.shared.profile
         
-        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerPurchase : profile?.achAllowancePerPurchase
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
         let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
