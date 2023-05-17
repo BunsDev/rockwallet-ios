@@ -118,7 +118,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         return view
     }()
     
-    private var drawerManager: RWDrawerManager?
+    private var drawerManager: BottomDrawerManager?
     
     // MARK: - Lifecycle
     
@@ -259,7 +259,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: RWDrawer.bottomToolbarHeight)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: BottomDrawer.bottomToolbarHeight)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)
@@ -287,7 +287,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             in self?.didTapDrawerButton()
         }]
         
-        drawerManager = RWDrawerManager()
+        drawerManager = BottomDrawerManager()
         drawerManager?.setupDrawer(on: self, config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
             drawer.dismissActionPublisher.sink { [weak self] _ in
                 self?.animationView.play(fromProgress: 1, toProgress: 0)

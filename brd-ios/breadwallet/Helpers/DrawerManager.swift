@@ -1,5 +1,5 @@
 //
-//  RWDrawerManager.swift
+//  BottomDrawerManager.swift
 //  breadwallet
 //
 //  Created by Kenan Mamedoff on 12/04/2023.
@@ -10,9 +10,9 @@
 
 import UIKit
 
-class RWDrawerManager: NSObject {
+class BottomDrawerManager: NSObject {
     private var viewController: UIViewController?
-    private let drawer = RWDrawer()
+    private let drawer = BottomDrawer()
     
     var drawerIsShown: Bool {
         return drawer.isShown
@@ -22,7 +22,7 @@ class RWDrawerManager: NSObject {
                      config: DrawerConfiguration,
                      viewModel: DrawerViewModel,
                      callbacks: [(() -> Void)],
-                     dismissSetup: ((RWDrawer) -> Void)?) {
+                     dismissSetup: ((BottomDrawer) -> Void)?) {
         self.viewController = viewController
         
         drawer.callbacks = callbacks

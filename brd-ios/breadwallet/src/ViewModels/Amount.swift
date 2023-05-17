@@ -250,8 +250,8 @@ public struct Amount: Hashable {
         return format
     }
     
-    var customFormat: RWFormatter {
-        let format = RWFormatter()
+    var customFormat: ExchangeNumberFormatter {
+        let format = ExchangeNumberFormatter()
         format.numberStyle = .currency
         format.locale = locale
         format.isLenient = true

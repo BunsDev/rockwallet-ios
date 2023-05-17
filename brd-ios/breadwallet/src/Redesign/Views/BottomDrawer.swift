@@ -1,5 +1,5 @@
 //
-//  RWDrawer.swift
+//  BottomDrawer.swift
 //  breadwallet
 //
 //  Created by Rok on 07/12/2022.
@@ -30,7 +30,7 @@ struct DrawerViewModel: ViewModel {
     var notice: ButtonViewModel?
 }
 
-class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
+class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
     var callbacks: [(() -> Void)] = []
     var isShown: Bool { return containerView.alpha == 1 }
     
