@@ -437,7 +437,7 @@
 		7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */; };
 		7E75AD492943297E00E54DEF /* AssetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD482943297E00E54DEF /* AssetModels.swift */; };
 		7E75AD4B2943298900E54DEF /* AssetVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD4A2943298900E54DEF /* AssetVIP.swift */; };
-		7E7AFBEA29409FCC0063023F /* RWDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7AFBE929409FCC0063023F /* RWDrawer.swift */; };
+		7E7AFBEA29409FCC0063023F /* BottomDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7AFBE929409FCC0063023F /* BottomDrawer.swift */; };
 		7E852748286C551C0058F4C0 /* ServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E852747286C551C0058F4C0 /* ServerResponse.swift */; };
 		7E87B32D285346E00097671F /* UIImage+Compress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E87B32C285346E00097671F /* UIImage+Compress.swift */; };
 		7E8AA729291A6CB5005BB378 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AA728291A6CB5005BB378 /* Strings.swift */; };
@@ -796,7 +796,7 @@
 		CEF61B121ECF52C700C7EA6A /* AmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */; };
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
 		D712BC9C29C9F2BA00C2F09E /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */; };
-		D712BD1229DACBAB00C2F09E /* RWBottomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */; };
+		D712BD1229DACBAB00C2F09E /* BottomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */; };
 		D730F7EE29F6659400809BEE /* SupportedCurrenciesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730F7ED29F6659400809BEE /* SupportedCurrenciesManager.swift */; };
 		D78D296029ED3A7B0039A5D6 /* TwoStepSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */; };
 		D78D296129ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */; };
@@ -812,7 +812,7 @@
 		D7F75963299A1D2300FB4BFA /* FindAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */; };
 		D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */; };
 		D7F75969299D1F9900FB4BFA /* RetrieveAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */; };
-		D7F8EA3829C4857B008DD7C7 /* RWDrawerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3729C4857B008DD7C7 /* RWDrawerManager.swift */; };
+		D7F8EA3829C4857B008DD7C7 /* DrawerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3729C4857B008DD7C7 /* DrawerManager.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1327,7 +1327,7 @@
 		7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchPaymentVIP.swift; sourceTree = "<group>"; };
 		7E75AD482943297E00E54DEF /* AssetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetModels.swift; sourceTree = "<group>"; };
 		7E75AD4A2943298900E54DEF /* AssetVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetVIP.swift; sourceTree = "<group>"; };
-		7E7AFBE929409FCC0063023F /* RWDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWDrawer.swift; sourceTree = "<group>"; };
+		7E7AFBE929409FCC0063023F /* BottomDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawer.swift; sourceTree = "<group>"; };
 		7E852747286C551C0058F4C0 /* ServerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerResponse.swift; sourceTree = "<group>"; };
 		7E87B32C285346E00097671F /* UIImage+Compress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Compress.swift"; sourceTree = "<group>"; };
 		7E8AA728291A6CB5005BB378 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Strings.swift; path = src/Constants/Strings.swift; sourceTree = "<group>"; };
@@ -1668,7 +1668,7 @@
 		CEF61B111ECF52C700C7EA6A /* AmountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AmountViewController.swift; path = src/ViewControllers/AmountViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
 		D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
-		D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWBottomBarItem.swift; sourceTree = "<group>"; };
+		D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarItem.swift; sourceTree = "<group>"; };
 		D730F7ED29F6659400809BEE /* SupportedCurrenciesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCurrenciesManager.swift; sourceTree = "<group>"; };
 		D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsStore.swift; sourceTree = "<group>"; };
 		D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsPresenter.swift; sourceTree = "<group>"; };
@@ -1684,7 +1684,7 @@
 		D7F75962299A1D2300FB4BFA /* FindAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressViewController.swift; sourceTree = "<group>"; };
 		D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressWorker.swift; sourceTree = "<group>"; };
 		D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAddressWorker.swift; sourceTree = "<group>"; };
-		D7F8EA3729C4857B008DD7C7 /* RWDrawerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWDrawerManager.swift; sourceTree = "<group>"; };
+		D7F8EA3729C4857B008DD7C7 /* DrawerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerManager.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2695,7 +2695,7 @@
 				7E5CB3702835090E00EC787E /* Wrappers */,
 				7E8E979E283F4851008606B0 /* Core */,
 				7E8E979F283F48EE008606B0 /* NavigationItemView.swift */,
-				7E7AFBE929409FCC0063023F /* RWDrawer.swift */,
+				7E7AFBE929409FCC0063023F /* BottomDrawer.swift */,
 				7ECCA9982874342C00F99368 /* FETimerView.swift */,
 				C47671A929CD9AF4008A2F94 /* BackupCodesView.swift */,
 				7ECCA99C28745E0400F99368 /* AssetView.swift */,
@@ -2718,7 +2718,7 @@
 				04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */,
 				7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */,
 				7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */,
-				D712BD1129DACBAB00C2F09E /* RWBottomBarItem.swift */,
+				D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2787,7 +2787,7 @@
 				7C0F3DC32124A81100531E54 /* Backend.swift */,
 				7B8CF81D28A3D0C600D54D14 /* CardDetailsFormatter.swift */,
 				7B54E57427F4A2B0002DD1E4 /* DatePickerViewController.swift */,
-				D7F8EA3729C4857B008DD7C7 /* RWDrawerManager.swift */,
+				D7F8EA3729C4857B008DD7C7 /* DrawerManager.swift */,
 				7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */,
 				7BDB49B52805AC780031F015 /* EmailFeedbackManager.swift */,
 				7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */,
@@ -4218,7 +4218,7 @@
 				7B2E5057289A5F02008CACD8 /* AddCardModels.swift in Sources */,
 				7E5CB39D2835090E00EC787E /* Alertable.swift in Sources */,
 				7E5CB3892835090E00EC787E /* Margins+Sizes.swift in Sources */,
-				D7F8EA3829C4857B008DD7C7 /* RWDrawerManager.swift in Sources */,
+				D7F8EA3829C4857B008DD7C7 /* DrawerManager.swift in Sources */,
 				043DB5D629EEAA4700DEB8FD /* SetTwoStepAppCodeWorker.swift in Sources */,
 				0441E14F29CD99F3003D870E /* TwoStepSettingsWorker.swift in Sources */,
 				7EB838482849DD8200C7CC05 /* FELink.swift in Sources */,
@@ -4346,7 +4346,7 @@
 				C4842F1529939F4100915BA4 /* UnlinkWalletViewController.swift in Sources */,
 				CEC6AA3D1DEE687000EE5AFD /* RadialGradientView.swift in Sources */,
 				CEEC70921E95DA4400EF788E /* GradientSwitch.swift in Sources */,
-				D712BD1229DACBAB00C2F09E /* RWBottomBarItem.swift in Sources */,
+				D712BD1229DACBAB00C2F09E /* BottomBarItem.swift in Sources */,
 				7CEA35D5232A9D1200FB58C4 /* Identifier.swift in Sources */,
 				CEE20C2F1EA3E5820086F724 /* BlinkingView.swift in Sources */,
 				04E0131929ED524600743954 /* TwoStepExchangeWorker.swift in Sources */,
@@ -4600,7 +4600,7 @@
 				3AEA2CAB24D3219200DA4C3A /* SelectBackupView.swift in Sources */,
 				7E2E1A2B284E097900E56E69 /* KYCCoordinator.swift in Sources */,
 				7B2E5048289800BB008CACD8 /* FieldValidator.swift in Sources */,
-				7E7AFBEA29409FCC0063023F /* RWDrawer.swift in Sources */,
+				7E7AFBEA29409FCC0063023F /* BottomDrawer.swift in Sources */,
 				CEB909FA1E5FF242001804DC /* RecoverWalletIntroViewController.swift in Sources */,
 				CE25BF911DF9ADE700BC67B6 /* UIImage+Utils.swift in Sources */,
 				7BF5D4F9296D4FC900942ADB /* SignUpInteractor.swift in Sources */,

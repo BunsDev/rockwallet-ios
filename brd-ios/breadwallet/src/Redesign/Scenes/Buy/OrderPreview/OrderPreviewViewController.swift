@@ -22,7 +22,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     private var veriffKYCManager: VeriffKYCManager?
-    private var drawerManager = RWDrawerManager()
+    private var drawerManager = BottomDrawerManager()
     
     // MARK: - Overrides
     

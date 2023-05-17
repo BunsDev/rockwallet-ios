@@ -10,7 +10,7 @@
 
 import UIKit
 
-class RWFormatter: NumberFormatter {
+class ExchangeNumberFormatter: NumberFormatter {
     override func string(from: NSNumber) -> String {
         generatesDecimalNumbers = true
         numberStyle = .currency

@@ -25,6 +25,10 @@ struct Presets {
                                                           tintColor: LightColors.Contrast.two,
                                                           border: Presets.Border.disabledButtonFullRadius)
             
+            static var borderless = BackgroundConfiguration(backgroundColor: LightColors.Background.cards,
+                                                             tintColor: LightColors.primary,
+                                                             border: Presets.Border.borderlessButtonFullRadius)
+            
             static var error = BackgroundConfiguration(backgroundColor: LightColors.primary,
                                                        tintColor: LightColors.Error.one,
                                                        border: Presets.Border.error)
@@ -72,6 +76,8 @@ struct Presets {
         static var selectedButtonFullRadius = BorderConfiguration(tintColor: LightColors.secondary, borderWidth: 1.5, cornerRadius: .fullRadius)
         static var disabledButtonFullRadius = BorderConfiguration(tintColor: LightColors.Disabled.one, borderWidth: 1.5, cornerRadius: .fullRadius)
         
+        static var borderlessButtonFullRadius = BorderConfiguration(tintColor: .clear, borderWidth: 0, cornerRadius: .fullRadius)
+        
         static var normalTextField = BorderConfiguration(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall)
         static var selectedTextField = BorderConfiguration(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall)
         static var disabledTextField = BorderConfiguration(tintColor: LightColors.Outline.two, borderWidth: 1, cornerRadius: .extraSmall)
@@ -100,6 +106,11 @@ extension Presets {
         static var primary = ButtonConfiguration(normalConfiguration: Presets.Background.Primary.normal,
                                                  selectedConfiguration: Presets.Background.Primary.selected,
                                                  disabledConfiguration: Presets.Background.Primary.disabled)
+        
+        static var whiteBorderless = ButtonConfiguration(normalConfiguration: Presets.Background.Primary.borderless,
+                                                         selectedConfiguration: Presets.Background.Primary.borderless,
+                                                         disabledConfiguration: Presets.Background.Primary.borderless,
+                                                         buttonContentEdgeInsets: .zero)
         
         static var secondary = ButtonConfiguration(normalConfiguration: Presets.Background.Secondary.normal
             .withBorder(border: Presets.Border.normalButtonFullRadius),
