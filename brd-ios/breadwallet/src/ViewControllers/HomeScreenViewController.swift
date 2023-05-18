@@ -107,7 +107,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     // We are not using pullToRefreshControl.isRefreshing because when you trigger reload() it is already refreshing. We need a variable that tracks the real refreshing of the resources.
     private var isRefreshing = false
     
-    private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
+    private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(home)),
                                  (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
                                  (L10n.Drawer.title, nil, #selector(buy)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
@@ -307,15 +307,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         setupAnimationView()
     }
     
-    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
-        if let type = type {
-            didTapBuy?(type)
-        } else {
-            didTapSell?()
-        }
-        animationView.play(fromProgress: 1, toProgress: 0)
-    }
-    
     private func setupToolbar() {
         var buttons = [UITabBarItem]()
         
@@ -466,11 +457,14 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     // MARK: Actions
     
-    @objc private func showHome() {
-        if drawerManager?.drawerIsShown == true {
-            animationView.play(fromProgress: 1, toProgress: 0)
+    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+        if let type {
+            didTapBuy?(type)
+        } else {
+            didTapSell?()
         }
-        drawerManager?.hideDrawer()
+        
+        animationView.play(fromProgress: 1, toProgress: 0)
     }
     
     private func commonTapAction() {
@@ -480,6 +474,15 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         drawerManager?.hideDrawer()
     }
     
+    @objc private func home() {
+        commonTapAction()
+    }
+    
+    @objc private func trade() {
+        commonTapAction()
+        didTapTrade?()
+    }
+    
     @objc private func buy() {
         if drawerManager?.drawerIsShown == true {
             animationView.play(fromProgress: 1, toProgress: 0)
@@ -487,11 +490,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             animationView.play()
         }
         drawerManager?.toggleDrawer()
-    }
-    
-    @objc private func trade() {
-        commonTapAction()
-        didTapTrade?()
     }
     
     @objc private func profile() {
