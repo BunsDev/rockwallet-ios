@@ -130,16 +130,16 @@ extension Presenter where Self: AssetActionResponses,
         let isSwap = self.isKind(of: SwapPresenter.self)
         
         if isSwap,
-           let presenter = self as? SwapPresenter,
-           quote?.isMinimumImpactedByWithdrawal == true &&
+           let dataStore = (self as? SwapPresenter)?.viewController?.dataStore,
+           dataStore.isMinimumImpactedByWithdrawalShown == false &&
+            !actionResponse.handleErrors &&
+            quote?.isMinimumImpactedByWithdrawal == true &&
             from.cryptoAmount.isZero &&
-            actionResponse.toAmount?.cryptoAmount.isZero == false &&
-            !presenter.isMinimumImpactedByWithdrawalShown &&
-            !actionResponse.handleErrors {
+            actionResponse.toAmount?.cryptoAmount.isZero == true {
             error = ExchangeErrors.highFees
             presentError(actionResponse: .init(error: error))
             
-            presenter.isMinimumImpactedByWithdrawalShown = true
+            dataStore.isMinimumImpactedByWithdrawalShown = true
             
             return false
         } else if !actionResponse.handleErrors {
