@@ -259,8 +259,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                                               buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
                                                         .init(title: L10n.Buy.buyWithAch, image: Asset.bank.image),
                                                         .init(title: L10n.Button.sell, image: Asset.remove.image)],
-                                              viewController: self,
-                                              hasBottomTollbar: true)
+                                              onView: view,
+                                              bottomInset: BottomDrawer.bottomToolbarHeight)
         let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
             self?.didTapDrawerButton(.card)
         }, { [weak self] in

@@ -127,7 +127,7 @@ extension Presenter where Self: AssetActionResponses,
         let fromFee = actionResponse.fromFee
         
         var senderValidationResult = actionResponse.senderValidationResult ?? .ok
-        var hasError = false
+        var error: ExchangeErrors?
         
         if let feeCurrency = actionResponse.fromFeeCurrency,
            let feeCurrencyWalletBalance = feeCurrency.wallet?.balance,
@@ -147,42 +147,30 @@ extension Presenter where Self: AssetActionResponses,
         
         if case .insufficientFunds = senderValidationResult {
             let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
-            let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
-            presentError(actionResponse: .init(error: error))
-            hasError = true
+            error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
             
         } else if case .insufficientGas = senderValidationResult {
             if from.currency.isEthereum {
-                let error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
-                presentError(actionResponse: .init(error: error))
-                hasError = true
+                error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
                 
             } else if from.currency.isERC20Token {
-                let error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
-                presentError(actionResponse: .init(error: error))
-                hasError = true
+                error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
                 
             } else if actionResponse.fromFeeBasis?.fee != nil {
                 let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
-                let error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
-                presentError(actionResponse: .init(error: error))
-                hasError = true
+                error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
                 
             }
         } else if quote == nil {
-            presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: fromCode, to: toCode)))
-            hasError = true
+            error = ExchangeErrors.noQuote(from: fromCode, to: toCode)
             
-        } else if ExchangeManager.shared.canSwap(from.currency) == false {
-            presentError(actionResponse: .init(error: ExchangeErrors.pendingSwap))
-            hasError = true
+        } else if ExchangeManager.shared.canSwap(from.currency) == false && self.isKind(of: SwapPresenter.self) {
+            error = ExchangeErrors.pendingSwap
             
         } else if let feeAmount = fromFee,
                   let feeWallet = feeAmount.currency.wallet,
                   feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
-            let error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
-            presentError(actionResponse: .init(error: error))
-            hasError = true
+            error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
             
         } else if let profile = UserManager.shared.profile {
             let fiat = from.fiatValue.round(to: 2)
@@ -197,17 +185,21 @@ extension Presenter where Self: AssetActionResponses,
             var perExchangeLimit: Decimal = 0
             var reason: BaseInfoModels.FailureReason = .swap
             
-            if self.isKind(of: BuyPresenter.self) {
+            let isBuy = self.isKind(of: BuyPresenter.self)
+            let isSell = self.isKind(of: SellPresenter.self)
+            let isSwap = self.isKind(of: SwapPresenter.self)
+            
+            if isBuy {
                 lifetimeLimit = profile.buyAllowanceLifetime
                 dailyLimit = profile.buyAllowanceDaily
                 perExchangeLimit = profile.buyAllowancePerExchange
                 reason = .buyCard(nil)
-            } else if self.isKind(of: SellPresenter.self) {
+            } else if isSell {
                 lifetimeLimit = profile.sellAllowanceLifetime
                 dailyLimit = profile.sellAllowanceDaily
                 perExchangeLimit = profile.sellAllowancePerExchange
                 reason = .sell
-            } else if self.isKind(of: SwapPresenter.self) {
+            } else if isSwap {
                 lifetimeLimit = profile.swapAllowanceLifetime
                 dailyLimit = profile.swapAllowanceDaily
                 perExchangeLimit = profile.swapAllowancePerExchange
@@ -216,59 +208,64 @@ extension Presenter where Self: AssetActionResponses,
             
             switch fiat {
             case _ where fiat <= 0:
-                // Fiat value is below 0
-                presentError(actionResponse: .init(error: nil))
-                hasError = true
+                // Fiat value is or below 0
                 
-            case _ where fiat < minimumUsd:
-                // Value below minimum Fiat
-                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumUsd, currency: toCode, reason: reason)))
-                hasError = true
-                
-            case _ where token < minimumValue:
-                // Value below minimum crypto
-                presentError(actionResponse: .init(error: ExchangeErrors.tooLow(amount: minimumValue, currency: toCode, reason: reason)))
-                hasError = true
+                error = nil
                 
             case _ where fiat > lifetimeLimit,
                 _ where minimumUsd > lifetimeLimit:
                 // Over lifetime limit
-                presentError(actionResponse: .init(error: ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)))
-                hasError = true
+                
+                error = ExchangeErrors.overLifetimeLimit(limit: lifetimeLimit)
                 
             case _ where fiat > dailyLimit:
                 // Over daily limit
+                
                 let level2 = ExchangeErrors.overDailyLimitLevel2(limit: dailyLimit)
                 let level1 = ExchangeErrors.overDailyLimit(limit: dailyLimit)
-                let error = profile.status == .levelTwo(.levelTwo) ? level2 : level1
-                presentError(actionResponse: .init(error: error))
-                hasError = true
+                error = profile.status == .levelTwo(.levelTwo) ? level2 : level1
                 
             case _ where fiat > perExchangeLimit:
                 // Over exchange limit
-                presentError(actionResponse: .init(error: ExchangeErrors.overExchangeLimit))
-                hasError = true
+                
+                error = ExchangeErrors.overExchangeLimit
                 
             case _ where fiat > maximumUsd,
                 _ where minimumUsd > maximumUsd:
                 // Over exchange limit
-                presentError(actionResponse: .init(error: ExchangeErrors.tooHigh(amount: maximumUsd, currency: toCode, reason: reason)))
-                hasError = true
+                
+                error = ExchangeErrors.tooHigh(amount: maximumUsd, currency: toCode, reason: reason)
+                
+            case _ where fiat < minimumUsd:
+                // Value below minimum Fiat
+                
+                error = ExchangeErrors.tooLow(amount: minimumUsd, currency: toCode, reason: reason)
+                
+            case _ where token < minimumValue:
+                // Value below minimum crypto
+                
+                if isSwap {
+                    error = ExchangeErrors.tooLow(amount: minimumValue, currency: toCode, reason: reason)
+                }
                 
             case _ where fiat > (balance?.fiatValue ?? 0):
                 // Value higher than balance
-                let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
-                let error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.fromFeeAmount?.currency.code.uppercased() ?? "")
-                presentError(actionResponse: .init(error: error))
-                hasError = true
+                
+                if isSell || isSwap {
+                    let value = actionResponse.fromFeeAmount?.tokenValue ?? actionResponse.quote?.fromFee?.fee ?? 0
+                    error = ExchangeErrors.balanceTooLow(balance: value, currency: actionResponse.fromFeeAmount?.currency.code.uppercased() ?? "")
+                }
                 
             default:
                 // Remove error
-                presentError(actionResponse: .init(error: nil))
+                
+                error = nil
             }
         }
         
-        return hasError
+        presentError(actionResponse: .init(error: error))
+        
+        return error != nil
     }
 }
 
