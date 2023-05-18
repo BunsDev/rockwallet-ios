@@ -51,6 +51,8 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     
+    var isMinimumImpactedByWithdrawalShown: Bool = false
+    
     var secondFactorCode: String?
     var secondFactorBackup: String?
     

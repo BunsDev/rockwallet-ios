@@ -357,8 +357,7 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showToastMessage(with error: Error? = nil,
                           model: InfoViewModel? = nil,
-                          configuration: InfoViewConfiguration? = nil,
-                          onTapCallback: (() -> Void)? = nil) {
+                          configuration: InfoViewConfiguration? = nil) {
         hideOverlay()
         LoadingView.hideIfNeeded()
         
@@ -380,11 +379,13 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
         
         guard let model = model,
-              let configuration = configuration else { return }
+              let configuration = configuration else {
+            ToastMessageManager.shared.hide()
+            return
+        }
         
         ToastMessageManager.shared.show(model: model,
-                                        configuration: configuration,
-                                        onTapCallback: onTapCallback)
+                                        configuration: configuration)
     }
     
     func showOverlay(with viewModel: TransparentViewModel, completion: (() -> Void)? = nil) {

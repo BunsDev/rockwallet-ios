@@ -10,9 +10,9 @@
 
 import UIKit
 
-enum DismissType {
+enum FEInfoViewDismissType: CGFloat {
     /// After 5 sec
-    case auto
+    case auto = 5
     /// Tap to remove
     case tapToDismiss
     /// Non interactable
@@ -62,7 +62,7 @@ struct InfoViewModel: ViewModel {
     var button: ButtonViewModel?
     var tickbox: TickboxItemViewModel?
     
-    var dismissType: DismissType = .auto
+    var dismissType: FEInfoViewDismissType = .auto
     var canUseAch: Bool = false
 }
 
@@ -259,8 +259,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
     }
     
     override func configure(with config: InfoViewConfiguration?) {
-        toggleVisibility(isShown: config != nil)
-        
         guard let config = config else { return }
         
         super.configure(with: config)
@@ -336,14 +334,7 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         tickboxItemView.isHidden = viewModel.tickbox == nil
         
         switch viewModel.dismissType {
-        case .auto:
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-                self?.viewTapped()
-            }
-            
-            addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
-            
-        case .tapToDismiss:
+        case .tapToDismiss, .auto:
             addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
             
         default:
@@ -381,11 +372,5 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
     
     func tickboxTapped(value: Bool) {
         toggleTickboxCallback?(value)
-    }
-    
-    private func toggleVisibility(isShown: Bool) {
-        Self.animate(withDuration: Presets.Animation.short.rawValue) { [weak self] in
-            self?.alpha = isShown ? 1.0 : 0.0
-        }
     }
 }

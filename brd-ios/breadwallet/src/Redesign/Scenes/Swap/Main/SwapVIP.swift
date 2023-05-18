@@ -66,6 +66,8 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, AssetDataStore, CreateTra
     
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
+    
+    var isMinimumImpactedByWithdrawalShown: Bool { get set }
 }
 
 protocol SwapDataPassing {
