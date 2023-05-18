@@ -452,7 +452,11 @@ class BaseCoordinator: NSObject, Coordinatable {
             let isRestrictedUSState = restrictionReason == .state && (!(accessRights?.hasSwapAccess ?? false)
                                                                       && !(accessRights?.hasBuyAccess ?? false)
                                                                       && !(accessRights?.hasAchAccess ?? false))
-            showComingSoon(reason: reason, restrictionReason: restrictionReason, isRestrictedUSState: isRestrictedUSState)
+            
+            let isGreyListedCountry = restrictionReason == .state && ((accessRights?.hasSwapAccess ?? false)
+                                                                      && !(accessRights?.hasBuyAccess ?? false)
+                                                                      && !(accessRights?.hasAchAccess ?? false))
+            showComingSoon(reason: reason, restrictionReason: restrictionReason, isRestrictedUSState: isRestrictedUSState, isGreyListedCountry: isGreyListedCountry)
             
         default:
             break
@@ -535,10 +539,19 @@ class BaseCoordinator: NSObject, Coordinatable {
                         coreSystem: CoreSystem? = nil,
                         keyStore: KeyStore? = nil,
                         restrictionReason: Profile.AccessRights.RestrictionReason?,
-                        isRestrictedUSState: Bool = false) {
+                        isRestrictedUSState: Bool = false,
+                        isGreyListedCountry: Bool = false) {
         open(scene: Scenes.ComingSoon) { [weak self] vc in
             self?.handleComingSoonNavigation(vc)
-            let restrictedReason: BaseInfoModels.ComingSoonReason? = isRestrictedUSState ? .restrictedUSState : reason
+            
+            var restrictedReason: BaseInfoModels.ComingSoonReason?
+            if isRestrictedUSState {
+                restrictedReason = .restrictedUSState
+            } else if isGreyListedCountry {
+                restrictedReason = .greyListedCountry
+            } else {
+                restrictedReason = reason
+            }
             vc.reason = restrictedReason
             vc.isModalDismissable = isModalDismissable
             vc.navigationItem.hidesBackButton = hidesBackButton
@@ -553,12 +566,12 @@ class BaseCoordinator: NSObject, Coordinatable {
         guard let vc else { return }
         
         vc.didTapMainButton = {
-            if vc.reason == .swap || vc.reason == .buy || vc.reason == .sell ||  vc.reason == .restrictedUSState {
-                vc.coordinator?.popViewController()
-            } else if vc.reason == .buyAch {
+            if vc.reason == .buyAch {
                 vc.coordinator?.showBuy(type: .card,
                                         coreSystem: vc.dataStore?.coreSystem,
                                         keyStore: vc.dataStore?.keyStore)
+            } else {
+                vc.coordinator?.popViewController()
             }
         }
         

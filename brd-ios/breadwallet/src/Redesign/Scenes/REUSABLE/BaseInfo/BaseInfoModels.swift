@@ -296,6 +296,7 @@ enum BaseInfoModels {
         case buyAch
         case sell
         case restrictedUSState
+        case greyListedCountry
         
         var iconName: String {
             return Asset.time.name
@@ -306,7 +307,7 @@ enum BaseInfoModels {
             case .swap, .buy, .restrictedUSState:
                 return L10n.ComingSoon.title
                 
-            case .buyAch, .sell:
+            case .buyAch, .sell, .greyListedCountry:
                 return L10n.Buy.Ach.notAvailableTitle
             }
         }
@@ -319,28 +320,28 @@ enum BaseInfoModels {
             case .buyAch:
                 return  L10n.Buy.Ach.notAvailableBody
                 
-            case .sell:
+            case .sell, .greyListedCountry:
                 return L10n.Sell.notAvailableBody
             }
         }
         
         var firstButtonTitle: String? {
             switch self {
-            case .swap, .buy, .sell, .restrictedUSState:
-                return L10n.Button.back
-                
             case .buyAch:
                 return L10n.Buy.buyWithCardButton
+                
+           default:
+                return L10n.Button.back
             }
         }
         
         var secondButtonTitle: String? {
             switch self {
-            case .swap, .buy, .restrictedUSState, .sell:
-                return L10n.ComingSoon.Buttons.contactSupport
-                
             case .buyAch:
                 return L10n.Swap.backToHome
+                
+            default:
+                return L10n.ComingSoon.Buttons.contactSupport
             }
         }
     }
