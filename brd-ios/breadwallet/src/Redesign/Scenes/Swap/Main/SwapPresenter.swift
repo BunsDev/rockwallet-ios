@@ -20,8 +20,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
     
     private var exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel())
     private var mainSwapViewModel = MainSwapViewModel()
-    private var fromCurrencyCode: String?
-    private var toCurrencyCode: String?
+    var isMinimumImpactedByWithdrawalShown = false
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
         guard let item = actionResponse.item as? Models.Item,
@@ -99,27 +98,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                                         title: .text(L10n.Buy.iWant),
                                                         feeDescription: .text(receivingFee)))
         
-        // Remove presented error
-        presentError(actionResponse: .init(error: nil))
-        
-        guard actionResponse.handleErrors else {
-            if quote?.isMinimumImpactedByWithdrawal == true
-                && (fromCurrencyCode != fromCode || toCurrencyCode != toCode) {
-                fromCurrencyCode = fromCode
-                toCurrencyCode = toCode
-                
-                presentError(actionResponse: .init(error: ExchangeErrors.highFees))
-            }
-            
-            viewController?.displayAmount(responseDisplay: .init(continueEnabled: false,
-                                                                 amounts: mainSwapViewModel,
-                                                                 rate: exchangeRateViewModel))
-            return
-        }
-        
-        let fromFee = actionResponse.fromFee
-        
-        let continueEnabled = (!handleError(actionResponse: actionResponse) && fromFee != nil)
+        let continueEnabled = !handleError(actionResponse: actionResponse) && actionResponse.handleErrors
         
         viewController?.displayAmount(responseDisplay: .init(continueEnabled: continueEnabled,
                                                              amounts: mainSwapViewModel,

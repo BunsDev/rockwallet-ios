@@ -118,16 +118,33 @@ extension Presenter where Self: AssetActionResponses,
         guard let from = actionResponse.fromAmount else { return true }
         
         let quote = actionResponse.quote
-        
         let balance = from.currency.state?.balance
-        
         let fromCode = from.currency.code.uppercased()
         let toCode = Constant.usdCurrencyCode
-        
         let fromFee = actionResponse.fromFee
-        
         var senderValidationResult = actionResponse.senderValidationResult ?? .ok
         var error: ExchangeErrors?
+        
+        let isBuy = self.isKind(of: BuyPresenter.self)
+        let isSell = self.isKind(of: SellPresenter.self)
+        let isSwap = self.isKind(of: SwapPresenter.self)
+        
+        if isSwap,
+           let presenter = self as? SwapPresenter,
+           quote?.isMinimumImpactedByWithdrawal == true &&
+            from.cryptoAmount.isZero &&
+            actionResponse.toAmount?.cryptoAmount.isZero == false &&
+            !presenter.isMinimumImpactedByWithdrawalShown &&
+            !actionResponse.handleErrors {
+            error = ExchangeErrors.highFees
+            presentError(actionResponse: .init(error: error))
+            
+            presenter.isMinimumImpactedByWithdrawalShown = true
+            
+            return false
+        } else if !actionResponse.handleErrors {
+            return false
+        }
         
         if let feeCurrency = actionResponse.fromFeeCurrency,
            let feeCurrencyWalletBalance = feeCurrency.wallet?.balance,
@@ -177,17 +194,13 @@ extension Presenter where Self: AssetActionResponses,
             let token = from.tokenValue
             
             let minimumValue = quote?.minimumValue ?? 0
-            let minimumUsd = quote?.minimumUsd ?? 0
-            let maximumUsd = quote?.maximumUsd ?? 0
+            let minimumUsd = quote?.minimumUsd.round(to: 2) ?? 0
+            let maximumUsd = quote?.maximumUsd.round(to: 2) ?? 0
             
             var lifetimeLimit: Decimal = 0
             var dailyLimit: Decimal = 0
             var perExchangeLimit: Decimal = 0
             var reason: BaseInfoModels.FailureReason = .swap
-            
-            let isBuy = self.isKind(of: BuyPresenter.self)
-            let isSell = self.isKind(of: SellPresenter.self)
-            let isSwap = self.isKind(of: SwapPresenter.self)
             
             if isBuy {
                 lifetimeLimit = profile.buyAllowanceLifetime

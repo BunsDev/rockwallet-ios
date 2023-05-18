@@ -157,8 +157,7 @@ class VIPViewController<C: CoordinatableRoutes,
         if let coordinator {
             coordinator.showToastMessage(with: responseDisplay.error,
                                          model: responseDisplay.model,
-                                         configuration: responseDisplay.config,
-                                         onTapCallback: nil)
+                                         configuration: responseDisplay.config)
             
         } else {
             ToastMessageManager.shared.show(model: responseDisplay.model,
@@ -171,8 +170,7 @@ class VIPViewController<C: CoordinatableRoutes,
         
         coordinator?.showToastMessage(with: responseDisplay.error,
                                       model: responseDisplay.model,
-                                      configuration: responseDisplay.config,
-                                      onTapCallback: nil)
+                                      configuration: responseDisplay.config)
         
         return true
     }

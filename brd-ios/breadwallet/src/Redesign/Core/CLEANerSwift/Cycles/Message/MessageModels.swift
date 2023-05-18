@@ -18,7 +18,7 @@ struct MessageModels {
         struct ActionResponse {
             var title: String?
             var body: String?
-            var dissmiss: DismissType = .auto
+            var dismiss: FEInfoViewDismissType = .auto
         }
     }
     
