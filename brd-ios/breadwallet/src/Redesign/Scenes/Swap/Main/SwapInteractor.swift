@@ -195,6 +195,15 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             return
         }
         
+        let profile = UserManager.shared.profile
+        let limit = profile?.swapAllowanceDaily ?? 0
+
+        if from.fiatValue > limit {
+            let error = profile?.status == .levelTwo(.levelTwo) ? ExchangeErrors.overDailyLimitLevel2(limit: limit) : ExchangeErrors.overDailyLimit(limit: limit)
+            presenter?.presentError(actionResponse: .init(error: error))
+            return
+        }
+        
         fetchWalletKitFee(for: from,
                           with: sender,
                           address: fromAddress) { [weak self] fee in
