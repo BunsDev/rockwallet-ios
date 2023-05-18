@@ -44,7 +44,7 @@ protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDis
     func displayAssetSelectionMessage(responseDisplay: SwapModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol SwapDataStore: BaseDataStore, FetchDataStore, AssetDataStore, CreateTransactionDataStore {
+protocol SwapDataStore: BaseDataStore, FetchDataStore, AssetDataStore, CreateTransactionDataStore, TwoStepDataStore {
     var showTimer: Bool { get set }
     
     var fromAmount: Amount? { get set }

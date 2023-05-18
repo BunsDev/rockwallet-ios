@@ -17,5 +17,10 @@ class RegistrationConfirmationStore: NSObject, BaseDataStore, RegistrationConfir
     var setTwoStepAppModel: SetTwoStepAuth?
     var code: String?
     
+    // MARK: - TwoStepDataStore
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
     // MARK: - Additional helpers
 }

@@ -165,11 +165,5 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         })
     }
     
-    func displayNextFailure(responseDisplay: RegistrationConfirmationModels.NextFailure.ResponseDisplay) {
-        coordinator?.showTwoStepErrorFlow(reason: responseDisplay.reason,
-                                          registrationRequestData: responseDisplay.registrationRequestData,
-                                          setPasswordRequestData: responseDisplay.setPasswordRequestData)
-    }
-    
     // MARK: - Additional Helpers
 }

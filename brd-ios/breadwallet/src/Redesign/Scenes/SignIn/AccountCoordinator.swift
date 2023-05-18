@@ -105,8 +105,8 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     }
     
     func showTwoStepErrorFlow(reason: NetworkingError,
-                              registrationRequestData: RegistrationRequestData?,
-                              setPasswordRequestData: SetPasswordRequestData?) {
+                              registrationRequestData: RegistrationRequestData? = nil,
+                              setPasswordRequestData: SetPasswordRequestData? = nil) {
         if reason == .twoStepAppRequired {
             let type: RegistrationConfirmationModels.ConfirmationType = registrationRequestData == nil ? .twoStepAppResetPassword : .twoStepAppLogin
             

@@ -53,6 +53,8 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var isMinimumImpactedByWithdrawalShown: Bool = false
     
+    // MARK: - TwoStepDataStore
+    
     var secondFactorCode: String?
     var secondFactorBackup: String?
     

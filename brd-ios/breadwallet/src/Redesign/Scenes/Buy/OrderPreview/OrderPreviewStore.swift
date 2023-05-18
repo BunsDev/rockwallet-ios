@@ -43,6 +43,8 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var paymentstatus: AddCard.Status?
     var availablePayments: [PaymentCard.PaymentType]?
     
+    // MARK: - TwoStepDataStore
+    
     var secondFactorCode: String?
     var secondFactorBackup: String?
     

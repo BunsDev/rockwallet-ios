@@ -121,11 +121,6 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                                                               config: Presets.InfoView.verification))
     }
     
-    func presentNextFailure(actionResponse: RegistrationConfirmationModels.NextFailure.ActionResponse) {
-        viewController?.displayNextFailure(responseDisplay: .init(reason: actionResponse.reason,
-                                                                  registrationRequestData: actionResponse.registrationRequestData))
-    }
-    
     // MARK: - Additional Helpers
 
 }
