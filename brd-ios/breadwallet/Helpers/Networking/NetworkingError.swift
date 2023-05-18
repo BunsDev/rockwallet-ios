@@ -47,7 +47,7 @@ enum NetworkingError: FEError, Equatable {
             return L10n.ErrorMessages.somethingWentWrong
             
         case .twoStepInvalidCode(let attemptCount):
-            return L10n.TwoStep.Error.attempts
+            return L10n.TwoStep.Error.attempts(String(describing: attemptCount))
             
         case .inappropriatePaymail:
             return L10n.PaymailAddress.inappropriateWordsMessage
