@@ -17,7 +17,6 @@ struct ServerResponse: Decodable {
         case twoStepRequired = "Required 2FA"
         case twoStepInvalid = "Invalid 2FA"
         case twoStepInvalidCode = "Invalid 2FA code"
-        case twoStepInvalidRetryable = "Invalid code"
         case twoStepBlockedAccount = "Account blocked"
         case twoStepInvalidCodeBlockedAccount = "Invalid 2FA code, account blocked"
         case inappropriatePaymail = "Bad word in handle"
@@ -34,6 +33,7 @@ struct ServerResponse: Decodable {
     struct ServerError: Decodable, FEError {
         var code: String?
         var serverMessage: String?
+        var attemptsLeft: Int
         var statusCode: Int { return Int(code ?? "") ?? -1 }
         var errorMessage: String { return serverMessage ?? ""  }
         var errorType: ErrorType?
