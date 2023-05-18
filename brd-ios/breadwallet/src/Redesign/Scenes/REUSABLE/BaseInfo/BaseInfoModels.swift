@@ -336,14 +336,11 @@ enum BaseInfoModels {
         
         var secondButtonTitle: String? {
             switch self {
-            case .swap, .buy, .restrictedUSState:
+            case .swap, .buy, .restrictedUSState, .sell:
                 return L10n.ComingSoon.Buttons.contactSupport
                 
             case .buyAch:
                 return L10n.Button.back
-                
-            case .sell:
-                return nil
             }
         }
     }

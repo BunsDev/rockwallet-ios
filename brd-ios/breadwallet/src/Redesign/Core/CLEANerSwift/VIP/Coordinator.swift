@@ -126,13 +126,15 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showSell(coreSystem: CoreSystem?, keyStore: KeyStore?) {
         decideFlow { [weak self] showScene in
-            // TODO: This logic will need to be updated.
-            guard showScene else {
+            // TODO: This logic will need to be updated when hasSellAccess is available
+            guard showScene,
+                  let profile = UserManager.shared.profile,
+                  profile.kycAccessRights.hasAchAccess == true else {
                 self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
                 
                 return
             }
-            
+                
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                     vc?.dataStore?.currencies = Store.state.currencies
@@ -446,7 +448,9 @@ class BaseCoordinator: NSObject, Coordinatable {
             showVerifyAccount(flow: flow)
             
         case .country, .state, .manuallyConfigured:
-            let isRestrictedUSState = restrictionReason == .state && (!(accessRights?.hasSwapAccess ?? false) && !(accessRights?.hasBuyAccess ?? false) && !(accessRights?.hasAchAccess ?? false))
+            let isRestrictedUSState = restrictionReason == .state && (!(accessRights?.hasSwapAccess ?? false)
+                                                                      && !(accessRights?.hasBuyAccess ?? false)
+                                                                      && !(accessRights?.hasAchAccess ?? false))
             showComingSoon(reason: reason, restrictionReason: restrictionReason, isRestrictedUSState: isRestrictedUSState)
             
         default:
@@ -533,7 +537,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                         isRestrictedUSState: Bool = false) {
         open(scene: Scenes.ComingSoon) { [weak self] vc in
             self?.handleComingSoonNavigation(vc)
-            var restrictedReason: BaseInfoModels.ComingSoonReason? = isRestrictedUSState ? .restrictedUSState : reason
+            let restrictedReason: BaseInfoModels.ComingSoonReason? = isRestrictedUSState ? .restrictedUSState : reason
             vc.reason = restrictedReason
             vc.isModalDismissable = isModalDismissable
             vc.navigationItem.hidesBackButton = hidesBackButton
@@ -558,10 +562,10 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
         
         vc.didTapSecondayButton = {
-            if vc.reason == .swap || vc.reason == .buy ||  vc.reason == .restrictedUSState {
-                vc.coordinator?.showSupport()
-            } else if vc.reason == .buyAch {
+            if vc.reason == .buyAch {
                 vc.coordinator?.popViewController()
+            } else {
+                vc.coordinator?.showSupport()
             }
         }
     }
