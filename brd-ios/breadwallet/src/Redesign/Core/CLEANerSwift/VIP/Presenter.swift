@@ -107,7 +107,7 @@ extension Presenter {
     func presentNotification(actionResponse: MessageModels.Notification.ActionResponse) {
         let model = InfoViewModel(title: actionResponse.title != nil ?.text(actionResponse.title) : nil,
                                   description: actionResponse.body != nil ?.text(actionResponse.body) : nil,
-                                  dismissType: actionResponse.dissmiss)
+                                  dismissType: actionResponse.dismiss)
         let config = Presets.InfoView.error
         
         viewController?.displayMessage(responseDisplay: .init(model: model, config: config))

@@ -122,6 +122,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         dataStore?.fromRate = nil
         dataStore?.toRate = nil
         dataStore?.fromFeeBasis = nil
+        dataStore?.isMinimumImpactedByWithdrawalShown = false
         
         presenter?.presentError(actionResponse: .init(error: nil))
         
