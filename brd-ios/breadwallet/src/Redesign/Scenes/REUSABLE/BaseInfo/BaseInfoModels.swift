@@ -340,7 +340,7 @@ enum BaseInfoModels {
                 return L10n.ComingSoon.Buttons.contactSupport
                 
             case .buyAch:
-                return L10n.Button.back
+                return L10n.Swap.backToHome
             }
         }
     }
