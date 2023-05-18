@@ -242,6 +242,10 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                     return
                 }
                 
+                if error.errorType == .twoStepInvalidCode || error.errorType == .twoStepInvalidCode2 {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                }
+                
                 self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
                                                                           registrationRequestData: registrationRequestData))
             }
