@@ -65,11 +65,6 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         guard let from = actionResponse.fromAmount,
               let to = actionResponse.toAmount else { return }
         
-        let quote = actionResponse.quote
-        
-        let fromCode = from.currency.code.uppercased()
-        let toCode = to.currency.code.uppercased()
-        
         let balance = from.currency.state?.balance
         let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
         let receivingFee = L10n.Swap.receiveNetworkFee
