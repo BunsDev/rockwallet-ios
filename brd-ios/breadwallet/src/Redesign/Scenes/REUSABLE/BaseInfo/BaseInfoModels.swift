@@ -295,6 +295,7 @@ enum BaseInfoModels {
         case buy
         case buyAch
         case sell
+        case restrictedUSState
         
         var iconName: String {
             return Asset.time.name
@@ -302,7 +303,7 @@ enum BaseInfoModels {
         
         var title: String {
             switch self {
-            case .swap, .buy:
+            case .swap, .buy, .restrictedUSState:
                 return L10n.ComingSoon.title
                 
             case .buyAch, .sell:
@@ -312,7 +313,7 @@ enum BaseInfoModels {
         
         var description: String {
             switch self {
-            case .swap, .buy:
+            case .swap, .buy, .restrictedUSState:
                 return  L10n.ComingSoon.body
                 
             case .buyAch:
@@ -325,7 +326,7 @@ enum BaseInfoModels {
         
         var firstButtonTitle: String? {
             switch self {
-            case .swap, .buy, .sell:
+            case .swap, .buy, .sell, .restrictedUSState:
                 return L10n.Button.back
                 
             case .buyAch:
@@ -335,7 +336,7 @@ enum BaseInfoModels {
         
         var secondButtonTitle: String? {
             switch self {
-            case .swap, .buy:
+            case .swap, .buy, .restrictedUSState:
                 return L10n.ComingSoon.Buttons.contactSupport
                 
             case .buyAch:
