@@ -17,5 +17,10 @@ class SetPasswordStore: NSObject, BaseDataStore, SetPasswordDataStore {
     var passwordAgain: String = ""
     var code: String?
     
+    // MARK: - TwoStepDataStore
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
     // MARK: - Additional helpers
 }

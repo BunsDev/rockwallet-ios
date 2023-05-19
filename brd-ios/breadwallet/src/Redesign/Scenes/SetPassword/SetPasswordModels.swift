@@ -64,15 +64,4 @@ enum SetPasswordModels {
         struct ActionResponse {}
         struct ResponseDisplay {}
     }
-    
-    struct NextFailure {
-        struct ActionResponse {
-            let reason: NetworkingError
-            let setPasswordRequestData: SetPasswordRequestData?
-        }
-        struct ResponseDisplay {
-            let reason: NetworkingError
-            let setPasswordRequestData: SetPasswordRequestData?
-        }
-    }
 }

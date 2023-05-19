@@ -85,6 +85,8 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var keyStore: KeyStore?
     var canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess
     
+    // MARK: - TwoStepDataStore
+    
     var secondFactorCode: String?
     var secondFactorBackup: String?
     

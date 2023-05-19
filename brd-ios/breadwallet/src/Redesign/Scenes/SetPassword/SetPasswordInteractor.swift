@@ -64,13 +64,7 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
                 }
                 
             case .failure(let error):
-                guard let error = (error as? NetworkingError), error.errorCategory == .twoStep else {
-                    self?.presenter?.presentError(actionResponse: .init(error: error))
-                    return
-                }
-                
-                self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
-                                                                          setPasswordRequestData: data))
+                self?.handleNextFailure(viewAction: .init(setPasswordRequestData: data, error: error))
             }
         }
     }

@@ -59,7 +59,7 @@ protocol SellResponseDisplays: AnyObject,
     func displayAssetSelectionMessage(responseDisplay: SellModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, CreateTransactionDataStore {
+protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, CreateTransactionDataStore, TwoStepDataStore {
     // MARK: - SellDataStore
     
     var availablePayments: [PaymentCard.PaymentType] { get set }

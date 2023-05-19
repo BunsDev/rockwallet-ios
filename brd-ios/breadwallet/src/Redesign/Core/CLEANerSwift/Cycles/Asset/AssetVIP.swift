@@ -30,7 +30,7 @@ protocol AssetResponseDisplays {
     func displayExchangeRate(responseDisplay: AssetModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?)
 }
 
-protocol AssetDataStore: NSObject {
+protocol AssetDataStore: NSObject, TwoStepDataStore {
     var limits: NSMutableAttributedString? { get }
     var fromCode: String { get }
     var toCode: String { get }
@@ -38,9 +38,6 @@ protocol AssetDataStore: NSObject {
     var quote: Quote? { get set }
     var showTimer: Bool { get set }
     var isFromBuy: Bool { get set }
-    
-    var secondFactorCode: String? { get set }
-    var secondFactorBackup: String? { get set }
 }
 
 extension Interactor where Self: AssetViewActions,

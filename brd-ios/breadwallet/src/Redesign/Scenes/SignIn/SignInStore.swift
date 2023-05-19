@@ -16,5 +16,10 @@ class SignInStore: NSObject, BaseDataStore, SignInDataStore {
     var email: String = ""
     var password: String = ""
     
+    // MARK: - TwoStepDataStore
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
     // MARK: - Additional helpers
 }

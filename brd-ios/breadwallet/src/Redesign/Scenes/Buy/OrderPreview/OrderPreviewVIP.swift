@@ -57,7 +57,7 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayPreview(responseDisplay: OrderPreviewModels.Preview.ResponseDsiaply)
 }
 
-protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore, CreateTransactionDataStore {
+protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore, CreateTransactionDataStore, TwoStepDataStore {
     var type: PreviewType? { get set }
     var to: Amount? { get set }
     var from: Decimal? { get set }
@@ -71,8 +71,6 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore, CreateTransaction
     var availablePayments: [PaymentCard.PaymentType]? { get set }
     var isAchAccount: Bool { get }
     var createTransactionModel: CreateTransactionModels.Transaction.ViewAction? { get set }
-    var secondFactorCode: String? { get set }
-    var secondFactorBackup: String? { get set }
 }
 
 protocol OrderPreviewDataPassing {

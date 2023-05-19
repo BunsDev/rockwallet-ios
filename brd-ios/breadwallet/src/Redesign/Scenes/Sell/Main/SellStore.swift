@@ -62,6 +62,8 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var createTransactionModel: CreateTransactionModels.Transaction.ViewAction?
     
+    // MARK: - TwoStepDataStore
+    
     var secondFactorCode: String?
     var secondFactorBackup: String?
     
