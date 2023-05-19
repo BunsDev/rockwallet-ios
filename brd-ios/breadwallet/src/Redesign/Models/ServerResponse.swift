@@ -17,7 +17,6 @@ struct ServerResponse: Decodable {
         case twoStepRequired = "Required 2FA"
         case twoStepInvalid = "Invalid 2FA"
         case twoStepInvalidCode = "Invalid 2FA code"
-        case twoStepInvalidCode2 = "Invalid code"
         case twoStepBlockedAccount = "Account blocked"
         case twoStepInvalidCodeBlockedAccount = "Invalid 2FA code, account blocked"
         case inappropriatePaymail = "Bad word in handle"

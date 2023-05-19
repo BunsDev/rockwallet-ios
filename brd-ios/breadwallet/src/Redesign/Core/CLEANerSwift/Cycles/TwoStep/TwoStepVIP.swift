@@ -38,7 +38,7 @@ extension Interactor where Self: TwoStepViewActions,
             return
         }
         
-        if error.errorType == .twoStepInvalidCode || error.errorType == .twoStepInvalidCode2 {
+        if error.errorType == .twoStepInvalidCode {
             presenter?.presentError(actionResponse: .init(error: error))
         }
         

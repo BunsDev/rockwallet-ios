@@ -116,16 +116,14 @@ enum NetworkingError: FEError, Equatable {
         case 400:
             if serverMessage == ServerResponse.ErrorType.inappropriatePaymail.rawValue {
                 self = .inappropriatePaymail
-            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue ||
-                        serverMessage == ServerResponse.ErrorType.twoStepInvalidCode2.rawValue {
+            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
                 self = .twoStepInvalidCode(error?.attemptsLeft)
             } else {
                 self = .general
             }
             
         case 401:
-            if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue ||
-                serverMessage == ServerResponse.ErrorType.twoStepInvalidCode2.rawValue {
+            if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
                 self = .twoStepInvalidCode(error?.attemptsLeft)
             } else {
                 switch TwoStepSettingsResponseData.TwoStepType(rawValue: error?.serverMessage ?? "") {
