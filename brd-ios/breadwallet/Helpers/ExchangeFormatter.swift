@@ -103,12 +103,18 @@ extension String {
     }
     
     func cleanupFormatting(forFiat: Bool) -> String {
-        let text = isEmpty != false ? "0" : self
+        var text = isEmpty != false ? "0" : self
         
         let expectedFormat = forFiat ? ExchangeFormatter.fiat : ExchangeFormatter.crypto
         let inputFormat = ExchangeFormatter.current
         
-        let sanitized = text.sanitize(inputFormat: inputFormat, expectedFormat: expectedFormat)
+        var sanitized = text.sanitize(inputFormat: inputFormat, expectedFormat: expectedFormat)
+        
+        expectedFormat.maximumIntegerDigits = 7
+        
+        let number = expectedFormat.string(for: Decimal(string: sanitized))
+        
+        sanitized = text.sanitize(inputFormat: inputFormat, expectedFormat: expectedFormat)
         
         return sanitized
     }

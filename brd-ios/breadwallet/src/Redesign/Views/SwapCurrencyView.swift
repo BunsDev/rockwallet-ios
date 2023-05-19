@@ -251,7 +251,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     
     private func cleanupFormatting(textField: UITextField, forFiat: Bool) -> String {
         let description = textField.text?.description ?? ""
-        var text = String(describing: description.cleanupFormatting(forFiat: forFiat).prefix(10))
+        var text = String(describing: description.cleanupFormatting(forFiat: forFiat))
         
         if text == "0" && textField.text != "0" {
             text = ""
@@ -267,18 +267,12 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == fiatAmountField {
-            let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-            
-            didChangeFiatAmount?(cleanedText)
+            fiatAmountDidChange(textField)
         } else if textField == cryptoAmountField {
-            let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-            
-            didChangeCryptoAmount?(cleanedText)
+            cryptoAmountDidChange(textField)
         }
         
         didFinish?(false)
-        
-        decidePlaceholder()
     }
     
     override func configure(with config: SwapCurrencyConfiguration?) {
