@@ -72,11 +72,6 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
         viewController?.displayNext(responseDisplay: .init())
     }
     
-    func presentNextFailure(actionResponse: SetPasswordModels.NextFailure.ActionResponse) {
-        viewController?.displayNextFailure(responseDisplay: .init(reason: actionResponse.reason,
-                                                                  setPasswordRequestData: actionResponse.setPasswordRequestData))
-    }
-    
     // MARK: - Additional Helpers
     
 }

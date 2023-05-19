@@ -204,13 +204,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                 self?.presenter?.presentConfirm(actionResponse: .init())
                 
             case .failure(let error):
-                guard let error = (error as? NetworkingError), error.errorCategory == .twoStep else {
-                    self?.presenter?.presentError(actionResponse: .init(error: error))
-                    return
-                }
-                
-                self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
-                                                                          setPasswordRequestData: setPasswordRequestData))
+                self?.handleNextFailure(viewAction: .init(setPasswordRequestData: setPasswordRequestData, error: error))
             }
         }
     }
@@ -237,13 +231,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
                 self?.presentConfirm()
                 
             case .failure(let error):
-                guard let error = (error as? NetworkingError), error.errorCategory == .twoStep else {
-                    self?.presenter?.presentError(actionResponse: .init(error: error))
-                    return
-                }
-                
-                self?.presenter?.presentNextFailure(actionResponse: .init(reason: error,
-                                                                          registrationRequestData: registrationRequestData))
+                self?.handleNextFailure(viewAction: .init(registrationRequestData: registrationRequestData, error: error))
             }
         }
     }

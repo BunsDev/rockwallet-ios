@@ -68,6 +68,8 @@
 		0453B0BC29D22BF100BBE246 /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 0453B0BB29D22BF100BBE246 /* GoogleTagManager */; };
 		0453B0C029D2DEB100BBE246 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
+		0486949A2A16388D004EDDBA /* TwoStepModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048694992A16388D004EDDBA /* TwoStepModels.swift */; };
+		0486949C2A1638E5004EDDBA /* TwoStepVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486949B2A1638E5004EDDBA /* TwoStepVIP.swift */; };
 		049CE73C29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */; };
 		049CE73F29DD59C0009D0F2D /* PaymailDestinationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73E29DD59C0009D0F2D /* PaymailDestinationWorker.swift */; };
 		049CE74529DD5A90009D0F2D /* FEButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */; };
@@ -942,6 +944,8 @@
 		0452C93D29D4310100CCC8DA /* VeriffKYCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VeriffKYCManager.swift; sourceTree = "<group>"; };
 		0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
+		048694992A16388D004EDDBA /* TwoStepModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepModels.swift; sourceTree = "<group>"; };
+		0486949B2A1638E5004EDDBA /* TwoStepVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepVIP.swift; sourceTree = "<group>"; };
 		049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneCodeWorker.swift; sourceTree = "<group>"; };
 		049CE73D29DD5959009D0F2D /* breadwallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = breadwallet.entitlements; path = Resources/breadwallet.entitlements; sourceTree = "<group>"; };
 		049CE73E29DD59C0009D0F2D /* PaymailDestinationWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymailDestinationWorker.swift; path = src/ViewControllers/PaymailDestinationWorker.swift; sourceTree = "<group>"; };
@@ -1819,6 +1823,15 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		048694982A163841004EDDBA /* TwoStep */ = {
+			isa = PBXGroup;
+			children = (
+				048694992A16388D004EDDBA /* TwoStepModels.swift */,
+				0486949B2A1638E5004EDDBA /* TwoStepVIP.swift */,
+			);
+			path = TwoStep;
+			sourceTree = "<group>";
+		};
 		0495723D29BF19F80078BFE7 /* Send */ = {
 			isa = PBXGroup;
 			children = (
@@ -2600,6 +2613,7 @@
 			children = (
 				7EA9F7B129683A78000F45B6 /* CountriesAndStates */,
 				7E67A78B294734E40012FB3F /* AchPayment */,
+				048694982A163841004EDDBA /* TwoStep */,
 				7E75AD472943296500E54DEF /* Asset */,
 				04B05FF02A120B5000EA7591 /* CreateTransaction */,
 				7E5CB34C2835090D00EC787E /* Alerts */,
@@ -4402,6 +4416,7 @@
 				D78D296229ED3A7B0039A5D6 /* TwoStepSettingsModels.swift in Sources */,
 				7EF45F4F2845352400D1F7B0 /* KYCBasicInteractor.swift in Sources */,
 				7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */,
+				0486949C2A1638E5004EDDBA /* TwoStepVIP.swift in Sources */,
 				7B60826729700B9E00C4736B /* SetPasswordViewController.swift in Sources */,
 				7E52B7A22872CD1E003D2249 /* SupportedCurrenciesWorker.swift in Sources */,
 				7E5CB3982835090E00EC787E /* Controller.swift in Sources */,
@@ -4619,6 +4634,7 @@
 				7EF45F8D284768C100D1F7B0 /* ItemSelectionCoordinator.swift in Sources */,
 				7C1931CD2327371A0061DE20 /* CoreDatabase.swift in Sources */,
 				7EF45F582845353100D1F7B0 /* DateView.swift in Sources */,
+				0486949A2A16388D004EDDBA /* TwoStepModels.swift in Sources */,
 				3AFAD9302567EE15005853E8 /* GiftViewController.swift in Sources */,
 				7E5CB3952835090E00EC787E /* MessageVIP.swift in Sources */,
 				7E5CB39A2835090E00EC787E /* Presenter.swift in Sources */,

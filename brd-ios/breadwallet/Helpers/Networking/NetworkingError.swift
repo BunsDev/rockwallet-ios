@@ -14,7 +14,11 @@ struct GeneralError: FEError {
     var errorType: ServerResponse.ErrorType?
 }
 
-enum NetworkingError: FEError {
+enum NetworkingError: FEError, Equatable {
+    var value: String? {
+        return String(describing: self)
+    }
+    
     case general
     case noConnection
     case accessDenied
@@ -30,8 +34,7 @@ enum NetworkingError: FEError {
     case twoStepEmailRequired
     case twoStepAppRequired
     case twoStepInvalid
-    case twoStepInvalidCode
-    case twoStepInvalidRetryable
+    case twoStepInvalidCode(Int?)
     case twoStepBlockedAccount
     case twoStepInvalidCodeBlockedAccount
     case inappropriatePaymail
@@ -47,8 +50,8 @@ enum NetworkingError: FEError {
         case .serverAtCapacity, .accessDenied:
             return L10n.ErrorMessages.somethingWentWrong
             
-        case .twoStepInvalidCode:
-            return L10n.TwoStep.Error.attempts
+        case .twoStepInvalidCode(let attemptCount):
+            return L10n.TwoStep.Error.attempts(String(describing: attemptCount ?? 0))
             
         case .inappropriatePaymail:
             return L10n.PaymailAddress.inappropriateWordsMessage
@@ -61,7 +64,7 @@ enum NetworkingError: FEError {
     var errorCategory: ServerResponse.ErrorCategory? {
         switch self {
         case .twoStepEmailRequired, .twoStepAppRequired, .twoStepInvalidCode,
-                .twoStepInvalidRetryable, .twoStepBlockedAccount, .twoStepInvalidCodeBlockedAccount, .twoStepInvalid:
+                .twoStepBlockedAccount, .twoStepInvalidCodeBlockedAccount, .twoStepInvalid:
             return .twoStep
             
         default:
@@ -89,9 +92,6 @@ enum NetworkingError: FEError {
         case .twoStepInvalidCode:
             return .twoStepInvalidCode
             
-        case .twoStepInvalidRetryable:
-            return .twoStepInvalidRetryable
-            
         case .twoStepInvalid:
             return .twoStepInvalid
             
@@ -101,6 +101,8 @@ enum NetworkingError: FEError {
     }
     
     init?(error: ServerResponse.ServerError?) {
+        let serverMessage = error?.serverMessage ?? ""
+        
         switch error?.statusCode {
         case 101:
             self = .accessDenied
@@ -112,34 +114,34 @@ enum NetworkingError: FEError {
             self = .sessionExpired
         
         case 400:
-            if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalidRetryable.rawValue {
-                self = .twoStepInvalidRetryable
-            } else if error?.serverMessage == ServerResponse.ErrorType.inappropriatePaymail.rawValue {
+            if serverMessage == ServerResponse.ErrorType.inappropriatePaymail.rawValue {
                 self = .inappropriatePaymail
+            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
+                self = .twoStepInvalidCode(error?.attemptsLeft)
             } else {
                 self = .general
             }
             
         case 401:
-            switch TwoStepSettingsResponseData.TwoStepType(rawValue: error?.serverMessage ?? "") {
-            case .authenticator:
-                self = .twoStepAppRequired
-                
-            case .email:
-                self = .twoStepEmailRequired
-            
-            default:
-                if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
-                    self = .twoStepInvalidCode
-                } else {
+            if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
+                self = .twoStepInvalidCode(error?.attemptsLeft)
+            } else {
+                switch TwoStepSettingsResponseData.TwoStepType(rawValue: error?.serverMessage ?? "") {
+                case .authenticator:
+                    self = .twoStepAppRequired
+                    
+                case .email:
+                    self = .twoStepEmailRequired
+                    
+                default:
                     self = .accessDenied
                 }
             }
             
         case 403:
-            if error?.serverMessage == ServerResponse.ErrorType.twoStepBlockedAccount.rawValue {
+            if serverMessage == ServerResponse.ErrorType.twoStepBlockedAccount.rawValue {
                 self = .twoStepBlockedAccount
-            } else if error?.serverMessage == ServerResponse.ErrorType.twoStepInvalidCodeBlockedAccount.rawValue {
+            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCodeBlockedAccount.rawValue {
                 self = .twoStepInvalidCodeBlockedAccount
             } else {
                 self = .sessionNotVerified

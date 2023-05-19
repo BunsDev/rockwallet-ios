@@ -53,15 +53,13 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore {
+protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, TwoStepDataStore {
     var from: Decimal? { get set }
     var to: Decimal? { get set }
     var values: AssetModels.Asset.ViewAction { get set }
     var toAmount: Amount? { get set }
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }
-    var secondFactorCode: String? { get set }
-    var secondFactorBackup: String? { get set }
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     var publicToken: String? { get set }

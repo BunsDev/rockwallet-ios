@@ -1073,10 +1073,10 @@ internal enum L10n {
     }
   }
   internal enum ComingSoon {
-    /// Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.
+    /// Buy, Swap and Sell are not available in your state. We will notify you when they become available. 
     /// 
-    /// You can still safely send and receive digital assets to your wallet in the meantime.
-    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
+    /// You can still Store, Send and Receive digital assets in your RockWallet.
+    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy, Swap and Sell are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.")
     /// You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.
     internal static let buyDescription = L10n.tr("Localizable", "ComingSoon.BuyDescription", fallback: "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.")
     /// This feature is not available for your account at this time.
@@ -2219,8 +2219,10 @@ internal enum L10n {
     }
     /// I receive
     internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
-    /// Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.
-    internal static let notAvailableBody = L10n.tr("Localizable", "Sell.NotAvailableBody", fallback: "Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.")
+    /// This feature is not available in your region. We will notify you when it becomes available.
+    /// 
+    /// You can still Swap, Store, Send and Receive digital assets in your RockWallet.
+    internal static let notAvailableBody = L10n.tr("Localizable", "Sell.NotAvailableBody", fallback: "This feature is not available in your region. We will notify you when it becomes available.\n\nYou can still Swap, Store, Send and Receive digital assets in your RockWallet.")
     /// Withdrawal preview
     internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
     /// Conversion rate
@@ -3168,8 +3170,10 @@ internal enum L10n {
       }
     }
     internal enum Error {
-      /// Invalid code. You have 3 more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
-      internal static let attempts = L10n.tr("Localizable", "TwoStep.Error.Attempts", fallback: "Invalid code. You have 3 more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.")
+      /// Invalid code. You have %s more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
+      internal static func attempts(_ p1: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "TwoStep.Error.Attempts", p1, fallback: "Invalid code. You have %s more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.")
+      }
     }
     internal enum Menu {
       /// Two-Factor Authentication (2FA)

@@ -86,17 +86,4 @@ enum RegistrationConfirmationModels {
         struct ActionResponse {}
         struct ResponseDisplay {}
     }
-    
-    struct NextFailure {
-        struct ActionResponse {
-            let reason: NetworkingError
-            var registrationRequestData: RegistrationRequestData?
-            var setPasswordRequestData: SetPasswordRequestData?
-        }
-        struct ResponseDisplay {
-            let reason: NetworkingError
-            var registrationRequestData: RegistrationRequestData?
-            var setPasswordRequestData: SetPasswordRequestData?
-        }
-    }
 }
