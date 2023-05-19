@@ -228,24 +228,26 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     }
     
     @objc func fiatAmountDidChange(_ textField: UITextField) {
+        let description = textField.text?.description ?? ""
+        let text = String(describing: description.cleanupFormatting(forFiat: true).prefix(10))
+        
         decidePlaceholder()
         
-        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
+        textField.attributedText = ExchangeFormatter.createAmountString(string: text)
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-        
-        didChangeFiatAmount?(cleanedText)
+        didChangeFiatAmount?(text)
         didChangeContent?()
     }
     
     @objc func cryptoAmountDidChange(_ textField: UITextField) {
+        let description = textField.text?.description ?? ""
+        let text = String(describing: description.cleanupFormatting(forFiat: false).prefix(10))
+        
         decidePlaceholder()
         
-        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
+        textField.attributedText = ExchangeFormatter.createAmountString(string: text)
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-        
-        didChangeCryptoAmount?(cleanedText)
+        didChangeCryptoAmount?(text)
         didChangeContent?()
     }
     
