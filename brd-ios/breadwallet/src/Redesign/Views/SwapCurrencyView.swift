@@ -234,7 +234,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         
         textField.attributedText = ExchangeFormatter.createAmountString(string: text)
         
-        didChangeFiatAmount?(text)
+        didChangeFiatAmount?(text.isEmpty ? "0" : text)
         didChangeContent?()
     }
     
@@ -245,7 +245,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         
         textField.attributedText = ExchangeFormatter.createAmountString(string: text)
         
-        didChangeCryptoAmount?(text)
+        didChangeCryptoAmount?(text.isEmpty ? "0" : text)
         didChangeContent?()
     }
     
