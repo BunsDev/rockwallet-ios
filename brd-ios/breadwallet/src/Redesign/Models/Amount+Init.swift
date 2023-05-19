@@ -13,7 +13,13 @@ import WalletKit
 
 extension Amount {
     init(decimalAmount: Decimal, isFiat: Bool, currency: Currency, exchangeRate: Decimal? = nil, decimals: Int = 16) {
-        let amount = decimalAmount
+        let amount: Decimal
+        
+        if decimalAmount <= 9999999999 {
+            amount = decimalAmount
+        } else {
+            amount = Decimal(string: String(decimalAmount.description.prefix(10))) ?? 0
+        }
         
         let formatter = ExchangeFormatter.current
         formatter.maximumFractionDigits = decimals
