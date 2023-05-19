@@ -42,7 +42,7 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
                 TextFieldModel(title: item?.screenType?.emailViewTitle,
                                value: emailValue,
                                trailing: item?.screenType?.image,
-                               isUserInteractionEnabled: false)
+                               isUserInteractionEnabled: item?.screenType == .paymailNotSetup)
             ],
             .paymail: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.PaymailAddress.whatIsPaymail,
