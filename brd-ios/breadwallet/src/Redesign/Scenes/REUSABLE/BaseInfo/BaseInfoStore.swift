@@ -16,7 +16,6 @@ class BaseInfoStore: NSObject, BaseDataStore, BaseInfoDataStore {
     var keyStore: KeyStore?
     var id: String?
     var restrictionReason: Profile.AccessRights.RestrictionReason?
-    var isRestrictedUSState: Bool?
     
     var item: Any?
 

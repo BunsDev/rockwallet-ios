@@ -456,6 +456,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             let isGreyListedCountry = restrictionReason == .state && ((accessRights?.hasSwapAccess ?? false)
                                                                       && !(accessRights?.hasBuyAccess ?? false)
                                                                       && !(accessRights?.hasAchAccess ?? false))
+            
             showComingSoon(reason: reason, restrictionReason: restrictionReason, isRestrictedUSState: isRestrictedUSState, isGreyListedCountry: isGreyListedCountry)
             
         default:
