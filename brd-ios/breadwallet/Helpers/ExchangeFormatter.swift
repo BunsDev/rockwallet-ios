@@ -52,8 +52,13 @@ struct ExchangeFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
+        
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 7
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 8
+        formatter.maximum = 9999999999
+        
         return formatter
     }
     
@@ -61,8 +66,13 @@ struct ExchangeFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
+        
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 7
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
+        formatter.maximum = 9999999999
+        
         return formatter
     }
     
@@ -70,6 +80,13 @@ struct ExchangeFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
+        
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 7
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 8
+        formatter.maximum = 9999999999
+        
         return formatter
     }
     
@@ -103,18 +120,12 @@ extension String {
     }
     
     func cleanupFormatting(forFiat: Bool) -> String {
-        var text = isEmpty != false ? "0" : self
+        let text = isEmpty != false ? "0" : self
         
         let expectedFormat = forFiat ? ExchangeFormatter.fiat : ExchangeFormatter.crypto
         let inputFormat = ExchangeFormatter.current
         
-        var sanitized = text.sanitize(inputFormat: inputFormat, expectedFormat: expectedFormat)
-        
-        expectedFormat.maximumIntegerDigits = 7
-        
-        let number = expectedFormat.string(for: Decimal(string: sanitized))
-        
-        sanitized = text.sanitize(inputFormat: inputFormat, expectedFormat: expectedFormat)
+        let sanitized = text.sanitize(inputFormat: inputFormat, expectedFormat: expectedFormat)
         
         return sanitized
     }
