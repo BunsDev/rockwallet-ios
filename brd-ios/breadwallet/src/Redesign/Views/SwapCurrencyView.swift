@@ -245,7 +245,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     @objc func cryptoAmountDidChange(_ textField: UITextField) {
         let text = cleanupFormatting(textField: textField, forFiat: false)
         
-        didChangeFiatAmount?(text)
+        didChangeCryptoAmount?(text)
         didChangeContent?()
     }
     
@@ -262,9 +262,9 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         textField.text = text
         textField.attributedText = ExchangeFormatter.createAmountString(string: text)
         textField.selectedTextRange = range
-        
+
         decidePlaceholder()
-        
+
         return text.isEmpty ? "0" : text
     }
     
@@ -273,11 +273,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == fiatAmountField {
-            fiatAmountDidChange(textField)
-        } else if textField == cryptoAmountField {
-            cryptoAmountDidChange(textField)
-        }
+        setChangedText(for: textField)
         
         didFinish?(false)
     }
