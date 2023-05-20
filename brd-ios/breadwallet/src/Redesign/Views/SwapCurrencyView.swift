@@ -236,25 +236,37 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     }
     
     @objc func fiatAmountDidChange(_ textField: UITextField) {
+        let text = cleanupFormatting(textField: textField, forFiat: true)
+        
         decidePlaceholder()
         
-        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
+        textField.attributedText = ExchangeFormatter.createAmountString(string: text)
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-        
-        didChangeFiatAmount?(cleanedText)
+        didChangeFiatAmount?(text.isEmpty ? "0" : text)
         didChangeContent?()
     }
     
     @objc func cryptoAmountDidChange(_ textField: UITextField) {
+        let text = cleanupFormatting(textField: textField, forFiat: false)
+        
         decidePlaceholder()
         
-        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
+        textField.attributedText = ExchangeFormatter.createAmountString(string: text)
         
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-        
-        didChangeCryptoAmount?(cleanedText)
+        didChangeFiatAmount?(text.isEmpty ? "0" : text)
         didChangeContent?()
+    }
+    
+    private func cleanupFormatting(textField: UITextField, forFiat: Bool) -> String {
+        let description = textField.text?.description ?? ""
+        var text = String(describing: description.cleanupFormatting(forFiat: forFiat))
+        
+        if text == "0" && textField.text != "0" {
+            text = ""
+            textField.text = text
+        }
+        
+        return text
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -263,18 +275,12 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == fiatAmountField {
-            let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-            
-            didChangeFiatAmount?(cleanedText)
+            fiatAmountDidChange(textField)
         } else if textField == cryptoAmountField {
-            let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-            
-            didChangeCryptoAmount?(cleanedText)
+            cryptoAmountDidChange(textField)
         }
         
         didFinish?(false)
-        
-        decidePlaceholder()
     }
     
     override func configure(with config: SwapCurrencyConfiguration?) {
