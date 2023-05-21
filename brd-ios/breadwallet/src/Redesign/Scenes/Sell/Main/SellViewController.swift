@@ -14,8 +14,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SellPresenter,
                           SellStore>,
                           SellResponseDisplays {
-    
-    typealias Models = ExchangeModels
+    typealias Models = AssetModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title

@@ -21,7 +21,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                          BuyStore>,
                          BuyResponseDisplays,
                          Subscriber {
-    typealias Models = ExchangeModels
+    typealias Models = AssetModels
     
     override var sceneLeftAlignedTitle: String? {
         return dataStore?.canUseAch == true ? nil : L10n.Button.buy

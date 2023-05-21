@@ -38,13 +38,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         dataStore?.supportedCurrencies = currencies
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
-        presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
-                                                                       achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
-        
         if amount == nil {
+            presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
+                                                                                achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
             setAmount(viewAction: .init(currency: dataStore?.currencies.first?.code))
-        } else {
-            setPresentAmountData(handleErrors: false)
         }
         
         getPayments(viewAction: .init(), completion: { [weak self] in

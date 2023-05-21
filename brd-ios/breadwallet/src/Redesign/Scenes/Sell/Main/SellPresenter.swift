@@ -20,9 +20,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     // MARK: - SellActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? Models.Item else { return }
+        guard let item = actionResponse.item as? AssetModels.Item else { return }
         
-        let sections: [ExchangeModels.Section] = [
+        let sections: [AssetModels.Section] = [
             .rateAndTimer,
             .swapCard,
             .paymentMethod,
@@ -44,7 +44,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             paymentMethodViewModel = CardSelectionViewModel()
         }
         
-        let sectionRows: [ExchangeModels.Section: [any Hashable]] = [
+        let sectionRows: [AssetModels.Section: [any Hashable]] = [
             .rateAndTimer: [
                 exchangeRateViewModel
             ],

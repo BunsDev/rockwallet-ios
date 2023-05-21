@@ -15,8 +15,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SwapPresenter,
                           SwapStore>,
                           SwapResponseDisplays {
-    
-    typealias Models = ExchangeModels
+    typealias Models = AssetModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.HomeScreen.trade
@@ -231,7 +230,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         LoadingView.hideIfNeeded()
         
-        guard let section = sections.firstIndex(where: { $0.hashValue == ExchangeModels.Section.swapCard.hashValue }),
+        guard let section = sections.firstIndex(where: { $0.hashValue == AssetModels.Section.swapCard.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.mainSwapViewModel)

@@ -10,11 +10,6 @@ import UIKit
 import WalletKit
 
 enum SellModels {
-    struct Item: Hashable {
-        var type: PaymentCard.PaymentType?
-        var achEnabled: Bool?
-    }
-    
     struct Fee {
         struct ViewAction {}
     }
