@@ -33,8 +33,6 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var toAmount: Amount?
     var isFromBuy: Bool = false
     
-    var values: SwapModels.Amounts.ViewAction = .init()
-    
     var quote: Quote?
     var fromRate: Decimal?
     var toRate: Decimal?

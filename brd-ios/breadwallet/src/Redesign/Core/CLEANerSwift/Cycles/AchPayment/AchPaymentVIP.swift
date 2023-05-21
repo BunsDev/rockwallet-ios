@@ -12,8 +12,7 @@ import Foundation
 import LinkKit
 
 protocol AchViewActions {
-    func getPayments(viewAction: AchPaymentModels.Get.ViewAction)
-    func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction)
+    func getPayments(viewAction: AchPaymentModels.Get.ViewAction, completion: (() -> Void)?)
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction)
 }
@@ -21,6 +20,7 @@ protocol AchViewActions {
 protocol AchActionResponses: AnyObject {
     var achPaymentModel: CardSelectionViewModel? { get set }
     
+    func presentPaymentCards(actionResponse: AchPaymentModels.PaymentCards.ActionResponse)
     func presentAch(actionResponse: AchPaymentModels.Get.ActionResponse)
     func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse)
 }
@@ -28,6 +28,7 @@ protocol AchActionResponses: AnyObject {
 protocol AchResponseDisplays: AnyObject {
     var plaidHandler: PlaidLinkKitHandler? { get set }
     
+    func displayPaymentCards(responseDisplay: AchPaymentModels.PaymentCards.ResponseDisplay)
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay)
     func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay)
 }
@@ -42,7 +43,7 @@ protocol AchDataStore {
 extension Interactor where Self: AchViewActions,
                            Self.DataStore: AchDataStore,
                            Self.ActionResponses: AchActionResponses {
-    func getPayments(viewAction: AchPaymentModels.Get.ViewAction) {
+    func getPayments(viewAction: AchPaymentModels.Get.ViewAction, completion: (() -> Void)?) {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
@@ -52,8 +53,16 @@ extension Interactor where Self: AchViewActions,
             default:
                 break
             }
-            self?.presenter?.presentAch(actionResponse: .init(item: self?.dataStore?.ach))
-            self?.didGetPayments(viewAction: viewAction)
+            
+            if viewAction.openCards == true {
+                self?.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self?.dataStore?.cards ?? []))
+            } else {
+                if self?.dataStore?.paymentMethod == .ach {
+                    self?.presenter?.presentAch(actionResponse: .init(item: self?.dataStore?.ach))
+                }
+                
+                completion?()
+            }
         }
     }
     
@@ -111,8 +120,9 @@ extension Interactor where Self: AchViewActions,
                                                                                   accountId: dataStore?.ach?.id)) { [weak self] result in
             switch result {
             case .success:
-                self?.getPayments(viewAction: .init())
-                self?.achSuccessMessage(viewAction: .init())
+                self?.getPayments(viewAction: .init(), completion: { [weak self] in
+                    self?.achSuccessMessage(viewAction: .init())
+                })
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -136,6 +146,10 @@ extension Interactor where Self: AchViewActions,
 
 extension Presenter where Self: AchActionResponses,
                           Self.ResponseDisplays: AchResponseDisplays {
+    func presentPaymentCards(actionResponse: AchPaymentModels.PaymentCards.ActionResponse) {
+        viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
+    }
+    
     func presentAch(actionResponse: AchPaymentModels.Get.ActionResponse) {
         guard let item = actionResponse.item else {
             achPaymentModel = .init(title: .text(L10n.Sell.achWithdrawal),
@@ -157,6 +171,8 @@ extension Presenter where Self: AchActionResponses,
                                     subtitle: .text(L10n.Buy.relinkBankAccount),
                                     userInteractionEnabled: true)
         }
+        
+        viewController?.displayAch(responseDisplay: .init(viewModel: achPaymentModel))
     }
     
     func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse) {
@@ -165,6 +181,18 @@ extension Presenter where Self: AchActionResponses,
 }
 
 extension Controller where Self: AchResponseDisplays {
+    func displayPaymentCards(responseDisplay: AchPaymentModels.PaymentCards.ResponseDisplay) {
+        view.endEditing(true)
+        
+        (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
+            guard let selectedCard = selectedCard else { return }
+            
+            (self?.interactor as? AssetViewActions)?.setAmount(viewAction: .init(card: selectedCard))
+        }, completion: { [weak self] in
+            (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(), completion: {})
+        })
+    }
+    
     func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay) {
         plaidHandler = responseDisplay.plaidHandler
         plaidHandler?.open(presentUsing: .viewController(self))

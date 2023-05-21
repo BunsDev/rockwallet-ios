@@ -33,20 +33,6 @@ enum BuyModels {
         }
     }
     
-    struct PaymentCards {
-        struct ViewAction {
-            var getCards: Bool?
-        }
-        
-        struct ActionResponse {
-            var allPaymentCards: [PaymentCard]
-        }
-        
-        struct ResponseDisplay {
-            var allPaymentCards: [PaymentCard]
-        }
-    }
-    
     struct Limits {
         struct ActionResponse {
             var min: Decimal?
@@ -86,19 +72,6 @@ enum BuyModels {
         struct ActionResponse {}
         
         struct ResponseDisplay {}
-    }
-    
-    struct AchData {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var currencyCode: String?
-        }
-        
-        struct ResponseDisplay {
-            var model: InfoViewModel?
-            var config: InfoViewConfiguration?
-        }
     }
     
     struct RetryPaymentMethod {

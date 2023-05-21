@@ -14,6 +14,14 @@ import WalletKit
 enum AssetModels {
     enum Asset {
         struct ViewAction {
+            // TODO: FOR SWAP. UNIFY WITH THE REST
+            var fromFiatAmount: String?
+            var fromCryptoAmount: String?
+            var toFiatAmount: String?
+            var toCryptoAmount: String?
+            var handleErrors = false
+            //***************************//
+            
             var fiatValue: String?
             var tokenValue: String?
             

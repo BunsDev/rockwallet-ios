@@ -18,7 +18,6 @@ protocol SellViewActions: BaseViewActions,
                           AssetViewActions,
                           AchViewActions,
                           CreateTransactionViewActions {
-    func setAmount(viewAction: AssetModels.Asset.ViewAction)
     func showOrderPreview(viewAction: SellModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: SellModels.AssetSelector.ViewAction)
     func selectPaymentMethod(viewAction: SellModels.PaymentMethod.ViewAction)
@@ -33,7 +32,6 @@ protocol SellActionResponses: BaseActionResponses,
                               FetchActionResponses,
                               AssetActionResponses,
                               AchActionResponses {
-    func presentPaymentCards(actionResponse: SellModels.PaymentCards.ActionResponse)
     func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentOrderPreview(actionResponse: SellModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: SellModels.AssetSelector.ActionResponse)
@@ -49,11 +47,9 @@ protocol SellResponseDisplays: AnyObject,
                                FetchResponseDisplays,
                                AssetResponseDisplays,
                                AchResponseDisplays {
-    func displayPaymentCards(responseDisplay: SellModels.PaymentCards.ResponseDisplay)
     func displayAmount(responseDisplay: SellModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: SellModels.AssetSelector.ResponseDisplay)
-    func displayAchData(responseDisplay: SellModels.AchData.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: SellModels.LimitsInfo.ResponseDisplay)
     func displayInstantAchPopup(responseDisplay: SellModels.InstantAchPopup.ResponseDisplay)
     func displayAssetSelectionMessage(responseDisplay: SellModels.AssetSelectionMessage.ResponseDisplay)
@@ -72,7 +68,6 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataSt
     var fromRate: Decimal? { get set }
     
     var fromAmount: Amount? { get set }
-    var values: AssetModels.Asset.ViewAction { get set }
     
     var exchange: Exchange? { get set }
     

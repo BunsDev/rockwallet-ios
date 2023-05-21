@@ -73,7 +73,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                 case .ach:
                     (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
                 default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true))
+                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
                 }
             }
         }

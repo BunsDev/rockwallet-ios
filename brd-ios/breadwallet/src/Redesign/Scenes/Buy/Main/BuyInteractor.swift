@@ -32,25 +32,17 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
                                                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
         
-        getPayments(viewAction: .init())
-        
-        guard dataStore?.toAmount?.currency != nil,
-              dataStore?.paymentMethod != nil,
-              dataStore?.supportedCurrencies?.isEmpty != false else {
-            setAmount(viewAction: .init(currency: dataStore?.currencies.first?.code))
-            return
-        }
-        
-        setAmount(viewAction: .init())
-    }
-    
-    func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
-        if viewAction.openCards == true {
-            presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
-        } else {
-            dataStore?.selected = dataStore?.paymentMethod == .ach ? dataStore?.ach : dataStore?.cards.first
-            setAmount(viewAction: .init(card: dataStore?.selected))
-        }
+        getPayments(viewAction: .init(), completion: { [weak self] in
+            self?.dataStore?.selected = self?.dataStore?.paymentMethod == .ach ? self?.dataStore?.ach : (self?.dataStore?.selected ?? self?.dataStore?.cards.first)
+            
+            if self?.dataStore?.toAmount == nil {
+                self?.setAmount(viewAction: .init(currency: self?.dataStore?.currencies.first?.code))
+            }
+            
+            self?.getExchangeRate(viewAction: .init(), completion: { [weak self] in
+                self?.setPresentAmountData(handleErrors: false)
+            })
+        })
     }
     
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
@@ -79,8 +71,6 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             setPresentAmountData(handleErrors: true)
             return
         }
-                
-        dataStore?.values = viewAction
         
         let to: Amount
         

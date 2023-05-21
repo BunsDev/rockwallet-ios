@@ -33,7 +33,7 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
         presenter?.presentData(actionResponse: .init(item: item))
     }
     
-    func getPaymentCards(viewAction: BuyModels.PaymentCards.ViewAction) {
+    func getPaymentCards(viewAction: AchPaymentModels.PaymentCards.ViewAction) {
         fetchCards { [weak self] result in
             guard let self = self else { return }
             

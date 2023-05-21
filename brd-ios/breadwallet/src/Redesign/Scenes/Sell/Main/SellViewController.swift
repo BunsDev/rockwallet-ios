@@ -205,17 +205,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
-    func displayPaymentCards(responseDisplay: SellModels.PaymentCards.ResponseDisplay) {
-        view.endEditing(true)
-        
-        coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            guard let selectedCard = selectedCard else { return }
-            self?.interactor?.setAmount(viewAction: .init(card: selectedCard))
-        }, completion: { [weak self] in
-            self?.interactor?.getPayments(viewAction: .init())
-        })
-    }
-    
     func displayAmount(responseDisplay actionResponse: SellModels.Assets.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
@@ -259,10 +248,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         continueButton.viewModel?.enabled = responseDisplay.error == nil
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
-    
-    func displayAchData(responseDisplay: SellModels.AchData.ResponseDisplay) {
-        interactor?.getPayments(viewAction: .init())
     }
     
     func displayLimitsInfo(responseDisplay: SellModels.LimitsInfo.ResponseDisplay) {

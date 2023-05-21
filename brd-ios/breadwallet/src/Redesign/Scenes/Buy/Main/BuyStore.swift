@@ -28,16 +28,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var from: Decimal?
     var to: Decimal?
     var isFromBuy = true
-    var values: AssetModels.Asset.ViewAction = .init()
-    var paymentMethod: PaymentCard.PaymentType? {
-        didSet {
-            guard toAmount == nil, let currency = currencies.first(where: {
-                $0.code.lowercased() == Constant.BTC.lowercased()
-            }) ?? currencies.first else { return }
-            
-            toAmount = .zero(currency)
-        }
-    }
+    var paymentMethod: PaymentCard.PaymentType?
     var publicToken: String?
     var mask: String?
     var limits: NSMutableAttributedString? {

@@ -135,10 +135,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         _ = handleError(actionResponse: actionResponse)
     }
     
-    func presentPaymentCards(actionResponse: SellModels.PaymentCards.ActionResponse) {
-        viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
-    }
-    
     func presentOrderPreview(actionResponse: SellModels.OrderPreview.ActionResponse) {
         viewController?.displayOrderPreview(responseDisplay: .init(availablePayments: actionResponse.availablePayments))
     }

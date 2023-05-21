@@ -18,16 +18,6 @@ enum SwapModels {
         struct ViewAction {}
     }
     
-    struct Amounts {
-        struct ViewAction {
-            var fromFiatAmount: String?
-            var fromCryptoAmount: String?
-            var toFiatAmount: String?
-            var toCryptoAmount: String?
-            var handleErrors = false
-        }
-    }
-    
     struct SelectedAsset {
         struct ViewAction {
             var from: String?

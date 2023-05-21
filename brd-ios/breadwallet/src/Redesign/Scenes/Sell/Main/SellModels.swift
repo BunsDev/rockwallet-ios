@@ -22,20 +22,6 @@ enum SellModels {
         }
     }
     
-    struct PaymentCards {
-        struct ViewAction {
-            var getCards: Bool?
-        }
-        
-        struct ActionResponse {
-            var allPaymentCards: [PaymentCard]
-        }
-        
-        struct ResponseDisplay {
-            var allPaymentCards: [PaymentCard]
-        }
-    }
-    
     struct Fee {
         struct ViewAction {}
     }
@@ -79,19 +65,6 @@ enum SellModels {
         struct ActionResponse {}
         
         struct ResponseDisplay {}
-    }
-    
-    struct AchData {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var currencyCode: String?
-        }
-        
-        struct ResponseDisplay {
-            var model: InfoViewModel?
-            var config: InfoViewConfiguration?
-        }
     }
     
     struct RetryPaymentMethod {
