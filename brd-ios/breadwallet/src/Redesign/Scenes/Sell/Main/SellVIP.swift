@@ -32,7 +32,6 @@ protocol SellActionResponses: BaseActionResponses,
                               FetchActionResponses,
                               AssetActionResponses,
                               AchActionResponses {
-    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentOrderPreview(actionResponse: SellModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: SellModels.AssetSelector.ActionResponse)
     func presentMessage(actionResponse: SellModels.RetryPaymentMethod.ActionResponse)
@@ -47,7 +46,6 @@ protocol SellResponseDisplays: AnyObject,
                                FetchResponseDisplays,
                                AssetResponseDisplays,
                                AchResponseDisplays {
-    func displayAmount(responseDisplay: SellModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: SellModels.AssetSelector.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: SellModels.LimitsInfo.ResponseDisplay)

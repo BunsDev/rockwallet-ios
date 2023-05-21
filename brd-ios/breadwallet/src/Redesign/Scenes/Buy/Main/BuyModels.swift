@@ -14,13 +14,6 @@ enum BuyModels {
         var achEnabled: Bool?
     }
     
-    struct Assets {
-        struct ResponseDisplay {
-            var cryptoModel: SwapCurrencyViewModel?
-            var cardModel: CardSelectionViewModel?
-        }
-    }
-    
     struct Fee {
         struct ViewAction {}
         

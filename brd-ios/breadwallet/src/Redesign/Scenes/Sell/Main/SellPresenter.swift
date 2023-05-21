@@ -129,7 +129,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             }
         }
         
-        viewController?.displayAmount(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
+        viewController?.displayAmount(responseDisplay: .init(mainSwapViewModel: cryptoModel,
+                                                             cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
         _ = handleError(actionResponse: actionResponse)

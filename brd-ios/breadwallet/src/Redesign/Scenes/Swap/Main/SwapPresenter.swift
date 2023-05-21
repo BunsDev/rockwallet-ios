@@ -95,8 +95,8 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
         
         let continueEnabled = !handleError(actionResponse: actionResponse) && actionResponse.handleErrors
         
-        viewController?.displayAmount(responseDisplay: .init(continueEnabled: continueEnabled,
-                                                             amounts: mainSwapViewModel,
+        viewController?.displayAmount(responseDisplay: .init(mainSwapViewModel: mainSwapViewModel,
+                                                             continueEnabled: continueEnabled,
                                                              rate: exchangeRateViewModel))
     }
     

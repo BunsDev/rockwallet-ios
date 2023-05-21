@@ -19,6 +19,7 @@ protocol AssetViewActions {
 protocol AssetActionResponses {
     func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
     func handleError(actionResponse: AssetModels.Asset.ActionResponse) -> Bool
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
 }
 
 protocol AssetResponseDisplays {
@@ -29,6 +30,7 @@ protocol AssetResponseDisplays {
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>?
     
     func displayExchangeRate(responseDisplay: AssetModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?)
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay)
 }
 
 protocol AssetDataStore: NSObject, TwoStepDataStore {
@@ -311,4 +313,6 @@ extension Controller where Self: AssetResponseDisplays,
         
         completion?()
     }
+    
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {}
 }
