@@ -279,7 +279,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             
             if max.currency.isEthereum { // Only adjust maximum for ETH
                 let adjustTokenValue = max.tokenValue * (self?.ethMultiplier ?? 0.80) // Reduce amount for ETH estimate fee API call
-                max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: max.currency)
+                max = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: max.currency)
             }
             self?.amountView.forceUpdateAmount(amount: max)
             self?.updateFeesMax(depth: 0)
@@ -356,7 +356,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     
                     if maximum.currency.isEthereum {
                         let adjustTokenValue = value.tokenValue * 0.95 // Reduce amount for ETH createTxn API call
-                        value = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: value.currency)
+                        value = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: value.currency)
                         self?.amountView.forceUpdateAmount(amount: value)
                     } else {
                         if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
@@ -369,7 +369,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     // updateFeesMax failed, default to a fixed reduction
                     if maximum.currency.isEthereum {
                         let adjustTokenValue = maximum.tokenValue * 0.80 // Reduce amount for ETH estimate fee API call
-                        let max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
+                        let max = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
                         self?.amountView.forceUpdateAmount(amount: max)
                     } else {
                         self?.handleEstimateFeeError(error: error)

@@ -26,7 +26,7 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var quote: Quote?
     var networkFee: Amount? {
         guard let value = quote?.toFee,
-              let fee = ExchangeFormatter.crypto.string(for: value.fee),
+              let fee = ExchangeFormatter.current.string(for: value.fee),
               let currency = Store.state.currencies.first(where: { $0.code == value.currency.uppercased() }) else {
             return nil
         }

@@ -56,8 +56,8 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let currencyCode = Constant.usdCurrencyCode
         
         let formattedUsdAmountString = ExchangeFormatter.fiat.string(for: detail.source.usdAmount) ?? ""
-        let formattedCurrencyAmountString = ExchangeFormatter.crypto.string(for: detail.source.currencyAmount) ?? ""
-        let formattedCurrencyAmountDestination = ExchangeFormatter.crypto.string(for: detail.destination.currencyAmount) ?? ""
+        let formattedCurrencyAmountString = ExchangeFormatter.current.string(for: detail.source.currencyAmount) ?? ""
+        let formattedCurrencyAmountDestination = ExchangeFormatter.current.string(for: detail.destination.currencyAmount) ?? ""
         
         let timestamp = TimeInterval(detail.timestamp) / 1000
         let date = Date(timeIntervalSince1970: timestamp)

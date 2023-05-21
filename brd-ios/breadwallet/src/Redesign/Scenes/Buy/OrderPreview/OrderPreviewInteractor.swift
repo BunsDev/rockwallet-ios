@@ -113,7 +113,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
               let to = dataStore?.to?.tokenValue,
               let from = dataStore?.from else { return }
         
-        let cryptoFormatter = ExchangeFormatter.crypto
+        let cryptoFormatter = ExchangeFormatter.current
         cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
         
@@ -183,7 +183,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     private func submitAch() {
         let currency = dataStore?.to?.currency
         
-        let cryptoFormatter = ExchangeFormatter.crypto
+        let cryptoFormatter = ExchangeFormatter.current
         cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
         
