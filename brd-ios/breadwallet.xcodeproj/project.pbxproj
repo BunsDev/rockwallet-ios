@@ -807,7 +807,6 @@
 		D78D296429ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295D29ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift */; };
 		D78D296529ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295E29ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift */; };
 		D7EA320929C0805B00D9FD4F /* BiometricStatusHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */; };
-		D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */; };
 		D7F0AF31298D308100474E5C /* VerificationInProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */; };
 		D7F0AF33298D378700474E5C /* verificationLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = D7F0AF32298D378700474E5C /* verificationLoader.json */; };
 		D7F7595E299236E100FB4BFA /* KYCSubmitInfoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */; };
@@ -1681,7 +1680,6 @@
 		D78D295D29ED3A7B0039A5D6 /* TwoStepSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsViewController.swift; sourceTree = "<group>"; };
 		D78D295E29ED3A7B0039A5D6 /* TwoStepSettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsInteractor.swift; sourceTree = "<group>"; };
 		D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusHelper.swift; sourceTree = "<group>"; };
-		D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeModels.swift; sourceTree = "<group>"; };
 		D7F0AF30298D308100474E5C /* VerificationInProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationInProgressViewController.swift; sourceTree = "<group>"; };
 		D7F0AF32298D378700474E5C /* verificationLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = verificationLoader.json; sourceTree = "<group>"; };
 		D7F7595D299236E100FB4BFA /* KYCSubmitInfoWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCSubmitInfoWorker.swift; sourceTree = "<group>"; };
@@ -2781,7 +2779,6 @@
 				7E852747286C551C0058F4C0 /* ServerResponse.swift */,
 				7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */,
 				7EDDB82528C8684900C287CB /* Amount+Init.swift */,
-				D7EFE49129AF4F5E0065E6C2 /* ExchangeModels.swift */,
 				040C09F229F13BC90011308B /* EmptyViewModel.swift */,
 			);
 			path = Models;
@@ -4491,7 +4488,6 @@
 				3A69885E24591F890084953D /* Paymail.swift in Sources */,
 				7B08D2262860574F00D65ED9 /* SimpleBackBarButtonItem.swift in Sources */,
 				7B9434352886A7FA00638703 /* DeleteProfileInfoStore.swift in Sources */,
-				D7EFE49229AF4F5E0065E6C2 /* ExchangeModels.swift in Sources */,
 				7BF5D4FB296D4FC900942ADB /* SignUpVIP.swift in Sources */,
 				7B9434362886A7FA00638703 /* DeleteProfileInfoPresenter.swift in Sources */,
 				CEC6AA421DEFC88F00EE5AFD /* ReceiveViewController.swift in Sources */,

@@ -30,7 +30,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let sections: [ExchangeModels.Section] = [
+        let sections: [AssetModels.Section] = [
             .rateAndTimer,
             .swapCard,
             .accountLimits
@@ -46,7 +46,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                                             formattedTokenFeeString: nil,
                                             title: .text(L10n.Buy.iWant)))
         
-        let sectionRows: [ExchangeModels.Section: [any Hashable]] = [
+        let sectionRows: [AssetModels.Section: [any Hashable]] = [
             .rateAndTimer: [
                 exchangeRateViewModel
             ],
