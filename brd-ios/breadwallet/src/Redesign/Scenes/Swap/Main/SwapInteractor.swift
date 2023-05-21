@@ -117,7 +117,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     }
     
     private func setInitialData(getFees: Bool) {
-        dataStore?.values = .init()
         dataStore?.quote = nil
         dataStore?.fromRate = nil
         dataStore?.toRate = nil
@@ -131,7 +130,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         })
     }
     
-    func setAmount(viewAction: SwapModels.Amounts.ViewAction) {
+    func setAmount(viewAction: AssetModels.Asset.ViewAction) {
         guard let fromRate = dataStore?.fromRate, let toRate = dataStore?.toRate, fromRate > 0, toRate > 0 else {
             return
         }
@@ -176,8 +175,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             return
         }
         
-        dataStore?.values = viewAction
-        dataStore?.values.handleErrors = false
         dataStore?.fromAmount = from
         dataStore?.toAmount = to
         

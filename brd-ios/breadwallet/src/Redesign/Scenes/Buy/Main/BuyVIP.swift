@@ -17,7 +17,6 @@ protocol BuyViewActions: BaseViewActions,
                          FetchViewActions,
                          AssetViewActions,
                          AchViewActions {
-    func setAmount(viewAction: AssetModels.Asset.ViewAction)
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
@@ -31,7 +30,6 @@ protocol BuyActionResponses: BaseActionResponses,
                              FetchActionResponses,
                              AssetActionResponses,
                              AchActionResponses {
-    func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse)
     func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
@@ -43,11 +41,9 @@ protocol BuyActionResponses: BaseActionResponses,
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays, AchResponseDisplays {
-    func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay)
     func displayAmount(responseDisplay: BuyModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
-    func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay)
     func displayInstantAchPopup(responseDisplay: BuyModels.InstantAchPopup.ResponseDisplay)
     func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay)
@@ -56,7 +52,6 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
 protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, TwoStepDataStore {
     var from: Decimal? { get set }
     var to: Decimal? { get set }
-    var values: AssetModels.Asset.ViewAction { get set }
     var toAmount: Amount? { get set }
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }

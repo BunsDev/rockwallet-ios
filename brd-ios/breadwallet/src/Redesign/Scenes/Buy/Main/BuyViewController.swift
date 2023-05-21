@@ -254,17 +254,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
-    func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay) {
-        view.endEditing(true)
-        
-        coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            guard let selectedCard = selectedCard else { return }
-            self?.interactor?.setAmount(viewAction: .init(card: selectedCard))
-        }, completion: { [weak self] in
-            self?.interactor?.getPayments(viewAction: .init())
-        })
-    }
-    
     func displayAmount(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
@@ -303,10 +292,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
-    func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay) {
-        interactor?.getPayments(viewAction: .init())
-    }
-    
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay) {
         let _: WrapperPopupView<LimitsPopupView>? = coordinator?.showPopup(with: responseDisplay.config,
                                                                            viewModel: responseDisplay.viewModel,
@@ -317,6 +302,18 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     func displayInstantAchPopup(responseDisplay: BuyModels.InstantAchPopup.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
+    }
+    
+    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
+        
+        cell.wrappedView.setup(with: responseDisplay.viewModel)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
+        
+        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     // MARK: - Additional Helpers

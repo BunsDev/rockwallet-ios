@@ -13,6 +13,7 @@ import UIKit
 protocol AssetViewActions {
     func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
+    func setAmount(viewAction: AssetModels.Asset.ViewAction)
 }
 
 protocol AssetActionResponses {
@@ -81,6 +82,8 @@ extension Interactor where Self: AssetViewActions,
     }
     
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}
+    
+    func setAmount(viewAction: AssetModels.Asset.ViewAction) {}
 }
 
 extension Presenter where Self: AssetActionResponses,
