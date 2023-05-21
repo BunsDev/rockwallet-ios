@@ -99,11 +99,11 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFiatAmount = { [weak self] value in
-                self?.interactor?.setAmount(viewAction: .init(fiatValue: value))
+                self?.interactor?.setAmount(viewAction: .init(fromFiatValue: value))
             }
             
             view.didChangeCryptoAmount = { [weak self] value in
-                self?.interactor?.setAmount(viewAction: .init(tokenValue: value))
+                self?.interactor?.setAmount(viewAction: .init(fromTokenValue: value))
             }
             
             view.didFinish = { [weak self] _ in
@@ -152,7 +152,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         if paymentTypes.count >= segment {
             let paymentType = paymentTypes[segment]
             interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
-            interactor?.setAmount(viewAction: .init(fiatValue: "0", tokenValue: "0"))
+            interactor?.setAmount(viewAction: .init(fromFiatValue: "0", fromTokenValue: "0"))
         }
     }
     
@@ -254,7 +254,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
-    func displayAmount(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
@@ -265,8 +265,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             return
         }
         
-        fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
-        toCell.wrappedView.setup(with: actionResponse.cardModel)
+        fromCell.wrappedView.setup(with: responseDisplay.swapCurrencyViewModel)
+        toCell.wrappedView.setup(with: responseDisplay.cardModel)
         
         tableView.invalidateTableViewIntrinsicContentSize()
         

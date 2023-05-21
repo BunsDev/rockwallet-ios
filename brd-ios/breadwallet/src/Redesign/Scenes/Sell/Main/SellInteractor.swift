@@ -110,9 +110,9 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         let to: Amount
         
-        if let fiat = ExchangeFormatter.current.number(from: viewAction.fiatValue ?? "")?.decimalValue {
+        if let fiat = ExchangeFormatter.current.number(from: viewAction.toFiatValue ?? "")?.decimalValue {
             to = .init(decimalAmount: fiat, isFiat: true, currency: toCurrency, exchangeRate: rate)
-        } else if let crypto = ExchangeFormatter.current.number(from: viewAction.tokenValue ?? "")?.decimalValue {
+        } else if let crypto = ExchangeFormatter.current.number(from: viewAction.fromTokenValue ?? "")?.decimalValue {
             to = .init(decimalAmount: crypto, isFiat: false, currency: toCurrency, exchangeRate: rate)
         } else {
             setPresentAmountData(handleErrors: true)

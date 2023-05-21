@@ -86,11 +86,11 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFromCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(tokenValue: amount))
+                self?.interactor?.setAmount(viewAction: .init(fromTokenValue: amount))
             }
             
             view.didChangeToCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(fiatValue: amount))
+                self?.interactor?.setAmount(viewAction: .init(toFiatValue: amount))
             }
             
             view.didFinish = { [weak self] _ in
@@ -205,7 +205,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
-    func displayAmount(responseDisplay actionResponse: SellModels.Assets.ResponseDisplay) {
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<MainSwapView>,
@@ -216,8 +216,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             return
         }
         
-        fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
-        toCell.wrappedView.setup(with: actionResponse.cardModel)
+        fromCell.wrappedView.setup(with: responseDisplay.mainSwapViewModel)
+        toCell.wrappedView.setup(with: responseDisplay.cardModel)
         
         tableView.invalidateTableViewIntrinsicContentSize()
         

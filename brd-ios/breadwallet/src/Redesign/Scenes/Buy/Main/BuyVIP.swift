@@ -30,7 +30,6 @@ protocol BuyActionResponses: BaseActionResponses,
                              FetchActionResponses,
                              AssetActionResponses,
                              AchActionResponses {
-    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
@@ -41,7 +40,6 @@ protocol BuyActionResponses: BaseActionResponses,
 }
 
 protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays, AchResponseDisplays {
-    func displayAmount(responseDisplay: BuyModels.Assets.ResponseDisplay)
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay)

@@ -14,16 +14,10 @@ import WalletKit
 enum AssetModels {
     enum Asset {
         struct ViewAction {
-            // TODO: FOR SWAP. UNIFY WITH THE REST
-            var fromFiatAmount: String?
-            var fromCryptoAmount: String?
-            var toFiatAmount: String?
-            var toCryptoAmount: String?
-            var handleErrors = false
-            //***************************//
-            
-            var fiatValue: String?
-            var tokenValue: String?
+            var fromFiatValue: String?
+            var fromTokenValue: String?
+            var toFiatValue: String?
+            var toTokenValue: String?
             
             var currency: String?
             var card: PaymentCard?
@@ -46,6 +40,16 @@ enum AssetModels {
             var quote: Quote?
             
             var handleErrors = false
+        }
+        
+        struct ResponseDisplay {
+            var swapCurrencyViewModel: SwapCurrencyViewModel?
+            var mainSwapViewModel: MainSwapViewModel?
+            
+            var cardModel: CardSelectionViewModel?
+            
+            var continueEnabled = false
+            var rate: ExchangeRateViewModel?
         }
     }
     

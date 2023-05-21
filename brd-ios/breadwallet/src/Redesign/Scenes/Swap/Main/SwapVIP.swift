@@ -26,7 +26,6 @@ protocol SwapViewActions: BaseViewActions, FetchViewActions, AssetViewActions, C
 }
 
 protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, AssetActionResponses {
-    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentSelectAsset(actionResponse: SwapModels.Assets.ActionResponse)
     func presentConfirmation(actionResponse: SwapModels.ShowConfirmDialog.ActionResponse)
     func presentConfirm(actionResponse: SwapModels.Confirm.ActionResponse)
