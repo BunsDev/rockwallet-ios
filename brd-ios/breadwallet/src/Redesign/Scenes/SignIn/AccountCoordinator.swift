@@ -132,9 +132,5 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         }
     }
     
-    func showKYCLevelOne() {
-        open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
-    }
-    
     // MARK: - Additional helpers
 }

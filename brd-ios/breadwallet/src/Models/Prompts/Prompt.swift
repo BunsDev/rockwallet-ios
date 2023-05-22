@@ -10,7 +10,7 @@ import UIKit
 import LocalAuthentication
 
 // Defines the types and priority ordering of prompts. Only one prompt can appear on the home screen at at time.
-enum PromptType: Int, CaseIterable {
+enum PromptType: Int {
     case none
     case noInternet
     case noAccount
