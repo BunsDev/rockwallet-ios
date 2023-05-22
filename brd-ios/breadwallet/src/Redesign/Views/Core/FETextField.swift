@@ -257,7 +257,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         mainStack.spacing = titleStack.isHidden ? 0 : Margins.small.rawValue
         textFieldStack.spacing = titleStack.isHidden ? 0 : -Margins.medium.rawValue
         
-        textField.isEnabled = viewModel.isUserInteractionEnabled
+        isUserInteractionEnabled = viewModel.isUserInteractionEnabled
         
         animateTo(state: viewModel.displayState ?? .normal, withAnimation: viewModel.displayStateAnimated == true)
     }
