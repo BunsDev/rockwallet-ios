@@ -33,6 +33,8 @@ class CoreSystem: Subscriber {
     
     private var createWalletCallback: ((Wallet?) -> Void)?
     
+    var currenctAccount: Account? { return system?.account }
+    
     // MARK: Lifecycle
     
     init(keyStore: KeyStore) {

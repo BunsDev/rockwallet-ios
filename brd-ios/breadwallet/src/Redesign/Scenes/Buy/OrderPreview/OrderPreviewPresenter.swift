@@ -185,7 +185,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                 return L10n.Buy.Ach.Instant.ConfirmationDrawer.description(cryptoAmount, fiatAmount)
             }
         }
-        let amount = instantLimit.description + " " + fiatCurrency
+
         let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
         let drawerViewModel = DrawerViewModel(title: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.title),
                                               description: .text(description),
