@@ -52,7 +52,6 @@ struct TextFieldModel: ViewModel {
     var displayState: DisplayState?
     var displayStateAnimated: Bool?
     var isUserInteractionEnabled: Bool = true
-    var showTogglePassword: Bool = false
 }
 
 class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDelegate, StateDisplayable {
@@ -205,8 +204,11 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textField.autocorrectionType = config.autocorrectionType
         textField.keyboardType = config.keyboardType
         textField.isSecureTextEntry = config.isSecureTextEntry
-        trailingView.tintColor = LightColors.Text.three
-        setupTogglableSecureEntry()
+        if config.isSecureTextEntry {
+            trailingView.isHidden = false
+            trailingView.tintColor = LightColors.Text.three
+            setupTogglableSecureEntry()
+        }
         
         if let textConfig = config.textConfiguration {
             textField.font = textConfig.font
@@ -250,7 +252,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         leadingView.isHidden = viewModel.leading == nil
         
         trailingView.setup(with: viewModel.trailing)
-        trailingView.isHidden = viewModel.trailing == nil && !viewModel.showTogglePassword
+        trailingView.isHidden = viewModel.trailing == nil
         
         titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
@@ -290,8 +292,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     @objc private func trailingViewTapped() {
         guard config?.isSecureTextEntry == false else {
             textField.isSecureTextEntry.toggle()
-            let eye = textField.isSecureTextEntry == true ? Asset.eyeShow.image : Asset.eyeHide.image
-            trailingView.setup(with: .image(eye))
+            setupTogglableSecureEntry()
             return
         }
         
@@ -357,7 +358,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     private func setupTogglableSecureEntry() {
-        guard config?.isSecureTextEntry == true else { return }
-        trailingView.setup(with: .image(Asset.eyeShow.image))
+        let eye = textField.isSecureTextEntry == true ? Asset.eyeShow.image : Asset.eyeHide.image
+        trailingView.setup(with: .image(eye))
     }
 }

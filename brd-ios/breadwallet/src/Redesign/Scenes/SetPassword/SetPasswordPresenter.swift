@@ -28,8 +28,8 @@ final class SetPasswordPresenter: NSObject, Presenter, SetPasswordActionResponse
         ]
         
         let sectionRows: [Models.Section: [any Hashable]] = [
-            .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password, showTogglePassword: true)],
-            .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password, showTogglePassword: true)],
+            .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password)],
+            .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password)],
             .notice: [LabelViewModel.text(L10n.Account.passwordRequirements)]
         ]
         
