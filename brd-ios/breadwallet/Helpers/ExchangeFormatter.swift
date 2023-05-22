@@ -52,8 +52,12 @@ struct ExchangeFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
+        
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 14
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 8
+        
         return formatter
     }
     
@@ -61,8 +65,12 @@ struct ExchangeFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
+        
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 14
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
+        
         return formatter
     }
     
@@ -70,6 +78,12 @@ struct ExchangeFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
+        
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 14
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 8
+        
         return formatter
     }
     
