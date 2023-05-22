@@ -75,7 +75,10 @@ class BaseCoordinator: NSObject, Coordinatable {
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
+        
+        DispatchQueue.main.async {
+            UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
+        }
     }
     
     func showSwap(selectedCurrency: Currency? = nil, coreSystem: CoreSystem, keyStore: KeyStore) {
