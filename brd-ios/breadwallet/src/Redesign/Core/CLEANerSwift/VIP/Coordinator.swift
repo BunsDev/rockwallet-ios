@@ -126,13 +126,15 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showSell(coreSystem: CoreSystem?, keyStore: KeyStore?) {
         decideFlow { [weak self] showScene in
-            // TODO: This logic will need to be updated.
-            guard showScene else {
+            // TODO: This logic will need to be updated when hasSellAccess is available
+            guard showScene,
+                  let profile = UserManager.shared.profile,
+                  profile.kycAccessRights.hasAchAccess == true else {
                 self?.handleUnverifiedOrRestrictedUser(flow: .sell, reason: .sell)
                 
                 return
             }
-            
+                
             ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
                 self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                     vc?.dataStore?.currencies = Store.state.currencies
@@ -443,14 +445,23 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func handleUnverifiedOrRestrictedUser(flow: ProfileModels.ExchangeFlow?, reason: BaseInfoModels.ComingSoonReason?) {
-        let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason
+        let accessRights = UserManager.shared.profile?.kycAccessRights
+        let restrictionReason = accessRights?.restrictionReason
         
         switch restrictionReason {
         case .kyc:
             showVerifyAccount(flow: flow)
             
         case .country, .state, .manuallyConfigured:
-            showComingSoon(reason: reason)
+            let isRestrictedUSState = restrictionReason == .state && (!(accessRights?.hasSwapAccess ?? false)
+                                                                      && !(accessRights?.hasBuyAccess ?? false)
+                                                                      && !(accessRights?.hasAchAccess ?? false))
+            
+            let isGreyListedCountry = restrictionReason == .state && ((accessRights?.hasSwapAccess ?? false)
+                                                                      && !(accessRights?.hasBuyAccess ?? false)
+                                                                      && !(accessRights?.hasAchAccess ?? false))
+            
+            showComingSoon(reason: reason, restrictionReason: restrictionReason, isRestrictedUSState: isRestrictedUSState, isGreyListedCountry: isGreyListedCountry)
             
         default:
             break
@@ -531,16 +542,28 @@ class BaseCoordinator: NSObject, Coordinatable {
                         isModalDismissable: Bool = false,
                         hidesBackButton: Bool = true,
                         coreSystem: CoreSystem? = nil,
-                        keyStore: KeyStore? = nil) {
+                        keyStore: KeyStore? = nil,
+                        restrictionReason: Profile.AccessRights.RestrictionReason?,
+                        isRestrictedUSState: Bool = false,
+                        isGreyListedCountry: Bool = false) {
         open(scene: Scenes.ComingSoon) { [weak self] vc in
             self?.handleComingSoonNavigation(vc)
             
-            vc.reason = reason
+            var restrictedReason: BaseInfoModels.ComingSoonReason?
+            if isRestrictedUSState {
+                restrictedReason = .restrictedUSState
+            } else if isGreyListedCountry {
+                restrictedReason = .greyListedCountry
+            } else {
+                restrictedReason = reason
+            }
+            vc.reason = restrictedReason
             vc.isModalDismissable = isModalDismissable
             vc.navigationItem.hidesBackButton = hidesBackButton
             vc.navigationItem.rightBarButtonItem = nil
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
+            vc.dataStore?.restrictionReason = restrictionReason
         }
     }
     
@@ -548,20 +571,20 @@ class BaseCoordinator: NSObject, Coordinatable {
         guard let vc else { return }
         
         vc.didTapMainButton = {
-            if vc.reason == .swap || vc.reason == .buy || vc.reason == .sell {
-                vc.coordinator?.popViewController()
-            } else if vc.reason == .buyAch {
+            if vc.reason == .buyAch {
                 vc.coordinator?.showBuy(type: .card,
                                         coreSystem: vc.dataStore?.coreSystem,
                                         keyStore: vc.dataStore?.keyStore)
+            } else {
+                vc.coordinator?.popViewController()
             }
         }
         
         vc.didTapSecondayButton = {
-            if vc.reason == .swap || vc.reason == .buy {
-                vc.coordinator?.showSupport()
-            } else if vc.reason == .buyAch {
+            if vc.reason == .buyAch {
                 vc.coordinator?.popViewController()
+            } else {
+                vc.coordinator?.showSupport()
             }
         }
     }

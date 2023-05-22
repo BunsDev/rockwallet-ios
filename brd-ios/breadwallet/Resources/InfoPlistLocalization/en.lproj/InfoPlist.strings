@@ -246,7 +246,7 @@
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
 
-"Account.VerifyAccountTitle" = "To start using 'Swap' or 'Buy', your wallet must be verified.";
+"Account.VerifyAccountTitle" = "Verify your identity to get full access to your RockWallet!";
 
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
