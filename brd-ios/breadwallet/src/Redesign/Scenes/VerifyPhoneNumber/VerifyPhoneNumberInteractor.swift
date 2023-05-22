@@ -51,11 +51,11 @@ class VerifyPhoneNumberInteractor: NSObject, Interactor, VerifyPhoneNumberViewAc
         SetTwoStepPhoneWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
-                UserManager.shared.refresh()
-                
                 UserDefaults.phoneNumber = phoneNumber
                 
-                self?.presenter?.presentConfirm(actionResponse: .init())
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentConfirm(actionResponse: .init())
+                }
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))

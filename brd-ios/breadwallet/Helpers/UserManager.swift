@@ -101,7 +101,8 @@ class UserManager: NSObject {
         UserManager.shared.profileResult = nil
         UserManager.shared.error = nil
         
-        for type in PromptType.allCases {
+        PromptFactory.shared.presentedPopups.removeAll()
+        for type in PromptType.defaultTypes {
             PromptPresenter.shared.hidePrompt(type)
         }
     }

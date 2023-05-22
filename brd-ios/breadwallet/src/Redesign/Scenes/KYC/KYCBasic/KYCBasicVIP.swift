@@ -41,5 +41,4 @@ protocol KYCBasicDataPassing {
 }
 
 protocol KYCBasicRoutes: CoordinatableRoutes {
-    func showKYCLevelOne()
 }

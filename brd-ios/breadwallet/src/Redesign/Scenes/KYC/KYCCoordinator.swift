@@ -56,10 +56,6 @@ class KYCCoordinator: BaseCoordinator,
         }
     }
     
-    func showKYCLevelOne() {
-        open(scene: Scenes.KYCBasic)
-    }
-    
     func showFindAddress(completion: ((ResidentialAddress) -> Void)?) {
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.FindAddress,
