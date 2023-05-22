@@ -803,6 +803,10 @@ extension CoreSystem: SystemListener {
     func handleNetworkEvent(system: System, network: Network, event: NetworkEvent) {
         print("[SYS] network event: \(event) (\(network))")
     }
+    
+    func getCurrentAccount() -> Account? {
+        return system?.account
+    }
 }
 
 // MARK: - Extensions
