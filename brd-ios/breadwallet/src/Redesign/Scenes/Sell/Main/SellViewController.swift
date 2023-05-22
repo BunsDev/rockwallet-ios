@@ -14,8 +14,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SellPresenter,
                           SellStore>,
                           SellResponseDisplays {
-    
-    typealias Models = ExchangeModels
+    typealias Models = AssetModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title
@@ -86,11 +85,11 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFromCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(tokenValue: amount))
+                self?.interactor?.setAmount(viewAction: .init(fromTokenValue: amount))
             }
             
             view.didChangeToCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(fiatValue: amount))
+                self?.interactor?.setAmount(viewAction: .init(toFiatValue: amount))
             }
             
             view.didFinish = { [weak self] _ in
@@ -205,18 +204,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
-    func displayPaymentCards(responseDisplay: SellModels.PaymentCards.ResponseDisplay) {
-        view.endEditing(true)
-        
-        coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            guard let selectedCard = selectedCard else { return }
-            self?.interactor?.setAmount(viewAction: .init(card: selectedCard))
-        }, completion: { [weak self] in
-            self?.interactor?.getPayments(viewAction: .init())
-        })
-    }
-    
-    func displayAmount(responseDisplay actionResponse: SellModels.Assets.ResponseDisplay) {
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<MainSwapView>,
@@ -227,8 +215,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             return
         }
         
-        fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
-        toCell.wrappedView.setup(with: actionResponse.cardModel)
+        fromCell.wrappedView.setup(with: responseDisplay.mainSwapViewModel)
+        toCell.wrappedView.setup(with: responseDisplay.cardModel)
         
         tableView.invalidateTableViewIntrinsicContentSize()
         
@@ -259,10 +247,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         continueButton.viewModel?.enabled = responseDisplay.error == nil
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
-    
-    func displayAchData(responseDisplay: SellModels.AchData.ResponseDisplay) {
-        interactor?.getPayments(viewAction: .init())
     }
     
     func displayLimitsInfo(responseDisplay: SellModels.LimitsInfo.ResponseDisplay) {

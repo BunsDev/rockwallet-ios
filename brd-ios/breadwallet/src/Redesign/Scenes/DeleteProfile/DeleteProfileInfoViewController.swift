@@ -73,7 +73,7 @@ class DeleteProfileInfoViewController: BaseTableViewController<AccountCoordinato
     override func buttonTapped() {
         super.buttonTapped()
         
-        guard let navigationController = coordinator?.navigationController, let keyStore = dataStore?.keyMaster else { return }
+        guard let navigationController = coordinator?.navigationController, let keyStore = dataStore?.keyStore else { return }
         RecoveryKeyFlowController.pushUnlinkWalletFlowWithoutIntro(from: navigationController,
                                                                    keyMaster: keyStore,
                                                                    phraseEntryReason: .validateForWipingWalletAndDeletingFromDevice({ [weak self] in

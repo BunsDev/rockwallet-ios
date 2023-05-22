@@ -13,11 +13,13 @@ import UIKit
 protocol AssetViewActions {
     func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
+    func setAmount(viewAction: AssetModels.Asset.ViewAction)
 }
 
 protocol AssetActionResponses {
     func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
     func handleError(actionResponse: AssetModels.Asset.ActionResponse) -> Bool
+    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
 }
 
 protocol AssetResponseDisplays {
@@ -28,6 +30,7 @@ protocol AssetResponseDisplays {
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>?
     
     func displayExchangeRate(responseDisplay: AssetModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?)
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay)
 }
 
 protocol AssetDataStore: NSObject, TwoStepDataStore {
@@ -81,6 +84,8 @@ extension Interactor where Self: AssetViewActions,
     }
     
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}
+    
+    func setAmount(viewAction: AssetModels.Asset.ViewAction) {}
 }
 
 extension Presenter where Self: AssetActionResponses,
@@ -308,4 +313,6 @@ extension Controller where Self: AssetResponseDisplays,
         
         completion?()
     }
+    
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {}
 }

@@ -25,7 +25,7 @@ struct HomeScreenAssetViewModel {
     
     var tokenBalance: String {
         guard let balance = currency.state?.balance,
-              let text = ExchangeFormatter.crypto.string(for: balance.tokenValue)
+              let text = ExchangeFormatter.current.string(for: balance.tokenValue)
         else { return "" }
         
         return text

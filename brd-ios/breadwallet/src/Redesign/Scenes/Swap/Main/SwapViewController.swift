@@ -15,8 +15,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SwapPresenter,
                           SwapStore>,
                           SwapResponseDisplays {
-    
-    typealias Models = ExchangeModels
+    typealias Models = AssetModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.HomeScreen.trade
@@ -73,19 +72,19 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFromFiatAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(fromFiatAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(fromFiatValue: amount))
             }
             
             view.didChangeFromCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(fromCryptoAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(fromTokenValue: amount))
             }
             
             view.didChangeToFiatAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(toFiatAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(toFiatValue: amount))
             }
             
             view.didChangeToCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(toCryptoAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(toTokenValue: amount))
             }
             
             view.didTapFromAssetsSelection = { [weak self] in
@@ -226,6 +225,20 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                callbacks: [ { [weak self] in
             self?.coordinator?.dismissFlow()
         }])
+    }
+    
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
+        LoadingView.hideIfNeeded()
+        
+        guard let section = sections.firstIndex(where: { $0.hashValue == AssetModels.Section.swapCard.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
+        
+        cell.wrappedView.setup(with: responseDisplay.mainSwapViewModel)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
+        
+        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     // MARK: - Additional Helpers

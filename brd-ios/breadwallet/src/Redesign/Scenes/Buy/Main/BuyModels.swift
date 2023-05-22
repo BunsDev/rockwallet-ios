@@ -9,18 +9,6 @@
 import UIKit
 
 enum BuyModels {
-    struct Item: Hashable {
-        var type: PaymentCard.PaymentType?
-        var achEnabled: Bool?
-    }
-    
-    struct Assets {
-        struct ResponseDisplay {
-            var cryptoModel: SwapCurrencyViewModel?
-            var cardModel: CardSelectionViewModel?
-        }
-    }
-    
     struct Fee {
         struct ViewAction {}
         
@@ -30,20 +18,6 @@ enum BuyModels {
         
         struct ResponseDisplay {
             var to: String?
-        }
-    }
-    
-    struct PaymentCards {
-        struct ViewAction {
-            var getCards: Bool?
-        }
-        
-        struct ActionResponse {
-            var allPaymentCards: [PaymentCard]
-        }
-        
-        struct ResponseDisplay {
-            var allPaymentCards: [PaymentCard]
         }
     }
     
@@ -86,19 +60,6 @@ enum BuyModels {
         struct ActionResponse {}
         
         struct ResponseDisplay {}
-    }
-    
-    struct AchData {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var currencyCode: String?
-        }
-        
-        struct ResponseDisplay {
-            var model: InfoViewModel?
-            var config: InfoViewConfiguration?
-        }
     }
     
     struct RetryPaymentMethod {

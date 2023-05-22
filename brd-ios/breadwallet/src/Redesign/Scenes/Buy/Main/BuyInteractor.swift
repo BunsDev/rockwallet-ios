@@ -16,6 +16,15 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     var presenter: BuyPresenter?
     var dataStore: BuyStore?
     
+    private var amount: Amount? {
+        get {
+            return dataStore?.toAmount
+        }
+        set(value) {
+            dataStore?.toAmount = value
+        }
+    }
+    
     // MARK: - BuyViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
@@ -29,28 +38,19 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.supportedCurrencies = currencies
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
-        presenter?.presentData(actionResponse: .init(item: Models.Item(type: dataStore?.paymentMethod,
-                                                                       achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
-        
-        getPayments(viewAction: .init())
-        
-        guard dataStore?.toAmount?.currency != nil,
-              dataStore?.paymentMethod != nil,
-              dataStore?.supportedCurrencies?.isEmpty != false else {
+        if amount == nil {
+            presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
+                                                                                achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
             setAmount(viewAction: .init(currency: dataStore?.currencies.first?.code))
-            return
         }
         
-        setAmount(viewAction: .init())
-    }
-    
-    func didGetPayments(viewAction: AchPaymentModels.Get.ViewAction) {
-        if viewAction.openCards == true {
-            presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: dataStore?.cards ?? []))
-        } else {
-            dataStore?.selected = dataStore?.paymentMethod == .ach ? dataStore?.ach : dataStore?.cards.first
-            setAmount(viewAction: .init(card: dataStore?.selected))
-        }
+        getPayments(viewAction: .init(), completion: { [weak self] in
+            self?.dataStore?.selected = self?.dataStore?.paymentMethod == .ach ? self?.dataStore?.ach : (self?.dataStore?.selected ?? self?.dataStore?.cards.first)
+            
+            self?.getExchangeRate(viewAction: .init(), completion: { [weak self] in
+                self?.setPresentAmountData(handleErrors: false)
+            })
+        })
     }
     
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
@@ -61,7 +61,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func setAmount(viewAction: AssetModels.Asset.ViewAction) {
         if let value = viewAction.currency?.lowercased(),
            let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == value }) {
-            dataStore?.toAmount = .zero(currency)
+            amount = .zero(currency)
             
             getExchangeRate(viewAction: .init(), completion: { [weak self] in
                 self?.setPresentAmountData(handleErrors: false)
@@ -75,19 +75,17 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         
         guard let rate = dataStore?.quote?.exchangeRate,
-              let toCurrency = dataStore?.toAmount?.currency else {
+              let toCurrency = amount?.currency else {
             setPresentAmountData(handleErrors: true)
             return
         }
-                
-        dataStore?.values = viewAction
         
         let to: Amount
         
-        if let value = viewAction.tokenValue,
+        if let value = viewAction.fromTokenValue,
            let crypto = ExchangeFormatter.current.number(from: value)?.decimalValue {
             to = .init(decimalAmount: crypto, isFiat: false, currency: toCurrency, exchangeRate: 1 / rate)
-        } else if let value = viewAction.fiatValue,
+        } else if let value = viewAction.fromFiatValue,
                   let fiat = ExchangeFormatter.current.number(from: value)?.decimalValue {
             to = .init(decimalAmount: fiat, isFiat: true, currency: toCurrency, exchangeRate: 1 / rate)
         } else {
@@ -95,16 +93,16 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             return
         }
         
-        dataStore?.toAmount = to
+        amount = to
         dataStore?.from = to.fiatValue
         
         setPresentAmountData(handleErrors: false)
     }
     
     private func setPresentAmountData(handleErrors: Bool) {
-        let isNotZero = !(dataStore?.toAmount?.tokenValue ?? 0).isZero
+        let isNotZero = !(amount?.tokenValue ?? 0).isZero
         
-        presenter?.presentAmount(actionResponse: .init(fromAmount: dataStore?.toAmount,
+        presenter?.presentAmount(actionResponse: .init(fromAmount: amount,
                                                        card: dataStore?.selected,
                                                        type: dataStore?.paymentMethod,
                                                        quote: dataStore?.quote,
@@ -171,7 +169,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         
         dataStore?.paymentMethod = viewAction.method
-        dataStore?.toAmount = selectedCurrency == nil ? dataStore?.toAmount : selectedCurrency
+        amount = selectedCurrency == nil ? amount : selectedCurrency
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
             self?.setPresentAmountData(handleErrors: false)

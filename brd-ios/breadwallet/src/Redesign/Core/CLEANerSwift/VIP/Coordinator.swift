@@ -166,10 +166,12 @@ class BaseCoordinator: NSObject, Coordinatable {
         navigationController.present(nvc, animated: true)
     }
     
-    func showDeleteProfileInfo(keyMaster: KeyStore) {
+    // TODO: showDeleteProfileInfo and showTwoStepAuthentication should be refactored when everything used coordinators.
+    
+    func showDeleteProfileInfo(keyStore: KeyStore) {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
-        coordinator.showDeleteProfile(with: keyMaster)
+        coordinator.showDeleteProfile(with: keyStore)
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
@@ -177,9 +179,13 @@ class BaseCoordinator: NSObject, Coordinatable {
     }
     
     func showTwoStepAuthentication(keyStore: KeyStore?) {
-        openModally(coordinator: AccountCoordinator.self, scene: Scenes.TwoStepAuthentication) { vc in
-            vc?.dataStore?.keyStore = keyStore
-        }
+        let nvc = RootNavigationController()
+        let coordinator = AccountCoordinator(navigationController: nvc)
+        coordinator.showTwoStepAuthentication(with: keyStore)
+        coordinator.parentCoordinator = self
+        
+        childCoordinators.append(coordinator)
+        UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
     }
     
     func showPaymailAddress(isPaymailFromAssets: Bool) {
@@ -320,9 +326,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         case .failure(let error):
             let error = error as? NetworkingError
             
-            if error == .sessionExpired || error == .parameterMissing {
-                coordinator = AccountCoordinator(navigationController: nvc)
-            } else if error?.errorType == .twoStepRequired {
+            if error == .sessionExpired || error == .parameterMissing || error?.errorType == .twoStepRequired {
                 coordinator = AccountCoordinator(navigationController: nvc)
             } else {
                 completion?(false)
