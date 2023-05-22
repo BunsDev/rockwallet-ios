@@ -31,7 +31,7 @@ protocol DeleteProfileInfoResponseDisplays: AnyObject, BaseResponseDisplays, Fet
 }
 
 protocol DeleteProfileInfoDataStore: BaseDataStore, FetchDataStore {
-    var keyMaster: KeyStore? { get set }
+    var keyStore: KeyStore? { get set }
 }
 
 protocol DeleteProfileInfoDataPassing {
