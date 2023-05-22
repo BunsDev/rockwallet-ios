@@ -33,6 +33,8 @@ class CoreSystem: Subscriber {
     
     private var createWalletCallback: ((Wallet?) -> Void)?
     
+    var currenctAccount: Account? { return system?.account }
+    
     // MARK: Lifecycle
     
     init(keyStore: KeyStore) {
@@ -802,10 +804,6 @@ extension CoreSystem: SystemListener {
     
     func handleNetworkEvent(system: System, network: Network, event: NetworkEvent) {
         print("[SYS] network event: \(event) (\(network))")
-    }
-    
-    func getCurrentAccount() -> Account? {
-        return system?.account
     }
 }
 

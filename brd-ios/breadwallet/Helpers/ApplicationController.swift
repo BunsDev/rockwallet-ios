@@ -178,7 +178,7 @@ class ApplicationController: Subscriber {
         }
         
         Store.subscribe(self, name: .refreshToken) { [weak self] _ in
-            guard let account = self?.coreSystem.getCurrentAccount() else { return }
+            guard let account = self?.coreSystem.currenctAccount else { return }
             
             Backend.disconnectWallet()
             self?.coreSystem.shutdown(completion: {
