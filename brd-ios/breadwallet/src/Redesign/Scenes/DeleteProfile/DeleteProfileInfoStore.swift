@@ -13,7 +13,7 @@ import UIKit
 class DeleteProfileInfoStore: NSObject, BaseDataStore, DeleteProfileInfoDataStore {
     // MARK: - DeleteProfileInfoDataStore
     
-    var keyMaster: KeyStore?
+    var keyStore: KeyStore?
     
     // MARK: - Additional helpers
 }
