@@ -116,8 +116,6 @@ enum NetworkingError: FEError, Equatable {
         case 400:
             if serverMessage == ServerResponse.ErrorType.inappropriatePaymail.rawValue {
                 self = .inappropriatePaymail
-            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
-                self = .twoStepInvalidCode(error?.attemptsLeft)
             } else {
                 self = .general
             }
@@ -125,6 +123,8 @@ enum NetworkingError: FEError, Equatable {
         case 401:
             if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
                 self = .twoStepInvalidCode(error?.attemptsLeft)
+            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCodeBlockedAccount.rawValue {
+                self = .twoStepInvalidCodeBlockedAccount
             } else {
                 switch TwoStepSettingsResponseData.TwoStepType(rawValue: error?.serverMessage ?? "") {
                 case .authenticator:
