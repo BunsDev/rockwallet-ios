@@ -82,7 +82,7 @@ class UserManager: NSObject {
         }
     }
     
-    func setUserCredentials(email: String, sessionToken: String, sessionTokenHash: String) {
+    func setUserCredentials(email: String?, sessionToken: String?, sessionTokenHash: String?) {
         UserDefaults.email = email
         UserDefaults.sessionToken = sessionToken
         UserDefaults.sessionTokenHash = sessionTokenHash
