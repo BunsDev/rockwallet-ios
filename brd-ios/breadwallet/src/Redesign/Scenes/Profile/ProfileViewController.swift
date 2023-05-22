@@ -110,7 +110,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                         self?.coordinator?.showFailure(reason: .documentVerificationRetry)
                         
                     default:
-                        self?.coordinator?.showAccountVerification()
+                        self?.coordinator?.showKYCLevelOne()
                     }
                 }
             }

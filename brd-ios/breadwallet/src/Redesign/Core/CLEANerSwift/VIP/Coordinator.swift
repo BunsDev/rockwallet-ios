@@ -157,15 +157,6 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showAccountVerification() {
-        let nvc = RootNavigationController()
-        let coordinator = KYCCoordinator(navigationController: nvc)
-        coordinator.start()
-        coordinator.parentCoordinator = self
-        childCoordinators.append(coordinator)
-        navigationController.present(nvc, animated: true)
-    }
-    
     // TODO: showDeleteProfileInfo and showTwoStepAuthentication should be refactored when everything used coordinators.
     
     func showDeleteProfileInfo(keyStore: KeyStore) {
@@ -221,6 +212,10 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showSupport() {
         showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
+    }
+    
+    func showKYCLevelOne() {
+        openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
@@ -490,7 +485,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 vc.coordinator?.popViewController()
                 
             default:
-                self?.showAccountVerification()
+                self?.showKYCLevelOne()
             }
         }
         
