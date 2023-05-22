@@ -204,6 +204,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textField.autocorrectionType = config.autocorrectionType
         textField.keyboardType = config.keyboardType
         textField.isSecureTextEntry = config.isSecureTextEntry
+        setupTogglableSecureEntry()
         
         if let textConfig = config.textConfiguration {
             textField.font = textConfig.font
@@ -288,6 +289,13 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     @objc private func trailingViewTapped() {
+        guard config?.isSecureTextEntry == false else {
+            textField.isSecureTextEntry.toggle()
+            let eye = textField.isSecureTextEntry == true ? Asset.eyeShow.image : Asset.eyeHide.image
+            trailingView.setup(with: .image(eye))
+            return
+        }
+        
         didTapTrailingView?()
     }
     
@@ -347,5 +355,11 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     
     func changeToFirstResponder() {
         startEditing()
+    }
+    
+    private func setupTogglableSecureEntry() {
+        guard config?.isSecureTextEntry == true else { return }
+        trailingView.setup(with: .image(Asset.eyeShow.image))
+        trailingView.tintColor = LightColors.Text.three
     }
 }
