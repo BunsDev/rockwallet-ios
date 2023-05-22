@@ -100,5 +100,9 @@ class UserManager: NSObject {
         UserManager.shared.profile = nil
         UserManager.shared.profileResult = nil
         UserManager.shared.error = nil
+        
+        for type in PromptType.allCases {
+            PromptPresenter.shared.hidePrompt(type)
+        }
     }
 }
