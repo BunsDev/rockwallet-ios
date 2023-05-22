@@ -409,7 +409,10 @@ class ApplicationController: Subscriber {
     
     private func triggerDeeplinkHandling() {
         guard UserManager.shared.profile != nil else {
-            coordinator?.handleUserAccount()
+            DispatchQueue.main.async { [weak self] in
+                self?.coordinator?.handleUserAccount()
+            }
+            
             return
         }
         
