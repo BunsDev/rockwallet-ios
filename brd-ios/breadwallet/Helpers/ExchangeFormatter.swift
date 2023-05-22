@@ -54,10 +54,9 @@ struct ExchangeFormatter {
         formatter.generatesDecimalNumbers = true
         
         formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 9
+        formatter.maximumIntegerDigits = 14
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 8
-        formatter.maximum = 9999999999
         
         return formatter
     }
@@ -68,10 +67,9 @@ struct ExchangeFormatter {
         formatter.generatesDecimalNumbers = true
         
         formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 9
+        formatter.maximumIntegerDigits = 14
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        formatter.maximum = 9999999999
         
         return formatter
     }
@@ -82,10 +80,9 @@ struct ExchangeFormatter {
         formatter.generatesDecimalNumbers = true
         
         formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 9
+        formatter.maximumIntegerDigits = 14
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 8
-        formatter.maximum = 9999999999
         
         return formatter
     }
