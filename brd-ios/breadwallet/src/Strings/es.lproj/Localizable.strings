@@ -3256,7 +3256,7 @@
 
 "TwoStep.App.Confirmation.BackupCode.Instructions" = "Confirm you’ve stored your backup codes securely by entering one of them.";
 
-"TwoStep.App.Confirmation.BackupCode.Title" = "Enter the code from your Authenticator app";
+"TwoStep.App.Confirmation.BackupCode.Title" = "Enter one of your backup codes";
 
 "TwoStep.App.Confirmation.Title" = "Enter the code from your Authenticator app";
 
