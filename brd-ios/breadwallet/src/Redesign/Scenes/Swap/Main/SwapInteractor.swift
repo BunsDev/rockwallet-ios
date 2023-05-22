@@ -242,7 +242,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
               let from = dataStore?.fromAmount?.tokenValue,
               let to = dataStore?.toAmount?.tokenValue else { return }
         
-        let formatter = ExchangeFormatter.crypto
+        let formatter = ExchangeFormatter.current
         formatter.locale = Locale(identifier: Constant.usLocaleCode)
         formatter.usesGroupingSeparator = false
         

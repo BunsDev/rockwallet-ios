@@ -70,9 +70,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         let cardModel: CardSelectionViewModel
         
         let balance = from.currency.state?.balance
-        let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.crypto.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
+        let balanceText = String(format: L10n.Swap.balance(ExchangeFormatter.current.string(for: balance?.tokenValue.doubleValue) ?? "", balance?.currency.code ?? ""))
         
-        let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: from.tokenValue)
+        let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.current.string(for: from.tokenValue)
         let toFiatValue = from.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: from.fiatValue)
         
         let fromFormattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
@@ -167,10 +167,10 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
-        let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
-        let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
-        let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
-        let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
+        let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
+        let dailyMaxLimitText = ExchangeFormatter.current.string(for: dailyMaxLimit) ?? ""
+        let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
+        let monthlyLimitText = ExchangeFormatter.current.string(for: monthlyLimit) ?? ""
         
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),

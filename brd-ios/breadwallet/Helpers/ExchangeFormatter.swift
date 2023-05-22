@@ -48,30 +48,15 @@ class ExchangeNumberFormatter: NumberFormatter {
 }
 
 struct ExchangeFormatter {
-    static var crypto: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.generatesDecimalNumbers = true
-        
-        formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 9
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 8
-        formatter.maximum = 9999999999
-        
-        return formatter
-    }
-    
     static var fiat: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.generatesDecimalNumbers = true
         
         formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 9
+        formatter.maximumIntegerDigits = 14
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        formatter.maximum = 9999999999
         
         return formatter
     }
@@ -82,10 +67,9 @@ struct ExchangeFormatter {
         formatter.generatesDecimalNumbers = true
         
         formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 9
+        formatter.maximumIntegerDigits = 14
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 8
-        formatter.maximum = 9999999999
         
         return formatter
     }
@@ -122,7 +106,7 @@ extension String {
     func cleanupFormatting(forFiat: Bool) -> String {
         let text = isEmpty != false ? "0" : self
         
-        let expectedFormat = forFiat ? ExchangeFormatter.fiat : ExchangeFormatter.crypto
+        let expectedFormat = forFiat ? ExchangeFormatter.fiat : ExchangeFormatter.current
         let inputFormat = ExchangeFormatter.current
         
         let sanitized = text.sanitize(inputFormat: inputFormat, expectedFormat: expectedFormat)

@@ -29,7 +29,7 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
         
         var data: [AssetViewModel]? = currencies?.compactMap {
             let topRightText = String(format: "%@ %@",
-                                      ExchangeFormatter.crypto.string(for: $0.state?.balance?.tokenValue) ?? "",
+                                      ExchangeFormatter.current.string(for: $0.state?.balance?.tokenValue) ?? "",
                                       $0.code.uppercased())
             let bottomRightText = String(format: "%@ %@",
                                          ExchangeFormatter.fiat.string(for: $0.state?.balance?.fiatValue) ?? "",

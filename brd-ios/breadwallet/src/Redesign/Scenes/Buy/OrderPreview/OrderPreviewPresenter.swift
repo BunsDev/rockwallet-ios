@@ -172,14 +172,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                 let regularCrypto = toAmount.tokenValue - cryptoLimit
                 let regularFiat = toAmount.fiatValue - instantLimit
                 
-                let cryptoInstantAmount = String(format: currencyFormat, ExchangeFormatter.crypto.string(for: cryptoLimit) ?? "", cryptoCurrency)
-                let cryptoRegularAmount = String(format: currencyFormat, ExchangeFormatter.crypto.string(for: regularCrypto) ?? "", cryptoCurrency)
+                let cryptoInstantAmount = String(format: currencyFormat, ExchangeFormatter.current.string(for: cryptoLimit) ?? "", cryptoCurrency)
+                let cryptoRegularAmount = String(format: currencyFormat, ExchangeFormatter.current.string(for: regularCrypto) ?? "", cryptoCurrency)
                 let fiatInstantAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantLimit) ?? "", fiatCurrency)
                 let fiatRegularAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: regularFiat) ?? "", fiatCurrency)
 
                 return L10n.Buy.Ach.Instant.hybridConfirmationDrawer(cryptoInstantAmount, fiatInstantAmount, cryptoRegularAmount, fiatRegularAmount)
             } else {
-                let cryptoAmount = String(format: currencyFormat, ExchangeFormatter.crypto.string(for: toAmount.tokenValue) ?? "", cryptoCurrency)
+                let cryptoAmount = String(format: currencyFormat, ExchangeFormatter.current.string(for: toAmount.tokenValue) ?? "", cryptoCurrency)
                 let fiatAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toAmount.fiatValue) ?? "", fiatCurrency)
                 
                 return L10n.Buy.Ach.Instant.ConfirmationDrawer.description(cryptoAmount, fiatAmount)
@@ -223,7 +223,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let to = toAmount.fiatValue
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         let toFiatValue = toAmount.fiatValue
-        let toCryptoValue = ExchangeFormatter.crypto.string(for: toAmount.tokenValue) ?? ""
+        let toCryptoValue = ExchangeFormatter.current.string(for: toAmount.tokenValue) ?? ""
         let toCryptoDisplayImage = item.to?.currency.imageSquareBackground
         let toCryptoDisplayName = item.to?.currency.displayName ?? ""
         let from = item.from ?? 0
