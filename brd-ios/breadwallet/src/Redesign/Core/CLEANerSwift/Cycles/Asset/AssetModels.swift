@@ -12,10 +12,29 @@ import Foundation
 import WalletKit
 
 enum AssetModels {
+    struct Item: Hashable {
+        var type: PaymentCard.PaymentType?
+        var achEnabled: Bool?
+    }
+    
+    enum Section: Sectionable {
+        case segment
+        case rateAndTimer
+        case accountLimits
+        case increaseLimits
+        case paymentMethod
+        case swapCard
+        
+        var header: AccessoryType? { return nil }
+        var footer: AccessoryType? { return nil }
+    }
+    
     enum Asset {
         struct ViewAction {
-            var fiatValue: String?
-            var tokenValue: String?
+            var fromFiatValue: String?
+            var fromTokenValue: String?
+            var toFiatValue: String?
+            var toTokenValue: String?
             
             var currency: String?
             var card: PaymentCard?
@@ -39,6 +58,16 @@ enum AssetModels {
             
             var handleErrors = false
         }
+        
+        struct ResponseDisplay {
+            var swapCurrencyViewModel: SwapCurrencyViewModel?
+            var mainSwapViewModel: MainSwapViewModel?
+            
+            var cardModel: CardSelectionViewModel?
+            
+            var continueEnabled = false
+            var rate: ExchangeRateViewModel?
+        }
     }
     
     enum ExchangeRate {
@@ -60,6 +89,7 @@ enum AssetModels {
             var accountLimits: LabelViewModel?
         }
     }
+    
     enum CoingeckoRate {
         struct ViewAction {
             var getFees: Bool = false

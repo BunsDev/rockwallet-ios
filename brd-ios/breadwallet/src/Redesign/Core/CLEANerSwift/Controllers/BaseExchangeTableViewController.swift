@@ -13,8 +13,7 @@ import UIKit
 class BaseExchangeTableViewController<C: CoordinatableRoutes,
                                       I: Interactor,
                                       P: Presenter,
-                                      DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS>,
-                                                                     ExchangeResponseDisplays {
+                                      DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS> {
     var didTriggerExchangeRate: (() -> Void)?
     
     private var didDisplayData = false
@@ -73,7 +72,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                 case .ach:
                     (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
                 default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true))
+                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
                 }
             }
         }
@@ -135,19 +134,4 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         }
     }
     
-    // MARK: Exchange response displays
-    
-    func displayAmount(responseDisplay: ExchangeModels.Amounts.ResponseDisplay) {
-        LoadingView.hideIfNeeded()
-        
-        guard let section = sections.firstIndex(where: { $0.hashValue == ExchangeModels.Section.swapCard.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
-        
-        cell.wrappedView.setup(with: responseDisplay.amounts)
-        
-        tableView.invalidateTableViewIntrinsicContentSize()
-        
-        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-    }
 }

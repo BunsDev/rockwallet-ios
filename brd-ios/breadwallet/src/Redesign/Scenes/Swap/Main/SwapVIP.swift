@@ -16,7 +16,6 @@ extension Scenes {
 }
 
 protocol SwapViewActions: BaseViewActions, FetchViewActions, AssetViewActions, CreateTransactionViewActions {
-    func setAmount(viewAction: SwapModels.Amounts.ViewAction)
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction)
     func selectAsset(viewAction: SwapModels.Assets.ViewAction)
     func showConfirmation(viewAction: SwapModels.ShowConfirmDialog.ViewAction)
@@ -27,7 +26,6 @@ protocol SwapViewActions: BaseViewActions, FetchViewActions, AssetViewActions, C
 }
 
 protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, AssetActionResponses {
-    func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
     func presentSelectAsset(actionResponse: SwapModels.Assets.ActionResponse)
     func presentConfirmation(actionResponse: SwapModels.ShowConfirmDialog.ActionResponse)
     func presentConfirm(actionResponse: SwapModels.Confirm.ActionResponse)
@@ -49,8 +47,6 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, AssetDataStore, CreateTra
     
     var fromAmount: Amount? { get set }
     var toAmount: Amount? { get set }
-    
-    var values: SwapModels.Amounts.ViewAction { get set }
     
     var exchange: Exchange? { get set }
     

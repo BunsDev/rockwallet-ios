@@ -517,7 +517,7 @@ class ApplicationController: Subscriber {
         }
         
         didTapDeleteAccount = { [unowned self] in
-            coordinator?.showDeleteProfileInfo(keyMaster: keyStore)
+            coordinator?.showDeleteProfileInfo(keyStore: keyStore)
         }
         
         didTapTwoStepAuth = { [unowned self] in

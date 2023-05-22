@@ -41,7 +41,7 @@ struct TxListViewModel: TxViewModel, Hashable {
                swap.status == .pending {
             }
             
-            let amount = ExchangeFormatter.crypto.string(for: swap.destination.currencyAmount) ?? ""
+            let amount = ExchangeFormatter.current.string(for: swap.destination.currencyAmount) ?? ""
             return "\(amount) \(swap.destination.currency)"
         } else {
             return .init()

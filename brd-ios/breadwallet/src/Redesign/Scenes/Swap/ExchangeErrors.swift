@@ -50,7 +50,7 @@ enum ExchangeErrors: FEError {
             return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
             
         case .balanceTooLow(let amount, let currency):
-            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.crypto.string(for: amount) ?? "", currency, currency)
+            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)
             
         case .tooLow(let amount, let currency, let reason):
             switch reason {
@@ -58,7 +58,7 @@ enum ExchangeErrors: FEError {
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
                 
             case .swap:
-                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
+                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.current.string(for: amount.doubleValue) ?? "", currency)
                 
             default:
                 return ""
@@ -70,7 +70,7 @@ enum ExchangeErrors: FEError {
                 return L10n.ErrorMessages.amountTooHigh(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
                 
             case .swap:
-                return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
+                return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.current.string(for: amount) ?? "", currency)
                 
             default:
                 return ""

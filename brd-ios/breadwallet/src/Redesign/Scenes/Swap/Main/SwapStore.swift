@@ -33,8 +33,6 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var toAmount: Amount?
     var isFromBuy: Bool = false
     
-    var values: SwapModels.Amounts.ViewAction = .init()
-    
     var quote: Quote?
     var fromRate: Decimal?
     var toRate: Decimal?
@@ -79,7 +77,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     
     var toFeeAmount: Amount? {
         guard let value = quote?.toFee,
-              let fee = ExchangeFormatter.crypto.string(for: value.fee),
+              let fee = ExchangeFormatter.current.string(for: value.fee),
               let currency = currencies.first(where: { $0.code == value.currency.uppercased() }) else {
             return nil
         }

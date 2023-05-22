@@ -32,18 +32,6 @@ enum BillingAddressModels {
         }
     }
     
-    struct PaymentCards {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var allPaymentCards: [PaymentCard]?
-        }
-        
-        struct ResponseDisplay {
-            var allPaymentCards: [PaymentCard]
-        }
-    }
-    
     struct StateProvince {
         struct ViewAction {
             var stateProvince: String?

@@ -19,9 +19,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     // MARK: - BuyActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? Models.Item else { return }
+        guard let item = actionResponse.item as? AssetModels.Item else { return }
         
-        var sections: [ExchangeModels.Section] = [
+        var sections: [AssetModels.Section] = [
             .rateAndTimer,
             .swapCard,
             .paymentMethod,
@@ -52,7 +52,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             paymentMethodViewModel = CardSelectionViewModel()
         }
         
-        let sectionRows: [ExchangeModels.Section: [any Hashable]] =  [
+        let sectionRows: [AssetModels.Section: [any Hashable]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .swapCard: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
@@ -73,7 +73,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let cardModel: CardSelectionViewModel
         
         let fromFiatValue = from.fiatValue == 0 ? nil : ExchangeFormatter.fiat.string(for: from.fiatValue)
-        let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.crypto.string(for: from.tokenValue)
+        let fromTokenValue = from.tokenValue == 0 ? nil : ExchangeFormatter.current.string(for: from.tokenValue)
         
         let formattedFiatString = ExchangeFormatter.createAmountString(string: fromFiatValue ?? "")
         let formattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
@@ -124,14 +124,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             }
         }
         
-        viewController?.displayAmount(responseDisplay: .init(cryptoModel: cryptoModel, cardModel: cardModel))
+        viewController?.displayAmount(responseDisplay: .init(swapCurrencyViewModel: cryptoModel,
+                                                             cardModel: cardModel))
         
         guard actionResponse.handleErrors else { return }
         _ = handleError(actionResponse: actionResponse)
-    }
-    
-    func presentPaymentCards(actionResponse: BuyModels.PaymentCards.ActionResponse) {
-        viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
     }
     
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse) {
@@ -165,10 +162,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
-        let perTransactionLimitText = ExchangeFormatter.crypto.string(for: perTransactionLimit) ?? ""
-        let dailyMaxLimitText = ExchangeFormatter.crypto.string(for: dailyMaxLimit) ?? ""
-        let weeklyLimitText = ExchangeFormatter.crypto.string(for: weeklyLimit) ?? ""
-        let monthlyLimitText = ExchangeFormatter.crypto.string(for: monthlyLimit) ?? ""
+        let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
+        let dailyMaxLimitText = ExchangeFormatter.current.string(for: dailyMaxLimit) ?? ""
+        let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
+        let monthlyLimitText = ExchangeFormatter.current.string(for: monthlyLimit) ?? ""
         
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
