@@ -67,7 +67,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        textField.gestureRecognizers?.removeAll()
+        textFieldStack.gestureRecognizers?.removeAll()
         trailingView.gestureRecognizers?.removeAll()
         value = nil
     }
@@ -243,10 +243,10 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         if viewModel.isUserInteractionEnabled {
             let tapped = UITapGestureRecognizer(target: self, action: #selector(startEditing))
-            textField.addGestureRecognizer(tapped)
-            textField.isUserInteractionEnabled = true
+            textFieldStack.addGestureRecognizer(tapped)
+            textFieldStack.isUserInteractionEnabled = true
         } else {
-            textField.isUserInteractionEnabled = false
+            textFieldStack.isUserInteractionEnabled = false
         }
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(trailingViewTapped))
