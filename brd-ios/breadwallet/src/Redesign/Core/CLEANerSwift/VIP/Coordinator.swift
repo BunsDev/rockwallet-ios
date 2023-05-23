@@ -88,14 +88,13 @@ class BaseCoordinator: NSObject, Coordinatable {
                 return
             }
             
-            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
-                    vc?.dataStore?.currencies = Store.state.currencies
-                    vc?.dataStore?.coreSystem = coreSystem
-                    vc?.dataStore?.keyStore = keyStore
-                    guard let selectedCurrency else { return }
-                    vc?.dataStore?.fromAmount = .zero(selectedCurrency)
-                }
+            self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
+                vc?.dataStore?.currencies = Store.state.currencies
+                vc?.dataStore?.coreSystem = coreSystem
+                vc?.dataStore?.keyStore = keyStore
+                
+                guard let selectedCurrency else { return }
+                vc?.dataStore?.fromAmount = .zero(selectedCurrency)
             }
         }
     }
@@ -110,16 +109,14 @@ class BaseCoordinator: NSObject, Coordinatable {
                 return
             }
             
-            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
-                    vc?.dataStore?.currencies = Store.state.currencies
-                    vc?.dataStore?.paymentMethod = type
-                    vc?.dataStore?.coreSystem = coreSystem
-                    vc?.dataStore?.keyStore = keyStore
-                    
-                    guard let selectedCurrency else { return }
-                    vc?.dataStore?.toAmount = .zero(selectedCurrency)
-                }
+            self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
+                vc?.dataStore?.currencies = Store.state.currencies
+                vc?.dataStore?.paymentMethod = type
+                vc?.dataStore?.coreSystem = coreSystem
+                vc?.dataStore?.keyStore = keyStore
+                
+                guard let selectedCurrency else { return }
+                vc?.dataStore?.toAmount = .zero(selectedCurrency)
             }
         }
     }
@@ -135,16 +132,14 @@ class BaseCoordinator: NSObject, Coordinatable {
                 return
             }
                 
-            ExchangeCurrencyHelper.setUSDifNeeded { [weak self] in
-                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
-                    vc?.dataStore?.currencies = Store.state.currencies
-                    vc?.dataStore?.coreSystem = coreSystem
-                    vc?.dataStore?.keyStore = keyStore
-                    
-                    // TODO: This logic will need to be updated.
-                    guard let selectedCurrency = Currencies.shared.bsv else { return }
-                    vc?.dataStore?.fromAmount = .zero(selectedCurrency)
-                }
+            self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
+                vc?.dataStore?.currencies = Store.state.currencies
+                vc?.dataStore?.coreSystem = coreSystem
+                vc?.dataStore?.keyStore = keyStore
+                
+                // TODO: This logic will need to be updated.
+                guard let selectedCurrency = Currencies.shared.bsv else { return }
+                vc?.dataStore?.fromAmount = .zero(selectedCurrency)
             }
         }
     }

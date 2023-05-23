@@ -62,6 +62,9 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
                     }
                 }
             }
+            
+        case .emailViewSetup:
+            cell = self.tableView(tableView, emailViewCellForRowAt: indexPath)
         
         case .paymail:
             cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
@@ -96,6 +99,27 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     }
 
     // MARK: - User Interaction
+    
+    func tableView(_ tableView: UITableView, emailViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<CardSelectionView> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? CardSelectionViewModel
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            let config = CardSelectionConfiguration(title: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
+                                                    subtitle: .init(font: Fonts.Title.six, textColor: LightColors.Text.three),
+                                                    arrow: .init(tintColor: LightColors.primary))
+            view.configure(with: config)
+            view.setup(with: model)
+            view.didTapSelectCard = { [weak self] in
+                self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
+            }
+        }
+        
+        return cell
+    }
     
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         let section = dataSource?.sectionIdentifier(for: indexPath.section)

@@ -45,28 +45,6 @@ enum SellModels {
         }
     }
     
-    struct PaymentMethod {
-        struct ViewAction {
-            let method: PaymentCard.PaymentType
-        }
-        
-        struct ActionResponse {}
-        
-        struct ResponseDisplay {}
-    }
-    
-    struct RetryPaymentMethod {
-        struct ViewAction {
-            let method: PaymentCard.PaymentType
-        }
-        
-        struct ActionResponse {
-            let method: PaymentCard.PaymentType
-        }
-        
-        struct ResponseDisplay {}
-    }
-    
     struct AchSuccess {
         struct ViewAction {}
         

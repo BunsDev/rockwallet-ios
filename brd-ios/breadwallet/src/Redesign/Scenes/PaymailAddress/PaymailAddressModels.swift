@@ -15,6 +15,7 @@ enum PaymailAddressModels {
         case description
         case emailViewTitle
         case emailView
+        case emailViewSetup
         case paymail
         
         var header: AccessoryType? { return nil }

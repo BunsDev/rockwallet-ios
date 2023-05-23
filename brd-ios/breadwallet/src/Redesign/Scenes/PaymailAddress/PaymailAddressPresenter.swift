@@ -22,11 +22,15 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
             .description,
             .emailViewTitle,
             .emailView,
+            .emailViewSetup,
             .paymail
         ]
         
         if item?.screenType == .paymailSetup {
             sections = sections.filter({ $0 != .emailViewTitle })
+            sections = sections.filter({ $0 != .emailView })
+        } else {
+            sections = sections.filter({ $0 != .emailViewSetup })
         }
         
         let emailValue = item?.paymailAddress != nil ? item?.paymailAddress : Constant.paymailDomain
@@ -41,8 +45,13 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
             .emailView: [
                 TextFieldModel(title: item?.screenType?.emailViewTitle,
                                value: emailValue,
-                               trailing: item?.screenType?.image,
-                               isUserInteractionEnabled: item?.screenType == .paymailNotSetup)
+                               trailing: item?.screenType?.image)
+            ],
+            .emailViewSetup: [
+                CardSelectionViewModel(title: .text(L10n.PaymailAddress.yourPaymailAddress),
+                                       subtitle: .text(emailValue),
+                                       arrow: .image(Asset.copyIcon.image),
+                                       userInteractionEnabled: true)
             ],
             .paymail: [
                 MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.PaymailAddress.whatIsPaymail,
