@@ -134,10 +134,8 @@ class ApplicationController: Subscriber {
         appRatingManager.start()
         setupSubscribers()
         
-        ExchangeCurrencyHelper.revertIfNeeded(coordinator: coordinator, completion: { [weak self] in
-            self?.initializeAssets(completionHandler: { [weak self] in
-                self?.decideFlow()
-            })
+        initializeAssets(completionHandler: { [weak self] in
+            self?.decideFlow()
         })
     }
     
@@ -446,8 +444,6 @@ class ApplicationController: Subscriber {
         homeScreen.didTapBuy = { [weak self] type in
             guard let self else { return }
             
-            self.homeScreenViewController?.isInExchangeFlow = true
-            
             self.coordinator?.showBuy(type: type,
                                       coreSystem: self.coreSystem,
                                       keyStore: self.keyStore)
@@ -458,16 +454,12 @@ class ApplicationController: Subscriber {
                 return
             }
             
-            self.homeScreenViewController?.isInExchangeFlow = true
-            
             self.coordinator?.showSell(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         
         homeScreen.didTapTrade = { [weak self] in
             guard let self else { return }
-            
-            self.homeScreenViewController?.isInExchangeFlow = true
             
             self.coordinator?.showSwap(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)

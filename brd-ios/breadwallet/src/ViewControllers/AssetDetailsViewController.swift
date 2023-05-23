@@ -203,7 +203,6 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     }
     
     override func viewSafeAreaInsetsDidChange() {
-        
         footerHeightConstraint?.constant = AssetDetailsFooterView.height + view.safeAreaInsets.bottom
     }
     

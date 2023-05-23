@@ -185,7 +185,6 @@
 		7B0E34CA28ABA73900D15180 /* PaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E34C828ABA73900D15180 /* PaymentMethodView.swift */; };
 		7B0E906228BF8E54002D5B6D /* ExchangeDetailsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E906128BF8E54002D5B6D /* ExchangeDetailsWorker.swift */; };
 		7B1A4690298BEF2500A6F68F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B1A4684298BEF2500A6F68F /* InfoPlist.strings */; };
-		7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */; };
 		7B2BF28529659D850037E731 /* RecoveryKeyIntroInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */; };
 		7B2BF28629659D850037E731 /* RecoveryKeyIntroVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */; };
 		7B2BF28729659D850037E731 /* RecoveryKeyIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */; };
@@ -1084,7 +1083,6 @@
 		7B1A468D298BEF2500A6F68F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7B1A468E298BEF2500A6F68F /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7B1A468F298BEF2500A6F68F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCurrencyHelper.swift; sourceTree = "<group>"; };
 		7B2BF27F29659D840037E731 /* RecoveryKeyIntroInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroInteractor.swift; sourceTree = "<group>"; };
 		7B2BF28029659D840037E731 /* RecoveryKeyIntroVIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroVIP.swift; sourceTree = "<group>"; };
 		7B2BF28129659D850037E731 /* RecoveryKeyIntroPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoveryKeyIntroPresenter.swift; sourceTree = "<group>"; };
@@ -2802,7 +2800,6 @@
 				7B0AE806297692140079C7E1 /* DynamicLinksManager.swift */,
 				7BDB49B52805AC780031F015 /* EmailFeedbackManager.swift */,
 				7BD88B4F28D92A7A003A766B /* ExchangeAuthHelper.swift */,
-				7B22AE0928DDA4CA002CC34F /* ExchangeCurrencyHelper.swift */,
 				7B8CF81F28A64B9300D54D14 /* ExchangeFormatter.swift */,
 				7B2E5047289800BB008CACD8 /* FieldValidator.swift */,
 				3A4972C42602E0ED0002C3EC /* IosBRDAuthProvider.swift */,
@@ -4412,7 +4409,6 @@
 				3A6FD42D24E456B800068ECE /* KeyStoreUtils.swift in Sources */,
 				D78D296229ED3A7B0039A5D6 /* TwoStepSettingsModels.swift in Sources */,
 				7EF45F4F2845352400D1F7B0 /* KYCBasicInteractor.swift in Sources */,
-				7B22AE0A28DDA4CA002CC34F /* ExchangeCurrencyHelper.swift in Sources */,
 				0486949C2A1638E5004EDDBA /* TwoStepVIP.swift in Sources */,
 				7B60826729700B9E00C4736B /* SetPasswordViewController.swift in Sources */,
 				7E52B7A22872CD1E003D2249 /* SupportedCurrenciesWorker.swift in Sources */,

@@ -38,10 +38,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.supportedCurrencies = currencies
         dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
-        if amount == nil {
+        if dataStore?.selected == nil {
             presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
                                                                                 achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
-            setAmount(viewAction: .init(currency: dataStore?.currencies.first?.code))
+            setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
         }
         
         getPayments(viewAction: .init(), completion: { [weak self] in
@@ -141,6 +141,9 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
             dataStore?.selected = dataStore?.cards.first
             
         }
+        
+        guard let currency = amount?.currency else { return }
+        amount = .zero(currency)
         
         getExchangeRate(viewAction: .init(), completion: { [weak self] in
             self?.setPresentAmountData(handleErrors: false)
