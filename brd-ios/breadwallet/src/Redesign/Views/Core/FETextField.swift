@@ -52,6 +52,7 @@ struct TextFieldModel: ViewModel {
     var displayState: DisplayState?
     var displayStateAnimated: Bool?
     var isUserInteractionEnabled: Bool = true
+    var showPasswordToggle: Bool = false
 }
 
 class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDelegate, StateDisplayable {
@@ -204,10 +205,11 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textField.autocorrectionType = config.autocorrectionType
         textField.keyboardType = config.keyboardType
         textField.isSecureTextEntry = config.isSecureTextEntry
-        if config.isSecureTextEntry {
-            trailingView.isHidden = false
+        
+        if viewModel?.showPasswordToggle == true {
             trailingView.tintColor = LightColors.Text.three
-            setupTogglableSecureEntry()
+            let eye = config.isSecureTextEntry ? Asset.eyeShow.image : Asset.eyeHide.image
+            trailingView.setup(with: .image(eye))
         }
         
         if let textConfig = config.textConfiguration {
@@ -251,8 +253,10 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         leadingView.setup(with: viewModel.leading)
         leadingView.isHidden = viewModel.leading == nil
         
-        trailingView.setup(with: viewModel.trailing)
-        trailingView.isHidden = viewModel.trailing == nil
+        if let trailing = viewModel.trailing {
+            trailingView.setup(with: trailing)
+        }
+        trailingView.isHidden = viewModel.trailing == nil && !viewModel.showPasswordToggle
         
         titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
@@ -290,9 +294,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     @objc private func trailingViewTapped() {
-        guard config?.isSecureTextEntry == false else {
-            textField.isSecureTextEntry.toggle()
-            setupTogglableSecureEntry()
+        guard viewModel?.showPasswordToggle == false else {
+            config?.isSecureTextEntry.toggle()
+            configure(with: config)
             return
         }
         
@@ -355,10 +359,5 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     
     func changeToFirstResponder() {
         startEditing()
-    }
-    
-    private func setupTogglableSecureEntry() {
-        let eye = textField.isSecureTextEntry == true ? Asset.eyeShow.image : Asset.eyeHide.image
-        trailingView.setup(with: .image(eye))
     }
 }
