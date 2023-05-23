@@ -3235,8 +3235,8 @@
 		C458C7C229E6D1F900146C0D /* PaymailAddress */ = {
 			isa = PBXGroup;
 			children = (
-				C458C7C429E6D22E00146C0D /* PaymailAddressStore.swift */,
 				C458C7C529E6D22E00146C0D /* PaymailAddressPresenter.swift */,
+				C458C7C429E6D22E00146C0D /* PaymailAddressStore.swift */,
 				C458C7C629E6D22E00146C0D /* PaymailAddressModels.swift */,
 				C458C7C729E6D22E00146C0D /* PaymailAddressVIP.swift */,
 				C458C7C829E6D22E00146C0D /* PaymailAddressViewController.swift */,
