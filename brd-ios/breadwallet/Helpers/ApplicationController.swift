@@ -282,8 +282,6 @@ class ApplicationController: Subscriber {
     }
     
     private func setupDefaults() {
-        ExchangeCurrencyHelper.shared.isInExchangeFlow = false
-        
         if UserDefaults.standard.object(forKey: shouldRequireLoginTimeoutKey) == nil {
             // Default 3 min timeout.
             UserDefaults.standard.set(Constant.secondsInMinute*3.0, forKey: shouldRequireLoginTimeoutKey)

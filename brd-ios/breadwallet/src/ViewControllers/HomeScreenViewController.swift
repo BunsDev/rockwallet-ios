@@ -423,8 +423,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func updateTotalAssets() {
-        guard !ExchangeCurrencyHelper.shared.isInExchangeFlow else { return }
-        
         let fiatTotal: Decimal = Store.state.wallets.values.map {
             guard let balance = $0.balance,
                   let rate = $0.currentRate else { return 0.0 }
@@ -433,7 +431,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             return amount.fiatValue
         }.reduce(0.0, +)
         
-        let localeComponents = [NSLocale.Key.currencyCode.rawValue: UserDefaults.defaultCurrencyCode]
+        let localeComponents = [NSLocale.Key.currencyCode.rawValue: Store.state.defaultCurrencyCode]
         let localeIdentifier = Locale.identifier(fromComponents: localeComponents)
         totalAssetsNumberFormatter.locale = Locale(identifier: localeIdentifier)
         totalAssetsNumberFormatter.currencySymbol = Store.state.orderedWallets.first?.currentRate?.code ?? ""
@@ -442,8 +440,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func updateAmountsForWidgets() {
-        guard !ExchangeCurrencyHelper.shared.isInExchangeFlow else { return }
-        
         let info: [CurrencyId: Double] = Store.state.wallets
             .map { ($0, $1) }
             .reduce(into: [CurrencyId: Double]()) {

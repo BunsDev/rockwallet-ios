@@ -169,18 +169,11 @@ extension UserDefaults {
             guard CurrencyFileManager.isFiatCodeAvailable(code) else { return Constant.usdCurrencyCode }
             return code
         }
-        set { defaults.set(newValue, forKey: defaultCurrencyCodeKey) }
+        set {
+            defaults.set(newValue, forKey: defaultCurrencyCodeKey)
+        }
     }
     
-    static var temporaryDefaultCurrencyCode: String {
-        get {
-            return defaults.string(forKey: temporaryDefaultCurrencyCodeKey) ?? ""
-        }
-        set {
-            defaults.setValue(newValue, forKey: temporaryDefaultCurrencyCodeKey)
-        }
-    }
-
     static var hasAquiredShareDataPermission: Bool {
         get {
             //If user's haven't set this key, default to true

@@ -133,8 +133,6 @@ class AssetListTableView: UITableViewController, Subscriber {
         didReload?()
         showLoadingState(false)
         
-        guard !ExchangeCurrencyHelper.shared.isInExchangeFlow else { return }
-        
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
