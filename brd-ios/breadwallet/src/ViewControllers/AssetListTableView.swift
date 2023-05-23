@@ -133,8 +133,7 @@ class AssetListTableView: UITableViewController, Subscriber {
         didReload?()
         showLoadingState(false)
         
-        guard let parentViewController = parent as? HomeScreenViewController,
-              parentViewController.isInExchangeFlow == false else { return }
+        guard !ExchangeCurrencyHelper.shared.isInExchangeFlow else { return }
         
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()

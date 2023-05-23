@@ -20,8 +20,6 @@ protocol SellViewActions: BaseViewActions,
                           CreateTransactionViewActions {
     func showOrderPreview(viewAction: SellModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: SellModels.AssetSelector.ViewAction)
-    func selectPaymentMethod(viewAction: SellModels.PaymentMethod.ViewAction)
-    func retryPaymentMethod(viewAction: SellModels.RetryPaymentMethod.ViewAction)
     func showLimitsInfo(viewAction: SellModels.LimitsInfo.ViewAction)
     func showInstantAchPopup(viewAction: SellModels.InstantAchPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SellModels.AssetSelectionMessage.ViewAction)
@@ -34,7 +32,6 @@ protocol SellActionResponses: BaseActionResponses,
                               AchActionResponses {
     func presentOrderPreview(actionResponse: SellModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: SellModels.AssetSelector.ActionResponse)
-    func presentMessage(actionResponse: SellModels.RetryPaymentMethod.ActionResponse)
     func presentAchSuccess(actionResponse: SellModels.AchSuccess.ActionResponse)
     func presentLimitsInfo(actionResponse: SellModels.LimitsInfo.ActionResponse)
     func presentInstantAchPopup(actionResponse: SellModels.InstantAchPopup.ActionResponse)

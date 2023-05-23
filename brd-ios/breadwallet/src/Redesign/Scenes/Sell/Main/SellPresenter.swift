@@ -152,12 +152,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                                               config: Presets.InfoView.verification))
     }
     
-    func presentMessage(actionResponse: SellModels.RetryPaymentMethod.ActionResponse) {
-        let message = actionResponse.method == .card ? L10n.Buy.switchedToDebitCard : L10n.Buy.switchedToAch
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(message)),
-                                                              config: Presets.InfoView.verification))
-    }
-    
     func presentLimitsInfo(actionResponse: SellModels.LimitsInfo.ActionResponse) {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
         let profile = UserManager.shared.profile

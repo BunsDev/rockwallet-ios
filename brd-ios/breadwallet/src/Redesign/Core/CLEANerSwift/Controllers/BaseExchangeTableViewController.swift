@@ -21,8 +21,16 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        ExchangeCurrencyHelper.shared.isInExchangeFlow = true
+        
         guard didDisplayData else { return }
         didTriggerExchangeRate?()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        ExchangeCurrencyHelper.shared.isInExchangeFlow = false
     }
     
     override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {

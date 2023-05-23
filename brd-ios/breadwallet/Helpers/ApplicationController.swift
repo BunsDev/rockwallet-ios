@@ -134,10 +134,8 @@ class ApplicationController: Subscriber {
         appRatingManager.start()
         setupSubscribers()
         
-        ExchangeCurrencyHelper.revertIfNeeded(coordinator: coordinator, completion: { [weak self] in
-            self?.initializeAssets(completionHandler: { [weak self] in
-                self?.decideFlow()
-            })
+        initializeAssets(completionHandler: { [weak self] in
+            self?.decideFlow()
         })
     }
     
@@ -284,6 +282,8 @@ class ApplicationController: Subscriber {
     }
     
     private func setupDefaults() {
+        ExchangeCurrencyHelper.shared.isInExchangeFlow = false
+        
         if UserDefaults.standard.object(forKey: shouldRequireLoginTimeoutKey) == nil {
             // Default 3 min timeout.
             UserDefaults.standard.set(Constant.secondsInMinute*3.0, forKey: shouldRequireLoginTimeoutKey)
@@ -446,8 +446,6 @@ class ApplicationController: Subscriber {
         homeScreen.didTapBuy = { [weak self] type in
             guard let self else { return }
             
-            self.homeScreenViewController?.isInExchangeFlow = true
-            
             self.coordinator?.showBuy(type: type,
                                       coreSystem: self.coreSystem,
                                       keyStore: self.keyStore)
@@ -458,16 +456,12 @@ class ApplicationController: Subscriber {
                 return
             }
             
-            self.homeScreenViewController?.isInExchangeFlow = true
-            
             self.coordinator?.showSell(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         
         homeScreen.didTapTrade = { [weak self] in
             guard let self else { return }
-            
-            self.homeScreenViewController?.isInExchangeFlow = true
             
             self.coordinator?.showSwap(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)

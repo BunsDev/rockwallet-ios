@@ -87,8 +87,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
-    var isInExchangeFlow = false
-    
     private lazy var totalAssetsNumberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.isLenient = true
@@ -158,9 +156,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         super.viewWillAppear(animated)
         
         pullToRefreshControl.endRefreshing()
-        
-        isInExchangeFlow = false
-        ExchangeCurrencyHelper.revertIfNeeded()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Home())
     }
@@ -428,7 +423,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func updateTotalAssets() {
-        guard isInExchangeFlow == false else { return }
+        guard !ExchangeCurrencyHelper.shared.isInExchangeFlow else { return }
         
         let fiatTotal: Decimal = Store.state.wallets.values.map {
             guard let balance = $0.balance,
@@ -447,7 +442,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func updateAmountsForWidgets() {
-        guard isInExchangeFlow == false else { return }
+        guard !ExchangeCurrencyHelper.shared.isInExchangeFlow else { return }
         
         let info: [CurrencyId: Double] = Store.state.wallets
             .map { ($0, $1) }

@@ -11,40 +11,32 @@
 import Foundation
 
 struct ExchangeCurrencyHelper {
-    static func setUSDifNeeded(completion: (() -> Void)) {
-        guard Store.state.defaultCurrencyCode != Constant.usdCurrencyCode else {
-            completion()
-            
-            return
+    static var shared = ExchangeCurrencyHelper()
+    
+    var isInExchangeFlow = false {
+        willSet(value) {
+            if value {
+                setUSDifNeeded()
+            } else {
+                revertIfNeeded()
+            }
         }
+    }
+    
+    private func setUSDifNeeded() {
+        guard Store.state.defaultCurrencyCode != Constant.usdCurrencyCode else { return }
         
         UserDefaults.temporaryDefaultCurrencyCode = Store.state.defaultCurrencyCode
         
         Store.perform(action: DefaultCurrency.SetDefault(Constant.usdCurrencyCode))
-        
-        completion()
     }
     
-    static func revertIfNeeded(coordinator: CoordinatableRoutes? = nil, completion: (() -> Void)? = nil) {
-        if let coordinator = coordinator {
-            guard coordinator.isKind(of: ExchangeCoordinator.self) else {
-                completion?()
-                
-                return
-            }
-        }
-        
-        guard UserDefaults.temporaryDefaultCurrencyCode.isEmpty == false &&
-                Store.state.defaultCurrencyCode != UserDefaults.temporaryDefaultCurrencyCode else {
-            completion?()
-            
-            return
-        }
+    private func revertIfNeeded() {
+        guard !UserDefaults.temporaryDefaultCurrencyCode.isEmpty &&
+                Store.state.defaultCurrencyCode != UserDefaults.temporaryDefaultCurrencyCode else { return }
         
         Store.perform(action: DefaultCurrency.SetDefault(UserDefaults.temporaryDefaultCurrencyCode))
         
         UserDefaults.temporaryDefaultCurrencyCode = ""
-        
-        completion?()
     }
 }
