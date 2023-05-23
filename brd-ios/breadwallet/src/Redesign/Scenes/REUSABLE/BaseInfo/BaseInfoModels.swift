@@ -330,7 +330,7 @@ enum BaseInfoModels {
             case .buyAch:
                 return L10n.Buy.buyWithCardButton
                 
-           default:
+            default:
                 return L10n.Button.back
             }
         }
