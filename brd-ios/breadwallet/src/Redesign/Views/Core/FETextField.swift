@@ -67,9 +67,19 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        textFieldStack.gestureRecognizers?.removeAll()
-        trailingView.gestureRecognizers?.removeAll()
+        isUserInteractionEnabled = true
         value = nil
+    }
+    
+    override var isUserInteractionEnabled: Bool {
+        get {
+            return textField.isUserInteractionEnabled
+        }
+        
+        set {
+            content.isUserInteractionEnabled = newValue
+            textField.isUserInteractionEnabled = newValue
+        }
     }
     
     var value: String? {
@@ -149,22 +159,22 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         mainStack.addArrangedSubview(hintLabel)
         
         textFieldContent.addSubview(textFieldStack)
-        
-        textFieldStack.addArrangedSubview(titleStack)
-        textFieldStack.addArrangedSubview(textField)
-        
-        titleStack.addArrangedSubview(leadingView)
         textFieldContent.addSubview(trailingView)
-        titleStack.addArrangedSubview(titleLabel)
-        
-        titleLabel.snp.makeConstraints { make in
-            make.width.equalToSuperview().priority(.low)
-        }
         
         textFieldStack.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(ViewSizes.Common.defaultCommon.rawValue)
             make.leading.equalTo(Margins.large.rawValue)
             make.trailing.equalTo(trailingView.snp.leading).offset(-Margins.minimum.rawValue)
+        }
+        
+        textFieldStack.addArrangedSubview(titleStack)
+        textFieldStack.addArrangedSubview(textField)
+        
+        titleStack.addArrangedSubview(leadingView)
+        titleStack.addArrangedSubview(titleLabel)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().priority(.low)
         }
         
         trailingView.snp.makeConstraints { make in
@@ -177,6 +187,12 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         textField.delegate = delegate ?? self
+        
+        let tapped = UITapGestureRecognizer(target: self, action: #selector(startEditing))
+        addGestureRecognizer(tapped)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(trailingViewTapped))
+        trailingView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func configure(with config: TextFieldConfiguration?) {
@@ -241,15 +257,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         mainStack.spacing = titleStack.isHidden ? 0 : Margins.small.rawValue
         textFieldStack.spacing = titleStack.isHidden ? 0 : -Margins.medium.rawValue
         
-        if viewModel.isUserInteractionEnabled {
-            let tapped = UITapGestureRecognizer(target: self, action: #selector(startEditing))
-            textFieldStack.addGestureRecognizer(tapped)
-        }
-        
-        textFieldStack.isUserInteractionEnabled = viewModel.isUserInteractionEnabled
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(trailingViewTapped))
-        trailingView.addGestureRecognizer(tapGestureRecognizer)
+        isUserInteractionEnabled = viewModel.isUserInteractionEnabled
         
         animateTo(state: viewModel.displayState ?? .normal, withAnimation: viewModel.displayStateAnimated == true)
     }
