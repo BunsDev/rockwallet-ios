@@ -91,6 +91,7 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<PaddedImageView>.self)
         tableView.register(WrapperTableViewCell<OrderView>.self)
         tableView.register(WrapperTableViewCell<UIView>.self)
+        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
     }
 
     override func prepareData() {

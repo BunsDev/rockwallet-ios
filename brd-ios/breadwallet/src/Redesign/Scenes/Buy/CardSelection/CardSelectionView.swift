@@ -104,9 +104,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         }
         
         containerStack.addArrangedSubview(arrowImageView)
-        arrowImageView.snp.makeConstraints { make in
-            make.width.equalTo(ViewSizes.small.rawValue)
-        }
         
         cardDetailsView.moreButtonCallback = { [weak self] in
             self?.moreButtonTapped()
