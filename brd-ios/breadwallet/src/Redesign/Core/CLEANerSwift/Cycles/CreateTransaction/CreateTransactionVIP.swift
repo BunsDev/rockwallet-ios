@@ -43,9 +43,9 @@ extension Interactor where Self: CreateTransactionViewActions,
         
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
         let transaction = sender.createTransaction(address: destination,
-                                                               amount: amount,
-                                                               feeBasis: fromFeeBasis,
-                                                               exchangeId: exchangeId)
+                                                   amount: amount,
+                                                   feeBasis: fromFeeBasis,
+                                                   exchangeId: exchangeId)
         
         var error: FEError?
         switch transaction {
