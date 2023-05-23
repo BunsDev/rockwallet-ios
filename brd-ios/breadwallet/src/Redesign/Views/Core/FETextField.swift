@@ -244,10 +244,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         if viewModel.isUserInteractionEnabled {
             let tapped = UITapGestureRecognizer(target: self, action: #selector(startEditing))
             textFieldStack.addGestureRecognizer(tapped)
-            textFieldStack.isUserInteractionEnabled = true
-        } else {
-            textFieldStack.isUserInteractionEnabled = false
         }
+        
+        textFieldStack.isUserInteractionEnabled = viewModel.isUserInteractionEnabled
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(trailingViewTapped))
         trailingView.addGestureRecognizer(tapGestureRecognizer)
