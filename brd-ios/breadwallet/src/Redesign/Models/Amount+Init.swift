@@ -24,10 +24,10 @@ extension Amount {
         guard let exchangeRate = exchangeRate, decimals >= 0 else {
             let exchangeRate = exchangeRate?.doubleValue ?? 1
             
-            let fiatRate = Rate(code: currency.code,
-                                name: currency.name,
+            let fiatRate = Rate(code: Constant.usdCurrencyCode,
+                                name: Constant.usdCurrencyCode,
                                 rate: exchangeRate <= 0 ? 1 : exchangeRate,
-                                reciprocalCode: "")
+                                reciprocalCode: currency.code)
             if isFiat, let fallbackAmount = Amount(fiatString: "0", currency: currency, rate: fiatRate, negative: isNegative) {
                 self = Amount(fiatString: amountString, currency: currency, rate: fiatRate, negative: isNegative) ?? fallbackAmount
             } else {
@@ -38,10 +38,10 @@ extension Amount {
         }
         
         let value: Amount?
-        let rate = Rate(code: currency.code,
-                        name: currency.name,
+        let rate = Rate(code: Constant.usdCurrencyCode,
+                        name: Constant.usdCurrencyCode,
                         rate: exchangeRate.doubleValue,
-                        reciprocalCode: "")
+                        reciprocalCode: currency.code)
         
         if isFiat {
             value = Amount(fiatString: amountString, currency: currency, rate: rate, negative: isNegative)
@@ -51,7 +51,11 @@ extension Amount {
         
         guard let value = value,
                   value.tokenValue != 0 else {
-            self = .init(decimalAmount: amount, isFiat: isFiat, currency: currency, exchangeRate: exchangeRate, decimals: decimals - 1)
+            self = .init(decimalAmount: amount,
+                         isFiat: isFiat,
+                         currency: currency,
+                         exchangeRate: exchangeRate,
+                         decimals: decimals - 1)
             
             return
         }
