@@ -3174,6 +3174,10 @@ internal enum L10n {
       }
     }
     internal enum Error {
+      /// Invalid code. You have %s more attempt, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
+      internal static func attempt(_ p1: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "TwoStep.Error.Attempt", p1, fallback: "Invalid code. You have %s more attempt, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.")
+      }
       /// Invalid code. You have %s more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
       internal static func attempts(_ p1: UnsafePointer<CChar>) -> String {
         return L10n.tr("Localizable", "TwoStep.Error.Attempts", p1, fallback: "Invalid code. You have %s more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.")
