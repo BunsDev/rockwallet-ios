@@ -48,6 +48,7 @@ extension Interactor where Self: CreateTransactionViewActions,
                                                    exchangeId: exchangeId)
         
         var error: FEError?
+        
         switch transaction {
         case .ok:
             sender.sendTransaction(allowBiometrics: false, exchangeId: exchangeId) { data in
@@ -65,8 +66,6 @@ extension Interactor where Self: CreateTransactionViewActions,
                 case .success:
                     ExchangeManager.shared.reload()
                     
-                    completion?(nil)
-                    
                 case .creationError(let message):
                     error = GeneralError(errorMessage: message)
                     
@@ -79,6 +78,8 @@ extension Interactor where Self: CreateTransactionViewActions,
                 
                 completion?(error)
             }
+            
+            return
             
         case .failed:
             error = GeneralError(errorMessage: L10n.ErrorMessages.unknownError)
