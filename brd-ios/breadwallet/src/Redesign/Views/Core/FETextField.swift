@@ -52,6 +52,7 @@ struct TextFieldModel: ViewModel {
     var displayState: DisplayState?
     var displayStateAnimated: Bool?
     var isUserInteractionEnabled: Bool = true
+    var showPasswordToggle: Bool = false
 }
 
 class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDelegate, StateDisplayable {
@@ -205,6 +206,12 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textField.keyboardType = config.keyboardType
         textField.isSecureTextEntry = config.isSecureTextEntry
         
+        if viewModel?.showPasswordToggle == true {
+            trailingView.tintColor = LightColors.Text.three
+            let eye = config.isSecureTextEntry ? Asset.eyeShow.image : Asset.eyeHide.image
+            trailingView.setup(with: .image(eye))
+        }
+        
         if let textConfig = config.textConfiguration {
             textField.font = textConfig.font
             textField.textColor = textConfig.textColor
@@ -246,11 +253,10 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         leadingView.setup(with: viewModel.leading)
         leadingView.isHidden = viewModel.leading == nil
         
-        trailingView.setup(with: viewModel.trailing)
-        trailingView.isHidden = viewModel.trailing == nil
-        trailingView.snp.updateConstraints { make in
-            make.width.equalTo(viewModel.trailing == nil ? 0 : ViewSizes.extraSmall.rawValue)
+        if let trailing = viewModel.trailing {
+            trailingView.setup(with: trailing)
         }
+        trailingView.isHidden = viewModel.trailing == nil && !viewModel.showPasswordToggle
         
         titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
@@ -288,6 +294,12 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
     }
     
     @objc private func trailingViewTapped() {
+        guard viewModel?.showPasswordToggle == false else {
+            config?.isSecureTextEntry.toggle()
+            configure(with: config)
+            return
+        }
+        
         didTapTrailingView?()
     }
     
