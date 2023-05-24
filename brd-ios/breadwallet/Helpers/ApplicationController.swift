@@ -472,7 +472,7 @@ class ApplicationController: Subscriber {
         homeScreen.didTapProfileFromPrompt = { [unowned self] in
             switch UserManager.shared.profileResult {
             case .success:
-                coordinator?.showKYCLevelOne()
+                coordinator?.showKYCLevelOne(isModally: true)
                 
             default:
                 break
