@@ -77,6 +77,8 @@ extension Interactor where Self: CreateTransactionViewActions,
                 }
                 
                 completion?(error)
+                
+                return
             }
             
             return
