@@ -29,7 +29,7 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
-            .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password)],
+            .password: [TextFieldModel(title: L10n.Account.enterPassword, value: item.password, showPasswordToggle: true)],
             .forgotPassword: [MultipleButtonsViewModel(buttons: [ButtonViewModel(title: L10n.Account.forgotPassword,
                                                                                  isUnderlined: true)])]
         ]
@@ -53,9 +53,8 @@ final class SignInPresenter: NSObject, Presenter, SignInActionResponses {
                       isPasswordValid: actionResponse.isPasswordValid,
                       isPasswordEmpty: actionResponse.isPasswordEmpty,
                       passwordModel: .init(title: L10n.Account.enterPassword,
-                                           trailing: !actionResponse.isPasswordEmpty
-                                           && !actionResponse.isPasswordValid ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
-                                           displayState: actionResponse.passwordState),
+                                           displayState: actionResponse.passwordState,
+                                           showPasswordToggle: true),
                       isValid: isValid))
     }
     
