@@ -119,7 +119,7 @@ class VerifyPhoneNumberViewController: BaseTableViewController<AccountCoordinato
     }
     
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay) {
-        coordinator?.showKYCLevelOne(isModally: false)
+        coordinator?.showKYCLevelOne(isModal: false)
     }
     
     // MARK: - Additional Helpers

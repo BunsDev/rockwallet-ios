@@ -209,8 +209,8 @@ class BaseCoordinator: NSObject, Coordinatable {
         showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
     }
     
-    func showKYCLevelOne(isModally: Bool) {
-        if isModally {
+    func showKYCLevelOne(isModal: Bool) {
+        if isModal {
             openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
         } else {
             open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
@@ -490,7 +490,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 vc.coordinator?.popViewController()
                 
             default:
-                self?.showKYCLevelOne(isModally: true)
+                self?.showKYCLevelOne(isModal: true)
             }
         }
         
