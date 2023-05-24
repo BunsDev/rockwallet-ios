@@ -37,7 +37,11 @@ enum NetworkingError: FEError, Equatable {
             return L10n.ErrorMessages.checkInternet
             
         case .twoStepInvalidCode(let attemptCount):
-            return L10n.TwoStep.Error.attempts(String(describing: attemptCount ?? 0))
+            let attemptCount = attemptCount ?? 0
+            let isMoreThanOne = attemptCount > 1
+            let plural = L10n.TwoStep.Error.attempts(String(describing: attemptCount))
+            let singular = L10n.TwoStep.Error.attempt(String(describing: attemptCount))
+            return isMoreThanOne ? plural : singular
             
         case .inappropriatePaymail:
             return L10n.PaymailAddress.inappropriateWordsMessage

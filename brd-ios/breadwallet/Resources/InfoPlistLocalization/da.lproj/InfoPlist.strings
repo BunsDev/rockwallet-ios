@@ -3280,6 +3280,8 @@
 
 "TwoStep.Email.Confirmation.Title" = "We’ve sent you a code";
 
+"TwoStep.Error.Attempt" = "Invalid code. You have %s more attempt, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.";
+
 "TwoStep.Error.Attempts" = "Invalid code. You have %s more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.";
 
 "TwoStep.getBackupCodesTitle" = "";
