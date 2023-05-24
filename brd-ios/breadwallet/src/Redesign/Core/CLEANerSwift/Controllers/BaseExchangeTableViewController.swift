@@ -21,8 +21,16 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        ExchangeManager.shared.reload()
+        
         guard didDisplayData else { return }
         didTriggerExchangeRate?()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        ExchangeManager.shared.reload()
     }
     
     override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
