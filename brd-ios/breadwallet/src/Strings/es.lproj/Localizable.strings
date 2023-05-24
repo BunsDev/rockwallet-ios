@@ -1110,6 +1110,8 @@
 
 "ComingSoon.body" = "La compra y el cambio no están disponibles actualmente en tu estado. Te avisaremos cuando puedas utilizar estas funciones.\n\nMientras tanto, puedes enviar y recibir activos digitales de forma segura en tu monedero.";
 
+"ComingSoon.BodyWithoutSell" = "Buy and Swap are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.";
+
 "ComingSoon.buttons.backHome" = "VOLVER AL INICIO";
 
 "ComingSoon.buttons.contactSupport" = "Contacta con el servicio de asistencia";

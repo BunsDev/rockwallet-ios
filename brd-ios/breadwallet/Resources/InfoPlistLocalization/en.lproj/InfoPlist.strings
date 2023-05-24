@@ -1110,6 +1110,8 @@
 
 "ComingSoon.body" = "Buy, Swap and Sell are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.";
 
+"ComingSoon.BodyWithoutSell" = "Buy and Swap are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.";
+
 "ComingSoon.buttons.backHome" = "BACK TO HOME";
 
 "ComingSoon.buttons.contactSupport" = "Contact support";
