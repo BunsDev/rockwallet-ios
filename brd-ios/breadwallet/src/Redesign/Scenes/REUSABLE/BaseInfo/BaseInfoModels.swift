@@ -315,7 +315,9 @@ enum BaseInfoModels {
         var description: String {
             switch self {
             case .swap, .buy, .restrictedUSState:
-                return  L10n.ComingSoon.body
+                // TODO: Uncomment this when sell is available and remove L10n.ComingSoon.bodyWithoutSell string
+//                return  L10n.ComingSoon.body
+                return  L10n.ComingSoon.bodyWithoutSell
                 
             case .buyAch:
                 return  L10n.Buy.Ach.notAvailableBody

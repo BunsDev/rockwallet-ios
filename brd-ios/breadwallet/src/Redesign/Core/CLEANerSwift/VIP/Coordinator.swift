@@ -209,8 +209,12 @@ class BaseCoordinator: NSObject, Coordinatable {
         showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
     }
     
-    func showKYCLevelOne() {
-        openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
+    func showKYCLevelOne(isModally: Bool) {
+        if isModally {
+            openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
+        } else {
+            open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
+        }
     }
     
     /// Determines whether the viewcontroller or navigation stack are being dismissed
@@ -480,7 +484,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 vc.coordinator?.popViewController()
                 
             default:
-                self?.showKYCLevelOne()
+                self?.showKYCLevelOne(isModally: true)
             }
         }
         
