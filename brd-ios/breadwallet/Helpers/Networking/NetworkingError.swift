@@ -15,19 +15,11 @@ struct GeneralError: FEError {
 }
 
 enum NetworkingError: FEError, Equatable {
-    var value: String? {
-        return String(describing: self)
-    }
-    
-    case general
     case noConnection
-    case accessDenied
-    case parameterMissing
-    case sessionExpired
-    case sessionNotVerified
-    case dataUnavailable
-    case unprocessableEntity
-    case serverAtCapacity
+    case general(String)
+    case accessDenied(String)
+    case parameterMissing(String)
+    case sessionExpired(String)
     case exchangesUnavailable
     case biometricAuthenticationRequired
     case biometricAuthenticationFailed
@@ -41,20 +33,20 @@ enum NetworkingError: FEError, Equatable {
     
     var errorMessage: String {
         switch self {
-        case .general:
-            return L10n.ErrorMessages.networkIssues
-            
         case .noConnection:
             return L10n.ErrorMessages.checkInternet
-            
-        case .serverAtCapacity, .accessDenied:
-            return L10n.ErrorMessages.somethingWentWrong
             
         case .twoStepInvalidCode(let attemptCount):
             return L10n.TwoStep.Error.attempts(String(describing: attemptCount ?? 0))
             
         case .inappropriatePaymail:
             return L10n.PaymailAddress.inappropriateWordsMessage
+            
+        case .general(let message),
+                .accessDenied(let message),
+                .parameterMissing(let message),
+                .sessionExpired(let message):
+            return message
             
         default:
             return L10n.ErrorMessages.unknownError
@@ -105,19 +97,19 @@ enum NetworkingError: FEError, Equatable {
         
         switch error?.statusCode {
         case 101:
-            self = .accessDenied
+            self = .accessDenied(serverMessage)
             
         case 103:
-            self = .parameterMissing
+            self = .parameterMissing(serverMessage)
             
         case 105:
-            self = .sessionExpired
+            self = .sessionExpired(serverMessage)
         
         case 400:
             if serverMessage == ServerResponse.ErrorType.inappropriatePaymail.rawValue {
                 self = .inappropriatePaymail
             } else {
-                self = .general
+                self = .general(serverMessage)
             }
             
         case 401:
@@ -134,7 +126,7 @@ enum NetworkingError: FEError, Equatable {
                     self = .twoStepEmailRequired
                     
                 default:
-                    self = .accessDenied
+                    self = .accessDenied(serverMessage)
                 }
             }
             
@@ -144,14 +136,11 @@ enum NetworkingError: FEError, Equatable {
             } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCodeBlockedAccount.rawValue {
                 self = .twoStepInvalidCodeBlockedAccount
             } else {
-                self = .sessionNotVerified
+                self = .general(serverMessage)
             }
             
-        case 404:
-            self = .dataUnavailable
-            
         case 422:
-            self = .unprocessableEntity
+            self = .general(serverMessage)
             
         case 503:
             switch error?.errorType {
@@ -159,7 +148,7 @@ enum NetworkingError: FEError, Equatable {
                 self = .exchangesUnavailable
             
             default:
-                self = .serverAtCapacity
+                self = .general(serverMessage)
             }
             
         case 1001:

@@ -320,11 +320,17 @@ class BaseCoordinator: NSObject, Coordinatable {
         case .failure(let error):
             let error = error as? NetworkingError
             
-            if error == .sessionExpired || error == .parameterMissing || error?.errorType == .twoStepRequired {
+            switch error {
+            case .sessionExpired, .parameterMissing:
                 coordinator = AccountCoordinator(navigationController: nvc)
-            } else {
-                completion?(false)
-                return
+                
+            default:
+                if error?.errorType == .twoStepRequired {
+                    coordinator = AccountCoordinator(navigationController: nvc)
+                } else {
+                    completion?(false)
+                    return
+                }
             }
             
         default:
