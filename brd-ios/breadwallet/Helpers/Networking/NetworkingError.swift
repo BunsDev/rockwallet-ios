@@ -97,7 +97,7 @@ enum NetworkingError: FEError, Equatable {
     }
     
     init?(error: ServerResponse.ServerError?) {
-        let serverMessage = error?.serverMessage ?? ""
+        let serverMessage = error?.serverMessage ?? L10n.ErrorMessages.somethingWentWrong
         
         switch error?.statusCode {
         case 101:
