@@ -154,24 +154,24 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     // TODO: showDeleteProfileInfo and showTwoStepAuthentication should be refactored when everything used coordinators.
     
-    func showDeleteProfileInfo(keyStore: KeyStore) {
+    func showDeleteProfileInfo(from viewController: UIViewController?, keyStore: KeyStore) {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.showDeleteProfile(with: keyStore)
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
-        UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
+        viewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showTwoStepAuthentication(keyStore: KeyStore?) {
+    func showTwoStepAuthentication(from viewController: UIViewController?, keyStore: KeyStore?) {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.showTwoStepAuthentication(with: keyStore)
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
-        UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
+        viewController?.present(coordinator.navigationController, animated: true)
     }
     
     func showPaymailAddress(isPaymailFromAssets: Bool) {
