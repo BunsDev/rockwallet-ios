@@ -158,7 +158,7 @@ enum NetworkingError: FEError, Equatable {
             self = .biometricAuthenticationFailed
             
         default:
-            self = .general(serverMessage)
+            return nil
         }
     }
 }
