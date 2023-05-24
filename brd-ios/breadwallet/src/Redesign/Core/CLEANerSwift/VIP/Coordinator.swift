@@ -154,24 +154,24 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     // TODO: showDeleteProfileInfo and showTwoStepAuthentication should be refactored when everything used coordinators.
     
-    func showDeleteProfileInfo(keyStore: KeyStore) {
+    func showDeleteProfileInfo(from viewController: UIViewController?, keyStore: KeyStore) {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.showDeleteProfile(with: keyStore)
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
-        UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
+        viewController?.present(coordinator.navigationController, animated: true)
     }
     
-    func showTwoStepAuthentication(keyStore: KeyStore?) {
+    func showTwoStepAuthentication(from viewController: UIViewController?, keyStore: KeyStore?) {
         let nvc = RootNavigationController()
         let coordinator = AccountCoordinator(navigationController: nvc)
         coordinator.showTwoStepAuthentication(with: keyStore)
         coordinator.parentCoordinator = self
         
         childCoordinators.append(coordinator)
-        UIApplication.shared.activeWindow?.rootViewController?.presentedViewController?.present(coordinator.navigationController, animated: true)
+        viewController?.present(coordinator.navigationController, animated: true)
     }
     
     func showPaymailAddress(isPaymailFromAssets: Bool) {
@@ -209,8 +209,8 @@ class BaseCoordinator: NSObject, Coordinatable {
         showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
     }
     
-    func showKYCLevelOne(isModally: Bool) {
-        if isModally {
+    func showKYCLevelOne(isModal: Bool) {
+        if isModal {
             openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
         } else {
             open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
@@ -320,11 +320,17 @@ class BaseCoordinator: NSObject, Coordinatable {
         case .failure(let error):
             let error = error as? NetworkingError
             
-            if error == .sessionExpired || error == .parameterMissing || error?.errorType == .twoStepRequired {
+            switch error {
+            case .sessionExpired, .parameterMissing:
                 coordinator = AccountCoordinator(navigationController: nvc)
-            } else {
-                completion?(false)
-                return
+                
+            default:
+                if error?.errorType == .twoStepRequired {
+                    coordinator = AccountCoordinator(navigationController: nvc)
+                } else {
+                    completion?(false)
+                    return
+                }
             }
             
         default:
@@ -484,7 +490,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                 vc.coordinator?.popViewController()
                 
             default:
-                self?.showKYCLevelOne(isModally: true)
+                self?.showKYCLevelOne(isModal: true)
             }
         }
         

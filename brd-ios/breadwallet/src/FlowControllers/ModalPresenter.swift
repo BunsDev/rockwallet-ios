@@ -1078,7 +1078,7 @@ class ModalPresenter: Subscriber {
         topViewController?.present(confirm, animated: true)
     }
     
-    private var topViewController: UIViewController? {
+    var topViewController: UIViewController? {
         var viewController = window.rootViewController
         if let nc = viewController as? UINavigationController {
             viewController = nc.topViewController
