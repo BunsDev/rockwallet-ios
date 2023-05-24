@@ -34,7 +34,7 @@ extension Presenter {
     private func handleGeneralErrors(error: Error?) {
         let responseDisplay: MessageModels.ResponseDisplays
         
-        if let error = error as? NetworkingError, error == .sessionExpired {
+        if let error = error as? NetworkingError, case .sessionExpired = error {
             responseDisplay = .init(error: error)
         } else if let error = error as? ExchangeErrors {
             let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
@@ -93,7 +93,7 @@ extension Presenter {
     }
     
     func isAccessDenied(error: Error?) -> Bool {
-        guard let error = error as? NetworkingError, error == .accessDenied else { return false }
+        guard let error = error as? NetworkingError, case .accessDenied = error else { return false }
         
         let model = InfoViewModel(description: .text(error.errorMessage), dismissType: .auto)
         let config = Presets.InfoView.error
