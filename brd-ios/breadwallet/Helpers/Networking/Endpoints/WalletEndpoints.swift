@@ -16,6 +16,7 @@ enum WalletEndpoints: String, URLType {
     case profile = "v3/profile"
     case profileSecondFactorCode = "v3/profile?second_factor_code=%@"
     case profileSecondFactorBackup = "v3/profile?second_factor_backup=%@"
+    case profileMain = "profile"
     
     case register
     case login
