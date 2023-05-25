@@ -246,8 +246,13 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 guard let redirectUrlString = exchangeData?.redirectUrl, let redirectUrl = URL(string: redirectUrlString) else {
                     if self?.dataStore?.type == .sell {
                         self?.createTransaction(viewAction: self?.dataStore?.createTransactionModel,
-                                                completion: { [weak self] _ in
-                            self?.getData(viewAction: .init())
+                                                completion: { [weak self] error in
+                            guard let error else {
+                                self?.getData(viewAction: .init())
+                                return
+                            }
+                            
+                            self?.presenter?.presentError(actionResponse: .init(error: error))
                         })
                     } else {
                         self?.getData(viewAction: .init())
