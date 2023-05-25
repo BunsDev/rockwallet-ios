@@ -154,24 +154,24 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     // TODO: showDeleteProfileInfo and showTwoStepAuthentication should be refactored when everything used coordinators.
     
-    func showDeleteProfileInfo(from viewController: UIViewController?, keyStore: KeyStore) {
-        let nvc = RootNavigationController()
-        let coordinator = AccountCoordinator(navigationController: nvc)
-        coordinator.showDeleteProfile(with: keyStore)
-        coordinator.parentCoordinator = self
-        
-        childCoordinators.append(coordinator)
-        viewController?.present(coordinator.navigationController, animated: true)
+    func showDeleteProfileInfo(from viewController: UIViewController?,
+                               coordinator: BaseCoordinator?,
+                               keyStore: KeyStore) {
+        coordinator?.open(coordinator: AccountCoordinator.self,
+                          scene: Scenes.DeleteProfileInfo,
+                          on: viewController as? UINavigationController) { vc in
+            vc?.dataStore?.keyStore = keyStore
+        }
     }
     
-    func showTwoStepAuthentication(from viewController: UIViewController?, keyStore: KeyStore?) {
-        let nvc = RootNavigationController()
-        let coordinator = AccountCoordinator(navigationController: nvc)
-        coordinator.showTwoStepAuthentication(with: keyStore)
-        coordinator.parentCoordinator = self
-        
-        childCoordinators.append(coordinator)
-        viewController?.present(coordinator.navigationController, animated: true)
+    func showTwoStepAuthentication(from viewController: UIViewController?,
+                                   coordinator: BaseCoordinator?,
+                                   keyStore: KeyStore?) {
+        coordinator?.open(coordinator: AccountCoordinator.self,
+                          scene: Scenes.TwoStepAuthentication,
+                          on: viewController as? UINavigationController) { vc in
+            vc?.dataStore?.keyStore = keyStore
+        }
     }
     
     func showPaymailAddress(isPaymailFromAssets: Bool) {
@@ -262,16 +262,19 @@ class BaseCoordinator: NSObject, Coordinatable {
     func open<C: BaseCoordinator,
               VC: BaseControllable>(coordinator: C.Type,
                                     scene: VC.Type,
+                                    on presentedNavigationController: UINavigationController? = nil,
                                     configure: ((VC?) -> Void)? = nil) {
+        let presentedController = presentedNavigationController ?? navigationController
+        
         let controller = VC()
-        let coordinator = C(navigationController: navigationController)
+        let coordinator = C(navigationController: presentedController)
         controller.coordinator = coordinator as? VC.CoordinatorType
         configure?(controller)
         
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         
-        navigationController.show(controller, sender: nil)
+        presentedController.show(controller, sender: nil)
     }
     
     /// Only call from coordinator subclasses

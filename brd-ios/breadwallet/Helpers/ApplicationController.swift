@@ -485,6 +485,7 @@ class ApplicationController: Subscriber {
         
         homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
             self.coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+                                                        coordinator: coordinator,
                                                         keyStore: keyStore)
         }
         
@@ -520,12 +521,14 @@ class ApplicationController: Subscriber {
         
         didTapDeleteAccount = { [unowned self] in
             coordinator?.showDeleteProfileInfo(from: modalPresenter?.topViewController ?? homeScreenViewController?.navigationController,
+                                               coordinator: coordinator,
                                                keyStore: keyStore)
         }
         
         didTapTwoStepAuth = { [unowned self] in
-            coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
-                                                   keyStore: keyStore)
+            self.coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+                                                        coordinator: coordinator,
+                                                        keyStore: keyStore)
         }
         
         didTapPaymail = { [unowned self] isPaymailFromAssets in
