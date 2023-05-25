@@ -84,18 +84,6 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.SignIn)
     }
     
-    func showDeleteProfile(with keyStore: KeyStore?) {
-        open(scene: Scenes.DeleteProfileInfo) { vc in
-            vc.dataStore?.keyStore = keyStore
-        }
-    }
-    
-    func showTwoStepAuthentication(with keyStore: KeyStore?) {
-        open(scene: Scenes.TwoStepAuthentication) { vc in
-            vc.dataStore?.keyStore = keyStore
-        }
-    }
-    
     func showAccountBlocked() {
         open(scene: Scenes.AccountBlocked) { vc in
             vc.navigationItem.hidesBackButton = true
