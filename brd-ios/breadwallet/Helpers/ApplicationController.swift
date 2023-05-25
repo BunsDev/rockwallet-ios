@@ -480,13 +480,13 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
-            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
+            coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
         }
         
         homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
-            self.coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
-                                                        coordinator: coordinator,
-                                                        keyStore: keyStore)
+            coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+                                                   coordinator: coordinator,
+                                                   keyStore: keyStore)
         }
         
         homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
@@ -526,9 +526,9 @@ class ApplicationController: Subscriber {
         }
         
         didTapTwoStepAuth = { [unowned self] in
-            self.coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
-                                                        coordinator: coordinator,
-                                                        keyStore: keyStore)
+            coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+                                                   coordinator: coordinator,
+                                                   keyStore: keyStore)
         }
         
         didTapPaymail = { [unowned self] isPaymailFromAssets in
