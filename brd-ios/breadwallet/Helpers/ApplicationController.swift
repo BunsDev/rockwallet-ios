@@ -480,12 +480,13 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
-            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
+            coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
         }
         
         homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
-            self.coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
-                                                        keyStore: keyStore)
+            coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+                                                   coordinator: coordinator,
+                                                   keyStore: keyStore)
         }
         
         homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
@@ -520,11 +521,13 @@ class ApplicationController: Subscriber {
         
         didTapDeleteAccount = { [unowned self] in
             coordinator?.showDeleteProfileInfo(from: modalPresenter?.topViewController ?? homeScreenViewController?.navigationController,
+                                               coordinator: coordinator,
                                                keyStore: keyStore)
         }
         
         didTapTwoStepAuth = { [unowned self] in
             coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+                                                   coordinator: coordinator,
                                                    keyStore: keyStore)
         }
         

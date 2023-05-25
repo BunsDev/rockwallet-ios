@@ -12,7 +12,7 @@ import Foundation
 
 class DeleteProfileWorker: BaseApiWorker<PlainMapper> {
     override func getUrl() -> String {
-        return APIURLHandler.getUrl(WalletEndpoints.profile)
+        return APIURLHandler.getUrl(WalletEndpoints.profileMain)
     }
     
     override func getMethod() -> HTTPMethod {
