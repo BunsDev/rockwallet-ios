@@ -205,6 +205,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
             
             let buyFee = ((dataStore?.quote?.buyFee ?? 0) / 100) + 1
             let fromAmount = (dataStore?.from ?? 0) * buyFee
+            let toAmount = (dataStore?.from?.doubleValue ?? 0) / (dataStore?.to?.rate?.rate ?? 0)
             
             let instantAchFee = (dataStore?.quote?.instantAch?.feePercentage ?? 0) / 100
             let instantAchLimit = dataStore?.quote?.instantAch?.limitUsd ?? 0
@@ -225,7 +226,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
             }
             
             formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
-            formattedWithdrawalQuantity = cryptoFormatter.string(for: dataStore?.from ?? 0) ?? ""
+            formattedWithdrawalQuantity = cryptoFormatter.string(for: toAmount) ?? ""
         }
         
         let data = AchExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
@@ -245,7 +246,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 guard let redirectUrlString = exchangeData?.redirectUrl, let redirectUrl = URL(string: redirectUrlString) else {
                     if self?.dataStore?.type == .sell {
                         self?.createTransaction(viewAction: self?.dataStore?.createTransactionModel,
-                                                completion: { [weak self] error in
+                                                completion: { [weak self] _ in
                             self?.getData(viewAction: .init())
                         })
                     } else {
