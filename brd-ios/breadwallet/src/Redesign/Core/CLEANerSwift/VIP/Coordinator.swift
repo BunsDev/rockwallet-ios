@@ -264,10 +264,10 @@ class BaseCoordinator: NSObject, Coordinatable {
                                     scene: VC.Type,
                                     on presentedNavigationController: UINavigationController? = nil,
                                     configure: ((VC?) -> Void)? = nil) {
-        let presentedController = presentedNavigationController ?? navigationController
+        let navigationController = presentedNavigationController ?? navigationController
         
         let controller = VC()
-        let coordinator = C(navigationController: presentedController)
+        let coordinator = C(navigationController: navigationController)
         controller.coordinator = coordinator as? VC.CoordinatorType
         configure?(controller)
         
