@@ -207,9 +207,9 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         textField.isSecureTextEntry = config.isSecureTextEntry
         
         if viewModel?.showPasswordToggle == true {
-            trailingView.tintColor = LightColors.Text.three
-            let eye = config.isSecureTextEntry ? Asset.eyeShow.image : Asset.eyeHide.image
-            trailingView.setup(with: .image(eye))
+            let trailingModel: ImageViewModel = config.isSecureTextEntry ?
+                .image(Asset.eyeShow.image.tinted(with: LightColors.Text.three)) : .image(Asset.eyeHide.image.tinted(with: LightColors.Text.three))
+            trailingView.setup(with: trailingModel)
         }
         
         if let textConfig = config.textConfiguration {
@@ -255,9 +255,11 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         let shouldHideTrailingView = viewModel.trailing == nil && !viewModel.showPasswordToggle
         trailingView.isHidden = shouldHideTrailingView
+        
         trailingView.snp.updateConstraints { make in
             make.width.equalTo(shouldHideTrailingView ? 0 : ViewSizes.extraSmall.rawValue)
         }
+        
         if let trailing = viewModel.trailing {
             trailingView.setup(with: trailing)
         }
