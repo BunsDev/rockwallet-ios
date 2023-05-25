@@ -274,7 +274,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         
-        presentedController.show(controller, sender: nil)
+        navigationController.show(controller, sender: nil)
     }
     
     /// Only call from coordinator subclasses
