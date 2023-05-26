@@ -3038,7 +3038,7 @@
 
 "Transaction.PurchasedWithAch" = "Purchased with ACH";
 
-"Transaction.purchasedWithInstantBy" = "Purchased with Instant Buy";
+"Transaction.purchasedWithInstantBuy" = "Purchased with Instant Buy";
 
 /* Purchase failed label in transaction view */
 "Transaction.PurchaseFailed" = "Purchase failed";

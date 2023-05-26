@@ -5,7 +5,7 @@
 "About.blog" = "Blogg";
 
 /* About screen footer */
-"About.footer" = "Skapad av det lokala teamet för RockWallet. Version %@ Build %@";
+"About.footer" = "Skapad av det lokala teamet för RockWallet. Version %s Build %s";
 
 /* Privay Policy button label */
 "About.privacy" = "Sekretesspolicy";
@@ -105,7 +105,7 @@
 "Account.EnterPassword" = "Enter your password";
 
 /* $10000 per BTC */
-"Account.exchangeRate" = "%@ per %@";
+"Account.exchangeRate" = "%s per %s";
 
 "Account.explanationSSN" = "We are required to verify the identity of all our users to comply with regulations.\n\nThat is why we need to collect your Social Security Number (SSN). We take the security and privacy of your personal information seriously, and use it only for the purposes of identity verification and compliance. This process will have no impact on your credit score.";
 
@@ -216,7 +216,7 @@
 
 "Account.VeriffPrivacyPolicy" = "Veriff’s Privacy Policy";
 
-"Account.VeriffTerms" = "Your session audio and video may be recorded.\nRead more from %@";
+"Account.VeriffTerms" = "Your session audio and video may be recorded.\nRead more from %s";
 
 /* You need to be at least 18 years old to complete Level 1 verification label in verify account */
 "Account.Verification" = "You need to be at least 18 years old to complete Level 1 verification";
@@ -251,7 +251,7 @@
 /* Enter and verify your email address for your account label in registration flow */
 "Account.VerifyEmail" = "Enter and verify your new email address for your RockWallet account.";
 
-"Account.VerifyIdentity" = "We need to verify your identity before you can %@ assets.";
+"Account.VerifyIdentity" = "We need to verify your identity before you can %s assets.";
 
 "Account.VerifyIdentityByVeriff" = "RockWallet would like to confirm your identity, a process is powered by Veriff.";
 
@@ -357,7 +357,7 @@
 "AccountKYCLevelTwo.BiometricsVerified" = "Biometrics verified";
 
 /* Buy limits on KYC2 account */
-"AccountKYCLevelTwo.BuyLimits" = "Buy limits: $%@ USD/day, no lifetime limit";
+"AccountKYCLevelTwo.BuyLimits" = "Buy limits: $%s USD/day, no lifetime limit";
 
 /* Capture back page of the document text */
 "AccountKYCLevelTwo.CaptureBackPage" = "Make sure to capture the entire back page of the document.";
@@ -411,7 +411,7 @@
 "AccountKYCLevelTwo.LevelTwo" = "Level 2";
 
 /* Swap limits on KYC2 account */
-"AccountKYCLevelTwo.Limits" = "Swap limits: $%@ USD/day, no lifetime limit";
+"AccountKYCLevelTwo.Limits" = "Swap limits: $%s USD/day, no lifetime limit";
 
 /* Make sure before photo label in KYC2 */
 "AccountKYCLevelTwo.MakeSure" = "Make sure you are in a well-lit room";
@@ -609,10 +609,10 @@
 "BackupCodes.Title" = "Backup codes";
 
 /* Send BCH view body. */
-"BCH.body" = "Ange mottagarens BCH-adress nedan. Alla BCH i din plånbok vid nästa fork (%@) kommer skickas.";
+"BCH.body" = "Ange mottagarens BCH-adress nedan. Alla BCH i din plånbok vid nästa fork (%s) kommer skickas.";
 
 /* Confirm sending <$5.00> to <address>? */
-"BCH.confirmationMessage" = "Bekräfta skickar %@ till %@";
+"BCH.confirmationMessage" = "Bekräfta skickar %s till %s";
 
 /* Confirmation alert title */
 "BCH.confirmationTitle" = "Bekräftelse";
@@ -650,7 +650,7 @@
 "BitID.approve" = "Godkänn";
 
 /* <sitename> is requesting authentication using your bitcoin wallet */
-"BitID.authenticationRequest" = "%@ begär autentisering med hjälp av din bitcoin-plånbok";
+"BitID.authenticationRequest" = "%s begär autentisering med hjälp av din bitcoin-plånbok";
 
 /* Deny button label */
 "BitID.deny" = "Avslå";
@@ -796,7 +796,7 @@
 
 "Buy.Ach.Instant.ConfirmationDrawer.ConfirmAction" = "Confirm purchase";
 
-"Buy.Ach.Instant.ConfirmationDrawer.Description" = "$%@ assets will settle immediately.";
+"Buy.Ach.Instant.ConfirmationDrawer.Description" = "$%s assets will settle immediately.";
 
 "Buy.Ach.Instant.ConfirmationDrawer.Notice" = "Instant purchase";
 
@@ -810,7 +810,7 @@
 
 "Buy.Ach.Instant.OrderPreview.HybridNotice" = "With Instant Buy %@ will be settled immediately. Remaining %@ will settle in 3-5 days.";
 
-"Buy.Ach.Instant.OrderPreview.Notice" = "With Instant Buy, %@ will be settled immediately.";
+"Buy.Ach.Instant.OrderPreview.Notice" = "With Instant Buy, %s will be settled immediately.";
 
 "Buy.Ach.Instant.PopupContent" = "Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!";
 
@@ -824,15 +824,15 @@
 
 "Buy.Ach.NotAvailableTitle" = "Sorry! This feature is unavailable";
 
-"Buy.Ach.WalletDisabled" = "%@ needs to be enabled in your wallet first. Kindly enable it %@, or by selecting 'Manage assets' on the home screen.";
+"Buy.Ach.WalletDisabled" = "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.";
 
 "Buy.Ach.WalletDisabled.Link" = "here";
 
 "Buy.Ach.WalletDisabled.ManageAssets" = "Manage assets";
 
-"Buy.achFee" = "ACH fee (%@)";
+"Buy.achFee" = "ACH fee (%s)";
 
-"Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  More info\n\nIt currently takes 3-5 days to process a purchase with ACH.";
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More info\n\nIt currently takes 3-5 days to process a purchase with ACH.";
 
 "Buy.achPaymentDurationWarning" = "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.";
 
@@ -869,7 +869,7 @@
 "Buy.BuyLimit" = "Buy limits";
 
 /* Buy min and max limit text */
-"Buy.BuyLimits" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@";
+"Buy.BuyLimits" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  %s";
 
 "Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
 
@@ -982,7 +982,7 @@
 /* Are you sure you want to remove this card title dialog */
 "Buy.RemoveCard" = "Are you sure you want to remove card ending in";
 
-"Buy.RemoveCard.android" = "Are you sure you want to remove card ending in %@?";
+"Buy.RemoveCard.android" = "Are you sure you want to remove card ending in %s?";
 
 /* You will no longer be able to use it to buy assets description on removing card dialog */
 "Buy.RemoveCardOption" = "You will no longer be able to use it to buy assets.";
@@ -1009,7 +1009,7 @@
 /* By placing this order you agree to our terms message when ordering */
 "Buy.Terms" = "By placing this order you agree to our";
 
-"Buy.Terms.android" = "By placing this order you agree to our %@";
+"Buy.Terms.android" = "By placing this order you agree to our %s";
 
 "Buy.TransactionError" = "Transaction error";
 
@@ -1018,7 +1018,7 @@
 /* Try a different payment method button title in failure buy screen */
 "Buy.TryAnotherPayment" = "Try a different payment method";
 
-"Buy.txHashHeader" = "%@ Transaction ID";
+"Buy.txHashHeader" = "%s Transaction ID";
 
 "Buy.understandAndAgree" = "I understand and agree";
 
@@ -1084,7 +1084,7 @@
 
 "CloudBackup.mainWarningConfirmation" = "Är du säker på att du vill inaktivera iCloud Backup? Detta tar bort din säkerhetskopia från alla enheter.";
 
-"CloudBackup.pinAttempts" = "Återstående försök innan radering av säkerhetskopiering: %@";
+"CloudBackup.pinAttempts" = "Återstående försök innan radering av säkerhetskopiering: %s";
 
 "CloudBackup.recoverButton" = "Återställ från återställningsnyckel";
 
@@ -1106,7 +1106,7 @@
 
 "CloudBackup.understandText" = "Jag förstår att den här funktionen inte fungerar om inte iCloud Keychain är aktiverat.";
 
-"CloudBackup.warningBody" = "Din iCloud-säkerhetskopia raderas efter %@ fler felaktiga PIN-försök.";
+"CloudBackup.warningBody" = "Din iCloud-säkerhetskopia raderas efter %s fler felaktiga PIN-försök.";
 
 "ComingSoon.body" = "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
 
@@ -1143,7 +1143,7 @@
 "Confirmation.hederaMemo" = "Hedera Memo";
 
 /* eg. Processing time: This transaction is predicted to complete in [10-60 minutes]. */
-"Confirmation.processingTime" = "Behandlingstid: Den här transaktionen beräknas slutföras om %@.";
+"Confirmation.processingTime" = "Behandlingstid: Den här transaktionen beräknas slutföras om %s.";
 
 /* Label for "send" button on final confirmation screen */
 "Confirmation.send" = "Skicka";
@@ -1171,7 +1171,7 @@
 "ConfirmPaperPhrase.label" = "Ange följande ord från din ordnyckel, för att vara säker på att allt skrevs korrekt.";
 
 /* Word label eg. Word #1, Word #2 */
-"ConfirmPaperPhrase.word" = "Ord #%@";
+"ConfirmPaperPhrase.word" = "Ord #%s";
 
 "CreateGift.amountLabel" = "Välj belopp ($ USD)";
 
@@ -1231,16 +1231,16 @@
 "Drawer.title" = "Buy / Sell";
 
 /* Share address by e-mail subject */
-"Email.address_subject" = "%@ Adress";
+"Email.address_subject" = "%s Adress";
 
 /* Service capabilities description */
-"EME.permissions.accountRequest" = "Begär %@ betalning";
+"EME.permissions.accountRequest" = "Begär %s betalning";
 
 /* Service capabilities description */
-"EME.permissions.callRequest" = "Begär %@ smart kontraktsamtal";
+"EME.permissions.callRequest" = "Begär %s smart kontraktsamtal";
 
 /* Service capabilities description */
-"EME.permissions.paymentRequest" = "Begär %@ kontoinformation";
+"EME.permissions.paymentRequest" = "Begär %s kontoinformation";
 
 "ErrorMessages.accessDenied" = "You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.";
 
@@ -1253,15 +1253,15 @@
 "ErrorMessages.Ach.InsufficientFunds" = "Unfortunately the transaction could not be completed due to insufficient funds in your bank account. Please try again later";
 
 /* The currency amount is to high for exchange. Accepts 2 parameters:, - maxiumum amount, - currency code */
-"ErrorMessages.AmountTooHigh" = "The amount is higher than your daily limit of %@ %@. Please enter a lower amount.";
+"ErrorMessages.AmountTooHigh" = "The amount is higher than your daily limit of %s %s. Please enter a lower amount.";
 
 /* The currency amount is to low for exchange. Accepts 2 parameters:, - minimum amount, - currency code */
-"ErrorMessages.amountTooLow" = "The amount is lower than the minimum of %@ %@. Please enter a higher amount.";
+"ErrorMessages.amountTooLow" = "The amount is lower than the minimum of %s %s. Please enter a higher amount.";
 
 "ErrorMessages.authorizationFailed" = "Card authorization failed. Please contact your credit card issuer/bank or try another card.";
 
 /* Accepts 3 parameters:, - currency code, - current balance, - (same) currency code */
-"ErrorMessages.balanceTooLow" = "You need %@ %@ in your wallet to cover network fees. Please add more %@ to your wallet.";
+"ErrorMessages.balanceTooLow" = "You need %s %s in your wallet to cover network fees. Please add more %s to your wallet.";
 
 /* Check your internet connection message */
 "ErrorMessages.CheckInternet" = "Please check your internet connection and try again later.";
@@ -1277,7 +1277,7 @@
 /* Not enough ETH for transaction fee */
 "ErrorMessages.ethBalanceLowAddEth" = "Insufficient Ethereum balance in your wallet to transfer this type of token.";
 
-"ErrorMessages.exchangeFailed" = "Swap failed. Reason: %@.";
+"ErrorMessages.exchangeFailed" = "Swap failed. Reason: %s.";
 
 "ErrorMessages.ExchangeQuoteFailed" = "We are currently having issues making a swap between this pair of coins. Please try again later.";
 
@@ -1309,15 +1309,15 @@
 "ErrorMessages.noFees" = "Failed to fetch network fees. Please try again later.";
 
 /* Accepts 2 parameters:, - first currency code, - second currency code */
-"ErrorMessages.noQuoteForPair" = "No quote for currency pair %@-%@.";
+"ErrorMessages.noQuoteForPair" = "No quote for currency pair %s-%s.";
 
-"ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.";
+"ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %s USD. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overExchangeLimit" = "Over exchange limit.";
 
-"ErrorMessages.overLifetimeLimit" = "The amount is higher than your lifetime limit of %@ USD. Please upgrade your account or enter a lower amount.";
+"ErrorMessages.overLifetimeLimit" = "The amount is higher than your lifetime limit of %s USD. Please upgrade your account or enter a lower amount.";
 
-"ErrorMessages.overLifetimeLimitLevel2" = "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.";
+"ErrorMessages.overLifetimeLimitLevel2" = "The amount is higher than your daily limit of %s USD. Please enter a lower amount.";
 
 "ErrorMessages.pendingExchange" = "A maximum of one swap can be active for a currency at a time.";
 
@@ -1331,7 +1331,7 @@
 "ErrorMessages.SomethingWentWrong" = "Oops! Something went wrong, please try again later.";
 
 /* Two parameters:, - maximum amount, - currency code */
-"ErrorMessages.swapAmountTooHigh" = "The amount is higher than the swap maximum of %@ %@.";
+"ErrorMessages.swapAmountTooHigh" = "The amount is higher than the swap maximum of %s %s.";
 
 "ErrorMessages.temporaryNetworkIssues" = "We are having temporary issues connecting to our network. Please try again later.";
 
@@ -1367,7 +1367,7 @@
 "ExportTransfers.header" = "Exportera transaktioner?";
 
 /* You can customize your Face ID Spending Limit from the [menu] */
-"FaceIDSettings.customizeText" = "Du kan anpassa din utgiftsgräns för Face ID från %@.";
+"FaceIDSettings.customizeText" = "Du kan anpassa din utgiftsgräns för Face ID från %s.";
 
 /* Text describing the purpose of the Face ID settings in the BRD app. */
 "FaceIDSettings.explanatoryText" = "Använd Face ID för att låsa upp din RockWallet-app och skicka pengar.";
@@ -1409,12 +1409,12 @@
 "FeeSelector.economyWarning" = "Detta alternativ rekommenderas inte för tidskänsliga transaktioner.";
 
 /* E.g. Estimated delivery: 10-60 minutes */
-"FeeSelector.estimatedDeliver" = "Beräknad leverans: %@";
+"FeeSelector.estimatedDeliver" = "Beräknad leverans: %s";
 
 /* [This transaction will complete in] 2-5 minutes */
 "FeeSelector.ethTime" = "2-5 minuter";
 
-"FeeSelector.lessThanMinutes" = "<%@ minuter";
+"FeeSelector.lessThanMinutes" = "<%s minuter";
 
 /* Priority fee */
 "FeeSelector.priority" = "Prioritet";
@@ -1477,7 +1477,7 @@
 "Import.checking" = "Kontrollerar privat nyckelsaldo...";
 
 /* Sweep private key confirmation message */
-"Import.confirm" = "Skicka %@ från denna privata nyckel till din plånbok? Bitcoins nätverk tar en avgift på %@.";
+"Import.confirm" = "Skicka %s från denna privata nyckel till din plånbok? Bitcoins nätverk tar en avgift på %s.";
 
 /* Duplicate key error message */
 "Import.Error.duplicate" = "Denna privata nyckel finns redan i din plånbok.";
@@ -1600,7 +1600,7 @@
 "LocationPlugin.notAuthorized" = "RockWallet har inte rätt att utnyttja platstjänster";
 
 /* Wallet creation date prefix */
-"ManageWallet.creationDatePrefix" = "Du skapade din plånbok på %@";
+"ManageWallet.creationDatePrefix" = "Du skapade din plånbok på %s";
 
 /* Manage wallet description text */
 "ManageWallet.description" = "Din plånboks namn visas bara i din kontohistorik och kan inte ses av någon annan.";
@@ -1789,7 +1789,7 @@
 "PaymailAddress.yourPaymailAddress" = "Your Paymail address:";
 
 /* Eg. Send 1.0Eth to purchase CCC */
-"PaymentConfirmation.amountText" = "Skicka %@ för att köpa %@";
+"PaymentConfirmation.amountText" = "Skicka %s för att köpa %s";
 
 /* Payment expired message */
 "PaymentConfirmation.PaymentExpired" = "The payment has expired due to inactivity. Please try again with the same card, or use a different card.";
@@ -1823,10 +1823,10 @@
 "PaymentProtocol.Errors.smallOutputError" = "Kunde inte göra utbetalning";
 
 /* Amount too small error message */
-"PaymentProtocol.Errors.smallPayment" = "Utbetalning av Bitcoin får inte vara lägre än %@.";
+"PaymentProtocol.Errors.smallPayment" = "Utbetalning av Bitcoin får inte vara lägre än %s.";
 
 /* Output too small error message. */
-"PaymentProtocol.Errors.smallTransaction" = "Utbetalningstransaktioner av Bitcoin får inte vara lägre än %@.";
+"PaymentProtocol.Errors.smallTransaction" = "Utbetalningstransaktioner av Bitcoin får inte vara lägre än %s.";
 
 /* Unsupported signature type payment protocol error message */
 "PaymentProtocol.Errors.unsupportedSignatureType" = "signaturtypen saknar stöd";
@@ -2080,7 +2080,7 @@
 "RecoveryKeyFlow.HelpPopup.title" = "What is “Recovery Phrase”?";
 
 /* Hint text for recovery key intro page, e.g., Step 2 */
-"RecoveryKeyFlow.howItWorksStep" = "Hur det fungerar - Steg %@";
+"RecoveryKeyFlow.howItWorksStep" = "Hur det fungerar - Steg %s";
 
 /* Error text displayed when the user enters an incorrect recovery phrase */
 "RecoveryKeyFlow.invalidPhrase" = "Några av orden du skrev in matchar inte din återställningsnyckel. Var god försök igen.";
@@ -2164,7 +2164,7 @@
 "RecoveryKeyFlow.writeKeyScreenTitle" = "Din återställningsnyckel";
 
 /* Title for the step number when the user pages through the recovery words */
-"RecoveryKeyFlow.writeKeyStepTitle" = "%@ av %@";
+"RecoveryKeyFlow.writeKeyStepTitle" = "%s av %s";
 
 "RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated  in the next step.";
 
@@ -2234,7 +2234,7 @@
 "Scanner.flashButtonLabel" = "Kamerablixt";
 
 /* (alert dialog message) Would you like to send a [Bitcoin / Bitcoin Cash / Ethereum] payment to this address?") */
-"Scanner.paymentPromptMessage" = "Vill du sänd en %@ betalning till den här adressen?";
+"Scanner.paymentPromptMessage" = "Vill du sänd en %s betalning till den här adressen?";
 
 /* alert dialog title */
 "Scanner.paymentPromptTitle" = "Sänd betalning";
@@ -2308,7 +2308,7 @@
 
 "Sell.details" = "Sell & Withdraw details";
 
-"Sell.disclaimer" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
+"Sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
 
 "Sell.iReceive" = "I receive";
 
@@ -2318,7 +2318,7 @@
 
 "Sell.rate" = "Conversion rate";
 
-"Sell.SellLimits" = "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
+"Sell.SellLimits" = "Minimum withdrawal is %s USD and maximum is %s USD per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
 
 "Sell.subtotal" = "Subtotal";
 
@@ -2344,7 +2344,7 @@
 "Send.amountLabel" = "Belopp";
 
 /* Balance: $4.00 */
-"Send.balance" = "Saldo: %@";
+"Send.balance" = "Saldo: %s";
 
 /* Balance: $4.00 for iOS, the balance can't have a parameter */
 "Send.balanceString" = "Saldo:";
@@ -2397,11 +2397,11 @@
 "Send.ethSendSelf" = "Kan inte skicka till sig själv.";
 
 /* Network Fee: $0.01 */
-"Send.fee" = "Nätverksavgift: %@";
+"Send.fee" = "Nätverksavgift: %s";
 
 "Send.fio_invalid" = "Ogiltig FIO-adress.";
 
-"Send.fio_noAddress" = "Det finns ingen %@ adress kopplad till denna FIO-adress.";
+"Send.fio_noAddress" = "Det finns ingen %s adress kopplad till denna FIO-adress.";
 
 "Send.fio_retrievalError" = "Det gick inte att hämta adressen för den här FIO-adressen. Vänligen försök igen senare.";
 
@@ -2415,16 +2415,16 @@
 "Send.insufficientGas" = "Insufficient gas.";
 
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
-"Send.insufficientGasMessage" = "Du måste ha minst %@ i din plånbok för att överföra denna typ av token. Vill du gå till din Ethereum-plånbok nu?";
+"Send.insufficientGasMessage" = "Du måste ha minst %s i din plånbok för att överföra denna typ av token. Vill du gå till din Ethereum-plånbok nu?";
 
 /* Your balance is insufficient to complete this action. */
-"Send.insufficientGasTitle" = "Insufficient %@ Balance";
+"Send.insufficientGasTitle" = "Insufficient %s Balance";
 
 /* e.g. The destination is not a valid (bitcoin) address. */
-"Send.invalidAddressMessage" = "Mottagaradressen är inte en giltig %@-adress.";
+"Send.invalidAddressMessage" = "Mottagaradressen är inte en giltig %s-adress.";
 
 /* Invalid address on pasteboard message */
-"Send.invalidAddressOnPasteboard" = "Urklipp innehåller inte en giltig %@-adress.";
+"Send.invalidAddressOnPasteboard" = "Urklipp innehåller inte en giltig %s-adress.";
 
 /* Invalid address alert title */
 "Send.invalidAddressTitle" = "Ogiltig adress";
@@ -2463,7 +2463,7 @@
 "Send.payId_invalid" = "Ogiltigt PayID.";
 
 /* Error message for no address associated with a PayID for a given currency */
-"Send.payId_noAddress" = "Det finns ingen %@ adress kopplad till detta PayID.";
+"Send.payId_noAddress" = "Det finns ingen %s adress kopplad till detta PayID.";
 
 /* Error message for error in retrieving the address from the PayID endpoint */
 "Send.payId_retrievalError" = "Det gick inte att hämta adressen för detta PayID. Vänligen försök igen senare.";
@@ -2537,7 +2537,7 @@
 "Settings.currency" = "Visa valuta";
 
 /* e.g. "USD Settings" (settings for how USD is handled) */
-"Settings.currencyPageTitle" = "%@ Inställningar";
+"Settings.currencyPageTitle" = "%s Inställningar";
 
 /* Section title for a collection of different settings screens, one for each currency */
 "Settings.currencySettings" = "Valutainställningar";
@@ -2684,7 +2684,7 @@
 /* Staking banner title */
 "Staking.stakingTitle" = "Staking";
 
-"Staking.stakingTo" = "satsar till %@";
+"Staking.stakingTo" = "satsar till %s";
 
 "Staking.statusPending" = "Avvaktar";
 
@@ -2701,7 +2701,7 @@
 /* Tezos XTZ baker asset type */
 "Staking.tezosOnly" = "Endast Tezos";
 
-"Staking.title" = "Insats %@";
+"Staking.title" = "Insats %s";
 
 "Staking.unstake" = "Ta av";
 
@@ -2720,7 +2720,7 @@
 "StartPaperPhrase.buttonTitle" = "Skriv ner ordnyckel";
 
 /* Argument is date; date should be on a new line */
-"StartPaperPhrase.date" = "Senast skrev du ner din ordnyckel på \n%@";
+"StartPaperPhrase.date" = "Senast skrev du ner din ordnyckel på \n%s";
 
 /* button label */
 "StartViewController.createButton" = "Skapa ny plånbok";
@@ -2753,7 +2753,7 @@
 "Swap.BackToHome" = "Back to Home";
 
 /* Balance text on swap */
-"Swap.Balance" = "I have %@ %@";
+"Swap.Balance" = "I have %s %s";
 
 /* Card fee label in swap details screen */
 "Swap.CardFee" = "Card fee";
@@ -2821,12 +2821,12 @@
 "Swap.SwapLimit" = "Swap limits";
 
 /* Swap min and max limit text */
-"Swap.SwapLimits" = "Currently, minimum for Swap is %@ USD and maximum is %@ USD/day.";
+"Swap.SwapLimits" = "Currently, minimum for Swap is %s USD and maximum is %s USD/day.";
 
-"Swap.Swapping" = "Swapping %@ to %@";
+"Swap.Swapping" = "Swapping %s to %s";
 
 /* Swap status message on swap flow */
-"Swap.SwapStatus" = "Your %@ is estimated to arrive in 30 minutes. You can continue to use your wallet. We'll let you know when your swap has finished.";
+"Swap.SwapStatus" = "Your %s is estimated to arrive in 30 minutes. You can continue to use your wallet. We'll let you know when your swap has finished.";
 
 "Swap.temporarilyUnavailable" = "Swap is temporarily unavailable";
 
@@ -2836,14 +2836,14 @@
 /* Total label in swap details screen */
 "Swap.Total" = "Total:";
 
-"Swap.transactionFrom" = "From %@";
+"Swap.transactionFrom" = "From %s";
 
 /* Transaction ID label in swap details screen */
 "Swap.TransactionID" = "RockWallet Transaction ID";
 
 "Swap.transactionInEthereumNetwork" = "It seems that your transaction takes place in the Ethereum network, please keep in mind that network fees will be charged in ETH";
 
-"Swap.transactionTo" = "To %@";
+"Swap.transactionTo" = "To %s";
 
 "Swap.youReceive" = "You'll receive";
 
@@ -2867,22 +2867,22 @@
 "SyncingView.retry" = "Försök igen";
 
 /* "eg. Synced through <Jan 12, 2015> */
-"SyncingView.syncedThrough" = "Synkroniserad genom %@";
+"SyncingView.syncedThrough" = "Synkroniserad genom %s";
 
 /* Syncing view syncing state header text */
 "SyncingView.syncing" = "Synkroniserar";
 
 /* 6 d (6 days) */
-"TimeSince.days" = "%@ d";
+"TimeSince.days" = "%s d";
 
 /* 6 h (6 hours) */
-"TimeSince.hours" = "%@ t";
+"TimeSince.hours" = "%s t";
 
 /* 6 m (6 minutes) */
-"TimeSince.minutes" = "%@ m";
+"TimeSince.minutes" = "%s m";
 
 /* 6 s (6 seconds) */
-"TimeSince.seconds" = "%@ s";
+"TimeSince.seconds" = "%s s";
 
 "Title.AutoEnterPin" = "Auto-enter PIN";
 
@@ -2924,7 +2924,7 @@
 "TokenList.show" = "Visa";
 
 /* You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button] */
-"TouchIdSettings.customizeText" = "Du kan anpassa din utgiftsgräns i Touch ID från %@.";
+"TouchIdSettings.customizeText" = "Du kan anpassa din utgiftsgräns i Touch ID från %s.";
 
 /* Fingerprint enabling description body */
 "TouchIdSettings.customizeText.android" = "Du kan anpassa ditt maxbelopp med fingeravtrycksautentisering från skärmen Maxbelopp med fingeravtrycksauktorisering";
@@ -2945,7 +2945,7 @@
 "TouchIdSettings.linkText" = "Sida för utgiftsgräns i Touch ID";
 
 /* Spending Limit: b100,000 ($100) */
-"TouchIdSettings.spendingLimit" = "Utnyttjandegräns: %@ (%@)";
+"TouchIdSettings.spendingLimit" = "Utnyttjandegräns: %s (%s)";
 
 /* Touch id switch label. */
 "TouchIdSettings.switchLabel" = "Aktivera Touch ID för RockWallet";
@@ -2993,7 +2993,7 @@
 "Transaction.confirming" = "Pågår";
 
 /* eg. Ending balance: $50.00 */
-"Transaction.ending" = "Utgående saldo: %@";
+"Transaction.ending" = "Utgående saldo: %s";
 
 /* Exchange rate on date header */
 "Transaction.exchangeOnDayReceived" = "Växlingskurs vid mottagande:";
@@ -3008,7 +3008,7 @@
 "Transaction.FailedSwap" = "Failed swap";
 
 /* (b600 fee) */
-"Transaction.fee" = "(%@ avgift)";
+"Transaction.fee" = "(%s avgift)";
 
 "Transaction.HybridPart" = "- %@/2";
 
@@ -3038,7 +3038,7 @@
 
 "Transaction.PurchasedWithAch" = "Purchased with ACH";
 
-"Transaction.purchasedWithInstantBy" = "Purchased with Instant Buy";
+"Transaction.purchasedWithInstantBuy" = "Purchased with Instant Buy";
 
 /* Purchase failed label in transaction view */
 "Transaction.PurchaseFailed" = "Purchase failed";
@@ -3046,43 +3046,43 @@
 "Transaction.PurchaseFailedWithAch" = "Purchase with ACH failed";
 
 /* Receive status text: 'In progress: 20%' */
-"Transaction.receivedStatus" = "Pågår: %@";
+"Transaction.receivedStatus" = "Pågår: %s";
 
 "Transaction.refunded" = "Refunded";
 
 /* Send status text: 'In progress: 20%' */
-"Transaction.sendingStatus" = "Pågår: %@";
+"Transaction.sendingStatus" = "Pågår: %s";
 
 /* sending to <address> */
-"Transaction.sendingTo" = "skickar till %@";
+"Transaction.sendingTo" = "skickar till %s";
 
 /* sent to <address> */
-"Transaction.sentTo" = "skickat till %@";
+"Transaction.sentTo" = "skickat till %s";
 
-"Transaction.stakingTo" = "satsar till %@";
+"Transaction.stakingTo" = "satsar till %s";
 
 /* eg. Starting balance: $50.00 */
-"Transaction.starting" = "Ingående saldo: %@";
+"Transaction.starting" = "Ingående saldo: %s";
 
-"Transaction.swapFromFailed" = "Swap from %@ failed";
+"Transaction.swapFromFailed" = "Swap from %s failed";
 
 /* Swapped transaction label */
 "Transaction.Swapped" = "Swapped";
 
-"Transaction.swappedFrom" = "Swapped from %@";
+"Transaction.swappedFrom" = "Swapped from %s";
 
-"Transaction.swappedTo" = "Swapped to %@";
+"Transaction.swappedTo" = "Swapped to %s";
 
-"Transaction.swappingFrom" = "Swapping from %@";
+"Transaction.swappingFrom" = "Swapping from %s";
 
-"Transaction.swappingTo" = "Swapping to %@";
+"Transaction.swappingTo" = "Swapping to %s";
 
-"Transaction.swapToFailed" = "Swap to %@ failed";
+"Transaction.swapToFailed" = "Swap to %s failed";
 
 /* e.g. "[The money you paid was a] Fee for token transfer: BRD" (BRD is the token that was transfered) */
-"Transaction.tokenTransfer" = "Avgift för token-överföring: %@";
+"Transaction.tokenTransfer" = "Avgift för token-överföring: %s";
 
-"Transaction.toRecipient" = "till %@";
+"Transaction.toRecipient" = "till %s";
 
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "Väntar på bekräftelse. Vissa handlare kräver bekräftelse för att slutföra en transaktion. Uppskattad tid: 1-2 timmar.";
@@ -3107,10 +3107,10 @@
 "TransactionDetails.amountHeader" = "Belopp";
 
 /* "(it was worth) $100 when sent, (and it is worth) $200 now" */
-"TransactionDetails.amountWhenReceived" = "%@ vid mottagande, %@ nu";
+"TransactionDetails.amountWhenReceived" = "%s vid mottagande, %s nu";
 
 /* "(it was worth) $100 when sent, (and it is worth) $200 now" */
-"TransactionDetails.amountWhenSent" = "%@ när det skickades, %@ nu";
+"TransactionDetails.amountWhenSent" = "%s när det skickades, %s nu";
 
 /* Block height label */
 "TransactionDetails.blockHeightLabel" = "Bekräftad i block";
@@ -3144,7 +3144,7 @@
 "TransactionDetails.feeHeader" = "Total avgift";
 
 /* "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part. */
-"TransactionDetails.from" = "på %@";
+"TransactionDetails.from" = "på %s";
 
 /* Tx detail field header */
 "TransactionDetails.gasLimitHeader" = "Gasbegränsning";
@@ -3154,7 +3154,7 @@
 
 "TransactionDetails.gift" = "Gåva";
 
-"TransactionDetails.giftedTo" = "Tilldelad till %@";
+"TransactionDetails.giftedTo" = "Tilldelad till %s";
 
 /* Label for Hedera Memo field on transaction details screen */
 "TransactionDetails.hederaMemo" = "Hedera Memo";
@@ -3169,41 +3169,41 @@
 "TransactionDetails.more" = "Mer...";
 
 /* Moved $5.00 (as in "I moved $5 to another location") */
-"TransactionDetails.moved" = "Flyttade %@";
+"TransactionDetails.moved" = "Flyttade %s";
 
 /* Moved $5.00 */
-"TransactionDetails.movedAmountDescription" = "Flyttade <b>%@</b>";
+"TransactionDetails.movedAmountDescription" = "Flyttade <b>%s</b>";
 
 /* eg. Confirmed in Block: Not Confirmed */
 "TransactionDetails.notConfirmedBlockHeightLabel" = "Inte bekräftad";
 
 /* "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part. */
-"TransactionDetails.received" = "Mottog %@";
+"TransactionDetails.received" = "Mottog %s";
 
 /* Received $5.00 */
-"TransactionDetails.receivedAmountDescription" = "Tog emot <b>%@</b>";
+"TransactionDetails.receivedAmountDescription" = "Tog emot <b>%s</b>";
 
 /* received from <address> */
-"TransactionDetails.receivedFrom" = "mottaget från %@";
+"TransactionDetails.receivedFrom" = "mottaget från %s";
 
 /* received via <address> */
-"TransactionDetails.receivedVia" = "mottaget via %@";
+"TransactionDetails.receivedVia" = "mottaget via %s";
 
 /* receiving from <address> */
-"TransactionDetails.receivingFrom" = "tar emot från %@";
+"TransactionDetails.receivingFrom" = "tar emot från %s";
 
 /* receiving via <address> */
-"TransactionDetails.receivingVia" = "tar emot via %@";
+"TransactionDetails.receivingVia" = "tar emot via %s";
 
 "TransactionDetails.reclaim" = "Återvinna";
 
 "TransactionDetails.resend" = "Skicka igen";
 
 /* "Sent [$5] to [address]" => This is the "Sent [$5]" part. */
-"TransactionDetails.sent" = "Skickade %@";
+"TransactionDetails.sent" = "Skickade %s";
 
 /* Sent $5.00 */
-"TransactionDetails.sentAmountDescription" = "Skickade <b>%@</b>";
+"TransactionDetails.sentAmountDescription" = "Skickade <b>%s</b>";
 
 /* Show Details button */
 "TransactionDetails.showDetails" = "Visa detaljer";
@@ -3236,7 +3236,7 @@
 "TransactionDetails.titleSent" = "Skickat";
 
 /* "Sent [$5] to [address]" => This is the "to [address]" part. */
-"TransactionDetails.to" = "till %@";
+"TransactionDetails.to" = "till %s";
 
 /* Tx detail field header */
 "TransactionDetails.totalHeader" = "Totalt";
@@ -3337,7 +3337,7 @@
 "UDomains.invalid" = "Invalid address.";
 
 /* Disabled until date */
-"UnlockScreen.disabled" = "Inaktiverad till: %@";
+"UnlockScreen.disabled" = "Inaktiverad till: %s";
 
 /* Unlock with FaceID accessibility label */
 "UnlockScreen.faceIdText" = "Lås upp med Face ID";
@@ -3704,7 +3704,7 @@
 "WritePaperPhrase.previous" = "Föregående";
 
 /* 1 of 3 */
-"WritePaperPhrase.step" = "%@ av %@";
+"WritePaperPhrase.step" = "%si av %si";
 
 "WritePaperPhrase.warning" = "For security purposes, do not screenshot or email these words.";
 
