@@ -204,11 +204,16 @@ extension Presenter where Self: AssetActionResponses,
             var perExchangeLimit: Decimal = 0
             var reason: BaseInfoModels.FailureReason = .swap
             
-            if isBuy {
+            if isBuy && actionResponse.type == .card {
                 lifetimeLimit = profile.buyAllowanceLifetime
                 dailyLimit = profile.buyAllowanceDaily
                 perExchangeLimit = profile.buyAllowancePerExchange
                 reason = .buyCard(nil)
+            } else if isBuy && actionResponse.type == .ach {
+                lifetimeLimit = profile.achAllowanceLifetime
+                dailyLimit = profile.achAllowanceDaily
+                perExchangeLimit = profile.achAllowancePerExchange
+                reason = .buyAch(true, "")
             } else if isSell {
                 lifetimeLimit = profile.sellAllowanceLifetime
                 dailyLimit = profile.sellAllowanceDaily
