@@ -156,7 +156,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         super.viewWillAppear(animated)
         
         ExchangeManager.shared.reload()
-        UserManager.shared.refresh ()
         
         pullToRefreshControl.endRefreshing()
         
