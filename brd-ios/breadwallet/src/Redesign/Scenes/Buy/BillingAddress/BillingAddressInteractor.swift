@@ -107,12 +107,14 @@ class BillingAddressInteractor: NSObject, Interactor, BillingAddressViewActions 
         
         let checkoutApiService = CheckoutAPIService(publicKey: E.checkoutApiToken, environment: E.isDevelopment ? .sandbox : .live)
         checkoutApiService.createToken(.card(card)) { [weak self] result in
-            switch result {
-            case .success(let token):
-                self?.afterSubmit(token: token.token)
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+            DispatchQueue.main.async { [weak self] in
+                switch result {
+                case .success(let token):
+                    self?.afterSubmit(token: token.token)
+                    
+                case .failure(let error):
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                }
             }
         }
     }
