@@ -1572,6 +1572,8 @@
 /* Wipe wallet button */
 "JailbreakWarnings.wipe" = "Cancella";
 
+"KENAN.TEST" = "TEST";
+
 /* Approve link wallet button label */
 "LinkWallet.approve" = "Approva";
 
