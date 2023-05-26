@@ -104,6 +104,9 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         }
         
         containerStack.addArrangedSubview(arrowImageView)
+        arrowImageView.snp.makeConstraints { make in
+            make.width.equalTo(ViewSizes.small.rawValue)
+        }
         
         cardDetailsView.moreButtonCallback = { [weak self] in
             self?.moreButtonTapped()
@@ -129,6 +132,11 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
+        subtitleLabel.configure(with: .init(font: Fonts.Title.six,
+                                        textColor: LightColors.Text.three,
+                                        textAlignment: .center,
+                                        numberOfLines: 1))
+        subtitleLabel.adjustsFontSizeToFitWidth = true
         
         cardDetailsView.isHidden = viewModel?.logo == nil
         
