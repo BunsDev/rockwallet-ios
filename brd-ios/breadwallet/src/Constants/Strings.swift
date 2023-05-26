@@ -1532,10 +1532,6 @@ internal enum L10n {
     /// Wipe wallet button
     internal static let wipe = L10n.tr("Localizable", "JailbreakWarnings.wipe", fallback: "Wipe")
   }
-  internal enum Kenan {
-    /// TEST
-    internal static let test = L10n.tr("Localizable", "KENAN.TEST", fallback: "TEST")
-  }
   internal enum LinkWallet {
     /// Approve link wallet button label
     internal static let approve = L10n.tr("Localizable", "LinkWallet.approve", fallback: "Approve")
