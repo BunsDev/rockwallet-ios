@@ -51,7 +51,9 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         PaymailAddressWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
-                self?.presenter?.presentPaymailSuccess(actionResponse: .init())
+                UserManager.shared.refresh { _ in
+                    self?.presenter?.presentPaymailSuccess(actionResponse: .init())
+                }
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
