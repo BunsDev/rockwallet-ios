@@ -245,8 +245,8 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         rateView.setup(with: viewModel?.rate)
         rateView.isHidden = viewModel?.rate == nil
         
-        [titleLabel, currencyStackView, rateView, topLineView].forEach { view in
-            view.isHidden = viewModel?.currencyIcon == nil && viewModel?.currencyAmountName == nil && viewModel?.rate == nil
+        [titleLabel, currencyStackView, topLineView].forEach { view in
+            view.isHidden = viewModel?.currencyIcon == nil && viewModel?.currencyAmountName == nil
         }
         
         amountView.setup(with: viewModel?.amount)

@@ -15,8 +15,9 @@ struct ExchangeDetailsResponseData: ModelResponse {
         var currency: String?
         var currencyAmount: Decimal?
         var usdAmount: Decimal?
-        var transactionId: String?
         var usdFee: Decimal?
+        var instantUsdFee: Decimal?
+        var transactionId: String?
         var paymentInstrument: PaymentCardsResponseData.PaymentInstrument?
         var feeRate: Decimal?
         var feeFixedRate: Decimal?
@@ -35,14 +36,21 @@ struct ExchangeDetailsResponseData: ModelResponse {
 
 struct SwapDetail: Model, Hashable {
     struct SourceDestination: Model, Hashable {
+        enum Part: Int {
+            case one = 1
+            case two = 2
+        }
+        
         var currency: String
         var currencyAmount: Decimal
         var usdAmount: Decimal
-        var transactionId: String?
         var usdFee: Decimal
-        var paymentInstrument: PaymentCard
+        var instantUsdFee: Decimal?
+        var transactionId: String?
+        var paymentInstrument: PaymentCard?
         var feeRate: Decimal?
         var feeFixedRate: Decimal?
+        var part: Part?
     }
     
     var orderId: Int
@@ -50,10 +58,12 @@ struct SwapDetail: Model, Hashable {
     var statusDetails: String
     var source: SourceDestination
     var destination: SourceDestination
-    var instantDestination: SourceDestination
+    var instantDestination: SourceDestination?
+    var isHybridTransaction: Bool
+    var part: SwapDetail.SourceDestination.Part?
     var rate: Decimal
     var timestamp: Int
-    var type: TransactionType
+    var type: ExchangeType
 }
 
 class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail> {
@@ -61,71 +71,62 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
         let source = response?.source
         let sourceCard = response?.source?.paymentInstrument
         let destination = response?.destination
-        let destinationCard = response?.destination?.paymentInstrument
         let instantDestination = response?.instantDestination
-        let instantDestinationCard = instantDestination?.paymentInstrument
-        let sourceData = SwapDetail.SourceDestination(currency: source?.currency?.uppercased() ?? "",
-                                                      currencyAmount: source?.currencyAmount ?? 0,
-                                                      usdAmount: source?.usdAmount ?? 0,
-                                                      transactionId: source?.transactionId,
-                                                      usdFee: source?.usdFee ?? 0,
-                                                      paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: sourceCard?.type ?? "") ?? .card,
-                                                                                     id: sourceCard?.id ?? "",
-                                                                                     fingerprint: sourceCard?.fingerprint ?? "",
-                                                                                     expiryMonth: sourceCard?.expiryMonth ?? 0,
-                                                                                     expiryYear: sourceCard?.expiryYear ?? 0,
-                                                                                     scheme: PaymentCard.Scheme(rawValue: sourceCard?.scheme ?? "") ?? .none,
-                                                                                     last4: sourceCard?.last4 ?? "",
-                                                                                     accountName: sourceCard?.accountName ?? "",
-                                                                                     status: PaymentCard.Status(rawValue: sourceCard?.status ?? "") ?? .none,
-                                                                                     cardType: PaymentCard.CardType(rawValue: sourceCard?.cardType ?? "") ?? .none),
-                                                      feeRate: source?.feeRate,
-                                                      feeFixedRate: source?.feeFixedRate)
-        let destinationData = SwapDetail.SourceDestination(currency: destination?.currency?.uppercased() ?? "",
-                                                           currencyAmount: destination?.currencyAmount ?? 0,
-                                                           usdAmount: destination?.usdAmount ?? 0,
-                                                           transactionId: destination?.transactionId,
-                                                           usdFee: destination?.usdFee ?? 0,
-                                                           paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: sourceCard?.type ?? "") ?? .card,
-                                                                                          id: destinationCard?.id ?? "",
-                                                                                          fingerprint: destinationCard?.fingerprint ?? "",
-                                                                                          expiryMonth: destinationCard?.expiryMonth ?? 0,
-                                                                                          expiryYear: destinationCard?.expiryYear ?? 0,
-                                                                                          scheme: PaymentCard.Scheme(rawValue: destinationCard?.scheme ?? "") ?? .none,
-                                                                                          last4: destinationCard?.last4 ?? "",
-                                                                                          accountName: sourceCard?.accountName ?? "",
-                                                                                          status: PaymentCard.Status(rawValue: sourceCard?.status ?? "") ?? .none,
-                                                                                          cardType: PaymentCard.CardType(rawValue: sourceCard?.cardType ?? "") ?? .none),
-                                                           feeRate: source?.feeRate,
-                                                           feeFixedRate: source?.feeFixedRate)
-        let instantDestinationData = SwapDetail
-            .SourceDestination(currency: instantDestination?.currency?.uppercased() ?? "",
-                               currencyAmount: instantDestination?.currencyAmount ?? 0,
-                               usdAmount: instantDestination?.usdAmount ?? 0,
-                               transactionId: instantDestination?.transactionId,
-                               usdFee: instantDestination?.usdFee ?? 0,
+        
+        let sourceData = SwapDetail
+            .SourceDestination(currency: source?.currency?.uppercased() ?? "",
+                               currencyAmount: source?.currencyAmount ?? 0,
+                               usdAmount: source?.usdAmount ?? 0,
+                               usdFee: source?.usdFee ?? 0,
+                               instantUsdFee: source?.instantUsdFee ?? 0,
+                               transactionId: source?.transactionId,
                                paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: sourceCard?.type ?? "") ?? .card,
-                                                              id: instantDestinationCard?.id ?? "",
-                                                              fingerprint: instantDestinationCard?.fingerprint ?? "",
-                                                              expiryMonth: instantDestinationCard?.expiryMonth ?? 0,
-                                                              expiryYear: instantDestinationCard?.expiryYear ?? 0,
-                                                              scheme: PaymentCard.Scheme(rawValue: instantDestinationCard?.scheme ?? "") ?? .none,
-                                                              last4: instantDestinationCard?.last4 ?? "",
+                                                              id: sourceCard?.id ?? "",
+                                                              fingerprint: sourceCard?.fingerprint ?? "",
+                                                              expiryMonth: sourceCard?.expiryMonth ?? 0,
+                                                              expiryYear: sourceCard?.expiryYear ?? 0,
+                                                              scheme: PaymentCard.Scheme(rawValue: sourceCard?.scheme ?? "") ?? .none,
+                                                              last4: sourceCard?.last4 ?? "",
                                                               accountName: sourceCard?.accountName ?? "",
                                                               status: PaymentCard.Status(rawValue: sourceCard?.status ?? "") ?? .none,
                                                               cardType: PaymentCard.CardType(rawValue: sourceCard?.cardType ?? "") ?? .none),
                                feeRate: source?.feeRate,
                                feeFixedRate: source?.feeFixedRate)
-
+        
+        let destinationData = SwapDetail
+            .SourceDestination(currency: destination?.currency?.uppercased() ?? "",
+                               currencyAmount: destination?.currencyAmount ?? 0,
+                               usdAmount: destination?.usdAmount ?? 0,
+                               usdFee: destination?.usdFee ?? 0,
+                               instantUsdFee: destination?.instantUsdFee,
+                               transactionId: destination?.transactionId,
+                               paymentInstrument: nil,
+                               feeRate: destination?.feeRate,
+                               feeFixedRate: destination?.feeFixedRate,
+                               part: instantDestination == nil ? .one : .two)
+        
+        let instantDestinationData = SwapDetail
+            .SourceDestination(currency: instantDestination?.currency?.uppercased() ?? "",
+                               currencyAmount: instantDestination?.currencyAmount ?? 0,
+                               usdAmount: instantDestination?.usdAmount ?? 0,
+                               usdFee: instantDestination?.usdFee ?? 0,
+                               instantUsdFee: instantDestination?.instantUsdFee,
+                               transactionId: instantDestination?.transactionId,
+                               paymentInstrument: nil,
+                               feeRate: instantDestination?.feeRate,
+                               feeFixedRate: instantDestination?.feeFixedRate,
+                               part: instantDestination != nil ? .one : nil)
+        
         return SwapDetail(orderId: Int(response?.orderId ?? 0),
                           status: .init(string: response?.status) ?? .failed,
                           statusDetails: response?.statusDetails ?? "",
                           source: sourceData,
                           destination: destinationData,
                           instantDestination: instantDestinationData,
+                          isHybridTransaction: instantDestination != nil && destination != nil,
                           rate: response?.rate ?? 0,
                           timestamp: Int(response?.timestamp ?? 0),
-                          type: TransactionType(rawValue: response?.type ?? "") ?? .base)
+                          type: ExchangeType(rawValue: response?.type ?? "") ?? .unknown)
     }
 }
 

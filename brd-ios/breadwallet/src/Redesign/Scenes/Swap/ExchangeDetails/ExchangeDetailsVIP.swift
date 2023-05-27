@@ -25,7 +25,8 @@ protocol ExchangeDetailsResponseDisplays: AnyObject, BaseResponseDisplays, Fetch
 }
 
 protocol ExchangeDetailsDataStore: BaseDataStore, FetchDataStore {
-    var transactionType: TransactionType { get set }
+    var transactionType: ExchangeType { get set }
+    var transactionPart: SwapDetail.SourceDestination.Part { get set }
     var exchangeId: String? { get set }
 }
 

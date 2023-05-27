@@ -9,14 +9,6 @@
 import UIKit
 import WalletKit
 
-enum TransactionType: String, Hashable {
-    case swap = "SWAP"
-    case buy = "BUY"
-    case buyAch = "BUY_ACH"
-    case sell = "SELL"
-    case base
-}
-
 /// Transacton status
 enum TransactionStatus: String, Hashable, ModelResponse {
     /// Zero confirmations
@@ -166,16 +158,17 @@ class Transaction {
     
     var hash: String { return transfer.hash?.description ?? "" }
     
-    var transactionType: TransactionType = .base
-    var swapTransationStatus: TransactionStatus?
-    var swapSource: SwapDetail.SourceDestination?
-    var swapDestination: SwapDetail.SourceDestination?
+    var transactionType: ExchangeType = .unknown
+    var exchangeStatus: TransactionStatus?
+    var exchangeSource: SwapDetail.SourceDestination?
+    var exchangeDestination: SwapDetail.SourceDestination?
+    var exchangeInstantDestination: SwapDetail.SourceDestination?
     var swapOrderId: Int?
     
     var status: TransactionStatus {
         switch transactionType {
         case .swap:
-            return swapTransationStatus ?? .failed
+            return exchangeStatus ?? .failed
             
         default:
             switch transfer.state {
@@ -184,17 +177,17 @@ class Transaction {
                 
             case .included:
                 
-                let buyTransaction = transactionType == .buy || transactionType == .buyAch
+                let buyTransaction = transactionType == .buyCard || transactionType == .buyAch
                 
                 switch Int(confirmations) {
                 case 0:
-                    return buyTransaction ? (swapTransationStatus ?? .failed) : .pending
+                    return buyTransaction ? (exchangeStatus ?? .failed) : .pending
                     
                 case 1..<currency.confirmationsUntilFinal:
                     return .confirmed
                     
                 default:
-                    return buyTransaction ? (swapTransationStatus ?? .failed) : .complete
+                    return buyTransaction ? (exchangeStatus ?? .failed) : .complete
                     
                 }
             case .failed, .deleted:

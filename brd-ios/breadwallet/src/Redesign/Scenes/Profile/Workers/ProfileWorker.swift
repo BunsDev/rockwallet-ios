@@ -10,6 +10,8 @@
 
 import Foundation
 
+typealias ExchangeType = ProfileResponseData.ExchangeLimit.ExchangeType
+
 struct ProfileRequestData: RequestModelData {
     var secondFactorCode: String?
     var secondFactorBackup: String?

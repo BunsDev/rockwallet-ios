@@ -16,9 +16,22 @@ struct ExchangeDetailsExchangesResponseData: ModelResponse {
 
 class SwapHistoryMapper: ModelMapper<ExchangeDetailsExchangesResponseData, [SwapDetail]> {
     override func getModel(from response: ExchangeDetailsExchangesResponseData?) -> [SwapDetail] {
-        return response?
-            .exchanges
-            .compactMap { ExchangeDetailsMapper().getModel(from: $0) } ?? []
+        var exchanges = (response?.exchanges ?? []).compactMap { ExchangeDetailsMapper().getModel(from: $0) }
+        
+        for exchange in exchanges where exchange.instantDestination?.transactionId != nil {
+            var one = exchange
+            one.part = .one
+            
+            var two = exchange
+            two.part = .two
+            
+            exchanges.insert(one, at: 0)
+            exchanges.insert(two, at: 0)
+            
+            exchanges = exchanges.filter { $0 != exchange }
+        }
+        
+        return exchanges
     }
 }
 

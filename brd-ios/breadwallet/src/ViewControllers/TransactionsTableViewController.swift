@@ -69,17 +69,18 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     
     private let currency: Currency
     private var remainingExchanges = [SwapDetail]()
-    private var swaps: [SwapDetail] = []
+    private var exchanges: [SwapDetail] = []
     private var transactions: [Transaction] = []
     private var allTransactions: [TxListViewModel] {
-        // Combine transactions and swapDetails into 1 array.
+        // Combine transactions and exchanges into 1 array.
+        
         var items = [TxListViewModel]()
         
         for item in transactions {
             items.append(.init(tx: item))
         }
-        for item in swaps {
-            items.append(.init(swap: item))
+        for item in exchanges {
+            items.append(.init(exchange: item))
         }
         return items.sorted(by: { lhs, rhs in
             return combineTransactions(tx: lhs) > combineTransactions(tx: rhs)
@@ -89,7 +90,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     private func combineTransactions(tx: TxListViewModel) -> Double {
         let result: Double
         
-        if let tx = tx.swap {
+        if let tx = tx.exchange {
             result = Double(tx.timestamp) / 1000
         } else if let tx = tx.tx {
             result = tx.timestamp
@@ -253,21 +254,28 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         remainingExchanges.forEach { exchange in
             let source = exchange.source
             let destination = exchange.destination
+            let instantDestination = exchange.instantDestination
+            
             let sourceId = source.transactionId
             let destinationId = destination.transactionId
+            let instantDestinationId = instantDestination?.transactionId
             
-            if let element = transactions.first(where: { $0.transfer.hash?.description == sourceId || $0.transfer.hash?.description == destinationId }) {
+            if let element = transactions.first(where: {
+                $0.transfer.hash?.description == sourceId ||
+                $0.transfer.hash?.description == destinationId ||
+                $0.transfer.hash?.description == instantDestinationId
+            }) {
                 element.transactionType = exchange.type
                 element.swapOrderId = exchange.orderId
-                element.swapTransationStatus = exchange.status
-                element.swapSource = exchange.source
-                element.swapDestination = exchange.destination
-                
-                remaining.removeAll(where: { $0.orderId == element.swapOrderId })
+                element.exchangeStatus = exchange.status
+                element.exchangeSource = exchange.source
+                element.exchangeDestination = exchange.destination
+                element.exchangeInstantDestination = exchange.instantDestination
             }
         }
         
-        swaps = remaining.filter { $0.status != .failed }
+        exchanges = remaining.filter { $0.status != .failed }
+        remainingExchanges = remaining
         
         createSnapshot(for: allTransactions)
     }
@@ -292,15 +300,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     
     private func transactionCell(_ indexPath: IndexPath) -> UITableViewCell {
         guard let cell: TxListCell = tableView.dequeueReusableCell(for: indexPath),
-              var viewModel = dataSource?.itemIdentifier(for: indexPath) as? TxListViewModel else { return UITableViewCell() }
-        
-        if let transaction = remainingExchanges.first(where: { $0.orderId == viewModel.tx?.swapOrderId }) {
-            if let transactionId = transaction.instantDestination.transactionId, transactionId == viewModel.transactionId {
-                viewModel.hybridTransaction = .instant
-            } else if let transactionId = transaction.destination.transactionId, transactionId == viewModel.transactionId {
-                viewModel.hybridTransaction = .regular
-            }
-        }
+              let viewModel = dataSource?.itemIdentifier(for: indexPath) as? TxListViewModel else { return UITableViewCell() }
         
         cell.setTransaction(viewModel,
                             currency: currency,

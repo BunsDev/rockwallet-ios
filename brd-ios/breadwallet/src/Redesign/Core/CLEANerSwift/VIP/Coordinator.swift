@@ -187,7 +187,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showExchangeDetails(with exchangeId: String?, type: TransactionType) {
+    func showExchangeDetails(with exchangeId: String?, type: ExchangeType) {
         open(scene: Scenes.ExchangeDetails) { vc in
             vc.navigationItem.hidesBackButton = true
             vc.dataStore?.exchangeId = exchangeId
@@ -528,7 +528,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                      isModalDismissable: Bool = false,
                      hidesBackButton: Bool = true,
                      itemId: String? = nil,
-                     transactionType: TransactionType? = nil) {
+                     transactionType: ExchangeType? = nil) {
         open(scene: Scenes.Success) { [weak self] vc in
             self?.handleSuccessNavigation(vc)
             
@@ -537,7 +537,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.navigationItem.hidesBackButton = hidesBackButton
             vc.navigationItem.rightBarButtonItem = nil
             vc.dataStore?.id = itemId
-            vc.transactionType = transactionType ?? .base
+            vc.transactionType = transactionType ?? .unknown
         }
     }
     
