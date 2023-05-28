@@ -18,18 +18,21 @@ class ExchangeHistoryMapper: ModelMapper<ExchangeDetailsExchangesResponseData, [
     override func getModel(from response: ExchangeDetailsExchangesResponseData?) -> [ExchangeDetail] {
         var exchanges = (response?.exchanges ?? []).compactMap { ExchangeDetailsMapper().getModel(from: $0) }
         
+        var hybridExchanges: [ExchangeDetail] = []
+        
         for exchange in exchanges where exchange.instantDestination?.transactionId != nil {
             var one = exchange
             one.part = .one
+            hybridExchanges.insert(one, at: 0)
             
             var two = exchange
             two.part = .two
-            
-            exchanges.insert(one, at: 0)
-            exchanges.insert(two, at: 0)
+            hybridExchanges.insert(two, at: 0)
             
             exchanges = exchanges.filter { $0 != exchange }
         }
+        
+        exchanges.append(contentsOf: hybridExchanges)
         
         return exchanges
     }
