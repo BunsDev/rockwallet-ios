@@ -93,8 +93,6 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleBuyTransactions() -> String {
-        var status: TransactionStatus = status
-        
         switch status {
         case .invalid, .failed, .refunded:
             status = .failed
