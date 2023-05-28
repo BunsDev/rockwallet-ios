@@ -2855,6 +2855,8 @@ internal enum L10n {
     internal static let failed = L10n.tr("Localizable", "Transaction.failed", fallback: "Failed")
     /// Failed swap label in transaction view
     internal static let failedSwap = L10n.tr("Localizable", "Transaction.FailedSwap", fallback: "Failed swap")
+    /// Failed purchase with Instant Buy
+    internal static let failedWithdrawWithInstantBuy = L10n.tr("Localizable", "Transaction.FailedWithdrawWithInstantBuy", fallback: "Failed purchase with Instant Buy")
     /// (b600 fee)
     internal static func fee(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Transaction.fee", String(describing: p1), fallback: "(%@ fee)")
@@ -2879,12 +2881,14 @@ internal enum L10n {
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
     /// Pending withdraw with ACH
     internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdraw with ACH")
+    /// Pending purchase with Instant Buy
+    internal static let pendingWithdrawWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingWithdrawWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Purchased label in transaction view
     internal static let purchased = L10n.tr("Localizable", "Transaction.Purchased", fallback: "Purchased")
     /// Purchased with ACH
     internal static let purchasedWithAch = L10n.tr("Localizable", "Transaction.PurchasedWithAch", fallback: "Purchased with ACH")
     /// Purchased with Instant Buy
-    internal static let purchasedWithInstantBy = L10n.tr("Localizable", "Transaction.purchasedWithInstantBy", fallback: "Purchased with Instant Buy")
+    internal static let purchasedWithInstantBuy = L10n.tr("Localizable", "Transaction.purchasedWithInstantBuy", fallback: "Purchased with Instant Buy")
     /// Purchase failed label in transaction view
     internal static let purchaseFailed = L10n.tr("Localizable", "Transaction.PurchaseFailed", fallback: "Purchase failed")
     /// Purchase with ACH failed

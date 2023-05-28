@@ -110,13 +110,13 @@ struct TxListViewModel: TxViewModel, Hashable {
         if exchange?.instantDestination?.part != nil && exchange?.destination.part != nil && exchange?.part == .one {
             switch status {
             case .pending:
-                return "Pending purchase with Instant Buy" // TODO: Localize
+                return L10n.Transaction.pendingWithdrawWithInstantBuy
                 
             case .complete:
-                return L10n.Transaction.purchasedWithInstantBy // TODO: Rename purchasedWithInstantBy to purchasedWithInstantBuy
+                return L10n.Transaction.purchasedWithInstantBuy
                 
             case .failed:
-                return "Failed purchase with Instant Buy" // TODO: Localize
+                return L10n.Transaction.failedWithdrawWithInstantBuy
                 
             default:
                 break
