@@ -3007,6 +3007,8 @@
 /* Failed swap label in transaction view */
 "Transaction.FailedSwap" = "Failed swap";
 
+"Transaction.FailedWithdrawWithInstantBuy" = "Failed purchase with Instant Buy";
+
 /* (b600 fee) */
 "Transaction.fee" = "(%s fee)";
 
@@ -3032,6 +3034,8 @@
 "Transaction.PendingSwap" = "Pending swap";
 
 "Transaction.PendingWithdrawWithAch" = "Pending withdraw with ACH";
+
+"Transaction.PendingWithdrawWithInstantBuy" = "Pending purchase with Instant Buy";
 
 /* Purchased label in transaction view */
 "Transaction.Purchased" = "Purchased";
