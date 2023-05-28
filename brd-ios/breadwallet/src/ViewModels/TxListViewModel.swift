@@ -110,13 +110,13 @@ struct TxListViewModel: TxViewModel, Hashable {
         if exchange?.instantDestination?.part != nil && exchange?.destination.part != nil && exchange?.part == .one {
             switch status {
             case .pending:
-                return L10n.Transaction.pendingWithdrawWithInstantBuy
+                return L10n.Transaction.pendingPurchaseWithInstantBuy
                 
             case .complete:
                 return L10n.Transaction.purchasedWithInstantBuy
                 
             case .failed:
-                return L10n.Transaction.failedWithdrawWithInstantBuy
+                return L10n.Transaction.failedPurchaseWithInstantBuy
                 
             default:
                 break

@@ -2853,6 +2853,8 @@ internal enum L10n {
     internal static let exchangeOnDaySent = L10n.tr("Localizable", "Transaction.exchangeOnDaySent", fallback: "Exchange rate when sent:")
     /// Transaction failed status text
     internal static let failed = L10n.tr("Localizable", "Transaction.failed", fallback: "Failed")
+    /// Failed purchase with Instant Buy
+    internal static let failedPurchaseWithInstantBuy = L10n.tr("Localizable", "Transaction.FailedPurchaseWithInstantBuy", fallback: "Failed purchase with Instant Buy")
     /// Failed swap label in transaction view
     internal static let failedSwap = L10n.tr("Localizable", "Transaction.FailedSwap", fallback: "Failed swap")
     /// Failed purchase with Instant Buy
@@ -2877,6 +2879,8 @@ internal enum L10n {
     internal static let pendingPurchase = L10n.tr("Localizable", "Transaction.PendingPurchase", fallback: "Pending purchase")
     /// Pending purchase with ACH
     internal static let pendingPurchaseWithAch = L10n.tr("Localizable", "Transaction.PendingPurchaseWithAch", fallback: "Pending purchase with ACH")
+    /// Pending purchase with Instant Buy
+    internal static let pendingPurchaseWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingPurchaseWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Pending swap label in transaction view
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
     /// Pending withdraw with ACH
