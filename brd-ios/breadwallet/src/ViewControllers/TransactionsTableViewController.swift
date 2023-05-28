@@ -68,8 +68,8 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     }()
     
     private let currency: Currency
-    private var remainingExchanges = [SwapDetail]()
-    private var exchanges: [SwapDetail] = []
+    private var remainingExchanges = [ExchangeDetail]()
+    private var exchanges: [ExchangeDetail] = []
     private var transactions: [Transaction] = []
     private var allTransactions: [TxListViewModel] {
         // Combine transactions and exchanges into 1 array.

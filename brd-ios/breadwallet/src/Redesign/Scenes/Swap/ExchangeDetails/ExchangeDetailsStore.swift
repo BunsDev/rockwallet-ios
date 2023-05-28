@@ -13,7 +13,7 @@ class ExchangeDetailsStore: NSObject, BaseDataStore, ExchangeDetailsDataStore {
     // MARK: - ExchangeDetailsDataStore
     
     var transactionType: ExchangeType = .unknown
-    var transactionPart: SwapDetail.SourceDestination.Part = .one
+    var transactionPart: ExchangeDetail.SourceDestination.Part = .one
     var exchangeId: String?
     
     // MARK: - Additional helpers

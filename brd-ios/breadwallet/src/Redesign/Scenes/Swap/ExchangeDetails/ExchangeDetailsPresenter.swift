@@ -148,7 +148,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         return currency.imageSquareBackground
     }
     
-    private func prepareOrderViewModel(_ detail: SwapDetail, destination: SwapDetail.SourceDestination, for type: ExchangeType) -> BuyOrderViewModel? {
+    private func prepareOrderViewModel(_ detail: ExchangeDetail, destination: ExchangeDetail.SourceDestination, for type: ExchangeType) -> BuyOrderViewModel? {
         let currencyCode = Constant.usdCurrencyCode
         let card = detail.source.paymentInstrument
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)

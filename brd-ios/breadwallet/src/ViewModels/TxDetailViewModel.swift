@@ -18,7 +18,7 @@ struct TxDetailViewModel: TxViewModel, Hashable {
     let originalFiatAmount: String?
     let exchangeRate: String?
     let tx: Transaction?
-    let exchange: SwapDetail?
+    let exchange: ExchangeDetail?
     
     // Ethereum-specific fields
     var gasPrice: String?

@@ -17,7 +17,7 @@ struct TxListViewModel: TxViewModel, Hashable {
     // MARK: - Properties
     
     var tx: Transaction?
-    var exchange: SwapDetail?
+    var exchange: ExchangeDetail?
 
     func amount(showFiatAmounts: Bool, rate: Rate) -> String {
         if let tx = tx {
@@ -34,7 +34,7 @@ struct TxListViewModel: TxViewModel, Hashable {
             return text
         } else if let exchange = exchange {
             let amount: String
-            var destination: SwapDetail.SourceDestination?
+            var destination: ExchangeDetail.SourceDestination?
             
             if let part = exchange.part {
                 if exchange.destination.part == part {

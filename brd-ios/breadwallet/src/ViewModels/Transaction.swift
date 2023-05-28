@@ -160,9 +160,9 @@ class Transaction {
     
     var transactionType: ExchangeType = .unknown
     var exchangeStatus: TransactionStatus?
-    var exchangeSource: SwapDetail.SourceDestination?
-    var exchangeDestination: SwapDetail.SourceDestination?
-    var exchangeInstantDestination: SwapDetail.SourceDestination?
+    var exchangeSource: ExchangeDetail.SourceDestination?
+    var exchangeDestination: ExchangeDetail.SourceDestination?
+    var exchangeInstantDestination: ExchangeDetail.SourceDestination?
     var swapOrderId: Int?
     
     var status: TransactionStatus {

@@ -13,17 +13,17 @@ import Foundation
 class ExchangeManager {
     static let shared = ExchangeManager()
     
-    private var worker: SwapHistoryWorker
-    private var exchanges: [SwapDetail]
+    private var worker: ExchangeHistoryWorker
+    private var exchanges: [ExchangeDetail]
     
     init() {
-        worker = SwapHistoryWorker()
+        worker = ExchangeHistoryWorker()
         exchanges = []
     }
     
-    func reload(for source: String? = nil, completion: (([SwapDetail]?) -> Void)? = nil) {
+    func reload(for source: String? = nil, completion: (([ExchangeDetail]?) -> Void)? = nil) {
         worker.execute { [weak self] result in
-            let exchanges: [SwapDetail]
+            let exchanges: [ExchangeDetail]
             
             switch result {
             case .success(let data):

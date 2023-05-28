@@ -13,7 +13,7 @@ import UIKit
 /// Representation of a transaction
 protocol TxViewModel: Hashable {
     var tx: Transaction? { get }
-    var exchange: SwapDetail? { get }
+    var exchange: ExchangeDetail? { get }
     var currency: Currency? { get }
     var blockHeight: String { get }
     var longTimestamp: String { get }

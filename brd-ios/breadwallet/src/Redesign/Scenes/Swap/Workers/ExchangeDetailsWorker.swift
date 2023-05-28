@@ -34,7 +34,7 @@ struct ExchangeDetailsResponseData: ModelResponse {
     var type: String?
 }
 
-struct SwapDetail: Model, Hashable {
+struct ExchangeDetail: Model, Hashable {
     struct SourceDestination: Model, Hashable {
         enum Part: Int {
             case one = 1
@@ -60,20 +60,20 @@ struct SwapDetail: Model, Hashable {
     var destination: SourceDestination
     var instantDestination: SourceDestination?
     var isHybridTransaction: Bool
-    var part: SwapDetail.SourceDestination.Part?
+    var part: ExchangeDetail.SourceDestination.Part?
     var rate: Decimal
     var timestamp: Int
     var type: ExchangeType
 }
 
-class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail> {
-    override func getModel(from response: ExchangeDetailsResponseData?) -> SwapDetail {
+class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDetail> {
+    override func getModel(from response: ExchangeDetailsResponseData?) -> ExchangeDetail {
         let source = response?.source
         let sourceCard = response?.source?.paymentInstrument
         let destination = response?.destination
         let instantDestination = response?.instantDestination
         
-        let sourceData = SwapDetail
+        let sourceData = ExchangeDetail
             .SourceDestination(currency: source?.currency?.uppercased() ?? "",
                                currencyAmount: source?.currencyAmount ?? 0,
                                usdAmount: source?.usdAmount ?? 0,
@@ -93,7 +93,7 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                                feeRate: source?.feeRate,
                                feeFixedRate: source?.feeFixedRate)
         
-        let destinationData = SwapDetail
+        let destinationData = ExchangeDetail
             .SourceDestination(currency: destination?.currency?.uppercased() ?? "",
                                currencyAmount: destination?.currencyAmount ?? 0,
                                usdAmount: destination?.usdAmount ?? 0,
@@ -105,7 +105,7 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                                feeFixedRate: destination?.feeFixedRate,
                                part: instantDestination == nil ? .one : .two)
         
-        let instantDestinationData = SwapDetail
+        let instantDestinationData = ExchangeDetail
             .SourceDestination(currency: instantDestination?.currency?.uppercased() ?? "",
                                currencyAmount: instantDestination?.currencyAmount ?? 0,
                                usdAmount: instantDestination?.usdAmount ?? 0,
@@ -117,16 +117,16 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, SwapDetail
                                feeFixedRate: instantDestination?.feeFixedRate,
                                part: instantDestination != nil ? .one : nil)
         
-        return SwapDetail(orderId: Int(response?.orderId ?? 0),
-                          status: .init(string: response?.status) ?? .failed,
-                          statusDetails: response?.statusDetails ?? "",
-                          source: sourceData,
-                          destination: destinationData,
-                          instantDestination: instantDestinationData,
-                          isHybridTransaction: instantDestination != nil && destination != nil,
-                          rate: response?.rate ?? 0,
-                          timestamp: Int(response?.timestamp ?? 0),
-                          type: ExchangeType(rawValue: response?.type ?? "") ?? .unknown)
+        return ExchangeDetail(orderId: Int(response?.orderId ?? 0),
+                              status: .init(string: response?.status) ?? .failed,
+                              statusDetails: response?.statusDetails ?? "",
+                              source: sourceData,
+                              destination: destinationData,
+                              instantDestination: instantDestinationData,
+                              isHybridTransaction: instantDestination != nil && destination != nil,
+                              rate: response?.rate ?? 0,
+                              timestamp: Int(response?.timestamp ?? 0),
+                              type: ExchangeType(rawValue: response?.type ?? "") ?? .unknown)
     }
 }
 
