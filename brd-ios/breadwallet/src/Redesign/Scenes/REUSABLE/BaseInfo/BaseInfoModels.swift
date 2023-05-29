@@ -227,6 +227,7 @@ enum BaseInfoModels {
             case .plaidConnection:
                 return L10n.Buy.plaidErrorDescription
                 
+            // TODO: Why are we passing isAch boolean into .buyAch case?
             case .buyAch(let isAch, let responseCode):
                 let text: String
                 if isAch {

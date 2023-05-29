@@ -214,7 +214,7 @@ class ReceiveViewController: UIViewController, Subscriber {
             return
         }
         
-        let paymailAddress = "\(paymail)\(Constant.paymailDomain)"
+        let paymailAddress = "\(paymail)\(E.paymailDomain)"
         let value = paymailAddress.filter { !$0.isWhitespace }
         UIPasteboard.general.string = value
         let model: InfoViewModel = .init(description: .text(L10n.PaymailAddress.copyMessage(paymailAddress)))
