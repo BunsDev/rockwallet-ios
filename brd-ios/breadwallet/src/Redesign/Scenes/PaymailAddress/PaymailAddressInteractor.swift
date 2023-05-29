@@ -46,7 +46,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     
     func createPaymailAddress(viewAction: Models.CreatePaymail.ViewAction) {
         guard let email = dataStore?.paymailAddress else { return }
-        let paymailEmail = email.replacingOccurrences(of: Constant.paymailDomain, with: "")
+        let paymailEmail = email.replacingOccurrences(of: E.paymailDomain, with: "")
         let data = PaymailRequestData(paymail: paymailEmail, xpub: getXPub(code: "bsv"))
         PaymailAddressWorker().execute(requestData: data) { [weak self] result in
             switch result {

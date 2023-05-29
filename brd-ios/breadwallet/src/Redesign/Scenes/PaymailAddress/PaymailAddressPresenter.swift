@@ -33,7 +33,7 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
             sections = sections.filter({ $0 != .emailViewSetup })
         }
         
-        let emailValue = item?.paymailAddress != nil ? item?.paymailAddress : Constant.paymailDomain
+        let emailValue = item?.paymailAddress != nil ? item?.paymailAddress : E.paymailDomain
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .description: [
