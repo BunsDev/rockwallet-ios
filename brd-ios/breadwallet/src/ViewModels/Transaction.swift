@@ -158,7 +158,7 @@ class Transaction {
     
     var hash: String { return transfer.hash?.description ?? "" }
     
-    var transactionType: ExchangeType = .unknown
+    var exchangeType: ExchangeType = .unknown
     var exchangeStatus: TransactionStatus?
     var exchangeSource: ExchangeDetail.SourceDestination?
     var exchangeDestination: ExchangeDetail.SourceDestination?
@@ -166,7 +166,7 @@ class Transaction {
     var swapOrderId: Int?
     
     var status: TransactionStatus {
-        switch transactionType {
+        switch exchangeType {
         case .swap:
             return exchangeStatus ?? .failed
             
@@ -177,7 +177,7 @@ class Transaction {
                 
             case .included:
                 
-                let buyTransaction = transactionType == .buyCard || transactionType == .buyAch
+                let buyTransaction = exchangeType == .buyCard || exchangeType == .buyAch
                 
                 switch Int(confirmations) {
                 case 0:

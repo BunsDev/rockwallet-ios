@@ -21,7 +21,7 @@ class SuccessViewController: BaseInfoViewController {
         }
     }
     
-    var transactionType: ExchangeType = .unknown
+    var exchangeType: ExchangeType = .unknown
     let canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false
     
     override var imageName: String? { return reason?.iconName }

@@ -55,7 +55,7 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     func shortDescription(for currency: Currency) -> String {
-        switch transactionType {
+        switch exchangeType {
         case .unknown:
             return handleDefaultTransactions()
             
@@ -124,7 +124,7 @@ struct TxListViewModel: TxViewModel, Hashable {
             
         }
         
-        switch transactionType {
+        switch exchangeType {
         case .buyCard:
             switch status {
             case .pending:

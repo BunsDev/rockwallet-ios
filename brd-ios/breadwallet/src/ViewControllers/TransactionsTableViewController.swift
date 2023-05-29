@@ -265,7 +265,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
                 $0.transfer.hash?.description == destinationId ||
                 $0.transfer.hash?.description == instantDestinationId
             }) {
-                element.transactionType = exchange.type
+                element.exchangeType = exchange.type
                 element.swapOrderId = exchange.orderId
                 element.exchangeStatus = exchange.status
                 element.exchangeSource = exchange.source
