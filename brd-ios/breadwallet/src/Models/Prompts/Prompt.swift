@@ -16,17 +16,17 @@ enum PromptType: Int {
     case noAccount
     case kyc
     case twoStep
+    case limitsAuthentication
     case upgradePin
     case paperKey
     case noPasscode
     case biometrics
-    case limitsAuthentication
     
     var order: Int { return rawValue }
     
     static var defaultTypes: [PromptType] = {
-        return [.noInternet, .noAccount, .kyc, .twoStep, .upgradePin,
-                .paperKey, .noPasscode, .biometrics, .limitsAuthentication]
+        return [.noInternet, .noAccount, .kyc, .twoStep, .limitsAuthentication,
+                .upgradePin, .paperKey, .noPasscode, .biometrics]
     }()
     
     var title: String {
@@ -204,6 +204,9 @@ extension Prompt {
     
     // Default implementation based on the type of prompt
     func shouldPrompt(walletAuthenticator: WalletAuthenticator?) -> Bool {
+        let userManager = UserManager.shared
+        let profile = userManager.profile
+        
         switch type {
         case .noInternet:
             GoogleAnalytics.logEvent(GoogleAnalytics.NoInternetScreen())
@@ -211,17 +214,23 @@ extension Prompt {
             return !Reachability.isReachable
             
         case .noAccount:
-            guard let isMigrated = UserManager.shared.profile?.isMigrated else { return true }
+            guard let isMigrated = profile?.isMigrated else { return true }
             
             return !isMigrated
             
         case .kyc:
-            guard let hasKYC = UserManager.shared.profile?.status.hasKYC else { return false }
+            guard let hasKYC = profile?.status.hasKYC,
+                  profile?.status != .emailPending else { return false }
             
             return !hasKYC
         
         case .twoStep:
-            return UserManager.shared.profile != nil && UserManager.shared.twoStepSettings?.type == nil
+            return profile != nil && userManager.twoStepSettings?.type == nil && profile?.status != .emailPending
+            
+        case .limitsAuthentication:
+            guard let hasPendingLimits = profile?.hasPendingLimits else { return false }
+            
+            return hasPendingLimits
             
         case .biometrics:
             guard !UserDefaults.hasPromptedBiometrics && LAContext.canUseBiometrics else { return false }
@@ -237,10 +246,6 @@ extension Prompt {
             
         case .noPasscode:
             return !LAContext.isPasscodeEnabled
-            
-        case .limitsAuthentication:
-            guard let hasPendingLimits = UserManager.shared.profile?.hasPendingLimits else { return false }
-            return hasPendingLimits
             
         default:
             return false
