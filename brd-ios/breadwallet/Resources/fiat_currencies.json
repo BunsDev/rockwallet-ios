@@ -1,1 +1,161 @@
-[{"colors":["#000000","#000000"],"rate":10260.080078125,"code":"USD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"US Dollar","scale":0},{"colors":["#000000","#000000"],"rate":9299.400390625,"code":"EUR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Eurozone Euro","scale":0},{"colors":["#000000","#000000"],"rate":8324.83984375,"code":"GBP","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Pound Sterling","scale":0},{"colors":["#000000","#000000"],"rate":1101812.5,"code":"JPY","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Japanese Yen","scale":0},{"colors":["#000000","#000000"],"rate":13521.7099609375,"code":"CAD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Canadian Dollar","scale":0},{"colors":["#000000","#000000"],"rate":14967.759765625,"code":"AUD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Australian Dollar","scale":0},{"colors":["#000000","#000000"],"rate":10177.740234375,"code":"CHF","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Swiss Franc","scale":0},{"colors":["#000000","#000000"],"rate":99881.546875,"code":"SEK","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Swedish Krona","scale":0},{"colors":["#000000","#000000"],"rate":15985.7001953125,"code":"NZD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"New Zealand Dollar","scale":0},{"colors":["#000000","#000000"],"rate":12228507,"code":"KRW","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"South Korean Won","scale":0},{"colors":["#000000","#000000"],"rate":37688.1484375,"code":"AED","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"UAE Dirham","scale":0},{"colors":["#000000","#000000"],"rate":574700.25,"code":"ARS","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Argentine Peso","scale":0},{"colors":["#000000","#000000"],"rate":869450.25,"code":"BDT","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Bangladeshi Taka","scale":0},{"colors":["#000000","#000000"],"rate":3867.929931640625,"code":"BHD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Bahraini Dinar","scale":0},{"colors":["#000000","#000000"],"rate":10260.080078125,"code":"BMD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Bermudan Dollar","scale":0},{"colors":["#000000","#000000"],"rate":42055.03125,"code":"BRL","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Brazilian Real","scale":0},{"colors":["#000000","#000000"],"rate":7334826.5,"code":"CLP","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Chilean Peso","scale":0},{"colors":["#000000","#000000"],"rate":240518.78125,"code":"CZK","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Czech Koruna","scale":0},{"colors":["#000000","#000000"],"rate":69365.1015625,"code":"DKK","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Danish Krone","scale":0},{"colors":["#000000","#000000"],"rate":3083373.5,"code":"HUF","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Hungarian Forint","scale":0},{"colors":["#000000","#000000"],"rate":144126512,"code":"IDR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Indonesian Rupiah","scale":0},{"colors":["#000000","#000000"],"rate":36313.48828125,"code":"ILS","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Israeli Shekel","scale":0},{"colors":["#000000","#000000"],"rate":737685.75,"code":"INR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Indian Rupee","scale":0},{"colors":["#000000","#000000"],"rate":3118.0400390625,"code":"KWD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Kuwaiti Dinar","scale":0},{"colors":["#000000","#000000"],"rate":1851485.875,"code":"LKR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Sri Lankan Rupee","scale":0},{"colors":["#000000","#000000"],"rate":15661513,"code":"MMK","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Myanmar Kyat","scale":0},{"colors":["#000000","#000000"],"rate":200659.671875,"code":"MXN","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Mexican Peso","scale":0},{"colors":["#000000","#000000"],"rate":42789.55859375,"code":"MYR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Malaysian Ringgit","scale":0},{"colors":["#000000","#000000"],"rate":92124.8671875,"code":"NOK","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Norwegian Krone","scale":0},{"colors":["#000000","#000000"],"rate":534252.5,"code":"PHP","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Philippine Peso","scale":0},{"colors":["#000000","#000000"],"rate":1608754.5,"code":"PKR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Pakistani Rupee","scale":0},{"colors":["#000000","#000000"],"rate":40288.578125,"code":"PLN","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Polish Zloty","scale":0},{"colors":["#000000","#000000"],"rate":38489.4609375,"code":"SAR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Saudi Riyal","scale":0},{"colors":["#000000","#000000"],"rate":14156.1396484375,"code":"SGD","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Singapore Dollar","scale":0},{"colors":["#000000","#000000"],"rate":314163.5625,"code":"THB","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Thai Baht","scale":0},{"colors":["#000000","#000000"],"rate":59193.78125,"code":"TRY","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Turkish Lira","scale":0},{"colors":["#000000","#000000"],"rate":256440.375,"code":"UAH","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Ukrainian Hryvnia","scale":0},{"colors":["#000000","#000000"],"rate":2549502464,"code":"VEF","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Venezuelan Bolívar Fuerte","scale":0},{"colors":["#000000","#000000"],"rate":238116432,"code":"VND","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"Vietnamese Dong","scale":0},{"colors":["#000000","#000000"],"rate":150697.90625,"code":"ZAR","contract_address":null,"currency_id":"","type":"native","is_supported":false,"name":"South African Rand","scale":0}]
+[{
+	"code": "USD",
+	"name": "US Dollar",
+	"rate": 10260.08
+}, {
+	"code": "EUR",
+	"name": "Eurozone Euro",
+	"rate": 9299.4
+}, {
+	"code": "GBP",
+	"name": "Pound Sterling",
+	"rate": 8324.84
+}, {
+	"code": "JPY",
+	"name": "Japanese Yen",
+	"rate": 1101812.49
+}, {
+	"code": "CAD",
+	"name": "Canadian Dollar",
+	"rate": 13521.71
+}, {
+	"code": "AUD",
+	"name": "Australian Dollar",
+	"rate": 14967.76
+}, {
+	"code": "CHF",
+	"name": "Swiss Franc",
+	"rate": 10177.74
+}, {
+	"code": "SEK",
+	"name": "Swedish Krona",
+	"rate": 99881.55
+}, {
+	"code": "NZD",
+	"name": "New Zealand Dollar",
+	"rate": 15985.7
+}, {
+	"code": "KRW",
+	"name": "South Korean Won",
+	"rate": 12228507.44
+}, {
+	"code": "AED",
+	"name": "UAE Dirham",
+	"rate": 37688.15
+}, {
+	"code": "ARS",
+	"name": "Argentine Peso",
+	"rate": 574700.26
+}, {
+	"code": "BDT",
+	"name": "Bangladeshi Taka",
+	"rate": 869450.25
+}, {
+	"code": "BHD",
+	"name": "Bahraini Dinar",
+	"rate": 3867.93
+}, {
+	"code": "BMD",
+	"name": "Bermudan Dollar",
+	"rate": 10260.08
+}, {
+	"code": "BRL",
+	"name": "Brazilian Real",
+	"rate": 42055.03
+}, {
+	"code": "CLP",
+	"name": "Chilean Peso",
+	"rate": 7334826.73
+}, {
+	"code": "CZK",
+	"name": "Czech Koruna",
+	"rate": 240518.78
+}, {
+	"code": "DKK",
+	"name": "Danish Krone",
+	"rate": 69365.1
+}, {
+	"code": "HUF",
+	"name": "Hungarian Forint",
+	"rate": 3083373.43
+}, {
+	"code": "IDR",
+	"name": "Indonesian Rupiah",
+	"rate": 144126511.85
+}, {
+	"code": "ILS",
+	"name": "Israeli Shekel",
+	"rate": 36313.49
+}, {
+	"code": "INR",
+	"name": "Indian Rupee",
+	"rate": 737685.74
+}, {
+	"code": "KWD",
+	"name": "Kuwaiti Dinar",
+	"rate": 3118.04
+}, {
+	"code": "LKR",
+	"name": "Sri Lankan Rupee",
+	"rate": 1851485.92
+}, {
+	"code": "MMK",
+	"name": "Myanmar Kyat",
+	"rate": 15661513.17
+}, {
+	"code": "MXN",
+	"name": "Mexican Peso",
+	"rate": 200659.67
+}, {
+	"code": "MYR",
+	"name": "Malaysian Ringgit",
+	"rate": 42789.56
+}, {
+	"code": "NOK",
+	"name": "Norwegian Krone",
+	"rate": 92124.87
+}, {
+	"code": "PHP",
+	"name": "Philippine Peso",
+	"rate": 534252.49
+}, {
+	"code": "PKR",
+	"name": "Pakistani Rupee",
+	"rate": 1608754.51
+}, {
+	"code": "PLN",
+	"name": "Polish Zloty",
+	"rate": 40288.58
+}, {
+	"code": "SAR",
+	"name": "Saudi Riyal",
+	"rate": 38489.46
+}, {
+	"code": "SGD",
+	"name": "Singapore Dollar",
+	"rate": 14156.14
+}, {
+	"code": "THB",
+	"name": "Thai Baht",
+	"rate": 314163.57
+}, {
+	"code": "TRY",
+	"name": "Turkish Lira",
+	"rate": 59193.78
+}, {
+	"code": "UAH",
+	"name": "Ukrainian Hryvnia",
+	"rate": 256440.37
+}, {
+	"code": "VEF",
+	"name": "Venezuelan BolÃ­var Fuerte",
+	"rate": 2549502441.09
+}, {
+	"code": "VND",
+	"name": "Vietnamese Dong",
+	"rate": 238116424.27
+}, {
+	"code": "ZAR",
+	"name": "South African Rand",
+	"rate": 150697.91
+}]
