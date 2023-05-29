@@ -42,17 +42,28 @@ class TxListCell: UITableViewCell, Identifiable {
     }
     
     func setTransaction(_ viewModel: TxListViewModel, currency: Currency, showFiatAmounts: Bool, rate: Rate) {
-        let status = viewModel.tx?.status ?? viewModel.swap?.status ?? .pending
+        let status = viewModel.tx?.status ?? viewModel.exchange?.status ?? .pending
         iconImageView.image = viewModel.icon?.tinted(with: status.tintColor)
         iconImageView.backgroundColor = status.backgroundColor
         
-        amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
-        if let hybridTransaction = viewModel.hybridTransaction {
-            let hybridPart: Int = hybridTransaction.rawValue
-            titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(hybridPart.description)
+        if let exchange = viewModel.exchange,
+           exchange.type == .buyAch,
+           let part = exchange.part?.rawValue,
+           exchange.isHybridTransaction {
+            titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(part)
+            
+        } else if let exchange = viewModel.exchange,
+                  exchange.type == .buyAch,
+                  let part = viewModel.exchange?.instantDestination?.part?.rawValue,
+                  exchange.isHybridTransaction {
+            titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(part)
+            
         } else {
             titleLabel.text = viewModel.shortTimestamp
+            
         }
+        
+        amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
         descriptionLabel.text = viewModel.shortDescription(for: currency)
         
         layoutSubviews()

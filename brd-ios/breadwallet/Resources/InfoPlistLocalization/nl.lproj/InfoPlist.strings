@@ -3004,8 +3004,12 @@
 /* Transaction failed status text */
 "Transaction.failed" = "Mislukt";
 
+"Transaction.FailedPurchaseWithInstantBuy" = "Failed purchase with Instant Buy";
+
 /* Failed swap label in transaction view */
 "Transaction.FailedSwap" = "Failed swap";
+
+"Transaction.FailedWithdrawWithInstantBuy" = "Failed purchase with Instant Buy";
 
 /* (b600 fee) */
 "Transaction.fee" = "(%@ fee)";
@@ -3028,17 +3032,21 @@
 
 "Transaction.PendingPurchaseWithAch" = "Pending purchase with ACH";
 
+"Transaction.PendingPurchaseWithInstantBuy" = "Pending purchase with Instant Buy";
+
 /* Pending swap label in transaction view */
 "Transaction.PendingSwap" = "Pending swap";
 
 "Transaction.PendingWithdrawWithAch" = "Pending withdraw with ACH";
+
+"Transaction.PendingWithdrawWithInstantBuy" = "Pending purchase with Instant Buy";
 
 /* Purchased label in transaction view */
 "Transaction.Purchased" = "Purchased";
 
 "Transaction.PurchasedWithAch" = "Purchased with ACH";
 
-"Transaction.purchasedWithInstantBy" = "Purchased with Instant Buy";
+"Transaction.purchasedWithInstantBuy" = "Purchased with Instant Buy";
 
 /* Purchase failed label in transaction view */
 "Transaction.PurchaseFailed" = "Purchase failed";

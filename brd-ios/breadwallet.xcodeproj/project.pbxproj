@@ -4052,6 +4052,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		04C1AF222A2078B00009AB4C /* Replace incompatible localization occurrences */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);

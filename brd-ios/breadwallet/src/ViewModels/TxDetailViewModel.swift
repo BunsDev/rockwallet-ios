@@ -18,7 +18,7 @@ struct TxDetailViewModel: TxViewModel, Hashable {
     let originalFiatAmount: String?
     let exchangeRate: String?
     let tx: Transaction?
-    let swap: SwapDetail?
+    let exchange: ExchangeDetail?
     
     // Ethereum-specific fields
     var gasPrice: String?
@@ -85,7 +85,8 @@ struct TxDetailViewModel: TxViewModel, Hashable {
 
 extension TxDetailViewModel {
     init(tx: Transaction) {
-        swap = nil
+        exchange = nil
+        
         let rate = tx.currency.state?.currentRate ?? Rate.empty
         amount = TxDetailViewModel.tokenAmount(tx: tx) ?? ""
         

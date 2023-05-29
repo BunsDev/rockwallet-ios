@@ -371,8 +371,8 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Wallet(currencyCode: transaction.currency?.code ?? ""))
 
-        switch transaction.transactionType {
-        case .base:
+        switch transaction.exchangeType {
+        case .unknown:
             guard let tx = transactions[selectedIndex].tx else { return }
             let transactionDetails = TxDetailViewController(transaction: tx, delegate: self)
             transactionDetails.modalPresentationStyle = .overCurrentContext
@@ -384,8 +384,9 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         default:
             let vc = ExchangeDetailsViewController()
             vc.isModalDismissable = false
-            vc.dataStore?.exchangeId = String(transaction.tx?.swapOrderId ?? transaction.swap?.orderId ?? -1)
-            vc.dataStore?.transactionType = transaction.transactionType
+            vc.dataStore?.exchangeId = String(transaction.tx?.swapOrderId ?? transaction.exchange?.orderId ?? -1)
+            vc.dataStore?.exchangeType = transaction.exchangeType
+            vc.dataStore?.transactionPart = transaction.exchange?.part ?? .one
             
             LoadingView.show()
             navigationController?.pushViewController(viewController: vc, animated: true) {

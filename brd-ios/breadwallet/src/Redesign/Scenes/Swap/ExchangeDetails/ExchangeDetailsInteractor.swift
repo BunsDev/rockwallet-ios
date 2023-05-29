@@ -23,8 +23,14 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
         ExchangeDetailsWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
-                guard let data = data, let transactionType = self?.dataStore?.transactionType else { return }
-                let item = ExchangeDetailsModels.Item(detail: data, type: transactionType)
+                guard let data = data,
+                      let exchangeType = self?.dataStore?.exchangeType,
+                      let part = self?.dataStore?.transactionPart else { return }
+                guard let destination = data.destination?.part == part ? data.destination : data.instantDestination else { return }
+                
+                let item = ExchangeDetailsModels.Item(detail: data,
+                                                      destination: destination,
+                                                      type: exchangeType)
                 self?.presenter?.presentData(actionResponse: .init(item: item))
                 
             case .failure(let error):

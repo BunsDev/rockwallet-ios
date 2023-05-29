@@ -1,5 +1,5 @@
 // 
-//  SwapHistoryWorker.swift
+//  ExchangeHistoryWorker.swift
 //  breadwallet
 //
 //  Created by Dijana Angelovska on 25.7.22.
@@ -14,15 +14,31 @@ struct ExchangeDetailsExchangesResponseData: ModelResponse {
     var exchanges: [ExchangeDetailsResponseData]
 }
 
-class SwapHistoryMapper: ModelMapper<ExchangeDetailsExchangesResponseData, [SwapDetail]> {
-    override func getModel(from response: ExchangeDetailsExchangesResponseData?) -> [SwapDetail] {
-        return response?
-            .exchanges
-            .compactMap { ExchangeDetailsMapper().getModel(from: $0) } ?? []
+class ExchangeHistoryMapper: ModelMapper<ExchangeDetailsExchangesResponseData, [ExchangeDetail]> {
+    override func getModel(from response: ExchangeDetailsExchangesResponseData?) -> [ExchangeDetail] {
+        var exchanges = (response?.exchanges ?? []).compactMap { ExchangeDetailsMapper().getModel(from: $0) }
+        
+        var hybridExchanges: [ExchangeDetail] = []
+        
+        for exchange in exchanges where exchange.destination?.transactionId != nil && exchange.instantDestination?.transactionId != nil {
+            var one = exchange
+            one.part = .one
+            hybridExchanges.insert(one, at: 0)
+            
+            var two = exchange
+            two.part = .two
+            hybridExchanges.insert(two, at: 0)
+            
+            exchanges = exchanges.filter { $0 != exchange }
+        }
+        
+        exchanges.append(contentsOf: hybridExchanges)
+        
+        return exchanges
     }
 }
 
-class SwapHistoryWorker: BaseApiWorker<SwapHistoryMapper> {
+class ExchangeHistoryWorker: BaseApiWorker<ExchangeHistoryMapper> {
     override func getUrl() -> String {
         return ExchangeEndpoints.history.url
     }
