@@ -52,7 +52,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         guard let header = detail.status.viewModel else { return }
         
-        let destinationCurrencyAmount: Decimal = detail.destination.currencyAmount + (detail.instantDestination?.currencyAmount ?? 0)
+        let destinationCurrencyAmount: Decimal = (detail.destination?.currencyAmount ?? 0) + (detail.instantDestination?.currencyAmount ?? 0)
         
         let fromImage = getBaseCurrencyImage(currencyCode: detail.source.currency)
         let toImage = getBaseCurrencyImage(currencyCode: destination.currency)

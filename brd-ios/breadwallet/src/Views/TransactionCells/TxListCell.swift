@@ -46,11 +46,16 @@ class TxListCell: UITableViewCell, Identifiable {
         iconImageView.image = viewModel.icon?.tinted(with: status.tintColor)
         iconImageView.backgroundColor = status.backgroundColor
         
-        if let exchange = viewModel.exchange, let part = exchange.part?.rawValue, exchange.isHybridTransaction {
+        if let exchange = viewModel.exchange,
+           exchange.type == .buyAch,
+           let part = exchange.part?.rawValue,
+           exchange.isHybridTransaction {
             titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(part)
             
-        } else if viewModel.exchange?.type == .buyAch,
-                  let part = viewModel.exchange?.instantDestination?.part?.rawValue {
+        } else if let exchange = viewModel.exchange,
+                  exchange.type == .buyAch,
+                  let part = viewModel.exchange?.instantDestination?.part?.rawValue,
+                  exchange.isHybridTransaction {
             titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(part)
             
         } else {

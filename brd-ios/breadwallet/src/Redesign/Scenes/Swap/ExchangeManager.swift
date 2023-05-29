@@ -40,7 +40,7 @@ class ExchangeManager {
                 return
             }
             
-            completion?(self?.exchanges.filter { $0.source.currency == source || $0.destination.currency == source || $0.instantDestination?.currency == source })
+            completion?(self?.exchanges.filter { $0.source.currency == source || $0.destination?.currency == source || $0.instantDestination?.currency == source })
         }
     }
     

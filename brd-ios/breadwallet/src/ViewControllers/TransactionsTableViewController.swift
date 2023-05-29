@@ -76,12 +76,14 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         
         var items = [TxListViewModel]()
         
-        for item in transactions {
-            items.append(.init(tx: item))
-        }
         for item in exchanges {
             items.append(.init(exchange: item))
         }
+        
+        for item in transactions where exchanges.filter({ $0.orderId == item.swapOrderId }).isEmpty {
+            items.append(.init(tx: item))
+        }
+        
         return items.sorted(by: { lhs, rhs in
             return combineTransactions(tx: lhs) > combineTransactions(tx: rhs)
         })
@@ -250,14 +252,13 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         
         transactions = transfers.sorted(by: { $0.timestamp > $1.timestamp })
         
-        var remaining = remainingExchanges
         remainingExchanges.forEach { exchange in
             let source = exchange.source
             let destination = exchange.destination
             let instantDestination = exchange.instantDestination
             
             let sourceId = source.transactionId
-            let destinationId = destination.transactionId
+            let destinationId = destination?.transactionId
             let instantDestinationId = instantDestination?.transactionId
             
             if let element = transactions.first(where: {
@@ -274,8 +275,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
             }
         }
         
-        exchanges = remaining.filter { $0.status != .failed }
-        remainingExchanges = remaining
+        exchanges = remainingExchanges.filter { $0.status != .failed }
         
         createSnapshot(for: allTransactions)
     }

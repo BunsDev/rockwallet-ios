@@ -26,7 +26,7 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
                 guard let data = data,
                       let exchangeType = self?.dataStore?.exchangeType,
                       let part = self?.dataStore?.transactionPart else { return }
-                guard let destination = data.destination.part == part ? data.destination : data.instantDestination else { return }
+                guard let destination = data.destination?.part == part ? data.destination : data.instantDestination else { return }
                 
                 let item = ExchangeDetailsModels.Item(detail: data,
                                                       destination: destination,

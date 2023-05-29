@@ -8,7 +8,6 @@
 //  See the LICENSE file at the project root for license information.
 //
 
-
 import UIKit
 
 /// View model of a transaction in list view
@@ -18,7 +17,10 @@ struct TxListViewModel: TxViewModel, Hashable {
     
     var tx: Transaction?
     var exchange: ExchangeDetail?
-
+    var id: Int? {
+        return tx?.swapOrderId ?? exchange?.orderId
+    }
+    
     func amount(showFiatAmounts: Bool, rate: Rate) -> String {
         if let tx = tx {
             var amount = tx.amount
@@ -37,13 +39,17 @@ struct TxListViewModel: TxViewModel, Hashable {
             var destination: ExchangeDetail.SourceDestination?
             
             if let part = exchange.part {
-                if exchange.destination.part == part {
+                if exchange.destination?.part == part {
                     destination = exchange.destination
                 } else if exchange.instantDestination?.part == part {
                     destination = exchange.instantDestination
                 }
             } else {
-                destination = exchange.destination
+                if exchange.destination?.transactionId != nil {
+                    destination = exchange.destination
+                } else if exchange.instantDestination?.transactionId != nil {
+                    destination = exchange.instantDestination
+                }
             }
             
             amount = ExchangeFormatter.current.string(for: destination?.currencyAmount) ?? ""
@@ -107,23 +113,6 @@ struct TxListViewModel: TxViewModel, Hashable {
             
         }
         
-        if exchange?.instantDestination?.part != nil && exchange?.destination.part != nil && exchange?.part == .one {
-            switch status {
-            case .pending:
-                return L10n.Transaction.pendingPurchaseWithInstantBuy
-                
-            case .complete:
-                return L10n.Transaction.purchasedWithInstantBuy
-                
-            case .failed:
-                return L10n.Transaction.failedPurchaseWithInstantBuy
-                
-            default:
-                break
-            }
-            
-        }
-        
         switch exchangeType {
         case .buyCard:
             switch status {
@@ -141,15 +130,33 @@ struct TxListViewModel: TxViewModel, Hashable {
             }
             
         case .buyAch, .instantAch:
+            if exchange?.instantDestination?.part == .one && exchange?.isHybridTransaction == false {
+                switch status {
+                case .pending:
+                    return L10n.Transaction.pendingPurchaseWithInstantBuy
+                    
+                case .complete:
+                    return L10n.Transaction.purchasedWithInstantBuy
+                    
+                case .failed:
+                    return L10n.Transaction.failedPurchaseWithInstantBuy
+                    
+                default:
+                    break
+                }
+            }
+            
+            var isHybridPartOne = exchange?.isHybridTransaction == true && exchange?.part == .one
+            
             switch status {
             case .pending:
-                return L10n.Transaction.pendingPurchaseWithAch
+                return isHybridPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
                 
             case .complete:
-                return L10n.Transaction.purchasedWithAch
+                return isHybridPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
                 
             case .failed:
-                return L10n.Transaction.purchaseFailedWithAch
+                return isHybridPartOne ? L10n.Transaction.failedPurchaseWithInstantBuy : L10n.Transaction.purchaseFailedWithAch
                 
             default:
                 break

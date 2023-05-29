@@ -57,7 +57,7 @@ struct ExchangeDetail: Model, Hashable {
     var status: TransactionStatus
     var statusDetails: String
     var source: SourceDestination
-    var destination: SourceDestination
+    var destination: SourceDestination?
     var instantDestination: SourceDestination?
     var isHybridTransaction: Bool
     var part: ExchangeDetail.SourceDestination.Part?

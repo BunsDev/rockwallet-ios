@@ -44,7 +44,7 @@ extension TxViewModel {
     }
     
     var exchangeDestinationCurrency: Currency? {
-        let destinationCurrency = exchange?.destination.currency.lowercased() ?? tx?.exchangeDestination?.currency.lowercased()
+        let destinationCurrency = exchange?.destination?.currency.lowercased() ?? tx?.exchangeDestination?.currency.lowercased()
         return Store.state.currencies.first(where: { $0.code.lowercased() == destinationCurrency })
     }
     
@@ -105,7 +105,7 @@ extension TxViewModel {
                 address = exchange.source.transactionId
                 
             case .received:
-                address = exchange.destination.transactionId
+                address = exchange.destination?.transactionId ?? ""
                 
             default:
                 address = ""
