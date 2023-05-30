@@ -28,6 +28,7 @@ struct CardSelectionViewModel: ViewModel {
     var expiration: LabelViewModel?
     var arrow: ImageViewModel? = .image(Asset.chevronRight.image)
     var userInteractionEnabled = false
+    var errorMessage: LabelViewModel?
 }
 
 class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewModel> {
@@ -95,9 +96,9 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                 
         mainStack.addArrangedSubview(cardDetailsView)
         
-        cardDetailsView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.medium.rawValue)
-        }
+//        cardDetailsView.snp.makeConstraints { make in
+//            make.height.equalTo(ViewSizes.medium.rawValue)
+//        }
         
         containerStack.addArrangedSubview(spacerView)
         spacerView.snp.makeConstraints { make in
@@ -144,13 +145,14 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         arrowImageView.setup(with: viewModel?.arrow)
         arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden) || viewModel?.userInteractionEnabled == false
         
-        let moreOption = viewModel?.expiration != nil && titleLabel.isHidden
+        let moreOption = viewModel?.expiration != nil && titleLabel.isHidden // TODO: add check if error here
         
         cardDetailsView.setup(with: .init(logo: viewModel?.logo,
                                           title: titleLabel.isHidden == true ? viewModel?.title : nil,
                                           cardNumber: viewModel?.cardNumber,
                                           expiration: viewModel?.expiration,
-                                          moreOption: moreOption))
+                                          moreOption: moreOption,
+                                          errorMessage: viewModel?.errorMessage))
         
         spacerView.isHidden = arrowImageView.isHidden
         guard viewModel?.userInteractionEnabled == true else {

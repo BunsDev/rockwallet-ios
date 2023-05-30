@@ -16,6 +16,7 @@ struct CardDetailsConfiguration: Configurable {
     var cardNumber: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one, numberOfLines: 1)
     var expiration: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two)
     var moreButton: BackgroundConfiguration? = Presets.Background.Secondary.selected
+    var error: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Error.one)
 }
 
 struct CardDetailsViewModel: ViewModel {
@@ -24,6 +25,7 @@ struct CardDetailsViewModel: ViewModel {
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
     var moreOption: Bool = false
+    var errorMessage: LabelViewModel?
 }
 
 class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
@@ -75,6 +77,11 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         view.setImage(Asset.more.image, for: .normal)
         return view
     }()
+    
+    private lazy var errorLabel: FELabel = {
+        let view = FELabel()
+        return view
+    }()
 
     override func setupSubviews() {
         super.setupSubviews()
@@ -110,6 +117,8 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         selectorStack.addArrangedSubview(moreButton)
         moreButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         
+        mainStack.addArrangedSubview(errorLabel)
+        
         layoutIfNeeded()
     }
     
@@ -121,6 +130,7 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         cardNumberLabel.configure(with: config?.cardNumber)
         expirationLabel.configure(with: config?.expiration)
         moreButton.configure(background: config?.moreButton)
+        errorLabel.configure(with: config?.error)
     }
     
     override func setup(with viewModel: CardDetailsViewModel?) {
@@ -138,8 +148,11 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         expirationLabel.setup(with: viewModel?.expiration)
         expirationLabel.isHidden = viewModel?.expiration == nil
         
+        errorLabel.setup(with: viewModel?.errorMessage)
+        errorLabel.isHidden = viewModel?.errorMessage == nil
+        
         guard let moreOption = viewModel?.moreOption else { return }
-        moreButton.isHidden = !moreOption
+        moreButton.isHidden = !moreOption && viewModel?.errorMessage == nil
     }
     
     @objc private func moreButtonTapped(_ sender: UIButton?) {
