@@ -71,8 +71,8 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let orderValue = "\(detail.orderId)"
         let transactionFromValue = String(describing: detail.source.transactionId ?? "")
-        let transactionToValue = String(describing: destination.transactionId ?? detail.status.rawValue.localizedCapitalized)
-        let transactionToValueIsCopyable = destination.transactionId != nil
+        let transactionToValue = String(describing: destination.transactionId ?? detail.status.rawValue.uppercased())
+        let transactionToValueIsCopyable = destination.transactionId?.isEmpty == false
         
         var toCurrencyAssetViewModel = AssetViewModel()
         

@@ -387,6 +387,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             vc.dataStore?.exchangeId = String(transaction.tx?.swapOrderId ?? transaction.exchange?.orderId ?? -1)
             vc.dataStore?.exchangeType = transaction.exchangeType
             vc.dataStore?.transactionPart = transaction.exchange?.part ?? .one
+            vc.coordinator = coordinator
             
             LoadingView.show()
             navigationController?.pushViewController(viewController: vc, animated: true) {
