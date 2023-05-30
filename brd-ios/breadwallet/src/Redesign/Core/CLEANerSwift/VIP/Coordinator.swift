@@ -308,6 +308,9 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     private func decideFlow(completion: ((Bool) -> Void)?) {
         guard !DynamicLinksManager.shared.shouldHandleDynamicLink else {
+            
+            DynamicLinksManager.shared.dynamicLinkType = nil
+            
             completion?(false)
             return
         }
@@ -737,6 +740,8 @@ class BaseCoordinator: NSObject, Coordinatable {
         popToRoot()
         
         guard let deeplink = DynamicLinksManager.shared.dynamicLinkType else { return }
+        
+        DynamicLinksManager.shared.dynamicLinkType = nil
         
         switch deeplink {
         case .home:
