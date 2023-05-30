@@ -144,18 +144,22 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     }
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
-        guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
+        guard let reference = actionResponse.paymentReference,
+              actionResponse.failed == false else {
             let isAch = actionResponse.isAch == true
             let responseCode = actionResponse.responseCode ?? ""
-            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell
-                                                                ? .sell : .buyAch(isAch, responseCode)) : .buyCard(actionResponse.errorDescription)
+            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell ? .sell
+                                                                : .buyAch(actionResponse.achDeliveryType, responseCode))
+            : .buyCard(actionResponse.errorDescription)
+            
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             
             return
         }
         
-        let isInstantAch = actionResponse.achDeliveryType == .instant
-        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(isInstantAch)) : .buyCard
+        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell
+                                                                                   ? .sell :
+                .buyAch(actionResponse.achDeliveryType)) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     
