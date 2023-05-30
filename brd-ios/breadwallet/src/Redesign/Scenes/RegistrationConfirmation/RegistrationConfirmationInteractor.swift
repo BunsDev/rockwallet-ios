@@ -72,7 +72,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmailResetPassword, .twoStepAppResetPassword:
             executeResetPassword()
             
-        case .twoStepAppBuy, .twoStepEmailBuy, .twoStepAppBackupCode, .twoStepAppSendFunds, .twoStepEmailSendFunds:
+        case .twoStepAppBuy, .twoStepEmailBuy, .twoStepAppSendFunds, .twoStepEmailSendFunds:
             presentConfirm()
             
         case .twoStepDisable:
@@ -80,6 +80,13 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             
         case .twoStepAppRequired, .twoStepEmailRequired:
             executeRefreshUserWithCode()
+        
+        case .twoStepAppBackupCode(let isLogin):
+            if isLogin {
+                executeLogin()
+            } else {
+                presentConfirm()
+            }
             
         default:
             break

@@ -44,8 +44,12 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
             sections = sections.filter({ $0 != .instructions })
         }
         
-        if confirmationType == .twoStepAppBackupCode || confirmationType == .twoStepAppBuy {
+        switch confirmationType {
+        case .twoStepAppBuy, .twoStepAppBackupCode:
             sections = sections.filter({ $0 != .image })
+            
+        default:
+            break
         }
         
         let title: String
@@ -87,7 +91,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                                     callback: viewController?.enterBackupCode)]
         }
         
-        if confirmationType == .twoStepAppBackupCode {
+        if case .twoStepAppBackupCode(_) = confirmationType {
             help.removeAll()
         }
         

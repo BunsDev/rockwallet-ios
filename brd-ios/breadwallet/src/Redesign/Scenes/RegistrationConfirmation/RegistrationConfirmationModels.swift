@@ -55,7 +55,7 @@ enum RegistrationConfirmationModels {
         case twoStepAppResetPassword
         
         // 2FA app backup code
-        case twoStepAppBackupCode
+        case twoStepAppBackupCode(Bool)
         
         // Disable 2FA
         case twoStepDisable
