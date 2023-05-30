@@ -164,13 +164,21 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showTwoStepAuthentication(from viewController: UIViewController?,
+    func showTwoStepAuthentication(from viewController: UIViewController? = nil,
+                                   isModal: Bool = false,
                                    coordinator: BaseCoordinator?,
                                    keyStore: KeyStore?) {
-        coordinator?.open(coordinator: AccountCoordinator.self,
-                          scene: Scenes.TwoStepAuthentication,
-                          on: viewController as? UINavigationController) { vc in
-            vc?.dataStore?.keyStore = keyStore
+        if isModal {
+            coordinator?.openModally(coordinator: AccountCoordinator.self,
+                                     scene: Scenes.TwoStepAuthentication) { vc in
+                vc?.dataStore?.keyStore = keyStore
+            }
+        } else {
+            coordinator?.open(coordinator: AccountCoordinator.self,
+                              scene: Scenes.TwoStepAuthentication,
+                              on: viewController as? UINavigationController) { vc in
+                vc?.dataStore?.keyStore = keyStore
+            }
         }
     }
     
@@ -225,8 +233,8 @@ class BaseCoordinator: NSObject, Coordinatable {
               navigationController.viewControllers.count < 1 else {
             return
         }
-        navigationController.dismiss(animated: true)
-        parentCoordinator?.childDidFinish(child: self)
+        
+        dismissFlow()
     }
     
     func popToRoot(completion: (() -> Void)? = nil) {
