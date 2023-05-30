@@ -40,7 +40,7 @@ enum BaseInfoModels {
     
     enum SuccessReason: SimpleMessage {
         case buyCard
-        case buyAch(Bool)
+        case buyAch(OrderPreviewModels.AchDeliveryType?)
         case sell
         case documentVerification
         case limitsAuthentication
@@ -79,11 +79,14 @@ enum BaseInfoModels {
             case .buyCard:
                 return L10n.Buy.purchaseSuccessText
                 
-            case .buyAch(let isInstant):
+            case .buyAch(let achDeliveryType):
                 let text: String
-                if isInstant {
+                
+                switch achDeliveryType {
+                case .instant:
                     text = L10n.Buy.Ach.Instant.Success.description
-                } else {
+                    
+                default:
                     text = L10n.Buy.bankAccountSuccessText
                 }
                 
@@ -179,10 +182,11 @@ enum BaseInfoModels {
     
     enum FailureReason: SimpleMessage {
         case buyCard(String?)
-        case buyAch(Bool, String)
+        case buyAch(OrderPreviewModels.AchDeliveryType?, String?)
         case swap
-        case plaidConnection
         case sell
+        
+        case plaidConnection
         case documentVerification
         case documentVerificationRetry
         case limitsAuthentication
@@ -227,10 +231,11 @@ enum BaseInfoModels {
             case .plaidConnection:
                 return L10n.Buy.plaidErrorDescription
                 
-            // TODO: Why are we passing isAch boolean into .buyAch case?
-            case .buyAch(let isAch, let responseCode):
+            case .buyAch(let achDeliveryType, let responseCode):
                 let text: String
-                if isAch {
+                
+                switch achDeliveryType {
+                case .instant, .normal:
                     switch responseCode {
                     case "30046":
                         text = L10n.ErrorMessages.Ach.accountClosed
@@ -244,7 +249,8 @@ enum BaseInfoModels {
                     default:
                         text = L10n.ErrorMessages.Ach.errorWhileProcessing
                     }
-                } else {
+                    
+                default:
                     text = L10n.Buy.bankAccountFailureText
                 }
                 

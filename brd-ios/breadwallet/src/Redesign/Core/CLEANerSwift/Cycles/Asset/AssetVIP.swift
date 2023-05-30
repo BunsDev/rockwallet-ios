@@ -213,7 +213,7 @@ extension Presenter where Self: AssetActionResponses,
                 lifetimeLimit = profile.achAllowanceLifetime
                 dailyLimit = profile.achAllowanceDaily
                 perExchangeLimit = profile.achAllowancePerExchange
-                reason = .buyAch(true, "")
+                reason = .buyAch(nil, nil)
             } else if isSell {
                 lifetimeLimit = profile.sellAllowanceLifetime
                 dailyLimit = profile.sellAllowanceDaily
