@@ -59,6 +59,8 @@ class UserManager: NSObject {
                 Store.trigger(name: .didCreateAccount)
                 
             case .failure(let error):
+                UserDefaults.email = nil
+                
                 self?.error = error
                 self?.profile = nil
             }
