@@ -484,7 +484,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
-            coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+            coordinator?.showTwoStepAuthentication(isModal: true,
                                                    coordinator: coordinator,
                                                    keyStore: keyStore)
         }
