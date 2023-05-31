@@ -91,7 +91,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
                                     callback: viewController?.enterBackupCode)]
         }
         
-        if case .twoStepAppBackupCode(_) = confirmationType {
+        if case .twoStepAppBackupCode = confirmationType {
             help.removeAll()
         }
         

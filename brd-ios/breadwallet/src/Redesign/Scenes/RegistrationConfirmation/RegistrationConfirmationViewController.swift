@@ -119,7 +119,9 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     }
     
     func enterBackupCode() {
-        dataStore?.confirmationType = .twoStepAppBackupCode(true)
+        guard let confirmationType = dataStore?.confirmationType else { return }
+        
+        dataStore?.confirmationType = .twoStepAppBackupCode(confirmationType)
         
         prepareData()
     }

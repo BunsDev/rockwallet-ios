@@ -22,7 +22,7 @@ enum RegistrationConfirmationModels {
         var footer: AccessoryType? { return nil }
     }
     
-    enum ConfirmationType: Hashable {
+    indirect enum ConfirmationType: Hashable {
         // Regular Login/Register without 2FA
         case account
         
@@ -55,7 +55,7 @@ enum RegistrationConfirmationModels {
         case twoStepAppResetPassword
         
         // 2FA app backup code
-        case twoStepAppBackupCode(Bool)
+        case twoStepAppBackupCode(ConfirmationType)
         
         // Disable 2FA
         case twoStepDisable
@@ -76,7 +76,9 @@ enum RegistrationConfirmationModels {
     }
     
     struct Confirm {
-        struct ViewAction {}
+        struct ViewAction {
+            var type: RegistrationConfirmationModels.ConfirmationType?
+        }
         struct ActionResponse {}
         struct ResponseDisplay {}
     }
