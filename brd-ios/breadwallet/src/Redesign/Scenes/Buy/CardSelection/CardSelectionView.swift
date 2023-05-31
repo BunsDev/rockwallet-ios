@@ -130,7 +130,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.setup(with: viewModel)
         
         titleLabel.setup(with: viewModel?.title)
-        titleLabel.isHidden = viewModel?.title == nil
+        titleLabel.isHidden = viewModel?.subtitle == nil
         
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
@@ -143,9 +143,9 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.isHidden = viewModel?.logo == nil
         
         arrowImageView.setup(with: viewModel?.arrow)
-        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden) || viewModel?.userInteractionEnabled == false
+        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden)
         
-        let moreOption = viewModel?.expiration != nil && titleLabel.isHidden // TODO: add check if error here
+        let moreOption = viewModel?.expiration != nil && titleLabel.isHidden
         
         cardDetailsView.setup(with: .init(logo: viewModel?.logo,
                                           title: titleLabel.isHidden == true ? viewModel?.title : nil,
@@ -165,6 +165,8 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
     }
     
     @objc private func cardSelectorTapped() {
+        // Payment method shouldn't be tappable if there is an error with it
+        guard viewModel?.errorMessage == nil else { return }
         didTapSelectCard?()
     }
     

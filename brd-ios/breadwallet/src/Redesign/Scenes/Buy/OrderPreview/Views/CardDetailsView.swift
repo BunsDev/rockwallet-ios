@@ -82,6 +82,12 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         let view = FELabel()
         return view
     }()
+    
+    private lazy var errorIndicator: UIImageView = {
+        let view = UIImageView(image: Asset.redWarning.image)
+        view.isHidden = true
+        return view
+    }()
 
     override func setupSubviews() {
         super.setupSubviews()
@@ -96,6 +102,13 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         selectorStack.addArrangedSubview(logoImageView)
         logoImageView.snp.makeConstraints { make in
             make.width.lessThanOrEqualTo(ViewSizes.medium.rawValue)
+        }
+        
+        logoImageView.addSubview(errorIndicator)
+        errorIndicator.snp.makeConstraints { make in
+            make.width.height.equalTo(ViewSizes.extraExtraSmall.rawValue)
+            make.centerX.equalTo(logoImageView.snp.trailing)
+            make.bottom.equalTo(logoImageView.snp.bottom)
         }
         
         selectorStack.addArrangedSubview(titleStack)
@@ -113,6 +126,7 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         }
         
         selectorStack.addArrangedSubview(expirationLabel)
+        selectorStack.addArrangedSubview(UIView())
         
         selectorStack.addArrangedSubview(moreButton)
         moreButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
@@ -150,9 +164,10 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         
         errorLabel.setup(with: viewModel?.errorMessage)
         errorLabel.isHidden = viewModel?.errorMessage == nil
+        errorIndicator.isHidden = errorLabel.isHidden
         
         guard let moreOption = viewModel?.moreOption else { return }
-        moreButton.isHidden = !moreOption && viewModel?.errorMessage == nil
+        moreButton.isHidden = !moreOption || viewModel?.errorMessage != nil
     }
     
     @objc private func moreButtonTapped(_ sender: UIButton?) {
