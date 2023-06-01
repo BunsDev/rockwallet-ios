@@ -46,7 +46,7 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    logo: model.displayImage,
                                    cardNumber: .text(model.displayName),
                                    expiration: .text(CardDetailsFormatter.formatExpirationDate(month: model.expiryMonth, year: model.expiryYear)),
-                                   errorMessage: .text("Temporarly unavailable, please contact support")))
+                                   errorMessage: .text(L10n.PaymentMethod.unavailable)))
             
             view.moreButtonCallback = { [weak self] in
                 self?.interactor?.showActionSheetRemovePayment(viewAction: .init(instrumentId: model.id,

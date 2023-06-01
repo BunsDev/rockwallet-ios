@@ -95,7 +95,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                       cardNumber: .text(paymentCard.displayName),
                                       userInteractionEnabled: false,
                                       // TODO: Replace with error from paymentCard)
-                                      errorMessage: .text("Temporarly unavailable, please contact support"))
+                                      errorMessage: .text(L10n.PaymentMethod.unavailable))
                     
                 default:
                     cardModel = .init(title: .text(L10n.Buy.achPayments),
@@ -122,7 +122,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                                   userInteractionEnabled: true,
                                   // TODO: Replace with error from paymentCard)
-                                  errorMessage: .text("Temporarly unavailable, please contact support"))
+                                  errorMessage: .text(L10n.PaymentMethod.unavailable))
             } else {
                 cardModel = .init(userInteractionEnabled: true)
             }
