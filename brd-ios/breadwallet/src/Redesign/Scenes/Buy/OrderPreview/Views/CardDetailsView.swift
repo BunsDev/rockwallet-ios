@@ -14,7 +14,7 @@ struct CardDetailsConfiguration: Configurable {
     var logo: BackgroundConfiguration? = .init(tintColor: LightColors.Text.two)
     var title: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Text.two, numberOfLines: 1)
     var cardNumber: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one, numberOfLines: 1)
-    var expiration: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two)
+    var expiration: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)
     var moreButton: BackgroundConfiguration? = Presets.Background.Secondary.selected
     var error: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Error.one)
 }
@@ -118,12 +118,6 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         
         titleStack.addArrangedSubview(titleLabel)
         titleStack.addArrangedSubview(cardNumberLabel)
-        
-        let spacer = UIView()
-        selectorStack.addArrangedSubview(spacer)
-        spacer.snp.makeConstraints { make in
-            make.width.lessThanOrEqualToSuperview().priority(.low)
-        }
         
         selectorStack.addArrangedSubview(expirationLabel)
         selectorStack.addArrangedSubview(UIView())

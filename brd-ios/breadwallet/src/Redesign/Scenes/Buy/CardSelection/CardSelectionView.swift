@@ -18,6 +18,7 @@ struct CardSelectionConfiguration: Configurable {
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
                                                      border: Presets.Border.mediumPlain)
+    var cardDetails: CardDetailsConfiguration? = .init()
 }
 
 struct CardSelectionViewModel: ViewModel {
@@ -75,6 +76,16 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         return view
     }()
     
+    var hasError: Bool = false {
+        didSet {
+            let textColor = hasError ? LightColors.Text.two : LightColors.Text.one
+            config?.cardDetails?.cardNumber = LabelConfiguration(font: Fonts.Subtitle.two, textColor: textColor, numberOfLines: 1)
+            config?.cardDetails?.expiration = LabelConfiguration(font: Fonts.Subtitle.two, textColor: textColor)
+            
+            configure(with: config)
+        }
+    }
+    
     override func setupSubviews() {
         super.setupSubviews()
         
@@ -96,10 +107,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                 
         mainStack.addArrangedSubview(cardDetailsView)
         
-//        cardDetailsView.snp.makeConstraints { make in
-//            make.height.equalTo(ViewSizes.medium.rawValue)
-//        }
-        
         containerStack.addArrangedSubview(spacerView)
         spacerView.snp.makeConstraints { make in
             make.width.lessThanOrEqualToSuperview().priority(.low)
@@ -119,7 +126,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.configure(with: config)
         titleLabel.configure(with: config?.title)
         subtitleLabel.configure(with: config?.subtitle)
-        cardDetailsView.configure(with: .init())
+        cardDetailsView.configure(with: config?.cardDetails)
         arrowImageView.configure(with: config?.arrow)
         
         configure(background: config?.background)
@@ -135,6 +142,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
         
+        // TODO: Shouldn't be in viewmodel setup
         subtitleLabel.configure(with: .init(font: Fonts.Title.six,
                                             textColor: LightColors.Text.three,
                                             textAlignment: .center,
@@ -153,6 +161,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                                           expiration: viewModel?.expiration,
                                           moreOption: moreOption,
                                           errorMessage: viewModel?.errorMessage))
+        hasError = viewModel?.errorMessage != nil
         
         spacerView.isHidden = arrowImageView.isHidden
         guard viewModel?.userInteractionEnabled == true else {

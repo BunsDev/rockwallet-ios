@@ -29,7 +29,15 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
         if !profile.status.hasKYCLevelTwo {
             navigationItems = navigationItems.filter { $0 != .paymentMethods }
         }
-        let navigationModel = navigationItems.compactMap { $0.model }
+        var navigationModel = navigationItems.compactMap { item in
+            var model = item.model
+            
+            if item == .paymentMethods { // TODO: add check if there is error on any of payment methods
+                model.showError = true
+            }
+            
+            return model
+        }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .profile: [
