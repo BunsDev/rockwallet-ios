@@ -22,7 +22,6 @@ protocol SwapViewActions: BaseViewActions, FetchViewActions, AssetViewActions, C
     func confirm(viewAction: SwapModels.Confirm.ViewAction)
     func showAssetInfoPopup(viewAction: SwapModels.AssetInfoPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction)
-    func prepareFees(viewAction: SwapModels.Fee.ViewAction)
 }
 
 protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, AssetActionResponses {

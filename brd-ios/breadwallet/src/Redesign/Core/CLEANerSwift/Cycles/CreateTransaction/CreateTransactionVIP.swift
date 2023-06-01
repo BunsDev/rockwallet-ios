@@ -143,18 +143,14 @@ extension Interactor where Self: CreateTransactionViewActions,
     }
     
     func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((FEError?) -> Void)?) {
-        guard let from = viewAction.fromAmount,
-              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
-              let sender = dataStore?.sender else {
-            completion?(ExchangeErrors.noFees)
-            
-            return
-        }
-        
+        dataStore?.fromFeeBasis = nil
         dataStore?.senderValidationResult = nil
         
-        guard from.fiatValue <= viewAction.limit ?? 0 else {
-            completion?(nil)
+        guard let from = viewAction.fromAmount,
+              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
+              let sender = dataStore?.sender,
+              from.fiatValue <= viewAction.limit ?? 0 else {
+            completion?(ExchangeErrors.noFees)
             
             return
         }
@@ -163,9 +159,10 @@ extension Interactor where Self: CreateTransactionViewActions,
                           with: sender,
                           address: fromAddress) { [weak self] fee in
             self?.dataStore?.fromFeeBasis = fee
-            self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
+            self?.dataStore?.senderValidationResult = sender.validate(amount: from,
+                                                                      feeBasis: self?.dataStore?.fromFeeBasis)
             
-            completion?(nil)
+            completion?(fee == nil ? ExchangeErrors.noFees : nil)
         }
     }
 }
