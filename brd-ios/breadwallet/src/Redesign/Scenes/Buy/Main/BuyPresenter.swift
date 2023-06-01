@@ -93,7 +93,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                       subtitle: nil,
                                       logo: .image(Asset.bank.image),
                                       cardNumber: .text(paymentCard.displayName),
-                                      userInteractionEnabled: false)
+                                      userInteractionEnabled: false,
+                                      // TODO: Replace with error from paymentCard)
+                                      errorMessage: .text(L10n.PaymentMethod.unavailable))
                     
                 default:
                     cardModel = .init(title: .text(L10n.Buy.achPayments),
@@ -118,7 +120,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                 cardModel = .init(logo: paymentCard.displayImage,
                                   cardNumber: .text(paymentCard.displayName),
                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
-                                  userInteractionEnabled: true)
+                                  userInteractionEnabled: true,
+                                  // TODO: Replace with error from paymentCard)
+                                  errorMessage: .text(L10n.PaymentMethod.unavailable))
             } else {
                 cardModel = .init(userInteractionEnabled: true)
             }

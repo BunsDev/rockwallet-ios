@@ -1748,6 +1748,10 @@ internal enum L10n {
     /// Try with debit card
     internal static let tryWithDebit = L10n.tr("Localizable", "PaymentConfirmation.TryWithDebit", fallback: "Try with debit card")
   }
+  internal enum PaymentMethod {
+    /// Temporarily unavailable, please contact support
+    internal static let unavailable = L10n.tr("Localizable", "PaymentMethod.Unavailable", fallback: "Temporarily unavailable, please contact support")
+  }
   internal enum PaymentProtocol {
     internal enum Errors {
       /// Bad Payment request alert title
