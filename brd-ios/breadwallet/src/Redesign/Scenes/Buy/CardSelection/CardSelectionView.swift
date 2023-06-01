@@ -78,9 +78,8 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
     
     var hasError: Bool = false {
         didSet {
-            let textColor = hasError ? LightColors.Text.two : LightColors.Text.one
-            config?.cardDetails?.cardNumber = LabelConfiguration(font: Fonts.Subtitle.two, textColor: textColor, numberOfLines: 1)
-            config?.cardDetails?.expiration = LabelConfiguration(font: Fonts.Subtitle.two, textColor: textColor)
+            config?.cardDetails?.cardNumber = hasError ? config?.cardDetails?.cardNumberError : config?.cardDetails?.cardNumber
+            config?.cardDetails?.expiration = hasError ? config?.cardDetails?.expirationError : config?.cardDetails?.expiration
             
             configure(with: config)
         }
