@@ -47,13 +47,13 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         getPayments(viewAction: .init(), completion: { [weak self] in
             self?.dataStore?.selected = self?.dataStore?.paymentMethod == .ach ? self?.dataStore?.ach : (self?.dataStore?.selected ?? self?.dataStore?.cards.first)
             
-            self?.getExchangeRate(viewAction: .init(), completion: { [weak self] in
+            self?.getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
                 self?.setPresentAmountData(handleErrors: false)
             })
         })
     }
     
-    func prepareFees(viewAction: SellModels.Fee.ViewAction) {
+    func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?) {
         guard let from = amount,
               let profile = UserManager.shared.profile else {
             return
@@ -97,9 +97,9 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
            let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == value }) {
             amount = .zero(currency)
             
-            prepareFees(viewAction: .init())
+            prepareFees(viewAction: .init(), completion: {})
             
-            getExchangeRate(viewAction: .init(), completion: { [weak self] in
+            getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
                 self?.setPresentAmountData(handleErrors: false)
             })
             

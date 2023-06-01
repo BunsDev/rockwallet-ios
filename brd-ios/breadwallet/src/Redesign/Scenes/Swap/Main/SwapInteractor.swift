@@ -48,7 +48,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         
         presenter?.presentData(actionResponse: .init(item: Models.Item(fromAmount: dataStore?.fromAmount,
                                                                        toAmount: dataStore?.toAmount)))
-        setInitialData(getFees: true)
+        setInitialData()
     }
     
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {
@@ -68,15 +68,15 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.dataStore?.fromRate = Decimal(data.first(where: { $0.id == baseCurrency })?.price ?? 0)
                 self?.dataStore?.toRate = Decimal(data.first(where: { $0.id == termCurrency })?.price ?? 0)
                 
-                completion?()
-                
                 guard viewAction.getFees else {
+                    completion?()
+                    
                     self?.setPresentAmountData(handleErrors: true)
                     
                     return
                 }
                 
-                self?.prepareFees(viewAction: .init())
+                self?.prepareFees(viewAction: .init(), completion: completion)
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -86,16 +86,17 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         }
         
         CoinGeckoClient().load(resource)
-        generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
-                                         coreSystem: dataStore?.coreSystem,
-                                         keyStore: dataStore?.keyStore))
     }
     
-    func prepareFees(viewAction: SwapModels.Fee.ViewAction) {
+    func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?) {
         guard let from = dataStore?.fromAmount,
               let profile = UserManager.shared.profile else {
             return
         }
+        
+        generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
+                                         coreSystem: dataStore?.coreSystem,
+                                         keyStore: dataStore?.keyStore))
         
         getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] error in
             if let error {
@@ -103,6 +104,8 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             } else {
                 self?.setPresentAmountData(handleErrors: true)
             }
+            
+            completion?()
         })
     }
     
@@ -113,10 +116,10 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         dataStore?.fromAmount = .zero(to)
         dataStore?.toAmount = .zero(from)
         
-        setInitialData(getFees: true)
+        setInitialData()
     }
     
-    private func setInitialData(getFees: Bool) {
+    private func setInitialData() {
         dataStore?.quote = nil
         dataStore?.fromRate = nil
         dataStore?.toRate = nil
@@ -125,7 +128,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         
         presenter?.presentError(actionResponse: .init(error: nil))
         
-        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+        getExchangeRate(viewAction: .init(getFees: true), completion: { [weak self] in
             self?.setPresentAmountData(handleErrors: false)
         })
     }
@@ -212,7 +215,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             dataStore?.fromAmount = .zero(from)
         }
         
-        setInitialData(getFees: true)
+        setInitialData()
     }
     
     func selectAsset(viewAction: SwapModels.Assets.ViewAction) {

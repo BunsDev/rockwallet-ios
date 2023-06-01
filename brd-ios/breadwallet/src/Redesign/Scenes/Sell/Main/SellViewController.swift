@@ -40,7 +40,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         super.setupSubviews()
         
         didTriggerExchangeRate = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(), completion: {})
+            self?.interactor?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
         }
     }
     

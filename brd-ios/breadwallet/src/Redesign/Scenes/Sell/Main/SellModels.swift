@@ -10,10 +10,6 @@ import UIKit
 import WalletKit
 
 enum SellModels {
-    struct Fee {
-        struct ViewAction {}
-    }
-    
     struct Limits {
         struct ActionResponse {
             var min: Decimal?
