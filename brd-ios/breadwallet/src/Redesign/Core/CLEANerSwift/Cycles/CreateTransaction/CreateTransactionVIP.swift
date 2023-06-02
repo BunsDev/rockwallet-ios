@@ -43,15 +43,15 @@ extension Interactor where Self: CreateTransactionViewActions,
             return
         }
         
-        dataStore?.sender?.reset()
+        generateSender(viewAction: .init(fromAmountCurrency: currency))
         
+        guard let sender = dataStore?.sender else {
+            completion?(ExchangeErrors.noFees)
+            
+            return
+        }
+            
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
-        guard let wallet = dataStore?.coreSystem?.wallet(for: amount.currency),
-              let keyStore = dataStore?.keyStore,
-              let kvStore = Backend.kvStore else { return }
-        
-        let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
-        
         let transaction = sender.createTransaction(address: destination,
                                                    amount: amount,
                                                    feeBasis: fromFeeBasis,

@@ -174,15 +174,6 @@ class ApplicationController: Subscriber {
             self.setupRootViewController()
             self.decideFlow()
         }
-        
-        Store.subscribe(self, name: .refreshToken) { [weak self] _ in
-            guard let account = self?.coreSystem.currenctAccount else { return }
-            
-            Backend.disconnectWallet()
-            self?.coreSystem.shutdown(completion: {
-                self?.setupSystem(with: account)
-            })
-        }
     }
     
     private func setupKeyboard() {

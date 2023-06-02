@@ -88,8 +88,6 @@ class UserManager: NSObject {
         UserDefaults.email = email
         UserDefaults.sessionToken = sessionToken
         UserDefaults.sessionTokenHash = sessionTokenHash
-        
-        Store.trigger(name: .refreshToken)
     }
     
     func resetUserCredentials() {
