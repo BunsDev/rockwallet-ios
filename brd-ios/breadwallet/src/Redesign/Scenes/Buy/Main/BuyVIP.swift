@@ -47,14 +47,12 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, TwoStepDataStore {
+protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, TwoStepDataStore, CreateTransactionDataStore {
     var from: Decimal? { get set }
     var to: Decimal? { get set }
     var toAmount: Amount? { get set }
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }
-    var coreSystem: CoreSystem? { get set }
-    var keyStore: KeyStore? { get set }
     var publicToken: String? { get set }
     var mask: String? { get set }
     var availablePayments: [PaymentCard.PaymentType] { get set }

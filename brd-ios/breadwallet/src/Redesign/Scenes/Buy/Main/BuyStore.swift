@@ -74,6 +74,11 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
+    
+    var sender: Sender?
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
+    
     var canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess
     
     // MARK: - TwoStepDataStore
