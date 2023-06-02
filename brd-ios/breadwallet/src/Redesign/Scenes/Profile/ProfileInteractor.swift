@@ -52,7 +52,7 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
             case .success:
                 UserManager.shared.resetUserCredentials()
                 self?.presenter?.presentLogout(actionResponse: .init())
-
+                
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
