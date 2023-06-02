@@ -94,9 +94,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             return
         }
         
-        generateSender(viewAction: .init(fromAmount: dataStore?.fromAmount,
-                                         coreSystem: dataStore?.coreSystem,
-                                         keyStore: dataStore?.keyStore))
+        generateSender(viewAction: .init(fromAmountCurrency: dataStore?.fromAmount?.currency))
         
         getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] error in
             if let error {
