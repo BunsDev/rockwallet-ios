@@ -88,6 +88,8 @@ class UserManager: NSObject {
         UserDefaults.email = email
         UserDefaults.sessionToken = sessionToken
         UserDefaults.sessionTokenHash = sessionTokenHash
+        
+        Store.trigger(name: .refreshToken)
     }
     
     func resetUserCredentials() {
@@ -100,6 +102,8 @@ class UserManager: NSObject {
         UserManager.shared.profile = nil
         UserManager.shared.profileResult = nil
         UserManager.shared.error = nil
+        
+        Store.trigger(name: .refreshToken)
         
         PromptFactory.shared.presentedPopups.removeAll()
         for type in PromptType.defaultTypes {
