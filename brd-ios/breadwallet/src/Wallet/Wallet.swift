@@ -102,7 +102,6 @@ class Wallet {
                              fee: FeeLevel,
                              isStake: Bool,
                              completion: @escaping (Result<TransferFeeBasis, Error>) -> Void) {
-//        guard let target = WalletKit.Address.create(string: address, network: core.manager.network) else { return }
         var addressCreated = WalletKit.Address.create(string: address, network: core.manager.network)
         if addressCreated == nil {
             addressCreated = WalletKit.Address.createLegacy(string: address, network: core.manager.network)

@@ -191,7 +191,7 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         
         self.currentUri = uri
         
-        let result = QRCode(content: uri)
+        let result = QRCode(content: uri, currencyRestriction: paymentRequestCurrencyRestriction)
         
         guard .invalid != result else {
             guide.state = .negative

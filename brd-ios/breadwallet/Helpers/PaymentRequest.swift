@@ -74,6 +74,13 @@ struct PaymentRequest {
             return
         }
         
+        if Address.createLegacy(string: string, network: currency.network) != nil {
+            let currencyBTC = Store.state.currencies.filter { currency in currency.network.name == "Bitcoin" }.first
+            toAddress = Address.create(string: string, network: currencyBTC?.network ?? currency.network)
+            type = .local
+            return
+        }
+        
         //Case: Incoming string is a url
         //By this stage, we know it's not an address, so if it's also
         //not a url, it's unparsable
