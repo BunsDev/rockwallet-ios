@@ -77,24 +77,29 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
             case .settings:
                 self.coordinator?.showTwoStepSettings()
                 
-            case .disable:
-                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepDisable)
-                
             default:
-                guard UserManager.shared.twoStepSettings?.type == nil else {
-                    self.changeMethod(indexPath: indexPath)
-                    return
-                }
-                
                 self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
                     guard success else { return }
                     
                     switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
                     case .email:
+                        guard UserManager.shared.twoStepSettings?.type == nil else {
+                            self.changeMethod(indexPath: indexPath)
+                            return
+                        }
+                        
                         self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
                         
                     case .app:
+                        guard UserManager.shared.twoStepSettings?.type == nil else {
+                            self.changeMethod(indexPath: indexPath)
+                            return
+                        }
+                        
                         self.coordinator?.showAuthenticatorApp()
+                        
+                    case .disable:
+                        self.disableMethod(indexPath: indexPath)
                         
                     default:
                         break
@@ -137,6 +142,16 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         let alert = UIAlertController(title: L10n.TwoStep.Change.title, message: L10n.TwoStep.Change.message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: { [weak self] _ in
             self?.interactor?.changeMethod(viewAction: .init(indexPath: indexPath))
+        }))
+        alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
+        
+        coordinator?.navigationController.present(alert, animated: true)
+    }
+    
+    private func disableMethod(indexPath: IndexPath) {
+        let alert = UIAlertController(title: L10n.TwoStep.Disable.title, message: L10n.TwoStep.Disable.message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: { [weak self] _ in
+            self?.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepDisable)
         }))
         alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
         
