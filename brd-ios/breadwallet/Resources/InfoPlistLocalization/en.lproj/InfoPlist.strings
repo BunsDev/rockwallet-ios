@@ -314,7 +314,7 @@
 /* Enter the code message in create account flow */
 "AccountCreation.EnterCode" = "Please enter the code we’ve sent to";
 
-"AccountCreation.EnterCode.android" = "Enter the code we\’ve sent to:\n%s";
+"AccountCreation.EnterCode.android" = "Enter the code we\’ve sent to:\n%@";
 
 /* Creating Account progress Label */
 "AccountCreation.error" = "An error occurred during account creation. Please try again later.";
@@ -840,7 +840,7 @@
 
 "Buy.Ach.Instant.InfoButtonTitle" = "Receive up to $500.00 instantly";
 
-"Buy.Ach.Instant.InfoButtonTitle.android" = "Receive up to %s instantly";
+"Buy.Ach.Instant.InfoButtonTitle.android" = "Receive up to %@ instantly";
 
 "Buy.Ach.Instant.OrderPreview.HybridNotice" = "With Instant Buy, %@ will be settled immediately. Remaining %@ will settle in 3-5 days.";
 
@@ -872,7 +872,7 @@
 
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@\n\nIt currently takes 3-5 days to process a purchase with ACH.";
 
-"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.";
+"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
 
 "Buy.achPaymentDurationWarning" = "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.";
 
@@ -911,7 +911,7 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@";
 
-"Buy.BuyLimits.android" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.";
+"Buy.BuyLimits.android" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -1189,7 +1189,7 @@
 /* eg. Processing time: This transaction is predicted to complete in [10-60 minutes]. */
 "Confirmation.processingTime" = "Processing time: This transaction is predicted to complete in %@.";
 
-"Confirmation.processingTime.android" = "Estimated delivery time: %s";
+"Confirmation.processingTime.android" = "Estimated delivery time: %@";
 
 /* Label for "send" button on final confirmation screen */
 "Confirmation.send" = "Send";
@@ -1363,7 +1363,7 @@
 /* Accepts 2 parameters:, - first currency code, - second currency code */
 "ErrorMessages.noQuoteForPair" = "No quote for currency pair %@-%@.";
 
-"ErrorMessages.notEnoughBalance" = "You don’t have enough %s in your wallet in order to transfer this type of token.";
+"ErrorMessages.notEnoughBalance" = "You don’t have enough %@ in your wallet in order to transfer this type of token.";
 
 "ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
@@ -1659,7 +1659,7 @@
 /* No permissions for location services */
 "LocationPlugin.notAuthorized" = "RockWallet does not have permission to access location services.";
 
-"LoginController.invalidPinError" = "Incorrect PIN. The wallet will get disabled after %d more failed %s.";
+"LoginController.invalidPinError" = "Incorrect PIN. The wallet will get disabled after %d more failed %@.";
 
 /* Wallet creation date prefix */
 "ManageWallet.creationDatePrefix" = "You created your wallet on %@";
@@ -2416,7 +2416,7 @@
 
 "Sell.SellLimits" = "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
 
-"Sell.SellLimits1" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.";
+"Sell.SellLimits1" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.";
 
 "Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
 
@@ -2766,7 +2766,7 @@
 /* Baker cell: Fee field header */
 "Staking.feeHeader" = "Fee:";
 
-"Staking.feePct" = "Fee: %s";
+"Staking.feePct" = "Fee: %@";
 
 "Staking.loadingBakerError" = "An error occurred while loading baker information. Please try again later.";
 
