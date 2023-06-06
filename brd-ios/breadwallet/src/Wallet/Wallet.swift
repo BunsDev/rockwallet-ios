@@ -102,7 +102,12 @@ class Wallet {
                              fee: FeeLevel,
                              isStake: Bool,
                              completion: @escaping (Result<TransferFeeBasis, Error>) -> Void) {
-        guard let target = WalletKit.Address.create(string: address, network: core.manager.network) else { return }
+//        guard let target = WalletKit.Address.create(string: address, network: core.manager.network) else { return }
+        var addressCreated = WalletKit.Address.create(string: address, network: core.manager.network)
+        if addressCreated == nil {
+            addressCreated = WalletKit.Address.createLegacy(string: address, network: core.manager.network)
+        }
+        guard addressCreated != nil, let target = addressCreated else { return }
         let networkFee = feeForLevel(level: fee)
         
         //Stake/Unstake transactions need the DelegationOp attributed or else the
