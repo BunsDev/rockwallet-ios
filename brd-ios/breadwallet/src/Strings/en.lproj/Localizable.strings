@@ -31,6 +31,8 @@
 /* Support center accessibiliy label */
 "AccessibilityLabels.faq" = "Support Center";
 
+"Account.2FA.pasteFollowingCodeInAuthApp" = "Paste the following code in your authenticator app.";
+
 /* Account limits title in profile view */
 "Account.AccountLimits" = "Account limits";
 
@@ -39,7 +41,13 @@
 
 "Account.AchDailyLimits" = "Daily (ACH)";
 
+"Account.AddressMandatory" = "Address*";
+
 "Account.AlreadyCreated" = "Already have an account?";
+
+"Account.Attempt" = "attempt";
+
+"Account.Attempts" = "attempts";
 
 /* Account balance */
 "Account.balance" = "Your balance";
@@ -82,6 +90,10 @@
 
 "Account.Daily" = "Daily";
 
+"Account.DailyLimitAchExtension" = "(ACH)";
+
+"Account.DailyLimitCardExtension" = "(Card)";
+
 /* Issues for processing your data label on profile screen */
 "Account.DataIssues" = "Oops! We had some issues processing your data";
 
@@ -96,6 +108,10 @@
 /* Delisted token alert banner message */
 "Account.delistedToken" = "This token has been delisted. \n\nYou may still be able to send these tokens to another platform. For more details, visit our support page.";
 
+"Account.delistedToken.android" = "You may still be able to send these tokens to another platform. For more details, visit our support page.";
+
+"Account.delistedTokenTitle.android" = "This token has been delisted";
+
 "Account.Email" = "Email";
 
 "Account.EmailAddress.Title" = "Email address";
@@ -103,6 +119,10 @@
 "Account.EnterEmail" = "Enter your e-mail";
 
 "Account.EnterPassword" = "Enter your password";
+
+"Account.EnterYourPhoneNumber" = "Enter your phone number";
+
+"Account.EnterYourPhoneNumberSubtitle" = "To ensure that you can access all the features of our app, we need to collect your phone number. We\'ll keep your information safe and won\'t share it with anyone";
 
 /* $10000 per BTC */
 "Account.exchangeRate" = "%@ per %@";
@@ -139,14 +159,14 @@
 
 "Account.Logout" = "Log out";
 
-"Account.LogoutMessage" = "You’ve been successfully logged out you RockWallet account. Your self-custodial wallet is still linked to this device.";
+"Account.LogoutMessage" = "You’ve been successfully logged out of your RockWallet account. Your self-custodial wallet is still linked to this device.";
 
 "Account.MandatoryFields" = "(*)Mandatory Fields";
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "Verify your account to get full access to your RockWallet!";
 
-"Account.MissingDataPromptText" = "Please fill in the missing information  to use your RockWallet seamlessly.";
+"Account.MissingDataPromptText" = "Please fill in the missing information to use your RockWallet seamlessly.";
 
 "Account.MissingDataPromptTitle" = "Add the missing information";
 
@@ -168,7 +188,7 @@
 "Account.PostalCode" = "Postal Code*";
 
 /* Promotion and offers label when registering account */
-"Account.Promotion" = "I'm ok with receiving future promotion, offers, and communications";
+"Account.Promotion" = "I'm ok with receiving future promotion, offers and communications";
 
 "Account.PromotionsTickbox" = "I’m ok with receiving future promotion, offers and communications";
 
@@ -194,7 +214,7 @@
 
 "Account.SocialSecurityNumber" = "Social Security Number";
 
-"Account.SocialSecurityNumberRequired" = "Social security number*";
+"Account.SocialSecurityNumberRequired" = "Social Security number*";
 
 "Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
 
@@ -230,7 +250,7 @@
 
 "Account.VerificationUnsuccessful" = "We're sorry, your verification was unsuccessful";
 
-"Account.VerificationUnsuccessful.description" = "Please try your verification again, while keeping the following in mind:\n\n- Please ensure the area is well-lit\n- Please ensure you are centered in the frame";
+"Account.VerificationUnsuccessful.description" = "Please try your verification again, while keeping the following in mind:\n\n・ Please ensure the area is well-lit\n・ Please ensure you are centered in the frame";
 
 "Account.Verified" = "Verified";
 
@@ -241,7 +261,7 @@
 
 "Account.VerifiedAccountTitle" = "Your account is verified!";
 
-"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.";
+"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations. Verify your account by clicking 'Profile' then 'Verification'.";
 
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
@@ -293,6 +313,8 @@
 
 /* Enter the code message in create account flow */
 "AccountCreation.EnterCode" = "Please enter the code we’ve sent to";
+
+"AccountCreation.EnterCode.android" = "Enter the code we\’ve sent to:\n%s";
 
 /* Creating Account progress Label */
 "AccountCreation.error" = "An error occurred during account creation. Please try again later.";
@@ -414,7 +436,7 @@
 "AccountKYCLevelTwo.Limits" = "Swap limits: $%@ USD/day, no lifetime limit";
 
 /* Make sure before photo label in KYC2 */
-"AccountKYCLevelTwo.MakeSure" = "Make sure you are in a well-lit room";
+"AccountKYCLevelTwo.MakeSure" = "Make sure you are in a well-lit room.";
 
 "AccountKYCLevelTwo.NationalIdCard" = "National ID card";
 
@@ -554,7 +576,9 @@
 "Alerts.walletRestored" = "Recovery Phrase correct";
 
 /* Error label on XRP send amount screen */
-"Amount.MinXRPAmount" = "The minimum required ammount is 10 XRP.";
+"Amount.MinXRPAmount" = "The minimum required amount is 10 XRP.";
+
+"Amount.MinXRPAmount.android" = "The minimum required amount is %d XRP.";
 
 /* Ripple balance title */
 "Amount.RippleBalance" = "XRP Balance";
@@ -686,10 +710,14 @@
 /* Button label to open a email compose window with our support email in the to field. */
 "Button.contactSupport.android" = "Contact Support";
 
+"Button.contactSupport.android.underlined" = "Contact Support";
+
 /* prompt continue button */
 "Button.continueAction" = "Continue";
 
 "Button.Convert" = "Convert";
+
+"Button.copy" = "Copy";
 
 /* prompt dismiss button */
 "Button.dismiss" = "Dismiss";
@@ -703,6 +731,8 @@
 "Button.Finish" = "Finish";
 
 "Button.FundWalletWithAch" = "Fund your wallet with ACH";
+
+"Button.gotIt" = "Got it";
 
 /* Go to dashboard button */
 "Button.GoToDashboard" = "Go to dashboard";
@@ -721,7 +751,7 @@
 "Button.map" = "Map";
 
 /* Maybe Later button label */
-"Button.maybeLater" = "Maybe later";
+"Button.maybeLater" = "Maybe Later";
 
 /* menu button */
 "Button.menu" = "Menu";
@@ -730,6 +760,8 @@
 "Button.moreInfo" = "More info";
 
 "Button.moreLimits" = "More limits";
+
+"Button.next" = "Next";
 
 /* No button */
 "Button.no" = "No";
@@ -800,15 +832,17 @@
 
 "Buy.Ach.Instant.ConfirmationDrawer.Notice" = "Instant purchase";
 
-"Buy.Ach.Instant.ConfirmationDrawer.Title" = "Puchase with Instant Buy";
+"Buy.Ach.Instant.ConfirmationDrawer.Title" = "Purchase with Instant Buy";
 
 "Buy.Ach.Instant.Fee.Title" = "Instant Buy fee";
 
-"Buy.Ach.Instant.HybridConfirmationDrawer" = "With Instant buy, %@ (%@) will show in your in your account instantly. The remaining %@ (%@) will arrive\n in 3-5 days.";
+"Buy.Ach.Instant.HybridConfirmationDrawer" = "With Instant buy, %@ (%@) will show in your account instantly. The remaining %@ (%@) will arrive in 3-5 days.";
 
 "Buy.Ach.Instant.InfoButtonTitle" = "Receive up to $500.00 instantly";
 
-"Buy.Ach.Instant.OrderPreview.HybridNotice" = "With Instant Buy %@ will be settled immediately. Remaining %@ will settle in 3-5 days.";
+"Buy.Ach.Instant.InfoButtonTitle.android" = "Receive up to %s instantly";
+
+"Buy.Ach.Instant.OrderPreview.HybridNotice" = "With Instant Buy, %@ will be settled immediately. Remaining %@ will settle in 3-5 days.";
 
 "Buy.Ach.Instant.OrderPreview.Notice" = "With Instant Buy, %@ will be settled immediately.";
 
@@ -830,9 +864,15 @@
 
 "Buy.Ach.WalletDisabled.ManageAssets" = "Manage assets";
 
+"Buy.achBuyDisclaimer" = "It currently takes 3–5 days to process a purchase with ACH";
+
 "Buy.achFee" = "ACH fee (%@)";
 
+"Buy.achFee.android" = "ACH fee";
+
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@\n\nIt currently takes 3-5 days to process a purchase with ACH.";
+
+"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.";
 
 "Buy.achPaymentDurationWarning" = "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.";
 
@@ -871,7 +911,7 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@";
 
-"Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
+"Buy.BuyLimits.android" = "Currently, minimum for Buy is %s USD and maximum is %s USD per day.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -905,11 +945,13 @@
 /* Please confirm your CVV label in payment view */
 "Buy.ConfirmCVV" = "Please confirm your CVV";
 
+"Buy.ConfirmingPayment" = "Confirming payment";
+
 "Buy.Country" = "Country";
 
 "Buy.CvvHint" = "XXX";
 
-"Buy.dailyMaLimits" = "Daily max";
+"Buy.dailyMaxLimits" = "Daily max";
 
 "Buy.dailyMinLimits" = "Daily min";
 
@@ -997,7 +1039,7 @@
 "Buy.SecurityCodePopup" = "Please enter the 3 digit CVV number as it appears on the back of your card";
 
 /* Select a payment method button title in buy flow */
-"Buy.SelectPaymentMethod" = "Select a payment method";
+"Buy.SelectPaymentMethod" = "Select payment method";
 
 /* State/Province label in billing address view on buy flow */
 "Buy.StateProvince" = "State/Province";
@@ -1118,6 +1160,8 @@
 
 "ComingSoon.BuyDescription" = "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.";
 
+"ComingSoon.FeatureUnavailable.Subtitle" = "This feature is not available in your region. We will notify you when this becomes available.";
+
 "ComingSoon.SwapBuyTitle" = "This feature is not available for your account at this time.";
 
 "ComingSoon.SwapDescription" = "You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.";
@@ -1127,14 +1171,14 @@
 "CommonString.Or.label" = "Or";
 
 /* Amount to Send: ($1.00) */
-"Confirmation.amountLabel" = "Amount to Send:";
+"Confirmation.amountLabel" = "Amount to send";
 
 "Confirmation.destinationTag" = "Destination Tag";
 
 "Confirmation.destinationTag_EmptyHint" = "(empty)";
 
 /* Network Fee: ($1.00) */
-"Confirmation.feeLabel" = "Network Fee:";
+"Confirmation.feeLabel" = "Network fee";
 
 /* Network Fee: (ETH) */
 "Confirmation.feeLabelETH" = "Network Fee (ETH):";
@@ -1144,6 +1188,8 @@
 
 /* eg. Processing time: This transaction is predicted to complete in [10-60 minutes]. */
 "Confirmation.processingTime" = "Processing time: This transaction is predicted to complete in %@.";
+
+"Confirmation.processingTime.android" = "Estimated delivery time: %s";
 
 /* Label for "send" button on final confirmation screen */
 "Confirmation.send" = "Send";
@@ -1156,6 +1202,8 @@
 
 /* Total Cost: ($5.00) */
 "Confirmation.totalLabel" = "Total Cost:";
+
+"Confirmation.totalLabel.android" = "You'll receive";
 
 /* Validator address label on  confirmation screen */
 "Confirmation.ValidatorAddress" = "Validator Address";
@@ -1172,6 +1220,8 @@
 
 /* Word label eg. Word #1, Word #2 */
 "ConfirmPaperPhrase.word" = "Word %02i";
+
+"ConfirmPaperPhrase.word.android" = "Word %1$s%2$s";
 
 "CreateGift.amountLabel" = "Choose amount ($USD)";
 
@@ -1258,6 +1308,8 @@
 /* The currency amount is to low for exchange. Accepts 2 parameters:, - minimum amount, - currency code */
 "ErrorMessages.amountTooLow" = "The amount is lower than the minimum of %@ %@. Please enter a higher amount.";
 
+"ErrorMessages.appNotInstalled" = "You don\'t have an app installed to complete this action.";
+
 "ErrorMessages.authorizationFailed" = "Card authorization failed. Please contact your credit card issuer/bank or try another card.";
 
 /* Accepts 3 parameters:, - currency code, - current balance, - (same) currency code */
@@ -1311,6 +1363,8 @@
 /* Accepts 2 parameters:, - first currency code, - second currency code */
 "ErrorMessages.noQuoteForPair" = "No quote for currency pair %@-%@.";
 
+"ErrorMessages.notEnoughBalance" = "You don’t have enough %s in your wallet in order to transfer this type of token.";
+
 "ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overExchangeLimit" = "Over exchange limit.";
@@ -1325,7 +1379,7 @@
 
 "ErrorMessages.PlaidLinkToken" = "Unfortunately, an error occurred while linking the bank account. Please contact us for further support.";
 
-"ErrorMessages.selectAssets" = "In order to succesfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.";
+"ErrorMessages.selectAssets" = "In order to successfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.";
 
 /* Something went wrong message */
 "ErrorMessages.SomethingWentWrong" = "Oops! Something went wrong, please try again later.";
@@ -1399,6 +1453,8 @@
 /* Face Id spending limit screen title */
 "FaceIDSpendingLimit.title" = "Face ID Spending Limit";
 
+"Feedback.noEmailClient" = "Email client not found";
+
 /* Economy fee */
 "FeeSelector.economy" = "Economy";
 
@@ -1446,6 +1502,8 @@
 /* Switch label to enable fingerprint authentication to unlock BRD app */
 "FingerprintSettings.unlockApp" = "Use fingerprint to unlock RockWallet";
 
+"HomeScreen.accountDataUpdatedToastMessage" = "Your account data has been updated.";
+
 /* Activity button on the home screen toolbar */
 "HomeScreen.activity" = "Activity";
 
@@ -1457,6 +1515,8 @@
 
 /* home screen toolbar 'Buy & Sell' button */
 "HomeScreen.buyAndSell" = "Buy & Sell";
+
+"HomeScreen.home" = "Home";
 
 /* Menu button on the home screen toolbar */
 "HomeScreen.menu" = "Menu";
@@ -1598,6 +1658,8 @@
 
 /* No permissions for location services */
 "LocationPlugin.notAuthorized" = "RockWallet does not have permission to access location services.";
+
+"LoginController.invalidPinError" = "Incorrect PIN. The wallet will get disabled after %d more failed %s.";
 
 /* Wallet creation date prefix */
 "ManageWallet.creationDatePrefix" = "You created your wallet on %@";
@@ -1807,6 +1869,8 @@
 
 "PaymentConfirmation.TryWithDebit" = "Try with debit card";
 
+"PaymentMethod.Unavailable" = "Temporarily unavailable, please contact support";
+
 /* Bad Payment request alert title */
 "PaymentProtocol.Errors.badPaymentRequest" = "Your transaction request couldn’t be completed. Please try again.";
 
@@ -1834,11 +1898,19 @@
 /* Untrusted certificate payment protocol error message */
 "PaymentProtocol.Errors.untrustedCertificate" = "untrusted certificate";
 
+"PersonalInformation.Day" = "DD";
+
+"PersonalInformation.Month" = "MM";
+
+"PersonalInformation.Year" = "YYYY";
+
 "Platform.transaction_cancelled" = "Transaction Cancelled";
 
 "Prompts.ConnectionIssues.title" = "Connection issues";
 
 "Prompts.CreateAccount.body" = "With your RockWallet account you’ll be able to Swap and Buy seamlessly.";
+
+"Prompts.CreateAccount.title" = "Create your RockWallet account";
 
 /* Body text for a prompt that asks the user to subscribe to email updates to find out product updates. */
 "Prompts.Email.body" = "Be the first to receive important support and product updates";
@@ -1883,6 +1955,8 @@
 /* Warning about recovery phrase (formerly paper key). */
 "Prompts.PaperKey.body" = "Set up your Recovery Phrase in case you ever lose or replace your phone. This is also required if you change your phone's security settings.";
 
+"Prompts.PaperKey.Body.Android" = "Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone\'s security settings.";
+
 /* An action is required (You must do this action). */
 "Prompts.PaperKey.title" = "Action Required";
 
@@ -1925,7 +1999,7 @@
 /* Button on fingerprint prompt so the user can enter their PIN instead */
 "Prompts.TouchId.usePin.android" = "PIN";
 
-"Prompts.TwoStep.body" = "Secure your wallet with two factor authentication.";
+"Prompts.TwoStep.body" = "Secure your wallet with Two Factor Authentication.";
 
 "Prompts.TwoStep.title" = "Enable 2FA";
 
@@ -1936,6 +2010,8 @@
 "Prompts.UpgradePin.title" = "Upgrade PIN";
 
 "Prompts.VerifyAccount.body" = "One more step and you’ll be able to Swap and Buy seamlessly.";
+
+"Prompts.VerifyAccount.title" = "Verify your account";
 
 /* Body text for the push notifications prompt. */
 "PushNotifications.body" = "Turn on push notifications and be the first to hear about new features and special offers.";
@@ -1988,6 +2064,8 @@
 /* Request button label */
 "Receive.request" = "Request an Amount";
 
+"Receive.SelectAsset" = "Select asset";
+
 /* Share button label */
 "Receive.share" = "Share";
 
@@ -1996,6 +2074,8 @@
 
 /* Receive modal title */
 "Receive.title" = "Receive";
+
+"RecoverWallet.description" = "Type your 12 Word Phrase";
 
 /* Done button text */
 "RecoverWallet.done" = "DONE";
@@ -2039,6 +2119,10 @@
 /* Reset PIN with paper key: sub-header */
 "RecoverWallet.subheader_reset_pin" = "To reset your PIN, enter the words from your Recovery Phrase into the boxes below.";
 
+"RecoverWallet.Subheader.DeleteAccount" = "Please enter your Recovery Phrase to delete your account and unlink your wallet";
+
+"RecoverWallet.subtitle" = "Enter your Recovery Phrase";
+
 /* What is recovery phrase title on popup */
 "RecoverWallet.WhatIsRecoveryPhrase" = "What is “Recovery Phrase”?";
 
@@ -2052,7 +2136,7 @@
 "RecoveryKeyFlow.confirmRecoveryKeyTitle" = "Confirm your Recovery Phrase";
 
 /* Title displayed when the user starts the process of entering a recovery phrase */
-"RecoveryKeyFlow.enterRecoveryKey" = "Enter Recovery Phrase";
+"RecoveryKeyFlow.enterRecoveryKey" = "Enter your Recovery Phrase";
 
 /* Subtitle displayed when the user starts the process of entering a recovery phrase */
 "RecoveryKeyFlow.enterRecoveryKeySubtitle" = "Please enter the Recovery Phrase in order to delete your account and unlink the wallet.";
@@ -2166,7 +2250,7 @@
 /* Title for the step number when the user pages through the recovery words */
 "RecoveryKeyFlow.writeKeyStepTitle" = "%@ of %@";
 
-"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated  in the next step.";
+"RecoveryKeyFlow.WritePhrase.subtitle" = "Save your 12 word Recovery Phrase generated in the next step.";
 
 "RecoveryKeyFlow.WritePhrase.title" = "Write it down";
 
@@ -2221,6 +2305,14 @@
 /* Subheader label */
 "ReScan.subheader2" = "When to Sync?";
 
+"ResetPin.description" = "Your PIN will be used to unlock your RockWallet and send money";
+
+"ResetPin.subtitleConfirmNewPin" = "Confirm your new PIN";
+
+"ResetPin.subtitleNewPin" = "Set your new PIN";
+
+"ResetPin.Title" = "Reset PIN";
+
 /* Rewards view expanded body. */
 "RewardsView.expandedBody" = "Learn how you can save on trading fees and unlock future rewards";
 
@@ -2232,6 +2324,8 @@
 
 /* Scan bitcoin address camera flash toggle */
 "Scanner.flashButtonLabel" = "Camera Flash";
+
+"Scanner.noCamera" = "No camera found";
 
 /* (alert dialog message) Would you like to send a [Bitcoin / Bitcoin Cash / Ethereum] payment to this address?") */
 "Scanner.paymentPromptMessage" = "Would you like to send a %@ payment to this address?";
@@ -2304,6 +2398,8 @@
 
 "Sell.achDurationWarning" = "ACH withdrawal will be processed within 3-5 business days.";
 
+"Sell.achFee" = "ACH fee";
+
 "Sell.achWithdrawal" = "ACH Withdrawal";
 
 "Sell.details" = "Sell & Withdraw details";
@@ -2320,6 +2416,10 @@
 
 "Sell.SellLimits" = "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
 
+"Sell.SellLimits1" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s.";
+
+"Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
+
 "Sell.subtotal" = "Subtotal";
 
 "Sell.title" = "Sell & Withdraw funds";
@@ -2332,9 +2432,11 @@
 
 "Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
 
-"Sell.WithdrawDetails" = "Sell and withdraw details";
+"Sell.WithdrawDetails" = "Sell and Withdraw details";
 
 "Sell.yourOrder" = "You sell:";
+
+"Sell.YourSellLimits" = "Your sell limits";
 
 "Sell.YouWillReceive" = "You’ll receive";
 
@@ -2347,7 +2449,9 @@
 "Send.balance" = "Balance: %@";
 
 /* Balance: $4.00 for iOS, the balance can't have a parameter */
-"Send.balanceString" = "Balance:";
+"Send.balanceString" = "Balance: ";
+
+"Send.BCHConverter.ErrorToast" = "The BCH address could not be converted.";
 
 /* Instructions how to allow the camera access for the app */
 "Send.cameraUnavailabeMessage.android" = "Allow camera access in \"Settings\" > \"Apps\" > \"RockWallet\" > \"Permissions\"";
@@ -2486,7 +2590,7 @@
 "Send.sendError" = "Send Error";
 
 /* Sending Max: $4.00 for iOS, the balance can't have a parameter */
-"Send.sendingMax" = "Sending Max:";
+"Send.sendingMax" = "Sending Max: ";
 
 /* Send button label (the action, "press here to send") */
 "Send.sendLabel" = "Send";
@@ -2514,6 +2618,10 @@
 
 /* What is a destination tag title in popup in send view */
 "Send.WhatIsDestinationTag" = "What is a destination tag?";
+
+"SendConfirmation.youWillSend" = "You\'ll send";
+
+"SetPin.descriptionConfirm" = "Please re-enter your PIN";
 
 /* Section header for "other settings". */
 "Settings.other" = "Other";
@@ -2657,6 +2765,10 @@
 
 /* Baker cell: Fee field header */
 "Staking.feeHeader" = "Fee:";
+
+"Staking.feePct" = "Fee: %s";
+
+"Staking.loadingBakerError" = "An error occurred while loading baker information. Please try again later.";
 
 /* Status label: current staking transaction is pending */
 "Staking.pendingTransaction" = "Transaction pending...";
@@ -3053,6 +3165,8 @@
 
 "Transaction.PurchaseFailedWithAch" = "Purchase with ACH failed";
 
+"Transaction.PurchaseFailedWithInstantAch" = "Purchase with Instant Buy failed";
+
 /* Receive status text: 'In progress: 20%' */
 "Transaction.receivedStatus" = "In progress: %@";
 
@@ -3098,6 +3212,10 @@
 "Transaction.WithdrawalComplete" = "Withdrawn to bank account";
 
 "Transaction.WithdrawalFailed" = "Withdrawal failed";
+
+"Transaction.WithdrawFailedWithAch" = "Withdraw with ACH failed";
+
+"Transaction.WithdrawWithAch" = "Withdrew with ACH";
 
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "account";
@@ -3260,6 +3378,8 @@
 
 "TwoStep.additionalMethodsTitle" = "";
 
+"TwoStep.App.BackupCodes.SavedMessage" = "Your backup codes are successfully saved to Downloads folder";
+
 "TwoStep.App.BackupCodes.warning" = "Your backup codes are the only way to access your account if you lose access your Authenticator App";
 
 "TwoStep.App.CantAccess.Title" = "I can’t access my Authenticator App";
@@ -3284,7 +3404,11 @@
 
 "TwoStep.changePhoneNumberTitle" = "Change Phone Number";
 
+"TwoStep.Disable.Message" = "Deleting your 2FA method is an important security decision, in order to do this you’ll need to provide your PIN and an email code.";
+
 "TwoStep.Disable.Title" = "Disable 2FA";
+
+"TwoStep.DisableAuthDialogDescription" = "Deleting your 2FA method is an important security decision, in order to do this you’ll need to provide your PIN and an email code.";
 
 "TwoStep.Email.Confirmation.Title" = "We’ve sent you a code";
 
@@ -3294,7 +3418,7 @@
 
 "TwoStep.getBackupCodesTitle" = "";
 
-"TwoStep.mainInstructions" = "Two Factor Authentication in enabled with the phone number ending in";
+"TwoStep.mainInstructions" = "Two Factor Authentication is enabled with the phone number ending in";
 
 "TwoStep.mainTitle" = "Two Factor Authentication";
 
@@ -3302,9 +3426,9 @@
 
 "TwoStep.Menu.Title" = "Two-Factor Authentication (2FA)";
 
-"TwoStep.Method.App.Description" = "Two Factor Authentication in enabled with Authenticator App";
+"TwoStep.Method.App.Description" = "Two Factor Authentication is enabled with Authenticator App";
 
-"TwoStep.Method.Email.Description" = "Two Factor Authentication in enabled with Email";
+"TwoStep.Method.Email.Description" = "Two Factor Authentication is enabled with Email";
 
 "TwoStep.methods.additionalGetBackupCodesAction" = "Get your backup codes";
 
@@ -3316,7 +3440,7 @@
 
 "TwoStep.methods.phone.title" = "Phone number";
 
-"TwoStep.PreferredSettings" = "Select you preferred 2FA Settings";
+"TwoStep.PreferredSettings" = "Select your preferred 2FA Settings";
 
 "TwoStep.RecoverChangingPassword" = "Recover/Changing password";
 
@@ -3339,6 +3463,8 @@
 "TwoStep.SignInIntoNewDevice" = "Sign in into new device";
 
 "TwoStep.Success.Message" = "2FA Successfully set up";
+
+"TwoStep.SuccessfullyDisabled" = "2FA Successfully disabled";
 
 "TwoStep.TwoStepPeriod" = "Every 90 days";
 
@@ -3386,6 +3512,8 @@
 "UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
 
 "UpdatePin.Alert.title" = "What is a PIN?";
+
+"UpdatePin.bottomSheetMsg" = "PIN updated successfully";
 
 /* Update PIN caption text */
 "UpdatePin.caption" = "Remember this PIN. If you forget it, you won't be able to access your assets";
@@ -3717,4 +3845,6 @@
 "WritePaperPhrase.warning" = "For security purposes, do not screenshot or email these words.";
 
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
+
+"WrongStateBuySell.Subtitle" = "Buy and swap aren\'t currently available in your state. We\'ll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
 
