@@ -235,7 +235,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             self?.amountView.closePinPad()
         }
         
-        addressCell.didEndEditing = { [weak self] address in
+        addressCell.didEndEditing = { [weak self] in
             self?.checkAndHandleLegacyBCHAddress()
         }
         
@@ -624,8 +624,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     func isLegacyAddress(currency: Currency, address: String) -> Bool {
-        return currency == Currencies.shared.bch && (address.first == "1" || address.first == "3")
-        && Address.createLegacy(string: address, network: currency.network) != nil
+        return currency.isLegacyBCHAddress(address: address) && Address.createLegacy(string: address, network: currency.network) != nil
     }
     
     private func checkAndHandleLegacyBCHAddress() {

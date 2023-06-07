@@ -16,7 +16,7 @@ enum QRCode: Equatable {
     case deepLink(URL)
     case invalid
     
-    init(content: String) {
+    init(content: String, currencyRestriction: Currency? = nil) {
         if let url = URL(string: content), let key = QRCode.extractPrivKeyFromGift(url: url) {
             self = .gift(key, nil)
         } else if (Key.createFromString(asPrivate: content) != nil) || Key.isProtected(asPrivate: content) {
@@ -24,23 +24,12 @@ enum QRCode: Equatable {
         } else if let url = URL(string: content), url.isDeepLink {
             self = .deepLink(url)
         } else if let paymentRequest = QRCode.detectPaymentRequest(fromURI: content) {
-            self = .paymentRequest(paymentRequest)
-        } else {
-            self = .invalid
-        }
-    }
-    
-    init(content: String, currencyRestriction: Currency?) {
-        if let url = URL(string: content), let key = QRCode.extractPrivKeyFromGift(url: url) {
-            self = .gift(key, nil)
-        } else if (Key.createFromString(asPrivate: content) != nil) || Key.isProtected(asPrivate: content) {
-            self = .privateKey(content)
-        } else if let url = URL(string: content), url.isDeepLink {
-            self = .deepLink(url)
-        } else if let currencyRestriction = currencyRestriction, let paymentRequest = QRCode.detectPaymentRequest(fromURI: content, currencyRestriction: currencyRestriction) {
-            self = .paymentRequest(paymentRequest)
-        } else if let paymentRequest = QRCode.detectPaymentRequest(fromURI: content) {
-            self = .paymentRequest(paymentRequest)
+            if let currencyRestriction,
+                let paymentRequestRestricted = QRCode.detectPaymentRequest(fromURI: content, currencyRestriction: currencyRestriction) {
+                self = .paymentRequest(paymentRequestRestricted)
+            } else {
+                self = .paymentRequest(paymentRequest)
+            }
         } else {
             self = .invalid
         }

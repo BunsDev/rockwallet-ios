@@ -75,7 +75,7 @@ struct PaymentRequest {
         }
         
         if Address.createLegacy(string: string, network: currency.network) != nil {
-            let currencyBTC = Store.state.currencies.filter { currency in currency.network.name == "Bitcoin" }.first
+            let currencyBTC = Store.state.currencies.filter { $0.code == Constant.BTC }.first
             toAddress = Address.create(string: string, network: currencyBTC?.network ?? currency.network)
             type = .local
             return
