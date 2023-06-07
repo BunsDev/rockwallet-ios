@@ -176,7 +176,7 @@ class ApplicationController: Subscriber {
         }
         
         Store.subscribe(self, name: .refreshToken) { [weak self] _ in
-            guard let account = self?.coreSystem.currenctAccount else { return }
+            guard let account = self?.coreSystem.account else { return }
             
             Backend.disconnectWallet()
             self?.coreSystem.shutdown(completion: {
@@ -420,12 +420,12 @@ class ApplicationController: Subscriber {
     }
     
     private func triggerDeeplinkHandling() {
-        if UserManager.shared.profile == nil {
+        if DynamicLinksManager.shared.shouldHandleDynamicLink {
+            Store.trigger(name: .handleDeeplink)
+        } else if UserManager.shared.profile == nil {
             DispatchQueue.main.async { [weak self] in
                 self?.coordinator?.handleUserAccount()
             }
-        } else if DynamicLinksManager.shared.shouldHandleDynamicLink {
-            Store.trigger(name: .handleDeeplink)
         }
     }
     
@@ -484,7 +484,7 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
-            coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+            coordinator?.showTwoStepAuthentication(isModal: true,
                                                    coordinator: coordinator,
                                                    keyStore: keyStore)
         }

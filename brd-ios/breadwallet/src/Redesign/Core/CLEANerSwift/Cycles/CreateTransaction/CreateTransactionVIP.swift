@@ -18,6 +18,8 @@ protocol CreateTransactionViewActions: FeeFetchable {
 }
 
 protocol CreateTransactionDataStore: NSObject {
+    var coreSystem: CoreSystem? { get set }
+    var keyStore: KeyStore? { get set }
     var sender: Sender? { get set }
     var fromFeeBasis: TransferFeeBasis? { get set }
     var senderValidationResult: SenderValidationResult? { get set }
@@ -27,20 +29,28 @@ extension Interactor where Self: CreateTransactionViewActions,
                            Self.DataStore: CreateTransactionDataStore {
     func createTransaction(viewAction: CreateTransactionModels.Transaction.ViewAction?, completion: ((FEError?) -> Void)?) {
         guard let viewAction,
-              let sender = dataStore?.sender,
               let exchange = viewAction.exchange,
+              let destination = exchange.address,
+              let amountValue = exchange.amount,
+              let exchangeId = exchange.exchangeId,
+              let exchangeCurrency = exchange.currency?.lowercased(),
               let fromFeeBasis = viewAction.fromFeeBasis,
               let fromFeeAmount = viewAction.fromFeeAmount,
               let fromAmount = viewAction.fromAmount,
               let toAmountCode = viewAction.toAmountCode,
-              let destination = viewAction.exchange?.address,
-              let amountValue = viewAction.exchange?.amount,
-              let exchangeId = viewAction.exchange?.exchangeId,
-              let currency = viewAction.currencies?.first(where: { $0.code == exchange.currency }) else {
+              let currency = viewAction.currencies?.first(where: { $0.code.lowercased() == exchangeCurrency }) else {
             completion?(ExchangeErrors.noFees)
             return
         }
         
+        generateSender(viewAction: .init(fromAmountCurrency: currency))
+        
+        guard let sender = dataStore?.sender else {
+            completion?(ExchangeErrors.noFees)
+            
+            return
+        }
+            
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
         let transaction = sender.createTransaction(address: destination,
                                                    amount: amount,
@@ -131,9 +141,9 @@ extension Interactor where Self: CreateTransactionViewActions,
     }
     
     func generateSender(viewAction: CreateTransactionModels.Sender.ViewAction) {
-        guard let fromCurrency = viewAction.fromAmount?.currency,
-              let wallet = viewAction.coreSystem?.wallet(for: fromCurrency),
-              let keyStore = viewAction.keyStore,
+        guard let fromCurrency = viewAction.fromAmountCurrency,
+              let wallet = dataStore?.coreSystem?.wallet(for: fromCurrency),
+              let keyStore = dataStore?.keyStore,
               let kvStore = Backend.kvStore else { return }
         
         let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
@@ -143,18 +153,14 @@ extension Interactor where Self: CreateTransactionViewActions,
     }
     
     func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((FEError?) -> Void)?) {
-        guard let from = viewAction.fromAmount,
-              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
-              let sender = dataStore?.sender else {
-            completion?(ExchangeErrors.noFees)
-            
-            return
-        }
-        
+        dataStore?.fromFeeBasis = nil
         dataStore?.senderValidationResult = nil
         
-        guard from.fiatValue <= viewAction.limit ?? 0 else {
-            completion?(nil)
+        guard let from = viewAction.fromAmount,
+              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
+              let sender = dataStore?.sender,
+              from.fiatValue <= viewAction.limit ?? 0 else {
+            completion?(ExchangeErrors.noFees)
             
             return
         }
@@ -163,9 +169,10 @@ extension Interactor where Self: CreateTransactionViewActions,
                           with: sender,
                           address: fromAddress) { [weak self] fee in
             self?.dataStore?.fromFeeBasis = fee
-            self?.dataStore?.senderValidationResult = sender.validate(amount: from, feeBasis: self?.dataStore?.fromFeeBasis)
+            self?.dataStore?.senderValidationResult = sender.validate(amount: from,
+                                                                      feeBasis: self?.dataStore?.fromFeeBasis)
             
-            completion?(nil)
+            completion?(fee == nil ? ExchangeErrors.noFees : nil)
         }
     }
 }

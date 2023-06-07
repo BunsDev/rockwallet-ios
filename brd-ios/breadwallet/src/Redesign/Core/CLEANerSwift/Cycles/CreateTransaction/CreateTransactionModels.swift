@@ -25,9 +25,7 @@ struct CreateTransactionModels {
     
     struct Sender {
         struct ViewAction {
-            var fromAmount: Amount?
-            var coreSystem: CoreSystem?
-            var keyStore: KeyStore?
+            var fromAmountCurrency: Currency?
         }
     }
     

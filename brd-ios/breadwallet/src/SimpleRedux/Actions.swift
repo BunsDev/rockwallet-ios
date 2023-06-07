@@ -71,7 +71,7 @@ enum ManageWallets {
         let reduce: Reducer
         init(_ newWallets: [CurrencyId: WalletState]) {
             reduce = {
-                return $0.mutate(wallets: $0.wallets.merging(newWallets) { (x, _) in x })
+                return $0.mutate(wallets: $0.wallets.merging(newWallets) { (_, x) in x })
             }
         }
     }

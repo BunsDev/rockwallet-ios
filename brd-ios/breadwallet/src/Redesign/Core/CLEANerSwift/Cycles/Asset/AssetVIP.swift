@@ -13,6 +13,7 @@ import UIKit
 protocol AssetViewActions {
     func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
+    func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?)
     func setAmount(viewAction: AssetModels.Asset.ViewAction)
 }
 
@@ -86,6 +87,8 @@ extension Interactor where Self: AssetViewActions,
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}
     
     func setAmount(viewAction: AssetModels.Asset.ViewAction) {}
+    
+    func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?) {}
 }
 
 extension Presenter where Self: AssetActionResponses,
@@ -213,7 +216,7 @@ extension Presenter where Self: AssetActionResponses,
                 lifetimeLimit = profile.achAllowanceLifetime
                 dailyLimit = profile.achAllowanceDaily
                 perExchangeLimit = profile.achAllowancePerExchange
-                reason = .buyAch(true, "")
+                reason = .buyAch(nil, nil)
             } else if isSell {
                 lifetimeLimit = profile.sellAllowanceLifetime
                 dailyLimit = profile.sellAllowanceDaily
@@ -297,6 +300,7 @@ extension Presenter where Self: AssetActionResponses,
 }
 
 extension Controller where Self: AssetResponseDisplays,
+                           Self.DataStore: AssetDataStore,
                            Self.ViewActions: AssetViewActions {
     func displayExchangeRate(responseDisplay: AssetModels.ExchangeRate.ResponseDisplay, completion: (() -> Void)?) {
         if let cell = getRateAndTimerCell(), let rateAndTimer = responseDisplay.rateAndTimer {
@@ -304,7 +308,7 @@ extension Controller where Self: AssetResponseDisplays,
             
             cell.wrappedView.setup(with: rateAndTimer)
             cell.wrappedView.completion = { [weak self] in
-                self?.interactor?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
+                self?.interactor?.getExchangeRate(viewAction: .init(getFees: self?.dataStore?.isFromBuy == false), completion: {})
             }
         }
         

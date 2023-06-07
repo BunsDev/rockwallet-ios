@@ -71,7 +71,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let orderValue = "\(detail.orderId)"
         let transactionFromValue = String(describing: detail.source.transactionId ?? "")
-        let transactionToValue = String(describing: destination.transactionId ?? detail.status.rawValue.localizedCapitalized)
+        let transactionToValue = String(describing: destination.transactionId ?? detail.status.rawValue.capitalized)
         let transactionToValueIsCopyable = destination.transactionId != nil
         
         var toCurrencyAssetViewModel = AssetViewModel()
@@ -158,15 +158,19 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                           currencyCode)
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: detail.source.currencyAmount) ?? "",
                                currencyCode)
-        let amountValue = detail.source.currencyAmount - detail.source.usdFee - destination.usdFee
+        let amountValue = detail.source.currencyAmount - detail.source.usdFee - (detail.destination?.usdFee ?? 0) - (detail.instantDestination?.usdFee ?? 0)
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: amountValue) ?? "",
                                 currencyCode)
         let cardFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: detail.source.usdFee) ?? "",
                                  currencyCode)
-        let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: destination.usdFee) ?? "",
+        let networkFeeText = String(format: currencyFormat,
+                                    ExchangeFormatter.fiat.string(for: (detail.destination?.usdFee ?? 0) + (detail.instantDestination?.usdFee ?? 0)) ?? "",
                                     currencyCode)
-        let displayFeeTitle = card?.type == .card ? L10n.Swap.cardFee :
-        L10n.Buy.achFee("$\(String(format: "%.2f", destination.feeFixedRate?.doubleValue ?? 0.0)) + \(destination.feeRate ?? 0)%")
+        
+        let fixedFeeRate = (detail.destination?.feeFixedRate?.doubleValue ?? 0.0) + (detail.instantDestination?.feeFixedRate?.doubleValue ?? 0.0)
+        let feeRate = (detail.destination?.feeRate ?? 0) + (detail.instantDestination?.feeRate ?? 0)
+        let buyAchFee = L10n.Buy.achFee("$\(String(format: "%.2f", fixedFeeRate)) + \(feeRate)%")
+        let displayFeeTitle = card?.type == .card ? L10n.Swap.cardFee : buyAchFee
         
         let method = PaymentMethodViewModel(methodTitle: .text(L10n.Buy.paymentMethod),
                                             logo: card?.displayImage,
