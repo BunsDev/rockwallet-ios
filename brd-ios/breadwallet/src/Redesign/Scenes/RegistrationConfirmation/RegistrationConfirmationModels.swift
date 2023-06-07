@@ -72,7 +72,7 @@ enum RegistrationConfirmationModels {
                 return [.title, .instructions, .input, .help]
                 
             default:
-                return [.image, .title, .instructions, .input, .help]
+                return []
             }
         }
         
@@ -93,7 +93,7 @@ enum RegistrationConfirmationModels {
             }
         }
         
-        func getInstructions(email: String) -> String {
+        func getInstructions(email: String) -> String? {
             switch self {
             case .account, .twoStepAccountEmailSettings, .twoStepAccountAppSettings:
                 return "\(L10n.AccountCreation.enterCode)\(email)"
@@ -102,11 +102,11 @@ enum RegistrationConfirmationModels {
                     .twoStepEmailBuy, .twoStepEmailRequired, .twoStepDisable:
                 return "\(L10n.AccountCreation.enterCode)\(email)"
                 
-            case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy, .twoStepAppRequired:
-                return ""
-                
             case .twoStepAppBackupCode:
                 return L10n.TwoStep.App.Confirmation.BackupCode.instructions
+                
+            case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy, .twoStepAppRequired:
+                return nil
             }
         }
     }
