@@ -443,12 +443,6 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return
         }
         
-//        if isLegacyAddress(currency: currency, address: pasteboard) {
-//            addressCell.setContent(pasteboard)
-//            sendButton.isEnabled = true
-//            return
-//        }
-        
         guard let request = PaymentRequest(string: pasteboard, currency: currency) else {
             let message = L10n.Send.invalidAddressOnPasteboard(currency.name)
             return showAlert(title: L10n.Send.invalidAddressTitle, message: message)
