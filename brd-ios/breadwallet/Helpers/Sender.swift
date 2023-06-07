@@ -150,9 +150,11 @@ class Sender: Subscriber {
                            exchangeId: String? = nil,
                            secondFactorCode: String? = nil,
                            secondFactorBackup: String? = nil) -> SenderValidationResult {
-        assert(transfer == nil)
         let result = validate(address: address, amount: amount, feeBasis: feeBasis)
         guard case .ok = result else { return result }
+        
+        reset()
+        
         switch wallet.createTransfer(outputScript: outputScript,
                                      to: address,
                                      amount: amount,
@@ -196,9 +198,11 @@ class Sender: Subscriber {
                            ignoreIdentityNotCertified: Bool,
                            feeBasis: TransferFeeBasis,
                            comment: String?) -> SenderValidationResult {
-        assert(transfer == nil)
         let result = validate(protocolRequest: protoReq, ignoreUsedAddress: ignoreUsedAddress, ignoreIdentityNotCertified: ignoreIdentityNotCertified)
         guard case .ok = result else { return result }
+        
+        reset()
+        
         switch wallet.createTransfer(forProtocolRequest: protoReq, feeBasis: feeBasis) {
         case .success(let transfer):
             self.comment = comment
