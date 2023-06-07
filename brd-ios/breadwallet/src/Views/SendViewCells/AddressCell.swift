@@ -22,6 +22,7 @@ class AddressCell: UIView {
 
     var textDidChange: ((String?) -> Void)?
     var didBeginEditing: (() -> Void)?
+    var didEndEditing: ((String?) -> Void)?
     var didReceivePaymentRequest: ((PaymentRequest) -> Void)?
     var didReceiveResolvedAddress: ((Result<String?, Error>, ResolvableType) -> Void)?
     
@@ -203,6 +204,7 @@ extension AddressCell: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        didEndEditing?(textField.text)
         contentLabel.isHidden = false
         textField.isHidden = true
         gr.isEnabled = true

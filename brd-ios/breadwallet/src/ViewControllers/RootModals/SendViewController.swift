@@ -235,6 +235,10 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             self?.amountView.closePinPad()
         }
         
+        addressCell.didEndEditing = { [weak self] address in
+            self?.checkAndHandleLegacyBCHAddress()
+        }
+        
         addressCell.didReceivePaymentRequest = { [weak self] request in
             self?.handleRequest(request)
         }
@@ -439,11 +443,11 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return
         }
         
-        if isLegacyAddress(currency: currency, address: pasteboard) {
-            addressCell.setContent(pasteboard)
-            sendButton.isEnabled = true
-            return
-        }
+//        if isLegacyAddress(currency: currency, address: pasteboard) {
+//            addressCell.setContent(pasteboard)
+//            sendButton.isEnabled = true
+//            return
+//        }
         
         guard let request = PaymentRequest(string: pasteboard, currency: currency) else {
             let message = L10n.Send.invalidAddressOnPasteboard(currency.name)
@@ -535,21 +539,6 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        let isLegacyAddress = isLegacyAddress(currency: currency, address: address)
-        guard !isLegacyAddress else {
-            let model = PopupViewModel(title: .text(L10n.Bch.converterTitle),
-                                       body: L10n.Bch.converterDescription,
-                                       buttons: [.init(title: L10n.Button.convert),
-                                                 .init(title: L10n.LinkWallet.decline)],
-                                       closeButton: .init(image: Asset.close.image))
-            
-            showInfoPopup(with: model, callbacks: [ { [weak self] in
-                self?.convertBCH(address: address)
-            }, { [weak self] in
-                self?.declineConversion()
-            }])
-            return false
-        }
         //Having an invalid address will cause fee estimation to fail,
         //so we need to display this error before the fee estimate error.
         //Without this, the fee estimate error will be shown and the user won't
@@ -643,6 +632,23 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     func isLegacyAddress(currency: Currency, address: String) -> Bool {
         return currency == Currencies.shared.bch && (address.first == "1" || address.first == "3")
         && Address.createLegacy(string: address, network: currency.network) != nil
+    }
+    
+    private func checkAndHandleLegacyBCHAddress() {
+        guard let address else { return }
+        if isLegacyAddress(currency: currency, address: address) {
+            let model = PopupViewModel(title: .text(L10n.Bch.converterTitle),
+                                       body: L10n.Bch.converterDescription,
+                                       buttons: [.init(title: L10n.Button.convert),
+                                                 .init(title: L10n.LinkWallet.decline)],
+                                       closeButton: .init(image: Asset.close.image))
+            
+            showInfoPopup(with: model, callbacks: [ { [weak self] in
+                self?.convertBCH(address: address)
+            }, { [weak self] in
+                self?.declineConversion()
+            }])
+        }
     }
     
     func declineConversion() {
@@ -762,6 +768,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             addressCell.setContent(request.toAddress?.description)
             addressCell.isEditable = true
             
+            checkAndHandleLegacyBCHAddress()
+
             if let amount = request.amount {
                 amountView.forceUpdateAmount(amount: amount)
             }

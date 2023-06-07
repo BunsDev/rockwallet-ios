@@ -31,14 +31,14 @@ struct ConvertBchModel: Model {
     var cashAddress: String?
 }
 
-class ConvertBchWorkerWorkerMapper: ModelMapper<ConvertBchResponseData, ConvertBchModel> {
+class ConvertBchMapper: ModelMapper<ConvertBchResponseData, ConvertBchModel> {
     override func getModel(from response: ConvertBchResponseData?) -> ConvertBchModel? {
         return .init(legacyAddress: response?.legacyAddress,
                      cashAddress: response?.cashAddress)
     }
 }
 
-class ConvertBchWorker: BaseApiWorker<ConvertBchWorkerWorkerMapper> {
+class ConvertBchWorker: BaseApiWorker<ConvertBchMapper> {
     override func getUrl() -> String {
         guard let urlParams = (requestData as? ConvertBchRequestData)?.address else { return "" }
         
