@@ -16,8 +16,6 @@ class DynamicLinksManager {
     var shouldHandleDynamicLink: Bool {
         let type = DynamicLinksManager.shared.dynamicLinkType
         
-        DynamicLinksManager.shared.dynamicLinkType = nil
-        
         return type != nil
     }
     

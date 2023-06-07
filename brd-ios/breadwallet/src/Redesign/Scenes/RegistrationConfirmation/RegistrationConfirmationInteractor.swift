@@ -53,7 +53,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     }
     
     func confirm(viewAction: RegistrationConfirmationModels.Confirm.ViewAction) {
-        switch dataStore?.confirmationType {
+        switch viewAction.type ?? dataStore?.confirmationType {
         case .account:
             executeRegistrationConfirmation()
             
@@ -72,7 +72,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .twoStepEmailResetPassword, .twoStepAppResetPassword:
             executeResetPassword()
             
-        case .twoStepAppBuy, .twoStepEmailBuy, .twoStepAppBackupCode, .twoStepAppSendFunds, .twoStepEmailSendFunds:
+        case .twoStepAppBuy, .twoStepEmailBuy, .twoStepAppSendFunds, .twoStepEmailSendFunds:
             presentConfirm()
             
         case .twoStepDisable:
@@ -80,6 +80,9 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             
         case .twoStepAppRequired, .twoStepEmailRequired:
             executeRefreshUserWithCode()
+        
+        case .twoStepAppBackupCode(let type):
+            confirm(viewAction: .init(type: type))
             
         default:
             break

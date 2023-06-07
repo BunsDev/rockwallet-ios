@@ -27,7 +27,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var from: Decimal?
     var to: Decimal?
-    var isFromBuy = true
+    var isFromBuy: Bool = true
     var paymentMethod: PaymentCard.PaymentType?
     var publicToken: String?
     var mask: String?
@@ -74,6 +74,11 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
+    
+    var sender: Sender?
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
+    
     var canUseAch = UserManager.shared.profile?.kycAccessRights.hasAchAccess
     
     // MARK: - TwoStepDataStore

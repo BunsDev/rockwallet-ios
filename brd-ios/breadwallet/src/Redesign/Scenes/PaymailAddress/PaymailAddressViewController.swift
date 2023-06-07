@@ -108,11 +108,14 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
         }
         
         cell.setup { view in
-            let config = CardSelectionConfiguration(title: .init(font: Fonts.Body.three, textColor: LightColors.Text.two),
-                                                    subtitle: .init(font: Fonts.Title.six, textColor: LightColors.Text.three),
+            let config = CardSelectionConfiguration(subtitle: .init(font: Fonts.Title.six,
+                                                                    textColor: LightColors.Text.three,
+                                                                    textAlignment: .center,
+                                                                    numberOfLines: 1),
                                                     arrow: .init(tintColor: LightColors.primary))
             view.configure(with: config)
             view.setup(with: model)
+            
             view.didTapSelectCard = { [weak self] in
                 self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
             }

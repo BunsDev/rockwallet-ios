@@ -43,10 +43,6 @@ enum SwapModels {
         }
     }
     
-    struct Fee {
-        struct ViewAction {}
-    }
-    
     struct ShowConfirmDialog {
         struct ViewAction {}
         

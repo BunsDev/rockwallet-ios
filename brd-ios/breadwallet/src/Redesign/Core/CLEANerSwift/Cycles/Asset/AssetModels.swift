@@ -17,6 +17,10 @@ enum AssetModels {
         var achEnabled: Bool?
     }
     
+    struct Fee {
+        struct ViewAction {}
+    }
+    
     enum Section: Sectionable {
         case segment
         case rateAndTimer
@@ -72,7 +76,7 @@ enum AssetModels {
     
     enum ExchangeRate {
         struct ViewAction {
-            var getFees: Bool = false
+            let getFees: Bool
         }
         
         struct ActionResponse {

@@ -158,11 +158,15 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else { return false }
+        let allowedCharacters = CharacterSet.decimalDigits
+        
+        guard let text = textField.text,
+                allowedCharacters.isSuperset(of: CharacterSet(charactersIn: string))
+                && string.count <= CodeInputView.numberOfFields else { return false }
         
         let newLength = text.count + string.count - range.length
-        let characterSet = CharacterSet(charactersIn: text)
         
-        return CharacterSet.decimalDigits.isSuperset(of: characterSet) && newLength <= CodeInputView.numberOfFields
+        return allowedCharacters.isSuperset(of: CharacterSet(charactersIn: text))
+        && newLength <= CodeInputView.numberOfFields
     }
 }

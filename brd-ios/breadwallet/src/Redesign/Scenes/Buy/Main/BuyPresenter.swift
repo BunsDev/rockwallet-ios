@@ -175,7 +175,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
-                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaLimits),
+                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaxLimits),
                                                                            value: .text("$\(dailyMaxLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
                                                                          value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),

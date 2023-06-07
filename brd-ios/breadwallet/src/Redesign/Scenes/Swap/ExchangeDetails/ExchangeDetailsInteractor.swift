@@ -17,9 +17,7 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
     // MARK: - ExchangeDetailsViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard let itemId = dataStore?.exchangeId, !itemId.isEmpty else { return }
-        
-        let data = ExchangeDetailsRequestData(exchangeId: itemId)
+        let data = ExchangeDetailsRequestData(exchangeId: dataStore?.exchangeId ?? "")
         ExchangeDetailsWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):

@@ -59,6 +59,8 @@ class UserManager: NSObject {
                 Store.trigger(name: .didCreateAccount)
                 
             case .failure(let error):
+                UserDefaults.email = nil
+                
                 self?.error = error
                 self?.profile = nil
             }
@@ -100,6 +102,8 @@ class UserManager: NSObject {
         UserManager.shared.profile = nil
         UserManager.shared.profileResult = nil
         UserManager.shared.error = nil
+        
+        Store.trigger(name: .refreshToken)
         
         PromptFactory.shared.presentedPopups.removeAll()
         for type in PromptType.defaultTypes {

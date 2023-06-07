@@ -23,7 +23,6 @@ protocol SellViewActions: BaseViewActions,
     func showLimitsInfo(viewAction: SellModels.LimitsInfo.ViewAction)
     func showInstantAchPopup(viewAction: SellModels.InstantAchPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SellModels.AssetSelectionMessage.ViewAction)
-    func prepareFees(viewAction: SellModels.Fee.ViewAction)
 }
 
 protocol SellActionResponses: BaseActionResponses,
@@ -57,8 +56,6 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataSt
     
     var currencies: [Currency] { get set }
     var supportedCurrencies: [SupportedCurrency]? { get set }
-    var coreSystem: CoreSystem? { get set }
-    var keyStore: KeyStore? { get set }
     
     var fromRate: Decimal? { get set }
     
