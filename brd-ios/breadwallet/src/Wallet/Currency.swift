@@ -239,7 +239,15 @@ extension Currency: Hashable {
 
 extension Currency {
     func isValidAddress(_ address: String) -> Bool {
-        return Address.create(string: address, network: network) != nil
+        var addressCreated = Address.create(string: address, network: network)
+        if addressCreated == nil && isLegacyBCHAddress(address: address) {
+            addressCreated = Address.createLegacy(string: address, network: network)
+        }
+        return addressCreated != nil
+    }
+    
+    func isLegacyBCHAddress(address: String) -> Bool {
+        return self == Currencies.shared.bch && (address.first == "1" || address.first == "3")
     }
 }
 

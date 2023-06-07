@@ -16,7 +16,7 @@ enum QRCode: Equatable {
     case deepLink(URL)
     case invalid
     
-    init(content: String) {
+    init(content: String, currencyRestriction: Currency? = nil) {
         if let url = URL(string: content), let key = QRCode.extractPrivKeyFromGift(url: url) {
             self = .gift(key, nil)
         } else if (Key.createFromString(asPrivate: content) != nil) || Key.isProtected(asPrivate: content) {
@@ -24,7 +24,12 @@ enum QRCode: Equatable {
         } else if let url = URL(string: content), url.isDeepLink {
             self = .deepLink(url)
         } else if let paymentRequest = QRCode.detectPaymentRequest(fromURI: content) {
-            self = .paymentRequest(paymentRequest)
+            if let currencyRestriction,
+                let paymentRequestRestricted = QRCode.detectPaymentRequest(fromURI: content, currencyRestriction: currencyRestriction) {
+                self = .paymentRequest(paymentRequestRestricted)
+            } else {
+                self = .paymentRequest(paymentRequest)
+            }
         } else {
             self = .invalid
         }
@@ -41,6 +46,15 @@ enum QRCode: Equatable {
             .sorted(by: { lhs, _ in
                 return lhs.tokenType == .native //For generic QR code scanning, we should prefer native currencies
             }).compactMap {
+                PaymentRequest(string: uri, currency: $0)
+            }.first
+    }
+    
+    private static func detectPaymentRequest(fromURI uri: String, currencyRestriction: Currency) -> PaymentRequest? {
+        return Store.state.currencies
+            .sorted(by: { lhs, _ in
+                return lhs.tokenType == .native //For generic QR code scanning, we should prefer native currencies
+            }).filter { currency in currency.network.name == currencyRestriction.network.name }.compactMap {
                 PaymentRequest(string: uri, currency: $0)
             }.first
     }
