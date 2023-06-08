@@ -79,5 +79,19 @@ class CardSelectionViewController: ItemSelectionViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
+              section == Models.Section.items,
+              let model = dataSource?.itemIdentifier(for: indexPath) as? PaymentCard else {
+            coordinator?.open(scene: Scenes.AddCard)
+            return
+        }
+        
+        guard dataStore?.isSelectingEnabled == true, !model.paymentMethodStatus.isProblematic else { return }
+        itemSelected?(model)
+        
+        coordinator?.dismissFlow()
+    }
+    
     // MARK: - Additional Helpers
 }
