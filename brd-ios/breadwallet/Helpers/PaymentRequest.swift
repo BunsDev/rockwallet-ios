@@ -17,7 +17,7 @@ enum PaymentRequestType {
 extension PaymentProtocolRequest {
     var displayText: String? {
         if let name = commonName {
-            return isSecure ? "\(L10n.Symbols.lock) \(name.sanitized)" : name.sanitized
+            return isSecure ? "🔒 \(name.sanitized)" : name.sanitized
         } else {
             return primaryTarget?.description
         }
