@@ -22,13 +22,18 @@ struct NavigationViewModel: ViewModel {
     var image: ImageViewModel?
     var label: LabelViewModel?
     var button: ButtonViewModel?
+    var showError: Bool = false
 }
 
 class NavigationItemView: FEView<NavigationConfiguration, NavigationViewModel> {
-    private lazy var verticalStack: UIStackView = {
+    private lazy var mainStack: UIStackView = {
         let view = UIStackView()
         view.spacing = Margins.medium.rawValue
         return view
+    }()
+    
+    private lazy var leadingImageContainer: UIView = {
+        return UIView()
     }()
     
     private lazy var leadingImageView: FEImageView = {
@@ -46,25 +51,44 @@ class NavigationItemView: FEView<NavigationConfiguration, NavigationViewModel> {
         return view
     }()
     
+    private lazy var errorIndicator: UIImageView = {
+        let view = UIImageView(image: Asset.redWarning.image)
+        view.isHidden = true
+        return view
+    }()
+    
     override func setupSubviews() {
         super.setupSubviews()
         
-        content.addSubview(verticalStack)
-        verticalStack.snp.makeConstraints { make in
+        content.addSubview(mainStack)
+        mainStack.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        verticalStack.addArrangedSubview(leadingImageView)
-        leadingImageView.snp.makeConstraints { make in
+        mainStack.addArrangedSubview(leadingImageContainer)
+        leadingImageContainer.snp.makeConstraints { make in
             make.width.equalTo(ViewSizes.medium.rawValue)
         }
         
-        verticalStack.addArrangedSubview(titleLabel)
+        leadingImageContainer.addSubview(leadingImageView)
+        leadingImageView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.equalTo(ViewSizes.small.rawValue)
+        }
+        
+        leadingImageView.addSubview(errorIndicator)
+        errorIndicator.snp.makeConstraints { make in
+            make.width.height.equalTo(ViewSizes.extraExtraSmall.rawValue)
+            make.centerX.equalTo(leadingImageView.snp.trailing)
+            make.centerY.equalTo(leadingImageView.snp.bottom).inset(Margins.extraSmall.rawValue)
+        }
+        
+        mainStack.addArrangedSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().priority(.low)
         }
         
-        verticalStack.addArrangedSubview(trailing)
+        mainStack.addArrangedSubview(trailing)
         trailing.snp.makeConstraints { make in
             make.width.equalTo(Margins.huge.rawValue)
         }
@@ -88,8 +112,11 @@ class NavigationItemView: FEView<NavigationConfiguration, NavigationViewModel> {
         
         leadingImageView.setup(with: viewModel.image)
         leadingImageView.isHidden = viewModel.image == nil
+        errorIndicator.isHidden = !viewModel.showError
+        
         titleLabel.setup(with: viewModel.label)
         titleLabel.isHidden = viewModel.label == nil
+        
         trailing.setup(with: viewModel.button)
         trailing.isHidden = viewModel.button == nil
     }
