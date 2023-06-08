@@ -22,7 +22,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         let email = item.email ?? ""
         let emailString = ":\n\(email)"
         
-        var sections: [Models.Section] = confirmationType.sections
+        let sections: [Models.Section] = confirmationType.sections
         
         var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
                                                        isUnderlined: true,
