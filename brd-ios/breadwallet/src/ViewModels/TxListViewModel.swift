@@ -146,7 +146,7 @@ struct TxListViewModel: TxViewModel, Hashable {
                 }
             }
             
-            var isHybridPartOne = exchange?.isHybridTransaction == true && exchange?.part == .one
+            let isHybridPartOne = exchange?.isHybridTransaction == true && exchange?.part == .one
             
             switch status {
             case .pending:
