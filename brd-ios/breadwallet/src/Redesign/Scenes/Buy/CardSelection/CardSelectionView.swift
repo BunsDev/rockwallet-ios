@@ -78,8 +78,14 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
     
     var hasError: Bool = false {
         didSet {
-            config?.cardDetails?.cardNumber = hasError ? config?.cardDetails?.cardNumberError : config?.cardDetails?.cardNumber
-            config?.cardDetails?.expiration = hasError ? config?.cardDetails?.expirationError : config?.cardDetails?.expiration
+            let cardNumberConfig = config?.cardDetails?.cardNumber
+            let cardNumberErrorConfig = config?.cardDetails?.cardNumberError
+            
+            let expirationConfig = config?.cardDetails?.expiration
+            let expirationErrorConfig = config?.cardDetails?.expirationError
+            
+            config?.cardDetails?.cardNumber = hasError ? cardNumberErrorConfig : cardNumberConfig
+            config?.cardDetails?.expiration = hasError ? expirationErrorConfig : expirationConfig
             
             configure(with: config)
         }
