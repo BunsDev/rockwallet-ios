@@ -41,7 +41,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
         case .cardDetails:
             cell = self.tableView(tableView, bankCardInputDetailsCellForRowAt: indexPath)
 
-        case .confirm:
+        case .button:
             cell = self.tableView(tableView, buttonCellForRowAt: indexPath)
             
         default:
@@ -140,7 +140,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     }
     
     func displayValidate(responseDisplay: AddCardModels.Validate.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.confirm.hashValue }),
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.button.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         isValid = responseDisplay.isValid

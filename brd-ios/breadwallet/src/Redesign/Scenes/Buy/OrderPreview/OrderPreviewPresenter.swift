@@ -62,11 +62,12 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             .submit
         ]
         
-        if isAchAccount {
+        if isAchAccount && item.type != .sell {
             sections.insert(.achSegment, at: 0)
         }
         
-        let achSegment = SegmentControlViewModel(selectedIndex: 0,
+        let selectedSegment = Models.AchDeliveryType.allCases.firstIndex(where: { $0.hashValue == item.achDeliveryType?.hashValue })
+        let achSegment = SegmentControlViewModel(selectedIndex: selectedSegment,
                                                  segments: [.init(image: Asset.flash.image, title: L10n.Buy.Ach.Instant.title),
                                                             .init(image: Asset.timelapse.image, title: L10n.Buy.Ach.Hybrid.title)])
         
@@ -143,27 +144,55 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     }
     
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
-        guard let reference = actionResponse.paymentReference, actionResponse.failed == false else {
+        guard let reference = actionResponse.paymentReference,
+              actionResponse.failed == false else {
             let isAch = actionResponse.isAch == true
             let responseCode = actionResponse.responseCode ?? ""
-            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell
-                                                                ? .sell : .buyAch(isAch, responseCode)) : .buyCard(actionResponse.errorDescription)
+            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell ? .sell
+                                                                : .buyAch(actionResponse.achDeliveryType, responseCode))
+            : .buyCard(actionResponse.errorDescription)
+            
             viewController?.displayFailure(responseDisplay: .init(reason: reason))
             
             return
         }
         
-        // TODO: Update this when BE is ready.
-        let buyAchSuccessReason = Int.random(in: 0...1) == 0
-        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell ? .sell : .buyAch(buyAchSuccessReason)) : .buyCard
+        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell
+                                                                                   ? .sell :
+                .buyAch(actionResponse.achDeliveryType)) : .buyCard
         viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
     }
     
     func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse) {
-        // TODO: Update amount
+        guard let instantLimit = actionResponse.quote?.instantAch?.limitUsd,
+              let cryptoLimit = actionResponse.quote?.instantAch?.limitInToCurrency,
+              let toAmount = actionResponse.to else { return }
+        let fiatCurrency = (actionResponse.quote?.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
+        let cryptoCurrency = toAmount.currency.code.uppercased()
+        let currencyFormat = "%@ %@"
+        
+        var description: String {
+            if toAmount.fiatValue > instantLimit {
+                let regularCrypto = toAmount.tokenValue - cryptoLimit
+                let regularFiat = toAmount.fiatValue - instantLimit
+                
+                let cryptoInstantAmount = String(format: currencyFormat, ExchangeFormatter.current.string(for: cryptoLimit) ?? "", cryptoCurrency)
+                let cryptoRegularAmount = String(format: currencyFormat, ExchangeFormatter.current.string(for: regularCrypto) ?? "", cryptoCurrency)
+                let fiatInstantAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantLimit) ?? "", fiatCurrency)
+                let fiatRegularAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: regularFiat) ?? "", fiatCurrency)
+
+                return L10n.Buy.Ach.Instant.hybridConfirmationDrawer(cryptoInstantAmount, fiatInstantAmount, cryptoRegularAmount, fiatRegularAmount)
+            } else {
+                let cryptoAmount = String(format: currencyFormat, ExchangeFormatter.current.string(for: toAmount.tokenValue) ?? "", cryptoCurrency)
+                let fiatAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toAmount.fiatValue) ?? "", fiatCurrency)
+                
+                return L10n.Buy.Ach.Instant.ConfirmationDrawer.description(cryptoAmount, fiatAmount)
+            }
+        }
+
         let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary])
         let drawerViewModel = DrawerViewModel(title: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.title),
-                                              description: .text(L10n.Buy.Ach.Instant.ConfirmationDrawer.description("YYY")),
+                                              description: .text(description),
                                               buttons: [.init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.confirmAction)],
                                               notice: .init(title: L10n.Buy.Ach.Instant.ConfirmationDrawer.notice, image: Asset.flash.image))
         let drawerCallbacks: [ (() -> Void) ] = [ { [weak self] in
@@ -177,6 +206,10 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse) {
         viewController?.displayContinueEnabled(responseDisplay: .init(continueEnabled: actionResponse.value))
+    }
+    
+    func presentPreview(actionRespone: OrderPreviewModels.Preview.ActionResponse) {
+        viewController?.displayPreview(responseDisplay: .init(infoModel: prepareOrderPreviewViewModel(for: actionRespone.item)))
     }
     
     // MARK: - Additional Helpers
@@ -194,13 +227,24 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let to = toAmount.fiatValue
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         let toFiatValue = toAmount.fiatValue
-        let toCryptoValue = ExchangeFormatter.crypto.string(for: toAmount.tokenValue) ?? ""
+        let toCryptoValue = ExchangeFormatter.current.string(for: toAmount.tokenValue) ?? ""
         let toCryptoDisplayImage = item.to?.currency.imageSquareBackground
         let toCryptoDisplayName = item.to?.currency.displayName ?? ""
         let from = item.from ?? 0
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
-        let networkFee = item.networkFee?.fiatValue ?? 0
+
         let fiatCurrency = (quote.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
+        let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0) / 100
+        let instantAchLimit = item.quote?.instantAch?.limitUsd ?? 0
+        
+        // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
+        var networkFee: Decimal {
+            guard isAchAccount, toFiatValue >= instantAchLimit else {
+                return item.networkFee?.fiatValue ?? 0
+            }
+            
+            return 2 * (item.networkFee?.fiatValue ?? 0)
+        }
         
         let currencyFormat = "%@ %@"
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)
@@ -208,7 +252,6 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: networkFee) ?? "", fiatCurrency)
         
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
-        let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue + networkFee + cardFee) ?? "", fiatCurrency)
         
         let cardAchFee: TitleValueViewModel = isAchAccount ?
             .init(title: .text(L10n.Buy.achFee("$\(String(format: "%.2f", quote.buyFeeUsd?.doubleValue ?? 0.0)) + \(quote.buyFee ?? 0)%")),
@@ -217,9 +260,26 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         
-        // TODO: Update fee
-        let instantBuyFee: TitleValueViewModel? = isAchAccount ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
-                                                                       value: .text("$0.55 USD")) : nil
+        let buyFee = ((quote.buyFee ?? 0) / 100) + 1
+        let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
+        
+        let isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
+        let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
+        let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
+                                                                       value: .text(achFeeDescription)) : nil
+        let exceedsInstantBuyLimit: Bool = toFiatValue > instantAchLimit
+        
+        var instantAchNoticeText: String {
+            if exceedsInstantBuyLimit {
+                let regularPart = toFiatValue - instantAchLimit
+                let instantAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchLimit) ?? "", fiatCurrency)
+                let regularAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: regularPart) ?? "", fiatCurrency)
+                return L10n.Buy.Ach.Instant.OrderPreview.hybridNotice(instantAmount, regularAmount)
+            } else {
+                let formatedAmount = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: toFiatValue) ?? "", fiatCurrency)
+                return L10n.Buy.Ach.Instant.OrderPreview.notice(formatedAmount)
+            }
+        }
         
         switch item.type {
         case .sell:
@@ -233,8 +293,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           totalCost: .init(title: .text(L10n.Swap.youReceive), value: .text(totalText)))
             
         default:
-            // TODO: Update amount
-            model = .init(notice: .text(L10n.Buy.Ach.Instant.OrderPreview.notice("000")),
+            var totalFee = toFiatValue + networkFee + cardFee
+            // Opting for instant ach adds instant ach fee
+            if isInstantAch {
+                totalFee += instantAchFeeUsd
+            }
+            
+            let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: totalFee) ?? "", fiatCurrency)
+            model = .init(notice: isInstantAch ? .text(instantAchNoticeText) : nil,
                           currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
@@ -244,7 +310,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           networkFee: .init(title: .text(L10n.Swap.miningNetworkFee),
                                             value: .text(networkFeeText),
                                             infoImage: .image(infoImage)),
-                          totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)))
+                          totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)),
+            exceedInstantBuyLimit: exceedsInstantBuyLimit)
         }
         
         return model

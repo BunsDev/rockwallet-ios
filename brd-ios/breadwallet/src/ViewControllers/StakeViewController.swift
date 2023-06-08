@@ -189,7 +189,10 @@ class StakeViewController: UIViewController, Subscriber, ModalPresentable {
         sender.stake(address: address, pinVerifier: pinVerifier) { [weak self] result in
             guard let self = self else { return }
             self.sendingActivity.dismiss(animated: true) {
-                defer { self.sender.reset() }
+                defer {
+                    self.sender.reset()
+                }
+                
                 switch result {
                 case .success:
                     self.onPublishSuccess?()

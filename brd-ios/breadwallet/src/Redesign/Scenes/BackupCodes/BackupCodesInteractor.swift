@@ -41,5 +41,5 @@ class BackupCodesInteractor: NSObject, Interactor, BackupCodesViewActions {
         presenter?.presentSkipSaving(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

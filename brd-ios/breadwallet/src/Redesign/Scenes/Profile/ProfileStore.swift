@@ -10,10 +10,9 @@ import UIKit
 
 class ProfileStore: NSObject, BaseDataStore, ProfileDataStore {
     // MARK: - ProfileDataStore
-    var itemId: String?
     
     var allPaymentCards: [PaymentCard]?
     var paymentCard: PaymentCard?
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

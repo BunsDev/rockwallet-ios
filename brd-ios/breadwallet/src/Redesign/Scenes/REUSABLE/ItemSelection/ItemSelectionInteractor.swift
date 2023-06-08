@@ -33,7 +33,7 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
         presenter?.presentData(actionResponse: .init(item: item))
     }
     
-    func getPaymentCards(viewAction: BuyModels.PaymentCards.ViewAction) {
+    func getPaymentCards(viewAction: AchPaymentModels.PaymentCards.ViewAction) {
         fetchCards { [weak self] result in
             guard let self = self else { return }
             
@@ -91,7 +91,7 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
         }        
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     private func fetchCards(completion: ((Result<[PaymentCard]?, Error>) -> Void)?) {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in

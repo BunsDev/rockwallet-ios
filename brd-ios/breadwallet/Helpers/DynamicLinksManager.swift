@@ -14,18 +14,21 @@ class DynamicLinksManager {
     static var shared = DynamicLinksManager()
     
     var shouldHandleDynamicLink: Bool {
-        return DynamicLinksManager.shared.dynamicLinkType != nil
+        let type = DynamicLinksManager.shared.dynamicLinkType
+        
+        return type != nil
     }
     
     enum DynamicLinkType: String {
         case setPassword = "op=password"
-        case home = "home"
-        case profile = "profile"
-        case swap = "swap"
+        case home
+        case profile
+        case swap
     }
     
     var dynamicLinkType: DynamicLinkType?
     var code: String?
+    var email: String?
     
     static func getDynamicLinkType(from url: URL) -> DynamicLinkType? {
         let url = url.absoluteString
@@ -68,11 +71,13 @@ class DynamicLinksManager {
     
     private static func handleReSetPassword(with url: URL) {
         guard let parameters = url.queryParameters,
-              let code = parameters["code"] else {
+              let code = parameters["code"],
+              let email = parameters["email"] else {
             return
         }
         
         DynamicLinksManager.shared.dynamicLinkType = .setPassword
         DynamicLinksManager.shared.code = code
+        DynamicLinksManager.shared.email = email
     }
 }

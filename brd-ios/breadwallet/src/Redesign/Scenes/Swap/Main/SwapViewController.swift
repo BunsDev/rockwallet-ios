@@ -15,8 +15,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SwapPresenter,
                           SwapStore>,
                           SwapResponseDisplays {
-    
-    typealias Models = ExchangeModels
+    typealias Models = AssetModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.HomeScreen.trade
@@ -73,19 +72,19 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFromFiatAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(fromFiatAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(fromFiatValue: amount))
             }
             
             view.didChangeFromCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(fromCryptoAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(fromTokenValue: amount))
             }
             
             view.didChangeToFiatAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(toFiatAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(toFiatValue: amount))
             }
             
             view.didChangeToCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(toCryptoAmount: amount))
+                self?.interactor?.setAmount(viewAction: .init(toTokenValue: amount))
             }
             
             view.didTapFromAssetsSelection = { [weak self] in
@@ -104,7 +103,7 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                     
                     self?.interactor?.switchPlaces(viewAction: .init())
                 } else {
-                    self?.interactor?.getFees(viewAction: .init())
+                    self?.interactor?.prepareFees(viewAction: .init(), completion: {})
                 }
             }
             
@@ -141,24 +140,15 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
-        hideToastMessage()
+        ToastMessageManager.shared.hide()
+        
         interactor?.showConfirmation(viewAction: .init())
     }
     
     // MARK: - SwapResponseDisplay
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hideIfNeeded()
-        }
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        guard let error = responseDisplay.error as? ExchangeErrors else {
-            return
-        }
-        
-        switch error {
+        switch responseDisplay.error as? ExchangeErrors {
         case .noQuote:
             displayExchangeRate(responseDisplay: .init(rateAndTimer: .init()), completion: {})
             
@@ -166,15 +156,14 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             coordinator?.showFailure(reason: .swap)
             
         default:
-            coordinator?.showToastMessage(with: responseDisplay.error,
-                                          model: responseDisplay.model,
-                                          configuration: responseDisplay.config)
+            super.displayMessage(responseDisplay: responseDisplay)
         }
     }
     
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay) {
         view.endEditing(true)
-        hideToastMessage()
+        
+        ToastMessageManager.shared.hide()
         
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: responseDisplay.to ?? responseDisplay.from,
@@ -182,12 +171,24 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                        selected: { [weak self] model in
             guard let model = model as? AssetViewModel else { return }
             
+            guard !model.isDisabled else {
+                self?.interactor?.showAssetSelectionMessage(viewAction: .init(selectedDisabledAsset: model))
+                
+                return
+            }
+            
+            self?.coordinator?.dismissFlow()
+            
             guard responseDisplay.from?.isEmpty == false else {
                 self?.interactor?.assetSelected(viewAction: .init(to: model.subtitle))
                 return
             }
             self?.interactor?.assetSelected(viewAction: .init(from: model.subtitle))
         })
+    }
+    
+    func displayAssetSelectionMessage(responseDisplay: SwapModels.AssetSelectionMessage.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
     func displayConfirmation(responseDisplay: SwapModels.ShowConfirmDialog.ResponseDisplay) {
@@ -224,6 +225,20 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                callbacks: [ { [weak self] in
             self?.coordinator?.dismissFlow()
         }])
+    }
+    
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
+        LoadingView.hideIfNeeded()
+        
+        guard let section = sections.firstIndex(where: { $0.hashValue == AssetModels.Section.swapCard.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
+        
+        cell.wrappedView.setup(with: responseDisplay.mainSwapViewModel)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
+        
+        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     // MARK: - Additional Helpers

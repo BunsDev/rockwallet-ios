@@ -17,7 +17,7 @@ enum PaymentRequestType {
 extension PaymentProtocolRequest {
     var displayText: String? {
         if let name = commonName {
-            return isSecure ? "\(L10n.Symbols.lock) \(name.sanitized)" : name.sanitized
+            return isSecure ? "🔒 \(name.sanitized)" : name.sanitized
         } else {
             return primaryTarget?.description
         }
@@ -70,6 +70,13 @@ struct PaymentRequest {
         //Case: Incoming string is just a plain address
         if let address = Address.create(string: string, network: currency.network) {
             toAddress = address
+            type = .local
+            return
+        }
+        
+        if Address.createLegacy(string: string, network: currency.network) != nil {
+            let currencyBTC = Store.state.currencies.filter { $0.code == Constant.BTC }.first
+            toAddress = Address.create(string: string, network: currencyBTC?.network ?? currency.network)
             type = .local
             return
         }

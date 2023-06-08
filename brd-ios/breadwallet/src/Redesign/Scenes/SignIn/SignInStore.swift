@@ -11,12 +11,15 @@
 import UIKit
 
 class SignInStore: NSObject, BaseDataStore, SignInDataStore {
-    var itemId: String?
-    
     // MARK: - ProfileDataStore
     
     var email: String = ""
     var password: String = ""
     
-    // MARK: - Aditional helpers
+    // MARK: - TwoStepDataStore
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
+    // MARK: - Additional helpers
 }

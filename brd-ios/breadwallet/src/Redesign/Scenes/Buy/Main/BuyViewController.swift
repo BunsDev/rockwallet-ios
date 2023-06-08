@@ -21,7 +21,11 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                          BuyStore>,
                          BuyResponseDisplays,
                          Subscriber {
-    typealias Models = BuyModels
+    typealias Models = AssetModels
+    
+    override var sceneLeftAlignedTitle: String? {
+        return dataStore?.canUseAch == true ? nil : L10n.Button.buy
+    }
     
     var plaidHandler: LinkKit.Handler?
     
@@ -41,10 +45,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         super.viewWillDisappear(animated)
         
         getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
-    override var sceneLeftAlignedTitle: String? {
-        return dataStore?.canUseAch == true ? nil : L10n.Button.buy
     }
     
     override func setupSubviews() {
@@ -67,7 +67,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
             
-        case .from:
+        case .swapCard:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
             
         case .paymentMethod:
@@ -99,11 +99,11 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFiatAmount = { [weak self] value in
-                self?.interactor?.setAmount(viewAction: .init(fiatValue: value))
+                self?.interactor?.setAmount(viewAction: .init(fromFiatValue: value))
             }
             
             view.didChangeCryptoAmount = { [weak self] value in
-                self?.interactor?.setAmount(viewAction: .init(tokenValue: value))
+                self?.interactor?.setAmount(viewAction: .init(fromTokenValue: value))
             }
             
             view.didFinish = { [weak self] _ in
@@ -119,7 +119,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
         }
         
-        cell.setupCustomMargins(vertical: .large, horizontal: .large)
+        cell.setupCustomMargins(vertical: .small, horizontal: .large)
         
         return cell
     }
@@ -235,25 +235,26 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
         coordinator?.showAssetSelector(title: responseDisplay.title,
                                        currencies: dataStore?.currencies,
-                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] item in
-            guard let item = item as? AssetViewModel else { return }
-            self?.interactor?.setAssets(viewAction: .init(currency: item.subtitle))
+                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] model in
+            guard let model = model as? AssetViewModel else { return }
+            
+            guard !model.isDisabled else {
+                self?.interactor?.showAssetSelectionMessage(viewAction: .init())
+                
+                return
+            }
+            
+            self?.coordinator?.dismissFlow()
+            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle))
         }
     }
     
-    func displayPaymentCards(responseDisplay: BuyModels.PaymentCards.ResponseDisplay) {
-        view.endEditing(true)
-        
-        coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            guard let selectedCard = selectedCard else { return }
-            self?.interactor?.setAssets(viewAction: .init(card: selectedCard))
-        }, completion: { [weak self] in
-            self?.interactor?.getPayments(viewAction: .init())
-        })
+    func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
     }
     
-    func displayAssets(responseDisplay actionResponse: BuyModels.Assets.ResponseDisplay) {
-        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.from.hashValue }),
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
               let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
@@ -263,8 +264,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             return
         }
         
-        fromCell.wrappedView.setup(with: actionResponse.cryptoModel)
-        toCell.wrappedView.setup(with: actionResponse.cardModel)
+        fromCell.wrappedView.setup(with: responseDisplay.swapCurrencyViewModel)
+        toCell.wrappedView.setup(with: responseDisplay.cardModel)
         
         tableView.invalidateTableViewIntrinsicContentSize()
         
@@ -284,24 +285,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hideIfNeeded()
-        }
+        super.displayMessage(responseDisplay: responseDisplay)
         
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        if responseDisplay.error != nil {
-            continueButton.viewModel?.enabled = false
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        }
-        
-        coordinator?.showToastMessage(with: responseDisplay.error,
-                                      model: responseDisplay.model,
-                                      configuration: responseDisplay.config)
-    }
-    
-    func displayAchData(responseDisplay: BuyModels.AchData.ResponseDisplay) {
-        interactor?.getPayments(viewAction: .init())
+        continueButton.viewModel?.enabled = responseDisplay.error == nil
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay) {
@@ -316,6 +303,18 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showPopup(with: responseDisplay.model)
     }
     
+    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
+        
+        cell.wrappedView.setup(with: responseDisplay.viewModel)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
+        
+        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+    }
+    
     // MARK: - Additional Helpers
     
     func updatePaymentMethod(paymentMethod: PaymentCard.PaymentType?) {
@@ -326,18 +325,5 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         interactor?.retryPaymentMethod(viewAction: .init(method: paymentMethod))
         
         setSegment(filteredIndex)
-    }
-    
-    private func mapStructToDictionary<T>(item: T) -> [String: Any] {
-        let dictionary = Dictionary(uniqueKeysWithValues:
-            Mirror(reflecting: item).children.lazy.map({ (label: String?, value: Any) in
-                if let label = label {
-                    return (label, value)
-                } else {
-                    return (Date().timeIntervalSince1970.description, value)
-                }
-            })
-        )
-        return dictionary.compactMapValues { $0 }
     }
 }

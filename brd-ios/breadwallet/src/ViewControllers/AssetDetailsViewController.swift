@@ -16,6 +16,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     var currency: Currency
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
+    var paymailCallback: ((Bool) -> Void)?
     
     weak var coordinator: BaseCoordinator?
     
@@ -43,14 +44,15 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             
             switch action {
             case .send:
-                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency)))
+                Store.perform(action: RootModalActions.Present(modal: .send(currency: self.currency, coordinator: self.coordinator)))
                 
             case .receive:
                 Store.perform(action: RootModalActions.Present(modal: .receive(currency: self.currency)))
                 
             // TODO: Replace buy with buySell for drawer
             case .buy:
-                self.coordinator?.showBuy(type: .card,
+                self.coordinator?.showBuy(selectedCurrency: currency,
+                                          type: .card,
                                           coreSystem: coreSystem,
                                           keyStore: keyStore)
                 
@@ -58,7 +60,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
 //                toggleDrawer()
                 
             case .swap:
-                self.coordinator?.showSwap(currencies: Store.state.currencies,
+                self.coordinator?.showSwap(selectedCurrency: currency,
                                            coreSystem: coreSystem,
                                            keyStore: keyStore)
                 
@@ -174,6 +176,10 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         transactionsTableView?.view.layer.cornerRadius = CornerRadius.large.rawValue
         transactionsTableView?.view.layer.masksToBounds = true
         transactionsTableView?.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        if currency == Currencies.shared.bsv && UserManager.shared.profile != nil {
+            paymailCallback?(true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -197,7 +203,6 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     }
     
     override func viewSafeAreaInsetsDidChange() {
-        
         footerHeightConstraint?.constant = AssetDetailsFooterView.height + view.safeAreaInsets.bottom
     }
     
@@ -366,8 +371,8 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Wallet(currencyCode: transaction.currency?.code ?? ""))
 
-        switch transaction.transactionType {
-        case .base:
+        switch transaction.exchangeType {
+        case .unknown:
             guard let tx = transactions[selectedIndex].tx else { return }
             let transactionDetails = TxDetailViewController(transaction: tx, delegate: self)
             transactionDetails.modalPresentationStyle = .overCurrentContext
@@ -379,8 +384,10 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         default:
             let vc = ExchangeDetailsViewController()
             vc.isModalDismissable = false
-            vc.dataStore?.itemId = String(transaction.tx?.swapOrderId ?? transaction.swap?.orderId ?? -1)
-            vc.dataStore?.transactionType = transaction.transactionType
+            vc.dataStore?.exchangeId = String(transaction.tx?.swapOrderId ?? transaction.exchange?.orderId ?? -1)
+            vc.dataStore?.exchangeType = transaction.exchangeType
+            vc.dataStore?.transactionPart = transaction.exchange?.part ?? .one
+            vc.coordinator = coordinator
             
             LoadingView.show()
             navigationController?.pushViewController(viewController: vc, animated: true) {

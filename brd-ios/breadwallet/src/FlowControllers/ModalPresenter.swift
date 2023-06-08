@@ -20,12 +20,14 @@ class ModalPresenter: Subscriber {
     
     init(keyStore: KeyStore, system: CoreSystem, window: UIWindow, alertPresenter: AlertPresenter?,
          deleteAccountCallback: (() -> Void)?,
-         twoStepAuthCallback: (() -> Void)?) {
+         twoStepAuthCallback: (() -> Void)?,
+         paymailCallback: ((Bool) -> Void)?) {
         self.system = system
         self.window = window
         self.alertPresenter = alertPresenter
         self.deleteAccountCallback = deleteAccountCallback
         self.twoStepAuthCallback = twoStepAuthCallback
+        self.paymailCallback = paymailCallback
         self.keyStore = keyStore
         self.modalTransitionDelegate = ModalTransitionDelegate(type: .regular)
         
@@ -42,6 +44,7 @@ class ModalPresenter: Subscriber {
     private var alertPresenter: AlertPresenter?
     private var deleteAccountCallback: (() -> Void)?
     private var twoStepAuthCallback: (() -> Void)?
+    private var paymailCallback: ((Bool) -> Void)?
     private let modalTransitionDelegate: ModalTransitionDelegate
     private let messagePresenter = MessageUIPresenter()
     private let verifyPinTransitionDelegate = PinTransitioningDelegate()
@@ -219,8 +222,8 @@ class ModalPresenter: Subscriber {
         switch type {
         case .none:
             return nil
-        case .send(let currency):
-            return makeSendView(currency: currency)
+        case .send(let currency, let coordinator):
+            return makeSendView(currency: currency, coordinator: coordinator)
         case .receive(let currency):
             return makeReceiveView(currency: currency, isRequestAmountVisible: (currency.urlSchemes?.first != nil))
         case .loginScan:
@@ -295,7 +298,7 @@ class ModalPresenter: Subscriber {
         return ModalViewController(childViewController: stakeView)
     }
     
-    private func makeSendView(currency: Currency) -> UIViewController? {
+    private func makeSendView(currency: Currency, coordinator: BaseCoordinator?) -> UIViewController? {
         guard let wallet = system.wallet(for: currency),
               let kvStore = Backend.kvStore else { return nil }
         guard !(currency.state?.isRescanning ?? false) else {
@@ -311,6 +314,7 @@ class ModalPresenter: Subscriber {
         currentRequest = nil
         
         let root = ModalViewController(childViewController: sendVC)
+        sendVC.coordinator = coordinator
         sendVC.presentScan = presentScan(parent: root, currency: currency)
         sendVC.presentVerifyPin = { [weak self, weak root] bodyText, success in
             guard let self = self, let root = root else { return }
@@ -335,6 +339,7 @@ class ModalPresenter: Subscriber {
     
     private func makeReceiveView(currency: Currency, isRequestAmountVisible: Bool, isBTCLegacy: Bool = false) -> UIViewController? {
         let receiveVC = ReceiveViewController(currency: currency, isRequestAmountVisible: isRequestAmountVisible, isBTCLegacy: isBTCLegacy)
+        receiveVC.paymailCallback = paymailCallback
         let root = ModalViewController(childViewController: receiveVC)
         
         receiveVC.shareAddress = { [weak self, weak root] address, qrCode in
@@ -358,7 +363,7 @@ class ModalPresenter: Subscriber {
                 let message = L10n.Scanner.paymentPromptMessage(request.currency.name)
                 let alert = UIAlertController.confirmationAlert(title: L10n.Scanner.paymentPromptTitle, message: message) {
                     self.currentRequest = request
-                    self.presentModal(.send(currency: request.currency))
+                    self.presentModal(.send(currency: request.currency, coordinator: nil))
                 }
                 top.present(alert, animated: true)
                 
@@ -367,7 +372,8 @@ class ModalPresenter: Subscriber {
                 
                 let wallets = [Currencies.shared.bsv?.wallet,
                                Currencies.shared.btc?.wallet,
-                               Currencies.shared.bch?.wallet]
+                               Currencies.shared.bch?.wallet,
+                               Currencies.shared.ltc?.wallet]
                 wallets.forEach { wallet in
                     guard let wallet else { return }
                     alert.addAction(UIAlertAction(title: wallet.currency.code, style: .default, handler: { _ in
@@ -491,6 +497,26 @@ class ModalPresenter: Subscriber {
         var bsvMenu = MenuItem(title: L10n.Settings.currencyPageTitle(Currencies.shared.bsv?.name ?? ""), subMenu: bsvItems, rootNav: menuNav)
         bsvMenu.shouldShow = { return !bsvItems.isEmpty }
         
+        // MARK: Litecoin Menu
+        var ltcItems: [MenuItem] = []
+        if let ltc = Currencies.shared.ltc, let ltcWallet = ltc.wallet {
+            if system.connectionMode(for: ltc) == .p2p_only {
+                // Rescan
+                ltcItems.append(MenuItem(title: L10n.Settings.sync, callback: { [weak self] in
+                    guard let self = self else { return }
+                    menuNav.pushViewController(ReScanSyncViewController(system: self.system, wallet: ltcWallet), animated: true)
+                }))
+            }
+            ltcItems.append(MenuItem(title: L10n.Settings.importTitle, callback: {
+                menuNav.dismiss(animated: true, completion: { [unowned self] in
+                    self.presentKeyImport(wallet: ltcWallet)
+                })
+            }))
+
+        }
+        var ltcMenu = MenuItem(title: L10n.Settings.currencyPageTitle(Currencies.shared.ltc?.name ?? ""), subMenu: ltcItems, rootNav: menuNav)
+        ltcMenu.shouldShow = { return !ltcItems.isEmpty }
+        
         // MARK: Ethereum Menu
         var ethItems: [MenuItem] = []
         if let eth = Currencies.shared.eth, let ethWallet = eth.wallet {
@@ -520,6 +546,7 @@ class ModalPresenter: Subscriber {
             bsvMenu,
             btcMenu,
             bchMenu,
+            ltcMenu,
             ethMenu,
             
             // Share Anonymous Data
@@ -544,9 +571,10 @@ class ModalPresenter: Subscriber {
         return preferencesItems
     }
     
-    func presentMenu() {
+    func presentMenu(didDismiss: (() -> Void)?) {
         let menuNav = RootNavigationController()
         menuNav.modalPresentationStyle = .overFullScreen
+        
         // MARK: Preferences
         let preferencesItems = preparePreferencesMenuItems(menuNav: menuNav)
         
@@ -558,6 +586,10 @@ class ModalPresenter: Subscriber {
             // Scan QR Code
             MenuItem(title: L10n.MenuButton.scan, icon: MenuItem.Icon.scan) { [weak self] in
                 self?.presentLoginScan()
+            },
+            // Paymail address
+            MenuItem(title: L10n.PaymailAddress.title, icon: MenuItem.Icon.paymailAddress) { [weak self] in
+                self?.paymailCallback?(false)
             },
             // Feedback
             MenuItem(title: L10n.MenuButton.feedback, icon: MenuItem.Icon.feedback) { [weak self] in
@@ -774,7 +806,10 @@ class ModalPresenter: Subscriber {
         
         let rootMenu = MenuViewController(items: rootItems,
                                           title: L10n.Settings.title)
-        rootMenu.addCloseNavigationItem(side: .right)
+        rootMenu.addCloseNavigationItem(side: .right, didDismiss: {
+            didDismiss?()
+        })
+        
         menuNav.viewControllers = [rootMenu]
         
         self.menuNavController = menuNav
@@ -938,13 +973,13 @@ class ModalPresenter: Subscriber {
         self.currentRequest = request
         
         guard !Store.state.isLoginRequired else {
-            presentModal(.send(currency: request.currency))
+            presentModal(.send(currency: request.currency, coordinator: nil))
             
             return
         }
         
         showAccountView(currency: request.currency, animated: false) {
-            self.presentModal(.send(currency: request.currency))
+            self.presentModal(.send(currency: request.currency, coordinator: nil))
         }
     }
     
@@ -1043,7 +1078,7 @@ class ModalPresenter: Subscriber {
         topViewController?.present(confirm, animated: true)
     }
     
-    private var topViewController: UIViewController? {
+    var topViewController: UIViewController? {
         var viewController = window.rootViewController
         if let nc = viewController as? UINavigationController {
             viewController = nc.topViewController
@@ -1144,7 +1179,7 @@ class ModalPresenter: Subscriber {
         var securityItems: [MenuItem] = [unlink, updatePin, biometrics, twoStep, paperKey, widgetPortfolio, iCloudBackup, deleteAccount]
         
         if UserManager.shared.profile == nil || UserDefaults.email == nil {
-            securityItems = securityItems.filter { $0.title != twoStep.title || $0.title != deleteAccount.title }
+            securityItems = securityItems.filter { $0.title != twoStep.title && $0.title != deleteAccount.title }
         }
         
         return securityItems

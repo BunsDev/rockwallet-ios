@@ -117,6 +117,7 @@ class VIPViewController<C: CoordinatableRoutes,
         super.didMove(toParent: parent)
 
         parent?.presentationController?.delegate = self
+        
         guard parent == nil else { return }
 
         coordinator?.goBack()
@@ -125,10 +126,8 @@ class VIPViewController<C: CoordinatableRoutes,
     func setupCloseButton(closeAction: Selector) {}
     
     @objc func dismissModal() {
-        ExchangeCurrencyHelper.revertIfNeeded(coordinator: coordinator, completion: { [weak self] in
-            self?.navigationController?.dismiss(animated: true, completion: {
-                self?.coordinator?.goBack()
-            })
+        navigationController?.dismiss(animated: true, completion: { [weak self] in
+            self?.coordinator?.goBack()
         })
     }
     
@@ -149,27 +148,27 @@ class VIPViewController<C: CoordinatableRoutes,
     // MARK: BaseResponseDisplay
     
     func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        LoadingView.hideIfNeeded()
+        
         guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
         
         if let coordinator {
             coordinator.showToastMessage(with: responseDisplay.error,
                                          model: responseDisplay.model,
-                                         configuration: responseDisplay.config,
-                                         onTapCallback: nil)
+                                         configuration: responseDisplay.config)
+            
         } else {
-            navigationController?.showToastMessage(model: responseDisplay.model,
-                                                   configuration: responseDisplay.config,
-                                                   onTapCallback: nil)
+            ToastMessageManager.shared.show(model: responseDisplay.model,
+                                            configuration: responseDisplay.config)
         }
     }
     
     func isAccessDenied(responseDisplay: MessageModels.ResponseDisplays) -> Bool {
-        guard let error = responseDisplay.error as? NetworkingError, error == .accessDenied else { return false }
+        guard let error = responseDisplay.error as? NetworkingError, case .accessDenied = error else { return false }
         
         coordinator?.showToastMessage(with: responseDisplay.error,
                                       model: responseDisplay.model,
-                                      configuration: responseDisplay.config,
-                                      onTapCallback: nil)
+                                      configuration: responseDisplay.config)
         
         return true
     }

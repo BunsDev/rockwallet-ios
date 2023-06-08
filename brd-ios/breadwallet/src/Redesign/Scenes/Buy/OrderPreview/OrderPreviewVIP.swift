@@ -14,7 +14,7 @@ extension Scenes {
     static let OrderPreview = OrderPreviewViewController.self
 }
 
-protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions {
+protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions, CreateTransactionViewActions {
     func showTermsAndConditions(viewAction: OrderPreviewModels.TermsAndConditions.ViewAction)
     func checkTimeOut(viewAction: OrderPreviewModels.ExpirationValidations.ViewAction)
     func showInfoPopup(viewAction: OrderPreviewModels.InfoPopup.ViewAction)
@@ -24,6 +24,7 @@ protocol OrderPreviewViewActions: BaseViewActions, FetchViewActions {
     func showAchInstantDrawer(viewAction: OrderPreviewModels.AchInstantDrawer.ViewAction)
     func submit(viewAction: OrderPreviewModels.Submit.ViewAction)
     func toggleTickbox(viewAction: OrderPreviewModels.Tickbox.ViewAction)
+    func changeAchDeliveryType(viewAction: OrderPreviewModels.SelectAchDeliveryType.ViewAction)
 }
 
 protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses {
@@ -38,6 +39,7 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentToggleTickbox(actionResponse: OrderPreviewModels.Tickbox.ActionResponse)
     func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse)
     func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse)
+    func presentPreview(actionRespone: OrderPreviewModels.Preview.ActionResponse)
 }
 
 protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
@@ -52,9 +54,10 @@ protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchRes
     func displayFailure(responseDisplay: OrderPreviewModels.Failure.ResponseDisplay)
     func displayAchInstantDrawer(responseDisplay: OrderPreviewModels.AchInstantDrawer.ResponseDisplay)
     func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay)
+    func displayPreview(responseDisplay: OrderPreviewModels.Preview.ResponseDsiaply)
 }
 
-protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
+protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore, CreateTransactionDataStore, TwoStepDataStore {
     var type: PreviewType? { get set }
     var to: Amount? { get set }
     var from: Decimal? { get set }
@@ -65,7 +68,9 @@ protocol OrderPreviewDataStore: BaseDataStore, FetchDataStore {
     var cvv: String? { get set }
     var paymentReference: String? { get set }
     var paymentstatus: AddCard.Status? { get set }
+    var availablePayments: [PaymentCard.PaymentType]? { get set }
     var isAchAccount: Bool { get }
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction? { get set }
 }
 
 protocol OrderPreviewDataPassing {
@@ -80,7 +85,8 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
                           from: Decimal?,
                           card: PaymentCard?,
                           quote: Quote?,
-                          availablePayments: [PaymentCard.PaymentType]?)
+                          availablePayments: [PaymentCard.PaymentType]?,
+                          createTransactionModel: CreateTransactionModels.Transaction.ViewAction?)
     func showTermsAndConditions(url: URL)
     func showTimeout(type: PreviewType?)
     func showThreeDSecure(url: URL)

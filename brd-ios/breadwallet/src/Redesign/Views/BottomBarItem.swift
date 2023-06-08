@@ -1,5 +1,5 @@
 // 
-//  RWBottomBarItem.swift
+//  BottomBarItem.swift
 //  breadwallet
 //
 //  Created by Dino Gacevic on 03/04/2023.
@@ -10,11 +10,11 @@
 
 import UIKit
 
-struct RWBottomBarItemConfiguration: Configurable {
+struct BottomBarItemConfiguration: Configurable {
 }
 
-struct RWBottomBarItemViewModel: ViewModel {
-    static func == (lhs: RWBottomBarItemViewModel, rhs: RWBottomBarItemViewModel) -> Bool {
+struct BottomBarItemViewModel: ViewModel {
+    static func == (lhs: BottomBarItemViewModel, rhs: BottomBarItemViewModel) -> Bool {
         return lhs.title == rhs.title && lhs.image == rhs.image
     }
     
@@ -25,10 +25,11 @@ struct RWBottomBarItemViewModel: ViewModel {
     
     var title: String
     var image: UIImage?
+    var enabled: Bool = true
     var callback: (() -> Void)?
 }
 
-class RWBottomBarItem: FEView<RWBottomBarItemConfiguration, RWBottomBarItemViewModel> {
+class BottomBarItem: FEView<BottomBarItemConfiguration, BottomBarItemViewModel> {
     static let defaultheight: CGFloat = 72.0
     
     private lazy var imageContainerView: UIView = {
@@ -87,15 +88,17 @@ class RWBottomBarItem: FEView<RWBottomBarItemConfiguration, RWBottomBarItemViewM
         tappableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped(_:))))
     }
     
-    override func configure(with config: RWBottomBarItemConfiguration?) {
+    override func configure(with config: BottomBarItemConfiguration?) {
         super.configure(with: config)
     }
     
-    override func setup(with viewModel: RWBottomBarItemViewModel?) {
+    override func setup(with viewModel: BottomBarItemViewModel?) {
         guard let viewModel = viewModel else { return }
         
         imageView.image = viewModel.image
         label.setup(with: .text(viewModel.title))
+        content.isUserInteractionEnabled = viewModel.enabled
+        content.alpha = viewModel.enabled ? 1.0 : 0.5
         onTap = viewModel.callback
     }
     

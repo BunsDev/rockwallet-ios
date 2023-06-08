@@ -13,8 +13,7 @@ import UIKit
 class BaseExchangeTableViewController<C: CoordinatableRoutes,
                                       I: Interactor,
                                       P: Presenter,
-                                      DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS>,
-                                                                     ExchangeResponseDisplays {
+                                      DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS> {
     var didTriggerExchangeRate: (() -> Void)?
     
     private var didDisplayData = false
@@ -22,8 +21,16 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        ExchangeManager.shared.reload()
+        
         guard didDisplayData else { return }
         didTriggerExchangeRate?()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        ExchangeManager.shared.reload()
     }
     
     override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
@@ -73,7 +80,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                 case .ach:
                     (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
                 default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true))
+                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
                 }
             }
         }
@@ -104,20 +111,35 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         }
     }
     
-    // MARK: Exchange response displays
-    
-    func displayAmount(responseDisplay: ExchangeModels.Amounts.ResponseDisplay) {
-        LoadingView.hideIfNeeded()
-        hideToastMessage()
+    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        super.displayMessage(responseDisplay: responseDisplay)
         
-        guard let section = sections.firstIndex(where: { $0.hashValue == ExchangeModels.Section.swapCard.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<MainSwapView> else { return }
+        let error = responseDisplay.error as? NetworkingError
         
-        cell.wrappedView.setup(with: responseDisplay.amounts)
-        
-        tableView.invalidateTableViewIntrinsicContentSize()
-        
-        continueButton.viewModel?.enabled = responseDisplay.continueEnabled
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+        switch error?.errorType {
+        case .twoStepRequired:
+            (coordinator as? BaseCoordinator)?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                vc?.dataStore?.confirmationType = error == .twoStepAppRequired ? .twoStepAppRequired : .twoStepEmailRequired
+                vc?.isModalDismissable = true
+                
+                vc?.didDismiss = { didDismissSuccessfully in
+                    guard didDismissSuccessfully else { return }
+                    
+                    switch vc?.dataStore?.confirmationType {
+                    case .twoStepAppBackupCode:
+                        (self.dataStore as? AssetDataStore)?.secondFactorBackup = vc?.dataStore?.code
+                        
+                    default:
+                        (self.dataStore as? AssetDataStore)?.secondFactorCode = vc?.dataStore?.code
+                    }
+                    
+                    (self.interactor as? AssetViewActions)?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
+                }
+            }
+            
+        default:
+            break
+        }
     }
+    
 }

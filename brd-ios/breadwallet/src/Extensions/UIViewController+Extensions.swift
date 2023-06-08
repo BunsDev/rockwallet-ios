@@ -25,11 +25,13 @@ extension UIViewController {
         viewController.didMove(toParent: self)
     }
     
-    func addCloseNavigationItem(side: NavBarButtonSide = .left) {
+    func addCloseNavigationItem(side: NavBarButtonSide = .left, didDismiss: (() -> Void)? = nil) {
         let close = side == .left ? UIButton.buildModernCloseButton(position: .left) : UIButton.buildModernCloseButton(position: .right)
         close.tintColor = navigationController?.navigationItem.titleView?.tintColor
         close.tap = { [weak self] in
-            self?.dismiss(animated: true, completion: nil)
+            self?.dismiss(animated: true, completion: {
+                didDismiss?()
+            })
         }
         
         switch side {

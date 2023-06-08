@@ -51,8 +51,9 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         case .email, .app, .backupCodes, .settings, .disable:
             cell = self.tableView(tableView, iconTitleSubtitleToggleViewCellForRowAt: indexPath)
             
-        case .settingsTitle:
-            cell = self.tableView(tableView, titleLabelCellForRowAt: indexPath)
+        case .emptySection:
+            cell = self.tableView(tableView, emptyCellForRowAt: indexPath)
+            cell.addSeparator()
             
         default:
             cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -77,40 +78,63 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
                 self.coordinator?.showTwoStepSettings()
                 
             case .disable:
-                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .disable)
+                self.disableMethod(indexPath: indexPath)
                 
             default:
-                if UserManager.shared.twoStepSettings?.type == nil {
-                    coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
-                        if success {
-                            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                            case .email:
-                                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
-                                
-                            case .app:
-                                self.coordinator?.showAuthenticatorApp()
-                                
-                            default:
-                                break
-                            }
-                        } else {
-                            
-                        }
-                    })
-                    
-                } else {
+                guard UserManager.shared.twoStepSettings?.type == nil else {
                     self.changeMethod(indexPath: indexPath)
+                    return
                 }
+                
+                self.coordinator?.showPinInput(keyStore: self.dataStore?.keyStore, callback: { success in
+                    guard success else { return }
+                    
+                    switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+                    case .email:
+                        self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepEmail)
+                        
+                    case .app:
+                        self.coordinator?.showAuthenticatorApp()
+                        
+                    default:
+                        break
+                    }
+                })
             }
         }
         
         return cell
     }
     
+    // TODO: This creates an empty space between cells to make the "toCell" stick to bottom. Make this reusable
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.app.hashValue }),
+              let toSection = sections.firstIndex(where: { $0.hashValue == sections.last?.hashValue }),
+              let emptySection = sections.firstIndex(where: { $0.hashValue == Models.Section.emptySection.hashValue }),
+              let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
+              section == .emptySection else {
+            return UITableView.automaticDimension
+        }
+        
+        let fromCell = tableView.rect(forSection: fromSection)
+        let toCell = tableView.rect(forSection: toSection)
+        
+        let fromCellConverted = tableView.convert(fromCell, to: tableView.superview)
+        let toCellConverted = tableView.convert(toCell, to: tableView.superview)
+        
+        let bottomElementsHeight = toCellConverted.height * CGFloat(sections[emptySection..<sections.count - 1].count)
+        let insetsHeight = tableView.contentInset.top + tableView.contentInset.bottom
+        
+        return tableView.bounds.height
+        - insetsHeight
+        - bottomElementsHeight
+        - fromCellConverted.maxY
+    }
+    
     // MARK: - User Interaction
     
     private func changeMethod(indexPath: IndexPath) {
-        let alert = UIAlertController(title: L10n.TwoStep.Change.title, message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: L10n.TwoStep.Change.title, message: L10n.TwoStep.Change.message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: { [weak self] _ in
             self?.interactor?.changeMethod(viewAction: .init(indexPath: indexPath))
         }))
@@ -119,22 +143,33 @@ class TwoStepAuthenticationViewController: BaseTableViewController<AccountCoordi
         coordinator?.navigationController.present(alert, animated: true)
     }
     
+    private func disableMethod(indexPath: IndexPath) {
+        let alert = UIAlertController(title: L10n.TwoStep.Disable.title, message: L10n.TwoStep.Disable.message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Button.ok, style: .default, handler: { [weak self] _ in
+            self?.coordinator?.showPinInput(keyStore: self?.dataStore?.keyStore, callback: { success in
+                guard success else { return }
+                
+                self?.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepDisable)
+            })
+        }))
+        alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
+        
+        coordinator?.navigationController.present(alert, animated: true)
+    }
+    
     private func handleFlow(indexPath: IndexPath) {
         coordinator?.showPinInput(keyStore: dataStore?.keyStore, callback: { success in
-            if success {
-                switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-                case .email:
-                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepEmailSettings)
-                    
-                case .app:
-                    self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .acountTwoStepAppSettings)
-                    
-                default:
-                    break
-                }
+            guard success else { return }
+            
+            switch self.dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+            case .email:
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepAccountEmailSettings)
                 
-            } else {
+            case .app:
+                self.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .twoStepAccountAppSettings)
                 
+            default:
+                break
             }
         })
     }

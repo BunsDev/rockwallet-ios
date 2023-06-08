@@ -156,7 +156,7 @@ class BackupCodesViewController: BaseTableViewController<AccountCoordinator,
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<BackupCodesView> else { return }
         
         let documentDirectory = FileManager.default.temporaryDirectory
-        let outputFileURL = documentDirectory.appendingPathComponent("RW_Backup_Codes_\(UserDefaults.email ?? "").pdf")
+        let outputFileURL = documentDirectory.appendingPathComponent("RW_2FA_Backup_Codes_\(UserDefaults.email ?? "").pdf")
         
         let pdfRenderer = UIGraphicsPDFRenderer(bounds: cell.bounds)
         

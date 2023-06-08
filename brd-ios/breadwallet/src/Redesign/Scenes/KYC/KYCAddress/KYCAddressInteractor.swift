@@ -118,5 +118,5 @@ class KYCAddressInteractor: NSObject, Interactor, KYCAddressViewActions {
         presenter?.presentForm(actionResponse: .init(isValid: dataStore?.isValid))
     }
 
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

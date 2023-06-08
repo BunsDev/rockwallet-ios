@@ -51,7 +51,11 @@ extension Amount {
         
         guard let value = value,
                   value.tokenValue != 0 else {
-            self = .init(decimalAmount: amount, isFiat: isFiat, currency: currency, exchangeRate: exchangeRate, decimals: decimals - 1)
+            self = .init(decimalAmount: amount,
+                         isFiat: isFiat,
+                         currency: currency,
+                         exchangeRate: exchangeRate,
+                         decimals: decimals - 1)
             
             return
         }

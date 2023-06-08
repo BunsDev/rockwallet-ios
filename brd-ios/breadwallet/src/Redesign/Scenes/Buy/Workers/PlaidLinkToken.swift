@@ -43,4 +43,18 @@ class PlaidLinkTokenWorker: BaseApiWorker<PlaidLinkTokenWorkerMapper> {
         
         return APIURLHandler.getUrl(ExchangeEndpoints.plaidLinkTokenId, parameters: urlParams)
     }
+    
+    override func apiCallDidFinish(response: HTTPResponse) {
+        guard response.statusCode == 403 else {
+            super.apiCallDidFinish(response: response)
+            return
+        }
+        
+        completion?(.failure(PlaidLinkError()))
+    }
+}
+
+struct PlaidLinkError: FEError {
+    var errorType: ServerResponse.ErrorType?
+    var errorMessage: String { return L10n.ErrorMessages.plaidLinkToken }
 }

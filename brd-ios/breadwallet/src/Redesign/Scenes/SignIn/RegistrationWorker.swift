@@ -45,6 +45,8 @@ struct RegistrationRequestData: RequestModelData {
     let password: String?
     let token: String?
     let subscribe: Bool?
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     enum AccountHandling {
         case register, login
@@ -57,7 +59,9 @@ struct RegistrationRequestData: RequestModelData {
             "email": email,
             "password": password,
             "token": token,
-            "subscribe": subscribe
+            "subscribe": subscribe,
+            "second_factor_code": secondFactorCode,
+            "second_factor_backup": secondFactorBackup
         ]
         
         return params.compactMapValues { $0 }

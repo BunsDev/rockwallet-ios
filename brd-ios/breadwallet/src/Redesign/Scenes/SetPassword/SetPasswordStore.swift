@@ -11,13 +11,16 @@
 import UIKit
 
 class SetPasswordStore: NSObject, BaseDataStore, SetPasswordDataStore {
-    var itemId: String?
-    
     // MARK: - ProfileDataStore
     
     var password: String = ""
     var passwordAgain: String = ""
     var code: String?
     
-    // MARK: - Aditional helpers
+    // MARK: - TwoStepDataStore
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
+    // MARK: - Additional helpers
 }

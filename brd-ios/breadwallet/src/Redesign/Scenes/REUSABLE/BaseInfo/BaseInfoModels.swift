@@ -40,7 +40,7 @@ enum BaseInfoModels {
     
     enum SuccessReason: SimpleMessage {
         case buyCard
-        case buyAch(Bool)
+        case buyAch(OrderPreviewModels.AchDeliveryType?)
         case sell
         case documentVerification
         case limitsAuthentication
@@ -79,11 +79,14 @@ enum BaseInfoModels {
             case .buyCard:
                 return L10n.Buy.purchaseSuccessText
                 
-            case .buyAch(let isInstant):
+            case .buyAch(let achDeliveryType):
                 let text: String
-                if isInstant {
+                
+                switch achDeliveryType {
+                case .instant:
                     text = L10n.Buy.Ach.Instant.Success.description
-                } else {
+                    
+                default:
                     text = L10n.Buy.bankAccountSuccessText
                 }
                 
@@ -106,7 +109,7 @@ enum BaseInfoModels {
                 return L10n.Button.buyDigitalAssets
                 
             default:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
             }
         }
         
@@ -119,7 +122,7 @@ enum BaseInfoModels {
                 return L10n.Button.receiveDigitalAssets
                 
             case .limitsAuthentication:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
                 
             default:
                 return L10n.Buy.details
@@ -179,10 +182,11 @@ enum BaseInfoModels {
     
     enum FailureReason: SimpleMessage {
         case buyCard(String?)
-        case buyAch(Bool, String)
+        case buyAch(OrderPreviewModels.AchDeliveryType?, String?)
         case swap
-        case plaidConnection
         case sell
+        
+        case plaidConnection
         case documentVerification
         case documentVerificationRetry
         case limitsAuthentication
@@ -227,9 +231,11 @@ enum BaseInfoModels {
             case .plaidConnection:
                 return L10n.Buy.plaidErrorDescription
                 
-            case .buyAch(let isAch, let responseCode):
+            case .buyAch(let achDeliveryType, let responseCode):
                 let text: String
-                if isAch {
+                
+                switch achDeliveryType {
+                case .instant, .normal:
                     switch responseCode {
                     case "30046":
                         text = L10n.ErrorMessages.Ach.accountClosed
@@ -243,7 +249,8 @@ enum BaseInfoModels {
                     default:
                         text = L10n.ErrorMessages.Ach.errorWhileProcessing
                     }
-                } else {
+                    
+                default:
                     text = L10n.Buy.bankAccountFailureText
                 }
                 
@@ -279,7 +286,7 @@ enum BaseInfoModels {
         var secondButtonTitle: String? {
             switch self {
             case .swap:
-                return L10n.Swap.backToHome
+                return L10n.Button.back
                 
             case .documentVerification, .documentVerificationRetry, .limitsAuthentication:
                 return L10n.Button.tryLater
@@ -295,6 +302,8 @@ enum BaseInfoModels {
         case buy
         case buyAch
         case sell
+        case restrictedUSState
+        case greyListedCountry
         
         var iconName: String {
             return Asset.time.name
@@ -302,50 +311,46 @@ enum BaseInfoModels {
         
         var title: String {
             switch self {
-            case .swap, .buy:
-                return L10n.ComingSoon.swapBuyTitle
+            case .swap, .buy, .restrictedUSState:
+                return L10n.ComingSoon.title
                 
-            case .buyAch, .sell:
+            case .buyAch, .sell, .greyListedCountry:
                 return L10n.Buy.Ach.notAvailableTitle
             }
         }
         
         var description: String {
             switch self {
-            case .swap:
-                return  L10n.ComingSoon.swapDescription
-                
-            case .buy:
-                return L10n.ComingSoon.buyDescription
+            case .swap, .buy, .restrictedUSState:
+                // TODO: Uncomment this when sell is available and remove L10n.ComingSoon.bodyWithoutSell string
+//                return  L10n.ComingSoon.body
+                return  L10n.ComingSoon.bodyWithoutSell
                 
             case .buyAch:
-                return L10n.Buy.Ach.notAvailableBody
+                return  L10n.Buy.Ach.notAvailableBody
                 
-            case .sell:
+            case .sell, .greyListedCountry:
                 return L10n.Sell.notAvailableBody
             }
         }
         
         var firstButtonTitle: String? {
             switch self {
-            case .swap, .buy, .sell:
-                return L10n.Swap.backToHome
-                
             case .buyAch:
                 return L10n.Buy.buyWithCardButton
+                
+            default:
+                return L10n.Button.back
             }
         }
         
         var secondButtonTitle: String? {
             switch self {
-            case .swap, .buy:
-                return L10n.ComingSoon.Buttons.contactSupport
-                
             case .buyAch:
                 return L10n.Swap.backToHome
                 
-            case .sell:
-                return nil
+            default:
+                return L10n.ComingSoon.Buttons.contactSupport
             }
         }
     }

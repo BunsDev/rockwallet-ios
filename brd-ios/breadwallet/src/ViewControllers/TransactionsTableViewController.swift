@@ -68,19 +68,22 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     }()
     
     private let currency: Currency
-    private var remainingExchanges = [SwapDetail]()
-    private var swaps: [SwapDetail] = []
+    private var remainingExchanges = [ExchangeDetail]()
+    private var exchanges: [ExchangeDetail] = []
     private var transactions: [Transaction] = []
     private var allTransactions: [TxListViewModel] {
-        // Combine transactions and swapDetails into 1 array.
+        // Combine transactions and exchanges into 1 array.
+        
         var items = [TxListViewModel]()
         
-        for item in transactions {
+        for item in exchanges {
+            items.append(.init(exchange: item))
+        }
+        
+        for item in transactions where exchanges.filter({ $0.orderId == item.swapOrderId }).isEmpty {
             items.append(.init(tx: item))
         }
-        for item in swaps {
-            items.append(.init(swap: item))
-        }
+        
         return items.sorted(by: { lhs, rhs in
             return combineTransactions(tx: lhs) > combineTransactions(tx: rhs)
         })
@@ -89,7 +92,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
     private func combineTransactions(tx: TxListViewModel) -> Double {
         let result: Double
         
-        if let tx = tx.swap {
+        if let tx = tx.exchange {
             result = Double(tx.timestamp) / 1000
         } else if let tx = tx.tx {
             result = tx.timestamp
@@ -249,25 +252,30 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         
         transactions = transfers.sorted(by: { $0.timestamp > $1.timestamp })
         
-        var remaining = remainingExchanges
         remainingExchanges.forEach { exchange in
             let source = exchange.source
             let destination = exchange.destination
-            let sourceId = source.transactionId
-            let destinationId = destination.transactionId
+            let instantDestination = exchange.instantDestination
             
-            if let element = transactions.first(where: { $0.transfer.hash?.description == sourceId || $0.transfer.hash?.description == destinationId }) {
-                element.transactionType = exchange.type
+            let sourceId = source.transactionId
+            let destinationId = destination?.transactionId
+            let instantDestinationId = instantDestination?.transactionId
+            
+            if let element = transactions.first(where: {
+                $0.transfer.hash?.description == sourceId ||
+                $0.transfer.hash?.description == destinationId ||
+                $0.transfer.hash?.description == instantDestinationId
+            }) {
+                element.exchangeType = exchange.type
                 element.swapOrderId = exchange.orderId
-                element.swapTransationStatus = exchange.status
-                element.swapSource = exchange.source
-                element.swapDestination = exchange.destination
-                
-                remaining.removeAll(where: { $0.orderId == element.swapOrderId })
+                element.exchangeStatus = exchange.status
+                element.exchangeSource = exchange.source
+                element.exchangeDestination = exchange.destination
+                element.exchangeInstantDestination = exchange.instantDestination
             }
         }
         
-        swaps = remaining.filter { $0.status != .failed }
+        exchanges = remainingExchanges.filter { $0.status != .failed }
         
         createSnapshot(for: allTransactions)
     }

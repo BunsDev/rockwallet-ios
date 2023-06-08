@@ -55,6 +55,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
     
     private lazy var subtitleLabel: FELabel = {
         let view = FELabel()
+        view.adjustsFontSizeToFitWidth = true
         return view
     }()
     

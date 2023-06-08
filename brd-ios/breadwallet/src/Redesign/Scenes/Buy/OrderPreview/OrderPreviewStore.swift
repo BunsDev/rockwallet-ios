@@ -12,7 +12,10 @@ import UIKit
 import WalletKit
 
 class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
-    var itemId: String?
+    // MARK: - CreateTransactionDataStore
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
+    var sender: Sender?
     
     // MARK: - OrderPreviewDataStore
     var type: PreviewType?
@@ -23,7 +26,7 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var quote: Quote?
     var networkFee: Amount? {
         guard let value = quote?.toFee,
-              let fee = ExchangeFormatter.crypto.string(for: value.fee),
+              let fee = ExchangeFormatter.current.string(for: value.fee),
               let currency = Store.state.currencies.first(where: { $0.code == value.currency.uppercased() }) else {
             return nil
         }
@@ -40,12 +43,21 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     var paymentstatus: AddCard.Status?
     var availablePayments: [PaymentCard.PaymentType]?
     
+    // MARK: - TwoStepDataStore
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction?
+    
     // TODO: update it according to BE data
     var isAchAccount: Bool {
         return card?.type == .ach
     }
     
-    // MARK: - Aditional helpers
+    var achDeliveryType: OrderPreviewModels.AchDeliveryType? = .instant
+    
+    // MARK: - Additional helpers
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
 }

@@ -110,7 +110,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
                         self?.coordinator?.showFailure(reason: .documentVerificationRetry)
                         
                     default:
-                        self?.coordinator?.showAccountVerification()
+                        self?.coordinator?.showKYCLevelOne(isModal: true)
                     }
                 }
             }
@@ -151,6 +151,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
             
         case .logout:
             LoadingView.show()
+            
             interactor?.logout(viewAction: .init())
             
         }
@@ -159,17 +160,13 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     func displayPaymentCards(responseDisplay: ProfileModels.PaymentCards.ResponseDisplay) {
         coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards,
                                       selected: nil,
-                                      fromBuy: false)
+                                      isFromBuy: false)
     }
     
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+    func displayLogout(responseDisplay: ProfileModels.Logout.ResponseDisplay) {
         LoadingView.hideIfNeeded()
         
         coordinator?.dismissFlow()
-        
-        UIApplication.topViewController()?.showToastMessage(model: responseDisplay.model,
-                                                            configuration: responseDisplay.config,
-                                                            onTapCallback: nil)
     }
     
     // MARK: - Additional Helpers

@@ -26,6 +26,7 @@ protocol CurrencyUID {
     var isBitcoin: Bool { get }
     var isBitcoinSV: Bool { get }
     var isBitcoinCash: Bool { get }
+    var isLitecoin: Bool { get }
     var isEthereum: Bool { get }
     var isERC20Token: Bool { get }
     var isXRP: Bool { get }
@@ -74,6 +75,7 @@ class SharedCurrency: CurrencyUID {
     var isBitcoin: Bool { return uid == Currencies.shared.getUID(from: AssetCodes.btc.value) }
     var isBitcoinSV: Bool { return uid == Currencies.shared.getUID(from: AssetCodes.bsv.value) }
     var isBitcoinCash: Bool { return uid == Currencies.shared.getUID(from: AssetCodes.bch.value) }
+    var isLitecoin: Bool { return uid == Currencies.shared.getUID(from: AssetCodes.ltc.value) }
     var isEthereum: Bool { return uid == Currencies.shared.getUID(from: AssetCodes.eth.value) }
     var isXRP: Bool { return uid == Currencies.shared.getUID(from: AssetCodes.xrp.value) }
     var isERC20Token: Bool { return tokenType == .erc20 }
@@ -219,6 +221,7 @@ class Currencies {
         case bch
         case eth
         case xrp
+        case ltc
         
         var value: String { return rawValue }
     }

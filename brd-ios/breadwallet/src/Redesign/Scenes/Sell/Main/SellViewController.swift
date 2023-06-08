@@ -14,8 +14,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                           SellPresenter,
                           SellStore>,
                           SellResponseDisplays {
-    
-    typealias Models = ExchangeModels
+    typealias Models = AssetModels
     
     override var sceneLeftAlignedTitle: String? {
         return L10n.Sell.title
@@ -41,7 +40,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         super.setupSubviews()
         
         didTriggerExchangeRate = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(), completion: {})
+            self?.interactor?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
         }
     }
     
@@ -51,13 +50,16 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
+        case .increaseLimits:
+            cell = self.tableView(tableView, increaseLimitsCellForRowAt: indexPath)
+            
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
             
         case .swapCard:
             cell = self.tableView(tableView, swapMainCellForRowAt: indexPath)
             
-        case .payoutMethod:
+        case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
         default:
@@ -83,15 +85,19 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeFromCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(from: amount))
+                self?.interactor?.setAmount(viewAction: .init(fromTokenValue: amount))
             }
             
             view.didChangeToCryptoAmount = { [weak self] amount in
-                self?.interactor?.setAmount(viewAction: .init(to: amount))
+                self?.interactor?.setAmount(viewAction: .init(toFiatValue: amount))
             }
             
-            view.contentSizeChanged = { [weak self] in
-                self?.tableView.invalidateTableViewIntrinsicContentSize()
+            view.didFinish = { [weak self] _ in
+                self?.interactor?.setAmount(viewAction: .init())
+            }
+            
+            view.didTapFromAssetsSelection = { [weak self] in
+                self?.interactor?.navigateAssetSelector(viewAction: .init())
             }
             
             view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
@@ -100,9 +106,55 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(font: Fonts.Body.three,
+                                       textColor: LightColors.Text.two,
+                                       isUserInteractionEnabled: true))
+            view.setup(with: model)
+            
+            view.didTapLink = { [weak self] in
+                self?.interactor?.showLimitsInfo(viewAction: .init())
+            }
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(font: Fonts.Body.three,
+                                       textColor: LightColors.Text.two,
+                                       isUserInteractionEnabled: true))
+            view.setup(with: model)
+            
+            view.didTapLink = { [weak self] in
+                self?.increaseLimitsTapped()
+            }
+        }
+        
+        return cell
+    }
+    
     func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+            continueButton.viewModel?.enabled = false
+            continueButton.setup(with: continueButton.viewModel)
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+            
             return nil
         }
         
@@ -118,8 +170,67 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     // MARK: - User Interaction
+    
     @objc override func buttonTapped() {
         super.buttonTapped()
+        
+        interactor?.showOrderPreview(viewAction: .init())
+    }
+    
+    private func increaseLimitsTapped() {
+        coordinator?.showInWebView(urlString: Constant.limits, title: L10n.Buy.increaseYourLimits)
+    }
+    
+    // MARK: - SellResponseDisplay
+    
+    func displayNavigateAssetSelector(responseDisplay: SellModels.AssetSelector.ResponseDisplay) {
+        coordinator?.showAssetSelector(title: responseDisplay.title,
+                                       currencies: dataStore?.currencies,
+                                       supportedCurrencies: dataStore?.supportedCurrencies) { [weak self] model in
+            guard let model = model as? AssetViewModel else { return }
+            
+            guard !model.isDisabled else {
+                self?.interactor?.showAssetSelectionMessage(viewAction: .init())
+                
+                return
+            }
+            
+            self?.coordinator?.dismissFlow()
+            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle))
+        }
+    }
+    
+    func displayAssetSelectionMessage(responseDisplay: SellModels.AssetSelectionMessage.ResponseDisplay) {
+        coordinator?.showToastMessage(model: responseDisplay.model, configuration: responseDisplay.config)
+    }
+    
+    func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
+        guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
+              let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<MainSwapView>,
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+            continueButton.viewModel?.enabled = false
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+            
+            return
+        }
+        
+        fromCell.wrappedView.setup(with: responseDisplay.mainSwapViewModel)
+        toCell.wrappedView.setup(with: responseDisplay.cardModel)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
+        
+        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+    }
+    
+    func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay) {
+        dataStore?.createTransactionModel = .init(exchange: dataStore?.exchange,
+                                                  currencies: dataStore?.currencies,
+                                                  fromFeeBasis: dataStore?.fromFeeBasis,
+                                                  fromFeeAmount: dataStore?.fromFeeAmount,
+                                                  fromAmount: dataStore?.fromAmount,
+                                                  toAmountCode: Constant.usdCurrencyCode)
         
         coordinator?.showOrderPreview(type: .sell,
                                       coreSystem: dataStore?.coreSystem,
@@ -128,13 +239,30 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                       from: dataStore?.toAmount,
                                       card: dataStore?.ach,
                                       quote: dataStore?.quote,
-                                      availablePayments: [])
+                                      availablePayments: responseDisplay.availablePayments)
     }
     
-    // MARK: - SellResponseDisplay
+    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
+        super.displayMessage(responseDisplay: responseDisplay)
+        
+        continueButton.viewModel?.enabled = responseDisplay.error == nil
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+    }
+    
+    func displayLimitsInfo(responseDisplay: SellModels.LimitsInfo.ResponseDisplay) {
+        let _: WrapperPopupView<LimitsPopupView>? = coordinator?.showPopup(with: responseDisplay.config,
+                                                                           viewModel: responseDisplay.viewModel,
+                                                                           confirmedCallback: { [weak self] in
+            self?.coordinator?.dismissFlow()
+        })
+    }
+    
+    func displayInstantAchPopup(responseDisplay: SellModels.InstantAchPopup.ResponseDisplay) {
+        coordinator?.showPopup(with: responseDisplay.model)
+    }
     
     func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.payoutMethod.hashValue }),
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.viewModel)

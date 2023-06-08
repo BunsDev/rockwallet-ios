@@ -116,6 +116,10 @@ class Sender: Subscriber {
         guard wallet.currency.isValidAddress(address) else { return .invalidAddress }
         guard !wallet.isOwnAddress(address) else { return .ownAddress }
 
+        return validate(amount: amount, feeBasis: feeBasis)
+    }
+    
+    func validate(amount: Amount, feeBasis: TransferFeeBasis? = nil) -> SenderValidationResult {
         if let minOutput = minimum {
             guard amount >= minOutput else { return .outputTooSmall(minOutput) }
         }
@@ -135,24 +139,30 @@ class Sender: Subscriber {
         }
         return .ok
     }
-
+    
     func createTransaction(outputScript: String? = nil,
                            address: String,
                            amount: Amount,
                            feeBasis: TransferFeeBasis,
-                           comment: String?,
+                           comment: String? = nil,
                            attribute: String? = nil,
                            gift: Gift? = nil,
-                           exchangeId: String? = nil) -> SenderValidationResult {
-        assert(transfer == nil)
+                           exchangeId: String? = nil,
+                           secondFactorCode: String? = nil,
+                           secondFactorBackup: String? = nil) -> SenderValidationResult {
         let result = validate(address: address, amount: amount, feeBasis: feeBasis)
         guard case .ok = result else { return result }
+        
+        reset()
+        
         switch wallet.createTransfer(outputScript: outputScript,
                                      to: address,
                                      amount: amount,
                                      feeBasis: feeBasis,
                                      attribute: attribute,
-                                     exchangeId: exchangeId) {
+                                     exchangeId: exchangeId,
+                                     secondFactorCode: secondFactorCode,
+                                     secondFactorBackup: secondFactorBackup) {
         case .success(let transfer):
             self.comment = comment
             self.gift = gift
@@ -188,9 +198,11 @@ class Sender: Subscriber {
                            ignoreIdentityNotCertified: Bool,
                            feeBasis: TransferFeeBasis,
                            comment: String?) -> SenderValidationResult {
-        assert(transfer == nil)
         let result = validate(protocolRequest: protoReq, ignoreUsedAddress: ignoreUsedAddress, ignoreIdentityNotCertified: ignoreIdentityNotCertified)
         guard case .ok = result else { return result }
+        
+        reset()
+        
         switch wallet.createTransfer(forProtocolRequest: protoReq, feeBasis: feeBasis) {
         case .success(let transfer):
             self.comment = comment

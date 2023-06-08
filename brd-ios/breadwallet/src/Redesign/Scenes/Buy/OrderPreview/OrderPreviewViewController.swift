@@ -22,7 +22,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     private var veriffKYCManager: VeriffKYCManager?
-    private var drawerManager = RWDrawerManager()
+    private var drawerManager = BottomDrawerManager()
     
     // MARK: - Overrides
     
@@ -82,10 +82,19 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
             view.setup(with: model)
             
             view.didChangeValue = { [weak self] segment in
+                self?.setSegment(segment)
             }
         }
         
         return cell
+    }
+    
+    private func setSegment(_ segment: Int) {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.achSegment.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
+        cell.wrappedView.selectSegment(index: segment)
+        
+        interactor?.changeAchDeliveryType(viewAction: .init(achDeliveryType: Models.AchDeliveryType.allCases[segment]))
     }
     
     override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,7 +146,9 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         }
         
         cell.setup { view in
-            view.configure(with: .init())
+            view.configure(with: .init(notice: .init(font: Fonts.Body.three,
+                                                     textColor: LightColors.instantPurple,
+                                                     textAlignment: model.exceedInstantBuyLimit == true ? .left : .center)))
             view.setup(with: model)
             
             view.cardFeeInfoTapped = { [weak self] in
@@ -183,7 +194,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     @objc override func buttonTapped() {
         super.buttonTapped()
         
-        if let store = dataStore, store.isAchAccount {
+        if let store = dataStore, store.isAchAccount && store.achDeliveryType == .instant && store.type != .sell {
             interactor?.showAchInstantDrawer(viewAction: .init())
         } else {
             showPinInput()
@@ -192,11 +203,36 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     
     func showPinInput() {
         coordinator?.showPinInput(keyStore: dataStore?.keyStore) { [weak self] success in
-            if success {
-                self?.interactor?.checkTimeOut(viewAction: .init())
+            if let twoStepSettings = UserManager.shared.twoStepSettings, twoStepSettings.buy {
+                self?.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.RegistrationConfirmation) { vc in
+                    vc?.dataStore?.confirmationType = twoStepSettings.type == .authenticator ? .twoStepAppBuy : .twoStepEmailBuy
+                    vc?.isModalDismissable = true
+                    
+                    vc?.didDismiss = { didDismissSuccessfully in
+                        guard didDismissSuccessfully else { return }
+                        
+                        switch vc?.dataStore?.confirmationType {
+                        case .twoStepAppBackupCode:
+                            self?.dataStore?.secondFactorBackup = vc?.dataStore?.code
+                        
+                        default:
+                            self?.dataStore?.secondFactorCode = vc?.dataStore?.code
+                        }
+                        
+                        self?.handlePinInputSuccess(didDismissSuccessfully)
+                    }
+                }
             } else {
-                self?.coordinator?.dismissFlow()
+                self?.handlePinInputSuccess(success)
             }
+        }
+    }
+    
+    private func handlePinInputSuccess(_ bool: Bool) {
+        if bool {
+            interactor?.checkTimeOut(viewAction: .init())
+        } else {
+            coordinator?.dismissFlow()
         }
     }
     
@@ -230,10 +266,10 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay) {
         LoadingView.hideIfNeeded()
         
-        let transactionType: TransactionType = dataStore?.isAchAccount ?? false ? .buyAch : .buy
+        let exchangeType: ExchangeType = dataStore?.isAchAccount ?? false ? .buyAch : .buyCard
         coordinator?.showSuccess(reason: responseDisplay.reason,
                                  itemId: responseDisplay.paymentReference,
-                                 transactionType: transactionType)
+                                 exchangeType: exchangeType)
     }
     
     func displayAchInstantDrawer(responseDisplay: OrderPreviewModels.AchInstantDrawer.ResponseDisplay) {
@@ -273,23 +309,22 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         coordinator?.showThreeDSecure(url: responseDisplay.url)
     }
     
-    override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
-        if responseDisplay.error != nil {
-            LoadingView.hideIfNeeded()
-        }
-        
-        guard !isAccessDenied(responseDisplay: responseDisplay) else { return }
-        
-        coordinator?.showToastMessage(with: responseDisplay.error,
-                                      model: responseDisplay.model,
-                                      configuration: responseDisplay.config)
-    }
-    
     func displayContinueEnabled(responseDisplay: OrderPreviewModels.CvvValidation.ResponseDisplay) {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.submit.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FEButton> else { return }
         
         cell.wrappedView.isEnabled = responseDisplay.continueEnabled
+    }
+    
+    func displayPreview(responseDisplay: OrderPreviewModels.Preview.ResponseDsiaply) {
+        guard let previewSection = sections.firstIndex(where: { $0.hashValue == Models.Section.orderInfoCard.hashValue }),
+                let previewCell = tableView.cellForRow(at: IndexPath(row: 0, section: previewSection)) as? WrapperTableViewCell<BuyOrderView> else {
+            return
+        }
+        
+        previewCell.wrappedView.setup(with: responseDisplay.infoModel)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     // MARK: - Additional Helpers

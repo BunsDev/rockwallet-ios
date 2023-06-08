@@ -110,7 +110,7 @@ extension State {
 
 enum RootModal {
     case none
-    case send(currency: Currency)
+    case send(currency: Currency, coordinator: BaseCoordinator?)
     case receive(currency: Currency)
     case loginScan
     case requestAmount(currency: Currency, address: String)
@@ -200,8 +200,8 @@ func == (lhs: RootModal, rhs: RootModal) -> Bool {
     switch(lhs, rhs) {
     case (.none, .none):
         return true
-    case (.send(let lhsCurrency), .send(let rhsCurrency)):
-        return lhsCurrency == rhsCurrency
+    case (.send(let lhsCurrency, let lhsCoordinator), .send(let rhsCurrency, let rhsCoordinator)):
+        return lhsCurrency == rhsCurrency && lhsCoordinator == rhsCoordinator
     case (.receive(let lhsCurrency), .receive(let rhsCurrency)):
         return lhsCurrency == rhsCurrency
     case (.loginScan, .loginScan):

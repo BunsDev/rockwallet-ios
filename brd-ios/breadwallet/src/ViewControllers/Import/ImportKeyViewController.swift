@@ -27,7 +27,9 @@ class ImportKeyViewController: UIViewController, Subscriber {
     init(wallet: Wallet, initialQRCode: QRCode? = nil) {
         self.wallet = wallet
         self.initialQRCode = initialQRCode
-        assert(wallet.currency.isBitcoin || wallet.currency.isBitcoinCash || wallet.currency.isBitcoinSV, "Importing only supports BTC, BSV or BCH")
+        
+        let currency = wallet.currency
+        assert(currency.isBitcoin || currency.isBitcoinCash || currency.isBitcoinSV || currency.isLitecoin, "Importing only supports BTC, BSV, BCH, or LTC")
         super.init(nibName: nil, bundle: nil)
     }
 

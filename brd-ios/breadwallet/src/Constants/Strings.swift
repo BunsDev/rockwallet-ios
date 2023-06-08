@@ -28,8 +28,8 @@ internal enum L10n {
     /// About screen blog label
     internal static let blog = L10n.tr("Localizable", "About.blog", fallback: "Blog")
     /// About screen footer
-    internal static func footer(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "About.footer", p1, p2, fallback: "Made by the global RockWallet team.\nVersion %s Build %s")
+    internal static func footer(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "About.footer", String(describing: p1), String(describing: p2), fallback: "Made by the global RockWallet team.\nVersion %@ Build %@")
     }
     /// Privay Policy button label
     internal static let privacy = L10n.tr("Localizable", "About.privacy", fallback: "Privacy Policy")
@@ -61,8 +61,14 @@ internal enum L10n {
     internal static let accountVerification = L10n.tr("Localizable", "Account.AccountVerification", fallback: "Account Verification")
     /// Daily (ACH)
     internal static let achDailyLimits = L10n.tr("Localizable", "Account.AchDailyLimits", fallback: "Daily (ACH)")
+    /// Address*
+    internal static let addressMandatory = L10n.tr("Localizable", "Account.AddressMandatory", fallback: "Address*")
     /// Already have an account?
     internal static let alreadyCreated = L10n.tr("Localizable", "Account.AlreadyCreated", fallback: "Already have an account?")
+    /// attempt
+    internal static let attempt = L10n.tr("Localizable", "Account.Attempt", fallback: "attempt")
+    /// attempts
+    internal static let attempts = L10n.tr("Localizable", "Account.Attempts", fallback: "attempts")
     /// Account balance
     internal static let balance = L10n.tr("Localizable", "Account.balance", fallback: "Your balance")
     /// Before confirm photo label in create account screen
@@ -93,6 +99,10 @@ internal enum L10n {
     internal static let currentLimit = L10n.tr("Localizable", "Account.CurrentLimit", fallback: "Current limit: $1,000/day")
     /// Daily
     internal static let daily = L10n.tr("Localizable", "Account.Daily", fallback: "Daily")
+    /// (ACH)
+    internal static let dailyLimitAchExtension = L10n.tr("Localizable", "Account.DailyLimitAchExtension", fallback: "(ACH)")
+    /// (Card)
+    internal static let dailyLimitCardExtension = L10n.tr("Localizable", "Account.DailyLimitCardExtension", fallback: "(Card)")
     /// Issues for processing your data label on profile screen
     internal static let dataIssues = L10n.tr("Localizable", "Account.DataIssues", fallback: "Oops! We had some issues processing your data")
     /// Date of birth label in create account
@@ -109,9 +119,13 @@ internal enum L10n {
     internal static let enterEmail = L10n.tr("Localizable", "Account.EnterEmail", fallback: "Enter your e-mail")
     /// Enter your password
     internal static let enterPassword = L10n.tr("Localizable", "Account.EnterPassword", fallback: "Enter your password")
+    /// Enter your phone number
+    internal static let enterYourPhoneNumber = L10n.tr("Localizable", "Account.EnterYourPhoneNumber", fallback: "Enter your phone number")
+    /// To ensure that you can access all the features of our app, we need to collect your phone number. We'll keep your information safe and won't share it with anyone
+    internal static let enterYourPhoneNumberSubtitle = L10n.tr("Localizable", "Account.EnterYourPhoneNumberSubtitle", fallback: "To ensure that you can access all the features of our app, we need to collect your phone number. We'll keep your information safe and won't share it with anyone")
     /// $10000 per BTC
-    internal static func exchangeRate(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Account.exchangeRate", p1, p2, fallback: "%s per %s")
+    internal static func exchangeRate(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Account.exchangeRate", String(describing: p1), String(describing: p2), fallback: "%@ per %@")
     }
     /// We are required to verify the identity of all our users to comply with regulations.
     /// 
@@ -141,14 +155,14 @@ internal enum L10n {
     internal static let loadingMessage = L10n.tr("Localizable", "Account.loadingMessage", fallback: "Loading Wallet")
     /// Log out
     internal static let logout = L10n.tr("Localizable", "Account.Logout", fallback: "Log out")
-    /// You’ve been successfully logged out you RockWallet account. Your self-custodial wallet is still linked to this device.
-    internal static let logoutMessage = L10n.tr("Localizable", "Account.LogoutMessage", fallback: "You’ve been successfully logged out you RockWallet account. Your self-custodial wallet is still linked to this device.")
+    /// You’ve been successfully logged out of your RockWallet account. Your self-custodial wallet is still linked to this device.
+    internal static let logoutMessage = L10n.tr("Localizable", "Account.LogoutMessage", fallback: "You’ve been successfully logged out of your RockWallet account. Your self-custodial wallet is still linked to this device.")
     /// (*)Mandatory Fields
     internal static let mandatoryFields = L10n.tr("Localizable", "Account.MandatoryFields", fallback: "(*)Mandatory Fields")
     /// Verify your account to get full access to the wallet message
     internal static let messageVerifyAccount = L10n.tr("Localizable", "Account.MessageVerifyAccount", fallback: "Verify your account to get full access to your RockWallet!")
-    /// Please fill in the missing information  to use your RockWallet seamlessly.
-    internal static let missingDataPromptText = L10n.tr("Localizable", "Account.MissingDataPromptText", fallback: "Please fill in the missing information  to use your RockWallet seamlessly.")
+    /// Please fill in the missing information to use your RockWallet seamlessly.
+    internal static let missingDataPromptText = L10n.tr("Localizable", "Account.MissingDataPromptText", fallback: "Please fill in the missing information to use your RockWallet seamlessly.")
     /// Add the missing information
     internal static let missingDataPromptTitle = L10n.tr("Localizable", "Account.MissingDataPromptTitle", fallback: "Add the missing information")
     /// Monthly
@@ -168,7 +182,7 @@ internal enum L10n {
     /// Postal Code*
     internal static let postalCode = L10n.tr("Localizable", "Account.PostalCode", fallback: "Postal Code*")
     /// Promotion and offers label when registering account
-    internal static let promotion = L10n.tr("Localizable", "Account.Promotion", fallback: "I'm ok with receiving future promotion, offers, and communications")
+    internal static let promotion = L10n.tr("Localizable", "Account.Promotion", fallback: "I'm ok with receiving future promotion, offers and communications")
     /// I’m ok with receiving future promotion, offers and communications
     internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
@@ -191,8 +205,8 @@ internal enum L10n {
     internal static let signIn = L10n.tr("Localizable", "Account.SignIn", fallback: "Sign in")
     /// Social Security Number
     internal static let socialSecurityNumber = L10n.tr("Localizable", "Account.SocialSecurityNumber", fallback: "Social Security Number")
-    /// Social security number*
-    internal static let socialSecurityNumberRequired = L10n.tr("Localizable", "Account.SocialSecurityNumberRequired", fallback: "Social security number*")
+    /// Social Security Number*
+    internal static let socialSecurityNumberRequired = L10n.tr("Localizable", "Account.SocialSecurityNumberRequired", fallback: "Social Security Number*")
     /// Now let’s start with using your RockWallet.
     internal static let startUsingWallet = L10n.tr("Localizable", "Account.StartUsingWallet", fallback: "Now let’s start with using your RockWallet.")
     /// State title label in select state view
@@ -210,9 +224,9 @@ internal enum L10n {
     /// Veriff’s Privacy Policy
     internal static let veriffPrivacyPolicy = L10n.tr("Localizable", "Account.VeriffPrivacyPolicy", fallback: "Veriff’s Privacy Policy")
     /// Your session audio and video may be recorded.
-    /// Read more from %s
-    internal static func veriffTerms(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Account.VeriffTerms", p1, fallback: "Your session audio and video may be recorded.\nRead more from %s")
+    /// Read more from %@
+    internal static func veriffTerms(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Account.VeriffTerms", String(describing: p1), fallback: "Your session audio and video may be recorded.\nRead more from %@")
     }
     /// You need to be at least 18 years old to complete Level 1 verification label in verify account
     internal static let verification = L10n.tr("Localizable", "Account.Verification", fallback: "You need to be at least 18 years old to complete Level 1 verification")
@@ -234,17 +248,17 @@ internal enum L10n {
     internal static let verifiedAccountText = L10n.tr("Localizable", "Account.VerifiedAccountText", fallback: "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Your account is verified!
     internal static let verifiedAccountTitle = L10n.tr("Localizable", "Account.VerifiedAccountTitle", fallback: "Your account is verified!")
-    /// Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.
-    internal static let verifyAccountDescription = L10n.tr("Localizable", "Account.VerifyAccountDescription", fallback: "Verification helps keep your funds and information secure and ensures we comply with regulations.Verify your account by clicking 'Profile' then 'Verification'.")
+    /// Verification helps keep your funds and information secure and ensures we comply with regulations. Verify your account by clicking 'Profile' then 'Verification'.
+    internal static let verifyAccountDescription = L10n.tr("Localizable", "Account.VerifyAccountDescription", fallback: "Verification helps keep your funds and information secure and ensures we comply with regulations. Verify your account by clicking 'Profile' then 'Verification'.")
     /// Verify account text in popup
     internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
-    /// To start using 'Swap' or 'Buy', your wallet must be verified.
-    internal static let verifyAccountTitle = L10n.tr("Localizable", "Account.VerifyAccountTitle", fallback: "To start using 'Swap' or 'Buy', your wallet must be verified.")
+    /// Verify your identity to get full access to your RockWallet!
+    internal static let verifyAccountTitle = L10n.tr("Localizable", "Account.VerifyAccountTitle", fallback: "Verify your identity to get full access to your RockWallet!")
     /// Enter and verify your email address for your account label in registration flow
     internal static let verifyEmail = L10n.tr("Localizable", "Account.VerifyEmail", fallback: "Enter and verify your new email address for your RockWallet account.")
-    /// We need to verify your identity before you can %s assets.
-    internal static func verifyIdentity(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Account.VerifyIdentity", p1, fallback: "We need to verify your identity before you can %s assets.")
+    /// We need to verify your identity before you can %@ assets.
+    internal static func verifyIdentity(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Account.VerifyIdentity", String(describing: p1), fallback: "We need to verify your identity before you can %@ assets.")
     }
     /// RockWallet would like to confirm your identity, a process is powered by Veriff.
     internal static let verifyIdentityByVeriff = L10n.tr("Localizable", "Account.VerifyIdentityByVeriff", fallback: "RockWallet would like to confirm your identity, a process is powered by Veriff.")
@@ -264,6 +278,18 @@ internal enum L10n {
     internal static let whyVerify = L10n.tr("Localizable", "Account.WhyVerify", fallback: "Why should I verify my identity?")
     /// Write your name as it appears on your ID label in create account
     internal static let writeYourName = L10n.tr("Localizable", "Account.WriteYourName", fallback: "Write your name as it appears on your ID")
+    internal enum _2Fa {
+      /// Paste the following code in your authenticator app.
+      internal static let pasteFollowingCodeInAuthApp = L10n.tr("Localizable", "Account.2FA.pasteFollowingCodeInAuthApp", fallback: "Paste the following code in your authenticator app.")
+    }
+    internal enum BlockedAccount {
+      /// It appears that you're unable to verify your account. For security reasons, we have temporarily disabled it.
+      /// 
+      /// Don't worry, your data is safe, and you can still access your self-custodial funds from your homepage. For more information, please contact support.
+      internal static let description = L10n.tr("Localizable", "Account.BlockedAccount.Description", fallback: "It appears that you're unable to verify your account. For security reasons, we have temporarily disabled it.\n\nDon't worry, your data is safe, and you can still access your self-custodial funds from your homepage. For more information, please contact support.")
+      /// Your RockWallet account is currently disabled.
+      internal static let title = L10n.tr("Localizable", "Account.BlockedAccount.Title", fallback: "Your RockWallet account is currently disabled.")
+    }
     internal enum EmailAddress {
       /// Email address
       internal static let title = L10n.tr("Localizable", "Account.EmailAddress.Title", fallback: "Email address")
@@ -275,9 +301,17 @@ internal enum L10n {
     internal enum VerificationUnsuccessful {
       /// Please try your verification again, while keeping the following in mind:
       /// 
-      /// - Please ensure the area is well-lit
-      /// - Please ensure you are centered in the frame
-      internal static let description = L10n.tr("Localizable", "Account.VerificationUnsuccessful.description", fallback: "Please try your verification again, while keeping the following in mind:\n\n- Please ensure the area is well-lit\n- Please ensure you are centered in the frame")
+      /// ・ Please ensure the area is well-lit
+      /// ・ Please ensure you are centered in the frame
+      internal static let description = L10n.tr("Localizable", "Account.VerificationUnsuccessful.description", fallback: "Please try your verification again, while keeping the following in mind:\n\n・ Please ensure the area is well-lit\n・ Please ensure you are centered in the frame")
+    }
+    internal enum DelistedToken {
+      /// You may still be able to send these tokens to another platform. For more details, visit our support page.
+      internal static let android = L10n.tr("Localizable", "Account.delistedToken.android", fallback: "You may still be able to send these tokens to another platform. For more details, visit our support page.")
+    }
+    internal enum DelistedTokenTitle {
+      /// This token has been delisted
+      internal static let android = L10n.tr("Localizable", "Account.delistedTokenTitle.android", fallback: "This token has been delisted")
     }
     internal enum IdVerificationRejected {
       /// Unfortunately, we were unable to complete your verification at this time. Feel free to contact us for further support.
@@ -313,6 +347,13 @@ internal enum L10n {
     internal static let walletDisabled = L10n.tr("Localizable", "AccountCreation.WalletDisabled", fallback: "If you enter an incorrect wallet PIN too many times, your wallet will become disabled for a certain amount of time.\nThis is to prevent someone else from trying to guess your PIN by quickly making many guesses.\nIf your wallet is disabled, wait until the time shown and you will be able to enter your PIN again.\n\nIf you continue to enter the incorrect PIN, the amount of waiting time in between attempts will increase. Eventually, the app will reset and you can start a new wallet.\n\nIf you have the Recovery Phrase for your wallet, you can use it to reset your PIN by clicking the “Reset PIN” button.")
     /// Why is my wallet disabled title on popup
     internal static let walletDisabledTitle = L10n.tr("Localizable", "AccountCreation.WalletDisabledTitle", fallback: "Why is my wallet disabled?")
+    internal enum EnterCode {
+      /// Enter the code we’ve sent to:
+      /// %@
+      internal static func android(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "AccountCreation.EnterCode.android", String(describing: p1), fallback: "Enter the code we’ve sent to:\n%@")
+      }
+    }
   }
   internal enum AccountDelete {
     /// Popup text when the account is deleted
@@ -348,8 +389,8 @@ internal enum L10n {
     /// Biometrics verified
     internal static let biometricsVerified = L10n.tr("Localizable", "AccountKYCLevelTwo.BiometricsVerified", fallback: "Biometrics verified")
     /// Buy limits on KYC2 account
-    internal static func buyLimits(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "AccountKYCLevelTwo.BuyLimits", p1, fallback: "Buy limits: $%s USD/day, no lifetime limit")
+    internal static func buyLimits(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "AccountKYCLevelTwo.BuyLimits", String(describing: p1), fallback: "Buy limits: $%@ USD/day, no lifetime limit")
     }
     /// Capture back page of the document text
     internal static let captureBackPage = L10n.tr("Localizable", "AccountKYCLevelTwo.CaptureBackPage", fallback: "Make sure to capture the entire back page of the document.")
@@ -390,11 +431,11 @@ internal enum L10n {
     /// Level two title in Account screen
     internal static let levelTwo = L10n.tr("Localizable", "AccountKYCLevelTwo.LevelTwo", fallback: "Level 2")
     /// Swap limits on KYC2 account
-    internal static func limits(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "AccountKYCLevelTwo.Limits", p1, fallback: "Swap limits: $%s USD/day, no lifetime limit")
+    internal static func limits(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "AccountKYCLevelTwo.Limits", String(describing: p1), fallback: "Swap limits: $%@ USD/day, no lifetime limit")
     }
     /// Make sure before photo label in KYC2
-    internal static let makeSure = L10n.tr("Localizable", "AccountKYCLevelTwo.MakeSure", fallback: "Make sure you are in a well-lit room")
+    internal static let makeSure = L10n.tr("Localizable", "AccountKYCLevelTwo.MakeSure", fallback: "Make sure you are in a well-lit room.")
     /// National ID card
     internal static let nationalIdCard = L10n.tr("Localizable", "AccountKYCLevelTwo.NationalIdCard", fallback: "National ID card")
     /// Passport
@@ -527,11 +568,17 @@ internal enum L10n {
   }
   internal enum Amount {
     /// Error label on XRP send amount screen
-    internal static let minXRPAmount = L10n.tr("Localizable", "Amount.MinXRPAmount", fallback: "The minimum required ammount is 10 XRP.")
+    internal static let minXRPAmount = L10n.tr("Localizable", "Amount.MinXRPAmount", fallback: "The minimum required amount is 10 XRP.")
     /// Ripple balance title
     internal static let rippleBalance = L10n.tr("Localizable", "Amount.RippleBalance", fallback: "XRP Balance")
     /// Ripple balance popup text
     internal static let rippleBalanceText = L10n.tr("Localizable", "Amount.RippleBalanceText", fallback: "Ripple requires each wallet to have a minimum balance of 10 XRP, so the balance displayed here is always 10 XRP less than your actual balance.")
+    internal enum MinXRPAmount {
+      /// The minimum required amount is %d XRP.
+      internal static func android(_ p1: Int) -> String {
+        return L10n.tr("Localizable", "Amount.MinXRPAmount.android", p1, fallback: "The minimum required amount is %d XRP.")
+      }
+    }
   }
   internal enum Android {
     /// Tell the user where they can enable permissions to access device storage.
@@ -573,15 +620,23 @@ internal enum L10n {
   }
   internal enum Bch {
     /// Send BCH view body.
-    internal static func body(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "BCH.body", p1, fallback: "Enter a destination BCH address below. All BCH in your wallet at the time of the fork (%s) will be sent.")
+    internal static func body(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "BCH.body", String(describing: p1), fallback: "Enter a destination BCH address below. All BCH in your wallet at the time of the fork (%@) will be sent.")
     }
     /// Confirm sending <$5.00> to <address>?
-    internal static func confirmationMessage(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "BCH.confirmationMessage", p1, p2, fallback: "Confirm sending %s to %s")
+    internal static func confirmationMessage(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "BCH.confirmationMessage", String(describing: p1), String(describing: p2), fallback: "Confirm sending %@ to %@")
     }
     /// Confirmation alert title
     internal static let confirmationTitle = L10n.tr("Localizable", "BCH.confirmationTitle", fallback: "Confirmation")
+    /// The legacy BCH address has been converted to Cashaddr format.
+    internal static let conversionMessage = L10n.tr("Localizable", "BCH.conversionMessage", fallback: "The legacy BCH address has been converted to Cashaddr format.")
+    /// You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.
+    internal static let converterDescription = L10n.tr("Localizable", "BCH.ConverterDescription", fallback: "You have entered a legacy BCH address. To send, please convert the address to Cashaddr format.")
+    /// BCH Legacy address
+    internal static let converterTitle = L10n.tr("Localizable", "BCH.ConverterTitle", fallback: "BCH Legacy address")
+    /// The BCH address must be in Cashaddr format to send.
+    internal static let errorMessage = L10n.tr("Localizable", "BCH.errorMessage", fallback: "The BCH address must be in Cashaddr format to send.")
     /// Generic bch erorr message
     internal static let genericError = L10n.tr("Localizable", "BCH.genericError", fallback: "Your account does not contain any BCH, or you received BCH after the fork.")
     /// Transaction ID copied message
@@ -611,8 +666,8 @@ internal enum L10n {
     /// Approve button label
     internal static let approve = L10n.tr("Localizable", "BitID.approve", fallback: "Approve")
     /// <sitename> is requesting authentication using your bitcoin wallet
-    internal static func authenticationRequest(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "BitID.authenticationRequest", p1, fallback: "%s is requesting authentication using your bitcoin wallet")
+    internal static func authenticationRequest(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "BitID.authenticationRequest", String(describing: p1), fallback: "%@ is requesting authentication using your bitcoin wallet")
     }
     /// Deny button label
     internal static let deny = L10n.tr("Localizable", "BitID.deny", fallback: "Deny")
@@ -640,6 +695,10 @@ internal enum L10n {
     internal static let confirm = L10n.tr("Localizable", "Button.confirm", fallback: "Confirm")
     /// prompt continue button
     internal static let continueAction = L10n.tr("Localizable", "Button.continueAction", fallback: "Continue")
+    /// Convert
+    internal static let convert = L10n.tr("Localizable", "Button.Convert", fallback: "Convert")
+    /// Copy
+    internal static let copy = L10n.tr("Localizable", "Button.copy", fallback: "Copy")
     /// prompt dismiss button
     internal static let dismiss = L10n.tr("Localizable", "Button.dismiss", fallback: "Dismiss")
     /// Done button title
@@ -650,6 +709,8 @@ internal enum L10n {
     internal static let finish = L10n.tr("Localizable", "Button.Finish", fallback: "Finish")
     /// Fund your wallet with ACH
     internal static let fundWalletWithAch = L10n.tr("Localizable", "Button.FundWalletWithAch", fallback: "Fund your wallet with ACH")
+    /// Got it
+    internal static let gotIt = L10n.tr("Localizable", "Button.gotIt", fallback: "Got it")
     /// Go to dashboard button
     internal static let goToDashboard = L10n.tr("Localizable", "Button.GoToDashboard", fallback: "Go to dashboard")
     /// Button to return to the "home" screen (the home screen is the top menu).
@@ -663,13 +724,15 @@ internal enum L10n {
     /// Map button
     internal static let map = L10n.tr("Localizable", "Button.map", fallback: "Map")
     /// Maybe Later button label
-    internal static let maybeLater = L10n.tr("Localizable", "Button.maybeLater", fallback: "Maybe later")
+    internal static let maybeLater = L10n.tr("Localizable", "Button.maybeLater", fallback: "Maybe Later")
     /// menu button
     internal static let menu = L10n.tr("Localizable", "Button.menu", fallback: "Menu")
     /// More information button
     internal static let moreInfo = L10n.tr("Localizable", "Button.moreInfo", fallback: "More info")
     /// More limits
     internal static let moreLimits = L10n.tr("Localizable", "Button.moreLimits", fallback: "More limits")
+    /// Next
+    internal static let next = L10n.tr("Localizable", "Button.next", fallback: "Next")
     /// No button
     internal static let no = L10n.tr("Localizable", "Button.no", fallback: "No")
     /// OK button label
@@ -707,6 +770,10 @@ internal enum L10n {
     internal enum ContactSupport {
       /// Button label to open a email compose window with our support email in the to field.
       internal static let android = L10n.tr("Localizable", "Button.contactSupport.android", fallback: "Contact Support")
+      internal enum Android {
+        /// Contact Support
+        internal static let underlined = L10n.tr("Localizable", "Button.contactSupport.android.underlined", fallback: "Contact Support")
+      }
     }
     internal enum SecuritySettings {
       /// Button label to open Security Settings.
@@ -724,15 +791,17 @@ internal enum L10n {
   internal enum Buy {
     /// 3D Secure label on buy flow
     internal static let _3DSecure = L10n.tr("Localizable", "Buy.3DSecure", fallback: "3D Secure")
-    /// ACH fee (%s)
-    internal static func achFee(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achFee", p1, fallback: "ACH fee (%s)")
+    /// It currently takes 3–5 days to process a purchase with ACH
+    internal static let achBuyDisclaimer = L10n.tr("Localizable", "Buy.achBuyDisclaimer", fallback: "It currently takes 3–5 days to process a purchase with ACH")
+    /// ACH fee (%@)
+    internal static func achFee(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Buy.achFee", String(describing: p1), fallback: "ACH fee (%@)")
     }
-    /// Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More info
+    /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@
     /// 
     /// It currently takes 3-5 days to process a purchase with ACH.
-    internal static func achLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", p1, p2, p3, fallback: "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.  More info\n\nIt currently takes 3-5 days to process a purchase with ACH.")
+    internal static func achLimits(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+      return L10n.tr("Localizable", "Buy.achLimits", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@\n\nIt currently takes 3-5 days to process a purchase with ACH.")
     }
     /// ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.")
@@ -765,9 +834,11 @@ internal enum L10n {
     /// Buy limits
     internal static let buyLimit = L10n.tr("Localizable", "Buy.BuyLimit", fallback: "Buy limits")
     /// Buy min and max limit text
-    internal static func buyLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.BuyLimits", p1, p2, fallback: "Currently, minimum for Buy is %s USD and maximum is %s USD per day.  More info")
+    internal static func buyLimits(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@")
     }
+    /// BUY WITH ACH
+    internal static let buyWithAch = L10n.tr("Localizable", "Buy.buyWithAch", fallback: "BUY WITH ACH")
     /// BUY WITH CARD
     internal static let buyWithCard = L10n.tr("Localizable", "Buy.buyWithCard", fallback: "BUY WITH CARD")
     /// Buy with card
@@ -790,12 +861,14 @@ internal enum L10n {
     internal static let city = L10n.tr("Localizable", "Buy.City", fallback: "City")
     /// Please confirm your CVV label in payment view
     internal static let confirmCVV = L10n.tr("Localizable", "Buy.ConfirmCVV", fallback: "Please confirm your CVV")
+    /// Confirming payment
+    internal static let confirmingPayment = L10n.tr("Localizable", "Buy.ConfirmingPayment", fallback: "Confirming payment")
     /// Country
     internal static let country = L10n.tr("Localizable", "Buy.Country", fallback: "Country")
     /// XXX
     internal static let cvvHint = L10n.tr("Localizable", "Buy.CvvHint", fallback: "XXX")
     /// Daily max
-    internal static let dailyMaLimits = L10n.tr("Localizable", "Buy.dailyMaLimits", fallback: "Daily max")
+    internal static let dailyMaxLimits = L10n.tr("Localizable", "Buy.dailyMaxLimits", fallback: "Daily max")
     /// Daily min
     internal static let dailyMinLimits = L10n.tr("Localizable", "Buy.dailyMinLimits", fallback: "Daily min")
     /// Buy details title
@@ -861,7 +934,7 @@ internal enum L10n {
     /// Explanation of security code in popup
     internal static let securityCodePopup = L10n.tr("Localizable", "Buy.SecurityCodePopup", fallback: "Please enter the 3 digit CVV number as it appears on the back of your card")
     /// Select a payment method button title in buy flow
-    internal static let selectPaymentMethod = L10n.tr("Localizable", "Buy.SelectPaymentMethod", fallback: "Select a payment method")
+    internal static let selectPaymentMethod = L10n.tr("Localizable", "Buy.SelectPaymentMethod", fallback: "Select payment method")
     /// State/Province label in billing address view on buy flow
     internal static let stateProvince = L10n.tr("Localizable", "Buy.StateProvince", fallback: "State/Province")
     /// Payment method switched to ACH payments!
@@ -876,9 +949,9 @@ internal enum L10n {
     internal static let transferFromBank = L10n.tr("Localizable", "Buy.transferFromBank", fallback: "Transfer from bank account")
     /// Try a different payment method button title in failure buy screen
     internal static let tryAnotherPayment = L10n.tr("Localizable", "Buy.TryAnotherPayment", fallback: "Try a different payment method")
-    /// %s Transaction ID
-    internal static func txHashHeader(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Buy.txHashHeader", p1, fallback: "%s Transaction ID")
+    /// %@ Transaction ID
+    internal static func txHashHeader(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Buy.txHashHeader", String(describing: p1), fallback: "%@ Transaction ID")
     }
     /// I understand and agree
     internal static let understandAndAgree = L10n.tr("Localizable", "Buy.understandAndAgree", fallback: "I understand and agree")
@@ -897,15 +970,19 @@ internal enum L10n {
       internal static let notAvailableBody = L10n.tr("Localizable", "Buy.Ach.NotAvailableBody", fallback: "Fund with ACH isn’t available in your region. We'll notify you when this feature is released. You can still buy digital assets with a debit/credit card.")
       /// Sorry! This feature is unavailable
       internal static let notAvailableTitle = L10n.tr("Localizable", "Buy.Ach.NotAvailableTitle", fallback: "Sorry! This feature is unavailable")
-      /// %s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.
-      internal static func walletDisabled(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "Buy.Ach.WalletDisabled", p1, p2, fallback: "%s needs to be enabled in your wallet first. Kindly enable it %s, or by selecting 'Manage assets' on the home screen.")
+      /// %@ needs to be enabled in your wallet first. Kindly enable it %@, or by selecting 'Manage assets' on the home screen.
+      internal static func walletDisabled(_ p1: Any, _ p2: Any) -> String {
+        return L10n.tr("Localizable", "Buy.Ach.WalletDisabled", String(describing: p1), String(describing: p2), fallback: "%@ needs to be enabled in your wallet first. Kindly enable it %@, or by selecting 'Manage assets' on the home screen.")
       }
       internal enum Hybrid {
         /// 3-5 days
         internal static let title = L10n.tr("Localizable", "Buy.Ach.Hybrid.Title", fallback: "3-5 days")
       }
       internal enum Instant {
+        /// With Instant buy, %@ (%@) will show in your account instantly. The remaining %@ (%@) will arrive in 3-5 days.
+        internal static func hybridConfirmationDrawer(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+          return L10n.tr("Localizable", "Buy.Ach.Instant.HybridConfirmationDrawer", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "With Instant buy, %@ (%@) will show in your account instantly. The remaining %@ (%@) will arrive in 3-5 days.")
+        }
         /// Receive up to $500.00 instantly
         internal static let infoButtonTitle = L10n.tr("Localizable", "Buy.Ach.Instant.InfoButtonTitle", fallback: "Receive up to $500.00 instantly")
         /// Instant Buy via ACH is a fast and convenient way to purchase digital assets using funds from your bank account. The instant portion of your transaction will show in your account within seconds!
@@ -917,23 +994,33 @@ internal enum L10n {
         internal enum ConfirmationDrawer {
           /// Confirm purchase
           internal static let confirmAction = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.ConfirmAction", fallback: "Confirm purchase")
-          /// $%s assets will settle immediately.
-          internal static func description(_ p1: UnsafePointer<CChar>) -> String {
-            return L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Description", p1, fallback: "$%s assets will settle immediately.")
+          /// %@ (%@) assets will settle immediately.
+          internal static func description(_ p1: Any, _ p2: Any) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Description", String(describing: p1), String(describing: p2), fallback: "%@ (%@) assets will settle immediately.")
           }
           /// Instant purchase
           internal static let notice = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Notice", fallback: "Instant purchase")
-          /// Puchase with Instant Buy
-          internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Title", fallback: "Puchase with Instant Buy")
+          /// Purchase with Instant Buy
+          internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Title", fallback: "Purchase with Instant Buy")
         }
         internal enum Fee {
           /// Instant Buy fee
           internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Title", fallback: "Instant Buy fee")
         }
+        internal enum InfoButtonTitle {
+          /// Receive up to %@ instantly
+          internal static func android(_ p1: Any) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.InfoButtonTitle.android", String(describing: p1), fallback: "Receive up to %@ instantly")
+          }
+        }
         internal enum OrderPreview {
-          /// With Instant Buy, %s will be settled immediately.
-          internal static func notice(_ p1: UnsafePointer<CChar>) -> String {
-            return L10n.tr("Localizable", "Buy.Ach.Instant.OrderPreview.Notice", p1, fallback: "With Instant Buy, %s will be settled immediately.")
+          /// With Instant Buy, %@ will be settled immediately. Remaining %@ will settle in 3-5 days.
+          internal static func hybridNotice(_ p1: Any, _ p2: Any) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.OrderPreview.HybridNotice", String(describing: p1), String(describing: p2), fallback: "With Instant Buy, %@ will be settled immediately. Remaining %@ will settle in 3-5 days.")
+          }
+          /// With Instant Buy, %@ will be settled immediately.
+          internal static func notice(_ p1: Any) -> String {
+            return L10n.tr("Localizable", "Buy.Ach.Instant.OrderPreview.Notice", String(describing: p1), fallback: "With Instant Buy, %@ will be settled immediately.")
           }
         }
         internal enum Success {
@@ -942,6 +1029,10 @@ internal enum L10n {
         }
       }
       internal enum WalletDisabled {
+        /// %@ needs to be enabled in your wallet first. You can enable it %@, or by selecting %@ on the home screen.
+        internal static func android(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+          return L10n.tr("Localizable", "Buy.Ach.WalletDisabled.android", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "%@ needs to be enabled in your wallet first. You can enable it %@, or by selecting %@ on the home screen.")
+        }
         /// here
         internal static let link = L10n.tr("Localizable", "Buy.Ach.WalletDisabled.Link", fallback: "here")
         /// Manage assets
@@ -949,19 +1040,31 @@ internal enum L10n {
       }
     }
     internal enum BuyLimits {
-      /// Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.
-      internal static let android = L10n.tr("Localizable", "Buy.BuyLimits.android", fallback: "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.")
+      /// Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.
+      internal static func android(_ p1: Any, _ p2: Any) -> String {
+        return L10n.tr("Localizable", "Buy.BuyLimits.android", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.")
+      }
     }
     internal enum RemoveCard {
-      /// Are you sure you want to remove card ending in %s?
-      internal static func android(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "Buy.RemoveCard.android", p1, fallback: "Are you sure you want to remove card ending in %s?")
+      /// Are you sure you want to remove card ending in %@?
+      internal static func android(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "Buy.RemoveCard.android", String(describing: p1), fallback: "Are you sure you want to remove card ending in %@?")
       }
     }
     internal enum Terms {
-      /// By placing this order you agree to our %s
-      internal static func android(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "Buy.Terms.android", p1, fallback: "By placing this order you agree to our %s")
+      /// By placing this order you agree to our %@
+      internal static func android(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "Buy.Terms.android", String(describing: p1), fallback: "By placing this order you agree to our %@")
+      }
+    }
+    internal enum AchFee {
+      /// ACH fee
+      internal static let android = L10n.tr("Localizable", "Buy.achFee.android", fallback: "ACH fee")
+    }
+    internal enum AchLimits {
+      /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.
+      internal static func android(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+        return L10n.tr("Localizable", "Buy.achLimits.android", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.")
       }
     }
   }
@@ -1014,9 +1117,9 @@ internal enum L10n {
     internal static let mainWarning = L10n.tr("Localizable", "CloudBackup.mainWarning", fallback: "iCloud Keychain must be turned on in the iOS Settings app for this feature to work")
     /// Are you sure you want to disable iCloud Backup? This will delete your backup from all devices.
     internal static let mainWarningConfirmation = L10n.tr("Localizable", "CloudBackup.mainWarningConfirmation", fallback: "Are you sure you want to disable iCloud Backup? This will delete your backup from all devices.")
-    /// Attempts remaining before erasing backup: %s
-    internal static func pinAttempts(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "CloudBackup.pinAttempts", p1, fallback: "Attempts remaining before erasing backup: %s")
+    /// Attempts remaining before erasing backup: %@
+    internal static func pinAttempts(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "CloudBackup.pinAttempts", String(describing: p1), fallback: "Attempts remaining before erasing backup: %@")
     }
     /// Restore with Recovery Phrase
     internal static let recoverButton = L10n.tr("Localizable", "CloudBackup.recoverButton", fallback: "Restore with Recovery Phrase")
@@ -1038,16 +1141,20 @@ internal enum L10n {
     internal static let step4 = L10n.tr("Localizable", "CloudBackup.step4", fallback: "Verify that iCloud Keychain is ON")
     /// I understand that this feature will not work unless iCloud Keychain is enabled.
     internal static let understandText = L10n.tr("Localizable", "CloudBackup.understandText", fallback: "I understand that this feature will not work unless iCloud Keychain is enabled.")
-    /// Your iCloud backup will be erased after %s more incorrect PIN attempts.
-    internal static func warningBody(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "CloudBackup.warningBody", p1, fallback: "Your iCloud backup will be erased after %s more incorrect PIN attempts.")
+    /// Your iCloud backup will be erased after %@ more incorrect PIN attempts.
+    internal static func warningBody(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "CloudBackup.warningBody", String(describing: p1), fallback: "Your iCloud backup will be erased after %@ more incorrect PIN attempts.")
     }
   }
   internal enum ComingSoon {
-    /// Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.
+    /// Buy, Swap and Sell are not available in your state. We will notify you when they become available. 
     /// 
-    /// You can still safely send and receive digital assets to your wallet in the meantime.
-    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy and Swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
+    /// You can still Store, Send and Receive digital assets in your RockWallet.
+    internal static let body = L10n.tr("Localizable", "ComingSoon.body", fallback: "Buy, Swap and Sell are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.")
+    /// Buy and Swap are not available in your state. We will notify you when they become available. 
+    /// 
+    /// You can still Store, Send and Receive digital assets in your RockWallet.
+    internal static let bodyWithoutSell = L10n.tr("Localizable", "ComingSoon.BodyWithoutSell", fallback: "Buy and Swap are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.")
     /// You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.
     internal static let buyDescription = L10n.tr("Localizable", "ComingSoon.BuyDescription", fallback: "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.")
     /// This feature is not available for your account at this time.
@@ -1056,11 +1163,21 @@ internal enum L10n {
     internal static let swapDescription = L10n.tr("Localizable", "ComingSoon.SwapDescription", fallback: "You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.")
     /// Coming soon!
     internal static let title = L10n.tr("Localizable", "ComingSoon.title", fallback: "Coming soon!")
+    internal enum FeatureUnavailable {
+      /// This feature is not available in your region. We will notify you when this becomes available.
+      internal static let subtitle = L10n.tr("Localizable", "ComingSoon.FeatureUnavailable.Subtitle", fallback: "This feature is not available in your region. We will notify you when this becomes available.")
+    }
     internal enum Buttons {
       /// BACK TO HOME
       internal static let backHome = L10n.tr("Localizable", "ComingSoon.buttons.backHome", fallback: "BACK TO HOME")
       /// Contact support
       internal static let contactSupport = L10n.tr("Localizable", "ComingSoon.buttons.contactSupport", fallback: "Contact support")
+    }
+  }
+  internal enum CommonString {
+    internal enum Or {
+      /// Or
+      internal static let label = L10n.tr("Localizable", "CommonString.Or.label", fallback: "Or")
     }
   }
   internal enum ConfirmGift {
@@ -1078,23 +1195,29 @@ internal enum L10n {
     internal static func word(_ p1: Int) -> String {
       return L10n.tr("Localizable", "ConfirmPaperPhrase.word", p1, fallback: "Word %02i")
     }
+    internal enum Word {
+      /// Word %1$s%2$s
+      internal static func android(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "ConfirmPaperPhrase.word.android", p1, p2, fallback: "Word %1$s%2$s")
+      }
+    }
   }
   internal enum Confirmation {
     /// Amount to Send: ($1.00)
-    internal static let amountLabel = L10n.tr("Localizable", "Confirmation.amountLabel", fallback: "Amount to Send:")
+    internal static let amountLabel = L10n.tr("Localizable", "Confirmation.amountLabel", fallback: "Amount to send")
     /// Destination Tag
     internal static let destinationTag = L10n.tr("Localizable", "Confirmation.destinationTag", fallback: "Destination Tag")
     /// (empty)
     internal static let destinationTagEmptyHint = L10n.tr("Localizable", "Confirmation.destinationTag_EmptyHint", fallback: "(empty)")
     /// Network Fee: ($1.00)
-    internal static let feeLabel = L10n.tr("Localizable", "Confirmation.feeLabel", fallback: "Network Fee:")
+    internal static let feeLabel = L10n.tr("Localizable", "Confirmation.feeLabel", fallback: "Network fee")
     /// Network Fee: (ETH)
     internal static let feeLabelETH = L10n.tr("Localizable", "Confirmation.feeLabelETH", fallback: "Network Fee (ETH):")
     /// Label for Hedera Memo field on transaction confirmation screen
     internal static let hederaMemo = L10n.tr("Localizable", "Confirmation.hederaMemo", fallback: "Hedera Memo")
     /// eg. Processing time: This transaction is predicted to complete in [10-60 minutes].
-    internal static func processingTime(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Confirmation.processingTime", p1, fallback: "Processing time: This transaction is predicted to complete in %s.")
+    internal static func processingTime(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Confirmation.processingTime", String(describing: p1), fallback: "Processing time: This transaction is predicted to complete in %@.")
     }
     /// Label for "send" button on final confirmation screen
     internal static let send = L10n.tr("Localizable", "Confirmation.send", fallback: "Send")
@@ -1106,6 +1229,16 @@ internal enum L10n {
     internal static let totalLabel = L10n.tr("Localizable", "Confirmation.totalLabel", fallback: "Total Cost:")
     /// Validator address label on  confirmation screen
     internal static let validatorAddress = L10n.tr("Localizable", "Confirmation.ValidatorAddress", fallback: "Validator Address")
+    internal enum ProcessingTime {
+      /// Estimated delivery time: %@
+      internal static func android(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "Confirmation.processingTime.android", String(describing: p1), fallback: "Estimated delivery time: %@")
+      }
+    }
+    internal enum TotalLabel {
+      /// You'll receive
+      internal static let android = L10n.tr("Localizable", "Confirmation.totalLabel.android", fallback: "You'll receive")
+    }
   }
   internal enum CreateGift {
     /// Choose amount ($USD)
@@ -1114,8 +1247,8 @@ internal enum L10n {
     internal static let create = L10n.tr("Localizable", "CreateGift.create", fallback: "Create")
     /// Custom amount ($500 max)
     internal static let customAmountHint = L10n.tr("Localizable", "CreateGift.customAmountHint", fallback: "Custom amount ($500 max)")
-    /// We'll create what's called a
-    internal static let description = L10n.tr("Localizable", "CreateGift.description", fallback: "We'll create what's called a")
+    /// We'll create what's called a "paper wallet" with a qr code and instructions for installing RockWallet that you can email or text to friends and family.
+    internal static let description = L10n.tr("Localizable", "CreateGift.description", fallback: "We'll create what's called a \"paper wallet\" with a qr code and instructions for installing RockWallet that you can email or text to friends and family.")
     /// You must select a gift amount.
     internal static let inputAmountError = L10n.tr("Localizable", "CreateGift.inputAmountError", fallback: "You must select a gift amount.")
     /// You must enter the name of the recipient.
@@ -1170,41 +1303,43 @@ internal enum L10n {
   internal enum Eme {
     internal enum Permissions {
       /// Service capabilities description
-      internal static func accountRequest(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "EME.permissions.accountRequest", p1, fallback: "Request %s account information")
+      internal static func accountRequest(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "EME.permissions.accountRequest", String(describing: p1), fallback: "Request %@ account information")
       }
       /// Service capabilities description
-      internal static func callRequest(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "EME.permissions.callRequest", p1, fallback: "Request %s smart contract call")
+      internal static func callRequest(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "EME.permissions.callRequest", String(describing: p1), fallback: "Request %@ smart contract call")
       }
       /// Service capabilities description
-      internal static func paymentRequest(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "EME.permissions.paymentRequest", p1, fallback: "Request %s payment")
+      internal static func paymentRequest(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "EME.permissions.paymentRequest", String(describing: p1), fallback: "Request %@ payment")
       }
     }
   }
   internal enum Email {
     /// Share address by e-mail subject
-    internal static func addressSubject(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Email.address_subject", p1, fallback: "%s Address")
+    internal static func addressSubject(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Email.address_subject", String(describing: p1), fallback: "%@ Address")
     }
   }
   internal enum ErrorMessages {
     /// You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.
     internal static let accessDenied = L10n.tr("Localizable", "ErrorMessages.accessDenied", fallback: "You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.")
     /// The currency amount is to high for exchange. Accepts 2 parameters:, - maxiumum amount, - currency code
-    internal static func amountTooHigh(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.AmountTooHigh", p1, p2, fallback: "The amount is higher than your daily limit of %s %s. Please enter a lower amount.")
+    internal static func amountTooHigh(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.AmountTooHigh", String(describing: p1), String(describing: p2), fallback: "The amount is higher than your daily limit of %@ %@. Please enter a lower amount.")
     }
     /// The currency amount is to low for exchange. Accepts 2 parameters:, - minimum amount, - currency code
-    internal static func amountTooLow(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.amountTooLow", p1, p2, fallback: "The amount is lower than the minimum of %s %s. Please enter a higher amount.")
+    internal static func amountTooLow(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.amountTooLow", String(describing: p1), String(describing: p2), fallback: "The amount is lower than the minimum of %@ %@. Please enter a higher amount.")
     }
+    /// You don't have an app installed to complete this action.
+    internal static let appNotInstalled = L10n.tr("Localizable", "ErrorMessages.appNotInstalled", fallback: "You don't have an app installed to complete this action.")
     /// Card authorization failed. Please contact your credit card issuer/bank or try another card.
     internal static let authorizationFailed = L10n.tr("Localizable", "ErrorMessages.authorizationFailed", fallback: "Card authorization failed. Please contact your credit card issuer/bank or try another card.")
     /// Accepts 3 parameters:, - currency code, - current balance, - (same) currency code
-    internal static func balanceTooLow(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.balanceTooLow", p1, p2, p3, fallback: "You need %s %s in your wallet to cover network fees. Please add more %s to your wallet.")
+    internal static func balanceTooLow(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.balanceTooLow", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "You need %@ %@ in your wallet to cover network fees. Please add more %@ to your wallet.")
     }
     /// Check your internet connection message
     internal static let checkInternet = L10n.tr("Localizable", "ErrorMessages.CheckInternet", fallback: "Please check your internet connection and try again later.")
@@ -1215,12 +1350,12 @@ internal enum L10n {
     /// Email unavailable alert title
     internal static let emailUnavailableTitle = L10n.tr("Localizable", "ErrorMessages.emailUnavailableTitle", fallback: "Email Unavailable")
     /// Not enough ETH for transaction fee
-    internal static func ethBalanceLowAddEth(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", p1, fallback: "%s is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.")
+    internal static func ethBalanceLowAddEth(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", String(describing: p1), fallback: "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.")
     }
-    /// Swap failed. Reason: %s.
-    internal static func exchangeFailed(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.exchangeFailed", p1, fallback: "Swap failed. Reason: %s.")
+    /// Swap failed. Reason: %@.
+    internal static func exchangeFailed(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.exchangeFailed", String(describing: p1), fallback: "Swap failed. Reason: %@.")
     }
     /// We are currently having issues making a swap between this pair of coins. Please try again later.
     internal static let exchangeQuoteFailed = L10n.tr("Localizable", "ErrorMessages.ExchangeQuoteFailed", fallback: "We are currently having issues making a swap between this pair of coins. Please try again later.")
@@ -1243,34 +1378,40 @@ internal enum L10n {
     /// Failed to fetch network fees. Please try again later.
     internal static let noFees = L10n.tr("Localizable", "ErrorMessages.noFees", fallback: "Failed to fetch network fees. Please try again later.")
     /// Accepts 2 parameters:, - first currency code, - second currency code
-    internal static func noQuoteForPair(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.noQuoteForPair", p1, p2, fallback: "No quote for currency pair %s-%s.")
+    internal static func noQuoteForPair(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.noQuoteForPair", String(describing: p1), String(describing: p2), fallback: "No quote for currency pair %@-%@.")
     }
-    /// The amount is higher than your daily limit of %s USD. Please upgrade your account or enter a lower amount.
-    internal static func overDailyLimit(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.overDailyLimit", p1, fallback: "The amount is higher than your daily limit of %s USD. Please upgrade your account or enter a lower amount.")
+    /// You don’t have enough %@ in your wallet in order to transfer this type of token.
+    internal static func notEnoughBalance(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.notEnoughBalance", String(describing: p1), fallback: "You don’t have enough %@ in your wallet in order to transfer this type of token.")
+    }
+    /// The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.
+    internal static func overDailyLimit(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.overDailyLimit", String(describing: p1), fallback: "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.")
     }
     /// Over exchange limit.
     internal static let overExchangeLimit = L10n.tr("Localizable", "ErrorMessages.overExchangeLimit", fallback: "Over exchange limit.")
-    /// The amount is higher than your lifetime limit of %s USD. Please upgrade your account or enter a lower amount.
-    internal static func overLifetimeLimit(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimit", p1, fallback: "The amount is higher than your lifetime limit of %s USD. Please upgrade your account or enter a lower amount.")
+    /// The amount is higher than your lifetime limit of %@ USD. Please upgrade your account or enter a lower amount.
+    internal static func overLifetimeLimit(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimit", String(describing: p1), fallback: "The amount is higher than your lifetime limit of %@ USD. Please upgrade your account or enter a lower amount.")
     }
-    /// The amount is higher than your daily limit of %s USD. Please enter a lower amount.
-    internal static func overLifetimeLimitLevel2(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimitLevel2", p1, fallback: "The amount is higher than your daily limit of %s USD. Please enter a lower amount.")
+    /// The amount is higher than your daily limit of %@ USD. Please enter a lower amount.
+    internal static func overLifetimeLimitLevel2(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimitLevel2", String(describing: p1), fallback: "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.")
     }
     /// A maximum of one swap can be active for a currency at a time.
     internal static let pendingExchange = L10n.tr("Localizable", "ErrorMessages.pendingExchange", fallback: "A maximum of one swap can be active for a currency at a time.")
     /// PIN Authentication failed.
     internal static let pinConfirmationFailed = L10n.tr("Localizable", "ErrorMessages.pinConfirmationFailed", fallback: "PIN Authentication failed.")
-    /// In order to succesfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.
-    internal static let selectAssets = L10n.tr("Localizable", "ErrorMessages.selectAssets", fallback: "In order to succesfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.")
+    /// Unfortunately, an error occurred while linking the bank account. Please contact us for further support.
+    internal static let plaidLinkToken = L10n.tr("Localizable", "ErrorMessages.PlaidLinkToken", fallback: "Unfortunately, an error occurred while linking the bank account. Please contact us for further support.")
+    /// In order to successfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.
+    internal static let selectAssets = L10n.tr("Localizable", "ErrorMessages.selectAssets", fallback: "In order to successfully perform a swap, make sure you have two or more of our supported swap assets (BSV, BTC, ETH, BCH, SHIB, USDT) activated and funded within your wallet.")
     /// Something went wrong message
     internal static let somethingWentWrong = L10n.tr("Localizable", "ErrorMessages.SomethingWentWrong", fallback: "Oops! Something went wrong, please try again later.")
     /// Two parameters:, - maximum amount, - currency code
-    internal static func swapAmountTooHigh(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.swapAmountTooHigh", p1, p2, fallback: "The amount is higher than the swap maximum of %s %s.")
+    internal static func swapAmountTooHigh(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.swapAmountTooHigh", String(describing: p1), String(describing: p2), fallback: "The amount is higher than the swap maximum of %@ %@.")
     }
     /// We are having temporary issues connecting to our network. Please try again later.
     internal static let temporaryNetworkIssues = L10n.tr("Localizable", "ErrorMessages.temporaryNetworkIssues", fallback: "We are having temporary issues connecting to our network. Please try again later.")
@@ -1325,8 +1466,8 @@ internal enum L10n {
   }
   internal enum FaceIDSettings {
     /// You can customize your Face ID Spending Limit from the [menu]
-    internal static func customizeText(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "FaceIDSettings.customizeText", p1, fallback: "You can customize your Face ID spending limit from the %s.")
+    internal static func customizeText(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "FaceIDSettings.customizeText", String(describing: p1), fallback: "You can customize your Face ID spending limit from the %@.")
     }
     /// Text describing the purpose of the Face ID settings in the BRD app.
     internal static let explanatoryText = L10n.tr("Localizable", "FaceIDSettings.explanatoryText", fallback: "Use Face ID to unlock your RockWallet app and send money.")
@@ -1359,14 +1500,14 @@ internal enum L10n {
     /// Warning message for economy fee
     internal static let economyWarning = L10n.tr("Localizable", "FeeSelector.economyWarning", fallback: "This option is not recommended for time-sensitive transactions.")
     /// E.g. Estimated delivery: 10-60 minutes
-    internal static func estimatedDeliver(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "FeeSelector.estimatedDeliver", p1, fallback: "Estimated Delivery: %s")
+    internal static func estimatedDeliver(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "FeeSelector.estimatedDeliver", String(describing: p1), fallback: "Estimated Delivery: %@")
     }
     /// [This transaction will complete in] 2-5 minutes
     internal static let ethTime = L10n.tr("Localizable", "FeeSelector.ethTime", fallback: "2-5 minutes")
-    /// <%s minutes
-    internal static func lessThanMinutes(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "FeeSelector.lessThanMinutes", p1, fallback: "<%s minutes")
+    /// <%@ minutes
+    internal static func lessThanMinutes(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "FeeSelector.lessThanMinutes", String(describing: p1), fallback: "<%@ minutes")
     }
     /// Priority fee
     internal static let priority = L10n.tr("Localizable", "FeeSelector.priority", fallback: "Priority")
@@ -1378,6 +1519,10 @@ internal enum L10n {
     internal static let regularTime = L10n.tr("Localizable", "FeeSelector.regularTime", fallback: "10-60 minutes")
     /// Fee Selector title
     internal static let title = L10n.tr("Localizable", "FeeSelector.title", fallback: "Processing Speed")
+  }
+  internal enum Feedback {
+    /// Email client not found
+    internal static let noEmailClient = L10n.tr("Localizable", "Feedback.noEmailClient", fallback: "Email client not found")
   }
   internal enum FileChooser {
     internal enum SelectImageSource {
@@ -1396,6 +1541,8 @@ internal enum L10n {
     internal static let unlockApp = L10n.tr("Localizable", "FingerprintSettings.unlockApp", fallback: "Use fingerprint to unlock RockWallet")
   }
   internal enum HomeScreen {
+    /// Your account data has been updated.
+    internal static let accountDataUpdatedToastMessage = L10n.tr("Localizable", "HomeScreen.accountDataUpdatedToastMessage", fallback: "Your account data has been updated.")
     /// Activity button on the home screen toolbar
     internal static let activity = L10n.tr("Localizable", "HomeScreen.activity", fallback: "Activity")
     /// This is the section that allows administration of the user's wallet
@@ -1404,6 +1551,8 @@ internal enum L10n {
     internal static let buy = L10n.tr("Localizable", "HomeScreen.buy", fallback: "Buy")
     /// home screen toolbar 'Buy & Sell' button
     internal static let buyAndSell = L10n.tr("Localizable", "HomeScreen.buyAndSell", fallback: "Buy & Sell")
+    /// Home
+    internal static let home = L10n.tr("Localizable", "HomeScreen.home", fallback: "Home")
     /// Menu button on the home screen toolbar
     internal static let menu = L10n.tr("Localizable", "HomeScreen.menu", fallback: "Menu")
     /// This section lists the users wallets
@@ -1419,8 +1568,8 @@ internal enum L10n {
     /// Checking private key balance progress view text
     internal static let checking = L10n.tr("Localizable", "Import.checking", fallback: "Checking private key balance...")
     /// Sweep private key confirmation message
-    internal static func confirm(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Import.confirm", p1, p2, fallback: "You are importing %s from this private key into your RockWallet. There will be a network fee of %s.")
+    internal static func confirm(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Import.confirm", String(describing: p1), String(describing: p2), fallback: "You are importing %@ from this private key into your RockWallet. There will be a network fee of %@.")
     }
     /// [Redeem] the funds stored on this private key.
     internal static let importButton = L10n.tr("Localizable", "Import.importButton", fallback: "Sweep")
@@ -1513,10 +1662,16 @@ internal enum L10n {
     /// No permissions for location services
     internal static let notAuthorized = L10n.tr("Localizable", "LocationPlugin.notAuthorized", fallback: "RockWallet does not have permission to access location services.")
   }
+  internal enum LoginController {
+    /// Incorrect PIN. The wallet will get disabled after %d more failed %@.
+    internal static func invalidPinError(_ p1: Int, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "LoginController.invalidPinError", p1, String(describing: p2), fallback: "Incorrect PIN. The wallet will get disabled after %d more failed %@.")
+    }
+  }
   internal enum ManageWallet {
     /// Wallet creation date prefix
-    internal static func creationDatePrefix(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "ManageWallet.creationDatePrefix", p1, fallback: "You created your wallet on %s")
+    internal static func creationDatePrefix(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ManageWallet.creationDatePrefix", String(describing: p1), fallback: "You created your wallet on %@")
     }
     /// Manage wallet description text
     internal static let description = L10n.tr("Localizable", "ManageWallet.description", fallback: "Your wallet name only appears in your account transaction history and cannot be seen by anyone else.")
@@ -1658,14 +1813,32 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "OnboardingPageTwo.title", fallback: "Join people around the world who trust RockWallet.")
   }
   internal enum PaymailAddress {
+    /// Paymail address %@ copied to clipboard
+    internal static func copyMessage(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "PaymailAddress.CopyMessage", String(describing: p1), fallback: "Paymail address %@ copied to clipboard")
+    }
+    /// To enable quick BSV transfers you can create your unique Paymail address.
+    internal static let createAddressDescription = L10n.tr("Localizable", "PaymailAddress.createAddressDescription", fallback: "To enable quick BSV transfers you can create your unique Paymail address.")
+    /// Create your paymail
+    internal static let createAddressTitle = L10n.tr("Localizable", "PaymailAddress.createAddressTitle", fallback: "Create your paymail")
+    /// Create paymail address
+    internal static let createPaymailAddress = L10n.tr("Localizable", "PaymailAddress.createPaymailAddress", fallback: "Create paymail address")
     /// Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.
     internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
+    /// Sorry. Inappropriate language detected. Please choose a different paymail address.
+    internal static let inappropriateWordsMessage = L10n.tr("Localizable", "PaymailAddress.InappropriateWordsMessage", fallback: "Sorry. Inappropriate language detected. Please choose a different paymail address.")
+    /// Paymail address
+    internal static let paymailAddressField = L10n.tr("Localizable", "PaymailAddress.paymailAddressField", fallback: "Paymail address")
+    /// Paymail
+    internal static let paymailButton = L10n.tr("Localizable", "PaymailAddress.PaymailButton", fallback: "Paymail")
     /// Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.
     /// The goals of the paymail protocol are:
     /// User friendly payment destinations through memorable handles
     internal static let popupDescription = L10n.tr("Localizable", "PaymailAddress.popupDescription", fallback: "Paymail is a collection of protocols for Bitcoin SV wallets that allow for a set of simplified user experiences to be delivered across all wallets in the ecosystem.\nThe goals of the paymail protocol are:\nUser friendly payment destinations through memorable handles")
     /// Paymail Address
     internal static let title = L10n.tr("Localizable", "PaymailAddress.title", fallback: "Paymail Address")
+    /// Transfer BSV easier!
+    internal static let transferBsvTitle = L10n.tr("Localizable", "PaymailAddress.TransferBsvTitle", fallback: "Transfer BSV easier!")
     /// What is Paymail?
     internal static let whatIsPaymail = L10n.tr("Localizable", "PaymailAddress.whatIsPaymail", fallback: "What is Paymail?")
     /// Your Paymail address:
@@ -1673,8 +1846,8 @@ internal enum L10n {
   }
   internal enum PaymentConfirmation {
     /// Eg. Send 1.0Eth to purchase CCC
-    internal static func amountText(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "PaymentConfirmation.amountText", p1, p2, fallback: "Send %s to purchase %s")
+    internal static func amountText(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "PaymentConfirmation.amountText", String(describing: p1), String(describing: p2), fallback: "Send %@ to purchase %@")
     }
     /// Payment expired message
     internal static let paymentExpired = L10n.tr("Localizable", "PaymentConfirmation.PaymentExpired", fallback: "The payment has expired due to inactivity. Please try again with the same card, or use a different card.")
@@ -1689,6 +1862,10 @@ internal enum L10n {
     /// Try with debit card
     internal static let tryWithDebit = L10n.tr("Localizable", "PaymentConfirmation.TryWithDebit", fallback: "Try with debit card")
   }
+  internal enum PaymentMethod {
+    /// Temporarily unavailable, please contact support
+    internal static let unavailable = L10n.tr("Localizable", "PaymentMethod.Unavailable", fallback: "Temporarily unavailable, please contact support")
+  }
   internal enum PaymentProtocol {
     internal enum Errors {
       /// Bad Payment request alert title
@@ -1702,18 +1879,26 @@ internal enum L10n {
       /// Payment too small alert title
       internal static let smallOutputError = L10n.tr("Localizable", "PaymentProtocol.Errors.smallOutputError", fallback: "Couldn't make payment")
       /// Amount too small error message
-      internal static func smallPayment(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "PaymentProtocol.Errors.smallPayment", p1, fallback: "Payment can’t be less than %s. Bitcoin transaction fees are more than the amount of this transaction. Please increase the amount and try again.")
+      internal static func smallPayment(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "PaymentProtocol.Errors.smallPayment", String(describing: p1), fallback: "Payment can’t be less than %@. Bitcoin transaction fees are more than the amount of this transaction. Please increase the amount and try again.")
       }
       /// Output too small error message.
-      internal static func smallTransaction(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "PaymentProtocol.Errors.smallTransaction", p1, fallback: "Bitcoin transaction outputs can't be less than %s.")
+      internal static func smallTransaction(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "PaymentProtocol.Errors.smallTransaction", String(describing: p1), fallback: "Bitcoin transaction outputs can't be less than %@.")
       }
       /// Unsupported signature type payment protocol error message
       internal static let unsupportedSignatureType = L10n.tr("Localizable", "PaymentProtocol.Errors.unsupportedSignatureType", fallback: "unsupported signature type")
       /// Untrusted certificate payment protocol error message
       internal static let untrustedCertificate = L10n.tr("Localizable", "PaymentProtocol.Errors.untrustedCertificate", fallback: "untrusted certificate")
     }
+  }
+  internal enum PersonalInformation {
+    /// DD
+    internal static let day = L10n.tr("Localizable", "PersonalInformation.Day", fallback: "DD")
+    /// MM
+    internal static let month = L10n.tr("Localizable", "PersonalInformation.Month", fallback: "MM")
+    /// YYYY
+    internal static let year = L10n.tr("Localizable", "PersonalInformation.Year", fallback: "YYYY")
   }
   internal enum Platform {
     /// Transaction Cancelled
@@ -1727,6 +1912,8 @@ internal enum L10n {
     internal enum CreateAccount {
       /// With your RockWallet account you’ll be able to Swap and Buy seamlessly.
       internal static let body = L10n.tr("Localizable", "Prompts.CreateAccount.body", fallback: "With your RockWallet account you’ll be able to Swap and Buy seamlessly.")
+      /// Create your RockWallet account
+      internal static let title = L10n.tr("Localizable", "Prompts.CreateAccount.title", fallback: "Create your RockWallet account")
     }
     internal enum Email {
       /// Body text for a prompt that asks the user to subscribe to email updates to find out product updates.
@@ -1775,6 +1962,10 @@ internal enum L10n {
       internal static let body = L10n.tr("Localizable", "Prompts.PaperKey.body", fallback: "Set up your Recovery Phrase in case you ever lose or replace your phone. This is also required if you change your phone's security settings.")
       /// An action is required (You must do this action).
       internal static let title = L10n.tr("Localizable", "Prompts.PaperKey.title", fallback: "Action Required")
+      internal enum Body {
+        /// Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone's security settings.
+        internal static let android = L10n.tr("Localizable", "Prompts.PaperKey.Body.Android", fallback: "Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone's security settings.")
+      }
     }
     internal enum RateApp {
       /// Don't ask again
@@ -1821,8 +2012,8 @@ internal enum L10n {
       }
     }
     internal enum TwoStep {
-      /// Secure your wallet with two factor authentication.
-      internal static let body = L10n.tr("Localizable", "Prompts.TwoStep.body", fallback: "Secure your wallet with two factor authentication.")
+      /// Secure your wallet with Two Factor Authentication.
+      internal static let body = L10n.tr("Localizable", "Prompts.TwoStep.body", fallback: "Secure your wallet with Two Factor Authentication.")
       /// Enable 2FA
       internal static let title = L10n.tr("Localizable", "Prompts.TwoStep.title", fallback: "Enable 2FA")
     }
@@ -1835,6 +2026,8 @@ internal enum L10n {
     internal enum VerifyAccount {
       /// One more step and you’ll be able to Swap and Buy seamlessly.
       internal static let body = L10n.tr("Localizable", "Prompts.VerifyAccount.body", fallback: "One more step and you’ll be able to Swap and Buy seamlessly.")
+      /// Verify your account
+      internal static let title = L10n.tr("Localizable", "Prompts.VerifyAccount.title", fallback: "Verify your account")
     }
   }
   internal enum PushNotifications {
@@ -1910,6 +2103,8 @@ internal enum L10n {
     internal static let emailButton = L10n.tr("Localizable", "Receive.emailButton", fallback: "Email")
     /// Request button label
     internal static let request = L10n.tr("Localizable", "Receive.request", fallback: "Request an Amount")
+    /// Select asset
+    internal static let selectAsset = L10n.tr("Localizable", "Receive.SelectAsset", fallback: "Select asset")
     /// Share button label
     internal static let share = L10n.tr("Localizable", "Receive.share", fallback: "Share")
     /// Share via text message (SMS)
@@ -1918,6 +2113,8 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "Receive.title", fallback: "Receive")
   }
   internal enum RecoverWallet {
+    /// Type your 12 Word Phrase
+    internal static let description = L10n.tr("Localizable", "RecoverWallet.description", fallback: "Type your 12 Word Phrase")
     /// Done button text
     internal static let done = L10n.tr("Localizable", "RecoverWallet.done", fallback: "DONE")
     /// Enter recovery phrase label to delete the wallet
@@ -1946,8 +2143,14 @@ internal enum L10n {
     internal static let subheader = L10n.tr("Localizable", "RecoverWallet.subheader", fallback: "Enter the Recovery Phrase for the wallet you want to recover.")
     /// Reset PIN with paper key: sub-header
     internal static let subheaderResetPin = L10n.tr("Localizable", "RecoverWallet.subheader_reset_pin", fallback: "To reset your PIN, enter the words from your Recovery Phrase into the boxes below.")
+    /// Enter your Recovery Phrase
+    internal static let subtitle = L10n.tr("Localizable", "RecoverWallet.subtitle", fallback: "Enter your Recovery Phrase")
     /// What is recovery phrase title on popup
     internal static let whatIsRecoveryPhrase = L10n.tr("Localizable", "RecoverWallet.WhatIsRecoveryPhrase", fallback: "What is “Recovery Phrase”?")
+    internal enum Subheader {
+      /// Please enter your Recovery Phrase to delete your account and unlink your wallet
+      internal static let deleteAccount = L10n.tr("Localizable", "RecoverWallet.Subheader.DeleteAccount", fallback: "Please enter your Recovery Phrase to delete your account and unlink your wallet")
+    }
   }
   internal enum RecoveryKeyFlow {
     /// Instructs the user to enter words from the set of recovery key words.
@@ -1957,7 +2160,7 @@ internal enum L10n {
     /// Title for the confirmation step of the recovery phrase flow.
     internal static let confirmRecoveryKeyTitle = L10n.tr("Localizable", "RecoveryKeyFlow.confirmRecoveryKeyTitle", fallback: "Confirm your Recovery Phrase")
     /// Title displayed when the user starts the process of entering a recovery phrase
-    internal static let enterRecoveryKey = L10n.tr("Localizable", "RecoveryKeyFlow.enterRecoveryKey", fallback: "Enter Recovery Phrase")
+    internal static let enterRecoveryKey = L10n.tr("Localizable", "RecoveryKeyFlow.enterRecoveryKey", fallback: "Enter your Recovery Phrase")
     /// Subtitle displayed when the user starts the process of entering a recovery phrase
     internal static let enterRecoveryKeySubtitle = L10n.tr("Localizable", "RecoveryKeyFlow.enterRecoveryKeySubtitle", fallback: "Please enter the Recovery Phrase in order to delete your account and unlink the wallet.")
     /// Body text for an alert dialog asking the user whether to set up the recovery phrase later
@@ -1973,8 +2176,8 @@ internal enum L10n {
     /// Title for a button that takes the user to the wallet after setting up the recovery key.
     internal static let goToWalletButtonTitle = L10n.tr("Localizable", "RecoveryKeyFlow.goToWalletButtonTitle", fallback: "GO TO WALLET")
     /// Hint text for recovery key intro page, e.g., Step 2
-    internal static func howItWorksStep(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "RecoveryKeyFlow.howItWorksStep", p1, fallback: "How it works - Step %s")
+    internal static func howItWorksStep(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "RecoveryKeyFlow.howItWorksStep", String(describing: p1), fallback: "How it works - Step %@")
     }
     /// Error text displayed when the user enters an incorrect recovery phrase
     internal static let invalidPhrase = L10n.tr("Localizable", "RecoveryKeyFlow.invalidPhrase", fallback: "Some of the words you entered do not match your Recovery Phrase. Please try again.")
@@ -2025,8 +2228,8 @@ internal enum L10n {
     /// Title for the write recovery phrase screen
     internal static let writeKeyScreenTitle = L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyScreenTitle", fallback: "Recovery Phrase")
     /// Title for the step number when the user pages through the recovery words
-    internal static func writeKeyStepTitle(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyStepTitle", p1, p2, fallback: "%s of %s")
+    internal static func writeKeyStepTitle(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "RecoveryKeyFlow.writeKeyStepTitle", String(describing: p1), String(describing: p2), fallback: "%@ of %@")
     }
     internal enum HelpPopup {
       /// Your Recovery Phrase consists of 12 randomly generated words that the wallet creates for you automatically when you start a new wallet.
@@ -2049,8 +2252,8 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.StorePhraseSecurely.title", fallback: "Store it securely")
     }
     internal enum WritePhrase {
-      /// Save your 12 word Recovery Phrase generated  in the next step.
-      internal static let subtitle = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.subtitle", fallback: "Save your 12 word Recovery Phrase generated  in the next step.")
+      /// Save your 12 word Recovery Phrase generated in the next step.
+      internal static let subtitle = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.subtitle", fallback: "Save your 12 word Recovery Phrase generated in the next step.")
       /// Write it down
       internal static let title = L10n.tr("Localizable", "RecoveryKeyFlow.WritePhrase.title", fallback: "Write it down")
     }
@@ -2079,6 +2282,16 @@ internal enum L10n {
     /// Request a specific amount of bitcoin
     internal static let title = L10n.tr("Localizable", "RequestAnAmount.title", fallback: "Request an Amount")
   }
+  internal enum ResetPin {
+    /// Your PIN will be used to unlock your RockWallet and send money
+    internal static let description = L10n.tr("Localizable", "ResetPin.description", fallback: "Your PIN will be used to unlock your RockWallet and send money")
+    /// Confirm your new PIN
+    internal static let subtitleConfirmNewPin = L10n.tr("Localizable", "ResetPin.subtitleConfirmNewPin", fallback: "Confirm your new PIN")
+    /// Set your new PIN
+    internal static let subtitleNewPin = L10n.tr("Localizable", "ResetPin.subtitleNewPin", fallback: "Set your new PIN")
+    /// Reset PIN
+    internal static let title = L10n.tr("Localizable", "ResetPin.Title", fallback: "Reset PIN")
+  }
   internal enum RewardsView {
     /// Rewards view expanded body.
     internal static let expandedBody = L10n.tr("Localizable", "RewardsView.expandedBody", fallback: "Learn how you can save on trading fees and unlock future rewards")
@@ -2090,9 +2303,11 @@ internal enum L10n {
   internal enum Scanner {
     /// Scan bitcoin address camera flash toggle
     internal static let flashButtonLabel = L10n.tr("Localizable", "Scanner.flashButtonLabel", fallback: "Camera Flash")
+    /// No camera found
+    internal static let noCamera = L10n.tr("Localizable", "Scanner.noCamera", fallback: "No camera found")
     /// (alert dialog message) Would you like to send a [Bitcoin / Bitcoin Cash / Ethereum] payment to this address?")
-    internal static func paymentPromptMessage(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Scanner.paymentPromptMessage", p1, fallback: "Would you like to send a %s payment to this address?")
+    internal static func paymentPromptMessage(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Scanner.paymentPromptMessage", String(describing: p1), fallback: "Would you like to send a %@ payment to this address?")
     }
     /// alert dialog title
     internal static let paymentPromptTitle = L10n.tr("Localizable", "Scanner.paymentPromptTitle", fallback: "Send Payment")
@@ -2152,30 +2367,40 @@ internal enum L10n {
   internal enum Sell {
     /// ACH withdrawal will be processed within 3-5 business days.
     internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will be processed within 3-5 business days.")
+    /// ACH fee
+    internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee")
     /// ACH Withdrawal
     internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
     /// Sell & Withdraw details
     internal static let details = L10n.tr("Localizable", "Sell.details", fallback: "Sell & Withdraw details")
-    /// Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.
+    /// Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.withdrawal
-    internal static func disclaimer(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Sell.disclaimer", p1, p2, p3, fallback: "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal")
+    internal static func disclaimer(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+      return L10n.tr("Localizable", "Sell.disclaimer", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal")
     }
     /// I receive
     internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
-    /// Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.
-    internal static let notAvailableBody = L10n.tr("Localizable", "Sell.NotAvailableBody", fallback: "Sell & Withdraw isn't available in your region. We'll notify you when this feature is released. You can always swap to convert digital assets.")
+    /// This feature is not available in your region. We will notify you when it becomes available.
+    /// 
+    /// You can still Swap, Store, Send and Receive digital assets in your RockWallet.
+    internal static let notAvailableBody = L10n.tr("Localizable", "Sell.NotAvailableBody", fallback: "This feature is not available in your region. We will notify you when it becomes available.\n\nYou can still Swap, Store, Send and Receive digital assets in your RockWallet.")
     /// Withdrawal preview
     internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
     /// Conversion rate
     internal static let rate = L10n.tr("Localizable", "Sell.rate", fallback: "Conversion rate")
-    /// Minimum withdrawal is %s USD and maximum is %s USD per day. At the moment your lifetime limit is %s USD.
+    /// Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.
     /// 
     /// ACH Withdrawals will be processed within 3-5 business days.
-    internal static func sellLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>, _ p3: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Sell.SellLimits", p1, p2, p3, fallback: "Minimum withdrawal is %s USD and maximum is %s USD per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.")
+    internal static func sellLimits(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+      return L10n.tr("Localizable", "Sell.SellLimits", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.")
     }
+    /// Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.
+    internal static func sellLimits1(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+      return L10n.tr("Localizable", "Sell.SellLimits1", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.")
+    }
+    /// ACH Withdrawals will be processed within 3–5 business days.
+    internal static let sellLimits2 = L10n.tr("Localizable", "Sell.SellLimits2", fallback: "ACH Withdrawals will be processed within 3–5 business days.")
     /// Subtotal
     internal static let subtotal = L10n.tr("Localizable", "Sell.subtotal", fallback: "Subtotal")
     /// Sell & Withdraw funds
@@ -2188,10 +2413,12 @@ internal enum L10n {
     internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.")
     /// Your withdrawal is being processed
     internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
-    /// Sell and withdraw details
-    internal static let withdrawDetails = L10n.tr("Localizable", "Sell.WithdrawDetails", fallback: "Sell and withdraw details")
+    /// Sell and Withdraw details
+    internal static let withdrawDetails = L10n.tr("Localizable", "Sell.WithdrawDetails", fallback: "Sell and Withdraw details")
     /// You sell:
     internal static let yourOrder = L10n.tr("Localizable", "Sell.yourOrder", fallback: "You sell:")
+    /// Your sell limits
+    internal static let yourSellLimits = L10n.tr("Localizable", "Sell.YourSellLimits", fallback: "Your sell limits")
     /// You’ll receive
     internal static let youWillReceive = L10n.tr("Localizable", "Sell.YouWillReceive", fallback: "You’ll receive")
   }
@@ -2199,8 +2426,8 @@ internal enum L10n {
     /// Send money amount label
     internal static let amountLabel = L10n.tr("Localizable", "Send.amountLabel", fallback: "Amount")
     /// Balance: $4.00
-    internal static func balance(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.balance", p1, fallback: "Balance: %s")
+    internal static func balance(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Send.balance", String(describing: p1), fallback: "Balance: %@")
     }
     /// Balance: $4.00 for iOS, the balance can't have a parameter
     internal static let balanceString = L10n.tr("Localizable", "Send.balanceString", fallback: "Balance:")
@@ -2229,14 +2456,14 @@ internal enum L10n {
     /// "(you) can't send (to your)self"
     internal static let ethSendSelf = L10n.tr("Localizable", "Send.ethSendSelf", fallback: "Can't send to self.")
     /// Network Fee: $0.01
-    internal static func fee(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.fee", p1, fallback: "Network Fee: %s")
+    internal static func fee(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Send.fee", String(describing: p1), fallback: "Network Fee: %@")
     }
     /// Invalid FIO address.
     internal static let fioInvalid = L10n.tr("Localizable", "Send.fio_invalid", fallback: "Invalid FIO address.")
-    /// There is no %s address associated with this FIO address.
-    internal static func fioNoAddress(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.fio_noAddress", p1, fallback: "There is no %s address associated with this FIO address.")
+    /// There is no %@ address associated with this FIO address.
+    internal static func fioNoAddress(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Send.fio_noAddress", String(describing: p1), fallback: "There is no %@ address associated with this FIO address.")
     }
     /// There was an error retrieving the address for this FIO address. Please try again later.
     internal static let fioRetrievalError = L10n.tr("Localizable", "Send.fio_retrievalError", fallback: "There was an error retrieving the address for this FIO address. Please try again later.")
@@ -2247,20 +2474,20 @@ internal enum L10n {
     /// Insufficient gas error
     internal static let insufficientGas = L10n.tr("Localizable", "Send.insufficientGas", fallback: "Insufficient gas.")
     /// e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token.
-    internal static func insufficientGasMessage(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.insufficientGasMessage", p1, p2, fallback: "You must have at least %s in your wallet in order to transfer this type of token. Would you like to go to your %s wallet now?")
+    internal static func insufficientGasMessage(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Send.insufficientGasMessage", String(describing: p1), String(describing: p2), fallback: "You must have at least %@ in your wallet in order to transfer this type of token. Would you like to go to your %@ wallet now?")
     }
     /// Your balance is insufficient to complete this action.
-    internal static func insufficientGasTitle(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.insufficientGasTitle", p1, fallback: "Insufficient %s Balance")
+    internal static func insufficientGasTitle(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Send.insufficientGasTitle", String(describing: p1), fallback: "Insufficient %@ Balance")
     }
     /// e.g. The destination is not a valid (bitcoin) address.
-    internal static func invalidAddressMessage(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.invalidAddressMessage", p1, fallback: "The destination address is not a valid %s address.")
+    internal static func invalidAddressMessage(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Send.invalidAddressMessage", String(describing: p1), fallback: "The destination address is not a valid %@ address.")
     }
     /// Invalid address on pasteboard message
-    internal static func invalidAddressOnPasteboard(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.invalidAddressOnPasteboard", p1, fallback: "Pasteboard does not contain a valid %s address.")
+    internal static func invalidAddressOnPasteboard(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Send.invalidAddressOnPasteboard", String(describing: p1), fallback: "Pasteboard does not contain a valid %@ address.")
     }
     /// Invalid address alert title
     internal static let invalidAddressTitle = L10n.tr("Localizable", "Send.invalidAddressTitle", fallback: "Invalid Address")
@@ -2287,13 +2514,17 @@ internal enum L10n {
     /// Error message for invalid PayID
     internal static let payIdInvalid = L10n.tr("Localizable", "Send.payId_invalid", fallback: "Invalid PayString.")
     /// Error message for no address associated with a PayID for a given currency
-    internal static func payIdNoAddress(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Send.payId_noAddress", p1, fallback: "There is no %s address associated with this PayString.")
+    internal static func payIdNoAddress(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Send.payId_noAddress", String(describing: p1), fallback: "There is no %@ address associated with this PayString.")
     }
     /// Error message for error in retrieving the address from the PayID endpoint
     internal static let payIdRetrievalError = L10n.tr("Localizable", "Send.payId_retrievalError", fallback: "There was an error retrieving the address for this PayString. Please try again later.")
     /// PayID label
     internal static let payIdToLabel = L10n.tr("Localizable", "Send.payId_toLabel", fallback: "PayString")
+    /// Enter wallet address or Paymail
+    internal static let placeholderText = L10n.tr("Localizable", "Send.placeholderText", fallback: "Enter wallet address or Paymail")
+    /// Enter wallet address
+    internal static let placeholderTextWithoutPaymail = L10n.tr("Localizable", "Send.placeholderTextWithoutPaymail", fallback: "Enter wallet address")
     /// Could not publish transaction alert title
     internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Your transaction request couldn’t be completed. Please try again.")
     /// Could not load remote request error message
@@ -2316,6 +2547,10 @@ internal enum L10n {
     internal static let toLabel = L10n.tr("Localizable", "Send.toLabel", fallback: "To")
     /// What is a destination tag title in popup in send view
     internal static let whatIsDestinationTag = L10n.tr("Localizable", "Send.WhatIsDestinationTag", fallback: "What is a destination tag?")
+    internal enum BCHConverter {
+      /// The BCH address could not be converted.
+      internal static let errorToast = L10n.tr("Localizable", "Send.BCHConverter.ErrorToast", fallback: "The BCH address could not be converted.")
+    }
     internal enum Error {
       /// Sending error message
       internal static let authenticationError = L10n.tr("Localizable", "Send.Error.authenticationError", fallback: "Authentication Error")
@@ -2338,6 +2573,20 @@ internal enum L10n {
       /// Permission required to access camera
       internal static let android = L10n.tr("Localizable", "Send.cameraUnavailabeTitle.android", fallback: "RockWallet is not allowed to access the camera")
     }
+    internal enum InsufficientGasMessage {
+      /// You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.
+      internal static func android(_ p1: Any, _ p2: Any) -> String {
+        return L10n.tr("Localizable", "Send.insufficientGasMessage.android", String(describing: p1), String(describing: p2), fallback: "You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.")
+      }
+    }
+  }
+  internal enum SendConfirmation {
+    /// You'll send
+    internal static let youWillSend = L10n.tr("Localizable", "SendConfirmation.youWillSend", fallback: "You'll send")
+  }
+  internal enum SetPin {
+    /// Please re-enter your PIN
+    internal static let descriptionConfirm = L10n.tr("Localizable", "SetPin.descriptionConfirm", fallback: "Please re-enter your PIN")
   }
   internal enum Settings {
     /// About label
@@ -2353,8 +2602,8 @@ internal enum L10n {
     /// i.e. the currency which will be displayed
     internal static let currency = L10n.tr("Localizable", "Settings.currency", fallback: "Display Currency")
     /// e.g. "USD Settings" (settings for how USD is handled)
-    internal static func currencyPageTitle(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Settings.currencyPageTitle", p1, fallback: "%s Settings")
+    internal static func currencyPageTitle(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Settings.currencyPageTitle", String(describing: p1), fallback: "%@ Settings")
     }
     /// Section title for a collection of different settings screens, one for each currency
     internal static let currencySettings = L10n.tr("Localizable", "Settings.currencySettings", fallback: "Currency Settings")
@@ -2373,7 +2622,7 @@ internal enum L10n {
     /// Face ID spending limit label
     internal static let faceIdLimit = L10n.tr("Localizable", "Settings.faceIdLimit", fallback: "Face ID Spending Limit")
     /// Redeem the funds stored on this private key.
-    internal static let importTitle = L10n.tr("Localizable", "Settings.importTitle", fallback: "Redeem Private Key")
+    internal static let importTitle = L10n.tr("Localizable", "Settings.importTitle", fallback: "Sweep Wallet")
     /// Manage settings section header
     internal static let manage = L10n.tr("Localizable", "Settings.manage", fallback: "Manage")
     /// No log files found error message
@@ -2456,6 +2705,12 @@ internal enum L10n {
     internal static let descriptionTezos = L10n.tr("Localizable", "Staking.descriptionTezos", fallback: "Delegate your Tezos account to a validator to earn a reward while keeping full security and control of your coins.")
     /// Baker cell: Fee field header
     internal static let feeHeader = L10n.tr("Localizable", "Staking.feeHeader", fallback: "Fee:")
+    /// Fee: %@
+    internal static func feePct(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Staking.feePct", String(describing: p1), fallback: "Fee: %@")
+    }
+    /// An error occurred while loading baker information. Please try again later.
+    internal static let loadingBakerError = L10n.tr("Localizable", "Staking.loadingBakerError", fallback: "An error occurred while loading baker information. Please try again later.")
     /// Status label: current staking transaction is pending
     internal static let pendingTransaction = L10n.tr("Localizable", "Staking.pendingTransaction", fallback: "Transaction pending...")
     /// Button label: remove selected baker
@@ -2474,9 +2729,9 @@ internal enum L10n {
     internal static let stakingPendingFlag = L10n.tr("Localizable", "Staking.stakingPendingFlag", fallback: "PENDING")
     /// Staking banner title
     internal static let stakingTitle = L10n.tr("Localizable", "Staking.stakingTitle", fallback: "Staking")
-    /// staking to %s
-    internal static func stakingTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Staking.stakingTo", p1, fallback: "staking to %s")
+    /// staking to %@
+    internal static func stakingTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Staking.stakingTo", String(describing: p1), fallback: "staking to %@")
     }
     /// Pending
     internal static let statusPending = L10n.tr("Localizable", "Staking.statusPending", fallback: "Pending")
@@ -2490,9 +2745,9 @@ internal enum L10n {
     internal static let tezosMultiasset = L10n.tr("Localizable", "Staking.tezosMultiasset", fallback: "Multiasset Pool")
     /// Tezos XTZ baker asset type
     internal static let tezosOnly = L10n.tr("Localizable", "Staking.tezosOnly", fallback: "Tezos-only")
-    /// Stake %s
-    internal static func title(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Staking.title", p1, fallback: "Stake %s")
+    /// Stake %@
+    internal static func title(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Staking.title", String(describing: p1), fallback: "Stake %@")
     }
     /// Unstake
     internal static let unstake = L10n.tr("Localizable", "Staking.unstake", fallback: "Unstake")
@@ -2507,8 +2762,8 @@ internal enum L10n {
     /// button label
     internal static let buttonTitle = L10n.tr("Localizable", "StartPaperPhrase.buttonTitle", fallback: "Write Down Recovery Phrase")
     /// Argument is date; date should be on a new line
-    internal static func date(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "StartPaperPhrase.date", p1, fallback: "Last written down on\n %s")
+    internal static func date(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "StartPaperPhrase.date", String(describing: p1), fallback: "Last written down on\n %@")
     }
     internal enum Body {
       /// Paper key explanation text (Android-version)
@@ -2543,8 +2798,8 @@ internal enum L10n {
     /// Back to Home button
     internal static let backToHome = L10n.tr("Localizable", "Swap.BackToHome", fallback: "Back to Home")
     /// Balance text on swap
-    internal static func balance(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Swap.Balance", p1, p2, fallback: "I have %s %s")
+    internal static func balance(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Swap.Balance", String(describing: p1), String(describing: p2), fallback: "I have %@ %@")
     }
     /// Card fee label in swap details screen
     internal static let cardFee = L10n.tr("Localizable", "Swap.CardFee", fallback: "Card fee")
@@ -2591,16 +2846,16 @@ internal enum L10n {
     /// Swap limits
     internal static let swapLimit = L10n.tr("Localizable", "Swap.SwapLimit", fallback: "Swap limits")
     /// Swap min and max limit text
-    internal static func swapLimits(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Swap.SwapLimits", p1, p2, fallback: "Currently, minimum for Swap is %s USD and maximum is %s USD/day.")
+    internal static func swapLimits(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Swap.SwapLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Swap is %@ USD and maximum is %@ USD/day.")
     }
-    /// Swapping %s to %s
-    internal static func swapping(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Swap.Swapping", p1, p2, fallback: "Swapping %s to %s")
+    /// Swapping %@ to %@
+    internal static func swapping(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Swap.Swapping", String(describing: p1), String(describing: p2), fallback: "Swapping %@ to %@")
     }
     /// Swap status message on swap flow
-    internal static func swapStatus(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Swap.SwapStatus", p1, fallback: "Your %s is estimated to arrive in 30 minutes. You can continue to use your wallet. We'll let you know when your swap has finished.")
+    internal static func swapStatus(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Swap.SwapStatus", String(describing: p1), fallback: "Your %@ is estimated to arrive in 30 minutes. You can continue to use your wallet. We'll let you know when your swap has finished.")
     }
     /// Swap is temporarily unavailable
     internal static let temporarilyUnavailable = L10n.tr("Localizable", "Swap.temporarilyUnavailable", fallback: "Swap is temporarily unavailable")
@@ -2608,17 +2863,17 @@ internal enum L10n {
     internal static let timestamp = L10n.tr("Localizable", "Swap.Timestamp", fallback: "Timestamp")
     /// Total label in swap details screen
     internal static let total = L10n.tr("Localizable", "Swap.Total", fallback: "Total:")
-    /// From %s
-    internal static func transactionFrom(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Swap.transactionFrom", p1, fallback: "From %s")
+    /// From %@
+    internal static func transactionFrom(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Swap.transactionFrom", String(describing: p1), fallback: "From %@")
     }
     /// Transaction ID label in swap details screen
     internal static let transactionID = L10n.tr("Localizable", "Swap.TransactionID", fallback: "RockWallet Transaction ID")
     /// It seems that your transaction takes place in the Ethereum network, please keep in mind that network fees will be charged in ETH
     internal static let transactionInEthereumNetwork = L10n.tr("Localizable", "Swap.transactionInEthereumNetwork", fallback: "It seems that your transaction takes place in the Ethereum network, please keep in mind that network fees will be charged in ETH")
-    /// To %s
-    internal static func transactionTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Swap.transactionTo", p1, fallback: "To %s")
+    /// To %@
+    internal static func transactionTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Swap.transactionTo", String(describing: p1), fallback: "To %@")
     }
     /// You'll receive
     internal static let youReceive = L10n.tr("Localizable", "Swap.youReceive", fallback: "You'll receive")
@@ -2637,10 +2892,6 @@ internal enum L10n {
       internal static let android = L10n.tr("Localizable", "Swap.MiningNetworkFee.android", fallback: "Mining network fee:")
     }
   }
-  internal enum Symbols {
-    /// u{1F512}
-    internal static let lock = L10n.tr("Localizable", "Symbols.lock", fallback: "u{1F512}")
-  }
   internal enum SyncingView {
     /// Syncing view done syncing state header text
     internal static let activity = L10n.tr("Localizable", "SyncingView.activity", fallback: "Activity")
@@ -2653,28 +2904,28 @@ internal enum L10n {
     /// Retry button label
     internal static let retry = L10n.tr("Localizable", "SyncingView.retry", fallback: "Retry")
     /// "eg. Synced through <Jan 12, 2015>
-    internal static func syncedThrough(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "SyncingView.syncedThrough", p1, fallback: "Synced through %s")
+    internal static func syncedThrough(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "SyncingView.syncedThrough", String(describing: p1), fallback: "Synced through %@")
     }
     /// Syncing view syncing state header text
     internal static let syncing = L10n.tr("Localizable", "SyncingView.syncing", fallback: "Syncing")
   }
   internal enum TimeSince {
     /// 6 d (6 days)
-    internal static func days(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TimeSince.days", p1, fallback: "%s d")
+    internal static func days(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TimeSince.days", String(describing: p1), fallback: "%@ d")
     }
     /// 6 h (6 hours)
-    internal static func hours(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TimeSince.hours", p1, fallback: "%s h")
+    internal static func hours(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TimeSince.hours", String(describing: p1), fallback: "%@ h")
     }
     /// 6 m (6 minutes)
-    internal static func minutes(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TimeSince.minutes", p1, fallback: "%s m")
+    internal static func minutes(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TimeSince.minutes", String(describing: p1), fallback: "%@ m")
     }
     /// 6 s (6 seconds)
-    internal static func seconds(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TimeSince.seconds", p1, fallback: "%s s")
+    internal static func seconds(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TimeSince.seconds", String(describing: p1), fallback: "%@ s")
     }
   }
   internal enum Title {
@@ -2715,8 +2966,8 @@ internal enum L10n {
   }
   internal enum TouchIdSettings {
     /// You can customize your Touch ID Spending Limit from the [TouchIdSettings.linkText gets added here as a button]
-    internal static func customizeText(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TouchIdSettings.customizeText", p1, fallback: "You can customize your Touch ID spending limit from the %s.")
+    internal static func customizeText(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TouchIdSettings.customizeText", String(describing: p1), fallback: "You can customize your Touch ID spending limit from the %@.")
     }
     /// Text that describes the purpose of the Touch ID settings in the BRD app.
     internal static let explanatoryText = L10n.tr("Localizable", "TouchIdSettings.explanatoryText", fallback: "Use Touch ID to unlock your RockWallet app and send money.")
@@ -2725,8 +2976,8 @@ internal enum L10n {
     /// Link Text (see TouchIdSettings.customizeText)
     internal static let linkText = L10n.tr("Localizable", "TouchIdSettings.linkText", fallback: "Touch ID Spending Limit Screen")
     /// Spending Limit: b100,000 ($100)
-    internal static func spendingLimit(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TouchIdSettings.spendingLimit", p1, p2, fallback: "Spending limit: %s (%s)")
+    internal static func spendingLimit(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "TouchIdSettings.spendingLimit", String(describing: p1), String(describing: p2), fallback: "Spending limit: %@ (%@)")
     }
     /// Touch id switch label.
     internal static let switchLabel = L10n.tr("Localizable", "TouchIdSettings.switchLabel", fallback: "Enable Touch ID for RockWallet")
@@ -2781,8 +3032,8 @@ internal enum L10n {
     /// Transaction is confirming status text
     internal static let confirming = L10n.tr("Localizable", "Transaction.confirming", fallback: "In Progress")
     /// eg. Ending balance: $50.00
-    internal static func ending(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.ending", p1, fallback: "Ending balance: %s")
+    internal static func ending(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.ending", String(describing: p1), fallback: "Ending balance: %@")
     }
     /// Exchange rate on date header
     internal static let exchangeOnDayReceived = L10n.tr("Localizable", "Transaction.exchangeOnDayReceived", fallback: "Exchange rate when received:")
@@ -2790,11 +3041,19 @@ internal enum L10n {
     internal static let exchangeOnDaySent = L10n.tr("Localizable", "Transaction.exchangeOnDaySent", fallback: "Exchange rate when sent:")
     /// Transaction failed status text
     internal static let failed = L10n.tr("Localizable", "Transaction.failed", fallback: "Failed")
+    /// Failed purchase with Instant Buy
+    internal static let failedPurchaseWithInstantBuy = L10n.tr("Localizable", "Transaction.FailedPurchaseWithInstantBuy", fallback: "Failed purchase with Instant Buy")
     /// Failed swap label in transaction view
     internal static let failedSwap = L10n.tr("Localizable", "Transaction.FailedSwap", fallback: "Failed swap")
+    /// Failed purchase with Instant Buy
+    internal static let failedWithdrawWithInstantBuy = L10n.tr("Localizable", "Transaction.FailedWithdrawWithInstantBuy", fallback: "Failed purchase with Instant Buy")
     /// (b600 fee)
-    internal static func fee(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.fee", p1, fallback: "(%s fee)")
+    internal static func fee(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.fee", String(describing: p1), fallback: "(%@ fee)")
+    }
+    /// - %@/2
+    internal static func hybridPart(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.HybridPart", String(describing: p1), fallback: "- %@/2")
     }
     /// Invalid transaction
     internal static let invalid = L10n.tr("Localizable", "Transaction.invalid", fallback: "INVALID")
@@ -2808,77 +3067,85 @@ internal enum L10n {
     internal static let pendingPurchase = L10n.tr("Localizable", "Transaction.PendingPurchase", fallback: "Pending purchase")
     /// Pending purchase with ACH
     internal static let pendingPurchaseWithAch = L10n.tr("Localizable", "Transaction.PendingPurchaseWithAch", fallback: "Pending purchase with ACH")
+    /// Pending purchase with Instant Buy
+    internal static let pendingPurchaseWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingPurchaseWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Pending swap label in transaction view
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
     /// Pending withdraw with ACH
     internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdraw with ACH")
+    /// Pending purchase with Instant Buy
+    internal static let pendingWithdrawWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingWithdrawWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Purchased label in transaction view
     internal static let purchased = L10n.tr("Localizable", "Transaction.Purchased", fallback: "Purchased")
     /// Purchased with ACH
     internal static let purchasedWithAch = L10n.tr("Localizable", "Transaction.PurchasedWithAch", fallback: "Purchased with ACH")
+    /// Purchased with Instant Buy
+    internal static let purchasedWithInstantBuy = L10n.tr("Localizable", "Transaction.purchasedWithInstantBuy", fallback: "Purchased with Instant Buy")
     /// Purchase failed label in transaction view
     internal static let purchaseFailed = L10n.tr("Localizable", "Transaction.PurchaseFailed", fallback: "Purchase failed")
     /// Purchase with ACH failed
     internal static let purchaseFailedWithAch = L10n.tr("Localizable", "Transaction.PurchaseFailedWithAch", fallback: "Purchase with ACH failed")
+    /// Purchase with Instant Buy failed
+    internal static let purchaseFailedWithInstantAch = L10n.tr("Localizable", "Transaction.PurchaseFailedWithInstantAch", fallback: "Purchase with Instant Buy failed")
     /// Receive status text: 'In progress: 20%'
-    internal static func receivedStatus(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.receivedStatus", p1, fallback: "In progress: %s")
+    internal static func receivedStatus(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.receivedStatus", String(describing: p1), fallback: "In progress: %@")
     }
     /// Refunded
     internal static let refunded = L10n.tr("Localizable", "Transaction.refunded", fallback: "Refunded")
     /// Send status text: 'In progress: 20%'
-    internal static func sendingStatus(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.sendingStatus", p1, fallback: "In progress: %s")
+    internal static func sendingStatus(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.sendingStatus", String(describing: p1), fallback: "In progress: %@")
     }
     /// sending to <address>
-    internal static func sendingTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.sendingTo", p1, fallback: "sending to %s")
+    internal static func sendingTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.sendingTo", String(describing: p1), fallback: "sending to %@")
     }
     /// sent to <address>
-    internal static func sentTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.sentTo", p1, fallback: "sent to %s")
+    internal static func sentTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.sentTo", String(describing: p1), fallback: "sent to %@")
     }
-    /// staking to %s
-    internal static func stakingTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.stakingTo", p1, fallback: "staking to %s")
+    /// staking to %@
+    internal static func stakingTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.stakingTo", String(describing: p1), fallback: "staking to %@")
     }
     /// eg. Starting balance: $50.00
-    internal static func starting(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.starting", p1, fallback: "Starting balance: %s")
+    internal static func starting(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.starting", String(describing: p1), fallback: "Starting balance: %@")
     }
-    /// Swap from %s failed
-    internal static func swapFromFailed(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.swapFromFailed", p1, fallback: "Swap from %s failed")
+    /// Swap from %@ failed
+    internal static func swapFromFailed(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.swapFromFailed", String(describing: p1), fallback: "Swap from %@ failed")
     }
     /// Swapped transaction label
     internal static let swapped = L10n.tr("Localizable", "Transaction.Swapped", fallback: "Swapped")
-    /// Swapped from %s
-    internal static func swappedFrom(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.swappedFrom", p1, fallback: "Swapped from %s")
+    /// Swapped from %@
+    internal static func swappedFrom(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.swappedFrom", String(describing: p1), fallback: "Swapped from %@")
     }
-    /// Swapped to %s
-    internal static func swappedTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.swappedTo", p1, fallback: "Swapped to %s")
+    /// Swapped to %@
+    internal static func swappedTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.swappedTo", String(describing: p1), fallback: "Swapped to %@")
     }
-    /// Swapping from %s
-    internal static func swappingFrom(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.swappingFrom", p1, fallback: "Swapping from %s")
+    /// Swapping from %@
+    internal static func swappingFrom(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.swappingFrom", String(describing: p1), fallback: "Swapping from %@")
     }
-    /// Swapping to %s
-    internal static func swappingTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.swappingTo", p1, fallback: "Swapping to %s")
+    /// Swapping to %@
+    internal static func swappingTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.swappingTo", String(describing: p1), fallback: "Swapping to %@")
     }
-    /// Swap to %s failed
-    internal static func swapToFailed(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.swapToFailed", p1, fallback: "Swap to %s failed")
+    /// Swap to %@ failed
+    internal static func swapToFailed(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.swapToFailed", String(describing: p1), fallback: "Swap to %@ failed")
     }
     /// e.g. "[The money you paid was a] Fee for token transfer: BRD" (BRD is the token that was transfered)
-    internal static func tokenTransfer(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.tokenTransfer", p1, fallback: "Fee for token transfer: %s")
+    internal static func tokenTransfer(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.tokenTransfer", String(describing: p1), fallback: "Fee for token transfer: %@")
     }
-    /// to %s
-    internal static func toRecipient(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "Transaction.toRecipient", p1, fallback: "to %s")
+    /// to %@
+    internal static func toRecipient(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Transaction.toRecipient", String(describing: p1), fallback: "to %@")
     }
     /// Waiting to be confirmed string
     internal static let waiting = L10n.tr("Localizable", "Transaction.waiting", fallback: "Waiting to be confirmed. Some merchants require confirmation to complete a transaction. Estimated time: 1-2 hours.")
@@ -2886,6 +3153,10 @@ internal enum L10n {
     internal static let withdrawalComplete = L10n.tr("Localizable", "Transaction.WithdrawalComplete", fallback: "Withdrawn to bank account")
     /// Withdrawal failed
     internal static let withdrawalFailed = L10n.tr("Localizable", "Transaction.WithdrawalFailed", fallback: "Withdrawal failed")
+    /// Withdraw with ACH failed
+    internal static let withdrawFailedWithAch = L10n.tr("Localizable", "Transaction.WithdrawFailedWithAch", fallback: "Withdraw with ACH failed")
+    /// Withdrew with ACH
+    internal static let withdrawWithAch = L10n.tr("Localizable", "Transaction.WithdrawWithAch", fallback: "Withdrew with ACH")
   }
   internal enum TransactionDetails {
     /// e.g. I received money from an account.
@@ -2899,12 +3170,12 @@ internal enum L10n {
     /// Amount section header
     internal static let amountHeader = L10n.tr("Localizable", "TransactionDetails.amountHeader", fallback: "Amount")
     /// "(it was worth) $100 when sent, (and it is worth) $200 now"
-    internal static func amountWhenReceived(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.amountWhenReceived", p1, p2, fallback: "%s when received, %s now")
+    internal static func amountWhenReceived(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.amountWhenReceived", String(describing: p1), String(describing: p2), fallback: "%@ when received, %@ now")
     }
     /// "(it was worth) $100 when sent, (and it is worth) $200 now"
-    internal static func amountWhenSent(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.amountWhenSent", p1, p2, fallback: "%s when sent, %s now")
+    internal static func amountWhenSent(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.amountWhenSent", String(describing: p1), String(describing: p2), fallback: "%@ when sent, %@ now")
     }
     /// Block height label
     internal static let blockHeightLabel = L10n.tr("Localizable", "TransactionDetails.blockHeightLabel", fallback: "Confirmed in Block")
@@ -2929,8 +3200,8 @@ internal enum L10n {
     /// Tx detail field header
     internal static let feeHeader = L10n.tr("Localizable", "TransactionDetails.feeHeader", fallback: "Total Fee")
     /// "Received [$5] at [which of my addresses]" => This is the "at [which of my addresses]" part.
-    internal static func from(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.from", p1, fallback: "at %s")
+    internal static func from(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.from", String(describing: p1), fallback: "at %@")
     }
     /// Tx detail field header
     internal static let gasLimitHeader = L10n.tr("Localizable", "TransactionDetails.gasLimitHeader", fallback: "Gas Limit")
@@ -2938,9 +3209,9 @@ internal enum L10n {
     internal static let gasPriceHeader = L10n.tr("Localizable", "TransactionDetails.gasPriceHeader", fallback: "Gas Price")
     /// Gift
     internal static let gift = L10n.tr("Localizable", "TransactionDetails.gift", fallback: "Gift")
-    /// Gifted to %s
-    internal static func giftedTo(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.giftedTo", p1, fallback: "Gifted to %s")
+    /// Gifted to %@
+    internal static func giftedTo(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.giftedTo", String(describing: p1), fallback: "Gifted to %@")
     }
     /// Label for Hedera Memo field on transaction details screen
     internal static let hederaMemo = L10n.tr("Localizable", "TransactionDetails.hederaMemo", fallback: "Hedera Memo")
@@ -2951,50 +3222,50 @@ internal enum L10n {
     /// More button title
     internal static let more = L10n.tr("Localizable", "TransactionDetails.more", fallback: "More...")
     /// Moved $5.00 (as in "I moved $5 to another location")
-    internal static func moved(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.moved", p1, fallback: "Moved %s")
+    internal static func moved(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.moved", String(describing: p1), fallback: "Moved %@")
     }
     /// Moved $5.00
-    internal static func movedAmountDescription(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.movedAmountDescription", p1, fallback: "Moved <b>%s</b>")
+    internal static func movedAmountDescription(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.movedAmountDescription", String(describing: p1), fallback: "Moved <b>%@</b>")
     }
     /// eg. Confirmed in Block: Not Confirmed
     internal static let notConfirmedBlockHeightLabel = L10n.tr("Localizable", "TransactionDetails.notConfirmedBlockHeightLabel", fallback: "Not Confirmed")
     /// "Received [$5] at [which of my addresses]" => This is the "Received [$5]" part.
-    internal static func received(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.received", p1, fallback: "Received %s")
+    internal static func received(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.received", String(describing: p1), fallback: "Received %@")
     }
     /// Received $5.00
-    internal static func receivedAmountDescription(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivedAmountDescription", p1, fallback: "Received <b>%s</b>")
+    internal static func receivedAmountDescription(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.receivedAmountDescription", String(describing: p1), fallback: "Received <b>%@</b>")
     }
     /// received from <address>
-    internal static func receivedFrom(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivedFrom", p1, fallback: "received from %s")
+    internal static func receivedFrom(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.receivedFrom", String(describing: p1), fallback: "received from %@")
     }
     /// received via <address>
-    internal static func receivedVia(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivedVia", p1, fallback: "received via %s")
+    internal static func receivedVia(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.receivedVia", String(describing: p1), fallback: "received via %@")
     }
     /// receiving from <address>
-    internal static func receivingFrom(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivingFrom", p1, fallback: "receiving from %s")
+    internal static func receivingFrom(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.receivingFrom", String(describing: p1), fallback: "receiving from %@")
     }
     /// receiving via <address>
-    internal static func receivingVia(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivingVia", p1, fallback: "receiving via %s")
+    internal static func receivingVia(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.receivingVia", String(describing: p1), fallback: "receiving via %@")
     }
     /// Reclaim
     internal static let reclaim = L10n.tr("Localizable", "TransactionDetails.reclaim", fallback: "Reclaim")
     /// Resend
     internal static let resend = L10n.tr("Localizable", "TransactionDetails.resend", fallback: "Resend")
     /// "Sent [$5] to [address]" => This is the "Sent [$5]" part.
-    internal static func sent(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.sent", p1, fallback: "Sent %s")
+    internal static func sent(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.sent", String(describing: p1), fallback: "Sent %@")
     }
     /// Sent $5.00
-    internal static func sentAmountDescription(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.sentAmountDescription", p1, fallback: "Sent <b>%s</b>")
+    internal static func sentAmountDescription(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.sentAmountDescription", String(describing: p1), fallback: "Sent <b>%@</b>")
     }
     /// Show Details button
     internal static let showDetails = L10n.tr("Localizable", "TransactionDetails.showDetails", fallback: "Show Details")
@@ -3017,8 +3288,8 @@ internal enum L10n {
     /// Transaction Details Title - Sent
     internal static let titleSent = L10n.tr("Localizable", "TransactionDetails.titleSent", fallback: "Sent")
     /// "Sent [$5] to [address]" => This is the "to [address]" part.
-    internal static func to(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.to", p1, fallback: "to %s")
+    internal static func to(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "TransactionDetails.to", String(describing: p1), fallback: "to %@")
     }
     /// Tx detail field header
     internal static let totalHeader = L10n.tr("Localizable", "TransactionDetails.totalHeader", fallback: "Total")
@@ -3038,16 +3309,18 @@ internal enum L10n {
     internal static let buyTransactions = L10n.tr("Localizable", "TwoStep.BuyTransactions", fallback: "Buy transactions")
     /// Change Phone Number
     internal static let changePhoneNumberTitle = L10n.tr("Localizable", "TwoStep.changePhoneNumberTitle", fallback: "Change Phone Number")
+    /// Deleting your 2FA method is an important security decision, in order to do this you’ll need to provide your PIN and an email code.
+    internal static let disableAuthDialogDescription = L10n.tr("Localizable", "TwoStep.DisableAuthDialogDescription", fallback: "Deleting your 2FA method is an important security decision, in order to do this you’ll need to provide your PIN and an email code.")
     /// 
     internal static let getBackupCodesTitle = L10n.tr("Localizable", "TwoStep.getBackupCodesTitle", fallback: "")
-    /// Two Factor Authentication in enabled with the phone number ending in
-    internal static let mainInstructions = L10n.tr("Localizable", "TwoStep.mainInstructions", fallback: "Two Factor Authentication in enabled with the phone number ending in")
+    /// Two Factor Authentication is enabled with the phone number ending in
+    internal static let mainInstructions = L10n.tr("Localizable", "TwoStep.mainInstructions", fallback: "Two Factor Authentication is enabled with the phone number ending in")
     /// Two Factor Authentication
     internal static let mainTitle = L10n.tr("Localizable", "TwoStep.mainTitle", fallback: "Two Factor Authentication")
     /// (Mandatory)
     internal static let mandatory = L10n.tr("Localizable", "TwoStep.Mandatory", fallback: "(Mandatory)")
-    /// Select you preferred 2FA Settings
-    internal static let preferredSettings = L10n.tr("Localizable", "TwoStep.PreferredSettings", fallback: "Select you preferred 2FA Settings")
+    /// Select your preferred 2FA Settings
+    internal static let preferredSettings = L10n.tr("Localizable", "TwoStep.PreferredSettings", fallback: "Select your preferred 2FA Settings")
     /// Recover/Changing password
     internal static let recoverChangingPassword = L10n.tr("Localizable", "TwoStep.RecoverChangingPassword", fallback: "Recover/Changing password")
     /// Sending funds
@@ -3056,12 +3329,30 @@ internal enum L10n {
     internal static let settings = L10n.tr("Localizable", "TwoStep.Settings", fallback: "2FA Settings")
     /// Sign in into new device
     internal static let signInIntoNewDevice = L10n.tr("Localizable", "TwoStep.SignInIntoNewDevice", fallback: "Sign in into new device")
+    /// 2FA Successfully disabled
+    internal static let successfullyDisabled = L10n.tr("Localizable", "TwoStep.SuccessfullyDisabled", fallback: "2FA Successfully disabled")
     /// Every 90 days
     internal static let twoStepPeriod = L10n.tr("Localizable", "TwoStep.TwoStepPeriod", fallback: "Every 90 days")
     internal enum App {
       internal enum BackupCodes {
+        /// Your backup codes are successfully saved to Downloads folder
+        internal static let savedMessage = L10n.tr("Localizable", "TwoStep.App.BackupCodes.SavedMessage", fallback: "Your backup codes are successfully saved to Downloads folder")
         /// Your backup codes are the only way to access your account if you lose access your Authenticator App
         internal static let warning = L10n.tr("Localizable", "TwoStep.App.BackupCodes.warning", fallback: "Your backup codes are the only way to access your account if you lose access your Authenticator App")
+      }
+      internal enum CantAccess {
+        /// I can’t access my Authenticator App
+        internal static let title = L10n.tr("Localizable", "TwoStep.App.CantAccess.Title", fallback: "I can’t access my Authenticator App")
+      }
+      internal enum Confirmation {
+        /// Enter the code from your Authenticator app
+        internal static let title = L10n.tr("Localizable", "TwoStep.App.Confirmation.Title", fallback: "Enter the code from your Authenticator app")
+        internal enum BackupCode {
+          /// Confirm you’ve stored your backup codes securely by entering one of them.
+          internal static let instructions = L10n.tr("Localizable", "TwoStep.App.Confirmation.BackupCode.Instructions", fallback: "Confirm you’ve stored your backup codes securely by entering one of them.")
+          /// Enter one of your backup codes
+          internal static let title = L10n.tr("Localizable", "TwoStep.App.Confirmation.BackupCode.Title", fallback: "Enter one of your backup codes")
+        }
       }
       internal enum Import {
         /// Import with link
@@ -3075,12 +3366,32 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "TwoStep.AuthSettings.Title", fallback: "Two Factor Authentication Settings")
     }
     internal enum Change {
-      /// 
-      internal static let title = L10n.tr("Localizable", "TwoStep.Change.Title", fallback: "")
+      /// Changing your 2FA method is an important security decision, are you sure you want to proceed?
+      internal static let message = L10n.tr("Localizable", "TwoStep.Change.Message", fallback: "Changing your 2FA method is an important security decision, are you sure you want to proceed?")
+      /// Change 2FA method
+      internal static let title = L10n.tr("Localizable", "TwoStep.Change.Title", fallback: "Change 2FA method")
     }
     internal enum Disable {
+      /// Deleting your 2FA method is an important security decision, in order to do this you’ll need to provide your PIN and an email code.
+      internal static let message = L10n.tr("Localizable", "TwoStep.Disable.Message", fallback: "Deleting your 2FA method is an important security decision, in order to do this you’ll need to provide your PIN and an email code.")
       /// Disable 2FA
       internal static let title = L10n.tr("Localizable", "TwoStep.Disable.Title", fallback: "Disable 2FA")
+    }
+    internal enum Email {
+      internal enum Confirmation {
+        /// We’ve sent you a code
+        internal static let title = L10n.tr("Localizable", "TwoStep.Email.Confirmation.Title", fallback: "We’ve sent you a code")
+      }
+    }
+    internal enum Error {
+      /// Invalid code. You have %@ more attempt, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
+      internal static func attempt(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "TwoStep.Error.Attempt", String(describing: p1), fallback: "Invalid code. You have %@ more attempt, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.")
+      }
+      /// Invalid code. You have %@ more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.
+      internal static func attempts(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "TwoStep.Error.Attempts", String(describing: p1), fallback: "Invalid code. You have %@ more attempts, after that your RockWallet account will be blocked. You’ll still be able to access your self-custodial features.")
+      }
     }
     internal enum Menu {
       /// Two-Factor Authentication (2FA)
@@ -3088,12 +3399,12 @@ internal enum L10n {
     }
     internal enum Method {
       internal enum App {
-        /// Two Factor Authentication in enabled with Authenticator App
-        internal static let description = L10n.tr("Localizable", "TwoStep.Method.App.Description", fallback: "Two Factor Authentication in enabled with Authenticator App")
+        /// Two Factor Authentication is enabled with Authenticator App
+        internal static let description = L10n.tr("Localizable", "TwoStep.Method.App.Description", fallback: "Two Factor Authentication is enabled with Authenticator App")
       }
       internal enum Email {
-        /// Two Factor Authentication in enabled with Email
-        internal static let description = L10n.tr("Localizable", "TwoStep.Method.Email.Description", fallback: "Two Factor Authentication in enabled with Email")
+        /// Two Factor Authentication is enabled with Email
+        internal static let description = L10n.tr("Localizable", "TwoStep.Method.Email.Description", fallback: "Two Factor Authentication is enabled with Email")
       }
     }
     internal enum Success {
@@ -3147,8 +3458,8 @@ internal enum L10n {
   }
   internal enum UnlockScreen {
     /// Disabled until date
-    internal static func disabled(_ p1: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "UnlockScreen.disabled", p1, fallback: "Disabled until: %s")
+    internal static func disabled(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "UnlockScreen.disabled", String(describing: p1), fallback: "Disabled until: %@")
     }
     /// Unlock with FaceID accessibility label
     internal static let faceIdText = L10n.tr("Localizable", "UnlockScreen.faceIdText", fallback: "Unlock with FaceID")
@@ -3165,7 +3476,7 @@ internal enum L10n {
     /// Wallet disabled header
     internal static let walletDisabled = L10n.tr("Localizable", "UnlockScreen.walletDisabled", fallback: "Wallet disabled")
     /// Wallet disabled description
-    internal static let walletDisabledDescription = L10n.tr("Localizable", "UnlockScreen.walletDisabledDescription", fallback: "You will need your Recovery Phrases to reset PIN.")
+    internal static let walletDisabledDescription = L10n.tr("Localizable", "UnlockScreen.walletDisabledDescription", fallback: "You will need your Recovery Phrase to reset PIN.")
     /// Wipe wallet prompt
     internal static let wipePrompt = L10n.tr("Localizable", "UnlockScreen.wipePrompt", fallback: "Are you sure you would like to wipe this wallet?")
     internal enum TouchIdInstructions {
@@ -3182,6 +3493,8 @@ internal enum L10n {
     }
   }
   internal enum UpdatePin {
+    /// PIN updated successfully
+    internal static let bottomSheetMsg = L10n.tr("Localizable", "UpdatePin.bottomSheetMsg", fallback: "PIN updated successfully")
     /// Update PIN caption text
     internal static let caption = L10n.tr("Localizable", "UpdatePin.caption", fallback: "Remember this PIN. If you forget it, you won't be able to access your assets")
     /// Contact Support button on update pin view
@@ -3237,6 +3550,10 @@ internal enum L10n {
       internal static let body = L10n.tr("Localizable", "UpdatePin.Alert.body", fallback: "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.")
       /// What is a PIN?
       internal static let title = L10n.tr("Localizable", "UpdatePin.Alert.title", fallback: "What is a PIN?")
+      internal enum Body {
+        /// A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.
+        internal static let android = L10n.tr("Localizable", "UpdatePin.Alert.body.android", fallback: "A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.")
+      }
     }
   }
   internal enum VerificationCode {
@@ -3277,6 +3594,13 @@ internal enum L10n {
       internal static let instructions = L10n.tr("Localizable", "VerifyPhoneNumber.sms.instructions", fallback: "Enter the security code we’ve sent to")
       /// We’ve sent you an SMS
       internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.sms.title", fallback: "We’ve sent you an SMS")
+      internal enum Instructions {
+        /// Enter the security code we’ve sent to:
+        /// %@
+        internal static func android(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "VerifyPhoneNumber.sms.instructions.android", String(describing: p1), fallback: "Enter the security code we’ve sent to:\n%@")
+        }
+      }
     }
   }
   internal enum VerifyPin {
@@ -3296,12 +3620,12 @@ internal enum L10n {
     internal static let limitedAssets = L10n.tr("Localizable", "Wallet.LimitedAssets", fallback: "Limited assets")
     /// Limited assets message in add wallets popup
     internal static let limitedAssetsMessage = L10n.tr("Localizable", "Wallet.LimitedAssetsMessage", fallback: "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.")
-    /// 1d
-    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "1d")
+    /// 24h
+    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "24h")
     /// 1m
     internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1m")
-    /// 1w
-    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "1w")
+    /// 7d
+    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "7d")
     /// 1y
     internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1y")
     /// Staking
@@ -3413,7 +3737,7 @@ internal enum L10n {
   }
   internal enum WipeWallet {
     /// Wipe wallet alert message
-    internal static let alertMessage = L10n.tr("Localizable", "WipeWallet.alertMessage", fallback: "Are you sure you want to unlink this wallet from this device?")
+    internal static let alertMessage = L10n.tr("Localizable", "WipeWallet.alertMessage", fallback: "Are you sure you want to wipe this wallet from this device?")
     /// Wipe wallet alert title
     internal static let alertTitle = L10n.tr("Localizable", "WipeWallet.alertTitle", fallback: "Unlink Wallet?")
     /// Failed wipe wallet alert message
@@ -3441,13 +3765,19 @@ internal enum L10n {
     /// button label
     internal static let previous = L10n.tr("Localizable", "WritePaperPhrase.previous", fallback: "Previous")
     /// 1 of 3
-    internal static func step(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return L10n.tr("Localizable", "WritePaperPhrase.step", p1, p2, fallback: "%s of %s")
+    internal static func step(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "WritePaperPhrase.step", String(describing: p1), String(describing: p2), fallback: "%@ of %@")
     }
     /// For security purposes, do not screenshot or email these words.
     internal static let warning = L10n.tr("Localizable", "WritePaperPhrase.warning", fallback: "For security purposes, do not screenshot or email these words.")
     /// Remember to write these words down. Swipe back if you forgot.
     internal static let warning2 = L10n.tr("Localizable", "WritePaperPhrase.warning2", fallback: "Remember to write these words down. Swipe back if you forgot.")
+  }
+  internal enum WrongStateBuySell {
+    /// Buy and swap aren't currently available in your state. We'll notify you when you can use these features.
+    /// 
+    /// You can still safely send and receive digital assets to your wallet in the meantime.
+    internal static let subtitle = L10n.tr("Localizable", "WrongStateBuySell.Subtitle", fallback: "Buy and swap aren't currently available in your state. We'll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

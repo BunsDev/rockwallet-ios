@@ -14,36 +14,57 @@ struct GeneralError: FEError {
     var errorType: ServerResponse.ErrorType?
 }
 
-enum NetworkingError: FEError {
-    case general
+enum NetworkingError: FEError, Equatable {
     case noConnection
-    case accessDenied
-    case parameterMissing
-    case sessionExpired
-    case sessionNotVerified
-    case dataUnavailable
-    case unprocessableEntity
-    case serverAtCapacity
+    case general(String)
+    case accessDenied(String)
+    case parameterMissing(String)
+    case sessionExpired(String)
     case exchangesUnavailable
     case biometricAuthenticationRequired
     case biometricAuthenticationFailed
+    case twoStepEmailRequired
+    case twoStepAppRequired
+    case twoStepInvalid
+    case twoStepInvalidCode(Int?)
+    case twoStepBlockedAccount
+    case twoStepInvalidCodeBlockedAccount
+    case inappropriatePaymail
     
     var errorMessage: String {
         switch self {
-        case .general:
-            return L10n.ErrorMessages.networkIssues
-            
         case .noConnection:
             return L10n.ErrorMessages.checkInternet
             
-        case .accessDenied:
-            return L10n.ErrorMessages.accessDenied
+        case .twoStepInvalidCode(let attemptCount):
+            let attemptCount = attemptCount ?? 0
+            let isMoreThanOne = attemptCount > 1
+            let plural = L10n.TwoStep.Error.attempts(String(describing: attemptCount))
+            let singular = L10n.TwoStep.Error.attempt(String(describing: attemptCount))
+            return isMoreThanOne ? plural : singular
             
-        case .serverAtCapacity:
-            return L10n.ErrorMessages.somethingWentWrong
+        case .inappropriatePaymail:
+            return L10n.PaymailAddress.inappropriateWordsMessage
+            
+        case .general(let message),
+                .accessDenied(let message),
+                .parameterMissing(let message),
+                .sessionExpired(let message):
+            return message
             
         default:
             return L10n.ErrorMessages.unknownError
+        }
+    }
+    
+    var errorCategory: ServerResponse.ErrorCategory? {
+        switch self {
+        case .twoStepEmailRequired, .twoStepAppRequired, .twoStepInvalidCode,
+                .twoStepBlockedAccount, .twoStepInvalidCodeBlockedAccount, .twoStepInvalid:
+            return .twoStep
+            
+        default:
+            return nil
         }
     }
     
@@ -55,30 +76,75 @@ enum NetworkingError: FEError {
         case .biometricAuthenticationFailed, .biometricAuthenticationRequired:
             return .biometricAuthentication
             
+        case .twoStepAppRequired, .twoStepEmailRequired:
+            return .twoStepRequired
+            
+        case .twoStepBlockedAccount:
+            return .twoStepBlockedAccount
+            
+        case .twoStepInvalidCodeBlockedAccount:
+            return .twoStepInvalidCodeBlockedAccount
+            
+        case .twoStepInvalidCode:
+            return .twoStepInvalidCode
+            
+        case .twoStepInvalid:
+            return .twoStepInvalid
+            
         default:
             return nil
         }
     }
     
     init?(error: ServerResponse.ServerError?) {
+        let serverMessage = error?.serverMessage ?? L10n.ErrorMessages.somethingWentWrong
+        
         switch error?.statusCode {
         case 101:
-            self = .accessDenied
+            self = .accessDenied(serverMessage)
             
         case 103:
-            self = .parameterMissing
+            self = .parameterMissing(serverMessage)
             
         case 105:
-            self = .sessionExpired
+            self = .sessionExpired(serverMessage)
+        
+        case 400:
+            if serverMessage == ServerResponse.ErrorType.inappropriatePaymail.rawValue {
+                self = .inappropriatePaymail
+            } else {
+                self = .general(serverMessage)
+            }
+            
+        case 401:
+            if serverMessage == ServerResponse.ErrorType.twoStepInvalidCode.rawValue {
+                self = .twoStepInvalidCode(error?.attemptsLeft)
+            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCodeBlockedAccount.rawValue {
+                self = .twoStepInvalidCodeBlockedAccount
+            } else {
+                switch TwoStepSettingsResponseData.TwoStepType(rawValue: error?.serverMessage ?? "") {
+                case .authenticator:
+                    self = .twoStepAppRequired
+                    
+                case .email:
+                    self = .twoStepEmailRequired
+                    
+                default:
+                    self = .accessDenied(serverMessage)
+                }
+            }
             
         case 403:
-            self = .sessionNotVerified
-            
-        case 404:
-            self = .dataUnavailable
+            if serverMessage == ServerResponse.ErrorType.twoStepBlockedAccount.rawValue {
+                self = .twoStepBlockedAccount
+            } else if serverMessage == ServerResponse.ErrorType.twoStepInvalidCodeBlockedAccount.rawValue {
+                self = .twoStepInvalidCodeBlockedAccount
+            } else {
+                self = .general(serverMessage)
+            }
             
         case 422:
-            self = .unprocessableEntity
+            self = .general(serverMessage)
             
         case 503:
             switch error?.errorType {
@@ -86,7 +152,7 @@ enum NetworkingError: FEError {
                 self = .exchangesUnavailable
             
             default:
-                self = .serverAtCapacity
+                self = .general(serverMessage)
             }
             
         case 1001:

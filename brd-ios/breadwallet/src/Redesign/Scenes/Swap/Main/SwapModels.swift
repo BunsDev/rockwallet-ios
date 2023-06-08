@@ -12,39 +12,10 @@ import UIKit
 import WalletKit
 
 enum SwapModels {
-    typealias Item = (from: Amount?, to: Amount?)
-    
-    enum EstimateFeeResult {
-        case successFee(TransferFeeBasis)
-        case successEthFee(Decimal)
-        case failure(Error)
-    }
+    typealias Item = (fromAmount: Amount?, toAmount: Amount?)
     
     struct SwitchPlaces {
         struct ViewAction {}
-    }
-    
-    struct Amounts {
-        struct ViewAction {
-            var fromFiatAmount: String?
-            var fromCryptoAmount: String?
-            var toFiatAmount: String?
-            var toCryptoAmount: String?
-            var handleErrors = false
-        }
-        
-        struct ActionResponse {
-            var from: Amount?
-            var to: Amount?
-            
-            var fromFee: Amount?
-            var toFee: Amount?
-            
-            var baseBalance: Amount?
-            var minimumValue: Decimal?
-            var minimumUsd: Decimal?
-            var handleErrors = false
-        }
     }
     
     struct SelectedAsset {
@@ -72,26 +43,12 @@ enum SwapModels {
         }
     }
     
-    struct Fee {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var from: Decimal?
-            var to: Decimal?
-        }
-        
-        struct ResponseDisplay {
-            var from: String?
-            var to: String?
-        }
-    }
-    
     struct ShowConfirmDialog {
         struct ViewAction {}
         
         struct ActionResponse {
-            var from: Amount?
-            var to: Amount?
+            var fromAmount: Amount?
+            var toAmount: Amount?
             var quote: Quote?
             var fromFee: Amount?
             var toFee: Amount?
@@ -100,6 +57,23 @@ enum SwapModels {
         struct ResponseDisplay {
             var config: WrapperPopupConfiguration<SwapConfimationConfiguration>
             var viewModel: WrapperPopupViewModel<SwapConfirmationViewModel>
+        }
+    }
+    
+    struct AssetSelectionMessage {
+        struct ViewAction {
+            var selectedDisabledAsset: AssetViewModel?
+        }
+        
+        struct ActionResponse {
+            var from: Currency?
+            var to: Currency?
+            var selectedDisabledAsset: AssetViewModel?
+        }
+        
+        struct ResponseDisplay {
+            var model: InfoViewModel?
+            var config: InfoViewConfiguration?
         }
     }
     

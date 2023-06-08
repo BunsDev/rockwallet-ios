@@ -39,7 +39,7 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
                                      button: .init(title: L10n.TwoStep.App.Import.action, isUnderlined: true))
             ],
             .divider: [
-                LabelViewModel.text("OR")
+                LabelViewModel.text(L10n.CommonString.Or.label.uppercased())
             ],
             .instructions: [
                 LabelViewModel.text(L10n.Authentication.instructions)
@@ -65,11 +65,6 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
         viewController?.displayNext(responseDisplay: .init())
     }
     
-    func presentCopyValue(actionResponse: AuthenticatorAppModels.CopyValue.ActionResponse) {
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
-                                                              config: Presets.InfoView.verification))
-    }
-    
     func presentOpenTotpUrl(actionResponse: AuthenticatorAppModels.OpenTotpUrl.ActionResponse) {
         guard let urlString = actionResponse.url, let url = URL(string: urlString) else { return }
         
@@ -79,9 +74,9 @@ final class AuthenticatorAppPresenter: NSObject, Presenter, AuthenticatorAppActi
     // MARK: - Additional Helpers
     
     private func generateQRCode(from string: String) -> UIImage? {
-        let data = string.data(using: .utf8)
-        
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+        
+        let data = string.data(using: .utf8)
         filter.setValue(data, forKey: "inputMessage")
         
         let transform = CGAffineTransform(scaleX: 30, y: 30)

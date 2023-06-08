@@ -102,7 +102,11 @@ class Wallet {
                              fee: FeeLevel,
                              isStake: Bool,
                              completion: @escaping (Result<TransferFeeBasis, Error>) -> Void) {
-        guard let target = WalletKit.Address.create(string: address, network: core.manager.network) else { return }
+        var addressCreated = Address.create(string: address, network: core.manager.network)
+        if addressCreated == nil {
+            addressCreated = Address.createLegacy(string: address, network: core.manager.network)
+        }
+        guard addressCreated != nil, let target = addressCreated else { return }
         let networkFee = feeForLevel(level: fee)
         
         //Stake/Unstake transactions need the DelegationOp attributed or else the
@@ -217,7 +221,9 @@ class Wallet {
                         amount: Amount,
                         feeBasis: TransferFeeBasis,
                         attribute: String? = nil,
-                        exchangeId: String?) -> CreateTransferResult {
+                        exchangeId: String?,
+                        secondFactorCode: String? = nil,
+                        secondFactorBackup: String? = nil) -> CreateTransferResult {
         guard let target = Address.create(string: address, network: core.manager.network) else {
             return .failure(.invalidAddress)
         }
@@ -229,7 +235,10 @@ class Wallet {
                 .createTransfer(outputScript: outputScript,
                                 amount: amount.cryptoAmount,
                                 estimatedFeeBasis: feeBasis,
-                                attributes: attributes(forAttribute: attribute), exchangeId: exchangeId) else {
+                                attributes: attributes(forAttribute: attribute),
+                                exchangeId: exchangeId,
+                                secondFactorCode: secondFactorCode,
+                                secondFactorBackup: secondFactorBackup) else {
                 return .failure(.invalidAmountOrFee)
             }
             
@@ -239,7 +248,10 @@ class Wallet {
                 .createTransfer(target: target,
                                 amount: amount.cryptoAmount,
                                 estimatedFeeBasis: feeBasis,
-                                attributes: attributes(forAttribute: attribute), exchangeId: exchangeId) else {
+                                attributes: attributes(forAttribute: attribute),
+                                exchangeId: exchangeId,
+                                secondFactorCode: secondFactorCode,
+                                secondFactorBackup: secondFactorBackup) else {
                 return .failure(.invalidAmountOrFee)
             }
             

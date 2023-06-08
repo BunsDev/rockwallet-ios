@@ -48,7 +48,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     private lazy var headerStack: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.distribution = .equalSpacing
+        view.distribution = .fill
         view.spacing = Margins.small.rawValue
         return view
     }()
@@ -189,6 +189,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
             make.height.equalTo(ViewSizes.small.rawValue)
         }
         headerStack.addArrangedSubview(headerTitleLabel)
+        headerStack.addArrangedSubview(UIView())
         headerStack.addArrangedSubview(headerInfoButton)
         
         mainStack.addArrangedSubview(cryptoStack)
@@ -235,45 +236,46 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     }
     
     @objc func fiatAmountDidChange(_ textField: UITextField) {
-        decidePlaceholder()
+        let text = cleanupFormatting(textField: textField, forFiat: true)
         
-        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
-        
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-        
-        didChangeFiatAmount?(cleanedText)
+        didChangeFiatAmount?(text)
         didChangeContent?()
     }
     
     @objc func cryptoAmountDidChange(_ textField: UITextField) {
-        decidePlaceholder()
+        let text = cleanupFormatting(textField: textField, forFiat: false)
         
-        textField.attributedText = ExchangeFormatter.createAmountString(string: textField.text ?? "")
-        
-        let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-        
-        didChangeCryptoAmount?(cleanedText)
+        didChangeCryptoAmount?(text)
         didChangeContent?()
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    private func cleanupFormatting(textField: UITextField, forFiat: Bool) -> String {
+        let description = textField.text?.description ?? ""
+        var text = String(describing: description.cleanupFormatting(forFiat: forFiat))
+        
+        if text == "0" && textField.text != "0" {
+            text = ""
+            textField.text = text
+        }
+        
+        let range = textField.selectedTextRange
+        textField.text = text
+        textField.attributedText = ExchangeFormatter.createAmountString(string: text)
+        textField.selectedTextRange = range
+
         decidePlaceholder()
+
+        return text.isEmpty ? "0" : text
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        setChangedText(for: textField)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == fiatAmountField {
-            let cleanedText = textField.text?.cleanupFormatting(forFiat: true)
-            
-            didChangeFiatAmount?(cleanedText)
-        } else if textField == cryptoAmountField {
-            let cleanedText = textField.text?.cleanupFormatting(forFiat: false)
-            
-            didChangeCryptoAmount?(cleanedText)
-        }
+        setChangedText(for: textField)
         
         didFinish?(false)
-        
-        decidePlaceholder()
     }
     
     override func configure(with config: SwapCurrencyConfiguration?) {
@@ -300,7 +302,7 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
         super.setup(with: viewModel)
         
         headerTitleLabel.setup(with: viewModel.title)
-        headerInfoButton.setup(with: .init(title: viewModel.headerInfoButtonTitle))
+        headerInfoButton.setup(with: .init(title: viewModel.headerInfoButtonTitle, shouldCapitalize: true))
         headerInfoButton.isHidden = viewModel.headerInfoButtonTitle == nil
         
         if !fiatAmountField.isFirstResponder {
@@ -344,6 +346,14 @@ class SwapCurrencyView: FEView<SwapCurrencyConfiguration, SwapCurrencyViewModel>
     func resetTextFieldValues() {
         fiatAmountField.text = nil
         cryptoAmountField.text = nil
+    }
+    
+    private func setChangedText(for textField: UITextField) {
+        if textField == fiatAmountField {
+            fiatAmountDidChange(textField)
+        } else if textField == cryptoAmountField {
+            cryptoAmountDidChange(textField)
+        }
     }
     
     @objc private func selectorTapped(_ sender: Any) {

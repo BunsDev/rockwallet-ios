@@ -11,8 +11,6 @@
 import UIKit
 
 class SignUpStore: NSObject, BaseDataStore, SignUpDataStore {
-    var itemId: String?
-    
     // MARK: - ProfileDataStore
     
     var email = ""
@@ -21,5 +19,5 @@ class SignUpStore: NSObject, BaseDataStore, SignUpDataStore {
     var termsTickbox = false
     var promotionsTickbox = false
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

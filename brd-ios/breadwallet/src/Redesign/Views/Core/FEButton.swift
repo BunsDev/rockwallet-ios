@@ -59,6 +59,7 @@ struct ButtonViewModel: ViewModel {
     var enabled = true
     var shouldTemporarilyDisableAfterTap = false
     var callback: (() -> Void)?
+    var shouldCapitalize: Bool?
 }
 
 class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
@@ -142,7 +143,10 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         }
         
         if let title = viewModel.title {
-            let attributeTitle = NSMutableAttributedString(string: viewModel.isUnderlined ? title : title.uppercased())
+            let shouldCapitalize = viewModel.shouldCapitalize == true
+            let titleString: String = viewModel.isUnderlined ? title : shouldCapitalize ? title.capitalized : title.uppercased()
+            
+            let attributeTitle = NSMutableAttributedString(string: titleString)
             attributeTitle.addAttributes(defaultAttributes, range: NSRange(location: 0, length: title.count))
             
             attributedString = attributeTitle

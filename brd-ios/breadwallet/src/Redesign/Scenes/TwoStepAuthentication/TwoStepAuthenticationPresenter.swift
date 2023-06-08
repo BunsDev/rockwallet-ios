@@ -28,7 +28,7 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
         
         if authExists {
             sections.insert(.instructions, at: 0)
-            sections.append(contentsOf: [.settingsTitle, .backupCodes, .settings, .disable])
+            sections.append(contentsOf: [.emptySection, .backupCodes, .settings, .disable])
         }
         
         var authMethodDescription: String?
@@ -62,9 +62,7 @@ final class TwoStepAuthenticationPresenter: NSObject, Presenter, TwoStepAuthenti
                                                  checkmark: .image(appAuthCheckmark),
                                                  isInteractable: authType != .authenticator)
             ],
-            .settingsTitle: [
-                LabelViewModel.text(L10n.MenuButton.settings)
-            ],
+            .emptySection: [EmptyViewModel()],
             .backupCodes: [
                 IconTitleSubtitleToggleViewModel(title: .text(L10n.BackupCodes.title),
                                                  checkmark: .image(settingsChevron))

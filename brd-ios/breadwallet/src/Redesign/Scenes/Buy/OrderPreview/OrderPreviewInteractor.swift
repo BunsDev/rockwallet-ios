@@ -22,6 +22,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard dataStore?.type != nil else { return }
+        
         guard let reference = dataStore?.paymentReference else {
             let item: Models.Item = (type: dataStore?.type,
                                      to: dataStore?.to,
@@ -29,7 +30,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                      quote: dataStore?.quote,
                                      networkFee: dataStore?.networkFee,
                                      card: dataStore?.card,
-                                     isAchAccount: dataStore?.isAchAccount)
+                                     isAchAccount: dataStore?.isAchAccount,
+                                     achDeliveryType: dataStore?.achDeliveryType)
             presenter?.presentData(actionResponse: .init(item: item))
             return
         }
@@ -43,6 +45,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                     self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                          previewType: self?.dataStore?.type,
                                                                          isAch: self?.dataStore?.isAchAccount,
+                                                                         achDeliveryType: self?.dataStore?.achDeliveryType,
                                                                          failed: true,
                                                                          responseCode: data?.responseCode,
                                                                          errorDescription: data?.errorMessage))
@@ -51,6 +54,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                      previewType: self?.dataStore?.type,
                                                                      isAch: self?.dataStore?.isAchAccount,
+                                                                     achDeliveryType: self?.dataStore?.achDeliveryType,
                                                                      failed: false,
                                                                      responseCode: nil,
                                                                      errorDescription: nil))
@@ -72,7 +76,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     func submit(viewAction: OrderPreviewModels.Submit.ViewAction) {
         switch dataStore?.isAchAccount {
         case true:
-            submitAchBuy()
+            submitAch()
+            
         default:
             submitBuy()
         }
@@ -100,7 +105,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         presenter?.presentToggleTickbox(actionResponse: .init(value: viewAction.value))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     
     private func submitBuy() {
         guard let currency = dataStore?.to?.currency,
@@ -108,7 +113,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
               let to = dataStore?.to?.tokenValue,
               let from = dataStore?.from else { return }
         
-        let cryptoFormatter = ExchangeFormatter.crypto
+        let cryptoFormatter = ExchangeFormatter.current
         cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
         
@@ -121,19 +126,20 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let depositQuantity = from + (dataStore?.networkFee?.fiatValue ?? 0) + from * (dataStore?.quote?.buyFee ?? 1) / 100
         let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
-        let data = SwapRequestData(quoteId: dataStore?.quote?.quoteId,
-                                   depositQuantity: formattedDepositQuantity,
-                                   withdrawalQuantity: toTokenValue,
-                                   destination: address,
-                                   sourceInstrumentId: dataStore?.card?.id,
-                                   nologCvv: dataStore?.cvv?.description)
+        let data = ExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
+                                       depositQuantity: formattedDepositQuantity,
+                                       withdrawalQuantity: toTokenValue,
+                                       destination: address,
+                                       sourceInstrumentId: dataStore?.card?.id,
+                                       nologCvv: dataStore?.cvv?.description,
+                                       secondFactorCode: dataStore?.secondFactorCode,
+                                       secondFactorBackup: dataStore?.secondFactorBackup)
         
-        SwapWorker().execute(requestData: data) { [weak self] result in
+        ExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference
-                guard let redirectUrlString = exchangeData?.redirectUrl, let
-                        redirectUrl = URL(string: redirectUrlString) else {
+                guard let redirectUrlString = exchangeData?.redirectUrl, let redirectUrl = URL(string: redirectUrlString) else {
                     self?.getData(viewAction: .init())
                     return
                 }
@@ -155,7 +161,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
     }
     
     func showAchInstantDrawer(viewAction: OrderPreviewModels.AchInstantDrawer.ViewAction) {
-        presenter?.presentAchInstantDrawer(actionResponse: .init())
+        presenter?.presentAchInstantDrawer(actionResponse: .init(quote: dataStore?.quote, to: dataStore?.to))
     }
     
     func checkBiometricStatus(viewAction: OrderPreviewModels.BiometricStatusCheck.ViewAction) {
@@ -170,48 +176,88 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.submitBuy()
                 return
             }
-            self?.submitAchBuy()
+            self?.submitAch()
         }
     }
     
-    private func submitAchBuy() {
-        guard let currency = dataStore?.to?.currency,
-              let address = currency.wallet?.defaultReceiveAddress,
-              let to = dataStore?.to?.tokenValue,
-              let from = dataStore?.from
-        else { return }
+    private func submitAch() {
+        let currency = dataStore?.to?.currency
         
-        let cryptoFormatter = ExchangeFormatter.crypto
+        let cryptoFormatter = ExchangeFormatter.current
         cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
-        
-        let toTokenValue = cryptoFormatter.string(for: to) ?? ""
         
         let fiatFormatter = ExchangeFormatter.fiat
         fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
         
-        let fromAmount = from * (1 + (dataStore?.quote?.buyFee ?? 0) / 100)
-        let networkFee = dataStore?.networkFee?.fiatValue ?? 0
-        let achFee = dataStore?.quote?.buyFeeUsd ?? 0
+        let formattedDepositQuantity: String
+        let formattedWithdrawalQuantity: String
         
-        let depositQuantity = fromAmount + networkFee + achFee
-        let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
+        if dataStore?.type == .sell {
+            let sellFee = 1 - ((dataStore?.quote?.buyFee ?? 0) / 100)
+            let fromAmount = (dataStore?.from ?? 0) * sellFee
+            
+            formattedDepositQuantity = cryptoFormatter.string(for: dataStore?.to?.tokenValue ?? 0) ?? ""
+            formattedWithdrawalQuantity = fiatFormatter.string(from: (fromAmount) as NSNumber) ?? ""
+        } else {
+            let achFee = dataStore?.quote?.buyFeeUsd ?? 0
+            
+            let buyFee = ((dataStore?.quote?.buyFee ?? 0) / 100) + 1
+            let fromAmount = (dataStore?.from ?? 0) * buyFee
+            let toAmount = (dataStore?.from?.doubleValue ?? 0) / (dataStore?.to?.rate?.rate ?? 0)
+            
+            let instantAchFee = (dataStore?.quote?.instantAch?.feePercentage ?? 0) / 100
+            let instantAchLimit = dataStore?.quote?.instantAch?.limitUsd ?? 0
+            let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
+            
+            // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
+            var networkFeeValue: Decimal {
+                guard dataStore?.from ?? 0 >= instantAchLimit && dataStore?.type != .sell else {
+                    return dataStore?.networkFee?.fiatValue ?? 0
+                }
+                
+                return 2 * (dataStore?.networkFee?.fiatValue ?? 0)
+            }
+            
+            var depositQuantity = fromAmount + networkFeeValue + achFee
+            if dataStore?.achDeliveryType == .instant {
+                depositQuantity += instantAchFeeUsd
+            }
+            
+            formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
+            formattedWithdrawalQuantity = cryptoFormatter.string(for: toAmount) ?? ""
+        }
         
-        let data = AchRequestData(quoteId: dataStore?.quote?.quoteId,
-                                  depositQuantity: formattedDepositQuantity,
-                                  withdrawalQuantity: toTokenValue,
-                                  destination: address,
-                                  accountId: dataStore?.card?.id,
-                                  nologCvv: dataStore?.cvv?.description)
+        let data = AchExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
+                                          depositQuantity: formattedDepositQuantity,
+                                          withdrawalQuantity: formattedWithdrawalQuantity,
+                                          destination: dataStore?.type == .sell ? nil : currency?.wallet?.defaultReceiveAddress,
+                                          accountId: dataStore?.card?.id,
+                                          nologCvv: dataStore?.type == .sell ? nil : dataStore?.cvv?.description,
+                                          useInstantAch: dataStore?.type == .sell ? nil : dataStore?.achDeliveryType == .instant,
+                                          secondFactorCode: dataStore?.secondFactorCode,
+                                          secondFactorBackup: dataStore?.secondFactorBackup)
         
-        AchWorker().execute(requestData: data) { [weak self] result in
+        AchExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let exchangeData):
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference
-                guard let redirectUrlString = exchangeData?.redirectUrl, let
-                        redirectUrl = URL(string: redirectUrlString) else {
-                    self?.getData(viewAction: .init())
+                guard let redirectUrlString = exchangeData?.redirectUrl, let redirectUrl = URL(string: redirectUrlString) else {
+                    if self?.dataStore?.type == .sell {
+                        self?.createTransaction(viewAction: self?.dataStore?.createTransactionModel,
+                                                completion: { [weak self] error in
+                            guard let error else {
+                                self?.getData(viewAction: .init())
+                                return
+                            }
+                            
+                            self?.presenter?.presentError(actionResponse: .init(error: error))
+                        })
+                    } else {
+                        self?.getData(viewAction: .init())
+                    }
+                    
                     return
                 }
                 
@@ -229,5 +275,19 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                 self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
             }
         }
+    }
+    
+    func changeAchDeliveryType(viewAction: OrderPreviewModels.SelectAchDeliveryType.ViewAction) {
+        dataStore?.achDeliveryType = viewAction.achDeliveryType
+        
+        let item: Models.Item = (type: dataStore?.type,
+                                 to: dataStore?.to,
+                                 from: dataStore?.from,
+                                 quote: dataStore?.quote,
+                                 networkFee: dataStore?.networkFee,
+                                 card: dataStore?.card,
+                                 isAchAccount: dataStore?.isAchAccount,
+                                 achDeliveryType: dataStore?.achDeliveryType)
+        presenter?.presentPreview(actionRespone: .init(item: item))
     }
 }

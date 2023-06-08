@@ -1,5 +1,5 @@
 //
-//  RWDrawer.swift
+//  BottomDrawer.swift
 //  breadwallet
 //
 //  Created by Rok on 07/12/2022.
@@ -13,7 +13,7 @@ import UIKit
 import SnapKit
 
 struct DrawerConfiguration: Configurable {
-    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.one)
+    var background = BackgroundConfiguration(backgroundColor: LightColors.Background.two)
     var titleConfig = LabelConfiguration(font: Fonts.Subtitle.one,
                                          textColor: LightColors.secondary,
                                          textAlignment: .center)
@@ -28,9 +28,11 @@ struct DrawerViewModel: ViewModel {
     var description: LabelViewModel?
     var buttons: [ButtonViewModel] = []
     var notice: ButtonViewModel?
+    var onView: UIView?
+    var bottomInset: CGFloat = 0
 }
 
-class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
+class BottomDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognizerDelegate {
     var callbacks: [(() -> Void)] = []
     var isShown: Bool { return containerView.alpha == 1 }
     
@@ -106,10 +108,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         
         isUserInteractionEnabled = false
         
-        UIApplication.shared.activeWindow?.addSubview(containerView)
-        containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        (viewModel?.onView ?? UIApplication.shared.activeWindow)?.addSubview(containerView)
         
         containerView.addSubview(blurView)
         blurView.snp.makeConstraints { make in
@@ -128,12 +127,7 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         }
         
         drawer.addSubview(stack)
-        stack.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(Margins.huge.rawValue)
-            make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().inset(Margins.huge.rawValue)
-            make.bottom.equalToSuperview()
-        }
+        
         stack.addArrangedSubview(grabberImage)
         grabberImage.snp.makeConstraints { make in
             make.height.equalTo(Margins.extraSmall.rawValue)
@@ -204,9 +198,18 @@ class RWDrawer: FEView<DrawerConfiguration, DrawerViewModel>, UIGestureRecognize
         
         notice.isHidden = viewModel.notice == nil
         
-        stack.snp.updateConstraints { make in
-            let bottomOffset = UIDevice.current.hasNotch ? UIDevice.current.bottomNotch : Margins.large.rawValue
-            make.bottom.equalToSuperview().inset(bottomOffset)
+        (viewModel.onView ?? UIApplication.shared.activeWindow)?.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        stack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(Margins.huge.rawValue)
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().inset(Margins.huge.rawValue)
+            
+            let inset = viewModel.bottomInset + UIDevice.current.bottomNotch
+            make.bottom.equalToSuperview().inset(inset)
         }
         
         buttonStack.arrangedSubviews.forEach({ $0.removeFromSuperview() })

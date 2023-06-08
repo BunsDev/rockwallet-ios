@@ -17,17 +17,18 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
     // MARK: - ExchangeDetailsViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard let itemId = dataStore?.itemId,
-              !itemId.isEmpty else {
-            return
-        }
-        
-        let data = ExchangeDetailsRequestData(exchangeId: itemId)
+        let data = ExchangeDetailsRequestData(exchangeId: dataStore?.exchangeId ?? "")
         ExchangeDetailsWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
-                guard let data = data, let transactionType = self?.dataStore?.transactionType else { return }
-                let item = ExchangeDetailsModels.Item(detail: data, type: transactionType)
+                guard let data = data,
+                      let exchangeType = self?.dataStore?.exchangeType,
+                      let part = self?.dataStore?.transactionPart else { return }
+                guard let destination = data.destination?.part == part ? data.destination : data.instantDestination else { return }
+                
+                let item = ExchangeDetailsModels.Item(detail: data,
+                                                      destination: destination,
+                                                      type: exchangeType)
                 self?.presenter?.presentData(actionResponse: .init(item: item))
                 
             case .failure(let error):
@@ -36,16 +37,9 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
         }
     }
     
-    func copyValue(viewAction: ExchangeDetailsModels.CopyValue.ViewAction) {
-        let value = viewAction.value?.filter { !$0.isWhitespace } ?? ""
-        UIPasteboard.general.string = value
-        
-        presenter?.presentCopyValue(actionResponse: .init())
-    }
-    
     func showInfoPopup(viewAction: ExchangeDetailsModels.InfoPopup.ViewAction) {
         presenter?.presentInfoPopup(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

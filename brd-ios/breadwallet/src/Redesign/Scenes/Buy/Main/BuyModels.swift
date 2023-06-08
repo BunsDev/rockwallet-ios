@@ -9,44 +9,6 @@
 import UIKit
 
 enum BuyModels {
-    
-    struct Item: Hashable {
-        var type: PaymentCard.PaymentType?
-        var achEnabled: Bool?
-    }
-    
-    enum Section: Sectionable {
-        case segment
-        case rateAndTimer
-        case accountLimits
-        case from
-        case paymentMethod
-        case increaseLimits
-        
-        var header: AccessoryType? { return nil }
-        var footer: AccessoryType? { return nil }
-    }
-    
-    struct Assets {
-        struct ViewAction {
-            var currency: String?
-            var card: PaymentCard?
-        }
-        
-        struct ActionResponse {
-            var amount: Amount?
-            var card: PaymentCard?
-            var type: PaymentCard.PaymentType?
-            var quote: Quote?
-            var handleErrors = false
-        }
-        
-        struct ResponseDisplay {
-            var cryptoModel: SwapCurrencyViewModel?
-            var cardModel: CardSelectionViewModel?
-        }
-    }
-    
     struct Fee {
         struct ViewAction {}
         
@@ -56,27 +18,6 @@ enum BuyModels {
         
         struct ResponseDisplay {
             var to: String?
-        }
-    }
-    
-    struct PaymentCards {
-        struct ViewAction {
-            var getCards: Bool?
-        }
-        
-        struct ActionResponse {
-            var allPaymentCards: [PaymentCard]
-        }
-        
-        struct ResponseDisplay {
-            var allPaymentCards: [PaymentCard]
-        }
-    }
-    
-    struct Amounts {
-        struct ViewAction {
-            var fiatValue: String?
-            var tokenValue: String?
         }
     }
     
@@ -121,19 +62,6 @@ enum BuyModels {
         struct ResponseDisplay {}
     }
     
-    struct AchData {
-        struct ViewAction {}
-        
-        struct ActionResponse {
-            var currencyCode: String?
-        }
-        
-        struct ResponseDisplay {
-            var model: InfoViewModel?
-            var config: InfoViewConfiguration?
-        }
-    }
-    
     struct RetryPaymentMethod {
         struct ViewAction {
             let method: PaymentCard.PaymentType
@@ -172,6 +100,17 @@ enum BuyModels {
         struct ActionResponse {}
         struct ResponseDisplay {
             var model: PopupViewModel
+        }
+    }
+    
+    struct AssetSelectionMessage {
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {
+            var model: InfoViewModel?
+            var config: InfoViewConfiguration?
         }
     }
 }

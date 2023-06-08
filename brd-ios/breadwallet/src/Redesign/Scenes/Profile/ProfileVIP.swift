@@ -30,6 +30,7 @@ protocol ProfileResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponse
     func displayVerificationInfo(responseDisplay: ProfileModels.VerificationInfo.ResponseDisplay)
     func displayNavigation(responseDisplay: ProfileModels.Navigate.ResponseDisplay)
     func displayPaymentCards(responseDisplay: ProfileModels.PaymentCards.ResponseDisplay)
+    func displayLogout(responseDisplay: ProfileModels.Logout.ResponseDisplay)
 }
 
 protocol ProfileDataStore: BaseDataStore, FetchDataStore {

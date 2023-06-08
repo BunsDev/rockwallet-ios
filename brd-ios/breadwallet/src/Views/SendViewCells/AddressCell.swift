@@ -22,6 +22,7 @@ class AddressCell: UIView {
 
     var textDidChange: ((String?) -> Void)?
     var didBeginEditing: (() -> Void)?
+    var didEndEditing: (() -> Void)?
     var didReceivePaymentRequest: ((PaymentRequest) -> Void)?
     var didReceiveResolvedAddress: ((Result<String?, Error>, ResolvableType) -> Void)?
     
@@ -159,6 +160,10 @@ class AddressCell: UIView {
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
         textField.keyboardType = .emailAddress
+        textField.attributedPlaceholder = NSAttributedString(string: L10n.Send.placeholderText, attributes: [
+            .foregroundColor: LightColors.Text.two,
+            .font: Fonts.Body.three
+        ])
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         contentLabel.lineBreakMode = .byTruncatingMiddle
 
@@ -199,6 +204,7 @@ extension AddressCell: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        didEndEditing?()
         contentLabel.isHidden = false
         textField.isHidden = true
         gr.isEnabled = true

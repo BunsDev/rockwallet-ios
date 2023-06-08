@@ -339,7 +339,8 @@ class UpdatePinViewController: UIViewController, Subscriber {
             } else {
                 if pin != newPin {
                     let model: InfoViewModel = .init(description: .text(L10n.UpdatePin.pinDoesntMatch), dismissType: .auto)
-                    showToastMessage(model: model, configuration: Presets.InfoView.error)
+                    ToastMessageManager.shared.show(model: model,
+                                                    configuration: Presets.InfoView.error)
                 }
                 
                 clearAfterFailure()

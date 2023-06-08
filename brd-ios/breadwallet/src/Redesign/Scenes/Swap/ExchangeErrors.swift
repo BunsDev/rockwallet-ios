@@ -18,13 +18,13 @@ enum ExchangeErrors: FEError {
     case tooHigh(amount: Decimal, currency: String, reason: BaseInfoModels.FailureReason)
     /// Param 1: amount, param 2 currency symbol
     case balanceTooLow(balance: Decimal, currency: String)
+    case insufficientGasERC20(currency: String)
     case overDailyLimit(limit: Decimal)
     case overLifetimeLimit(limit: Decimal)
     case overDailyLimitLevel2(limit: Decimal)
     case notEnoughEthForFee(currency: String)
     case failed(error: Error?)
     case supportedCurrencies(error: Error?)
-    case quoteFail
     case noFees
     case networkFee
     case overExchangeLimit
@@ -46,16 +46,19 @@ enum ExchangeErrors: FEError {
     
     var errorMessage: String {
         switch self {
+        case .insufficientGasERC20(let currency):
+            return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
+            
         case .balanceTooLow(let amount, let currency):
-            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.crypto.string(for: amount) ?? "", currency, currency)
+            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)
             
         case .tooLow(let amount, let currency, let reason):
             switch reason {
-            case .buyCard:
+            case .buyCard, .buyAch, .sell:
                 return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
                 
             case .swap:
-                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.crypto.string(for: amount.doubleValue) ?? "", currency)
+                return L10n.ErrorMessages.amountTooLow(ExchangeFormatter.current.string(for: amount.doubleValue) ?? "", currency)
                 
             default:
                 return ""
@@ -63,11 +66,11 @@ enum ExchangeErrors: FEError {
             
         case .tooHigh(let amount, let currency, let reason):
             switch reason {
-            case .buyCard:
+            case .buyCard, .buyAch, .sell:
                 return L10n.ErrorMessages.amountTooHigh(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
                 
             case .swap:
-                return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.crypto.string(for: amount) ?? "", currency)
+                return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.current.string(for: amount) ?? "", currency)
                 
             default:
                 return ""
@@ -88,9 +91,6 @@ enum ExchangeErrors: FEError {
         case .networkFee:
             return L10n.ErrorMessages.networkFee
             
-        case .quoteFail:
-            return L10n.ErrorMessages.exchangeQuoteFailed
-        
         case .noQuote(let from, let to):
             let from = from ?? "/"
             let to = to ?? "/"

@@ -14,6 +14,7 @@ enum BlocksatoshiEndpoints: String, URLType {
     static var baseURL: String = "https://"  + E.apiUrl + "blocksatoshi/blocksatoshi/%@"
     
     case paymailDestination = "paymail-destination"
+    case convertBchAddress = "convert-bch-address?address=%@"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

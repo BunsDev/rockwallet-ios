@@ -22,27 +22,12 @@ enum Kyc2: String, Equatable {
     case kycWithoutSsn = "KYC_WITHOUT_SSN"
 }
 
-enum TradeRestrictionReason {
-    case verification, location
-}
-
-struct TradeStatus {
-    var canTrade: Bool
-    var restrictionReason: TradeRestrictionReason?
-}
-
 enum VerificationStatus: Hashable {
     case none
     case emailPending
     case email
     case levelOne
     case levelTwo(Kyc2)
-    
-    var isKYCLocationRestricted: Bool {
-        guard let restrictionReason = UserManager.shared.profile?.kycAccessRights.restrictionReason else { return false }
-        
-        return restrictionReason == .country || restrictionReason == .state || restrictionReason == .manuallyConfigured
-    }
     
     var hasKYCLevelTwo: Bool {
         switch self {
@@ -61,19 +46,6 @@ enum VerificationStatus: Hashable {
             
         default:
             return false
-        }
-    }
-    
-    var tradeStatus: TradeStatus {
-        switch (hasKYCLevelTwo, isKYCLocationRestricted) {
-        case (true, false):
-            return .init(canTrade: true, restrictionReason: nil)
-            
-        case (true, true):
-            return .init(canTrade: false, restrictionReason: .location)
-            
-        case (false, _):
-            return .init(canTrade: false, restrictionReason: .verification)
         }
     }
     
@@ -125,9 +97,9 @@ enum VerificationStatus: Hashable {
     var viewModel: InfoViewModel? {
         let profile = UserManager.shared.profile
         let canUseAch = profile?.kycAccessRights.hasAchAccess ?? false
-        let swapAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.swapAllowanceDaily) ?? ""
-        let buyAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.buyAllowanceDaily) ?? ""
-        let achAllowanceDaily = ExchangeFormatter.crypto.string(for: profile?.achAllowanceDaily) ?? ""
+        let swapAllowanceDaily = ExchangeFormatter.current.string(for: profile?.swapAllowanceDaily) ?? ""
+        let buyAllowanceDaily = ExchangeFormatter.current.string(for: profile?.buyAllowanceDaily) ?? ""
+        let achAllowanceDaily = ExchangeFormatter.current.string(for: profile?.achAllowanceDaily) ?? ""
         
         switch self {
         case .none, .email, .levelOne, .levelTwo(.notStarted), .levelTwo(.kycInfoProvided):

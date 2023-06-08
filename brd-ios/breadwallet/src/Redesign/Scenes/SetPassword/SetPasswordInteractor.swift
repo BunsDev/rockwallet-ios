@@ -64,10 +64,10 @@ class SetPasswordInteractor: NSObject, Interactor, SetPasswordViewActions {
                 }
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                self?.handleNextFailure(viewAction: .init(setPasswordRequestData: data, error: error))
             }
         }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

@@ -11,5 +11,5 @@ import UIKit
 class CheckListStore: NSObject, BaseDataStore, CheckListDataStore {
     // MARK: - CheckListDataStore
 
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

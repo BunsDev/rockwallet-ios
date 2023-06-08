@@ -28,9 +28,11 @@ struct TwoStepSettingsRequestData: RequestModelData {
 }
 
 struct TwoStepSettingsResponseData: ModelResponse {
-    enum TwoStepType: String, ModelResponse {
+    enum TwoStepType: String, ModelResponse, CaseIterableDefaultsLast {
         case email = "EMAIL"
         case authenticator = "AUTHENTICATOR"
+        
+        case unknown
     }
     
     let type: TwoStepSettingsResponseData.TwoStepType?

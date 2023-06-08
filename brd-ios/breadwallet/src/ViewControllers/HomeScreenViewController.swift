@@ -82,11 +82,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapTrade: (() -> Void)?
     var didTapProfile: (() -> Void)?
     var didTapProfileFromPrompt: (() -> Void)?
+    var didTapTwoStepFromPrompt: (() -> Void)?
     var didTapCreateAccountFromPrompt: (() -> Void)?
     var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
-    
-    var isInExchangeFlow = false
     
     private lazy var totalAssetsNumberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -106,19 +105,22 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     // We are not using pullToRefreshControl.isRefreshing because when you trigger reload() it is already refreshing. We need a variable that tracks the real refreshing of the resources.
     private var isRefreshing = false
     
-    private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(showHome)),
+    private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(home)),
                                  (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
-                                 // TODO: uncomment for drawer
+                                 // TODO: Uncomment for drawer
 //                                 (L10n.Drawer.title, nil, #selector(buy)),
                                  (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
                                  (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
     
-    let animationView: LottieAnimationView = {
-        let view = LottieAnimationView(animation: Animations.buyAndSell.animation)
-        return view
-    }()
-
+    // TODO: Uncomment for drawer
+//    let animationView: LottieAnimationView = {
+//        let view = LottieAnimationView(animation: Animations.buyAndSell.animation)
+//        return view
+//    }()
+    
+    private var drawerManager: BottomDrawerManager?
+    
     // MARK: - Lifecycle
     
     init(walletAuthenticator: WalletAuthenticator, coreSystem: CoreSystem) {
@@ -153,10 +155,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        pullToRefreshControl.endRefreshing()
+        ExchangeManager.shared.reload()
         
-        isInExchangeFlow = false
-        ExchangeCurrencyHelper.revertIfNeeded()
+        pullToRefreshControl.endRefreshing()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Home())
     }
@@ -252,8 +253,15 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         })
         
         // TODO: Uncomment for drawer
-//        let drawerConfig = DrawerConfiguration()
-//        let drawerViewModel = DrawerViewModel()
+//        let drawerConfig = DrawerConfiguration(buttons: [Presets.Button.primary,
+//                                                         Presets.Button.primary,
+//                                                         Presets.Button.whiteBorderless])
+//        let drawerViewModel = DrawerViewModel(title: .text(L10n.Drawer.title),
+//                                              buttons: [.init(title: L10n.Buy.buyWithCard, image: Asset.card.image),
+//                                                        .init(title: L10n.Buy.buyWithAch, image: Asset.bank.image),
+//                                                        .init(title: L10n.Button.sell, image: Asset.remove.image)],
+//                                              onView: view,
+//                                              bottomInset: BottomDrawer.bottomToolbarHeight)
 //        let drawerCallbacks: [(() -> Void)] = [ { [weak self] in
 //            self?.didTapDrawerButton(.card)
 //        }, { [weak self] in
@@ -261,7 +269,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
 //        }, { [weak self]
 //            in self?.didTapDrawerButton()
 //        }]
-//        setupDrawer(config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
+//
+//        drawerManager = BottomDrawerManager()
+//        drawerManager?.setupDrawer(on: self, config: drawerConfig, viewModel: drawerViewModel, callbacks: drawerCallbacks) { [unowned self] drawer in
 //            drawer.dismissActionPublisher.sink { [weak self] _ in
 //                self?.animationView.play(fromProgress: 1, toProgress: 0)
 //            }.store(in: &self.observers)
@@ -274,7 +284,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             tabBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tabBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tabBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tabBarContainerView.heightAnchor.constraint(equalToConstant: RWDrawer.bottomToolbarHeight)])
+            tabBarContainerView.heightAnchor.constraint(equalToConstant: BottomDrawer.bottomToolbarHeight)])
         
         tabBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.large.rawValue)
@@ -296,16 +306,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         
         setupToolbar()
         updateTotalAssets()
-        setupAnimationView()
-    }
-    
-    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
-        if let type = type {
-            didTapBuy?(type)
-        } else {
-            didTapSell?()
-        }
-        animationView.play(fromProgress: 1, toProgress: 0)
+        // TODO: Uncomment for drawer
+//        setupAnimationView()
     }
     
     private func setupToolbar() {
@@ -324,10 +326,11 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         tabBar.items = buttons
     }
     
-    private func setupAnimationView() {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(buy))
-        animationView.addGestureRecognizer(gesture)
-    }
+    // TODO: Uncomment for drawer
+//    private func setupAnimationView() {
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(buy))
+//        animationView.addGestureRecognizer(gesture)
+//    }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         guard let index = tabBar.items?.firstIndex(where: { $0 == item }) else { return }
@@ -382,7 +385,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         })
         
         Store.subscribe(self, name: .promptTwoStep, callback: { _ in
-            // TODO: ENABLE 2FA
+            self.didTapTwoStepFromPrompt?()
         })
         
         Store.subscribe(self, name: .promptLimitsAuthentication, callback: { _ in
@@ -412,6 +415,9 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             case .noAccount:
                 self?.didTapCreateAccountFromPrompt?()
                 
+            case .twoStep:
+                self?.didTapTwoStepFromPrompt?()
+                
             default:
                 break
             }
@@ -419,8 +425,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func updateTotalAssets() {
-        guard isInExchangeFlow == false else { return }
-        
         let fiatTotal: Decimal = Store.state.wallets.values.map {
             guard let balance = $0.balance,
                   let rate = $0.currentRate else { return 0.0 }
@@ -429,7 +433,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             return amount.fiatValue
         }.reduce(0.0, +)
         
-        let localeComponents = [NSLocale.Key.currencyCode.rawValue: UserDefaults.defaultCurrencyCode]
+        let localeComponents = [NSLocale.Key.currencyCode.rawValue: Store.state.defaultCurrencyCode]
         let localeIdentifier = Locale.identifier(fromComponents: localeComponents)
         totalAssetsNumberFormatter.locale = Locale(identifier: localeIdentifier)
         totalAssetsNumberFormatter.currencySymbol = Store.state.orderedWallets.first?.currentRate?.code ?? ""
@@ -438,8 +442,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func updateAmountsForWidgets() {
-        guard isInExchangeFlow == false else { return }
-        
         let info: [CurrencyId: Double] = Store.state.wallets
             .map { ($0, $1) }
             .reduce(into: [CurrencyId: Double]()) {
@@ -455,37 +457,43 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     // MARK: Actions
     
-    @objc private func showHome() {
-        // TODO: Uncomment for drawer
-
-//        if drawerIsShown {
-//            animationView.play(fromProgress: 1, toProgress: 0)
+    // TODO: Uncomment for drawer
+//    private func didTapDrawerButton(_ type: PaymentCard.PaymentType? = nil) {
+//        if let type {
+//            didTapBuy?(type)
+//        } else {
+//            didTapSell?()
 //        }
-//        hideDrawer()
-    }
+//
+//        animationView.play(fromProgress: 1, toProgress: 0)
+//    }
     
     private func commonTapAction() {
         // TODO: Uncomment for drawer
-
-//        if drawerIsShown {
+//        if drawerManager?.drawerIsShown == true {
 //            animationView.play(fromProgress: 1, toProgress: 0)
 //        }
-//        hideDrawer()
+//        drawerManager?.hideDrawer()
     }
     
-    @objc private func buy() {
-        didTapBuy?(.card)
-//        if drawerIsShown {
-//            animationView.play(fromProgress: 1, toProgress: 0)
-//        } else {
-//            animationView.play()
-//        }
-//        toggleDrawer()
+    @objc private func home() {
+        commonTapAction()
     }
     
     @objc private func trade() {
         commonTapAction()
         didTapTrade?()
+    }
+    
+    @objc private func buy() {
+        // TODO: Uncomment for drawer
+//        if drawerManager?.drawerIsShown == true {
+//            animationView.play(fromProgress: 1, toProgress: 0)
+//        } else {
+//            animationView.play()
+//        }
+//        drawerManager?.toggleDrawer()
+        didTapBuy?(.card)
     }
     
     @objc private func profile() {

@@ -22,4 +22,12 @@ extension UIDevice {
         
         return window.safeAreaInsets.bottom
     }
+    
+    var topNotch: CGFloat {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        guard let window = windowScene?.windows.first else { return 0 }
+        
+        return window.safeAreaInsets.top
+    }
 }

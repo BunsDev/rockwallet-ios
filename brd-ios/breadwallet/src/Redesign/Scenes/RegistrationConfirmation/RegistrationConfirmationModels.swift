@@ -9,7 +9,7 @@
 import UIKit
 
 enum RegistrationConfirmationModels {
-    typealias Item = RegistrationConfirmationModels.ConfirmationType
+    typealias Item = (type: RegistrationConfirmationModels.ConfirmationType, email: String?)
     
     enum Section: Sectionable {
         case image
@@ -22,13 +22,43 @@ enum RegistrationConfirmationModels {
         var footer: AccessoryType? { return nil }
     }
     
-    enum ConfirmationType: Hashable {
+    indirect enum ConfirmationType: Hashable {
+        // Regular Login/Register without 2FA
         case account
-        case acountTwoStepEmailSettings
-        case acountTwoStepAppSettings
+        
+        // Change 2FA method
+        case twoStepAccountEmailSettings
+        case twoStepAccountAppSettings
+        
+        // First time 2FA setup
         case twoStepEmail
         case twoStepApp
-        case disable
+        
+        // Login with 2FA
+        case twoStepEmailLogin
+        case twoStepAppLogin
+        
+        // Send funds with 2FA
+        case twoStepEmailSendFunds
+        case twoStepAppSendFunds
+        
+        // Buy with 2FA
+        case twoStepEmailBuy
+        case twoStepAppBuy
+        
+        // 2FA required
+        case twoStepEmailRequired
+        case twoStepAppRequired
+        
+        // Reset password with 2FA
+        case twoStepEmailResetPassword
+        case twoStepAppResetPassword
+        
+        // 2FA app backup code
+        case twoStepAppBackupCode(ConfirmationType)
+        
+        // Disable 2FA
+        case twoStepDisable
     }
     
     struct Validate {
@@ -46,18 +76,14 @@ enum RegistrationConfirmationModels {
     }
     
     struct Confirm {
-        struct ViewAction {}
+        struct ViewAction {
+            var type: RegistrationConfirmationModels.ConfirmationType?
+        }
         struct ActionResponse {}
         struct ResponseDisplay {}
     }
     
     struct Resend {
-        struct ViewAction {}
-        struct ActionResponse {}
-        struct ResponseDisplay {}
-    }
-    
-    struct Error {
         struct ViewAction {}
         struct ActionResponse {}
         struct ResponseDisplay {}

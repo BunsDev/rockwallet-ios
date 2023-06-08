@@ -12,18 +12,28 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
     // MARK: - RegistrationRoutes
     
     override func start() {
+        let error = UserManager.shared.error as? NetworkingError
+        
         if DynamicLinksManager.shared.code != nil {
             showSetPassword()
         } else if UserManager.shared.profile?.status == .emailPending {
             showRegistrationConfirmation(isModalDismissable: true, confirmationType: .account)
+        } else if error?.errorType == .twoStepRequired {
+            let confirmationType: RegistrationConfirmationModels.ConfirmationType = error == .twoStepAppRequired ? .twoStepAppRequired : .twoStepEmailRequired
+            showRegistrationConfirmation(isModalDismissable: true, confirmationType: confirmationType)
         } else {
             showSignUp()
         }
     }
     
-    func showRegistrationConfirmation(isModalDismissable: Bool, confirmationType: RegistrationConfirmationModels.ConfirmationType) {
+    func showRegistrationConfirmation(isModalDismissable: Bool,
+                                      confirmationType: RegistrationConfirmationModels.ConfirmationType,
+                                      registrationRequestData: RegistrationRequestData? = nil,
+                                      setPasswordRequestData: SetPasswordRequestData? = nil) {
         open(scene: Scenes.RegistrationConfirmation) { vc in
             vc.dataStore?.confirmationType = confirmationType
+            vc.dataStore?.registrationRequestData = registrationRequestData
+            vc.dataStore?.setPasswordRequestData = setPasswordRequestData
             vc.isModalDismissable = isModalDismissable
         }
     }
@@ -32,8 +42,10 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.VerifyPhoneNumber)
     }
     
-    func showAuthenticatorApp() {
-        open(scene: Scenes.AuthenticatorApp)
+    func showAuthenticatorApp(setTwoStepAppModel: SetTwoStepAuth? = nil) {
+        open(scene: Scenes.AuthenticatorApp) { vc in
+            vc.dataStore?.setTwoStepAppModel = setTwoStepAppModel
+        }
     }
     
     func showBackupCodes() {
@@ -72,15 +84,41 @@ class AccountCoordinator: ExchangeCoordinator, SignInRoutes, SignUpRoutes, Forgo
         open(scene: Scenes.SignIn)
     }
     
-    func showDeleteProfile(with keyMaster: KeyStore) {
-        open(scene: Scenes.DeleteProfileInfo) { vc in
-            vc.dataStore?.keyMaster = keyMaster
+    func showAccountBlocked() {
+        open(scene: Scenes.AccountBlocked) { vc in
+            vc.navigationItem.hidesBackButton = true
+            
+            vc.didTapMainButton = { [weak self] in
+                self?.dismissFlow()
+            }
+            
+            vc.didTapSecondayButton = { [weak self] in
+                self?.showSupport()
+            }
         }
     }
     
-    func showKYCLevelOne() {
-        open(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
+    func showTwoStepErrorFlow(reason: NetworkingError,
+                              registrationRequestData: RegistrationRequestData? = nil,
+                              setPasswordRequestData: SetPasswordRequestData? = nil) {
+        if reason == .twoStepAppRequired {
+            let type: RegistrationConfirmationModels.ConfirmationType = registrationRequestData == nil ? .twoStepAppResetPassword : .twoStepAppLogin
+            
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: type,
+                                         registrationRequestData: registrationRequestData,
+                                         setPasswordRequestData: setPasswordRequestData)
+        } else if reason == .twoStepEmailRequired {
+            let type: RegistrationConfirmationModels.ConfirmationType = registrationRequestData == nil ? .twoStepEmailResetPassword : .twoStepEmailLogin
+            
+            showRegistrationConfirmation(isModalDismissable: true,
+                                         confirmationType: type,
+                                         registrationRequestData: registrationRequestData,
+                                         setPasswordRequestData: setPasswordRequestData)
+        } else if reason == .twoStepBlockedAccount || reason == .twoStepInvalidCodeBlockedAccount {
+            showAccountBlocked()
+        }
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

@@ -33,8 +33,8 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
         
         let sectionRows: [Models.Section: [any Hashable]] = [
             .email: [TextFieldModel(title: L10n.Account.enterEmail, value: item.email)],
-            .password: [TextFieldModel(title: L10n.Account.createPassword, value: item.password)],
-            .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password)],
+            .password: [TextFieldModel(title: L10n.Account.createPassword, value: item.password, showPasswordToggle: true)],
+            .confirmPassword: [TextFieldModel(title: L10n.Account.confirmPassword, value: item.password, showPasswordToggle: true)],
             .notice: [LabelViewModel.text(L10n.Account.passwordRequirements)],
             .termsTickbox: [TickboxItemViewModel(title: .attributedText(prepareTermsTickboxText()), url: termsAndConditionsURL)],
             .promotionsTickbox: [TickboxItemViewModel(title: .text(L10n.Account.promotionsTickbox))]
@@ -69,17 +69,15 @@ final class SignUpPresenter: NSObject, Presenter, SignUpActionResponses {
                       passwordModel: .init(title: L10n.Account.createPassword,
                                            hint: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
                                            && !actionResponse.isPasswordAgainEmpty ? L10n.Account.passwordDoNotMatch : nil,
-                                           trailing: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
-                                           && !actionResponse.isPasswordAgainEmpty ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
-                                           displayState: actionResponse.passwordState),
+                                           displayState: actionResponse.passwordState,
+                                           showPasswordToggle: true),
                       isPasswordAgainValid: actionResponse.isPasswordAgainValid,
                       isPasswordAgainEmpty: actionResponse.isPasswordAgainEmpty,
                       passwordAgainModel: .init(title: L10n.Account.confirmPassword,
                                                 hint: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
                                                 && !actionResponse.isPasswordAgainEmpty ? L10n.Account.passwordDoNotMatch : nil,
-                                                trailing: !actionResponse.passwordsMatch && !actionResponse.isPasswordEmpty
-                                                && !actionResponse.isPasswordAgainEmpty ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil,
-                                                displayState: actionResponse.passwordAgainState),
+                                                displayState: actionResponse.passwordAgainState,
+                                                showPasswordToggle: true),
                       isTermsTickboxValid: actionResponse.isTermsTickboxValid,
                       noticeConfiguration: noticeConfiguration,
                       isValid: isValid))

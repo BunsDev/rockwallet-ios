@@ -17,8 +17,8 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
     typealias Models = ExchangeDetailsModels
     
     override var sceneLeftAlignedTitle: String? {
-        switch dataStore?.transactionType {
-        case .buy, .buyAch:
+        switch dataStore?.exchangeType {
+        case .buyCard, .buyAch:
             return L10n.Buy.details
             
         case .swap:

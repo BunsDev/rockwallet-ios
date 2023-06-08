@@ -12,13 +12,11 @@ extension Scenes {
     static let ExchangeDetails = ExchangeDetailsViewController.self
 }
 
-protocol ExchangeDetailsViewActions: BaseViewActions, FetchViewActions {
-    func copyValue(viewAction: ExchangeDetailsModels.CopyValue.ViewAction)
+protocol ExchangeDetailsViewActions: BaseViewActions, FetchViewActions, CopyValueActions {
     func showInfoPopup(viewAction: ExchangeDetailsModels.InfoPopup.ViewAction)
 }
 
-protocol ExchangeDetailsActionResponses: BaseActionResponses, FetchActionResponses {
-    func presentCopyValue(actionResponse: ExchangeDetailsModels.CopyValue.ActionResponse)
+protocol ExchangeDetailsActionResponses: BaseActionResponses, FetchActionResponses, CopyValueResponses {
     func presentInfoPopup(actionResponse: ExchangeDetailsModels.InfoPopup.ActionResponse)
 }
 
@@ -27,7 +25,9 @@ protocol ExchangeDetailsResponseDisplays: AnyObject, BaseResponseDisplays, Fetch
 }
 
 protocol ExchangeDetailsDataStore: BaseDataStore, FetchDataStore {
-    var transactionType: TransactionType { get set }
+    var exchangeType: ExchangeType { get set }
+    var transactionPart: ExchangeDetail.SourceDestination.Part { get set }
+    var exchangeId: String? { get set }
 }
 
 protocol ExchangeDetailsDataPassing {

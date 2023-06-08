@@ -13,11 +13,15 @@ import Foundation
 struct SetPasswordRequestData: RequestModelData {
     let code: String?
     let password: String?
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     func getParameters() -> [String: Any] {
         let params = [
             "code": code,
-            "password": password
+            "password": password,
+            "second_factor_code": secondFactorCode,
+            "second_factor_backup": secondFactorBackup
         ]
         return params.compactMapValues { $0 }
     }

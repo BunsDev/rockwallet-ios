@@ -235,6 +235,10 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             self?.amountView.closePinPad()
         }
         
+        addressCell.didEndEditing = { [weak self] in
+            self?.checkAndHandleLegacyBCHAddress()
+        }
+        
         addressCell.didReceivePaymentRequest = { [weak self] request in
             self?.handleRequest(request)
         }
@@ -279,7 +283,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             
             if max.currency.isEthereum { // Only adjust maximum for ETH
                 let adjustTokenValue = max.tokenValue * (self?.ethMultiplier ?? 0.80) // Reduce amount for ETH estimate fee API call
-                max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: max.currency)
+                max = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: max.currency)
             }
             self?.amountView.forceUpdateAmount(amount: max)
             self?.updateFeesMax(depth: 0)
@@ -356,7 +360,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     
                     if maximum.currency.isEthereum {
                         let adjustTokenValue = value.tokenValue * 0.95 // Reduce amount for ETH createTxn API call
-                        value = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: value.currency)
+                        value = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: value.currency)
                         self?.amountView.forceUpdateAmount(amount: value)
                     } else {
                         if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
@@ -369,7 +373,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     // updateFeesMax failed, default to a fixed reduction
                     if maximum.currency.isEthereum {
                         let adjustTokenValue = maximum.tokenValue * 0.80 // Reduce amount for ETH estimate fee API call
-                        let max = Amount(tokenString: ExchangeFormatter.crypto.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
+                        let max = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: maximum.currency)
                         self?.amountView.forceUpdateAmount(amount: max)
                     } else {
                         self?.handleEstimateFeeError(error: error)
@@ -520,7 +524,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
     }
     
-    private func validateSendForm() -> Bool {
+    internal override func validateSendForm() -> Bool {
         //Payment Protocol Requests do their own validation
         guard paymentProtocolRequest == nil else { return true }
         
@@ -565,7 +569,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                                                                amount: amount,
                                                                feeBasis: feeBasis,
                                                                comment: memoCell.textView.text,
-                                                               attribute: attributeText))
+                                                               attribute: attributeText,
+                                                               secondFactorCode: secondFactorCode,
+                                                               secondFactorBackup: secondFactorBackup))
     }
     
     private func handleEstimateFeeError(error: Error) {
@@ -598,6 +604,56 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
 
             present(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func convertBCH(address: String) {
+        ConvertBchWorker().execute(requestData: ConvertBchRequestData(address: address)) { result in
+            switch result {
+            case .success(let data):
+                self.addressCell.setContent(data?.cashAddress)
+                self.hidePopup()
+                let model: InfoViewModel = .init(description: .text(L10n.Bch.conversionMessage))
+                self.showToastMessage(model: model, configuration: Presets.InfoView.verification)
+                
+            case .failure(let error):
+                let error = error as? NetworkingError
+                let model: InfoViewModel = .init(description: .text(error?.errorMessage))
+                self.showToastMessage(model: model, configuration: Presets.InfoView.error)
+            }
+        }
+    }
+    
+    func isLegacyAddress(currency: Currency, address: String) -> Bool {
+        return currency.isLegacyBCHAddress(address: address) && Address.createLegacy(string: address, network: currency.network) != nil
+    }
+    
+    private func checkAndHandleLegacyBCHAddress() {
+        guard let address else { return }
+        if isLegacyAddress(currency: currency, address: address) {
+            let model = PopupViewModel(title: .text(L10n.Bch.converterTitle),
+                                       body: L10n.Bch.converterDescription,
+                                       buttons: [.init(title: L10n.Button.convert),
+                                                 .init(title: L10n.LinkWallet.decline)],
+                                       closeButton: .init(image: Asset.close.image))
+            
+            showInfoPopup(with: model, callbacks: [ { [weak self] in
+                self?.convertBCH(address: address)
+            }, { [weak self] in
+                self?.declineConversion()
+            }])
+        }
+    }
+    
+    func declineConversion() {
+        hidePopup()
+        addressCell.setContent(nil)
+        let model: InfoViewModel = .init(description: .text(L10n.Bch.errorMessage))
+        showToastMessage(model: model, configuration: Presets.InfoView.error)
+    }
+    
+    func showToastMessage(model: InfoViewModel, configuration: InfoViewConfiguration) {
+        ToastMessageManager.shared.show(model: model,
+                                        configuration: configuration)
     }
     
     private func handleValidationResult(_ result: SenderValidationResult, protocolRequest: PaymentProtocolRequest? = nil) -> Bool {
@@ -663,8 +719,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             attributeCell?.textField.resignFirstResponder()
         }
         
-        guard validateSendForm(),
-              let amount = amount,
+        guard let amount = amount,
               let address = address,
               let feeBasis = currentFeeBasis else { return }
         
@@ -706,6 +761,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             addressCell.setContent(request.toAddress?.description)
             addressCell.isEditable = true
             
+            checkAndHandleLegacyBCHAddress()
+
             if let amount = request.amount {
                 amountView.forceUpdateAmount(amount: amount)
             }

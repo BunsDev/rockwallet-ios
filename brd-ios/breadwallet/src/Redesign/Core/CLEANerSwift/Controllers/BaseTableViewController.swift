@@ -90,10 +90,13 @@ class BaseTableViewController<C: CoordinatableRoutes,
         tableView.register(WrapperTableViewCell<TitleButtonView>.self)
         tableView.register(WrapperTableViewCell<PaddedImageView>.self)
         tableView.register(WrapperTableViewCell<OrderView>.self)
+        tableView.register(WrapperTableViewCell<UIView>.self)
+        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
     }
 
     override func prepareData() {
         super.prepareData()
+        
         (interactor as? (any FetchViewActions))?.getData(viewAction: .init())
     }
 
@@ -116,10 +119,12 @@ class BaseTableViewController<C: CoordinatableRoutes,
         }
         
         dataSource?.apply(snapshot, completion: { [weak self] in
+            self?.tableView.reloadData()
             self?.tableView.invalidateIntrinsicContentSize()
         })
         
         tableView.backgroundView?.isHidden = !sections.isEmpty
+        
         LoadingView.hideIfNeeded()
     }
 
@@ -227,6 +232,12 @@ class BaseTableViewController<C: CoordinatableRoutes,
     }
     
     // MARK: Custom cells
+    
+    func tableView(_ tableView: UITableView, emptyCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<UIView> = tableView.dequeueReusableCell(for: indexPath) else { return UITableViewCell() }
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, coverCellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: WrapperTableViewCell<FEImageView> = tableView.dequeueReusableCell(for: indexPath),
               let model = dataSource?.itemIdentifier(for: indexPath) as? ImageViewModel

@@ -28,6 +28,8 @@ protocol BaseInfoDataStore: BaseDataStore, FetchDataStore {
     var item: Any? { get set }
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
+    var id: String? { get set }
+    var restrictionReason: Profile.AccessRights.RestrictionReason? { get set }
 }
 
 protocol BaseInfoDataPassing {

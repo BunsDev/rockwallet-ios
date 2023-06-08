@@ -27,5 +27,5 @@ class RecoveryKeyIntroInteractor: NSObject, Interactor, RecoveryKeyIntroViewActi
         presenter?.presentToggleTickbox(actionResponse: .init(value: viewAction.value))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

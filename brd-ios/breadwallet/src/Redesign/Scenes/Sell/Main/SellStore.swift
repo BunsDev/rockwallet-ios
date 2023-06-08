@@ -7,23 +7,21 @@
 //
 
 import UIKit
+import WalletKit
 
 class SellStore: NSObject, BaseDataStore, SellDataStore {
+    // MARK: - CreateTransactionDataStore
+    var fromFeeBasis: WalletKit.TransferFeeBasis?
+    var senderValidationResult: SenderValidationResult?
+    var sender: Sender?
     
-    // MARK: - SellDataStore
+    // MARK: - ExchangeRateDataStore
     
-    // ExchangeRateDaatStore
-    var quote: Quote? = .init(quoteId: 5,
-                              exchangeRate: 0.99,
-                              timestamp: Date().timeIntervalSince1970,
-                              minimumValue: 100,
-                              maximumValue: 200,
-                              minimumUsd: 100,
-                              maximumUsd: 200)
+    var quote: Quote?
     
-    var fromCode: String { currency?.code ?? "" }
+    var fromCode: String { fromAmount?.currency.code ?? "" }
     var toCode: String { Constant.usdCurrencyCode }
-    var fromBuy = false
+    var isFromBuy: Bool = true
     var showTimer: Bool = false
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
@@ -31,13 +29,17 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
                      type: .sell)
     }
     
-    // MARK: - AchDataStore
+    // MARK: - SellDataStore
+    
     var ach: PaymentCard?
     var selected: PaymentCard?
     var cards: [PaymentCard] = []
     var paymentMethod: PaymentCard.PaymentType? = .ach
+    var availablePayments: [PaymentCard.PaymentType] = []
     
-    var currency: Currency?
+    var currencies: [Currency] = []
+    var supportedCurrencies: [SupportedCurrency]?
+    
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
     var limits: NSMutableAttributedString? {
@@ -53,9 +55,34 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var fromAmount: Amount?
     var toAmount: Decimal? { return fromAmount?.fiatValue }
     
-    // MARK: - Aditional helpers
+    var fromRate: Decimal?
+    
+    var exchange: Exchange?
+    
+    var createTransactionModel: CreateTransactionModels.Transaction.ViewAction?
+    
+    // MARK: - TwoStepDataStore
+    
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
+    
+    // MARK: - Additional helpers
+    
+    var fromFeeAmount: Amount? {
+        guard let value = fromFeeBasis,
+              let currency = currencies.first(where: { $0.code == value.fee.currency.code.uppercased() }) else {
+            return nil
+        }
+        return .init(cryptoAmount: value.fee, currency: currency)
+    }
+    
     var isFormValid: Bool {
-        // TODO: remove after BE is ready
+        guard let amount = fromAmount,
+              amount.tokenValue > 0,
+              selected != nil
+        else {
+            return false
+        }
         return true
     }
 }

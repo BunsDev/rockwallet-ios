@@ -18,49 +18,42 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     var presenter: SwapPresenter?
     var dataStore: SwapStore?
     
-    private var sender: Sender?
-    
     // MARK: - SwapViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard dataStore?.currencies.isEmpty == false else { return }
         
-        SupportedCurrenciesWorker().execute { [weak self] result in
-            switch result {
-            case .success(let currencies):
-                ExchangeManager.shared.reload()
-                
-                guard let currencies = currencies,
-                      currencies.count >= 2 else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-                    return
-                }
-                self?.dataStore?.supportedCurrencies = currencies
-                
-                let enabled = self?.dataStore?.currencies.filter { cur in currencies.map { $0.name }.contains(cur.code) }
-                
-                guard let from = enabled?.first,
-                      let to = enabled?.first(where: { $0.code != from.code })
-                else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-                    return
-                }
-                self?.dataStore?.from = .zero(from)
-                self?.dataStore?.to = .zero(to)
-                
-                self?.presenter?.presentData(actionResponse: .init(item: Models.Item(from: self?.dataStore?.from,
-                                                                                     to: self?.dataStore?.to)))
-                self?.setInitialData(getFees: true)
-                
-            case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.supportedCurrencies(error: error)))
-            }
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
+        
+        guard currencies.count >= 2 else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
         }
+        
+        dataStore?.supportedCurrencies = currencies
+        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
+        
+        let fromCurrency: Currency? = dataStore?.fromAmount != nil ? dataStore?.fromAmount?.currency : dataStore?.currencies.first
+        
+        guard let fromCurrency,
+              let toCurrency = dataStore?.currencies.first(where: { $0.code != fromCurrency.code })
+        else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
+        }
+        if dataStore?.fromAmount == nil {
+            dataStore?.fromAmount = .zero(fromCurrency)
+        }
+        dataStore?.toAmount = .zero(toCurrency)
+        
+        presenter?.presentData(actionResponse: .init(item: Models.Item(fromAmount: dataStore?.fromAmount,
+                                                                       toAmount: dataStore?.toAmount)))
+        setInitialData()
     }
     
-    func getCoingeckoExchangeRate(viewAction: ExchangeRateModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {
-        guard let baseCurrency = dataStore?.from?.currency.coinGeckoId,
-              let termCurrency = dataStore?.to?.currency.coinGeckoId else {
+    func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {
+        guard let baseCurrency = dataStore?.fromAmount?.currency.coinGeckoId,
+              let termCurrency = dataStore?.toAmount?.currency.coinGeckoId else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noQuote(from: dataStore?.fromCode, to: dataStore?.toCode)))
             return
         }
@@ -75,15 +68,15 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.dataStore?.fromRate = Decimal(data.first(where: { $0.id == baseCurrency })?.price ?? 0)
                 self?.dataStore?.toRate = Decimal(data.first(where: { $0.id == termCurrency })?.price ?? 0)
                 
-                completion?()
-                
                 guard viewAction.getFees else {
-                    self?.setAmountSuccess()
+                    completion?()
+                    
+                    self?.setPresentAmountData(handleErrors: true)
                     
                     return
                 }
                 
-                self?.getFees(viewAction: .init())
+                self?.prepareFees(viewAction: .init(), completion: completion)
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
@@ -93,40 +86,58 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         }
         
         CoinGeckoClient().load(resource)
-        _ = generateSender()
+    }
+    
+    func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?) {
+        guard let from = dataStore?.fromAmount,
+              let profile = UserManager.shared.profile else {
+            return
+        }
+        
+        generateSender(viewAction: .init(fromAmountCurrency: dataStore?.fromAmount?.currency))
+        
+        getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] error in
+            if let error {
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            } else {
+                self?.setPresentAmountData(handleErrors: true)
+            }
+            
+            completion?()
+        })
     }
     
     func switchPlaces(viewAction: SwapModels.SwitchPlaces.ViewAction) {
-        guard let from = dataStore?.from?.currency,
-              let to = dataStore?.to?.currency else { return }
+        guard let from = dataStore?.fromAmount?.currency,
+              let to = dataStore?.toAmount?.currency else { return }
         
-        dataStore?.from = .zero(to)
-        dataStore?.to = .zero(from)
+        dataStore?.fromAmount = .zero(to)
+        dataStore?.toAmount = .zero(from)
         
-        setInitialData(getFees: true)
+        setInitialData()
     }
     
-    private func setInitialData(getFees: Bool) {
-        dataStore?.values = .init()
+    private func setInitialData() {
         dataStore?.quote = nil
         dataStore?.fromRate = nil
         dataStore?.toRate = nil
-        dataStore?.fromFee = nil
+        dataStore?.fromFeeBasis = nil
+        dataStore?.isMinimumImpactedByWithdrawalShown = false
         
         presenter?.presentError(actionResponse: .init(error: nil))
         
-        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+        getExchangeRate(viewAction: .init(getFees: true), completion: { [weak self] in
             self?.setPresentAmountData(handleErrors: false)
         })
     }
     
-    func setAmount(viewAction: SwapModels.Amounts.ViewAction) {
+    func setAmount(viewAction: AssetModels.Asset.ViewAction) {
         guard let fromRate = dataStore?.fromRate, let toRate = dataStore?.toRate, fromRate > 0, toRate > 0 else {
             return
         }
         
-        guard let fromCurrency = dataStore?.from?.currency,
-              let toCurrency = dataStore?.to?.currency else {
+        guard let fromCurrency = dataStore?.fromAmount?.currency,
+              let toCurrency = dataStore?.toAmount?.currency else {
             presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: L10n.ErrorMessages.noCurrencies)))
             return
         }
@@ -139,104 +150,70 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         let from: Amount
         let to: Amount
         
-        if let fromCryptoAmount = viewAction.fromCryptoAmount,
+        if let fromCryptoAmount = viewAction.fromTokenValue,
            let fromCrypto = ExchangeFormatter.current.number(from: fromCryptoAmount)?.decimalValue {
             from = .init(decimalAmount: fromCrypto, isFiat: false, currency: fromCurrency, exchangeRate: fromRate)
             to = .init(decimalAmount: (fromCrypto - toFee / toFeeRate) * exchangeRate, isFiat: false, currency: toCurrency, exchangeRate: toRate)
             
-        } else if let fromFiatAmount = viewAction.fromFiatAmount,
+        } else if let fromFiatAmount = viewAction.fromFiatValue,
                   let fromFiat = ExchangeFormatter.current.number(from: fromFiatAmount)?.decimalValue {
             from = .init(decimalAmount: fromFiat, isFiat: true, currency: fromCurrency, exchangeRate: fromRate)
             to = .init(decimalAmount: (from.tokenValue - toFee / toFeeRate) * exchangeRate, isFiat: false, currency: toCurrency, exchangeRate: toRate)
             
-        } else if let toCryptoAmount = viewAction.toCryptoAmount,
+        } else if let toCryptoAmount = viewAction.toTokenValue,
                   let toCrypto = ExchangeFormatter.current.number(from: toCryptoAmount)?.decimalValue {
             from = .init(decimalAmount: toCrypto / exchangeRate + toFee / toFeeRate, isFiat: false, currency: fromCurrency, exchangeRate: fromRate)
             to = .init(decimalAmount: toCrypto, isFiat: false, currency: toCurrency, exchangeRate: toRate)
             
-        } else if let toFiatAmount = viewAction.toFiatAmount,
+        } else if let toFiatAmount = viewAction.toFiatValue,
                   let toFiat = ExchangeFormatter.current.number(from: toFiatAmount)?.decimalValue {
             to = .init(decimalAmount: toFiat, isFiat: true, currency: toCurrency, exchangeRate: toRate)
             from = .init(decimalAmount: to.tokenValue / exchangeRate + toFee / toFeeRate, isFiat: false, currency: fromCurrency, exchangeRate: fromRate)
             
         } else {
-            setPresentAmountData(handleErrors: viewAction.handleErrors)
+            setPresentAmountData(handleErrors: true)
             
             return
         }
         
-        dataStore?.values = viewAction
-        dataStore?.values.handleErrors = false
-        dataStore?.from = from
-        dataStore?.to = to
+        dataStore?.fromAmount = from
+        dataStore?.toAmount = to
         
-        setPresentAmountData(handleErrors: viewAction.handleErrors)
+        setPresentAmountData(handleErrors: false)
     }
     
     private func setPresentAmountData(handleErrors: Bool) {
-        presenter?.presentAmount(actionResponse: .init(from: dataStore?.from,
-                                                       to: dataStore?.to,
+        let isNotZero = !(dataStore?.fromAmount?.tokenValue ?? 0).isZero || !(dataStore?.toAmount?.tokenValue ?? 0).isZero
+        
+        presenter?.presentAmount(actionResponse: .init(fromAmount: dataStore?.fromAmount,
+                                                       toAmount: dataStore?.toAmount,
                                                        fromFee: dataStore?.fromFeeAmount,
                                                        toFee: dataStore?.toFeeAmount,
-                                                       baseBalance: dataStore?.from?.currency.state?.balance,
-                                                       minimumValue: dataStore?.quote?.minimumValue,
-                                                       minimumUsd: dataStore?.quote?.minimumUsd,
-                                                       handleErrors: handleErrors))
-    }
-    
-    func getFees(viewAction: Models.Fee.ViewAction) {
-        guard let from = dataStore?.from,
-              let fromAddress = from.currency.wallet?.defaultReceiveAddress,
-              let sender = sender else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
-            return
-        }
-        
-        // Fetching new fees
-        fetchWkFee(for: from,
-                   with: sender,
-                   address: fromAddress) { [weak self] fee in
-            self?.dataStore?.fromFee = fee
-            
-            if self?.dataStore?.fromFee != nil,
-               self?.dataStore?.quote != nil {
-                // All good
-                self?.setAmountSuccess()
-                if self?.dataStore?.quote?.isMinimumImpactedByWithdrawal == true {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.highFees))
-                }
-            } else if self?.dataStore?.quote?.fromFee?.fee != nil,
-                      from.currency.isEthereum {
-                // Not enough ETH for Swap + Fee
-                let value = self?.dataStore?.fromFeeAmount?.tokenValue ?? self?.dataStore?.quote?.fromFee?.fee ?? 0
-                let error = ExchangeErrors.balanceTooLow(balance: value, currency: from.currency.code)
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            } else if self?.dataStore?.quote?.fromFee?.fee != nil {
-                // Not enough ETH for fee
-                let value = self?.dataStore?.from?.tokenValue ?? 0
-                let error = ExchangeErrors.balanceTooLow(balance: value, currency: from.currency.code)
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            }
-        }
+                                                       senderValidationResult: dataStore?.senderValidationResult,
+                                                       fromFeeBasis: dataStore?.fromFeeBasis,
+                                                       fromFeeAmount: dataStore?.fromFeeAmount,
+                                                       fromFeeCurrency: dataStore?.sender?.wallet.feeCurrency,
+                                                       quote: dataStore?.quote,
+                                                       handleErrors: handleErrors && isNotZero))
     }
     
     func assetSelected(viewAction: SwapModels.SelectedAsset.ViewAction) {
-        guard let from = dataStore?.from?.currency,
-              let to = dataStore?.to?.currency else { return }
+        guard let from = dataStore?.fromAmount?.currency,
+              let to = dataStore?.toAmount?.currency else { return }
         
         if let asset = viewAction.from,
            let from = dataStore?.currencies.first(where: { $0.code == asset }) {
-            dataStore?.from = .zero(from)
-            dataStore?.to = .zero(to)
+            dataStore?.fromAmount = .zero(from)
+            dataStore?.toAmount = .zero(to)
         }
         
         if let asset = viewAction.to,
            let to = dataStore?.currencies.first(where: { $0.code == asset }) {
-            dataStore?.to = .zero(to)
-            dataStore?.from = .zero(from)
+            dataStore?.toAmount = .zero(to)
+            dataStore?.fromAmount = .zero(from)
         }
         
-        setInitialData(getFees: true)
+        setInitialData()
     }
     
     func selectAsset(viewAction: SwapModels.Assets.ViewAction) {
@@ -244,58 +221,61 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         var to: [Currency]?
         
         if viewAction.to == true {
-            to = dataStore?.currencies.filter { $0.code != dataStore?.from?.currency.code }
+            to = dataStore?.currencies.filter { $0.code != dataStore?.fromAmount?.currency.code }
         } else {
-            from = dataStore?.currencies.filter { $0.code != dataStore?.to?.currency.code }
+            from = dataStore?.currencies.filter { $0.code != dataStore?.toAmount?.currency.code }
         }
         
         presenter?.presentSelectAsset(actionResponse: .init(from: from, to: to))
     }
     
     func showConfirmation(viewAction: SwapModels.ShowConfirmDialog.ViewAction) {
-        presenter?.presentConfirmation(actionResponse: .init(from: dataStore?.from,
-                                                             to: dataStore?.to,
+        presenter?.presentConfirmation(actionResponse: .init(fromAmount: dataStore?.fromAmount,
+                                                             toAmount: dataStore?.toAmount,
                                                              quote: dataStore?.quote,
                                                              fromFee: dataStore?.fromFeeAmount,
                                                              toFee: dataStore?.toFeeAmount))
     }
     
     func confirm(viewAction: SwapModels.Confirm.ViewAction) {
-        guard let currency = dataStore?.currencies.first(where: { $0.code == dataStore?.to?.currency.code }),
+        guard let currency = dataStore?.currencies.first(where: { $0.code == dataStore?.toAmount?.currency.code }),
               let address = dataStore?.coreSystem?.wallet(for: currency)?.receiveAddress,
-              let from = dataStore?.from?.tokenValue,
-              let to = dataStore?.to?.tokenValue else { return }
+              let from = dataStore?.fromAmount?.tokenValue,
+              let to = dataStore?.toAmount?.tokenValue else { return }
         
-        let formatter = ExchangeFormatter.crypto
+        let formatter = ExchangeFormatter.current
         formatter.locale = Locale(identifier: Constant.usLocaleCode)
         formatter.usesGroupingSeparator = false
         
         let fromTokenValue = formatter.string(for: from) ?? ""
         let toTokenValue = formatter.string(for: to) ?? ""
         
-        let data = SwapRequestData(quoteId: dataStore?.quote?.quoteId,
-                                   depositQuantity: fromTokenValue,
-                                   withdrawalQuantity: toTokenValue,
-                                   destination: address)
+        let data = ExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
+                                       depositQuantity: fromTokenValue,
+                                       withdrawalQuantity: toTokenValue,
+                                       destination: address)
         
-        // We need to make sure the swap from amount is still less than the balance
-        if let balance = sender?.wallet.currency.state?.balance,
-           let minimumValue = dataStore?.quote?.minimumValue,
-           let minimumUsd = dataStore?.quote?.minimumUsd,
-           let amount = dataStore?.from,
-           let fee = dataStore?.fromFeeAmount {
-            if (amount + fee) > balance || amount.tokenValue < minimumValue || amount.fiatValue < minimumUsd {
-                let error = ExchangeErrors.balanceTooLow(balance: from, currency: dataStore?.from?.currency.code ?? "")
-                self.presenter?.presentError(actionResponse: .init(error: error))
-                return
-            }
-        }
-        
-        SwapWorker().execute(requestData: data) { [weak self] result in
+        ExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.dataStore?.swap = data
-                self?.createTransaction(from: data)
+                self?.dataStore?.exchange = data
+                self?.createTransaction(viewAction: .init(exchange: self?.dataStore?.exchange,
+                                                          currencies: self?.dataStore?.currencies,
+                                                          fromFeeBasis: self?.dataStore?.fromFeeBasis,
+                                                          fromFeeAmount: self?.dataStore?.fromFeeAmount,
+                                                          fromAmount: self?.dataStore?.fromAmount,
+                                                          toAmountCode: self?.dataStore?.toAmount?.currency.code.uppercased()), completion: { [weak self] error in
+                    if let error {
+                        self?.presenter?.presentError(actionResponse: .init(error: error))
+                    } else {
+                        let from = self?.dataStore?.fromAmount?.currency.code
+                        let to = self?.dataStore?.toAmount?.currency.code
+                        
+                        self?.presenter?.presentConfirm(actionResponse: .init(from: from,
+                                                                              to: to,
+                                                                              exchangeId: self?.dataStore?.exchange?.exchangeId))
+                    }
+                })
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.failed(error: error)))
@@ -307,127 +287,12 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         presenter?.presentAssetInfoPopup(actionResponse: .init())
     }
     
-    // MARK: - Aditional helpers
-    
-    private func setAmountSuccess() {
-        var model: Models.Amounts.ViewAction = dataStore?.values ?? .init()
-        model.handleErrors = true
-        setAmount(viewAction: model)
+    func showAssetSelectionMessage(viewAction: SwapModels.AssetSelectionMessage.ViewAction) {
+        presenter?.presentAssetSelectionMessage(actionResponse: .init(from: dataStore?.fromAmount?.currency,
+                                                                      to: dataStore?.toAmount?.currency,
+                                                                      selectedDisabledAsset: viewAction.selectedDisabledAsset))
     }
     
-    private func generateSender() -> Sender? {
-        guard let fromCurrency = dataStore?.from?.currency,
-              let wallet = dataStore?.coreSystem?.wallet(for: fromCurrency),
-              let keyStore = dataStore?.keyStore,
-              let kvStore = Backend.kvStore else { return nil }
-        
-        sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
-        
-        sender?.updateNetworkFees()
-        
-        return sender
-    }
+    // MARK: - Additional helpers
     
-    private func createTransaction(from swap: Swap?) {
-        guard let dataStore = dataStore,
-              let currency = dataStore.currencies.first(where: { $0.code == swap?.currency }),
-              let wallet = dataStore.coreSystem?.wallet(for: currency),
-              let kvStore = Backend.kvStore, let keyStore = dataStore.keyStore else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
-            return
-        }
-        
-        guard let destination = swap?.address,
-              let amountValue = swap?.amount,
-              let fee = dataStore.fromFee,
-              let exchangeId = dataStore.swap?.exchangeId
-        else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.noFees))
-            return
-        }
-        
-        let sender = Sender(wallet: wallet, authenticator: keyStore, kvStore: kvStore)
-        let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
-        let transaction = sender.createTransaction(address: destination,
-                                                   amount: amount,
-                                                   feeBasis: fee,
-                                                   comment: nil,
-                                                   exchangeId: exchangeId)
-        
-        var error: FEError?
-        switch transaction {
-        case .ok:
-            sender.sendTransaction(allowBiometrics: false, exchangeId: exchangeId) { [weak self] data in
-                guard let pin: String = try? keychainItem(key: KeychainKey.pin) else {
-                    self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.pinConfirmation))
-                    return
-                }
-                data(pin)
-            } completion: { [weak self] result in
-                defer { sender.reset() }
-                
-                var error: FEError?
-                switch result {
-                case .success:
-                    ExchangeManager.shared.reload()
-                    
-                    let from = self?.dataStore?.from?.currency.code
-                    let to = self?.dataStore?.to?.currency.code
-                    
-                    self?.presenter?.presentConfirm(actionResponse: .init(from: from, to: to, exchangeId: exchangeId))
-                    
-                case .creationError(let message):
-                    error = GeneralError(errorMessage: message)
-                    
-                case .insufficientGas:
-                    error = ExchangeErrors.networkFee
-                    
-                case .publishFailure(let code, let message):
-                    error = GeneralError(errorMessage: "Error \(code): \(message)")
-                }
-                
-                guard let error = error else { return }
-                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.failed(error: error)))
-            }
-            
-        case .failed:
-            error = GeneralError(errorMessage: "Unknown error")
-            
-        case .invalidAddress:
-            error = GeneralError(errorMessage: "Invalid address")
-            
-        case .ownAddress:
-            error = GeneralError(errorMessage: "Own address")
-            
-        case .insufficientFunds:
-            error = ExchangeErrors.balanceTooLow(balance: dataStore.fromFeeAmount?.tokenValue ?? dataStore.quote?.fromFee?.fee ?? 0, currency: currency.code)
-            
-        case .noExchangeRate:
-            error = ExchangeErrors.noQuote(from: dataStore.from?.currency.code, to: dataStore.to?.currency.code)
-            
-        case .noFees:
-            error = ExchangeErrors.noFees
-            
-        case .outputTooSmall(let amount):
-            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: Constant.usdCurrencyCode, reason: .swap)
-            
-        case .invalidRequest(let string):
-            error = GeneralError(errorMessage: string)
-            
-        case .paymentTooSmall(let amount):
-            error = ExchangeErrors.tooLow(amount: amount.tokenValue, currency: Constant.usdCurrencyCode, reason: .swap)
-            
-        case .usedAddress:
-            error = GeneralError(errorMessage: "Used address")
-            
-        case .identityNotCertified(let string):
-            error = GeneralError(errorMessage: "Not certified \(string)")
-            
-        case .insufficientGas:
-            error = ExchangeErrors.networkFee
-        }
-        
-        guard let error = error else { return }
-        presenter?.presentError(actionResponse: .init(error: error))
-    }
 }

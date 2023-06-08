@@ -13,12 +13,12 @@ import UIKit
 /// Representation of a transaction
 protocol TxViewModel: Hashable {
     var tx: Transaction? { get }
-    var swap: SwapDetail? { get }
+    var exchange: ExchangeDetail? { get }
     var currency: Currency? { get }
     var blockHeight: String { get }
     var longTimestamp: String { get }
     var status: TransactionStatus { get }
-    var transactionType: TransactionType { get }
+    var exchangeType: ExchangeType { get }
     var direction: TransferDirection { get }
     var displayAddress: String { get }
     var comment: String? { get }
@@ -31,45 +31,54 @@ extension TxViewModel {
     var currency: Currency? {
         if let tx = tx {
             return tx.currency
-        } else if let swap = swap {
-            return Store.state.currencies.first(where: { $0.code.lowercased() == swap.source.currency.lowercased() })
+        } else if let exchange = exchange {
+            return Store.state.currencies.first(where: { $0.code.lowercased() == exchange.source.currency.lowercased() })
         } else {
             return nil
         }
     }
     
-    var swapSourceCurrency: Currency? {
-        let sourceCurrency = swap?.source.currency.lowercased() ?? tx?.swapSource?.currency.lowercased()
+    var exchangeSourceCurrency: Currency? {
+        let sourceCurrency = exchange?.source.currency.lowercased() ?? tx?.exchangeSource?.currency.lowercased()
         return Store.state.currencies.first(where: { $0.code.lowercased() == sourceCurrency })
     }
     
-    var swapDestinationCurrency: Currency? {
-        let destinationCurrency = swap?.destination.currency.lowercased() ?? tx?.swapDestination?.currency.lowercased()
+    var exchangeDestinationCurrency: Currency? {
+        let destinationCurrency = exchange?.destination?.currency.lowercased() ?? tx?.exchangeDestination?.currency.lowercased()
         return Store.state.currencies.first(where: { $0.code.lowercased() == destinationCurrency })
+    }
+    
+    var transactionId: String {
+        guard let tx = tx,
+              let currency = currency
+        else { return "" }
+        
+        return currency.isEthereumCompatible ? tx.hash : tx.hash.removing(prefix: "0x")
     }
     
     var status: TransactionStatus {
         if let tx = tx {
             return tx.status
-        } else if let swap = swap {
-            return swap.status
+        } else if let exchange = exchange {
+            return exchange.status
         }
         return .invalid
     }
     
-    var transactionType: TransactionType {
+    var exchangeType: ExchangeType {
         if let tx = tx {
-            return tx.transactionType
-        } else if let swap = swap {
-            return swap.type
+            return tx.exchangeType
+        } else if let exchange = exchange {
+            return exchange.type
         }
-        return .base
+        return .unknown
     }
+    
     var direction: TransferDirection {
         if let tx = tx {
             return tx.direction
-        } else if let swap = swap {
-            if swap.source.currency.lowercased() == currency?.code.lowercased() {
+        } else if let exchange = exchange {
+            if exchange.source.currency.lowercased() == currency?.code.lowercased() {
                 return .sent
             } else {
                 return .received
@@ -89,14 +98,14 @@ extension TxViewModel {
             }
             
             return tx.fromAddress
-        } else if let swap = swap {
+        } else if let exchange = exchange {
             let address: String?
             switch direction {
             case .sent:
-                address = swap.source.transactionId
+                address = exchange.source.transactionId
                 
             case .received:
-                address = swap.destination.transactionId
+                address = exchange.destination?.transactionId ?? ""
                 
             default:
                 address = ""
@@ -120,8 +129,8 @@ extension TxViewModel {
         if let tx = tx,
            tx.timestamp > 0 {
             time = tx.timestamp
-        } else if let swap = swap {
-            time = Double(swap.timestamp) / 1000
+        } else if let exchange = exchange {
+            time = Double(exchange.timestamp) / 1000
         } else {
             time = nil
         }
@@ -154,14 +163,14 @@ extension TxViewModel {
     }
     
     var icon: UIImage? {
-        return iconDecider(transactionType: tx?.transactionType ?? transactionType,
+        return iconDecider(exchangeType: tx?.exchangeType ?? exchangeType,
                            status: tx?.status ?? status,
                            direction: tx?.direction ?? direction)
     }
     
-    private func iconDecider(transactionType: TransactionType, status: TransactionStatus, direction: TransferDirection) -> UIImage? {
-        switch transactionType {
-        case .buy, .buyAch, .sell:
+    private func iconDecider(exchangeType: ExchangeType, status: TransactionStatus, direction: TransferDirection) -> UIImage? {
+        switch exchangeType {
+        case .buyCard, .buyAch, .sell, .instantAch:
             switch status {
             case .confirmed, .complete, .manuallySettled, .pending:
                 return direction == .received ? Asset.receive.image : Asset.send.image
@@ -171,7 +180,7 @@ extension TxViewModel {
                 
             }
             
-        case .base:
+        case .unknown:
             if direction == .received || direction == .recovered {
                 return Asset.receive.image
                 
@@ -182,7 +191,7 @@ extension TxViewModel {
             
         case .swap:
             return Asset.exchange.image
-        
+            
         }
         
         return nil

@@ -18,7 +18,15 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     override var isModalDismissableEnabled: Bool { return isModalDismissable }
     var isModalDismissable = true
     
+    var didDismiss: ((Bool) -> Void)?
+    
     // MARK: - Overrides
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        didDismiss?(false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,32 +95,37 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         }
         
         cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders]))
-            
-            view.callbacks = [
-                resendCodeTapped,
-                changeEmailTapped
-            ]
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: .horizontal))
         }
         
         return cell
     }
 
     // MARK: - User Interaction
+    
     override func textFieldDidFinish(for indexPath: IndexPath, with text: String?) {
         interactor?.validate(viewAction: .init(code: text))
         
         super.textFieldDidFinish(for: indexPath, with: text)
     }
     
-    private func resendCodeTapped() {
+    func resendCodeTapped() {
         interactor?.resend(viewAction: .init())
     }
     
-    private func changeEmailTapped() {
+    func changeEmailTapped() {
         coordinator?.showChangeEmail()
     }
-
+    
+    func enterBackupCode() {
+        guard let confirmationType = dataStore?.confirmationType else { return }
+        
+        dataStore?.confirmationType = .twoStepAppBackupCode(confirmationType)
+        
+        prepareData()
+    }
+    
     // MARK: - RegistrationConfirmationResponseDisplay
     
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
@@ -120,38 +133,38 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
         
         coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
             guard let self = self else { return }
+            
             switch self.dataStore?.confirmationType {
+            case .twoStepEmailLogin, .twoStepAppLogin, .twoStepAppBackupCode, .twoStepEmailResetPassword,
+                    .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepEmailSendFunds,
+                    .twoStepEmailBuy, .twoStepAppBuy, .twoStepAppRequired, .twoStepEmailRequired:
+                self.didDismiss?(true)
+                
+                self.coordinator?.dismissFlow()
+                
             case .account:
                 self.coordinator?.showVerifyPhoneNumber()
                 
-            case .acountTwoStepEmailSettings, .twoStepEmail:
+            case .twoStepAccountEmailSettings, .twoStepEmail:
                 self.coordinator?.popToRoot(completion: { [weak self] in
                     self?.coordinator?.showToastMessage(model: InfoViewModel(description: .text(L10n.TwoStep.Success.message),
                                                                              dismissType: .auto),
                                                         configuration: Presets.InfoView.warning)
                 })
                 
-            case .acountTwoStepAppSettings:
-                self.coordinator?.showAuthenticatorApp()
+            case .twoStepAccountAppSettings:
+                self.coordinator?.showAuthenticatorApp(setTwoStepAppModel: self.dataStore?.setTwoStepAppModel)
                 
             case .twoStepApp:
                 self.coordinator?.showBackupCodes()
-                
-            case .disable:
+            
+            case .twoStepDisable:
                 self.coordinator?.popToRoot()
                 
             default:
                 break
             }
         })
-    }
-    
-    func displayError(responseDisplay: RegistrationConfirmationModels.Error.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.input.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CodeInputView>
-        else { return }
-        
-        cell.wrappedView.showErrorMessage()
     }
     
     // MARK: - Additional Helpers

@@ -10,7 +10,7 @@
 
 import Foundation
 
-enum QuoteType {
+enum QuoteType: Equatable {
     case swap
     case sell
     case buy(PaymentCard.PaymentType?)
@@ -38,12 +38,16 @@ struct QuoteRequestData: RequestModelData {
     var from: String?
     var to: String?
     var type: QuoteType = .swap
+    var accountId: String?
+    var secondFactorCode: String?
+    var secondFactorBackup: String?
     
     func getParameters() -> [String: Any] {
         let params = [
             "from": from,
             "to": to,
-            "type": type.value
+            "type": type.value,
+            "account_id": accountId
         ]
         return params.compactMapValues { $0 }
     }
@@ -69,6 +73,7 @@ struct QuoteModelResponse: ModelResponse {
     struct AchFee: Codable {
         var achFeeFixedUsd: Decimal?
         var achFeePercentage: Decimal?
+        var achSellFeePercentage: Decimal?
     }
     
     var fromFeeCurrency: Fee?
@@ -78,6 +83,8 @@ struct QuoteModelResponse: ModelResponse {
     var buyFees: Decimal?
     var achFees: AchFee?
     var isMinimumImpactedByWithdrawal: Bool?
+    var instantAch: InstantAchQuote?
+    var type: String?
 }
 
 struct Quote {
@@ -96,6 +103,13 @@ struct Quote {
     var buyFee: Decimal?
     var buyFeeUsd: Decimal?
     var isMinimumImpactedByWithdrawal: Bool?
+    var instantAch: InstantAchQuote?
+}
+
+struct InstantAchQuote: Codable {
+    var limitInToCurrency: Decimal?
+    var limitUsd: Decimal?
+    var feePercentage: Decimal?
 }
 
 struct EstimateFee: Model {
@@ -131,9 +145,10 @@ class QuoteMapper: ModelMapper<QuoteModelResponse, Quote> {
                      toFeeRate: response.toFeeCurrency?.rate,
                      fromFee: fromFee,
                      toFee: toFee,
-                     buyFee: response.buyFees ?? response.achFees?.achFeePercentage,
+                     buyFee: response.buyFees ?? (response.type == QuoteType.sell.value ? response.achFees?.achSellFeePercentage : response.achFees?.achFeePercentage),
                      buyFeeUsd: response.achFees?.achFeeFixedUsd,
-                     isMinimumImpactedByWithdrawal: response.isMinimumImpactedByWithdrawal)
+                     isMinimumImpactedByWithdrawal: response.isMinimumImpactedByWithdrawal,
+                     instantAch: response.instantAch)
     }
 }
 
@@ -141,9 +156,22 @@ class QuoteWorker: BaseApiWorker<QuoteMapper> {
     override func getUrl() -> String {
         guard let urlParams = (requestData as? QuoteRequestData),
               let from = urlParams.from,
-              let to = urlParams.to
-        else { return "" }
-        let type = urlParams.type.value
-        return APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, type)
+              let to = urlParams.to else { return "" }
+        
+        var url: String
+        
+        if let code = urlParams.secondFactorCode {
+            url = APIURLHandler.getUrl(ExchangeEndpoints.quoteSecondFactorCode, parameters: from, to, urlParams.type.value, code)
+        } else if let code = urlParams.secondFactorBackup {
+            url = APIURLHandler.getUrl(ExchangeEndpoints.quoteSecondFactorBackup, parameters: from, to, urlParams.type.value, code)
+        } else {
+            url = APIURLHandler.getUrl(ExchangeEndpoints.quote, parameters: from, to, urlParams.type.value)
+        }
+        
+        if let accountId = urlParams.accountId {
+            url.append(String(format: "&account_id=%@", accountId))
+        }
+        
+        return url
     }
 }

@@ -18,7 +18,9 @@ class UserManager: NSObject {
     var error: Error?
     var twoStepSettings: TwoStepSettings?
     
-    func refresh(completion: ((Result<Profile?, Error>?) -> Void)? = nil) {
+    func refresh(secondFactorCode: String? = nil,
+                 secondFactorBackup: String? = nil,
+                 completion: ((Result<Profile?, Error>?) -> Void)? = nil) {
         let group = DispatchGroup()
 
         group.enter()
@@ -27,15 +29,18 @@ class UserManager: NSObject {
             case .success(let data):
                 self?.twoStepSettings = data
                 
+                Store.trigger(name: .didSetTwoStep)
+                
             default:
-                break
+                self?.twoStepSettings = nil
             }
             
             group.leave()
         }
         
         group.enter()
-        ProfileWorker().execute { [weak self] result in
+        ProfileWorker().execute(requestData: ProfileRequestData(secondFactorCode: secondFactorCode,
+                                                                secondFactorBackup: secondFactorBackup)) { [weak self] result in
             self?.profileResult = result
             
             switch result {
@@ -54,10 +59,17 @@ class UserManager: NSObject {
                 Store.trigger(name: .didCreateAccount)
                 
             case .failure(let error):
+                UserDefaults.email = nil
+                
                 self?.error = error
                 self?.profile = nil
             }
             
+            group.leave()
+        }
+        
+        group.enter()
+        SupportedCurrenciesManager.shared.getSupportedCurrencies {
             group.leave()
         }
         
@@ -72,10 +84,12 @@ class UserManager: NSObject {
         }
     }
     
-    func setUserCredentials(email: String, sessionToken: String, sessionTokenHash: String) {
+    func setUserCredentials(email: String?, sessionToken: String?, sessionTokenHash: String?) {
         UserDefaults.email = email
         UserDefaults.sessionToken = sessionToken
         UserDefaults.sessionTokenHash = sessionTokenHash
+        
+        Store.trigger(name: .refreshToken)
     }
     
     func resetUserCredentials() {
@@ -88,5 +102,12 @@ class UserManager: NSObject {
         UserManager.shared.profile = nil
         UserManager.shared.profileResult = nil
         UserManager.shared.error = nil
+        
+        Store.trigger(name: .refreshToken)
+        
+        PromptFactory.shared.presentedPopups.removeAll()
+        for type in PromptType.defaultTypes {
+            PromptPresenter.shared.hidePrompt(type)
+        }
     }
 }

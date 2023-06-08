@@ -47,5 +47,5 @@ class DeleteProfileInfoInteractor: NSObject, Interactor, DeleteProfileInfoViewAc
         presenter?.presentToggleTickbox(actionResponse: .init(value: viewAction.value))
     }
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
 }

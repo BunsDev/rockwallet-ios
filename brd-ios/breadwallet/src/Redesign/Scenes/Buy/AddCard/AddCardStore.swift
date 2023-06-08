@@ -13,7 +13,6 @@ import UIKit
 class AddCardStore: NSObject, BaseDataStore, AddCardDataStore {
     // MARK: - AddCardDataStore
     
-    var itemId: String?
     var cardNumber: String?
     var cardExpDateString: String?
     var cardExpDateMonth: String?
@@ -22,7 +21,7 @@ class AddCardStore: NSObject, BaseDataStore, AddCardDataStore {
     var months: [String] = []
     var years: [String] = []
     
-    // MARK: - Aditional helpers
+    // MARK: - Additional helpers
     var isValid: Bool {
         return FieldValidator.validate(fields: [cardExpDateYear,
                                                 cardExpDateMonth,

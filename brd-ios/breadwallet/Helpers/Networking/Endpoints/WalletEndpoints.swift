@@ -13,7 +13,11 @@ import Foundation
 enum WalletEndpoints: String, URLType {
     static var baseURL: String = "https://"  + E.apiUrl + "blocksatoshi/wallet/auth/%@"
     
-    case profile
+    case profile = "v3/profile"
+    case profileSecondFactorCode = "v3/profile?second_factor_code=%@"
+    case profileSecondFactorBackup = "v3/profile?second_factor_backup=%@"
+    case profileMain = "profile"
+    
     case register
     case login
     case resend = "resend-email"

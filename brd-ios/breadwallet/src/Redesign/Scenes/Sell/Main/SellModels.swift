@@ -7,32 +7,77 @@
 //
 
 import UIKit
+import WalletKit
 
 enum SellModels {
-    typealias Item = Currency
-    
-    struct Amounts {
-        struct ViewAction {
-            var from: String?
-            var to: String?
+    struct Limits {
+        struct ActionResponse {
+            var min: Decimal?
+            var max: Decimal?
         }
         
-        struct ActionResponse {
-            var from: Amount?
-            var continueEnabled: Bool = false
-        }
+        typealias ResponseDisplay = LabelViewModel
     }
     
-    struct PaymentMethod {
+    struct OrderPreview {
         struct ViewAction {}
         
         struct ActionResponse {
-            var from: Amount?
+            var availablePayments: [PaymentCard.PaymentType]?
         }
         
         struct ResponseDisplay {
-            var continueEnabled = false
-            var amounts: MainSwapViewModel
+            var availablePayments: [PaymentCard.PaymentType]?
+        }
+    }
+    
+    struct AssetSelector {
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {
+            let title: String
+        }
+    }
+    
+    struct AchSuccess {
+        struct ViewAction {}
+        
+        struct ActionResponse {
+            var isRelinking: Bool?
+        }
+        
+        struct ResponseDisplay {}
+    }
+    
+    struct LimitsInfo {
+        struct ViewAction {}
+        struct ActionResponse {
+            var paymentMethod: PaymentCard.PaymentType?
+        }
+        struct ResponseDisplay {
+            var config: WrapperPopupConfiguration<LimitsPopupConfiguration>
+            var viewModel: WrapperPopupViewModel<LimitsPopupViewModel>
+        }
+    }
+    
+    struct InstantAchPopup {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {
+            var model: PopupViewModel
+        }
+    }
+    
+    struct AssetSelectionMessage {
+        struct ViewAction {}
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {
+            var model: InfoViewModel?
+            var config: InfoViewConfiguration?
         }
     }
 }

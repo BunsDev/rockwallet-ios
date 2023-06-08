@@ -12,17 +12,17 @@ import Foundation
 import WalletKit
 
 protocol FeeFetchable {
-    func fetchWkFee(for amount: Amount,
-                    with sender: Sender,
-                    address: String,
-                    completion: @escaping ((TransferFeeBasis?) -> Void))
+    func fetchWalletKitFee(for amount: Amount,
+                           with sender: Sender,
+                           address: String,
+                           completion: @escaping ((TransferFeeBasis?) -> Void))
 }
 
 extension FeeFetchable {
-    func fetchWkFee(for amount: Amount,
-                    with sender: Sender,
-                    address: String,
-                    completion: @escaping ((TransferFeeBasis?) -> Void)) {
+    func fetchWalletKitFee(for amount: Amount,
+                           with sender: Sender,
+                           address: String,
+                           completion: @escaping ((TransferFeeBasis?) -> Void)) {
         sender.estimateFee(address: address,
                            amount: amount,
                            tier: .priority,
@@ -31,7 +31,9 @@ extension FeeFetchable {
             case .success(let fee):
                 completion(fee)
                 
-            case .failure:
+            case .failure(let error):
+                debugPrint(error)
+                
                 completion(nil)
             }
         }

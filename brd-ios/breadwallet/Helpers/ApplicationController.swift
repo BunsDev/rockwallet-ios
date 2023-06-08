@@ -65,6 +65,7 @@ class ApplicationController: Subscriber {
 
     var didTapDeleteAccount: (() -> Void)?
     var didTapTwoStepAuth: (() -> Void)?
+    var didTapPaymail: ((Bool) -> Void)?
     
     // MARK: - Init/Launch
 
@@ -128,14 +129,13 @@ class ApplicationController: Subscriber {
                                         window: window,
                                         alertPresenter: alertPresenter,
                                         deleteAccountCallback: didTapDeleteAccount,
-                                        twoStepAuthCallback: didTapTwoStepAuth)
+                                        twoStepAuthCallback: didTapTwoStepAuth,
+                                        paymailCallback: didTapPaymail)
         appRatingManager.start()
         setupSubscribers()
         
-        ExchangeCurrencyHelper.revertIfNeeded(coordinator: coordinator, completion: { [weak self] in
-            self?.initializeAssets(completionHandler: { [weak self] in
-                self?.decideFlow()
-            })
+        initializeAssets(completionHandler: { [weak self] in
+            self?.decideFlow()
         })
     }
     
@@ -173,6 +173,15 @@ class ApplicationController: Subscriber {
             
             self.setupRootViewController()
             self.decideFlow()
+        }
+        
+        Store.subscribe(self, name: .refreshToken) { [weak self] _ in
+            guard let account = self?.coreSystem.account else { return }
+            
+            Backend.disconnectWallet()
+            self?.coreSystem.shutdown(completion: {
+                self?.setupSystem(with: account)
+            })
         }
     }
     
@@ -229,7 +238,8 @@ class ApplicationController: Subscriber {
                                                          window: self.window,
                                                          alertPresenter: self.alertPresenter,
                                                          deleteAccountCallback: self.didTapDeleteAccount,
-                                                         twoStepAuthCallback: self.didTapTwoStepAuth)
+                                                         twoStepAuthCallback: self.didTapTwoStepAuth,
+                                                         paymailCallback: self.didTapPaymail)
                     self.coreSystem.connect()
                     
                     self.wipeWalletIfNeeded()
@@ -292,7 +302,6 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
                 self.triggerDeeplinkHandling()
             }
         }
@@ -411,13 +420,13 @@ class ApplicationController: Subscriber {
     }
     
     private func triggerDeeplinkHandling() {
-        guard UserManager.shared.profile != nil else {
-            coordinator?.handleUserAccount()
-            return
+        if DynamicLinksManager.shared.shouldHandleDynamicLink {
+            Store.trigger(name: .handleDeeplink)
+        } else if UserManager.shared.profile == nil {
+            DispatchQueue.main.async { [weak self] in
+                self?.coordinator?.handleUserAccount()
+            }
         }
-        
-        guard DynamicLinksManager.shared.shouldHandleDynamicLink else { return }
-        Store.trigger(name: .handleDeeplink)
     }
     
     private func addHomeScreenHandlers(homeScreen: HomeScreenViewController,
@@ -428,13 +437,12 @@ class ApplicationController: Subscriber {
             assetDetailsViewController.coordinator = self.coordinator
             assetDetailsViewController.keyStore = self.keyStore
             assetDetailsViewController.coreSystem = self.coreSystem
+            assetDetailsViewController.paymailCallback = self.didTapPaymail
             navigationController.pushViewController(assetDetailsViewController, animated: true)
         }
         
         homeScreen.didTapBuy = { [weak self] type in
             guard let self else { return }
-            
-            self.homeScreenViewController?.isInExchangeFlow = true
             
             self.coordinator?.showBuy(type: type,
                                       coreSystem: self.coreSystem,
@@ -442,25 +450,18 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapSell = { [weak self] in
-            guard let self = self,
-                  let token = Store.state.currencies.first(where: { $0.code == Constant.USDT }) else {
+            guard let self = self else {
                 return
             }
             
-            self.homeScreenViewController?.isInExchangeFlow = true
-            
-            self.coordinator?.showSell(for: token,
-                                       coreSystem: self.coreSystem,
+            self.coordinator?.showSell(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         
         homeScreen.didTapTrade = { [weak self] in
             guard let self else { return }
             
-            self.homeScreenViewController?.isInExchangeFlow = true
-            
-            self.coordinator?.showSwap(currencies: Store.state.currencies,
-                                       coreSystem: self.coreSystem,
+            self.coordinator?.showSwap(coreSystem: self.coreSystem,
                                        keyStore: self.keyStore)
         }
         
@@ -471,7 +472,7 @@ class ApplicationController: Subscriber {
         homeScreen.didTapProfileFromPrompt = { [unowned self] in
             switch UserManager.shared.profileResult {
             case .success:
-                coordinator?.showAccountVerification()
+                coordinator?.showKYCLevelOne(isModal: true)
                 
             default:
                 break
@@ -479,7 +480,13 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapCreateAccountFromPrompt = { [unowned self] in
-            self.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
+            coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignUp)
+        }
+        
+        homeScreen.didTapTwoStepFromPrompt = { [unowned self] in
+            coordinator?.showTwoStepAuthentication(isModal: true,
+                                                   coordinator: coordinator,
+                                                   keyStore: keyStore)
         }
         
         homeScreen.didTapLimitsAuthenticationFromPrompt = { [unowned self] in
@@ -499,8 +506,10 @@ class ApplicationController: Subscriber {
             }
         }
         
-        homeScreen.didTapMenu = { [unowned self] in
-            self.modalPresenter?.presentMenu()
+        homeScreen.didTapMenu = { [weak self] in
+            self?.modalPresenter?.presentMenu(didDismiss: {
+                homeScreen.viewDidAppear(true)
+            })
         }
         
         homeScreen.didTapManageWallets = { [unowned self] in
@@ -511,11 +520,19 @@ class ApplicationController: Subscriber {
         }
         
         didTapDeleteAccount = { [unowned self] in
-            coordinator?.showDeleteProfileInfo(keyMaster: keyStore)
+            coordinator?.showDeleteProfileInfo(from: modalPresenter?.topViewController ?? homeScreenViewController?.navigationController,
+                                               coordinator: coordinator,
+                                               keyStore: keyStore)
         }
         
         didTapTwoStepAuth = { [unowned self] in
-            coordinator?.showTwoStepAuthentication(keyStore: keyStore)
+            coordinator?.showTwoStepAuthentication(from: modalPresenter?.topViewController ?? homeScreenViewController,
+                                                   coordinator: coordinator,
+                                                   keyStore: keyStore)
+        }
+        
+        didTapPaymail = { [unowned self] isPaymailFromAssets in
+            coordinator?.showPaymailAddress(isPaymailFromAssets: isPaymailFromAssets)
         }
     }
     
