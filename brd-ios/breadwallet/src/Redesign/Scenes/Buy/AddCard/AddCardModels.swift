@@ -17,7 +17,7 @@ enum AddCardModels {
     enum Section: Sectionable {
         case notificationPrompt
         case cardDetails
-        case confirm
+        case button
         
         var header: AccessoryType? { nil }
         var footer: AccessoryType? { nil }

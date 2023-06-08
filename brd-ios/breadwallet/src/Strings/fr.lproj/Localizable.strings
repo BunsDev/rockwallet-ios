@@ -860,6 +860,8 @@
 
 "Buy.Ach.WalletDisabled" = "%@ doit d'abord être activé dans votre portefeuille. Veuillez activer %@, ou en sélectionnant \"Gérer les actifs\" sur l'écran d'accueil.";
 
+"Buy.Ach.WalletDisabled.android" = "%@ needs to be enabled in your wallet first. You can enable it %@, or by selecting %@ on the home screen.";
+
 "Buy.Ach.WalletDisabled.Link" = "ici";
 
 "Buy.Ach.WalletDisabled.ManageAssets" = "Gérer les actifs";
@@ -2521,6 +2523,8 @@
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "Vous devez avoir au moins %@ dans votre portefeuille pour transférer ce type de jeton. Souhaitez-vous être redirigé vers votre portefeuille Ethereum maintenant ?";
 
+"Send.insufficientGasMessage.android" = "You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.";
+
 /* Your balance is insufficient to complete this action. */
 "Send.insufficientGasTitle" = "Solde de %@ insuffisant";
 
@@ -2576,6 +2580,8 @@
 "Send.payId_toLabel" = "PayID";
 
 "Send.placeholderText" = "Enter wallet address or Paymail";
+
+"Send.placeholderTextWithoutPaymail" = "Enter wallet address";
 
 /* Could not publish transaction alert title */
 "Send.publishTransactionError" = "Impossible de publier la transaction.";
@@ -2960,8 +2966,6 @@
 "Swap.youReceive" = "Vous recevez";
 
 "Swap.youSend" = "Vous envoyez";
-
-"Symbols.lock" = "\u{1F512}";
 
 /* Syncing view done syncing state header text */
 "SyncingView.activity" = "Activité";
@@ -3511,6 +3515,8 @@
 
 "UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
 
+"UpdatePin.Alert.body.android" = "A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.";
+
 "UpdatePin.Alert.title" = "What is a PIN?";
 
 "UpdatePin.bottomSheetMsg" = "PIN updated successfully";
@@ -3628,6 +3634,8 @@
 "VerifyPhoneNumber.sms.changeNumber" = "Change my phone number";
 
 "VerifyPhoneNumber.sms.instructions" = "Enter the security code we’ve sent to";
+
+"VerifyPhoneNumber.sms.instructions.android" = "Enter the security code we’ve sent to:\n%@";
 
 "VerifyPhoneNumber.sms.title" = "We’ve sent you an SMS";
 
