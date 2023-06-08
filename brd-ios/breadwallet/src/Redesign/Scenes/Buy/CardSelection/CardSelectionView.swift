@@ -179,8 +179,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
     }
     
     @objc private func cardSelectorTapped() {
-        // Payment method shouldn't be tappable if there is an error with it
-        guard viewModel?.errorMessage == nil else { return }
         didTapSelectCard?()
     }
     
