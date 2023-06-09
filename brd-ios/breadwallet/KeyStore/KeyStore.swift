@@ -162,6 +162,13 @@ class KeyStore {
         instance = try KeyStore()
         return instance!
     }
+    
+    static func getInstance() -> KeyStore? {
+        if KeyStore.instance != nil {
+            return instance
+        }
+        return nil
+    }
 
     private init() throws {
         // load BIP39 word lists
