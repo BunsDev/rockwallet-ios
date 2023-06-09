@@ -164,10 +164,8 @@ class KeyStore {
     }
     
     static func getInstance() -> KeyStore? {
-        if KeyStore.instance != nil {
-            return instance
-        }
-        return nil
+        guard let instance else { return nil }
+        return instance
     }
 
     private init() throws {

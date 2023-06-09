@@ -62,9 +62,10 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     }
     
     func getXPub(code: String) -> String {
-        var keyStore: KeyStore? = KeyStore.getInstance()
-        
-        if keyStore == nil {
+        var keyStore: KeyStore?
+        if let existingKeyStore = KeyStore.getInstance() {
+            keyStore = existingKeyStore
+        } else {
             do {
                 keyStore = try KeyStore.create()
             } catch { 
