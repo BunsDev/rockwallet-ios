@@ -62,13 +62,17 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     }
     
     func getXPub(code: String) -> String {
-        var keyStore: KeyStore
-        do {
-            keyStore = try KeyStore.create()
-        } catch { 
-            fatalError("error initializing key store")
+        var keyStore: KeyStore?
+        if let existingKeyStore = KeyStore.getInstance() {
+            keyStore = existingKeyStore
+        } else {
+            do {
+                keyStore = try KeyStore.create()
+            } catch { 
+                fatalError("error initializing key store")
+            }
         }
-        let xpub = keyStore.getXPubFromAccount(code: code)
+        let xpub = keyStore?.getXPubFromAccount(code: code) ?? String("")
         return xpub
     }
     
