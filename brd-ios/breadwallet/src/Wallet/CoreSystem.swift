@@ -678,17 +678,10 @@ extension CoreSystem: SystemListener {
                                       metaData: metaData,
                                       units: units,
                                       baseUnit: baseUnit,
-                                      defaultUnit: defaultUnit),
-              let displayOrder = assetCollection.displayOrder(for: currency.metaData) else {
+                                      defaultUnit: defaultUnit) else {
             return
         }
         currencies[coreCurrency.uid] = currency
-        let walletState = WalletState.initial(currency, displayOrder: displayOrder) //.mutate(syncState: .success)
-        let walletStates = [currency.metaData.uid: walletState]
-
-        DispatchQueue.main.async {
-            Store.perform(action: ManageWallets.SetWallets(walletStates))
-        }
         let coreWallet = manager.primaryWallet
         let wallet = Wallet(core: coreWallet,
                             currency: currency,
