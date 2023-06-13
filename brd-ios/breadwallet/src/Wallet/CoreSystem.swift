@@ -638,6 +638,65 @@ class CoreSystem: Subscriber {
 // callbacks execute on CoreSystem.queue
 extension CoreSystem: SystemListener {
     
+    func setManager(code: String, isBIP32: Bool) {
+        var name: String = "Bitcoin"
+        switch isBIP32 {
+        case true:
+            if code == "btc" || code == "BTC" {
+                name = "Bitcoin BIP32"
+            } else if code == "bch" || code == "BCH" {
+                name = "Bitcoin Cash BIP32"
+            } else if code == "bsv" || code == "BSV" {
+                name = "Bitcoin SV BIP32"
+            } else {
+                return
+            }
+        case false:
+            if code == "btc" || code == "BTC" {
+                name = "Bitcoin"
+            } else if code == "bch" || code == "BCH" {
+                name = "Bitcoin Cash"
+            } else if code == "bsv" || code == "BSV" {
+                name = "Bitcoin SV"
+            } else {
+                return
+            }
+        }
+        guard let managers = system?.managers,
+              let manager = managers.filter({ $0.network.name == name }).first else { return }
+
+        let coreCurrency = manager.primaryWallet.currency
+        let network = manager.network
+
+        guard let units = network.unitsFor(currency: coreCurrency),
+              let baseUnit = network.baseUnitFor(currency: coreCurrency),
+              let defaultUnit = network.defaultUnitFor(currency: coreCurrency),
+              let assetCollection = assetCollection,
+              let metaData = assetCollection.allAssets[coreCurrency.uid],
+              let currency = Currency(core: coreCurrency,
+                                      network: network,
+                                      metaData: metaData,
+                                      units: units,
+                                      baseUnit: baseUnit,
+                                      defaultUnit: defaultUnit),
+              let displayOrder = assetCollection.displayOrder(for: currency.metaData) else {
+            return
+        }
+        currencies[coreCurrency.uid] = currency
+        let walletState = WalletState.initial(currency, displayOrder: displayOrder) //.mutate(syncState: .success)
+        let walletStates = [currency.metaData.uid: walletState]
+
+        DispatchQueue.main.async {
+            Store.perform(action: ManageWallets.SetWallets(walletStates))
+        }
+        let coreWallet = manager.primaryWallet
+        let wallet = Wallet(core: coreWallet,
+                            currency: currency,
+                            system: self)
+        wallets[coreWallet.currency.uid] = wallet
+        addWalletState(for: wallet)
+    } // end setManager
+    
     func handleSystemEvent(system: System, event: SystemEvent) {
         print("[SYS] system event: \(event)")
         switch event {
@@ -720,6 +779,14 @@ extension CoreSystem: SystemListener {
             case .complete, .unknown:
                 syncState = .success
                 isComplete = true
+                
+                let balance = manager.primaryWallet.balance.description
+                print("balance: \(manager.primaryWallet.balance)")
+                print("breakpoint")
+                
+                if manager.network.name == "Bitcoin SV BIP32" {
+                    setManager(code: "bsv", isBIP32: true)
+                }
                 
             case .requested: // disconnect/background
                 syncState = .connecting

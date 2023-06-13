@@ -6346,8 +6346,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rockwalletcode/wallet-kit.git";
 			requirement = {
-				kind = exactVersion;
-				version = 5.0.25;
+				kind = revision;
+				revision = 5f4c73183b6bf4325a3563f8f5148d6cc46c3ad7;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
