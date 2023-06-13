@@ -55,11 +55,7 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
                 
                 view.configure(with: config)
                 view.didTapTrailingView = { [weak self] in
-                    if self?.dataStore?.screenType == .paymailSetup {
-                        self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
-                    } else {
-                        self?.interactor?.validate(viewAction: .init(email: E.paymailDomain))
-                    }
+                    self?.interactor?.validate(viewAction: .init(email: E.paymailDomain))
                 }
             }
             
@@ -117,7 +113,9 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                self?.interactor?.copyValue(viewAction: .init(value: self?.dataStore?.paymailAddress))
+                let paymailAddress = self?.dataStore?.paymailAddress
+                self?.interactor?.copyValue(viewAction: .init(value: paymailAddress,
+                                                              message: L10n.PaymailAddress.copyMessage(paymailAddress ?? "")))
             }
         }
         

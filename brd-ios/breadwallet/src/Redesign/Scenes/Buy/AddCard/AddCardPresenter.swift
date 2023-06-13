@@ -26,7 +26,7 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
         let sections: [Models.Section] = [
             .notificationPrompt,
             .cardDetails,
-            .confirm
+            .button
         ]
         
         let addCardNotificationModel = InfoViewModel(description: .text(L10n.Buy.addCardPrompt), dismissType: .persistent)
@@ -48,8 +48,8 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
             .cardDetails: [
                 bankCardInputDetailsViewModel
             ],
-            .confirm: [
-                ButtonViewModel(title: L10n.Button.confirm)
+            .button: [
+                ButtonViewModel(title: L10n.Button.continueAction)
             ]
         ]
         

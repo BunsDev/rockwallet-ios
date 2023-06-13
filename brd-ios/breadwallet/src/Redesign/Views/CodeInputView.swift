@@ -100,6 +100,8 @@ class CodeInputView: FEView<CodeInputConfiguration, CodeInputViewModel>, StateDi
         inputStack.arrangedSubviews.forEach { field in
             (field as? FETextField)?.configure(with: config?.input)
         }
+        
+        hiddenTextField.becomeFirstResponder()
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {

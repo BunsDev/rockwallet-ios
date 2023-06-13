@@ -205,8 +205,8 @@ internal enum L10n {
     internal static let signIn = L10n.tr("Localizable", "Account.SignIn", fallback: "Sign in")
     /// Social Security Number
     internal static let socialSecurityNumber = L10n.tr("Localizable", "Account.SocialSecurityNumber", fallback: "Social Security Number")
-    /// Social Security number*
-    internal static let socialSecurityNumberRequired = L10n.tr("Localizable", "Account.SocialSecurityNumberRequired", fallback: "Social Security number*")
+    /// Social Security Number*
+    internal static let socialSecurityNumberRequired = L10n.tr("Localizable", "Account.SocialSecurityNumberRequired", fallback: "Social Security Number*")
     /// Now let’s start with using your RockWallet.
     internal static let startUsingWallet = L10n.tr("Localizable", "Account.StartUsingWallet", fallback: "Now let’s start with using your RockWallet.")
     /// State title label in select state view
@@ -1029,6 +1029,10 @@ internal enum L10n {
         }
       }
       internal enum WalletDisabled {
+        /// %@ needs to be enabled in your wallet first. You can enable it %@, or by selecting %@ on the home screen.
+        internal static func android(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+          return L10n.tr("Localizable", "Buy.Ach.WalletDisabled.android", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "%@ needs to be enabled in your wallet first. You can enable it %@, or by selecting %@ on the home screen.")
+        }
         /// here
         internal static let link = L10n.tr("Localizable", "Buy.Ach.WalletDisabled.Link", fallback: "here")
         /// Manage assets
@@ -1243,8 +1247,8 @@ internal enum L10n {
     internal static let create = L10n.tr("Localizable", "CreateGift.create", fallback: "Create")
     /// Custom amount ($500 max)
     internal static let customAmountHint = L10n.tr("Localizable", "CreateGift.customAmountHint", fallback: "Custom amount ($500 max)")
-    /// We'll create what's called a
-    internal static let description = L10n.tr("Localizable", "CreateGift.description", fallback: "We'll create what's called a")
+    /// We'll create what's called a "paper wallet" with a qr code and instructions for installing RockWallet that you can email or text to friends and family.
+    internal static let description = L10n.tr("Localizable", "CreateGift.description", fallback: "We'll create what's called a \"paper wallet\" with a qr code and instructions for installing RockWallet that you can email or text to friends and family.")
     /// You must select a gift amount.
     internal static let inputAmountError = L10n.tr("Localizable", "CreateGift.inputAmountError", fallback: "You must select a gift amount.")
     /// You must enter the name of the recipient.
@@ -2426,7 +2430,7 @@ internal enum L10n {
       return L10n.tr("Localizable", "Send.balance", String(describing: p1), fallback: "Balance: %@")
     }
     /// Balance: $4.00 for iOS, the balance can't have a parameter
-    internal static let balanceString = L10n.tr("Localizable", "Send.balanceString", fallback: "Balance: ")
+    internal static let balanceString = L10n.tr("Localizable", "Send.balanceString", fallback: "Balance:")
     /// Camera not allowed message
     internal static let cameraunavailableMessage = L10n.tr("Localizable", "Send.cameraunavailableMessage", fallback: "Go to Settings to allow camera access.")
     /// Camera not allowed alert title
@@ -2519,6 +2523,8 @@ internal enum L10n {
     internal static let payIdToLabel = L10n.tr("Localizable", "Send.payId_toLabel", fallback: "PayString")
     /// Enter wallet address or Paymail
     internal static let placeholderText = L10n.tr("Localizable", "Send.placeholderText", fallback: "Enter wallet address or Paymail")
+    /// Enter wallet address
+    internal static let placeholderTextWithoutPaymail = L10n.tr("Localizable", "Send.placeholderTextWithoutPaymail", fallback: "Enter wallet address")
     /// Could not publish transaction alert title
     internal static let publishTransactionError = L10n.tr("Localizable", "Send.publishTransactionError", fallback: "Your transaction request couldn’t be completed. Please try again.")
     /// Could not load remote request error message
@@ -2528,7 +2534,7 @@ internal enum L10n {
     /// Title for error when send request times out and we are not sure weather it succesfull or not.
     internal static let sendError = L10n.tr("Localizable", "Send.sendError", fallback: "Send Error")
     /// Sending Max: $4.00 for iOS, the balance can't have a parameter
-    internal static let sendingMax = L10n.tr("Localizable", "Send.sendingMax", fallback: "Sending Max: ")
+    internal static let sendingMax = L10n.tr("Localizable", "Send.sendingMax", fallback: "Sending Max:")
     /// Send button label (the action, "press here to send")
     internal static let sendLabel = L10n.tr("Localizable", "Send.sendLabel", fallback: "Send")
     /// Send button label (for special case where the user specified send amount is too high and does not leave a balance to cover fees.)
@@ -2566,6 +2572,12 @@ internal enum L10n {
     internal enum CameraUnavailabeTitle {
       /// Permission required to access camera
       internal static let android = L10n.tr("Localizable", "Send.cameraUnavailabeTitle.android", fallback: "RockWallet is not allowed to access the camera")
+    }
+    internal enum InsufficientGasMessage {
+      /// You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.
+      internal static func android(_ p1: Any, _ p2: Any) -> String {
+        return L10n.tr("Localizable", "Send.insufficientGasMessage.android", String(describing: p1), String(describing: p2), fallback: "You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.")
+      }
     }
   }
   internal enum SendConfirmation {
@@ -2610,7 +2622,7 @@ internal enum L10n {
     /// Face ID spending limit label
     internal static let faceIdLimit = L10n.tr("Localizable", "Settings.faceIdLimit", fallback: "Face ID Spending Limit")
     /// Redeem the funds stored on this private key.
-    internal static let importTitle = L10n.tr("Localizable", "Settings.importTitle", fallback: "Redeem Private Key")
+    internal static let importTitle = L10n.tr("Localizable", "Settings.importTitle", fallback: "Sweep Wallet")
     /// Manage settings section header
     internal static let manage = L10n.tr("Localizable", "Settings.manage", fallback: "Manage")
     /// No log files found error message
@@ -2879,10 +2891,6 @@ internal enum L10n {
       /// Mining network fee:
       internal static let android = L10n.tr("Localizable", "Swap.MiningNetworkFee.android", fallback: "Mining network fee:")
     }
-  }
-  internal enum Symbols {
-    /// u{1F512}
-    internal static let lock = L10n.tr("Localizable", "Symbols.lock", fallback: "u{1F512}")
   }
   internal enum SyncingView {
     /// Syncing view done syncing state header text
@@ -3468,7 +3476,7 @@ internal enum L10n {
     /// Wallet disabled header
     internal static let walletDisabled = L10n.tr("Localizable", "UnlockScreen.walletDisabled", fallback: "Wallet disabled")
     /// Wallet disabled description
-    internal static let walletDisabledDescription = L10n.tr("Localizable", "UnlockScreen.walletDisabledDescription", fallback: "You will need your Recovery Phrases to reset PIN.")
+    internal static let walletDisabledDescription = L10n.tr("Localizable", "UnlockScreen.walletDisabledDescription", fallback: "You will need your Recovery Phrase to reset PIN.")
     /// Wipe wallet prompt
     internal static let wipePrompt = L10n.tr("Localizable", "UnlockScreen.wipePrompt", fallback: "Are you sure you would like to wipe this wallet?")
     internal enum TouchIdInstructions {
@@ -3542,6 +3550,10 @@ internal enum L10n {
       internal static let body = L10n.tr("Localizable", "UpdatePin.Alert.body", fallback: "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.")
       /// What is a PIN?
       internal static let title = L10n.tr("Localizable", "UpdatePin.Alert.title", fallback: "What is a PIN?")
+      internal enum Body {
+        /// A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.
+        internal static let android = L10n.tr("Localizable", "UpdatePin.Alert.body.android", fallback: "A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.")
+      }
     }
   }
   internal enum VerificationCode {
@@ -3582,6 +3594,13 @@ internal enum L10n {
       internal static let instructions = L10n.tr("Localizable", "VerifyPhoneNumber.sms.instructions", fallback: "Enter the security code we’ve sent to")
       /// We’ve sent you an SMS
       internal static let title = L10n.tr("Localizable", "VerifyPhoneNumber.sms.title", fallback: "We’ve sent you an SMS")
+      internal enum Instructions {
+        /// Enter the security code we’ve sent to:
+        /// %@
+        internal static func android(_ p1: Any) -> String {
+          return L10n.tr("Localizable", "VerifyPhoneNumber.sms.instructions.android", String(describing: p1), fallback: "Enter the security code we’ve sent to:\n%@")
+        }
+      }
     }
   }
   internal enum VerifyPin {
@@ -3601,12 +3620,12 @@ internal enum L10n {
     internal static let limitedAssets = L10n.tr("Localizable", "Wallet.LimitedAssets", fallback: "Limited assets")
     /// Limited assets message in add wallets popup
     internal static let limitedAssetsMessage = L10n.tr("Localizable", "Wallet.LimitedAssetsMessage", fallback: "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.")
-    /// 1d
-    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "1d")
+    /// 24h
+    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "24h")
     /// 1m
     internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1m")
-    /// 1w
-    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "1w")
+    /// 7d
+    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "7d")
     /// 1y
     internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1y")
     /// Staking
@@ -3718,7 +3737,7 @@ internal enum L10n {
   }
   internal enum WipeWallet {
     /// Wipe wallet alert message
-    internal static let alertMessage = L10n.tr("Localizable", "WipeWallet.alertMessage", fallback: "Are you sure you want to unlink this wallet from this device?")
+    internal static let alertMessage = L10n.tr("Localizable", "WipeWallet.alertMessage", fallback: "Are you sure you want to wipe this wallet from this device?")
     /// Wipe wallet alert title
     internal static let alertTitle = L10n.tr("Localizable", "WipeWallet.alertTitle", fallback: "Unlink Wallet?")
     /// Failed wipe wallet alert message

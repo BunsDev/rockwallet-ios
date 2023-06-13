@@ -68,7 +68,9 @@ extension Interactor where Self: CreateTransactionViewActions,
                 }
                 data(pin)
             } completion: { result in
-                defer { sender.reset() }
+                defer {
+                    sender.reset()
+                }
                 
                 var error: FEError?
                 

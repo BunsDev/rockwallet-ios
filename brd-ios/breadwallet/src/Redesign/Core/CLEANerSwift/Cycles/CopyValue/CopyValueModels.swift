@@ -14,8 +14,11 @@ enum CopyValueModels {
     enum Copy {
         struct ViewAction {
             var value: String?
+            var message: String?
         }
-        struct ActionResponse {}
+        struct ActionResponse {
+            var message: String?
+        }
         struct ResponseDisplay {}
     }
 }
