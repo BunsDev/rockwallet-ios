@@ -46,8 +46,10 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
     
     func createPaymailAddress(viewAction: Models.CreatePaymail.ViewAction) {
         guard let email = dataStore?.paymailAddress else { return }
+        
         let paymailEmail = email.replacingOccurrences(of: E.paymailDomain, with: "")
         let data = PaymailRequestData(paymail: paymailEmail, xpub: getXPub(code: "bsv"))
+        
         PaymailAddressWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success:
@@ -61,18 +63,21 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         }
     }
     
-    func getXPub(code: String) -> String {
+    private func getXPub(code: String) -> String {
         var keyStore: KeyStore?
-        if let existingKeyStore = KeyStore.getInstance() {
-            keyStore = existingKeyStore
+        
+        if let existingKeyStoreInstance = KeyStore.instance {
+            keyStore = existingKeyStoreInstance
         } else {
             do {
                 keyStore = try KeyStore.create()
-            } catch { 
+            } catch {
                 fatalError("error initializing key store")
             }
         }
-        let xpub = keyStore?.getXPubFromAccount(code: code) ?? String("")
+        
+        let xpub = keyStore?.getXPubFromAccount(code: code) ?? ""
+        
         return xpub
     }
     
