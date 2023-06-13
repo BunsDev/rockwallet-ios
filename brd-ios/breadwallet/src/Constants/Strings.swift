@@ -770,10 +770,6 @@ internal enum L10n {
     internal enum ContactSupport {
       /// Button label to open a email compose window with our support email in the to field.
       internal static let android = L10n.tr("Localizable", "Button.contactSupport.android", fallback: "Contact Support")
-      internal enum Android {
-        /// Contact Support
-        internal static let underlined = L10n.tr("Localizable", "Button.contactSupport.android.underlined", fallback: "Contact Support")
-      }
     }
     internal enum SecuritySettings {
       /// Button label to open Security Settings.
@@ -907,6 +903,12 @@ internal enum L10n {
     internal static let paymentFailed = L10n.tr("Localizable", "Buy.PaymentFailed", fallback: "Payment failed")
     /// Payment method label in buy select card screen
     internal static let paymentMethod = L10n.tr("Localizable", "Buy.PaymentMethod", fallback: "Payment method")
+    /// Temporarly unavailable, please %@
+    internal static func paymentMethodBlocked(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Buy.PaymentMethodBlocked", String(describing: p1), fallback: "Temporarly unavailable, please %@")
+    }
+    /// Payment methods
+    internal static let paymentMethods = L10n.tr("Localizable", "Buy.PaymentMethods", fallback: "Payment methods")
     /// Pay with label in buy flow
     internal static let payWith = L10n.tr("Localizable", "Buy.PayWith", fallback: "Pay with")
     /// Per Transaction Limit
@@ -1044,6 +1046,10 @@ internal enum L10n {
       internal static func android(_ p1: Any, _ p2: Any) -> String {
         return L10n.tr("Localizable", "Buy.BuyLimits.android", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.")
       }
+    }
+    internal enum PaymentMethodBlocked {
+      /// contact support
+      internal static let link = L10n.tr("Localizable", "Buy.PaymentMethodBlocked.Link", fallback: "contact support")
     }
     internal enum RemoveCard {
       /// Are you sure you want to remove card ending in %@?
@@ -1415,6 +1421,8 @@ internal enum L10n {
     }
     /// We are having temporary issues connecting to our network. Please try again later.
     internal static let temporaryNetworkIssues = L10n.tr("Localizable", "ErrorMessages.temporaryNetworkIssues", fallback: "We are having temporary issues connecting to our network. Please try again later.")
+    /// Try again later
+    internal static let tryAgainLater = L10n.tr("Localizable", "ErrorMessages.TryAgainLater", fallback: "Try again later")
     /// Unknown error text message
     internal static let unknownError = L10n.tr("Localizable", "ErrorMessages.UnknownError", fallback: "Unknown error.")
     internal enum Ach {
@@ -1430,6 +1438,14 @@ internal enum L10n {
     internal enum Kyc {
       /// You must be at least 18 years old to complete Level 1 and 2 verification.
       internal static let underage = L10n.tr("Localizable", "ErrorMessages.Kyc.Underage", fallback: "You must be at least 18 years old to complete Level 1 and 2 verification.")
+    }
+    internal enum LivenessCheckLimit {
+      /// You have reached the maximum attempts for Verification. Please contact customer support for more information
+      internal static let description = L10n.tr("Localizable", "ErrorMessages.LivenessCheckLimit.Description", fallback: "You have reached the maximum attempts for Verification. Please contact customer support for more information")
+    }
+    internal enum VeriffDeclined {
+      /// Please try again and follow the on screen instructions.
+      internal static let description = L10n.tr("Localizable", "ErrorMessages.VeriffDeclined.Description", fallback: "Please try again and follow the on screen instructions.")
     }
     internal enum LoopingLockScreen {
       /// Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters)
@@ -1823,8 +1839,8 @@ internal enum L10n {
     internal static let createAddressTitle = L10n.tr("Localizable", "PaymailAddress.createAddressTitle", fallback: "Create your paymail")
     /// Create paymail address
     internal static let createPaymailAddress = L10n.tr("Localizable", "PaymailAddress.createPaymailAddress", fallback: "Create paymail address")
-    /// Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.
-    internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
+    /// Your Paymail address is set up. Share your Paymail address instead of your wallet address to receive funds seamlessly.
+    internal static let description = L10n.tr("Localizable", "PaymailAddress.description", fallback: "Your Paymail address is set up. Share your Paymail address instead of your wallet address to receive funds seamlessly.")
     /// Sorry. Inappropriate language detected. Please choose a different paymail address.
     internal static let inappropriateWordsMessage = L10n.tr("Localizable", "PaymailAddress.InappropriateWordsMessage", fallback: "Sorry. Inappropriate language detected. Please choose a different paymail address.")
     /// Paymail address
@@ -1903,6 +1919,10 @@ internal enum L10n {
   internal enum Platform {
     /// Transaction Cancelled
     internal static let transactionCancelled = L10n.tr("Localizable", "Platform.transaction_cancelled", fallback: "Transaction Cancelled")
+  }
+  internal enum Profile {
+    /// Payment methods
+    internal static let paymentMethods = L10n.tr("Localizable", "Profile.PaymentMethods", fallback: "Payment methods")
   }
   internal enum Prompts {
     internal enum ConnectionIssues {
@@ -2339,10 +2359,6 @@ internal enum L10n {
     internal static let touchIdDescription = L10n.tr("Localizable", "SecurityCenter.touchIdDescription", fallback: "Conveniently unlock your RockWallet and send money up to a set limit.")
     /// Touch ID button title
     internal static let touchIdTitle = L10n.tr("Localizable", "SecurityCenter.touchIdTitle", fallback: "Touch ID")
-    internal enum PaperKeyTitle {
-      /// Paper Key button title
-      internal static let android = L10n.tr("Localizable", "SecurityCenter.paperKeyTitle.android", fallback: "Recovery Phrase")
-    }
     internal enum TouchIdTitle {
       /// Security center fingerprint authentication button
       internal static let android = L10n.tr("Localizable", "SecurityCenter.touchIdTitle.android", fallback: "Fingerprint Authentication")

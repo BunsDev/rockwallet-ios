@@ -270,7 +270,7 @@ enum BaseInfoModels {
                 return L10n.Account.VerificationUnsuccessful.description.replacingOccurrences(of: "-", with: "\u{2022}")
                 
             case .biometricStatus:
-                return "You have reached the maximum attempts for Verification. Please contact customer support for more information"
+                return L10n.ErrorMessages.LivenessCheckLimit.description
             }
         }
         
@@ -283,7 +283,7 @@ enum BaseInfoModels {
                 return L10n.Account.contactUs
                 
             case .biometricStatus:
-                return "Try again later"
+                return L10n.ErrorMessages.tryAgainLater
                 
             default:
                 return L10n.PaymentConfirmation.tryAgain

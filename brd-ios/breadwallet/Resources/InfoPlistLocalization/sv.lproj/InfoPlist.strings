@@ -710,8 +710,6 @@
 /* Button label to open a email compose window with our support email in the to field. */
 "Button.contactSupport.android" = "Kontakta Support";
 
-"Button.contactSupport.android.underlined" = "Contact Support";
-
 /* prompt continue button */
 "Button.continueAction" = "Fortsätt";
 
@@ -1003,6 +1001,12 @@
 
 /* Payment method label in buy select card screen */
 "Buy.PaymentMethod" = "Payment method";
+
+"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %@";
+
+"Buy.PaymentMethodBlocked.Link" = "contact support";
+
+"Buy.PaymentMethods" = "Payment methods";
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Pay with";
@@ -1343,6 +1347,8 @@
 
 "ErrorMessages.Kyc.Underage" = "You must be at least 18 years old to complete Level 1 and 2 verification.";
 
+"ErrorMessages.LivenessCheckLimit.Description" = "You have reached the maximum attempts for Verification. Please contact customer support for more information";
+
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "RockWallet kan inte verifieras på grund av en bugg i din version av Android. [Klicka här för mer information.]";
 
@@ -1394,8 +1400,12 @@
 /* Fingerprint was not recognized by the scanner, please try scanning again */
 "ErrorMessages.touchIdFailed.android" = "Fingeravtryck ej bekräftat. Försök igen.";
 
+"ErrorMessages.TryAgainLater" = "Try again later";
+
 /* Unknown error text message */
 "ErrorMessages.UnknownError" = "Unknown error.";
+
+"ErrorMessages.VeriffDeclined.Description" = "Please try again and follow the on screen instructions.";
 
 "ExportConfirmation.cancel" = "Avbryt";
 
@@ -1908,6 +1918,8 @@
 
 "Platform.transaction_cancelled" = "Transaktionen annullerad";
 
+"Profile.PaymentMethods" = "Payment methods";
+
 "Prompts.ConnectionIssues.title" = "Connection issues";
 
 "Prompts.CreateAccount.body" = "With your RockWallet account you’ll be able to Swap and Buy seamlessly.";
@@ -2358,9 +2370,6 @@
 
 /* Recovery Phrase button title. This used to be called 'paper key', so leaving the string key as `paperKeyTitle` in order, * to not break existing client code. */
 "SecurityCenter.paperKeyTitle" = "Ordnyckel";
-
-/* Paper Key button title */
-"SecurityCenter.paperKeyTitle.android" = "Ordnyckel";
 
 /* PIN button description */
 "SecurityCenter.pinDescription" = "Skyddar ditt RockWallet från obehöriga användare.";
