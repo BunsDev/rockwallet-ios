@@ -15,7 +15,6 @@ extension Scenes {
 protocol ProfileViewActions: BaseViewActions, FetchViewActions {
     func showVerificationInfo(viewAction: ProfileModels.VerificationInfo.ViewAction)
     func navigate(viewAction: ProfileModels.Navigate.ViewAction)
-    func getPaymentCards(viewAction: ProfileModels.PaymentCards.ViewAction)
     func logout(viewAction: ProfileModels.Logout.ViewAction)
 }
 
