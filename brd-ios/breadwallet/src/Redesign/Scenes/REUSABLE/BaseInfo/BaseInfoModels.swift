@@ -190,6 +190,7 @@ enum BaseInfoModels {
         case documentVerification
         case documentVerificationRetry
         case limitsAuthentication
+        case biometricStatus
         
         var iconName: String {
             switch self {
@@ -203,7 +204,7 @@ enum BaseInfoModels {
         
         var title: String {
             switch self {
-            case .buyCard, .buyAch:
+            case .buyCard, .buyAch, .biometricStatus:
                 return L10n.Buy.errorProcessingPayment
                 
             case .swap, .sell:
@@ -267,6 +268,9 @@ enum BaseInfoModels {
                 
             case .limitsAuthentication:
                 return L10n.Account.VerificationUnsuccessful.description.replacingOccurrences(of: "-", with: "\u{2022}")
+                
+            case .biometricStatus:
+                return "You have reached the maximum attempts for Verification. Please contact customer support for more information"
             }
         }
         
@@ -277,6 +281,9 @@ enum BaseInfoModels {
                 
             case .documentVerification:
                 return L10n.Account.contactUs
+                
+            case .biometricStatus:
+                return "Try again later"
                 
             default:
                 return L10n.PaymentConfirmation.tryAgain
