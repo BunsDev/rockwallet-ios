@@ -130,8 +130,7 @@ protocol KeyMaster: WalletAuthenticator {
 /// The KeyStore manages keychain access by implementing the access protocols
 /// There can be only one instance (singleton) but this instance is not globally accessible
 class KeyStore {
-
-    static private var instance: KeyStore?
+    static var instance: KeyStore?
 
     static private var failedPins = [String]()
     static var failedBackupPins = [String]()
@@ -163,11 +162,6 @@ class KeyStore {
         return instance!
     }
     
-    static func getInstance() -> KeyStore? {
-        guard let instance else { return nil }
-        return instance
-    }
-
     private init() throws {
         // load BIP39 word lists
         Bundle.main.localizations.forEach { lang in
