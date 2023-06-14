@@ -56,14 +56,12 @@ enum ProfileModels {
     }
     
     struct PaymentCards {
-        struct ViewAction {}
-        
         struct ActionResponse {
             var allPaymentCards: [PaymentCard]
         }
         
         struct ResponseDisplay {
-            var allPaymentCards: [PaymentCard]
+            var model: NavigationViewModel
         }
     }
     
