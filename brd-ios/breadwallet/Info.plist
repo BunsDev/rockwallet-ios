@@ -4,6 +4,18 @@
 <dict>
 	<key>PAYMAIL_DOMAIN</key>
 	<string>$(PAYMAIL_DOMAIN)</string>
+	<key>GS_CLIENT_ID</key>
+	<string>$(GS_CLIENT_ID)</string>
+	<key>GS_API_KEY</key>
+	<string>$(GS_API_KEY)</string>
+	<key>GS_GCM_SENDER_ID</key>
+	<string>$(GS_GCM_SENDER_ID)</string>
+	<key>GS_PROJECT_ID</key>
+	<string>$(GS_PROJECT_ID)</string>
+	<key>GS_STORAGE_BUCKET</key>
+	<string>$(GS_STORAGE_BUCKET)</string>
+	<key>GS_GOOGLE_APP_ID</key>
+	<string>$(GS_GOOGLE_APP_ID)</string>
 	<key>LOQATE_KEY</key>
 	<string>$(LOQATE_KEY)</string>
 	<key>API_TOKEN</key>
