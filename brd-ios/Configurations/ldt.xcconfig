@@ -13,11 +13,8 @@
 
 #include ".env"
 
-API_URL=api.ldt.rockwallet.net/
-
-API_TOKEN=$(LDT_TOKEN)
-CHECKOUT_API_TOKEN=$(LDT_CHECKOUT_TOKEN)
-
 APP_ICON=AppIconLdt
+
+API_URL=api.ldt.rockwallet.net/
 
 IS_LDT=true

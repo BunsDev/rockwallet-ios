@@ -261,7 +261,6 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
                 self?.dataStore?.exchange = data
                 self?.createTransaction(viewAction: .init(exchange: self?.dataStore?.exchange,
                                                           currencies: self?.dataStore?.currencies,
-                                                          fromFeeBasis: self?.dataStore?.fromFeeBasis,
                                                           fromFeeAmount: self?.dataStore?.fromFeeAmount,
                                                           fromAmount: self?.dataStore?.fromAmount,
                                                           toAmountCode: self?.dataStore?.toAmount?.currency.code.uppercased()), completion: { [weak self] error in
