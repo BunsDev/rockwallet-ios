@@ -98,19 +98,13 @@ class ApplicationController: Subscriber {
     }
     
     private func setupFirebase() {
-        var fileName: String = "GoogleService-Info"
-        if E.isDevelopment {
-            fileName = "Dev-" + fileName
-        } else if E.isStaging {
-            fileName = "Stg-" + fileName
-        } else if E.isProduction {
-            fileName = "Rls-" + fileName
-        }
-        
-        if let googleServicesFile = Bundle.main.path(forResource: fileName, ofType: "plist"),
-           let options = FirebaseOptions(contentsOfFile: googleServicesFile) {
-            FirebaseApp.configure(options: options)
-        }
+        let options = FirebaseOptions(googleAppID: E.gsGoogleAppId,
+                                      gcmSenderID: E.gsGcmSenderId)
+        options.clientID = E.gsClientId
+        options.apiKey = E.gsApiKey
+        options.projectID = E.gsProjectId
+        options.storageBucket = E.gsStorageBucket
+        FirebaseApp.configure(options: options)
     }
     
     private func bumpLaunchCount() {

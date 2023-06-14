@@ -16,7 +16,6 @@ struct CreateTransactionModels {
         struct ViewAction {
             var exchange: Exchange?
             var currencies: [Currency]?
-            var fromFeeBasis: TransferFeeBasis?
             var fromFeeAmount: Amount?
             var fromAmount: Amount?
             var toAmountCode: String?
