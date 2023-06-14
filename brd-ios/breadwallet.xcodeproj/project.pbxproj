@@ -65,7 +65,6 @@
 		0453B0BC29D22BF100BBE246 /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 0453B0BB29D22BF100BBE246 /* GoogleTagManager */; };
 		0453B0C029D2DEB100BBE246 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */; };
 		045B5EF829B099CE00C25CB8 /* BiometricStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */; };
-		04630E842A39A14E003B79E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04630E832A39A14E003B79E4 /* GoogleService-Info.plist */; };
 		0486949A2A16388D004EDDBA /* TwoStepModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048694992A16388D004EDDBA /* TwoStepModels.swift */; };
 		0486949C2A1638E5004EDDBA /* TwoStepVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486949B2A1638E5004EDDBA /* TwoStepVIP.swift */; };
 		049CE73C29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */; };
@@ -937,7 +936,6 @@
 		0452C93D29D4310100CCC8DA /* VeriffKYCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VeriffKYCManager.swift; sourceTree = "<group>"; };
 		0453B0BF29D2DEB100BBE246 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		045B5EF729B099CE00C25CB8 /* BiometricStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatusWorker.swift; sourceTree = "<group>"; };
-		04630E832A39A14E003B79E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		048694992A16388D004EDDBA /* TwoStepModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepModels.swift; sourceTree = "<group>"; };
 		0486949B2A1638E5004EDDBA /* TwoStepVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepVIP.swift; sourceTree = "<group>"; };
 		049CE73B29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTwoStepPhoneCodeWorker.swift; sourceTree = "<group>"; };
@@ -1815,15 +1813,6 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		04630E822A39A02C003B79E4 /* GoogleService-Info */ = {
-			isa = PBXGroup;
-			children = (
-				04630E832A39A14E003B79E4 /* GoogleService-Info.plist */,
-			);
-			name = "GoogleService-Info";
-			path = "Resources/GoogleService-Info";
-			sourceTree = "<group>";
-		};
 		048694982A163841004EDDBA /* TwoStep */ = {
 			isa = PBXGroup;
 			children = (
@@ -2389,7 +2378,6 @@
 		7C377EBC20F64C1200E8CF1C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				04630E822A39A02C003B79E4 /* GoogleService-Info */,
 				7B1A4683298BEF2500A6F68F /* InfoPlistLocalization */,
 				7EAFC5F52941EC4B00A7FF26 /* Animations */,
 				7B8EC63428089729008C6DE5 /* Assets */,
@@ -3753,7 +3741,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75A2A7E31DA5934400A983D8 /* Build configuration list for PBXNativeTarget "breadwallet" */;
 			buildPhases = (
-				04630E732A3994E2003B79E4 /* ShellScript */,
 				04C1AF222A2078B00009AB4C /* Replace incompatible localization occurrences */,
 				7E67292529239E5100A2B612 /* SwiftGen */,
 				75A2A78C1DA5934300A983D8 /* Sources */,
@@ -3998,7 +3985,6 @@
 				7B519A932835B506007AC80A /* currencies.json in Resources */,
 				7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */,
 				7BB3B7E429558EA2006FF250 /* SofiaPro-Bold.otf in Resources */,
-				04630E842A39A14E003B79E4 /* GoogleService-Info.plist in Resources */,
 				CE473D7C1F042F1E00C0ACFD /* coinflip.aiff in Resources */,
 				CE5E6C9A1EB9135000A476DB /* Icon.xcassets in Resources */,
 				71014F7C2327E49400DA1373 /* fiat_currencies.json in Resources */,
@@ -4052,24 +4038,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		04630E732A3994E2003B79E4 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "DIRECTORY_PATH=\"${SRCROOT}/breadwallet/Resources/GoogleService-Info/\"\nPLIST_FILENAME=\"GoogleService-Info.plist\"\nPLIST_PATH=\"$DIRECTORY_PATH/$PLIST_FILENAME\"\n\n# Define the content of the plist file\nPLIST_CONTENT='\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n    <key>CLIENT_ID</key>\n    <string></string>\n    <key>REVERSED_CLIENT_ID</key>\n    <string></string>\n    <key>API_KEY</key>\n    <string></string>\n    <key>GCM_SENDER_ID</key>\n    <string></string>\n    <key>PLIST_VERSION</key>\n    <string>1</string>\n    <key>BUNDLE_ID</key>\n    <string>com.rockwallet.app</string>\n    <key>PROJECT_ID</key>\n    <string></string>\n    <key>STORAGE_BUCKET</key>\n    <string></string>\n    <key>IS_ADS_ENABLED</key>\n    <false/>\n    <key>IS_ANALYTICS_ENABLED</key>\n    <false/>\n    <key>IS_APPINVITE_ENABLED</key>\n    <true/>\n    <key>IS_GCM_ENABLED</key>\n    <true/>\n    <key>IS_SIGNIN_ENABLED</key>\n    <true/>\n    <key>GOOGLE_APP_ID</key>\n    <string></string>\n</dict>\n</plist>\n'\n\nmkdir -p \"$DIRECTORY_PATH\"\necho \"$PLIST_CONTENT\" > \"$PLIST_PATH\"\n";
-		};
 		04C1AF222A2078B00009AB4C /* Replace incompatible localization occurrences */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
