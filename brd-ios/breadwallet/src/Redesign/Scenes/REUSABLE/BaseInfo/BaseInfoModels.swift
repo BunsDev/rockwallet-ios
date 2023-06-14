@@ -190,7 +190,8 @@ enum BaseInfoModels {
         case documentVerification
         case documentVerificationRetry
         case limitsAuthentication
-        case biometricStatus
+        case livenessCheckLimit
+        case veriffDeclined
         
         var iconName: String {
             switch self {
@@ -204,7 +205,7 @@ enum BaseInfoModels {
         
         var title: String {
             switch self {
-            case .buyCard, .buyAch, .biometricStatus:
+            case .buyCard, .buyAch, .livenessCheckLimit, .veriffDeclined:
                 return L10n.Buy.errorProcessingPayment
                 
             case .swap, .sell:
@@ -269,8 +270,11 @@ enum BaseInfoModels {
             case .limitsAuthentication:
                 return L10n.Account.VerificationUnsuccessful.description.replacingOccurrences(of: "-", with: "\u{2022}")
                 
-            case .biometricStatus:
+            case .livenessCheckLimit:
                 return L10n.ErrorMessages.LivenessCheckLimit.description
+                
+            case .veriffDeclined:
+                return L10n.ErrorMessages.VeriffDeclined.description
             }
         }
         
@@ -282,7 +286,7 @@ enum BaseInfoModels {
             case .documentVerification:
                 return L10n.Account.contactUs
                 
-            case .biometricStatus:
+            case .livenessCheckLimit, .veriffDeclined:
                 return L10n.ErrorMessages.tryAgainLater
                 
             default:

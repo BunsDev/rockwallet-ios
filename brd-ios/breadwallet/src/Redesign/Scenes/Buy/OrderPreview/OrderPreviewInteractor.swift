@@ -168,7 +168,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let requestData = BiometricStatusRequestData(quoteId: dataStore?.quote?.quoteId.description)
         BiometricStatusHelper.shared.checkBiometricStatus(requestData: requestData, resetCounter: viewAction.resetCounter) { [weak self] error in
             guard error == nil else {
-                self?.presenter?.presentBiometricStatusFailed(actionResponse: .init())
+                self?.presenter?.presentBiometricStatusFailed(actionResponse: .init(reason: .veriffDeclined))
                 return
             }
             
@@ -272,7 +272,11 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                     return
                 }
                 
-                self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
+                if error as? NetworkingError == .livenessCheckLimit {
+                    self?.presenter?.presentBiometricStatusFailed(actionResponse: .init(reason: .livenessCheckLimit))
+                } else {
+                    self?.presenter?.presentVeriffLivenessCheck(actionResponse: .init(quoteId: String(quoteId), isBiometric: true))
+                }
             }
         }
     }

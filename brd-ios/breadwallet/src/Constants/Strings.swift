@@ -1042,9 +1042,9 @@ internal enum L10n {
       }
     }
     internal enum BuyLimits {
-      /// Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.
+      /// Currently, minimum for Buy is %@ and maximum is %@ per day.
       internal static func android(_ p1: Any, _ p2: Any) -> String {
-        return L10n.tr("Localizable", "Buy.BuyLimits.android", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.")
+        return L10n.tr("Localizable", "Buy.BuyLimits.android", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Buy is %@ and maximum is %@ per day.")
       }
     }
     internal enum PaymentMethodBlocked {
@@ -1068,9 +1068,9 @@ internal enum L10n {
       internal static let android = L10n.tr("Localizable", "Buy.achFee.android", fallback: "ACH fee")
     }
     internal enum AchLimits {
-      /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.
+      /// Currently, minimum for buying with ACH is %@ and maximum is %@ per day. At the moment lifetime limit is %@.
       internal static func android(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-        return L10n.tr("Localizable", "Buy.achLimits.android", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.")
+        return L10n.tr("Localizable", "Buy.achLimits.android", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for buying with ACH is %@ and maximum is %@ per day. At the moment lifetime limit is %@.")
       }
     }
   }
@@ -1442,6 +1442,8 @@ internal enum L10n {
     internal enum LivenessCheckLimit {
       /// You have reached the maximum attempts for Verification. Please contact customer support for more information
       internal static let description = L10n.tr("Localizable", "ErrorMessages.LivenessCheckLimit.Description", fallback: "You have reached the maximum attempts for Verification. Please contact customer support for more information")
+      /// Biometric authentication attempts reached
+      internal static let errorMessage = L10n.tr("Localizable", "ErrorMessages.LivenessCheckLimit.errorMessage", fallback: "Biometric authentication attempts reached")
     }
     internal enum VeriffDeclined {
       /// Please try again and follow the on screen instructions.
