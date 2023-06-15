@@ -10,7 +10,7 @@ import Foundation
 import WalletKit
 
 enum QRCode: Equatable {
-    case paymentRequest(PaymentRequest?)
+    case paymentRequest(PaymentRequest?, String)
     case privateKey(String)
     case gift(String, (any TxViewModel)?)
     case deepLink(URL)
@@ -26,9 +26,9 @@ enum QRCode: Equatable {
         } else if let paymentRequest = QRCode.detectPaymentRequest(fromURI: content) {
             if let currencyRestriction,
                 let paymentRequestRestricted = QRCode.detectPaymentRequest(fromURI: content, currencyRestriction: currencyRestriction) {
-                self = .paymentRequest(paymentRequestRestricted)
+                self = .paymentRequest(paymentRequestRestricted, content)
             } else {
-                self = .paymentRequest(paymentRequest)
+                self = .paymentRequest(paymentRequest, content)
             }
         } else {
             self = .invalid
@@ -39,6 +39,13 @@ enum QRCode: Equatable {
     init?(url: URL, viewModel: (any TxViewModel)?) {
         guard let key = QRCode.extractPrivKeyFromGift(url: url) else { return nil }
         self = .gift(key, viewModel)
+    }
+    
+    static func detectPossibleWallets(fromURI uri: String) -> [Wallet] {
+        return Store.state.currencies
+            .sorted(by: { lhs, _ in
+                return lhs.tokenType == .native //For generic QR code scanning, we should prefer native currencies
+            }).filter({ PaymentRequest(string: uri, currency: $0)?.currency != nil }).compactMap({ $0.wallet })
     }
     
     private static func detectPaymentRequest(fromURI uri: String) -> PaymentRequest? {
@@ -68,7 +75,7 @@ enum QRCode: Equatable {
     
     static func == (lhs: QRCode, rhs: QRCode) -> Bool {
         switch (lhs, rhs) {
-        case (.paymentRequest(let a), .paymentRequest(let b)):
+        case (.paymentRequest(let a, _), .paymentRequest(let b, _)):
             return a?.toAddress == b?.toAddress
         case (.privateKey(let a), .privateKey(let b)):
             return a == b
