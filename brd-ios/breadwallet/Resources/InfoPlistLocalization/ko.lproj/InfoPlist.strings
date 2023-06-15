@@ -710,8 +710,6 @@
 /* Button label to open a email compose window with our support email in the to field. */
 "Button.contactSupport.android" = "지원 요청";
 
-"Button.contactSupport.android.underlined" = "Contact Support";
-
 /* prompt continue button */
 "Button.continueAction" = "계획하기";
 
@@ -1003,6 +1001,12 @@
 
 /* Payment method label in buy select card screen */
 "Buy.PaymentMethod" = "Payment method";
+
+"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %@";
+
+"Buy.PaymentMethodBlocked.Link" = "contact support";
+
+"Buy.PaymentMethods" = "Payment methods";
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Pay with";
@@ -1343,6 +1347,10 @@
 
 "ErrorMessages.Kyc.Underage" = "You must be at least 18 years old to complete Level 1 and 2 verification.";
 
+"ErrorMessages.LivenessCheckLimit.Description" = "You have reached the maximum attempts for Verification. Please contact customer support for more information";
+
+"ErrorMessages.LivenessCheckLimit.errorMessage" = "Biometric authentication attempts reached";
+
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "현재 이용 중인 안드로이드 버전의 버그로 인해 BRD가 인증될 수 없습니다. [Please tap here for more information.]";
 
@@ -1394,8 +1402,12 @@
 /* Fingerprint was not recognized by the scanner, please try scanning again */
 "ErrorMessages.touchIdFailed.android" = "지문 인식되지 않음. 다시 시도해 주세요.";
 
+"ErrorMessages.TryAgainLater" = "Try again later";
+
 /* Unknown error text message */
 "ErrorMessages.UnknownError" = "Unknown error.";
+
+"ErrorMessages.VeriffDeclined.Description" = "Please try again and follow the on screen instructions.";
 
 "ExportConfirmation.cancel" = "취소";
 
@@ -1908,6 +1920,8 @@
 
 "Platform.transaction_cancelled" = "거래 취소";
 
+"Profile.PaymentMethods" = "Payment methods";
+
 "Prompts.ConnectionIssues.title" = "Connection issues";
 
 "Prompts.CreateAccount.body" = "With your RockWallet account you’ll be able to Swap and Buy seamlessly.";
@@ -2358,9 +2372,6 @@
 
 /* Recovery Phrase button title. This used to be called 'paper key', so leaving the string key as `paperKeyTitle` in order, * to not break existing client code. */
 "SecurityCenter.paperKeyTitle" = "복구 문구";
-
-/* Paper Key button title */
-"SecurityCenter.paperKeyTitle.android" = "복구 문구";
 
 /* PIN button description */
 "SecurityCenter.pinDescription" = "허가받지 않은 사용자로부터 브레드를 보호하세요.";
