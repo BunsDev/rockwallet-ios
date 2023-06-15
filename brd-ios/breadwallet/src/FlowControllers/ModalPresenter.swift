@@ -352,38 +352,47 @@ class ModalPresenter: Subscriber {
     }
     
     private func presentLoginScan() {
+        // TODO: This should be cleaned up and WalletPicker should be moved into ScanViewController
+        
         guard let top = topViewController else { return }
         let present = presentScan(parent: top, currency: nil)
         present { [unowned self] scanResult in
             guard let scanResult = scanResult else { return }
             switch scanResult {
-            case .paymentRequest(let request):
-                guard let request = request else { return }
-                
-                let message = L10n.Scanner.paymentPromptMessage(request.currency.name)
-                let alert = UIAlertController.confirmationAlert(title: L10n.Scanner.paymentPromptTitle, message: message) {
-                    self.currentRequest = request
-                    self.presentModal(.send(currency: request.currency, coordinator: nil))
+            case .paymentRequest(_, let uri):
+                WalletPicker.present(on: top, fromURI: uri) { wallet in
+                    // TODO: Hotfix. This parses the already parsed uri. This shouldn't be necessary. Refactor.
+                    
+                    let scanResult = QRCode(content: uri, currencyRestriction: wallet.currency)
+                    var paymentRequest: PaymentRequest?
+                    
+                    switch scanResult {
+                    case .paymentRequest(let request, _):
+                        paymentRequest = request
+                        
+                    default:
+                        break
+                    }
+                    
+                    guard let paymentRequest else { return }
+                    
+                    let message = L10n.Scanner.paymentPromptMessage(paymentRequest.currency.name)
+                    let alert = UIAlertController.confirmationAlert(title: L10n.Scanner.paymentPromptTitle, message: message) {
+                        self.currentRequest = paymentRequest
+                        self.presentModal(.send(currency: paymentRequest.currency, coordinator: nil))
+                    }
+                    top.present(alert, animated: true)
                 }
-                top.present(alert, animated: true)
                 
             case .privateKey:
-                let alert = UIAlertController(title: L10n.Settings.importTitle, message: nil, preferredStyle: .actionSheet)
-                
-                let wallets = [Currencies.shared.bsv?.wallet,
-                               Currencies.shared.btc?.wallet,
-                               Currencies.shared.bch?.wallet,
-                               Currencies.shared.ltc?.wallet]
-                wallets.forEach { wallet in
-                    guard let wallet else { return }
-                    alert.addAction(UIAlertAction(title: wallet.currency.code, style: .default, handler: { _ in
+                WalletPicker.present(on: top) { wallet in
+                    let message = L10n.Scanner.paymentPromptMessage(wallet.currency.name)
+                    let alert = UIAlertController.confirmationAlert(title: L10n.Scanner.paymentPromptTitle, message: message) {
                         self.presentKeyImport(wallet: wallet, scanResult: scanResult)
-                    }))
+                    }
+                    top.present(alert, animated: true)
                 }
                 
-                alert.addAction(UIAlertAction(title: L10n.Button.cancel, style: .cancel, handler: nil))
-                
-                top.present(alert, animated: true)
             case .deepLink(let url):
                 UIApplication.shared.open(url)
             case .invalid:

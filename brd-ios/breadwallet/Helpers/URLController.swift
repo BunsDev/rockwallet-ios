@@ -108,7 +108,7 @@ class URLController: Subscriber {
         default:
             let qrCode = QRCode(content: url.absoluteString)
             
-            guard case .paymentRequest(let request) = qrCode, let request = request else {
+            guard case .paymentRequest(let request, _) = qrCode, let request = request else {
                 return false
             }
             
