@@ -209,7 +209,7 @@ extension ScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         }
         
         if let currencyRestriction = paymentRequestCurrencyRestriction {
-            guard case .paymentRequest(let request) = result,
+            guard case .paymentRequest(let request, _) = result,
                     let request = request,
                     request.currency.shouldAcceptQRCodeFrom(currencyRestriction, request: request) else {
                 guide.state = .negative
