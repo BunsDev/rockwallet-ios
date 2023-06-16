@@ -73,6 +73,7 @@
 		049CE74829DDACDE009D0F2D /* GoogleDataTransport in Frameworks */ = {isa = PBXBuildFile; productRef = 049CE74729DDACDE009D0F2D /* GoogleDataTransport */; };
 		04B05FF22A120B6000EA7591 /* CreateTransactionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B05FF12A120B6000EA7591 /* CreateTransactionModels.swift */; };
 		04B05FF42A120B7500EA7591 /* CreateTransactionVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B05FF32A120B7500EA7591 /* CreateTransactionVIP.swift */; };
+		04C032592A3AF98700257E9C /* WalletPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C032582A3AF98700257E9C /* WalletPicker.swift */; };
 		04DD285E2A02522E00A70C09 /* ToastMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */; };
 		04E0131729ED30AA00743954 /* TwoStepChangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */; };
 		04E0131929ED524600743954 /* TwoStepExchangeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */; };
@@ -944,6 +945,7 @@
 		049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FEButton+Extensions.swift"; sourceTree = "<group>"; };
 		04B05FF12A120B6000EA7591 /* CreateTransactionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTransactionModels.swift; sourceTree = "<group>"; };
 		04B05FF32A120B7500EA7591 /* CreateTransactionVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTransactionVIP.swift; sourceTree = "<group>"; };
+		04C032582A3AF98700257E9C /* WalletPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPicker.swift; sourceTree = "<group>"; };
 		04DD285D2A02522E00A70C09 /* ToastMessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageManager.swift; sourceTree = "<group>"; };
 		04E0131629ED30AA00743954 /* TwoStepChangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepChangeWorker.swift; sourceTree = "<group>"; };
 		04E0131829ED524600743954 /* TwoStepExchangeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepExchangeWorker.swift; sourceTree = "<group>"; };
@@ -2818,6 +2820,7 @@
 				D7EA320829C0805B00D9FD4F /* BiometricStatusHelper.swift */,
 				D730F7ED29F6659400809BEE /* SupportedCurrenciesManager.swift */,
 				C461E47729E430E7006BAC3A /* ShareItem.swift */,
+				04C032582A3AF98700257E9C /* WalletPicker.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4639,6 +4642,7 @@
 				7E5CB3952835090E00EC787E /* MessageVIP.swift in Sources */,
 				7E5CB39A2835090E00EC787E /* Presenter.swift in Sources */,
 				7CE940E61FEB8A5F005A2B53 /* TxDetailRowCell.swift in Sources */,
+				04C032592A3AF98700257E9C /* WalletPicker.swift in Sources */,
 				3AFAD94F25699112005853E8 /* TxGiftCell.swift in Sources */,
 				7B2E5056289A5F02008CACD8 /* AddCardPresenter.swift in Sources */,
 				7B39478B297000ED007D405E /* ForgotPasswordPresenter.swift in Sources */,
