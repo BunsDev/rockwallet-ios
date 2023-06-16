@@ -15,7 +15,7 @@ extension Scenes {
 }
 
 class CardSelectionViewController: ItemSelectionViewController {
-    override var sceneTitle: String? { return L10n.Buy.paymentMethod }
+    override var sceneTitle: String? { return L10n.Buy.paymentMethods }
     override var isSearchEnabled: Bool { return false }
     var paymentCardDeleted: (() -> Void)?
     
@@ -45,7 +45,8 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    subtitle: nil,
                                    logo: model.displayImage,
                                    cardNumber: .text(model.displayName),
-                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: model.expiryMonth, year: model.expiryYear))))
+                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: model.expiryMonth, year: model.expiryYear)),
+                                   errorMessage: .text(L10n.PaymentMethod.unavailable)))
             
             view.moreButtonCallback = { [weak self] in
                 self?.interactor?.showActionSheetRemovePayment(viewAction: .init(instrumentId: model.id,
@@ -69,7 +70,8 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    subtitle: nil,
                                    logo: .image(Asset.card.image),
                                    cardNumber: .text(L10n.Buy.addDebitCreditCard),
-                                   expiration: nil))
+                                   expiration: nil,
+                                   errorMessage: nil))
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
         }

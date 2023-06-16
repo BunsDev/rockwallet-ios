@@ -14,8 +14,11 @@ struct CardDetailsConfiguration: Configurable {
     var logo: BackgroundConfiguration? = .init(tintColor: LightColors.Text.two)
     var title: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Text.two, numberOfLines: 1)
     var cardNumber: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one, numberOfLines: 1)
-    var expiration: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two)
+    var cardNumberError: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two, numberOfLines: 1)
+    var expiration: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)
+    var expirationError: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two)
     var moreButton: BackgroundConfiguration? = Presets.Background.Secondary.selected
+    var error: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Error.one)
 }
 
 struct CardDetailsViewModel: ViewModel {
@@ -24,6 +27,7 @@ struct CardDetailsViewModel: ViewModel {
     var cardNumber: LabelViewModel?
     var expiration: LabelViewModel?
     var moreOption: Bool = false
+    var errorMessage: LabelViewModel?
 }
 
 class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
@@ -75,6 +79,17 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         view.setImage(Asset.more.image, for: .normal)
         return view
     }()
+    
+    private lazy var errorLabel: FELabel = {
+        let view = FELabel()
+        return view
+    }()
+    
+    private lazy var errorIndicator: UIImageView = {
+        let view = UIImageView(image: Asset.redWarning.image)
+        view.isHidden = true
+        return view
+    }()
 
     override func setupSubviews() {
         super.setupSubviews()
@@ -91,6 +106,13 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
             make.width.lessThanOrEqualTo(ViewSizes.medium.rawValue)
         }
         
+        logoImageView.addSubview(errorIndicator)
+        errorIndicator.snp.makeConstraints { make in
+            make.width.height.equalTo(ViewSizes.extraExtraSmall.rawValue)
+            make.centerX.equalTo(logoImageView.snp.trailing)
+            make.bottom.equalTo(logoImageView.snp.bottom)
+        }
+        
         selectorStack.addArrangedSubview(titleStack)
         titleStack.snp.makeConstraints { make in
             make.width.lessThanOrEqualToSuperview().priority(.low)
@@ -99,16 +121,13 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         titleStack.addArrangedSubview(titleLabel)
         titleStack.addArrangedSubview(cardNumberLabel)
         
-        let spacer = UIView()
-        selectorStack.addArrangedSubview(spacer)
-        spacer.snp.makeConstraints { make in
-            make.width.lessThanOrEqualToSuperview().priority(.low)
-        }
-        
         selectorStack.addArrangedSubview(expirationLabel)
+        selectorStack.addArrangedSubview(UIView())
         
         selectorStack.addArrangedSubview(moreButton)
         moreButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
+        
+        mainStack.addArrangedSubview(errorLabel)
         
         layoutIfNeeded()
     }
@@ -121,6 +140,7 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         cardNumberLabel.configure(with: config?.cardNumber)
         expirationLabel.configure(with: config?.expiration)
         moreButton.configure(background: config?.moreButton)
+        errorLabel.configure(with: config?.error)
     }
     
     override func setup(with viewModel: CardDetailsViewModel?) {
@@ -138,8 +158,12 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         expirationLabel.setup(with: viewModel?.expiration)
         expirationLabel.isHidden = viewModel?.expiration == nil
         
+        errorLabel.setup(with: viewModel?.errorMessage)
+        errorLabel.isHidden = viewModel?.errorMessage == nil
+        errorIndicator.isHidden = errorLabel.isHidden
+        
         guard let moreOption = viewModel?.moreOption else { return }
-        moreButton.isHidden = !moreOption
+        moreButton.isHidden = !moreOption || viewModel?.errorMessage != nil
     }
     
     @objc private func moreButtonTapped(_ sender: UIButton?) {

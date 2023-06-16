@@ -22,26 +22,14 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
             case .success:
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item()))
                 
+                guard UserManager.shared.profile?.status.hasKYCLevelTwo ?? false else { return }
+                self?.fetchCards()
+                
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
                 
             default:
                 return
-            }
-        }
-    }
-    
-    func getPaymentCards(viewAction: ProfileModels.PaymentCards.ViewAction) {
-        fetchCards { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success:
-                let paymentCards = self.dataStore?.allPaymentCards?.filter { $0.type == .card }
-                self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
-                
-            case .failure(let error):
-                self.presenter?.presentError(actionResponse: .init(error: error))
             }
         }
     }
@@ -68,18 +56,19 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
     }
     
     // MARK: - Additional helpers
-    private func fetchCards(completion: ((Result<[PaymentCard]?, Error>) -> Void)?) {
+    private func fetchCards() {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.dataStore?.allPaymentCards = data
                 self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first
                 
-            default:
-                break
+                let paymentCards = self?.dataStore?.allPaymentCards?.filter { $0.type == .card }
+                self?.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
             }
-            
-            completion?(result)
         }
     }
 }
