@@ -120,7 +120,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     }
     
     func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse) {
-        viewController?.displayBiometricStatusFailed(responseDisplay: .init())
+        viewController?.displayBiometricStatusFailed(responseDisplay: .init(reason: actionResponse.reason))
     }
     
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse) {
