@@ -77,7 +77,7 @@ extension ProfileModels.NavigationItems {
         switch self {
         case .paymentMethods:
             return .init(image: .image(Asset.card.image),
-                         label: .text(L10n.Buy.paymentMethod),
+                         label: .text(L10n.Buy.paymentMethods),
                          button: .init(image: nil))
             
         case .security:
