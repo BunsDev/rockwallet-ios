@@ -41,6 +41,10 @@ class VeriffKYCManager: NSObject, VeriffSdkDelegate {
                                                          presentingFrom: navigationController)
                 })
                 
+            case.failure(let error):
+                guard let error = error as? ServerResponse.ServerError else { return }
+                self.handleVeriffFailure(error: error)
+                
             default:
                 break
             }
@@ -62,11 +66,24 @@ class VeriffKYCManager: NSObject, VeriffSdkDelegate {
                 VeriffSdk.shared.startAuthentication(sessionUrl: data?.sessionUrl ?? "",
                                                      configuration: Presets.veriff,
                                                      presentingFrom: navigationController)
+            
+            case.failure(let error):
+                guard let error = error as? ServerResponse.ServerError else { return }
+                self.handleVeriffFailure(error: error)
                 
             default:
                 break
             }
         }
+    }
+    
+    private func handleVeriffFailure(error: ServerResponse.ServerError?) {
+        LoadingView.hideIfNeeded()
+        
+        guard let message = error?.errorMessage else { return }
+        ToastMessageManager.shared.show(model: InfoViewModel(description: .text(message),
+                                                             dismissType: .auto),
+                                        configuration: Presets.InfoView.error)
     }
     
     func sessionDidEndWithResult(_ result: Veriff.VeriffSdk.Result) {
@@ -75,6 +92,8 @@ class VeriffKYCManager: NSObject, VeriffSdkDelegate {
         }
         
         completion?(result)
+        
+        LoadingView.hideIfNeeded()
     }
     
     private func turnOffSardineMobileIntelligence() {
