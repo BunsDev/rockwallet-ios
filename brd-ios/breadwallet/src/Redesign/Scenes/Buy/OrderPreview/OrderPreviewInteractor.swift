@@ -168,7 +168,8 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let requestData = BiometricStatusRequestData(quoteId: dataStore?.quote?.quoteId.description)
         BiometricStatusHelper.shared.checkBiometricStatus(requestData: requestData, resetCounter: viewAction.resetCounter) { [weak self] error in
             guard error == nil else {
-                self?.presenter?.presentBiometricStatusFailed(actionResponse: .init())
+                let error = error as? NetworkingError
+                self?.presenter?.presentBiometricStatusFailed(actionResponse: .init(reason: error == .livenessCheckLimit ? .livenessCheckLimit : .veriffDeclined))
                 return
             }
             

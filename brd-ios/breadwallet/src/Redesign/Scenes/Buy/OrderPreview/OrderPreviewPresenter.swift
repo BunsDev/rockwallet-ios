@@ -120,7 +120,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     }
     
     func presentBiometricStatusFailed(actionResponse: OrderPreviewModels.BiometricStatusFailed.ActionResponse) {
-        viewController?.displayBiometricStatusFailed(responseDisplay: .init())
+        viewController?.displayBiometricStatusFailed(responseDisplay: .init(reason: actionResponse.reason))
     }
     
     func presentCvv(actionResponse: OrderPreviewModels.CvvValidation.ActionResponse) {
@@ -254,9 +254,9 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         
         let cardAchFee: TitleValueViewModel = isAchAccount ?
-            .init(title: .text(L10n.Buy.achFee("$\(String(format: "%.2f", quote.buyFeeUsd?.doubleValue ?? 0.0)) + \(quote.buyFee ?? 0)%")),
+            .init(title: .text(L10n.Sell.achFee),
                   value: .text(cardFeeText)) :
-            .init(title: .text("\(L10n.Swap.cardFee) (\(quote.buyFee ?? 0)%)"),
+            .init(title: .text(L10n.Swap.cardFee),
                   value: .text(cardFeeText),
                   infoImage: .image(infoImage))
         

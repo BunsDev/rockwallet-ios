@@ -157,4 +157,31 @@ struct E {
     }
 }
 
+/// Google Firebase
+extension E {
+    static var gsClientId: String {
+        return Bundle.main.object(forInfoDictionaryKey: "GS_CLIENT_ID") as? String ?? ""
+    }
+    
+    static var gsApiKey: String {
+        return Bundle.main.object(forInfoDictionaryKey: "GS_API_KEY") as? String ?? ""
+    }
+    
+    static var gsGcmSenderId: String {
+        return Bundle.main.object(forInfoDictionaryKey: "GS_GCM_SENDER_ID") as? String ?? ""
+    }
+    
+    static var gsProjectId: String {
+        return Bundle.main.object(forInfoDictionaryKey: "GS_PROJECT_ID") as? String ?? ""
+    }
+    
+    static var gsStorageBucket: String {
+        return Bundle.main.object(forInfoDictionaryKey: "GS_STORAGE_BUCKET") as? String ?? ""
+    }
+    
+    static var gsGoogleAppId: String {
+        return Bundle.main.object(forInfoDictionaryKey: "GS_GOOGLE_APP_ID") as? String ?? ""
+    }
+}
+
 // swiftlint:enable type_name
