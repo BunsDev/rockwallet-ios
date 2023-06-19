@@ -21,7 +21,6 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
             switch result {
             case .success:
                 self?.presenter?.presentData(actionResponse: .init(item: Models.Item()))
-                self?.fetchCards()
                 
                 guard UserManager.shared.profile?.status.hasKYCLevelTwo ?? false else { return }
                 self?.fetchCards()
