@@ -46,8 +46,8 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
     
     func presentPaymentCards(actionResponse: ProfileModels.PaymentCards.ActionResponse) {
         var paymentMethodsModel = Models.NavigationItems.paymentMethods.model
-        let problematicPaymentMethods = actionResponse.allPaymentCards.compactMap { $0 } // TODO: Only map problematic payment methods
-        paymentMethodsModel.showError = true //!problematicPaymentMethods.isEmpty
+        let problematicPaymentMethods = actionResponse.allPaymentCards.filter { $0.paymentMethodStatus.isProblematic == true }
+        paymentMethodsModel.showError = !problematicPaymentMethods.isEmpty
         
         viewController?.displayPaymentCards(responseDisplay: .init(model: paymentMethodsModel))
     }

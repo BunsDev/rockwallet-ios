@@ -22,6 +22,7 @@ struct PaymentCardsResponseData: ModelResponse {
         var accountName: String?
         var status: String?
         var cardType: String?
+        var paymentMethodStatus: String?
     }
     
     var paymentInstruments: [PaymentInstrument]
@@ -52,6 +53,23 @@ struct PaymentCard: ItemSelectable {
         case none
     }
     
+    enum PaymentMethodStatus: String, CaseIterableDefaultsLast {
+        case active
+        case suspended
+        case blocked
+        case none
+        
+        var isProblematic: Bool {
+            switch self {
+            case .active:
+                return false
+                
+            default:
+                return true
+            }
+        }
+    }
+    
     var type: PaymentType
     var id: String
     var fingerprint: String
@@ -63,6 +81,7 @@ struct PaymentCard: ItemSelectable {
     var accountName: String
     var status: Status
     var cardType: CardType
+    var paymentMethodStatus: PaymentMethodStatus
     
     var displayName: String? {
         switch type {
@@ -95,7 +114,8 @@ class PaymentCardsMapper: ModelMapper<PaymentCardsResponseData, [PaymentCard]> {
                                last4: $0.last4 ?? "",
                                accountName: $0.accountName ?? "",
                                status: PaymentCard.Status(rawValue: $0.status ?? "") ?? .none,
-                               cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .none)
+                               cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .none,
+                               paymentMethodStatus: PaymentCard.PaymentMethodStatus(rawValue: $0.paymentMethodStatus ?? "") ?? .none)
         } ?? []
     }
 }
