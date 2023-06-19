@@ -214,7 +214,7 @@
 
 "Account.SocialSecurityNumber" = "Social Security Number";
 
-"Account.SocialSecurityNumberRequired" = "Social Security number*";
+"Account.SocialSecurityNumberRequired" = "Social Security Number*";
 
 "Account.StartUsingWallet" = "Now let’s start with using your RockWallet.";
 
@@ -710,8 +710,6 @@
 /* Button label to open a email compose window with our support email in the to field. */
 "Button.contactSupport.android" = "Contact Support";
 
-"Button.contactSupport.android.underlined" = "Contact Support";
-
 /* prompt continue button */
 "Button.continueAction" = "Continue";
 
@@ -860,6 +858,8 @@
 
 "Buy.Ach.WalletDisabled" = "%@ needs to be enabled in your wallet first. Kindly enable it %@, or by selecting 'Manage assets' on the home screen.";
 
+"Buy.Ach.WalletDisabled.android" = "%@ needs to be enabled in your wallet first. You can enable it %@, or by selecting %@ on the home screen.";
+
 "Buy.Ach.WalletDisabled.Link" = "here";
 
 "Buy.Ach.WalletDisabled.ManageAssets" = "Manage assets";
@@ -872,7 +872,7 @@
 
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@\n\nIt currently takes 3-5 days to process a purchase with ACH.";
 
-"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
+"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ and maximum is %@ per day. At the moment lifetime limit is %@.";
 
 "Buy.achPaymentDurationWarning" = "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.";
 
@@ -911,7 +911,7 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@";
 
-"Buy.BuyLimits.android" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.";
+"Buy.BuyLimits.android" = "Currently, minimum for Buy is %@ and maximum is %@ per day.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -1001,6 +1001,12 @@
 
 /* Payment method label in buy select card screen */
 "Buy.PaymentMethod" = "Payment method";
+
+"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %@";
+
+"Buy.PaymentMethodBlocked.Link" = "contact support";
+
+"Buy.PaymentMethods" = "Payment methods";
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Pay with";
@@ -1229,7 +1235,7 @@
 
 "CreateGift.customAmountHint" = "Custom amount ($500 max)";
 
-"CreateGift.description" = "We'll create what's called a";
+"CreateGift.description" = "We'll create what's called a \"paper wallet\" with a qr code and instructions for installing RockWallet that you can email or text to friends and family.";
 
 "CreateGift.inputAmountError" = "You must select a gift amount.";
 
@@ -1341,6 +1347,10 @@
 
 "ErrorMessages.Kyc.Underage" = "You must be at least 18 years old to complete Level 1 and 2 verification.";
 
+"ErrorMessages.LivenessCheckLimit.Description" = "You have reached the maximum attempts for Verification. Please contact customer support for more information";
+
+"ErrorMessages.LivenessCheckLimit.errorMessage" = "Biometric authentication attempts reached";
+
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "RockWallet can not be authenticated due to a bug in your version of Android. [Please tap here for more information.]";
 
@@ -1392,8 +1402,12 @@
 /* Fingerprint was not recognized by the scanner, please try scanning again */
 "ErrorMessages.touchIdFailed.android" = "Fingerprint not recognized. Please try again.";
 
+"ErrorMessages.TryAgainLater" = "Try again later";
+
 /* Unknown error text message */
 "ErrorMessages.UnknownError" = "Unknown error.";
+
+"ErrorMessages.VeriffDeclined.Description" = "Please try again and follow the on screen instructions.";
 
 "ExportConfirmation.cancel" = "Cancel";
 
@@ -1832,7 +1846,7 @@
 
 "PaymailAddress.createPaymailAddress" = "Create paymail address";
 
-"PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
+"PaymailAddress.description" = "Your Paymail address is set up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
 
 "PaymailAddress.InappropriateWordsMessage" = "Sorry. Inappropriate language detected. Please choose a different paymail address.";
 
@@ -1905,6 +1919,8 @@
 "PersonalInformation.Year" = "YYYY";
 
 "Platform.transaction_cancelled" = "Transaction Cancelled";
+
+"Profile.PaymentMethods" = "Payment methods";
 
 "Prompts.ConnectionIssues.title" = "Connection issues";
 
@@ -2357,9 +2373,6 @@
 /* Recovery Phrase button title. This used to be called 'paper key', so leaving the string key as `paperKeyTitle` in order, * to not break existing client code. */
 "SecurityCenter.paperKeyTitle" = "Recovery Phrase";
 
-/* Paper Key button title */
-"SecurityCenter.paperKeyTitle.android" = "Recovery Phrase";
-
 /* PIN button description */
 "SecurityCenter.pinDescription" = "Protects your RockWallet from unauthorized users.";
 
@@ -2449,7 +2462,7 @@
 "Send.balance" = "Balance: %@";
 
 /* Balance: $4.00 for iOS, the balance can't have a parameter */
-"Send.balanceString" = "Balance: ";
+"Send.balanceString" = "Balance:";
 
 "Send.BCHConverter.ErrorToast" = "The BCH address could not be converted.";
 
@@ -2521,6 +2534,8 @@
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "You must have at least %@ in your wallet in order to transfer this type of token. Would you like to go to your %@ wallet now?";
 
+"Send.insufficientGasMessage.android" = "You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.";
+
 /* Your balance is insufficient to complete this action. */
 "Send.insufficientGasTitle" = "Insufficient %@ Balance";
 
@@ -2577,6 +2592,8 @@
 
 "Send.placeholderText" = "Enter wallet address or Paymail";
 
+"Send.placeholderTextWithoutPaymail" = "Enter wallet address";
+
 /* Could not publish transaction alert title */
 "Send.publishTransactionError" = "Your transaction request couldn’t be completed. Please try again.";
 
@@ -2590,7 +2607,7 @@
 "Send.sendError" = "Send Error";
 
 /* Sending Max: $4.00 for iOS, the balance can't have a parameter */
-"Send.sendingMax" = "Sending Max: ";
+"Send.sendingMax" = "Sending Max:";
 
 /* Send button label (the action, "press here to send") */
 "Send.sendLabel" = "Send";
@@ -2671,7 +2688,7 @@
 "Settings.faceIdLimit" = "Face ID Spending Limit";
 
 /* Redeem the funds stored on this private key. */
-"Settings.importTitle" = "Redeem Private Key";
+"Settings.importTitle" = "Sweep Wallet";
 
 /* Manage settings section header */
 "Settings.manage" = "Manage";
@@ -2960,8 +2977,6 @@
 "Swap.youReceive" = "You'll receive";
 
 "Swap.youSend" = "You send";
-
-"Symbols.lock" = "\u{1F512}";
 
 /* Syncing view done syncing state header text */
 "SyncingView.activity" = "Activity";
@@ -3504,12 +3519,14 @@
 "UnlockScreen.walletDisabled" = "Wallet disabled";
 
 /* Wallet disabled description */
-"UnlockScreen.walletDisabledDescription" = "You will need your Recovery Phrases to reset PIN.";
+"UnlockScreen.walletDisabledDescription" = "You will need your Recovery Phrase to reset PIN.";
 
 /* Wipe wallet prompt */
 "UnlockScreen.wipePrompt" = "Are you sure you would like to wipe this wallet?";
 
 "UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
+
+"UpdatePin.Alert.body.android" = "A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.";
 
 "UpdatePin.Alert.title" = "What is a PIN?";
 
@@ -3629,6 +3646,8 @@
 
 "VerifyPhoneNumber.sms.instructions" = "Enter the security code we’ve sent to";
 
+"VerifyPhoneNumber.sms.instructions.android" = "Enter the security code we’ve sent to:\n%@";
+
 "VerifyPhoneNumber.sms.title" = "We’ve sent you an SMS";
 
 "VerifyPhoneNumber.title" = "Verify your phone number";
@@ -3654,11 +3673,11 @@
 /* Limited assets message in add wallets popup */
 "Wallet.LimitedAssetsMessage" = "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.";
 
-"Wallet.one_day" = "1d";
+"Wallet.one_day" = "24h";
 
 "Wallet.one_month" = "1m";
 
-"Wallet.one_week" = "1w";
+"Wallet.one_week" = "7d";
 
 "Wallet.one_year" = "1y";
 
@@ -3801,7 +3820,7 @@
 "Widget.portfolioTitle" = "Portfolio";
 
 /* Wipe wallet alert message */
-"WipeWallet.alertMessage" = "Are you sure you want to unlink this wallet from this device?";
+"WipeWallet.alertMessage" = "Are you sure you want to wipe this wallet from this device?";
 
 /* Wipe wallet alert title */
 "WipeWallet.alertTitle" = "Unlink Wallet?";

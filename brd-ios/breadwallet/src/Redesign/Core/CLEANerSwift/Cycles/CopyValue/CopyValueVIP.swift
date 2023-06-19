@@ -24,13 +24,14 @@ extension Interactor where Self: CopyValueActions,
         let value = viewAction.value?.filter { !$0.isWhitespace } ?? ""
         UIPasteboard.general.string = value
         
-        presenter?.presentCopyValue(actionResponse: .init())
+        let message = viewAction.message ?? L10n.Receive.copied
+        presenter?.presentCopyValue(actionResponse: .init(message: message))
     }
 }
 
 extension Presenter where Self: CopyValueResponses {
     func presentCopyValue(actionResponse: CopyValueModels.Copy.ActionResponse) {
-        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(L10n.Receive.copied)),
+        viewController?.displayMessage(responseDisplay: .init(model: .init(description: .text(actionResponse.message)),
                                                               config: Presets.InfoView.verification))
     }
 }

@@ -34,10 +34,10 @@ extension Interactor where Self: CreateTransactionViewActions,
               let amountValue = exchange.amount,
               let exchangeId = exchange.exchangeId,
               let exchangeCurrency = exchange.currency?.lowercased(),
-              let fromFeeBasis = viewAction.fromFeeBasis,
-              let fromFeeAmount = viewAction.fromFeeAmount,
               let fromAmount = viewAction.fromAmount,
               let toAmountCode = viewAction.toAmountCode,
+              let fromFeeAmount = viewAction.fromFeeAmount,
+              let fromFeeBasis = dataStore?.fromFeeBasis,
               let currency = viewAction.currencies?.first(where: { $0.code.lowercased() == exchangeCurrency }) else {
             completion?(ExchangeErrors.noFees)
             return
@@ -47,7 +47,6 @@ extension Interactor where Self: CreateTransactionViewActions,
         
         guard let sender = dataStore?.sender else {
             completion?(ExchangeErrors.noFees)
-            
             return
         }
             
@@ -68,7 +67,9 @@ extension Interactor where Self: CreateTransactionViewActions,
                 }
                 data(pin)
             } completion: { result in
-                defer { sender.reset() }
+                defer {
+                    sender.reset()
+                }
                 
                 var error: FEError?
                 
@@ -153,13 +154,13 @@ extension Interactor where Self: CreateTransactionViewActions,
     }
     
     func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((FEError?) -> Void)?) {
-        dataStore?.fromFeeBasis = nil
-        dataStore?.senderValidationResult = nil
-        
         guard let from = viewAction.fromAmount,
               let fromAddress = from.currency.wallet?.defaultReceiveAddress,
               let sender = dataStore?.sender,
               from.fiatValue <= viewAction.limit ?? 0 else {
+            dataStore?.fromFeeBasis = nil
+            dataStore?.senderValidationResult = nil
+            
             completion?(ExchangeErrors.noFees)
             
             return

@@ -75,7 +75,7 @@ class BaseCoordinator: NSObject, Coordinatable {
         coordinator.start()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        UIApplication.shared.activeWindow?.rootViewController?.present(coordinator.navigationController, animated: true)
+        navigationController.show(nvc, sender: nil)
     }
     
     func showSwap(selectedCurrency: Currency? = nil, coreSystem: CoreSystem, keyStore: KeyStore) {
@@ -680,6 +680,9 @@ class BaseCoordinator: NSObject, Coordinatable {
                     }
                 }
                 
+            case .veriffDeclined, .livenessCheckLimit:
+                vc.coordinator?.dismissFlow()
+                
             default:
                 if containsDebit || containsBankAccount {
                     guard let vc = self.navigationController.viewControllers.first as? BuyViewController else {
@@ -698,7 +701,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             case .swap:
                 vc.coordinator?.dismissFlow()
 
-            case .buyCard, .buyAch, .plaidConnection, .sell:
+            case .buyCard, .buyAch, .plaidConnection, .sell, .livenessCheckLimit, .veriffDeclined:
                 vc.coordinator?.showSupport()
                 
             case .limitsAuthentication, .documentVerification, .documentVerificationRetry:

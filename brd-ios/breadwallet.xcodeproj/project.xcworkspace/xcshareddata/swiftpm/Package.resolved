@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit.git",
       "state" : {
-        "revision" : "5e416ac4adc70c9ee99415f8569fc932a6d70745",
-        "version" : "5.0.24"
+        "revision" : "fee7c774dc409dcf981e6b05edde7dee2043bd70",
+        "version" : "5.0.25"
       }
     },
     {
@@ -212,8 +212,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit-core.git",
       "state" : {
-        "revision" : "5cbe33472894bdaf20878befae6bc229024ff0f5",
-        "version" : "5.0.23"
+        "revision" : "11961fef47da2224977983aee821f642f7c80391",
+        "version" : "5.0.25"
       }
     }
   ],

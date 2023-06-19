@@ -86,13 +86,14 @@ class BaseSendViewController: UIViewController {
         
         sender.sendTransaction(allowBiometrics: true, pinVerifier: pinVerifier) { [weak self] result in
             guard let self = self else { return }
-            
             self.sendingActivity.dismiss(animated: true) {
-                defer { self.sender.reset() }
+                defer {
+                    self.sender.reset()
+                }
+                
                 switch result {
                 case .success:
                     self.onSuccess()
-                    
                 case .creationError(let message):
                     self.showAlert(title: L10n.Alerts.sendFailure, message: message)
                 case .publishFailure(let code, let message):

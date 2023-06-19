@@ -710,8 +710,6 @@
 /* Button label to open a email compose window with our support email in the to field. */
 "Button.contactSupport.android" = "Kontakt support";
 
-"Button.contactSupport.android.underlined" = "Contact Support";
-
 /* prompt continue button */
 "Button.continueAction" = "Fortsæt";
 
@@ -860,6 +858,8 @@
 
 "Buy.Ach.WalletDisabled" = "%@ needs to be enabled in your wallet first. Kindly enable it %@, or by selecting 'Manage assets' on the home screen.";
 
+"Buy.Ach.WalletDisabled.android" = "%@ needs to be enabled in your wallet first. You can enable it %@, or by selecting %@ on the home screen.";
+
 "Buy.Ach.WalletDisabled.Link" = "here";
 
 "Buy.Ach.WalletDisabled.ManageAssets" = "Manage assets";
@@ -1001,6 +1001,12 @@
 
 /* Payment method label in buy select card screen */
 "Buy.PaymentMethod" = "Payment method";
+
+"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %@";
+
+"Buy.PaymentMethodBlocked.Link" = "contact support";
+
+"Buy.PaymentMethods" = "Payment methods";
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Pay with";
@@ -1341,6 +1347,10 @@
 
 "ErrorMessages.Kyc.Underage" = "You must be at least 18 years old to complete Level 1 and 2 verification.";
 
+"ErrorMessages.LivenessCheckLimit.Description" = "You have reached the maximum attempts for Verification. Please contact customer support for more information";
+
+"ErrorMessages.LivenessCheckLimit.errorMessage" = "Biometric authentication attempts reached";
+
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "RockWallet kan ikke godkendes grundet en fejl i din version af Android. [Tryk her for flere oplysninger.]";
 
@@ -1392,8 +1402,12 @@
 /* Fingerprint was not recognized by the scanner, please try scanning again */
 "ErrorMessages.touchIdFailed.android" = "Fingeraftryk ikke genkendt. Prøv igen.";
 
+"ErrorMessages.TryAgainLater" = "Try again later";
+
 /* Unknown error text message */
 "ErrorMessages.UnknownError" = "Unknown error.";
+
+"ErrorMessages.VeriffDeclined.Description" = "Please try again and follow the on screen instructions.";
 
 "ExportConfirmation.cancel" = "Afbestille";
 
@@ -1906,6 +1920,8 @@
 
 "Platform.transaction_cancelled" = "Transaktion annulleret";
 
+"Profile.PaymentMethods" = "Payment methods";
+
 "Prompts.ConnectionIssues.title" = "Connection issues";
 
 "Prompts.CreateAccount.body" = "With your RockWallet account you’ll be able to Swap and Buy seamlessly.";
@@ -2357,9 +2373,6 @@
 /* Recovery Phrase button title. This used to be called 'paper key', so leaving the string key as `paperKeyTitle` in order, * to not break existing client code. */
 "SecurityCenter.paperKeyTitle" = "Gendannelsesfrase";
 
-/* Paper Key button title */
-"SecurityCenter.paperKeyTitle.android" = "Gendannelsesfrase";
-
 /* PIN button description */
 "SecurityCenter.pinDescription" = "Beskytter dit RockWallet mod uberettigede brugere.";
 
@@ -2521,6 +2534,8 @@
 /* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
 "Send.insufficientGasMessage" = "Du skal have mindst %@ i din pung, for at kunne overføre denne type token. Vil du gå til din Ethereum pung nu?";
 
+"Send.insufficientGasMessage.android" = "You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.";
+
 /* Your balance is insufficient to complete this action. */
 "Send.insufficientGasTitle" = "Insufficient %@ Balance";
 
@@ -2576,6 +2591,8 @@
 "Send.payId_toLabel" = "PayID";
 
 "Send.placeholderText" = "Enter wallet address or Paymail";
+
+"Send.placeholderTextWithoutPaymail" = "Enter wallet address";
 
 /* Could not publish transaction alert title */
 "Send.publishTransactionError" = "Kunne ikke offentliggøre transaktion.";
@@ -2960,8 +2977,6 @@
 "Swap.youReceive" = "You'll receive";
 
 "Swap.youSend" = "You send";
-
-"Symbols.lock" = "\u{1F512}";
 
 /* Syncing view done syncing state header text */
 "SyncingView.activity" = "Aktivitet";
@@ -3511,6 +3526,8 @@
 
 "UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
 
+"UpdatePin.Alert.body.android" = "A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.";
+
 "UpdatePin.Alert.title" = "What is a PIN?";
 
 "UpdatePin.bottomSheetMsg" = "PIN updated successfully";
@@ -3628,6 +3645,8 @@
 "VerifyPhoneNumber.sms.changeNumber" = "Change my phone number";
 
 "VerifyPhoneNumber.sms.instructions" = "Enter the security code we’ve sent to";
+
+"VerifyPhoneNumber.sms.instructions.android" = "Enter the security code we’ve sent to:\n%@";
 
 "VerifyPhoneNumber.sms.title" = "We’ve sent you an SMS";
 
