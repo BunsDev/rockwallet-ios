@@ -60,6 +60,8 @@ enum RegistrationConfirmationModels {
         // Disable 2FA
         case twoStepDisable
         
+        case forgotPassword
+        
         var sections: [Section] {
             switch self {
             case .twoStepApp:
@@ -70,6 +72,9 @@ enum RegistrationConfirmationModels {
                 
             case .twoStepAppBackupCode, .twoStepAppBuy:
                 return [.title, .instructions, .input, .help]
+                
+            case .forgotPassword:
+                return [.image, .title, .instructions, .help]
                 
             default:
                 return []
@@ -90,6 +95,9 @@ enum RegistrationConfirmationModels {
                 
             case .twoStepAppBackupCode:
                 return L10n.TwoStep.App.Confirmation.BackupCode.title
+                
+            case .forgotPassword:
+                return "Check your email"
             }
         }
         
@@ -107,6 +115,9 @@ enum RegistrationConfirmationModels {
                 
             case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy, .twoStepAppRequired:
                 return nil
+                
+            case .forgotPassword:
+                return "We have sent password recover instructions to: \(email)"
             }
         }
     }
