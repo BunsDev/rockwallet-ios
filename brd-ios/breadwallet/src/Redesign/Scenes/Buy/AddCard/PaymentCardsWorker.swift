@@ -53,7 +53,7 @@ struct PaymentCard: ItemSelectable {
         case none
     }
     
-    enum PaymentMethodStatus: String {
+    enum PaymentMethodStatus: String, CaseIterableDefaultsLast {
         case active
         case suspended
         case blocked
