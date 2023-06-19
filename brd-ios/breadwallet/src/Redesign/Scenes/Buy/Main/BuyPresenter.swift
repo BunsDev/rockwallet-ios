@@ -89,12 +89,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             if let paymentCard = actionResponse.card {
                 switch actionResponse.card?.status {
                 case .statusOk:
+                    let unavailableText = NSMutableAttributedString().preparePaymentMethodUnavailableText()
                     cardModel = .init(title: .text(L10n.Buy.transferFromBank),
                                       subtitle: nil,
                                       logo: .image(Asset.bank.image),
                                       cardNumber: .text(paymentCard.displayName),
                                       userInteractionEnabled: false,
-                                      errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .text(L10n.PaymentMethod.unavailable) : nil)
+                                      errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
                     
                 default:
                     cardModel = .init(title: .text(L10n.Buy.achPayments),
@@ -115,12 +116,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             }
             
         default:
+            let unavailableText = NSMutableAttributedString().preparePaymentMethodUnavailableText()
             if let paymentCard = actionResponse.card {
                 cardModel = .init(logo: paymentCard.displayImage,
                                   cardNumber: .text(paymentCard.displayName),
                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                                   userInteractionEnabled: true,
-                                  errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .text(L10n.PaymentMethod.unavailable) : nil)
+                                  errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
             } else {
                 cardModel = .init(userInteractionEnabled: true)
             }
@@ -203,5 +205,4 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     // MARK: - Additional Helpers
-    
 }

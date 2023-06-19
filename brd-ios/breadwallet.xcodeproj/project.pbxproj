@@ -796,6 +796,7 @@
 		CEF7D94622CE6AC000939D19 /* HistoryPeriodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */; };
 		D712BC9C29C9F2BA00C2F09E /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */; };
 		D712BD1229DACBAB00C2F09E /* BottomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */; };
+		D71853E82A404CA200F0679A /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71853E72A404CA200F0679A /* NSMutableAttributedString+Extensions.swift */; };
 		D730F7EE29F6659400809BEE /* SupportedCurrenciesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730F7ED29F6659400809BEE /* SupportedCurrenciesManager.swift */; };
 		D78D296029ED3A7B0039A5D6 /* TwoStepSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */; };
 		D78D296129ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */; };
@@ -1666,6 +1667,7 @@
 		CEF7D94522CE6AC000939D19 /* HistoryPeriodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPeriodButton.swift; path = src/Views/Charts/HistoryPeriodButton.swift; sourceTree = "<group>"; };
 		D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarItem.swift; sourceTree = "<group>"; };
+		D71853E72A404CA200F0679A /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		D730F7ED29F6659400809BEE /* SupportedCurrenciesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCurrenciesManager.swift; sourceTree = "<group>"; };
 		D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsStore.swift; sourceTree = "<group>"; };
 		D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsPresenter.swift; sourceTree = "<group>"; };
@@ -2582,6 +2584,7 @@
 				049CE74429DD5A90009D0F2D /* FEButton+Extensions.swift */,
 				7B67708D29053CDF006FB72A /* Shadow+Background+Extensions.swift */,
 				D712BC9B29C9F2BA00C2F09E /* UIDevice+Extensions.swift */,
+				D71853E72A404CA200F0679A /* NSMutableAttributedString+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4254,6 +4257,7 @@
 				7E5CB3AD2835090E00EC787E /* WrapperTableViewCell.swift in Sources */,
 				3AFAD9562569F722005853E8 /* GiftingStatusUpdater.swift in Sources */,
 				7E8E979D283F4830008606B0 /* ProfileInteractor.swift in Sources */,
+				D71853E82A404CA200F0679A /* NSMutableAttributedString+Extensions.swift in Sources */,
 				CE5F21DB1E4A93A500C47B8E /* LoginTransitionDelegate.swift in Sources */,
 				71C44E942264BE2C00EF4459 /* BaseRecoveryKeyViewController.swift in Sources */,
 				0452C93729D42FC600CCC8DA /* BlocksatoshiEndpoints.swift in Sources */,
