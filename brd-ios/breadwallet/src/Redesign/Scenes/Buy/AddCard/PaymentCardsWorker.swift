@@ -68,6 +68,20 @@ struct PaymentCard: ItemSelectable {
                 return true
             }
         }
+        
+        var unavailableText: NSMutableAttributedString {
+            let attributedString = NSMutableAttributedString(string: L10n.PaymentMethod.unavailable)
+            
+            let maxRange = NSRange(location: 0, length: attributedString.mutableString.length)
+            attributedString.addAttribute(.font, value: Fonts.Body.three, range: maxRange)
+            attributedString.addAttribute(.foregroundColor, value: LightColors.Error.one, range: maxRange)
+            
+            let range = attributedString.mutableString.range(of: L10n.Buy.PaymentMethodBlocked.link)
+            attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
+            attributedString.addAttribute(.font, value: Fonts.Subtitle.three, range: range)
+            
+            return attributedString
+        }
     }
     
     var type: PaymentType

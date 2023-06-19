@@ -84,12 +84,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
+        let unavailableText = actionResponse.card?.paymentMethodStatus.unavailableText
+        
         switch actionResponse.type {
         case .ach:
             if let paymentCard = actionResponse.card {
                 switch actionResponse.card?.status {
                 case .statusOk:
-                    let unavailableText = NSMutableAttributedString().preparePaymentMethodUnavailableText()
                     cardModel = .init(title: .text(L10n.Buy.transferFromBank),
                                       subtitle: nil,
                                       logo: .image(Asset.bank.image),
@@ -116,7 +117,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             }
             
         default:
-            let unavailableText = NSMutableAttributedString().preparePaymentMethodUnavailableText()
             if let paymentCard = actionResponse.card {
                 cardModel = .init(logo: paymentCard.displayImage,
                                   cardNumber: .text(paymentCard.displayName),

@@ -40,7 +40,7 @@ class CardSelectionViewController: ItemSelectionViewController {
         }
         
         cell.setup { view in
-            let unavailableText = NSMutableAttributedString().preparePaymentMethodUnavailableText()
+            let unavailableText = model.paymentMethodStatus.unavailableText
             view.configure(with: .init())
             view.setup(with: .init(title: nil,
                                    subtitle: nil,
