@@ -109,7 +109,6 @@ enum RegistrationConfirmationModels {
                 
             default:
                 return L10n.AccountCreation.resendCode
-                
             }
         }
         
