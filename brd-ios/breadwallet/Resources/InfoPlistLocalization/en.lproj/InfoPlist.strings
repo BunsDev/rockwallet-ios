@@ -1008,7 +1008,7 @@
 /* Payment method label in buy select card screen */
 "Buy.PaymentMethod" = "Payment method";
 
-"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %s";
+"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %@";
 
 "Buy.PaymentMethodBlocked.Link" = "contact support";
 
