@@ -18,6 +18,7 @@ struct CardSelectionConfiguration: Configurable {
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
                                                      border: Presets.Border.mediumPlain)
+    var cardDetails: CardDetailsConfiguration? = .init()
 }
 
 struct CardSelectionViewModel: ViewModel {
@@ -28,6 +29,7 @@ struct CardSelectionViewModel: ViewModel {
     var expiration: LabelViewModel?
     var arrow: ImageViewModel? = .image(Asset.chevronRight.image)
     var userInteractionEnabled = false
+    var errorMessage: LabelViewModel?
 }
 
 class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewModel> {
@@ -74,6 +76,21 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         return view
     }()
     
+    var hasError: Bool = false {
+        didSet {
+            let cardNumberConfig = config?.cardDetails?.cardNumber
+            let cardNumberErrorConfig = config?.cardDetails?.cardNumberError
+            
+            let expirationConfig = config?.cardDetails?.expiration
+            let expirationErrorConfig = config?.cardDetails?.expirationError
+            
+            config?.cardDetails?.cardNumber = hasError ? cardNumberErrorConfig : cardNumberConfig
+            config?.cardDetails?.expiration = hasError ? expirationErrorConfig : expirationConfig
+            
+            configure(with: config)
+        }
+    }
+    
     override func setupSubviews() {
         super.setupSubviews()
         
@@ -95,10 +112,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                 
         mainStack.addArrangedSubview(cardDetailsView)
         
-        cardDetailsView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.medium.rawValue)
-        }
-        
         containerStack.addArrangedSubview(spacerView)
         spacerView.snp.makeConstraints { make in
             make.width.lessThanOrEqualToSuperview().priority(.low)
@@ -118,7 +131,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.configure(with: config)
         titleLabel.configure(with: config?.title)
         subtitleLabel.configure(with: config?.subtitle)
-        cardDetailsView.configure(with: .init())
+        cardDetailsView.configure(with: config?.cardDetails)
         arrowImageView.configure(with: config?.arrow)
         
         configure(background: config?.background)
@@ -129,15 +142,21 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.setup(with: viewModel)
         
         titleLabel.setup(with: viewModel?.title)
-        titleLabel.isHidden = viewModel?.title == nil
+        titleLabel.isHidden = viewModel?.subtitle == nil
         
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
         
+        // TODO: Shouldn't be in viewmodel setup
+        subtitleLabel.configure(with: .init(font: Fonts.Title.six,
+                                            textColor: LightColors.Text.three,
+                                            textAlignment: .center,
+                                            numberOfLines: 1))
+        
         cardDetailsView.isHidden = viewModel?.logo == nil
         
         arrowImageView.setup(with: viewModel?.arrow)
-        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden) || viewModel?.userInteractionEnabled == false
+        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden)
         
         let moreOption = viewModel?.expiration != nil && titleLabel.isHidden
         
@@ -145,7 +164,9 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                                           title: titleLabel.isHidden == true ? viewModel?.title : nil,
                                           cardNumber: viewModel?.cardNumber,
                                           expiration: viewModel?.expiration,
-                                          moreOption: moreOption))
+                                          moreOption: moreOption,
+                                          errorMessage: viewModel?.errorMessage))
+        hasError = viewModel?.errorMessage != nil
         
         spacerView.isHidden = arrowImageView.isHidden
         guard viewModel?.userInteractionEnabled == true else {

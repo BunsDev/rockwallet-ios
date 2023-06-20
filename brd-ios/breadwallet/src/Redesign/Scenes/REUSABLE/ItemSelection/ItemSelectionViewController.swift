@@ -105,12 +105,10 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
               section == Models.Section.items else {
-            coordinator?.open(scene: Scenes.AddCard)
             return
         }
         
         guard let model = dataSource?.itemIdentifier(for: indexPath), dataStore?.isSelectingEnabled == true else { return }
-        
         itemSelected?(model)
         
         coordinator?.dismissFlow()

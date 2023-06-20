@@ -338,6 +338,7 @@ internal enum Asset {
   internal static let radiobuttonSelected = ImageAsset(name: "radiobutton-selected")
   internal static let radiobutton = ImageAsset(name: "radiobutton")
   internal static let receive = ImageAsset(name: "receive")
+  internal static let redWarning = ImageAsset(name: "redWarning")
   internal static let remove = ImageAsset(name: "remove")
   internal static let reorganize = ImageAsset(name: "reorganize")
   internal static let search = ImageAsset(name: "search")

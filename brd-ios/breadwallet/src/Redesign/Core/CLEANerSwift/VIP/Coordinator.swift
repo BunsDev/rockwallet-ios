@@ -680,6 +680,9 @@ class BaseCoordinator: NSObject, Coordinatable {
                     }
                 }
                 
+            case .veriffDeclined, .livenessCheckLimit:
+                vc.coordinator?.dismissFlow()
+                
             default:
                 if containsDebit || containsBankAccount {
                     guard let vc = self.navigationController.viewControllers.first as? BuyViewController else {
@@ -698,7 +701,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             case .swap:
                 vc.coordinator?.dismissFlow()
 
-            case .buyCard, .buyAch, .plaidConnection, .sell:
+            case .buyCard, .buyAch, .plaidConnection, .sell, .livenessCheckLimit, .veriffDeclined:
                 vc.coordinator?.showSupport()
                 
             case .limitsAuthentication, .documentVerification, .documentVerificationRetry:
