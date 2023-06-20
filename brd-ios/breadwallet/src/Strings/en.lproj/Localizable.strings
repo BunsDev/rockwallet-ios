@@ -62,6 +62,8 @@
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Change your email";
 
+"Account.CheckYourEmail" = "Check your email";
+
 "Account.City" = "City*";
 
 "Account.ConfirmPassword" = "Confirm your password";
@@ -194,6 +196,10 @@
 
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
+
+"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to: %@";
+
+"Account.ResendEmail" = "Resend email";
 
 "Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
 
@@ -710,8 +716,6 @@
 /* Button label to open a email compose window with our support email in the to field. */
 "Button.contactSupport.android" = "Contact Support";
 
-"Button.contactSupport.android.underlined" = "Contact Support";
-
 /* prompt continue button */
 "Button.continueAction" = "Continue";
 
@@ -874,7 +878,7 @@
 
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@\n\nIt currently takes 3-5 days to process a purchase with ACH.";
 
-"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
+"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ and maximum is %@ per day. At the moment lifetime limit is %@.";
 
 "Buy.achPaymentDurationWarning" = "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.";
 
@@ -913,7 +917,7 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@";
 
-"Buy.BuyLimits.android" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.";
+"Buy.BuyLimits.android" = "Currently, minimum for Buy is %@ and maximum is %@ per day.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -1003,6 +1007,12 @@
 
 /* Payment method label in buy select card screen */
 "Buy.PaymentMethod" = "Payment method";
+
+"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %s";
+
+"Buy.PaymentMethodBlocked.Link" = "contact support";
+
+"Buy.PaymentMethods" = "Payment methods";
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Pay with";
@@ -1343,6 +1353,10 @@
 
 "ErrorMessages.Kyc.Underage" = "You must be at least 18 years old to complete Level 1 and 2 verification.";
 
+"ErrorMessages.LivenessCheckLimit.Description" = "You have reached the maximum attempts for Verification. Please contact customer support for more information";
+
+"ErrorMessages.LivenessCheckLimit.errorMessage" = "Biometric authentication attempts reached";
+
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "RockWallet can not be authenticated due to a bug in your version of Android. [Please tap here for more information.]";
 
@@ -1394,8 +1408,12 @@
 /* Fingerprint was not recognized by the scanner, please try scanning again */
 "ErrorMessages.touchIdFailed.android" = "Fingerprint not recognized. Please try again.";
 
+"ErrorMessages.TryAgainLater" = "Try again later";
+
 /* Unknown error text message */
 "ErrorMessages.UnknownError" = "Unknown error.";
+
+"ErrorMessages.VeriffDeclined.Description" = "Please try again and follow the on screen instructions.";
 
 "ExportConfirmation.cancel" = "Cancel";
 
@@ -1834,7 +1852,7 @@
 
 "PaymailAddress.createPaymailAddress" = "Create paymail address";
 
-"PaymailAddress.description" = "Your Paymail address is setted up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
+"PaymailAddress.description" = "Your Paymail address is set up. Share your Paymail address instead of your wallet address to receive funds seamlessly.";
 
 "PaymailAddress.InappropriateWordsMessage" = "Sorry. Inappropriate language detected. Please choose a different paymail address.";
 
@@ -1907,6 +1925,8 @@
 "PersonalInformation.Year" = "YYYY";
 
 "Platform.transaction_cancelled" = "Transaction Cancelled";
+
+"Profile.PaymentMethods" = "Payment methods";
 
 "Prompts.ConnectionIssues.title" = "Connection issues";
 
@@ -2358,9 +2378,6 @@
 
 /* Recovery Phrase button title. This used to be called 'paper key', so leaving the string key as `paperKeyTitle` in order, * to not break existing client code. */
 "SecurityCenter.paperKeyTitle" = "Recovery Phrase";
-
-/* Paper Key button title */
-"SecurityCenter.paperKeyTitle.android" = "Recovery Phrase";
 
 /* PIN button description */
 "SecurityCenter.pinDescription" = "Protects your RockWallet from unauthorized users.";
@@ -2939,7 +2956,7 @@
 "Swap.SwapLimit" = "Swap limits";
 
 /* Swap min and max limit text */
-"Swap.SwapLimits" = "Currently, minimum for Swap is %@ USD and maximum is %@ USD/day.";
+"Swap.SwapLimits" = "Currently, minimum for Swap is %@ and maximum is %@ per day.";
 
 "Swap.Swapping" = "Swapping %@ to %@";
 
@@ -3652,6 +3669,8 @@
 
 /* Authorize transaction with touch id message */
 "VerifyPin.touchIdMessage" = "Authorize this transaction";
+
+"view_coroutine_scope" = "view_scope";
 
 /* Find assets button on add wallets screen */
 "Wallet.FindAssets" = "Trouble finding assets?";
