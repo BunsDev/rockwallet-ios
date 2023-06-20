@@ -40,6 +40,7 @@ struct Constant {
     static let termsAndConditions = "https://\(companyURL)/tc"
     static let supportLink = "https://help.\(companyURL)"
     static let feedbackEmail = "support@\(companyURL)"
+    static let paymentMethodSupport = "https://share.hsforms.com/1bG9mrUX7QnKCDhGwGXYz7Q55ikl"
     static let veriffPrivacyPolicy = "https://www.veriff.com/privacy-policy"
     static let reviewLink = "https://apps.apple.com/us/app/rockwallet-buy-and-swap/id6444194230?action=write-review"
     static let limits = "https://\(companyURL)/limits"

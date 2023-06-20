@@ -217,6 +217,10 @@ class BaseCoordinator: NSObject, Coordinatable {
         showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
     }
     
+    func showPaymentMethodSupport() {
+        showInWebView(urlString: Constant.paymentMethodSupport, title: L10n.MenuButton.support)
+    }
+    
     func showKYCLevelOne(isModal: Bool) {
         if isModal {
             openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)

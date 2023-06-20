@@ -36,7 +36,8 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
     
     var moreButtonCallback: (() -> Void)?
     var didTapSelectCard: (() -> Void)?
-    
+    var errorLinkCallback: (() -> Void)?
+     
     private lazy var containerStack: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -166,12 +167,15 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                                           expiration: viewModel?.expiration,
                                           moreOption: moreOption,
                                           errorMessage: viewModel?.errorMessage))
+        cardDetailsView.errorLinkCallback = { [weak self] in
+            self?.errorLinkCallback?()
+        }
         hasError = viewModel?.errorMessage != nil
         
         spacerView.isHidden = arrowImageView.isHidden
+        
         guard viewModel?.userInteractionEnabled == true else {
-            gestureRecognizers?.forEach {
-                removeGestureRecognizer($0) }
+            gestureRecognizers?.forEach { removeGestureRecognizer($0) }
             return
         }
         

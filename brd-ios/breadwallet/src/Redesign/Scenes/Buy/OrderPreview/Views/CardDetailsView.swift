@@ -18,7 +18,6 @@ struct CardDetailsConfiguration: Configurable {
     var expiration: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)
     var expirationError: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.two)
     var moreButton: BackgroundConfiguration? = Presets.Background.Secondary.selected
-    var error: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Error.one)
 }
 
 struct CardDetailsViewModel: ViewModel {
@@ -32,6 +31,7 @@ struct CardDetailsViewModel: ViewModel {
 
 class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
     var moreButtonCallback: (() -> Void)?
+    var errorLinkCallback: (() -> Void)?
     
     private lazy var mainStack: UIStackView = {
         let view = UIStackView()
@@ -140,7 +140,6 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         cardNumberLabel.configure(with: config?.cardNumber)
         expirationLabel.configure(with: config?.expiration)
         moreButton.configure(background: config?.moreButton)
-        errorLabel.configure(with: config?.error)
     }
     
     override func setup(with viewModel: CardDetailsViewModel?) {
@@ -160,6 +159,10 @@ class CardDetailsView: FEView<CardDetailsConfiguration, CardDetailsViewModel> {
         
         errorLabel.setup(with: viewModel?.errorMessage)
         errorLabel.isHidden = viewModel?.errorMessage == nil
+        errorLabel.isUserInteractionEnabled = viewModel?.errorMessage != nil
+        errorLabel.didTapLink = { [weak self] in
+            self?.errorLinkCallback?()
+        }
         errorIndicator.isHidden = errorLabel.isHidden
         
         guard let moreOption = viewModel?.moreOption else { return }
