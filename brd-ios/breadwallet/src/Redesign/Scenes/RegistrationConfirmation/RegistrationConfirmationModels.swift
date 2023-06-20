@@ -97,7 +97,7 @@ enum RegistrationConfirmationModels {
                 return L10n.TwoStep.App.Confirmation.BackupCode.title
                 
             case .forgotPassword:
-                return "Check your email"
+                return L10n.Account.checkYourEmail
             }
         }
         
@@ -117,7 +117,7 @@ enum RegistrationConfirmationModels {
                 return nil
                 
             case .forgotPassword:
-                return "We have sent password recover instructions to: \(email)"
+                return L10n.Account.recoverPasswordInstructions(email) 
             }
         }
     }

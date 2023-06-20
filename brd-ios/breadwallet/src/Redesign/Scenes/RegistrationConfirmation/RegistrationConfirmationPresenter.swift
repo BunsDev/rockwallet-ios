@@ -26,7 +26,7 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         
         var help: [ButtonViewModel]
         if confirmationType == .forgotPassword {
-            help = [ButtonViewModel(title: "Resend email",
+            help = [ButtonViewModel(title: L10n.Account.resendEmail,
                                     isUnderlined: true,
                                     callback: viewController?.resendCodeTapped)]
         } else {
