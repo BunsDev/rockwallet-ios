@@ -60,6 +60,7 @@ enum RegistrationConfirmationModels {
         // Disable 2FA
         case twoStepDisable
         
+        // Check your email screen after Forgot Password
         case forgotPassword
         
         var sections: [Section] {
@@ -98,6 +99,17 @@ enum RegistrationConfirmationModels {
                 
             case .forgotPassword:
                 return L10n.Account.checkYourEmail
+            }
+        }
+        
+        var buttonTitle: String {
+            switch self {
+            case .forgotPassword:
+                return L10n.Account.resendEmail
+                
+            default:
+                return L10n.AccountCreation.resendCode
+                
             }
         }
         

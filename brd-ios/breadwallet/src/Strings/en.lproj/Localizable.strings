@@ -197,7 +197,7 @@
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
 
-"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to%@";
+"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to%s";
 
 "Account.ResendEmail" = "Resend email";
 
@@ -1388,6 +1388,8 @@
 "ErrorMessages.overLifetimeLimit" = "The amount is higher than your lifetime limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overLifetimeLimitLevel2" = "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.";
+
+"ErrorMessages.PaymailAlreadyTaken" = "This Paymail is already taken";
 
 "ErrorMessages.pendingExchange" = "A maximum of one swap can be active for a currency at a time.";
 
@@ -3681,11 +3683,11 @@
 /* Limited assets message in add wallets popup */
 "Wallet.LimitedAssetsMessage" = "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.";
 
-"Wallet.one_day" = "24h";
+"Wallet.one_day" = "1D";
 
 "Wallet.one_month" = "1m";
 
-"Wallet.one_week" = "7d";
+"Wallet.one_week" = "1W";
 
 "Wallet.one_year" = "1y";
 
