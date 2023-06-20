@@ -83,6 +83,10 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                     (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
                 }
             }
+            
+            view.errorLinkCallback = { [weak self] in
+                self?.onPaymentMethodErrorLinkTapped()
+            }
         }
         
         return cell
@@ -142,4 +146,5 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         }
     }
     
+    func onPaymentMethodErrorLinkTapped() {}
 }

@@ -40,17 +40,22 @@ class CardSelectionViewController: ItemSelectionViewController {
         }
         
         cell.setup { view in
+            let unavailableText = model.paymentMethodStatus.unavailableText
             view.configure(with: .init())
             view.setup(with: .init(title: nil,
                                    subtitle: nil,
                                    logo: model.displayImage,
                                    cardNumber: .text(model.displayName),
                                    expiration: .text(CardDetailsFormatter.formatExpirationDate(month: model.expiryMonth, year: model.expiryYear)),
-                                   errorMessage: model.paymentMethodStatus.isProblematic ? .text(L10n.PaymentMethod.unavailable) : nil))
+                                   errorMessage: model.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil))
             
             view.moreButtonCallback = { [weak self] in
                 self?.interactor?.showActionSheetRemovePayment(viewAction: .init(instrumentId: model.id,
                                                                                  last4: model.last4))
+            }
+            
+            view.errorLinkCallback = { [weak self] in
+                self?.coordinator?.showPaymentMethodSupport()
             }
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)

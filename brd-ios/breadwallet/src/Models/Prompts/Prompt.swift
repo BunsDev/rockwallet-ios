@@ -15,8 +15,8 @@ enum PromptType: Int {
     case noInternet
     case noAccount
     case kyc
-    case twoStep
     case limitsAuthentication
+    case twoStep
     case upgradePin
     case paperKey
     case noPasscode
@@ -25,7 +25,7 @@ enum PromptType: Int {
     var order: Int { return rawValue }
     
     static var defaultTypes: [PromptType] = {
-        return [.noInternet, .noAccount, .kyc, .twoStep, .limitsAuthentication,
+        return [.noInternet, .noAccount, .kyc, .limitsAuthentication, .twoStep,
                 .upgradePin, .paperKey, .noPasscode, .biometrics]
     }()
     

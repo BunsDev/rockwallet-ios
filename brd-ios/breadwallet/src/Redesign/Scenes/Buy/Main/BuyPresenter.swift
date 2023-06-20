@@ -84,6 +84,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
         
+        let unavailableText = actionResponse.card?.paymentMethodStatus.unavailableText
+        
         switch actionResponse.type {
         case .ach:
             if let paymentCard = actionResponse.card {
@@ -94,7 +96,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                       logo: .image(Asset.bank.image),
                                       cardNumber: .text(paymentCard.displayName),
                                       userInteractionEnabled: false,
-                                      errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .text(L10n.PaymentMethod.unavailable) : nil)
+                                      errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
                     
                 default:
                     cardModel = .init(title: .text(L10n.Buy.achPayments),
@@ -120,7 +122,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                   cardNumber: .text(paymentCard.displayName),
                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                                   userInteractionEnabled: true,
-                                  errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .text(L10n.PaymentMethod.unavailable) : nil)
+                                  errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
             } else {
                 cardModel = .init(userInteractionEnabled: true)
             }
@@ -203,5 +205,4 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     }
     
     // MARK: - Additional Helpers
-    
 }
