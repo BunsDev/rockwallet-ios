@@ -62,6 +62,8 @@
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Change your email";
 
+"Account.CheckYourEmail" = "Check your email";
+
 "Account.City" = "City*";
 
 "Account.ConfirmPassword" = "Confirm your password";
@@ -194,6 +196,10 @@
 
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
+
+"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to: %@";
+
+"Account.ResendEmail" = "Resend email";
 
 "Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
 
@@ -2950,7 +2956,7 @@
 "Swap.SwapLimit" = "Swap limits";
 
 /* Swap min and max limit text */
-"Swap.SwapLimits" = "Currently, minimum for Swap is %@ USD and maximum is %@ USD/day.";
+"Swap.SwapLimits" = "Currently, minimum for Swap is %@ and maximum is %@ per day.";
 
 "Swap.Swapping" = "Swapping %@ to %@";
 
@@ -3663,6 +3669,8 @@
 
 /* Authorize transaction with touch id message */
 "VerifyPin.touchIdMessage" = "Authorize this transaction";
+
+"view_coroutine_scope" = "view_scope";
 
 /* Find assets button on add wallets screen */
 "Wallet.FindAssets" = "Trouble finding assets?";

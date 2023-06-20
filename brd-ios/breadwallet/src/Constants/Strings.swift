@@ -20,6 +20,8 @@ internal enum L10n {
   internal static let sendFioToLabel = L10n.tr("Localizable", "Send_fio_toLabel", fallback: "FIO")
   /// Always require passcode option
   internal static let touchIdSpendingLimit = L10n.tr("Localizable", "TouchIdSpendingLimit", fallback: "Always require passcode")
+  /// view_scope
+  internal static let viewCoroutineScope = L10n.tr("Localizable", "view_coroutine_scope", fallback: "view_scope")
   internal enum ATMMapView {
     /// ATM Cash Locatios View Title
     internal static let title = L10n.tr("Localizable", "ATMMapView.title", fallback: "ATM Cash Locations Map")
@@ -75,6 +77,8 @@ internal enum L10n {
     internal static let beforeConfirm = L10n.tr("Localizable", "Account.BeforeConfirm", fallback: "Before you confirm, please:")
     /// Change your email title on registration flow
     internal static let changeEmail = L10n.tr("Localizable", "Account.ChangeEmail", fallback: "Change your email")
+    /// Check your email
+    internal static let checkYourEmail = L10n.tr("Localizable", "Account.CheckYourEmail", fallback: "Check your email")
     /// City*
     internal static let city = L10n.tr("Localizable", "Account.City", fallback: "City*")
     /// Confirm your password
@@ -187,6 +191,12 @@ internal enum L10n {
     internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
+    /// We have sent password recover instructions to: %@
+    internal static func recoverPasswordInstructions(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to: %@")
+    }
+    /// Resend email
+    internal static let resendEmail = L10n.tr("Localizable", "Account.ResendEmail", fallback: "Resend email")
     /// Enter your email below to reset your password.
     internal static let resetPasswordMessage = L10n.tr("Localizable", "Account.ResetPasswordMessage", fallback: "Enter your email below to reset your password.")
     /// Reset your password
@@ -2865,7 +2875,7 @@ internal enum L10n {
     internal static let swapLimit = L10n.tr("Localizable", "Swap.SwapLimit", fallback: "Swap limits")
     /// Swap min and max limit text
     internal static func swapLimits(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "Swap.SwapLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Swap is %@ USD and maximum is %@ USD/day.")
+      return L10n.tr("Localizable", "Swap.SwapLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Swap is %@ and maximum is %@ per day.")
     }
     /// Swapping %@ to %@
     internal static func swapping(_ p1: Any, _ p2: Any) -> String {
