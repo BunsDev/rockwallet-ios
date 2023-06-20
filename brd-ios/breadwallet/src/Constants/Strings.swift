@@ -191,9 +191,9 @@ internal enum L10n {
     internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
-    /// We have sent password recover instructions to: %@
+    /// We have sent password recover instructions to%@
     internal static func recoverPasswordInstructions(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to: %@")
+      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to%@")
     }
     /// Resend email
     internal static let resendEmail = L10n.tr("Localizable", "Account.ResendEmail", fallback: "Resend email")
