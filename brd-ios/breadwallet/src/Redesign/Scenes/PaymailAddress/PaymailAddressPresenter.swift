@@ -78,6 +78,7 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
     
     func presentValidate(actionResponse: PaymailAddressModels.Validate.ActionResponse) {
         let isValid = actionResponse.isEmailValid
+        let errorMessage = actionResponse.isPaymailTaken ? "This Paymail is already taken" :  L10n.Account.invalidEmail
         
         viewController?.displayValidate(responseDisplay:
                 .init(email: actionResponse.email,
@@ -85,7 +86,7 @@ final class PaymailAddressPresenter: NSObject, Presenter, PaymailAddressActionRe
                       isEmailEmpty: actionResponse.isEmailEmpty,
                       emailModel: .init(title: L10n.PaymailAddress.paymailAddressField,
                                         value: actionResponse.email,
-                                        hint: actionResponse.emailState == .error ? L10n.Account.invalidEmail : nil,
+                                        hint: actionResponse.emailState == .error ? errorMessage : nil,
                                         trailing: actionResponse.emailState == .error ?
                         .image(Asset.warning.image.tinted(with: LightColors.Error.one)) :
                             .image(Asset.cancel.image.tinted(with: LightColors.Text.three)),

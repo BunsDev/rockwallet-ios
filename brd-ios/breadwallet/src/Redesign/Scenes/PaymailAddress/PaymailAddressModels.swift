@@ -102,6 +102,7 @@ enum PaymailAddressModels {
             var isEmailValid: Bool
             var isEmailEmpty: Bool
             var emailState: DisplayState?
+            var isPaymailTaken: Bool
         }
         
         struct ResponseDisplay {
