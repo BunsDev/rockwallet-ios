@@ -13,19 +13,19 @@ import Foundation
 protocol AssetSelectionDisplayable {
     func showAssetSelector(title: String,
                            currencies: [Currency]?,
-                           supportedCurrencies: [SupportedCurrency]?,
+                           supportedCurrencies: [String]?,
                            selected: ((Any?) -> Void)?)
-    func isDisabledAsset(code: String?, supportedCurrencies: [SupportedCurrency]?) -> Bool?
+    func isDisabledAsset(code: String?, supportedCurrencies: [String]?) -> Bool?
 }
 
 extension AssetSelectionDisplayable where Self: BaseCoordinator {
     func showAssetSelector(title: String,
                            currencies: [Currency]?,
-                           supportedCurrencies: [SupportedCurrency]?,
+                           supportedCurrencies: [String]?,
                            selected: ((Any?) -> Void)?) {
         let allCurrencies = Currencies.shared.currencies
         
-        let supportedAssets = allCurrencies.filter { item in supportedCurrencies?.contains(where: { $0.code.lowercased() == item.code }) ?? false }
+        let supportedAssets = allCurrencies.filter { item in supportedCurrencies?.contains(where: { $0.lowercased() == item.code }) ?? false }
         
         var data: [AssetViewModel]? = currencies?.compactMap {
             let topRightText = String(format: "%@ %@",
@@ -69,9 +69,9 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
         }
     }
     
-    func isDisabledAsset(code: String?, supportedCurrencies: [SupportedCurrency]?) -> Bool? {
+    func isDisabledAsset(code: String?, supportedCurrencies: [String]?) -> Bool? {
         guard let assetCode = code else { return false }
         
-        return !(supportedCurrencies?.contains(where: { $0.code == assetCode}) ?? false)
+        return !(supportedCurrencies?.contains(where: { $0.lowercased() == assetCode.lowercased() }) ?? false)
     }
 }

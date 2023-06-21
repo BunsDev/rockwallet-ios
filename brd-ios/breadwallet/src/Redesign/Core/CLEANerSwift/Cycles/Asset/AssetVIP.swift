@@ -9,12 +9,14 @@
 //
 
 import UIKit
+import WalletKit
 
 protocol AssetViewActions {
     func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
     func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?)
     func setAmount(viewAction: AssetModels.Asset.ViewAction)
+    func prepareCurrencies(viewAction: AssetModels.Item)
 }
 
 protocol AssetActionResponses {
@@ -42,6 +44,8 @@ protocol AssetDataStore: NSObject, TwoStepDataStore {
     var quote: Quote? { get set }
     var showTimer: Bool { get set }
     var isFromBuy: Bool { get set }
+    var currencies: [Currency] { get set }
+    var supportedCurrencies: [String]? { get set }
 }
 
 extension Interactor where Self: AssetViewActions,
@@ -82,6 +86,15 @@ extension Interactor where Self: AssetViewActions,
                                                                                                   to: toCurrency)))
             }
         }
+    }
+    
+    func prepareCurrencies(viewAction: AssetModels.Item) {
+        guard let type = viewAction.type else { return }
+        
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies(type: type)
+        
+        dataStore?.supportedCurrencies = currencies
+        dataStore?.currencies = Store.state.currencies.filter { cur in currencies.map { $0.lowercased() }.contains(cur.code.lowercased()) }
     }
     
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}

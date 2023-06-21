@@ -51,8 +51,22 @@ class AssetDetailsViewController: UIViewController, Subscriber {
                 
             // TODO: Replace buy with buySell for drawer
             case .buy:
+                let cardSupported = SupportedCurrenciesManager.shared.isSupported(currency: currency.code, type: .card)
+                let achSupported = SupportedCurrenciesManager.shared.isSupported(currency: currency.code, type: .ach)
+                let type: PaymentCard.PaymentType?
+                
+                if cardSupported {
+                    type = .card
+                } else if achSupported {
+                    type = .ach
+                } else {
+                    type = nil
+                }
+                
+                guard let type = type else { return }
+                
                 self.coordinator?.showBuy(selectedCurrency: currency,
-                                          type: .card,
+                                          type: type,
                                           coreSystem: coreSystem,
                                           keyStore: keyStore)
                 
