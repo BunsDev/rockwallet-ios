@@ -59,7 +59,7 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
                 }
                 
             case .failure(let error):
-                guard (error as? NetworkingError)?.errorMessage == "Paymail already taken" else {
+                guard (error as? NetworkingError)?.errorMessage == L10n.ErrorMessages.paymailTaken else {
                     self?.presenter?.presentError(actionResponse: .init(error: error))
                     return
                 }
