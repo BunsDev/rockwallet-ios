@@ -389,13 +389,6 @@ class BaseCoordinator: NSObject, Coordinatable {
         case .accessDenied:
             UserManager.shared.refresh()
             
-        case .sessionExpired:
-            openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignIn) { vc in
-                vc?.navigationItem.hidesBackButton = true
-            }
-            
-            return
-            
         default:
             break
         }
