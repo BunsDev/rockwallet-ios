@@ -519,7 +519,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         addressCell.textField.resignFirstResponder()
         presentScan? { [weak self] scanResult in
             self?.paymentProtocolRequest = nil
-            guard case .paymentRequest(let request)? = scanResult, let request = request else { return }
+            guard case .paymentRequest(let request, _)? = scanResult, let request = request else { return }
             self?.handleRequest(request)
         }
     }

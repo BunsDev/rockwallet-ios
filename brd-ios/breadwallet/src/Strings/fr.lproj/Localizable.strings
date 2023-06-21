@@ -62,6 +62,8 @@
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Modifier votre adresse e-mail";
 
+"Account.CheckYourEmail" = "Check your email";
+
 "Account.City" = "City*";
 
 "Account.ConfirmPassword" = "Confirm your password";
@@ -194,6 +196,10 @@
 
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Document d'identité";
+
+"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to: %@";
+
+"Account.ResendEmail" = "Resend email";
 
 "Account.ResetPasswordMessage" = "Enter your email below to reset your password.";
 
@@ -710,8 +716,6 @@
 /* Button label to open a email compose window with our support email in the to field. */
 "Button.contactSupport.android" = "Contactez le support";
 
-"Button.contactSupport.android.underlined" = "Contact Support";
-
 /* prompt continue button */
 "Button.continueAction" = "Continuer";
 
@@ -1003,6 +1007,12 @@
 
 /* Payment method label in buy select card screen */
 "Buy.PaymentMethod" = "Mode de paiement";
+
+"Buy.PaymentMethodBlocked" = "Temporarly unavailable, please %@";
+
+"Buy.PaymentMethodBlocked.Link" = "contact support";
+
+"Buy.PaymentMethods" = "Payment methods";
 
 /* Pay with label in buy flow */
 "Buy.PayWith" = "Payer avec";
@@ -1343,6 +1353,10 @@
 
 "ErrorMessages.Kyc.Underage" = "Vous devez avoir au moins 18 ans pour effectuer les vérifications de niveaux 1 et 2.";
 
+"ErrorMessages.LivenessCheckLimit.Description" = "You have reached the maximum attempts for Verification. Please contact customer support for more information";
+
+"ErrorMessages.LivenessCheckLimit.errorMessage" = "Biometric authentication attempts reached";
+
 /* Message that gets shown when we've detected the user has encountered the looping lock-screen bug. (preserve [ ] characters) */
 "ErrorMessages.loopingLockScreen.android" = "RockWallet ne peut pas être authentifié en raison d'un bug dans votre version d'Android. [Veuillez cliquer ici pour plus d'informations.]";
 
@@ -1394,8 +1408,12 @@
 /* Fingerprint was not recognized by the scanner, please try scanning again */
 "ErrorMessages.touchIdFailed.android" = "L'empreinte digitale n'a pas été reconnue. Veuillez réessayer.";
 
+"ErrorMessages.TryAgainLater" = "Try again later";
+
 /* Unknown error text message */
 "ErrorMessages.UnknownError" = "Erreur inconnue.";
+
+"ErrorMessages.VeriffDeclined.Description" = "Please try again and follow the on screen instructions.";
 
 "ExportConfirmation.cancel" = "Annuler";
 
@@ -1908,6 +1926,8 @@
 
 "Platform.transaction_cancelled" = "Transaction annulée";
 
+"Profile.PaymentMethods" = "Payment methods";
+
 "Prompts.ConnectionIssues.title" = "Problèmes de connexion";
 
 "Prompts.CreateAccount.body" = "With your RockWallet account you’ll be able to Swap and Buy seamlessly.";
@@ -2358,9 +2378,6 @@
 
 /* Recovery Phrase button title. This used to be called 'paper key', so leaving the string key as `paperKeyTitle` in order, * to not break existing client code. */
 "SecurityCenter.paperKeyTitle" = "Clé papier";
-
-/* Paper Key button title */
-"SecurityCenter.paperKeyTitle.android" = "Clé papier";
 
 /* PIN button description */
 "SecurityCenter.pinDescription" = "Protège vos RockWallet contre les utilisateurs non autorisés.";
@@ -3652,6 +3669,8 @@
 
 /* Authorize transaction with touch id message */
 "VerifyPin.touchIdMessage" = "Autoriser cette transaction";
+
+"view_coroutine_scope" = "view_scope";
 
 /* Find assets button on add wallets screen */
 "Wallet.FindAssets" = "Vous avez des difficultés à trouver vos actifs ?";
