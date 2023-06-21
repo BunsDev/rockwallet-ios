@@ -19,6 +19,7 @@ enum ExchangeErrors: FEError {
     /// Param 1: amount, param 2 currency symbol
     case balanceTooLow(balance: Decimal, currency: String)
     case insufficientGasERC20(currency: String)
+    case insufficientFunds(currency: String)
     case overDailyLimit(limit: Decimal)
     case overLifetimeLimit(limit: Decimal)
     case overDailyLimitLevel2(limit: Decimal)
@@ -48,6 +49,9 @@ enum ExchangeErrors: FEError {
         switch self {
         case .insufficientGasERC20(let currency):
             return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
+            
+        case .insufficientFunds(let currency):
+            return L10n.ErrorMessages.notEnoughBalance(currency)
             
         case .balanceTooLow(let amount, let currency):
             return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)

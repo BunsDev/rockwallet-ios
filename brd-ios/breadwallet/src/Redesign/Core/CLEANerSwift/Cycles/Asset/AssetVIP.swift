@@ -156,26 +156,22 @@ extension Presenter where Self: AssetActionResponses,
            let fee = actionResponse.fromFeeBasis?.fee {
             let feeAmount = Amount(cryptoAmount: fee, currency: feeCurrency)
 
-            if feeCurrency.isEthereum, feeAmount > feeCurrencyWalletBalance {
-                senderValidationResult = .insufficientGas
-            }
-
             if from.currency == feeAmount.currency {
-                if let balance, from + feeAmount > balance {
+                if let balance, from > balance {
+                    senderValidationResult = .insufficientFunds
+                } else if let balance, from + feeAmount > balance {
                     senderValidationResult = .insufficientGas
                 }
+            } else if from.currency.isERC20Token, feeAmount > feeCurrencyWalletBalance {
+                senderValidationResult = .insufficientGas
             }
         }
         
         if case .insufficientFunds = senderValidationResult {
-            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
-            error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
+            error = ExchangeErrors.insufficientFunds(currency: fromCode)
             
         } else if case .insufficientGas = senderValidationResult {
-            if from.currency.isEthereum {
-                error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
-                
-            } else if from.currency.isERC20Token {
+            if from.currency.isERC20Token {
                 error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
                 
             } else if actionResponse.fromFeeBasis?.fee != nil {

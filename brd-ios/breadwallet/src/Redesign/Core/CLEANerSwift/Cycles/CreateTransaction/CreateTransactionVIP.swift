@@ -172,8 +172,18 @@ extension Interactor where Self: CreateTransactionViewActions,
             self?.dataStore?.fromFeeBasis = fee
             self?.dataStore?.senderValidationResult = sender.validate(amount: from,
                                                                       feeBasis: self?.dataStore?.fromFeeBasis)
+            // Handle the insufficientFunds case when walletkit returns no fees
+            var error: FEError = ExchangeErrors.noFees
+            if fee == nil {
+                switch self?.dataStore?.senderValidationResult {
+                case .insufficientFunds:
+                    error = ExchangeErrors.insufficientFunds(currency: from.currency.code.description)
+                default:
+                    error = ExchangeErrors.noFees
+                }
+            }
             
-            completion?(fee == nil ? ExchangeErrors.noFees : nil)
+            completion?(fee == nil ? error : nil)
         }
     }
 }
