@@ -191,12 +191,12 @@ extension Presenter where Self: AssetActionResponses,
             error = ExchangeErrors.insufficientFunds(currency: fromCode)
             
         } else if case .insufficientGas = senderValidationResult {
+            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+            
             if from.currency.isERC20Token {
-                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromFee?.currency.code ?? fromCode)
                 
-            } else {
-                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+            } else if actionResponse.fromFeeBasis?.fee != nil {
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
                 
             }
