@@ -21,17 +21,12 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     // MARK: - SwapViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        guard dataStore?.currencies.isEmpty == false else { return }
+        prepareCurrencies(viewAction: .init(type: .card))
         
-        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
-        
-        guard currencies.count >= 2 else {
+        guard (dataStore?.supportedCurrencies ?? []).count > 1 else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
             return
         }
-        
-        dataStore?.supportedCurrencies = currencies
-        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
         let fromCurrency: Currency? = dataStore?.fromAmount != nil ? dataStore?.fromAmount?.currency : dataStore?.currencies.first
         
