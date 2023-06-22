@@ -9,12 +9,14 @@
 //
 
 import UIKit
+import WalletKit
 
 protocol AssetViewActions {
     func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
     func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?)
     func setAmount(viewAction: AssetModels.Asset.ViewAction)
+    func prepareCurrencies(viewAction: AssetModels.Item)
 }
 
 protocol AssetActionResponses {
@@ -42,6 +44,8 @@ protocol AssetDataStore: NSObject, TwoStepDataStore {
     var quote: Quote? { get set }
     var showTimer: Bool { get set }
     var isFromBuy: Bool { get set }
+    var currencies: [Currency] { get set }
+    var supportedCurrencies: [String]? { get set }
 }
 
 extension Interactor where Self: AssetViewActions,
@@ -82,6 +86,15 @@ extension Interactor where Self: AssetViewActions,
                                                                                                   to: toCurrency)))
             }
         }
+    }
+    
+    func prepareCurrencies(viewAction: AssetModels.Item) {
+        guard let type = viewAction.type else { return }
+        
+        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies(type: type)
+        
+        dataStore?.supportedCurrencies = currencies
+        dataStore?.currencies = Store.state.currencies.filter { cur in currencies.map { $0.lowercased() }.contains(cur.code.lowercased()) }
     }
     
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?) {}
@@ -156,33 +169,38 @@ extension Presenter where Self: AssetActionResponses,
            let fee = actionResponse.fromFeeBasis?.fee {
             let feeAmount = Amount(cryptoAmount: fee, currency: feeCurrency)
 
-            if feeCurrency.isEthereum, feeAmount > feeCurrencyWalletBalance {
+            if let balance, from > balance {
+                senderValidationResult = .insufficientFunds
+            } else if from.currency == feeAmount.currency, let balance, from + feeAmount > balance {
                 senderValidationResult = .insufficientGas
-            }
-
-            if from.currency == feeAmount.currency {
-                if let balance, from + feeAmount > balance {
-                    senderValidationResult = .insufficientGas
-                }
+            } else if from.currency.isERC20Token, feeAmount > feeCurrencyWalletBalance {
+                senderValidationResult = .insufficientGas
             }
         }
         
-        if case .insufficientFunds = senderValidationResult {
-            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
-            error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
+        if actionResponse.fromFeeBasis?.fee == nil {
+            switch senderValidationResult {
+            case .insufficientFunds:
+                error = ExchangeErrors.insufficientFunds(currency: fromCode)
+                
+            default:
+                error = ExchangeErrors.noFees
+            }
+            
+        } else if case .insufficientFunds = senderValidationResult {
+            error = ExchangeErrors.insufficientFunds(currency: fromCode)
             
         } else if case .insufficientGas = senderValidationResult {
-            if from.currency.isEthereum {
-                error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
-                
-            } else if from.currency.isERC20Token {
-                error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
+            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+            
+            if from.currency.isERC20Token {
+                error = ExchangeErrors.balanceTooLow(balance: value, currency: fromFee?.currency.code ?? fromCode)
                 
             } else if actionResponse.fromFeeBasis?.fee != nil {
-                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
                 
             }
+            
         } else if quote == nil {
             error = ExchangeErrors.noQuote(from: fromCode, to: toCode)
             

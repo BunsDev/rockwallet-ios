@@ -27,14 +27,16 @@ enum BaseInfoModels {
     }
     
     enum Assets {
-        struct ViewAction { }
+        struct ViewAction {
+            let type: PaymentCard.PaymentType
+        }
         struct ActionResponse {
-            var supportedCurrencies: [SupportedCurrency]?
+            var supportedCurrencies: [String]?
         }
         struct ResponseDisplay {
             var title: String?
             var currencies: [Currency]?
-            var supportedCurrencies: [SupportedCurrency]?
+            var supportedCurrencies: [String]?
         }
     }
     

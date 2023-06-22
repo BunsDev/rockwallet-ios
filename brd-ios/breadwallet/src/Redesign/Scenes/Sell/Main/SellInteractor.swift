@@ -28,15 +28,12 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     // MARK: - SellViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
+        prepareCurrencies(viewAction: .init(type: .ach))
         
-        guard !currencies.isEmpty else {
+        guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
             return
         }
-        
-        dataStore?.supportedCurrencies = currencies
-        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
         if dataStore?.selected == nil {
             presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
@@ -61,12 +58,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         generateSender(viewAction: .init(fromAmountCurrency: amount?.currency))
         
-        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAllowanceLifetime), completion: { [weak self] error in
-            if let error {
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            } else {
-                self?.setPresentAmountData(handleErrors: true)
-            }
+        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAllowanceLifetime), completion: { [weak self] _ in
+            self?.setPresentAmountData(handleErrors: true)
+            
+            completion?()
         })
     }
     

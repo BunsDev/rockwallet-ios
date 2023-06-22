@@ -70,7 +70,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var quote: Quote?
     
     var currencies: [Currency] = []
-    var supportedCurrencies: [SupportedCurrency]?
+    var supportedCurrencies: [String]?
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
