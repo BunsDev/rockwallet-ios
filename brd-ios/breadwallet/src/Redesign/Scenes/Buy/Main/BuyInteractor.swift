@@ -28,15 +28,12 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     // MARK: - BuyViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        let currencies = SupportedCurrenciesManager.shared.supportedCurrencies
+        prepareCurrencies(viewAction: .init(type: dataStore?.paymentMethod ?? .card))
         
-        guard !currencies.isEmpty else {
+        guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
             return
         }
-        
-        dataStore?.supportedCurrencies = currencies
-        dataStore?.currencies = dataStore?.currencies.filter { cur in currencies.map { $0.code }.contains(cur.code) } ?? []
         
         if dataStore?.selected == nil {
             presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
@@ -145,8 +142,19 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         guard let currency = amount?.currency else { return }
         amount = .zero(currency)
         
-        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
-            self?.setPresentAmountData(handleErrors: false)
+        prepareCurrencies(viewAction: .init(type: dataStore?.paymentMethod ?? .card))
+        
+        guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
+        }
+        
+        setAmount(viewAction: .init(currency: dataStore?.currencies.first?.code))
+        
+        getPayments(viewAction: .init(), completion: { [weak self] in
+            self?.getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+                self?.setPresentAmountData(handleErrors: false)
+            })
         })
     }
     

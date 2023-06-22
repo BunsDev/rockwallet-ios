@@ -56,9 +56,6 @@ protocol SwapDataStore: BaseDataStore, FetchDataStore, AssetDataStore, CreateTra
     var termCurrencies: [String] { get set }
     var baseAndTermCurrencies: [[String]] { get set }
     
-    var currencies: [Currency] { get set }
-    var supportedCurrencies: [SupportedCurrency]? { get set }
-    
     var isMinimumImpactedByWithdrawalShown: Bool { get set }
 }
 
