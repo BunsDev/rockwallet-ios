@@ -169,12 +169,10 @@ extension Presenter where Self: AssetActionResponses,
            let fee = actionResponse.fromFeeBasis?.fee {
             let feeAmount = Amount(cryptoAmount: fee, currency: feeCurrency)
 
-            if from.currency == feeAmount.currency {
-                if let balance, from > balance {
-                    senderValidationResult = .insufficientFunds
-                } else if let balance, from + feeAmount > balance {
-                    senderValidationResult = .insufficientGas
-                }
+            if let balance, from > balance {
+                senderValidationResult = .insufficientFunds
+            } else if from.currency == feeAmount.currency, let balance, from + feeAmount > balance {
+                senderValidationResult = .insufficientGas
             } else if from.currency.isERC20Token, feeAmount > feeCurrencyWalletBalance {
                 senderValidationResult = .insufficientGas
             }
