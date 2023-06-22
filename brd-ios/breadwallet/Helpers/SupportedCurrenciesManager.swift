@@ -13,13 +13,15 @@ import Foundation
 class SupportedCurrenciesManager {
     static let shared = SupportedCurrenciesManager()
     
-    var supportedCurrencies: [SupportedCurrency] = []
+    private var generalSupportedCurrencies: [String] = []
+    private var achSupportedCurrencies: [String] = []
     
-    func getSupportedCurrencies(completion: (() -> Void)?) {
+    func fetchSupportedCurrencies(completion: (() -> Void)?) {
         SupportedCurrenciesWorker().execute { [weak self] result in
             switch result {
             case .success(let currencies):
-                self?.supportedCurrencies = currencies ?? []
+                self?.generalSupportedCurrencies = currencies?.supportedCurrencies ?? []
+                self?.achSupportedCurrencies = currencies?.achSupportedCurrencies ?? []
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -27,5 +29,20 @@ class SupportedCurrenciesManager {
             
             completion?()
         }
+    }
+    
+    func isSupported(currency code: String, type: PaymentCard.PaymentType) -> Bool {
+        let currencies = supportedCurrencies(type: type)
+        return currencies.contains(where: { $0.lowercased() == code.lowercased() })
+    }
+    
+    func isSupported(currency code: String) -> Bool {
+        let currencies = generalSupportedCurrencies + achSupportedCurrencies
+        return currencies.contains(where: { $0.lowercased() == code.lowercased() })
+    }
+    
+    func supportedCurrencies(type: PaymentCard.PaymentType) -> [String] {
+        let currencies = type == .card ? generalSupportedCurrencies : achSupportedCurrencies
+        return currencies
     }
 }
