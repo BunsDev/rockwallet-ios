@@ -54,9 +54,6 @@ protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataSt
     
     var availablePayments: [PaymentCard.PaymentType] { get set }
     
-    var currencies: [Currency] { get set }
-    var supportedCurrencies: [SupportedCurrency]? { get set }
-    
     var fromRate: Decimal? { get set }
     
     var fromAmount: Amount? { get set }
