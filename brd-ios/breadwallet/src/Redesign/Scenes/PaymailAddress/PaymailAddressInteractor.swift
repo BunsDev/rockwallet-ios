@@ -68,10 +68,10 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
                 let isEmailEmpty = self?.dataStore?.paymailAddress?.isEmpty == true
                 
                 self?.presenter?.presentValidate(actionResponse: .init(email: self?.dataStore?.paymailAddress,
-                                                               isEmailValid: isEmailValid,
-                                                               isEmailEmpty: isEmailEmpty,
-                                                               emailState: .error,
-                                                               isPaymailTaken: true))
+                                                                       isEmailValid: isEmailValid,
+                                                                       isEmailEmpty: isEmailEmpty,
+                                                                       emailState: .error,
+                                                                       isPaymailTaken: true))
             }
         }
     }
