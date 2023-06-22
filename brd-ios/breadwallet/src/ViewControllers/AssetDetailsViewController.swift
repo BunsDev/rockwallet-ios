@@ -53,15 +53,7 @@ class AssetDetailsViewController: UIViewController, Subscriber {
             case .buy:
                 let cardSupported = SupportedCurrenciesManager.shared.isSupported(currency: currency.code, type: .card)
                 let achSupported = SupportedCurrenciesManager.shared.isSupported(currency: currency.code, type: .ach)
-                let type: PaymentCard.PaymentType?
-                
-                if cardSupported {
-                    type = .card
-                } else if achSupported {
-                    type = .ach
-                } else {
-                    type = nil
-                }
+                let type: PaymentCard.PaymentType? = cardSupported ? .card : (achSupported ? .ach : nil)
                 
                 guard let type = type else { return }
                 
