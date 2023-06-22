@@ -69,7 +69,7 @@ class UserManager: NSObject {
         }
         
         group.enter()
-        SupportedCurrenciesManager.shared.getSupportedCurrencies {
+        SupportedCurrenciesManager.shared.fetchSupportedCurrencies {
             group.leave()
         }
         
