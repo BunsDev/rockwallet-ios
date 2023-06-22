@@ -38,7 +38,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var availablePayments: [PaymentCard.PaymentType] = []
     
     var currencies: [Currency] = []
-    var supportedCurrencies: [SupportedCurrency]?
+    var supportedCurrencies: [String]?
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?

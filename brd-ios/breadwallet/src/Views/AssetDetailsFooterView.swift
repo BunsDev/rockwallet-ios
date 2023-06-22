@@ -47,8 +47,8 @@ class AssetDetailsFooterView: UIView, Subscriber {
         setupToolbarButtons()
     }
     
-    var isSupported: Bool {
-        SupportedCurrenciesManager.shared.supportedCurrencies.first(where: { $0.code == currency.code }) != nil
+    private var isSupported: Bool {
+        return SupportedCurrenciesManager.shared.isSupported(currency: currency.code)
     }
     
     private func setupToolbarButtons() {

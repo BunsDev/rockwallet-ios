@@ -89,7 +89,6 @@ class BaseCoordinator: NSObject, Coordinatable {
             }
             
             self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Swap) { vc in
-                vc?.dataStore?.currencies = Store.state.currencies
                 vc?.dataStore?.coreSystem = coreSystem
                 vc?.dataStore?.keyStore = keyStore
                 
@@ -110,7 +109,6 @@ class BaseCoordinator: NSObject, Coordinatable {
             }
             
             self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Buy) { vc in
-                vc?.dataStore?.currencies = Store.state.currencies
                 vc?.dataStore?.paymentMethod = type
                 vc?.dataStore?.coreSystem = coreSystem
                 vc?.dataStore?.keyStore = keyStore
@@ -133,7 +131,6 @@ class BaseCoordinator: NSObject, Coordinatable {
             }
                 
             self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
-                vc?.dataStore?.currencies = Store.state.currencies
                 vc?.dataStore?.coreSystem = coreSystem
                 vc?.dataStore?.keyStore = keyStore
                 
@@ -619,7 +616,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             switch vc.reason {
             case .documentVerification:
                 LoadingView.show()
-                vc.interactor?.getAssetSelectionData(viewModel: .init())
+                vc.interactor?.getAssetSelectionData(viewModel: .init(type: .card))
                 
             case .limitsAuthentication:
                 vc.coordinator?.popToRoot()

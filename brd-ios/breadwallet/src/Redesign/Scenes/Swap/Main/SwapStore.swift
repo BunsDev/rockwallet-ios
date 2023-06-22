@@ -38,7 +38,7 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
     var toRate: Decimal?
     
     var currencies: [Currency] = []
-    var supportedCurrencies: [SupportedCurrency]?
+    var supportedCurrencies: [String]?
     
     var baseCurrencies: [String] = []
     var termCurrencies: [String] = []
