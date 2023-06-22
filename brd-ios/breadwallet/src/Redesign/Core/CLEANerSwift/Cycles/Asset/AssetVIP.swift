@@ -167,7 +167,16 @@ extension Presenter where Self: AssetActionResponses,
             }
         }
         
-        if case .insufficientFunds = senderValidationResult {
+        if actionResponse.fromFeeBasis?.fee == nil {
+            switch senderValidationResult {
+            case .insufficientFunds:
+                error = ExchangeErrors.insufficientFunds(currency: fromCode)
+                
+            default:
+                error = ExchangeErrors.noFees
+            }
+            
+        } else if case .insufficientFunds = senderValidationResult {
             error = ExchangeErrors.insufficientFunds(currency: fromCode)
             
         } else if case .insufficientGas = senderValidationResult {
@@ -175,11 +184,12 @@ extension Presenter where Self: AssetActionResponses,
                 let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromFee?.currency.code ?? fromCode)
                 
-            } else if actionResponse.fromFeeBasis?.fee != nil {
+            } else {
                 let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
                 
             }
+            
         } else if quote == nil {
             error = ExchangeErrors.noQuote(from: fromCode, to: toCode)
             

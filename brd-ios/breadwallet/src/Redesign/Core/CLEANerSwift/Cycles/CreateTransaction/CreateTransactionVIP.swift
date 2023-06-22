@@ -13,7 +13,7 @@ import WalletKit
 
 protocol CreateTransactionViewActions: FeeFetchable {
     func createTransaction(viewAction: CreateTransactionModels.Transaction.ViewAction?, completion: ((FEError?) -> Void)?)
-    func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((FEError?) -> Void)?)
+    func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((Result<TransferFeeBasis, Error>) -> Void)?)
     func generateSender(viewAction: CreateTransactionModels.Sender.ViewAction)
 }
 
@@ -153,7 +153,7 @@ extension Interactor where Self: CreateTransactionViewActions,
         dataStore?.sender = sender
     }
     
-    func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((FEError?) -> Void)?) {
+    func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((Result<TransferFeeBasis, Error>) -> Void)?) {
         guard let from = viewAction.fromAmount,
               let fromAddress = from.currency.wallet?.defaultReceiveAddress,
               let sender = dataStore?.sender,
@@ -161,29 +161,25 @@ extension Interactor where Self: CreateTransactionViewActions,
             dataStore?.fromFeeBasis = nil
             dataStore?.senderValidationResult = nil
             
-            completion?(ExchangeErrors.noFees)
+            completion?(.failure(ExchangeErrors.noFees))
             
             return
         }
         
         fetchWalletKitFee(for: from,
                           with: sender,
-                          address: fromAddress) { [weak self] fee in
-            self?.dataStore?.fromFeeBasis = fee
-            self?.dataStore?.senderValidationResult = sender.validate(amount: from,
-                                                                      feeBasis: self?.dataStore?.fromFeeBasis)
-            // Handle the insufficientFunds case when walletkit returns no fees
-            var error: FEError = ExchangeErrors.noFees
-            if fee == nil {
-                switch self?.dataStore?.senderValidationResult {
-                case .insufficientFunds:
-                    error = ExchangeErrors.insufficientFunds(currency: from.currency.code.description)
-                default:
-                    error = ExchangeErrors.noFees
-                }
+                          address: fromAddress) { [weak self] result in
+            switch result {
+            case .success(let fee):
+                self?.dataStore?.fromFeeBasis = fee
+                self?.dataStore?.senderValidationResult = sender.validate(amount: from,
+                                                                          feeBasis: self?.dataStore?.fromFeeBasis)
+                
+            default:
+                break
             }
             
-            completion?(fee == nil ? error : nil)
+            completion?(result)
         }
     }
 }

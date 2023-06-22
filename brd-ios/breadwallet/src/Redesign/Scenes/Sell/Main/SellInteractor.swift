@@ -61,12 +61,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         generateSender(viewAction: .init(fromAmountCurrency: amount?.currency))
         
-        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAllowanceLifetime), completion: { [weak self] error in
-            if let error {
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            } else {
-                self?.setPresentAmountData(handleErrors: true)
-            }
+        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAllowanceLifetime), completion: { [weak self] _ in
+            self?.setPresentAmountData(handleErrors: true)
+            
+            completion?()
         })
     }
     

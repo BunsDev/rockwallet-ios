@@ -96,12 +96,8 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         
         generateSender(viewAction: .init(fromAmountCurrency: dataStore?.fromAmount?.currency))
         
-        getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] error in
-            if let error {
-                self?.presenter?.presentError(actionResponse: .init(error: error))
-            } else {
-                self?.setPresentAmountData(handleErrors: true)
-            }
+        getFees(viewAction: .init(fromAmount: from, limit: profile.swapAllowanceLifetime), completion: { [weak self] _ in
+            self?.setPresentAmountData(handleErrors: true)
             
             completion?()
         })
