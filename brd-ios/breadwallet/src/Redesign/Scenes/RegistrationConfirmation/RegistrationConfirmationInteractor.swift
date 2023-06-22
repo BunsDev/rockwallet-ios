@@ -314,6 +314,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         }
     }
     
+    /// Password reset request
     private func executeEmailResend() {
         PasswordResetWorker().execute(requestData: PasswordResetRequestData(email: dataStore?.registrationRequestData?.email)) { [weak self] result in
             switch result {
