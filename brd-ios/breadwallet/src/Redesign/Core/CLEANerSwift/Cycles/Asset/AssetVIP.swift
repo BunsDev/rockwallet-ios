@@ -178,7 +178,7 @@ extension Presenter where Self: AssetActionResponses,
             }
         }
         
-        if actionResponse.fromFeeBasis?.fee == nil && (self.isKind(of: SwapPresenter.self) || self.isKind(of: SellPresenter.self)) {
+        if actionResponse.fromFeeBasis?.fee == nil && (isSwap || isSell) {
             switch senderValidationResult {
             case .insufficientFunds:
                 error = ExchangeErrors.insufficientFunds(currency: fromCode)
@@ -204,7 +204,7 @@ extension Presenter where Self: AssetActionResponses,
         } else if quote == nil {
             error = ExchangeErrors.noQuote(from: fromCode, to: toCode)
             
-        } else if ExchangeManager.shared.canSwap(from.currency) == false && self.isKind(of: SwapPresenter.self) {
+        } else if ExchangeManager.shared.canSwap(from.currency) == false && isSwap {
             error = ExchangeErrors.pendingSwap
             
         } else if let feeAmount = fromFee,
