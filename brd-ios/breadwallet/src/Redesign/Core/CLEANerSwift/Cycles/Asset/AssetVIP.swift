@@ -178,7 +178,7 @@ extension Presenter where Self: AssetActionResponses,
             }
         }
         
-        if actionResponse.fromFeeBasis?.fee == nil {
+        if actionResponse.fromFeeBasis?.fee == nil && (self.isKind(of: SwapPresenter.self) || self.isKind(of: SellPresenter.self)) {
             switch senderValidationResult {
             case .insufficientFunds:
                 error = ExchangeErrors.insufficientFunds(currency: fromCode)
