@@ -386,11 +386,7 @@ class ModalPresenter: Subscriber {
                 
             case .privateKey:
                 WalletPicker.present(on: top) { wallet in
-                    let message = L10n.Scanner.paymentPromptMessage(wallet.currency.name)
-                    let alert = UIAlertController.confirmationAlert(title: L10n.Scanner.paymentPromptTitle, message: message) {
-                        self.presentKeyImport(wallet: wallet, scanResult: scanResult)
-                    }
-                    top.present(alert, animated: true)
+                    self.presentKeyImport(wallet: wallet, scanResult: scanResult)
                 }
                 
             case .deepLink(let url):
