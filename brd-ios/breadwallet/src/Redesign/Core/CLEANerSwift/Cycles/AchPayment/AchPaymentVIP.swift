@@ -14,6 +14,7 @@ import LinkKit
 protocol AchViewActions {
     func getPayments(viewAction: AchPaymentModels.Get.ViewAction, completion: (() -> Void)?)
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
+    func setPaymentCard(viewAction: AchPaymentModels.SetPaymentCard.ViewAction)
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction)
 }
 
@@ -44,26 +45,46 @@ extension Interactor where Self: AchViewActions,
                            Self.DataStore: AchDataStore,
                            Self.ActionResponses: AchActionResponses {
     func getPayments(viewAction: AchPaymentModels.Get.ViewAction, completion: (() -> Void)?) {
+        var ach: PaymentCard?
+        var cards: [PaymentCard] = []
+        
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.dataStore?.ach = data?.first(where: { $0.type == .ach })
-                self?.dataStore?.cards = data?.filter {$0.type == .card } ?? []
+                ach = data?.first(where: { $0.type == .ach })
+                cards = data?.filter { $0.type == .card } ?? []
                 
-            default:
-                break
+                self?.dataStore?.ach = ach
+                self?.dataStore?.cards = cards
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
             }
             
             if viewAction.openCards == true {
                 self?.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self?.dataStore?.cards ?? []))
             } else {
-                if self?.dataStore?.paymentMethod == .ach {
-                    self?.presenter?.presentAch(actionResponse: .init(item: self?.dataStore?.ach))
+                guard let paymentMethod = self?.dataStore?.paymentMethod else { return }
+                
+                switch paymentMethod {
+                case .ach:
+                    self?.dataStore?.selected = ach
+                    
+                    self?.presenter?.presentAch(actionResponse: .init(item: ach))
+                    
+                case .card:
+                    self?.setPaymentCard(viewAction: .init(card: self?.dataStore?.selected ?? cards.first))
+                    
+                    (self as? AssetViewActions)?.setAmount(viewAction: .init())
                 }
                 
                 completion?()
             }
         }
+    }
+    
+    func setPaymentCard(viewAction: AchPaymentModels.SetPaymentCard.ViewAction) {
+        dataStore?.selected = viewAction.card
     }
     
     func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction) {
@@ -90,16 +111,12 @@ extension Interactor where Self: AchViewActions,
         }
         
         linkConfiguration.onExit = { [weak self] exit in
-            guard let data = self?.mapStructToDictionary(item: exit).description else {
-                return
-            }
+            guard let data = self?.mapStructToDictionary(item: exit).description else { return }
             PlaidErrorWorker().execute(requestData: PlaidErrorRequestData(error: data))
         }
         
         linkConfiguration.onEvent = { [weak self] event in
-            guard let data = self?.mapStructToDictionary(item: event).description else {
-                return
-            }
+            guard let data = self?.mapStructToDictionary(item: event).description else { return }
             PlaidEventWorker().execute(requestData: PlaidEventRequestData(event: data))
         }
         
@@ -109,8 +126,10 @@ extension Interactor where Self: AchViewActions,
         switch result {
         case .failure(let error):
             presenter?.presentError(actionResponse: .init(error: error))
+            
         case .success(let handler):
             presenter?.presentPlaidToken(actionResponse: .init(plaidHandler: handler))
+            
         }
     }
     
@@ -130,7 +149,7 @@ extension Interactor where Self: AchViewActions,
         }
     }
     
-    func mapStructToDictionary<T>(item: T) -> [String: Any] {
+    private func mapStructToDictionary<T>(item: T) -> [String: Any] {
         let dictionary = Dictionary(uniqueKeysWithValues:
             Mirror(reflecting: item).children.lazy.map({ (label: String?, value: Any) in
                 if let label = label {
@@ -185,11 +204,7 @@ extension Controller where Self: AchResponseDisplays {
         view.endEditing(true)
         
         (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            guard let selectedCard = selectedCard else { return }
-            
-            (self?.interactor as? AssetViewActions)?.setAmount(viewAction: .init(card: selectedCard))
-        }, completion: { [weak self] in
-            (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(), completion: {})
+            (self?.interactor as? AchViewActions)?.setPaymentCard(viewAction: .init(card: selectedCard))
         })
     }
     

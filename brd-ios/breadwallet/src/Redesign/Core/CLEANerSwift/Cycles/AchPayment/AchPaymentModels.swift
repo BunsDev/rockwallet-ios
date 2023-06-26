@@ -26,6 +26,12 @@ enum AchPaymentModels {
         }
     }
     
+    struct SetPaymentCard {
+        struct ViewAction {
+            var card: PaymentCard?
+        }
+    }
+    
     struct PaymentCards {
         struct ViewAction {}
         

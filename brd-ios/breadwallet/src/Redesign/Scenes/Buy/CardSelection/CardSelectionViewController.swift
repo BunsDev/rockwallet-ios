@@ -17,19 +17,18 @@ extension Scenes {
 class CardSelectionViewController: ItemSelectionViewController {
     override var sceneTitle: String? { return L10n.Buy.paymentMethods }
     override var isSearchEnabled: Bool { return false }
-    var paymentCardDeleted: (() -> Void)?
     
-    override func dismissModal() {
-        coordinator?.dismissCardsSelectionFlow(completion: {
-            self.paymentCardDeleted?()
-        })
-    }
+    var paymentCardDeleted: (() -> Void)?
     
     override func setupSubviews() {
         super.setupSubviews()
         
         tableView.separatorStyle = .none
         tableView.register(WrapperTableViewCell<CardSelectionView>.self)
+        
+        itemDeleted = { [weak self] in
+            self?.paymentCardDeleted?()
+        }
     }
     
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {

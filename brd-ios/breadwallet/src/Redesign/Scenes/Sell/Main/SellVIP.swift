@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import WalletKit
 
 extension Scenes {
     static let Sell = SellViewController.self
