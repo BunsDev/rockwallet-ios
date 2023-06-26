@@ -41,7 +41,8 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
         presenter?.presentValidate(actionResponse: .init(email: viewAction.email,
                                                          isEmailValid: isEmailValid,
                                                          isEmailEmpty: isEmailEmpty,
-                                                         emailState: emailState))
+                                                         emailState: emailState,
+                                                         isPaymailTaken: false))
     }
     
     func createPaymailAddress(viewAction: Models.CreatePaymail.ViewAction) {
@@ -58,7 +59,19 @@ class PaymailAddressInteractor: NSObject, Interactor, PaymailAddressViewActions 
                 }
                 
             case .failure(let error):
-                self?.presenter?.presentError(actionResponse: .init(error: error))
+                guard (error as? NetworkingError)?.errorMessage == L10n.ErrorMessages.paymailTaken else {
+                    self?.presenter?.presentError(actionResponse: .init(error: error))
+                    return
+                }
+                
+                let isEmailValid = self?.dataStore?.paymailAddress?.isValidEmailAddress ?? false
+                let isEmailEmpty = self?.dataStore?.paymailAddress?.isEmpty == true
+                
+                self?.presenter?.presentValidate(actionResponse: .init(email: self?.dataStore?.paymailAddress,
+                                                                       isEmailValid: isEmailValid,
+                                                                       isEmailEmpty: isEmailEmpty,
+                                                                       emailState: .error,
+                                                                       isPaymailTaken: true))
             }
         }
     }
