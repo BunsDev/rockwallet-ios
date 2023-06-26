@@ -101,6 +101,9 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
         case .account:
             executeRegular()
             
+        case .forgotPassword:
+            executeEmailResend()
+            
         default:
             break
         }
@@ -304,6 +307,21 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             switch result {
             case .success:
                 self?.presentConfirm()
+                
+            case .failure(let error):
+                self?.presenter?.presentError(actionResponse: .init(error: error))
+            }
+        }
+    }
+    
+    /// Password reset request
+    private func executeEmailResend() {
+        PasswordResetWorker().execute(requestData: PasswordResetRequestData(email: dataStore?.registrationRequestData?.email)) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.presentConfirm(actionResponse: .init())
+                
+                UserManager.shared.setUserCredentials(email: self?.dataStore?.registrationRequestData?.email, sessionToken: nil, sessionTokenHash: nil)
                 
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))

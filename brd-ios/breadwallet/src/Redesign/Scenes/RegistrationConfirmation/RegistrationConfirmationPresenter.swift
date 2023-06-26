@@ -24,11 +24,11 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         
         let sections: [Models.Section] = confirmationType.sections
         
-        var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
+        var help: [ButtonViewModel] = [ButtonViewModel(title: confirmationType.buttonTitle,
                                                        isUnderlined: true,
                                                        callback: viewController?.resendCodeTapped)]
         
-        if UserManager.shared.profile?.status == .emailPending {
+        if UserManager.shared.profile?.status == .emailPending || confirmationType == .forgotPassword {
             help.append(ButtonViewModel(title: L10n.AccountCreation.changeEmail,
                                         isUnderlined: true,
                                         callback: viewController?.changeEmailTapped))

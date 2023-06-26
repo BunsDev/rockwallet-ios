@@ -104,7 +104,8 @@ class ForgotPasswordViewController: BaseTableViewController<AccountCoordinator,
     
     func displayNext(responseDisplay: ForgotPasswordModels.Next.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .emailSent) { [weak self] in
-            self?.coordinator?.dismissFlow()
+            let registrationRequestData = RegistrationRequestData(email: self?.dataStore?.email, password: nil, token: nil, subscribe: false, accountHandling: .register)
+            self?.coordinator?.showRegistrationConfirmation(isModalDismissable: true, confirmationType: .forgotPassword, registrationRequestData: registrationRequestData)
         }
     }
     
