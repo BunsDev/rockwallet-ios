@@ -191,9 +191,10 @@ internal enum L10n {
     internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
-    /// We have sent password recover instructions to%@
+    /// We have sent password recover instructions to:
+    /// %@
     internal static func recoverPasswordInstructions(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to%@")
+      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to:\n%@")
     }
     /// Resend email
     internal static let resendEmail = L10n.tr("Localizable", "Account.ResendEmail", fallback: "Resend email")
@@ -3654,18 +3655,18 @@ internal enum L10n {
     internal static let limitedAssetsMessage = L10n.tr("Localizable", "Wallet.LimitedAssetsMessage", fallback: "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.")
     /// 1D
     internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "1D")
-    /// 1m
-    internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1m")
+    /// 1M
+    internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1M")
     /// 1W
     internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "1W")
-    /// 1y
-    internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1y")
+    /// 1Y
+    internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1Y")
     /// Staking
     internal static let stakingTitle = L10n.tr("Localizable", "Wallet.stakingTitle", fallback: "Staking")
-    /// 3m
-    internal static let threeMonths = L10n.tr("Localizable", "Wallet.three_months", fallback: "3m")
-    /// 3y
-    internal static let threeYears = L10n.tr("Localizable", "Wallet.three_years", fallback: "3y")
+    /// 3M
+    internal static let threeMonths = L10n.tr("Localizable", "Wallet.three_months", fallback: "3M")
+    /// 3Y
+    internal static let threeYears = L10n.tr("Localizable", "Wallet.three_years", fallback: "3Y")
   }
   internal enum WalletConnectionSettings {
     /// Turn off fast sync confirmation question
