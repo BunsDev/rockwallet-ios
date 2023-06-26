@@ -239,8 +239,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         
         verticalStackView.addArrangedSubview(buttonsStackView)
         buttonsStackView.snp.makeConstraints { make in
-            // TODO: Height is not working. 
-            make.height.greaterThanOrEqualTo(ViewSizes.medium.rawValue).priority(.low)
             make.width.equalToSuperview()
         }
         
