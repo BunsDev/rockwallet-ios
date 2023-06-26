@@ -380,7 +380,7 @@ internal enum L10n {
     /// Delete account explanation part three
     internal static let explanationThree = L10n.tr("Localizable", "AccountDelete.ExplanationThree", fallback: "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.")
     /// Delete account explanation part two
-    internal static let explanationTwo = L10n.tr("Localizable", "AccountDelete.ExplanationTwo", fallback: "-You will no longer be able to user your KYC and registration status")
+    internal static let explanationTwo = L10n.tr("Localizable", "AccountDelete.ExplanationTwo", fallback: "-You will no longer be able to use your KYC and registration status")
     /// Recover wallet text after deleting account
     internal static let recoverWallet = L10n.tr("Localizable", "AccountDelete.RecoverWallet", fallback: "I understand that the only way to recover my wallet is by entering my Recovery Phrase")
   }
@@ -2400,8 +2400,8 @@ internal enum L10n {
     internal static let homeButton = L10n.tr("Localizable", "Segwit.HomeButton", fallback: "Proceed")
   }
   internal enum Sell {
-    /// ACH withdrawal will be processed within 3-5 business days.
-    internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will be processed within 3-5 business days.")
+    /// ACH withdrawal will take 3–5 business days to reach your bank account.
+    internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will take 3–5 business days to reach your bank account.")
     /// ACH fee
     internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee")
     /// ACH Withdrawal
@@ -2444,8 +2444,10 @@ internal enum L10n {
     internal static let tryAgain = L10n.tr("Localizable", "Sell.tryAgain", fallback: "Please try again")
     /// Withdraw to
     internal static let widrawToBank = L10n.tr("Localizable", "Sell.widrawToBank", fallback: "Withdraw to")
-    /// Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.
-    internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.")
+    /// Please try again and if the issue persist, please contact customer support
+    internal static let withdrawalErrorText = L10n.tr("Localizable", "Sell.WithdrawalErrorText", fallback: "Please try again and if the issue persist, please contact customer support")
+    /// The funds should reach your selected bank account with 3–5 business days.
+    internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "The funds should reach your selected bank account with 3–5 business days.")
     /// Your withdrawal is being processed
     internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
     /// Sell and Withdraw details
