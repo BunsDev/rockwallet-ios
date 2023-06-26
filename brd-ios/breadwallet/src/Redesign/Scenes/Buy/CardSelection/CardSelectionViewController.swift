@@ -24,7 +24,6 @@ class CardSelectionViewController: ItemSelectionViewController {
         super.setupSubviews()
         
         tableView.separatorStyle = .none
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
         
         itemDeleted = { [weak self] in
             self?.paymentCardDeleted?()

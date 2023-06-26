@@ -44,7 +44,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
+        
         tableView.delaysContentTouches = false
         tableView.backgroundColor = LightColors.Background.two
     }
