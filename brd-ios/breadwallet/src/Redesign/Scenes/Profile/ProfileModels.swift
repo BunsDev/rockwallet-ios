@@ -56,14 +56,12 @@ enum ProfileModels {
     }
     
     struct PaymentCards {
-        struct ViewAction {}
-        
         struct ActionResponse {
             var allPaymentCards: [PaymentCard]
         }
         
         struct ResponseDisplay {
-            var allPaymentCards: [PaymentCard]
+            var model: NavigationViewModel
         }
     }
     
@@ -79,7 +77,7 @@ extension ProfileModels.NavigationItems {
         switch self {
         case .paymentMethods:
             return .init(image: .image(Asset.card.image),
-                         label: .text(L10n.Buy.paymentMethod),
+                         label: .text(L10n.Buy.paymentMethods),
                          button: .init(image: nil))
             
         case .security:

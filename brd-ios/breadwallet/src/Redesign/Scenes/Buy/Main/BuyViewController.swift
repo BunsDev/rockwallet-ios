@@ -230,6 +230,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showInWebView(urlString: Constant.limits, title: L10n.Buy.increaseYourLimits)
     }
     
+    override func onPaymentMethodErrorLinkTapped() {
+        coordinator?.showPaymentMethodSupport()
+    }
+    
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {

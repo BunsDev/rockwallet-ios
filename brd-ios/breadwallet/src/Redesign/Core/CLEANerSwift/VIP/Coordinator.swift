@@ -214,6 +214,10 @@ class BaseCoordinator: NSObject, Coordinatable {
         showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
     }
     
+    func showPaymentMethodSupport() {
+        showInWebView(urlString: Constant.paymentMethodSupport, title: L10n.MenuButton.support)
+    }
+    
     func showKYCLevelOne(isModal: Bool) {
         if isModal {
             openModally(coordinator: KYCCoordinator.self, scene: Scenes.KYCBasic)
@@ -381,13 +385,6 @@ class BaseCoordinator: NSObject, Coordinatable {
         switch error {
         case .accessDenied:
             UserManager.shared.refresh()
-            
-        case .sessionExpired:
-            openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignIn) { vc in
-                vc?.navigationItem.hidesBackButton = true
-            }
-            
-            return
             
         default:
             break
@@ -677,6 +674,9 @@ class BaseCoordinator: NSObject, Coordinatable {
                     }
                 }
                 
+            case .veriffDeclined, .livenessCheckLimit:
+                vc.coordinator?.dismissFlow()
+                
             default:
                 if containsDebit || containsBankAccount {
                     guard let vc = self.navigationController.viewControllers.first as? BuyViewController else {
@@ -695,7 +695,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             case .swap:
                 vc.coordinator?.dismissFlow()
 
-            case .buyCard, .buyAch, .plaidConnection, .sell:
+            case .buyCard, .buyAch, .plaidConnection, .sell, .livenessCheckLimit, .veriffDeclined:
                 vc.coordinator?.showSupport()
                 
             case .limitsAuthentication, .documentVerification, .documentVerificationRetry:

@@ -197,7 +197,7 @@
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Document d'identité";
 
-"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to: %@";
+"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to:\n%@";
 
 "Account.ResendEmail" = "Resend email";
 
@@ -1388,6 +1388,10 @@
 "ErrorMessages.overLifetimeLimit" = "Le montant est supérieur à votre limite à vie de %@ USD. Veuillez mettre à niveau votre compte ou indiquer un montant inférieur.";
 
 "ErrorMessages.overLifetimeLimitLevel2" = "Le montant est supérieur à votre limite quotidienne de %@ USD. Veuillez indiquer un montant inférieur.";
+
+"ErrorMessages.PaymailAlreadyTaken" = "This Paymail is already taken";
+
+"ErrorMessages.PaymailTaken" = "Paymail already taken";
 
 "ErrorMessages.pendingExchange" = "Un échange maximum peut être actif pour une devise à la fois.";
 

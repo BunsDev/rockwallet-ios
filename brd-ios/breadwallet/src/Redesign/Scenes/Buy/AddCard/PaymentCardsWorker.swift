@@ -22,6 +22,7 @@ struct PaymentCardsResponseData: ModelResponse {
         var accountName: String?
         var status: String?
         var cardType: String?
+        var paymentMethodStatus: String?
     }
     
     var paymentInstruments: [PaymentInstrument]
@@ -52,6 +53,37 @@ struct PaymentCard: ItemSelectable {
         case none
     }
     
+    enum PaymentMethodStatus: String, CaseIterableDefaultsLast {
+        case active
+        case suspended
+        case blocked
+        case none
+        
+        var isProblematic: Bool {
+            switch self {
+            case .active:
+                return false
+                
+            default:
+                return true
+            }
+        }
+        
+        var unavailableText: NSMutableAttributedString {
+            let attributedString = NSMutableAttributedString(string: L10n.PaymentMethod.unavailable)
+            
+            let maxRange = NSRange(location: 0, length: attributedString.mutableString.length)
+            attributedString.addAttribute(.font, value: Fonts.Body.three, range: maxRange)
+            attributedString.addAttribute(.foregroundColor, value: LightColors.Error.one, range: maxRange)
+            
+            let range = attributedString.mutableString.range(of: L10n.Buy.PaymentMethodBlocked.link)
+            attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
+            attributedString.addAttribute(.font, value: Fonts.Subtitle.three, range: range)
+            
+            return attributedString
+        }
+    }
+    
     var type: PaymentType
     var id: String
     var fingerprint: String
@@ -63,6 +95,7 @@ struct PaymentCard: ItemSelectable {
     var accountName: String
     var status: Status
     var cardType: CardType
+    var paymentMethodStatus: PaymentMethodStatus
     
     var displayName: String? {
         switch type {
@@ -95,7 +128,8 @@ class PaymentCardsMapper: ModelMapper<PaymentCardsResponseData, [PaymentCard]> {
                                last4: $0.last4 ?? "",
                                accountName: $0.accountName ?? "",
                                status: PaymentCard.Status(rawValue: $0.status ?? "") ?? .none,
-                               cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .none)
+                               cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .none,
+                               paymentMethodStatus: PaymentCard.PaymentMethodStatus(rawValue: $0.paymentMethodStatus ?? "") ?? .none)
         } ?? []
     }
 }

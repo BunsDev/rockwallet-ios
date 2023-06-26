@@ -359,11 +359,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     }
                     
                     if maximum.currency.isEthereum {
-                        let adjustTokenValue = value.tokenValue * 0.95 // Reduce amount for ETH createTxn API call
-                        value = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: value.currency)
                         self?.amountView.forceUpdateAmount(amount: value)
                     } else {
-                        if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
+                        if value != amount && depth < 3 { // Call recursively until the amount + fee = maximum up to 3 iterations
                             self?.amountView.forceUpdateAmount(amount: value)
                             self?.updateFeesMax(depth: depth + 1)
                         }
