@@ -1,5 +1,5 @@
 //
-//  AchPaymentVIP.swift
+//  PaymentMethodsVIP.swift
 //  breadwallet
 //
 //  Created by Rok on 12/12/2022.
@@ -11,40 +11,40 @@
 import Foundation
 import LinkKit
 
-protocol AchViewActions {
-    func getPayments(viewAction: AchPaymentModels.Get.ViewAction, completion: (() -> Void)?)
-    func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction)
-    func setPaymentCard(viewAction: AchPaymentModels.SetPaymentCard.ViewAction)
-    func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction)
+protocol PaymentMethodsViewActions {
+    func getPayments(viewAction: PaymentMethodsModels.Get.ViewAction, completion: (() -> Void)?)
+    func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction)
+    func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction)
+    func achSuccessMessage(viewAction: PaymentMethodsModels.Get.ViewAction)
 }
 
-protocol AchActionResponses: AnyObject {
+protocol PaymentMethodsActionResponses: AnyObject {
     var achPaymentModel: CardSelectionViewModel? { get set }
     
-    func presentPaymentCards(actionResponse: AchPaymentModels.PaymentCards.ActionResponse)
-    func presentAch(actionResponse: AchPaymentModels.Get.ActionResponse)
-    func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse)
+    func presentPaymentCards(actionResponse: PaymentMethodsModels.PaymentCards.ActionResponse)
+    func presentAch(actionResponse: PaymentMethodsModels.Get.ActionResponse)
+    func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse)
 }
 
-protocol AchResponseDisplays: AnyObject {
+protocol PaymentMethodsResponseDisplays: AnyObject {
     var plaidHandler: PlaidLinkKitHandler? { get set }
     
-    func displayPaymentCards(responseDisplay: AchPaymentModels.PaymentCards.ResponseDisplay)
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay)
-    func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay)
+    func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay)
+    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay)
+    func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay)
 }
 
-protocol AchDataStore {
+protocol PaymentMethodsDataStore {
     var selected: PaymentCard? { get set }
     var ach: PaymentCard? { get set }
     var cards: [PaymentCard] { get set }
     var paymentMethod: PaymentCard.PaymentType? { get }
 }
 
-extension Interactor where Self: AchViewActions,
-                           Self.DataStore: AchDataStore,
-                           Self.ActionResponses: AchActionResponses {
-    func getPayments(viewAction: AchPaymentModels.Get.ViewAction, completion: (() -> Void)?) {
+extension Interactor where Self: PaymentMethodsViewActions,
+                           Self.DataStore: PaymentMethodsDataStore,
+                           Self.ActionResponses: PaymentMethodsActionResponses {
+    func getPayments(viewAction: PaymentMethodsModels.Get.ViewAction, completion: (() -> Void)?) {
         var ach: PaymentCard?
         var cards: [PaymentCard] = []
         
@@ -83,11 +83,11 @@ extension Interactor where Self: AchViewActions,
         }
     }
     
-    func setPaymentCard(viewAction: AchPaymentModels.SetPaymentCard.ViewAction) {
+    func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction) {
         dataStore?.selected = viewAction.card
     }
     
-    func getPlaidToken(viewAction: AchPaymentModels.Link.ViewAction) {
+    func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction) {
         guard dataStore?.ach == nil || dataStore?.ach?.status != .statusOk else { return }
         
         PlaidLinkTokenWorker().execute(requestData: PlaidLinkTokenRequestData(accountId: dataStore?.ach?.id)) { [weak self] result in
@@ -163,13 +163,13 @@ extension Interactor where Self: AchViewActions,
     }
 }
 
-extension Presenter where Self: AchActionResponses,
-                          Self.ResponseDisplays: AchResponseDisplays {
-    func presentPaymentCards(actionResponse: AchPaymentModels.PaymentCards.ActionResponse) {
+extension Presenter where Self: PaymentMethodsActionResponses,
+                          Self.ResponseDisplays: PaymentMethodsResponseDisplays {
+    func presentPaymentCards(actionResponse: PaymentMethodsModels.PaymentCards.ActionResponse) {
         viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
     }
     
-    func presentAch(actionResponse: AchPaymentModels.Get.ActionResponse) {
+    func presentAch(actionResponse: PaymentMethodsModels.Get.ActionResponse) {
         guard let item = actionResponse.item else {
             achPaymentModel = .init(title: .text(L10n.Sell.achWithdrawal),
                                     subtitle: .text(L10n.Buy.linkBankAccount),
@@ -194,24 +194,24 @@ extension Presenter where Self: AchActionResponses,
         viewController?.displayAch(responseDisplay: .init(viewModel: achPaymentModel))
     }
     
-    func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse) {
+    func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse) {
         viewController?.displayPlaidToken(responseDisplay: .init(plaidHandler: actionResponse.plaidHandler))
     }
 }
 
-extension Controller where Self: AchResponseDisplays {
-    func displayPaymentCards(responseDisplay: AchPaymentModels.PaymentCards.ResponseDisplay) {
+extension Controller where Self: PaymentMethodsResponseDisplays {
+    func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay) {
         view.endEditing(true)
         
         (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
-            (self?.interactor as? AchViewActions)?.setPaymentCard(viewAction: .init(card: selectedCard))
+            (self?.interactor as? PaymentMethodsViewActions)?.setPaymentCard(viewAction: .init(card: selectedCard))
         })
     }
     
-    func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay) {
+    func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay) {
         plaidHandler = responseDisplay.plaidHandler
         plaidHandler?.open(presentUsing: .viewController(self))
     }
     
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {}
+    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay) {}
 }

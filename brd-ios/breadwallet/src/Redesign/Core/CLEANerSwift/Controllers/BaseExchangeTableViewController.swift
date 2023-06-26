@@ -76,12 +76,12 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                switch (self?.dataStore as? AchDataStore)?.paymentMethod {
+                switch (self?.dataStore as? PaymentMethodsDataStore)?.paymentMethod {
                 case .ach:
-                    (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
+                    (self?.interactor as? PaymentMethodsViewActions)?.getPlaidToken(viewAction: .init())
                     
                 default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
+                    (self?.interactor as? PaymentMethodsViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
                 }
             }
             
