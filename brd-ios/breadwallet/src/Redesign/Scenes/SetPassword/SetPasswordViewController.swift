@@ -129,7 +129,7 @@ class SetPasswordViewController: BaseTableViewController<AccountCoordinator,
     
     func displayNext(responseDisplay: SetPasswordModels.Next.ResponseDisplay) {
         coordinator?.showBottomSheetAlert(type: .passwordUpdated) { [weak self] in
-            self?.coordinator?.dismissFlow()
+            self?.coordinator?.showSignIn()
         }
     }
     

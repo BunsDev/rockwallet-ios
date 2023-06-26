@@ -191,9 +191,10 @@ internal enum L10n {
     internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
-    /// We have sent password recover instructions to: %@
+    /// We have sent password recover instructions to:
+    /// %@
     internal static func recoverPasswordInstructions(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to: %@")
+      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to:\n%@")
     }
     /// Resend email
     internal static let resendEmail = L10n.tr("Localizable", "Account.ResendEmail", fallback: "Resend email")
@@ -1415,6 +1416,10 @@ internal enum L10n {
     internal static func overLifetimeLimitLevel2(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimitLevel2", String(describing: p1), fallback: "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.")
     }
+    /// This Paymail is already taken
+    internal static let paymailAlreadyTaken = L10n.tr("Localizable", "ErrorMessages.PaymailAlreadyTaken", fallback: "This Paymail is already taken")
+    /// Paymail already taken
+    internal static let paymailTaken = L10n.tr("Localizable", "ErrorMessages.PaymailTaken", fallback: "Paymail already taken")
     /// A maximum of one swap can be active for a currency at a time.
     internal static let pendingExchange = L10n.tr("Localizable", "ErrorMessages.pendingExchange", fallback: "A maximum of one swap can be active for a currency at a time.")
     /// PIN Authentication failed.
@@ -3648,20 +3653,20 @@ internal enum L10n {
     internal static let limitedAssets = L10n.tr("Localizable", "Wallet.LimitedAssets", fallback: "Limited assets")
     /// Limited assets message in add wallets popup
     internal static let limitedAssetsMessage = L10n.tr("Localizable", "Wallet.LimitedAssetsMessage", fallback: "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.")
-    /// 24h
-    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "24h")
-    /// 1m
-    internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1m")
-    /// 7d
-    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "7d")
-    /// 1y
-    internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1y")
+    /// 1D
+    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "1D")
+    /// 1M
+    internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1M")
+    /// 1W
+    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "1W")
+    /// 1Y
+    internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1Y")
     /// Staking
     internal static let stakingTitle = L10n.tr("Localizable", "Wallet.stakingTitle", fallback: "Staking")
-    /// 3m
-    internal static let threeMonths = L10n.tr("Localizable", "Wallet.three_months", fallback: "3m")
-    /// 3y
-    internal static let threeYears = L10n.tr("Localizable", "Wallet.three_years", fallback: "3y")
+    /// 3M
+    internal static let threeMonths = L10n.tr("Localizable", "Wallet.three_months", fallback: "3M")
+    /// 3Y
+    internal static let threeYears = L10n.tr("Localizable", "Wallet.three_years", fallback: "3Y")
   }
   internal enum WalletConnectionSettings {
     /// Turn off fast sync confirmation question

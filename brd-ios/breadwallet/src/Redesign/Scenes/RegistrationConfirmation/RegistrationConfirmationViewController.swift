@@ -131,13 +131,15 @@ class RegistrationConfirmationViewController: BaseTableViewController<AccountCoo
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay) {
         view.endEditing(true)
         
-        coordinator?.showBottomSheetAlert(type: .generalSuccess, completion: { [weak self] in
+        let isGeneralSuccessAlert = dataStore?.confirmationType != .forgotPassword
+        
+        coordinator?.showBottomSheetAlert(type: isGeneralSuccessAlert ? .generalSuccess : .emailSent, completion: { [weak self] in
             guard let self = self else { return }
             
             switch self.dataStore?.confirmationType {
             case .twoStepEmailLogin, .twoStepAppLogin, .twoStepAppBackupCode, .twoStepEmailResetPassword,
                     .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepEmailSendFunds,
-                    .twoStepEmailBuy, .twoStepAppBuy, .twoStepAppRequired, .twoStepEmailRequired:
+                    .twoStepEmailBuy, .twoStepAppBuy, .twoStepAppRequired, .twoStepEmailRequired, .forgotPassword:
                 self.didDismiss?(true)
                 
                 self.coordinator?.dismissFlow()
