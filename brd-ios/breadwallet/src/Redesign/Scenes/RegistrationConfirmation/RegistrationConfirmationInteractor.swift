@@ -10,17 +10,19 @@ import UIKit
 
 class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConfirmationViewActions {
     typealias Models = RegistrationConfirmationModels
-
+    
     var presenter: RegistrationConfirmationPresenter?
     var dataStore: RegistrationConfirmationStore?
-
+    
     // MARK: - RegistrationConfirmationViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
         guard let confirmationType = dataStore?.confirmationType else { return }
         
         presenter?.presentData(actionResponse: .init(item: Models.Item(type: confirmationType,
-                                                                       email: UserDefaults.email ?? dataStore?.registrationRequestData?.email)))
+                                                                       email: UserDefaults.email
+                                                                       ?? dataStore?.registrationRequestData?.email
+                                                                       ?? DynamicLinksManager.shared.email)))
         
         switch dataStore?.confirmationType {
         case .twoStepEmail,
@@ -80,7 +82,7 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
             
         case .twoStepAppRequired, .twoStepEmailRequired:
             executeRefreshUserWithCode()
-        
+            
         case .twoStepAppBackupCode(let type):
             confirm(viewAction: .init(type: type))
             
@@ -91,11 +93,12 @@ class RegistrationConfirmationInteractor: NSObject, Interactor, RegistrationConf
     
     func resend(viewAction: RegistrationConfirmationModels.Resend.ViewAction) {
         switch dataStore?.confirmationType {
-        case .twoStepEmailLogin, .twoStepAppLogin, .twoStepEmailResetPassword, .twoStepAppResetPassword:
+        case .twoStepEmailLogin, .twoStepAppLogin, .twoStepEmailResetPassword,
+                .twoStepAppResetPassword, .twoStepEmailBuy, .twoStepEmailSendFunds:
             executeCodeEmailRequest()
             
-        case .twoStepEmail, .twoStepEmailSendFunds, .twoStepApp, .twoStepAccountEmailSettings,
-                .twoStepAccountAppSettings, .twoStepEmailBuy, .twoStepEmailRequired, .twoStepDisable:
+        case .twoStepEmail, .twoStepApp, .twoStepAccountEmailSettings,
+                .twoStepAccountAppSettings, .twoStepEmailRequired, .twoStepDisable:
             executeChangeRequest()
             
         case .account:

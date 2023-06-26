@@ -169,37 +169,42 @@ extension Presenter where Self: AssetActionResponses,
            let fee = actionResponse.fromFeeBasis?.fee {
             let feeAmount = Amount(cryptoAmount: fee, currency: feeCurrency)
 
-            if feeCurrency.isEthereum, feeAmount > feeCurrencyWalletBalance {
+            if let balance, from > balance {
+                senderValidationResult = .insufficientFunds
+            } else if from.currency == feeAmount.currency, let balance, from + feeAmount > balance {
                 senderValidationResult = .insufficientGas
-            }
-
-            if from.currency == feeAmount.currency {
-                if let balance, from + feeAmount > balance {
-                    senderValidationResult = .insufficientGas
-                }
+            } else if from.currency.isERC20Token, feeAmount > feeCurrencyWalletBalance {
+                senderValidationResult = .insufficientGas
             }
         }
         
-        if case .insufficientFunds = senderValidationResult {
-            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
-            error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
+        if actionResponse.fromFeeBasis?.fee == nil && (isSwap || isSell) {
+            switch senderValidationResult {
+            case .insufficientFunds:
+                error = ExchangeErrors.insufficientFunds(currency: fromCode)
+                
+            default:
+                error = ExchangeErrors.noFees
+            }
+            
+        } else if case .insufficientFunds = senderValidationResult {
+            error = ExchangeErrors.insufficientFunds(currency: fromCode)
             
         } else if case .insufficientGas = senderValidationResult {
-            if from.currency.isEthereum {
-                error = ExchangeErrors.notEnoughEthForFee(currency: fromCode)
-                
-            } else if from.currency.isERC20Token {
-                error = ExchangeErrors.insufficientGasERC20(currency: fromCode)
+            let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
+            
+            if from.currency.isERC20Token {
+                error = ExchangeErrors.balanceTooLow(balance: value, currency: fromFee?.currency.code ?? fromCode)
                 
             } else if actionResponse.fromFeeBasis?.fee != nil {
-                let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
                 
             }
+            
         } else if quote == nil {
             error = ExchangeErrors.noQuote(from: fromCode, to: toCode)
             
-        } else if ExchangeManager.shared.canSwap(from.currency) == false && self.isKind(of: SwapPresenter.self) {
+        } else if ExchangeManager.shared.canSwap(from.currency) == false && isSwap {
             error = ExchangeErrors.pendingSwap
             
         } else if let feeAmount = fromFee,
