@@ -95,7 +95,8 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
               amount.tokenValue > 0,
               selected != nil,
               feeAmount != nil,
-              feeAmount != nil
+              feeAmount != nil,
+              isPaymentMethodProblematic == false
         else {
             return false
         }
@@ -110,5 +111,18 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
         
         return isCustom
+    }
+    
+    private var isPaymentMethodProblematic: Bool {
+        switch paymentMethod {
+        case .card:
+            return selected?.paymentMethodStatus.isProblematic ?? true
+            
+        case .ach:
+            return ach?.paymentMethodStatus.isProblematic ?? true
+            
+        default:
+            return true
+        }
     }
 }
