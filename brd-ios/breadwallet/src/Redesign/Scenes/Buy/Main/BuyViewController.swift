@@ -307,7 +307,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showPopup(with: responseDisplay.model)
     }
     
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
+    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay) {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         

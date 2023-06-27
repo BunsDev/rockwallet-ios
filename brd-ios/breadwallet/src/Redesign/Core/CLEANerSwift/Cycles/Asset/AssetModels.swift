@@ -41,7 +41,6 @@ enum AssetModels {
             var toTokenValue: String?
             
             var currency: String?
-            var card: PaymentCard?
         }
         
         struct ActionResponse {

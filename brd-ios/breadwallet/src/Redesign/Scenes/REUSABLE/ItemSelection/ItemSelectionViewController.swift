@@ -25,6 +25,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     var itemSelected: ((Any?) -> Void)?
     var searchController = UISearchController()
     
+    var itemDeleted: (() -> Void)?
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
@@ -130,6 +132,7 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     // MARK: - User Interaction
 
     // MARK: - ItemSelectionResponseDisplay
+    
     func displayActionSheetRemovePayment(responseDisplay: ItemSelectionModels.ActionSheet.ResponseDisplay) {
         coordinator?.showPaymentsActionSheet(okButtonTitle: responseDisplay.actionSheetOkButton,
                                              cancelButtonTitle: responseDisplay.actionSheetCancelButton,
@@ -157,6 +160,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     
     func displayRemovePaymentSuccess(responseDisplay: ItemSelectionModels.RemovePayment.ResponseDisplay) {
         interactor?.getPaymentCards(viewAction: .init())
+        
+        itemDeleted?()
     }
 
     // MARK: - Additional Helpers

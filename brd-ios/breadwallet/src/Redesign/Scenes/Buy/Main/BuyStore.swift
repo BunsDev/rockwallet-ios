@@ -62,7 +62,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var toAmount: Amount?
     
-    // MARK: - AchDataStore
+    // MARK: - PaymentMethodsDataStore
     var ach: PaymentCard?
     var selected: PaymentCard?
     var cards: [PaymentCard] = []

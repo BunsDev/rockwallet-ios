@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import WalletKit
 
 extension Scenes {
     static let Sell = SellViewController.self
@@ -16,7 +15,7 @@ extension Scenes {
 protocol SellViewActions: BaseViewActions,
                           FetchViewActions,
                           AssetViewActions,
-                          AchViewActions,
+                          PaymentMethodsViewActions,
                           CreateTransactionViewActions {
     func showOrderPreview(viewAction: SellModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: SellModels.AssetSelector.ViewAction)
@@ -28,7 +27,7 @@ protocol SellViewActions: BaseViewActions,
 protocol SellActionResponses: BaseActionResponses,
                               FetchActionResponses,
                               AssetActionResponses,
-                              AchActionResponses {
+                              PaymentMethodsActionResponses {
     func presentOrderPreview(actionResponse: SellModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: SellModels.AssetSelector.ActionResponse)
     func presentAchSuccess(actionResponse: SellModels.AchSuccess.ActionResponse)
@@ -41,7 +40,7 @@ protocol SellResponseDisplays: AnyObject,
                                BaseResponseDisplays,
                                FetchResponseDisplays,
                                AssetResponseDisplays,
-                               AchResponseDisplays {
+                               PaymentMethodsResponseDisplays {
     func displayOrderPreview(responseDisplay: SellModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: SellModels.AssetSelector.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: SellModels.LimitsInfo.ResponseDisplay)
@@ -49,7 +48,7 @@ protocol SellResponseDisplays: AnyObject,
     func displayAssetSelectionMessage(responseDisplay: SellModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, CreateTransactionDataStore, TwoStepDataStore {
+protocol SellDataStore: BaseDataStore, FetchDataStore, AssetDataStore, PaymentMethodsDataStore, CreateTransactionDataStore, TwoStepDataStore {
     // MARK: - SellDataStore
     
     var availablePayments: [PaymentCard.PaymentType] { get set }

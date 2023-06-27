@@ -16,7 +16,7 @@ extension Scenes {
 protocol BuyViewActions: BaseViewActions,
                          FetchViewActions,
                          AssetViewActions,
-                         AchViewActions {
+                         PaymentMethodsViewActions {
     func showOrderPreview(viewAction: BuyModels.OrderPreview.ViewAction)
     func navigateAssetSelector(viewAction: BuyModels.AssetSelector.ViewAction)
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction)
@@ -29,7 +29,7 @@ protocol BuyViewActions: BaseViewActions,
 protocol BuyActionResponses: BaseActionResponses,
                              FetchActionResponses,
                              AssetActionResponses,
-                             AchActionResponses {
+                             PaymentMethodsActionResponses {
     func presentOrderPreview(actionResponse: BuyModels.OrderPreview.ActionResponse)
     func presentNavigateAssetSelector(actionResponse: BuyModels.AssetSelector.ActionResponse)
     func presentMessage(actionResponse: BuyModels.RetryPaymentMethod.ActionResponse)
@@ -39,7 +39,7 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentAssetSelectionMessage(actionResponse: BuyModels.AssetSelectionMessage.ActionResponse)
 }
 
-protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays, AchResponseDisplays {
+protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays, PaymentMethodsResponseDisplays {
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay)
@@ -47,7 +47,7 @@ protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisp
     func displayAssetSelectionMessage(responseDisplay: BuyModels.AssetSelectionMessage.ResponseDisplay)
 }
 
-protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataStore, TwoStepDataStore, CreateTransactionDataStore {
+protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, PaymentMethodsDataStore, TwoStepDataStore, CreateTransactionDataStore {
     var from: Decimal? { get set }
     var to: Decimal? { get set }
     var toAmount: Amount? { get set }
@@ -56,7 +56,7 @@ protocol BuyDataStore: BaseDataStore, FetchDataStore, AssetDataStore, AchDataSto
     var availablePayments: [PaymentCard.PaymentType] { get set }
 }
 
-protocol BuyDataPassing: AchDataStore {
+protocol BuyDataPassing: PaymentMethodsDataStore {
     var dataStore: (any BuyDataStore)? { get }
 }
 

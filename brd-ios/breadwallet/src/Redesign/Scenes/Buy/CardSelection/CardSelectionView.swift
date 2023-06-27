@@ -157,7 +157,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         cardDetailsView.isHidden = viewModel?.logo == nil
         
         arrowImageView.setup(with: viewModel?.arrow)
-        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden)
+        arrowImageView.isHidden = (viewModel?.expiration != nil && titleLabel.isHidden) || viewModel?.userInteractionEnabled == false
         
         let moreOption = viewModel?.expiration != nil && titleLabel.isHidden
         
