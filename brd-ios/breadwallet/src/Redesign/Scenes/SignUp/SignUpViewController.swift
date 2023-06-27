@@ -104,6 +104,9 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
                 config.isSecureTextEntry = true
                 
                 view.configure(with: config)
+                view.snp.makeConstraints { make in
+                    make.top.equalToSuperview()
+                }
             }
             
         case .confirmPassword:
@@ -117,6 +120,9 @@ class SignUpViewController: BaseTableViewController<AccountCoordinator,
                 config.isSecureTextEntry = true
                 
                 view.configure(with: config)
+                view.snp.makeConstraints { make in
+                    make.top.equalToSuperview()
+                }
             }
             
         case .notice:
