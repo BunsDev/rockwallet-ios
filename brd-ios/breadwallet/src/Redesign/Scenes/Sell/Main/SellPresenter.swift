@@ -26,14 +26,10 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .rateAndTimer,
             .swapCard,
             .paymentMethod,
-            .accountLimits,
-            .increaseLimits
+            .accountLimits
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        
-        let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
-        limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
         let paymentMethodViewModel: CardSelectionViewModel
         if item.type == .ach && item.achEnabled == true {
@@ -57,9 +53,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             ],
             .accountLimits: [
                 LabelViewModel.text("")
-            ],
-            .increaseLimits: [LabelViewModel.attributedText(limitsString)]
+            ]
         ]
+        
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     

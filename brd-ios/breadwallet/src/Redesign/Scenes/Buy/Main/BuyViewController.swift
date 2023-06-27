@@ -73,8 +73,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
-        case .increaseLimits:
-            cell = self.tableView(tableView, increaseLimitsCellForRowAt: indexPath)
+        case .limitActions:
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
             
         default:
             cell = UITableViewCell()
@@ -164,34 +164,23 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Body.three,
-                                       textColor: LightColors.Text.two,
-                                       isUserInteractionEnabled: dataStore?.isCustomLimits ?? false))
+                                       textColor: LightColors.Text.two))
             view.setup(with: model)
-            
-            view.didTapLink = { [weak self] in
-                self?.interactor?.showLimitsInfo(viewAction: .init())
-            }
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
+        
+        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
+            return cell
         }
         
         cell.setup { view in
-            view.configure(with: .init(font: Fonts.Body.three,
-                                       textColor: LightColors.Text.two,
-                                       isUserInteractionEnabled: true))
-            view.setup(with: model)
-            
-            view.didTapLink = { [weak self] in
-                self?.increaseLimitsTapped()
-            }
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: .vertical))
         }
         
         return cell
@@ -230,6 +219,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showInWebView(urlString: Constant.limits, title: L10n.Buy.increaseYourLimits)
     }
     
+    override func limitsInfoTapped() {
+        interactor?.showLimitsInfo(viewAction: .init())
+    }
+    
     override func onPaymentMethodErrorLinkTapped() {
         coordinator?.showPaymentMethodSupport()
     }
@@ -260,8 +253,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let limitActionsSection = sections.firstIndex(where: { $0.hashValue == Models.Section.limitActions.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView>,
+              let limitActionsCell = tableView.cellForRow(at: IndexPath(row: 0, section: limitActionsSection)) as? WrapperTableViewCell<MultipleButtonsView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
@@ -275,6 +270,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+        limitActionsCell.wrappedView.setup(with: responseDisplay.limitActions)
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {
