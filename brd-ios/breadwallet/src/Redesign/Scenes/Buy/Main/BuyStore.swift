@@ -34,13 +34,25 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
-              let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description else { return nil }
+              let weeklyCardText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly),
+              let weeklyAchText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly) else { return nil }
         
-        let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
+        let weeklyText = paymentMethod == .card ? weeklyCardText : weeklyAchText
+        let limits: String
+        
+        switch paymentMethod {
+        case .card:
+            limits = L10n.Buy.buyLimits(minText, Constant.usdCurrencyCode, weeklyText, Constant.usdCurrencyCode)
+            
+        case .ach:
+            limits = L10n.Buy.buyLimitsAch(minText, Constant.usdCurrencyCode, weeklyText, Constant.usdCurrencyCode)
+            
+        default:
+            limits = ""
+        }
+        
         let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
-        
-        let limitsString = NSMutableAttributedString(string: L10n.Buy.buyLimits(minText, maxText, moreInfo))
+        let limitsString = NSMutableAttributedString(string: limits + " " + moreInfo)
         
         guard isCustomLimits else { return limitsString }
         
