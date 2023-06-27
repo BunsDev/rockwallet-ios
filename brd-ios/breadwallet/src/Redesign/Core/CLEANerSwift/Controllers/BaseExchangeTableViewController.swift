@@ -80,8 +80,11 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                 case .ach:
                     (self?.interactor as? PaymentMethodsViewActions)?.getPlaidToken(viewAction: .init())
                     
-                default:
+                case .card:
                     (self?.interactor as? PaymentMethodsViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
+                    
+                default:
+                    break
                 }
             }
             

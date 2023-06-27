@@ -54,9 +54,6 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 ach = data?.first(where: { $0.type == .ach })
                 cards = data?.filter { $0.type == .card } ?? []
                 
-                self?.dataStore?.ach = ach
-                self?.dataStore?.cards = cards
-                
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
@@ -68,12 +65,16 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 
                 switch paymentMethod {
                 case .ach:
+                    self?.dataStore?.ach = ach
                     self?.dataStore?.selected = ach
                     
                     self?.presenter?.presentAch(actionResponse: .init(item: ach))
                     
                 case .card:
-                    self?.setPaymentCard(viewAction: .init(card: self?.dataStore?.selected ?? cards.first))
+                    let card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
+                    self?.setPaymentCard(viewAction: .init(card: card))
+                    
+                    self?.dataStore?.cards = cards
                     
                     (self as? AssetViewActions)?.setAmount(viewAction: .init())
                 }
@@ -204,6 +205,7 @@ extension Controller where Self: PaymentMethodsResponseDisplays {
         view.endEditing(true)
         
         (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
+            guard let selectedCard else { return }
             (self?.interactor as? PaymentMethodsViewActions)?.setPaymentCard(viewAction: .init(card: selectedCard))
         })
     }
