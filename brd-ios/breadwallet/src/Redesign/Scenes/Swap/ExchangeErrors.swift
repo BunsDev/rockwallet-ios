@@ -47,14 +47,13 @@ enum ExchangeErrors: FEError {
     
     var errorMessage: String {
         switch self {
-        case .insufficientGasERC20(let amount, let currency):
+        case .insufficientGasERC20(let amount, let currency),
+                .balanceTooLow(let amount, let currency),
+                .notEnoughEthForFee(let amount, let currency):
             return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)
             
         case .insufficientFunds(let currency):
             return L10n.ErrorMessages.notEnoughBalance(currency)
-            
-        case .balanceTooLow(let amount, let currency):
-            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)
             
         case .tooLow(let amount, let currency, let reason):
             switch reason {
@@ -105,9 +104,6 @@ enum ExchangeErrors: FEError {
             
         case  .pinConfirmation:
             return L10n.ErrorMessages.pinConfirmationFailed
-            
-        case .notEnoughEthForFee(let amount, let currency):
-            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)
             
         case .failed(let error):
             return L10n.ErrorMessages.exchangeFailed(error?.localizedDescription ?? "")
