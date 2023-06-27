@@ -178,6 +178,8 @@
 
 "Account.PasswordDoNotMatch" = "Passwords do not match";
 
+"Account.PasswordRecoverDescription" = "We have sent password recover instructions to";
+
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "En cours…";
@@ -2450,6 +2452,8 @@
 "Sell.tryAgain" = "Please try again";
 
 "Sell.widrawToBank" = "Withdraw to";
+
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
 
 "Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
 

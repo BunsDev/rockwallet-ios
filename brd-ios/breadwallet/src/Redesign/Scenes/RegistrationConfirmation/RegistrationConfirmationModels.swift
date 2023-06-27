@@ -128,7 +128,7 @@ enum RegistrationConfirmationModels {
                 return nil
                 
             case .forgotPassword:
-                return L10n.Account.recoverPasswordInstructions(email) 
+                return "\(L10n.Account.passwordRecoverDescription)\(email)"
             }
         }
     }

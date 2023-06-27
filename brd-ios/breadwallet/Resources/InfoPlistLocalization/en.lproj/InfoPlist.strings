@@ -178,6 +178,8 @@
 
 "Account.PasswordDoNotMatch" = "Passwords do not match";
 
+"Account.PasswordRecoverDescription" = "We have sent password recover instructions to";
+
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "Pending";
@@ -362,7 +364,7 @@
 "AccountDelete.ExplanationThree" = "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.";
 
 /* Delete account explanation part two */
-"AccountDelete.ExplanationTwo" = "-You will no longer be able to user your KYC and registration status";
+"AccountDelete.ExplanationTwo" = "-You will no longer be able to use your KYC and registration status";
 
 /* Recover wallet text after deleting account */
 "AccountDelete.RecoverWallet" = "I understand that the only way to recover my wallet is by entering my Recovery Phrase";
@@ -2419,7 +2421,7 @@
 /* Segwit button label that takes the user back to the home screen once SegWit is enabled. */
 "Segwit.HomeButton" = "Proceed";
 
-"Sell.achDurationWarning" = "ACH withdrawal will be processed within 3-5 business days.";
+"Sell.achDurationWarning" = "ACH withdrawal will take 3–5 business days to reach your bank account.";
 
 "Sell.achFee" = "ACH fee";
 
@@ -2451,7 +2453,9 @@
 
 "Sell.widrawToBank" = "Withdraw to";
 
-"Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
+
+"Sell.WithdrawalSuccessText" = "The funds should reach your selected bank account with 3–5 business days.";
 
 "Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
 
