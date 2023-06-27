@@ -18,12 +18,12 @@ enum ExchangeErrors: FEError {
     case tooHigh(amount: Decimal, currency: String, reason: BaseInfoModels.FailureReason)
     /// Param 1: amount, param 2 currency symbol
     case balanceTooLow(balance: Decimal, currency: String)
-    case insufficientGasERC20(currency: String)
+    case insufficientGasERC20(balance: Decimal, currency: String)
     case insufficientFunds(currency: String)
     case overDailyLimit(limit: Decimal)
     case overLifetimeLimit(limit: Decimal)
     case overDailyLimitLevel2(limit: Decimal)
-    case notEnoughEthForFee(currency: String)
+    case notEnoughEthForFee(balance: Decimal, currency: String)
     case failed(error: Error?)
     case supportedCurrencies(error: Error?)
     case noFees
@@ -47,14 +47,13 @@ enum ExchangeErrors: FEError {
     
     var errorMessage: String {
         switch self {
-        case .insufficientGasERC20(let currency):
-            return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
+        case .insufficientGasERC20(let amount, let currency),
+                .balanceTooLow(let amount, let currency),
+                .notEnoughEthForFee(let amount, let currency):
+            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)
             
         case .insufficientFunds(let currency):
             return L10n.ErrorMessages.notEnoughBalance(currency)
-            
-        case .balanceTooLow(let amount, let currency):
-            return L10n.ErrorMessages.balanceTooLow(ExchangeFormatter.current.string(for: amount) ?? "", currency, currency)
             
         case .tooLow(let amount, let currency, let reason):
             switch reason {
@@ -105,9 +104,6 @@ enum ExchangeErrors: FEError {
             
         case  .pinConfirmation:
             return L10n.ErrorMessages.pinConfirmationFailed
-            
-        case .notEnoughEthForFee(let currency):
-            return L10n.ErrorMessages.ethBalanceLowAddEth(currency)
             
         case .failed(let error):
             return L10n.ErrorMessages.exchangeFailed(error?.localizedDescription ?? "")

@@ -171,9 +171,11 @@ extension Presenter where Self: AssetActionResponses,
 
             if let balance, from > balance {
                 senderValidationResult = .insufficientFunds
-            } else if from.currency == feeAmount.currency, let balance, from + feeAmount > balance {
+            // ETH feeBasis on insufficient gas includes from + feeAmount
+            } else if from.currency.isERC20Token || from.currency.isEthereum,
+                      feeAmount > feeCurrencyWalletBalance {
                 senderValidationResult = .insufficientGas
-            } else if from.currency.isERC20Token, feeAmount > feeCurrencyWalletBalance {
+            } else if from.currency == feeAmount.currency, let balance, from + feeAmount > balance {
                 senderValidationResult = .insufficientGas
             }
         }
@@ -206,11 +208,6 @@ extension Presenter where Self: AssetActionResponses,
             
         } else if ExchangeManager.shared.canSwap(from.currency) == false && isSwap {
             error = ExchangeErrors.pendingSwap
-            
-        } else if let feeAmount = fromFee,
-                  let feeWallet = feeAmount.currency.wallet,
-                  feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
-            error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
             
         } else if let profile = UserManager.shared.profile {
             let fiat = from.fiatValue.round(to: 2)
