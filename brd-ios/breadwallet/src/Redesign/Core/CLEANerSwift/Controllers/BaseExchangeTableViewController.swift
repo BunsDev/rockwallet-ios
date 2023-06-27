@@ -44,7 +44,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
+        
         tableView.delaysContentTouches = false
         tableView.backgroundColor = LightColors.Background.two
     }
@@ -76,11 +76,15 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                switch (self?.dataStore as? AchDataStore)?.paymentMethod {
+                switch (self?.dataStore as? PaymentMethodsDataStore)?.paymentMethod {
                 case .ach:
-                    (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
+                    (self?.interactor as? PaymentMethodsViewActions)?.getPlaidToken(viewAction: .init())
+                    
+                case .card:
+                    (self?.interactor as? PaymentMethodsViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
+                    
                 default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
+                    break
                 }
             }
             
