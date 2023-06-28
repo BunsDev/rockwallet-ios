@@ -52,7 +52,8 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
     }
     
     func navigate(viewAction: ProfileModels.Navigate.ViewAction) {
-        presenter?.presentNavigation(actionResponse: .init(index: viewAction.index))
+        let paymentCards = dataStore?.paymentCards
+        presenter?.presentNavigation(actionResponse: .init(index: viewAction.index, paymentCards: paymentCards))
     }
     
     // MARK: - Additional helpers
@@ -60,10 +61,9 @@ class ProfileInteractor: NSObject, Interactor, ProfileViewActions {
         PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.dataStore?.allPaymentCards = data
-                self?.dataStore?.paymentCard = self?.dataStore?.allPaymentCards?.first
+                let paymentCards = data?.filter { $0.type == .card }
+                self?.dataStore?.paymentCards = paymentCards
                 
-                let paymentCards = self?.dataStore?.allPaymentCards?.filter { $0.type == .card }
                 self?.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: paymentCards ?? []))
                 
             case .failure(let error):

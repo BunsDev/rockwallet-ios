@@ -64,7 +64,7 @@ final class ProfilePresenter: NSObject, Presenter, ProfileActionResponses {
     
     func presentNavigation(actionResponse: ProfileModels.Navigate.ActionResponse) {
         let item = Models.NavigationItems.allCases[actionResponse.index]
-        viewController?.displayNavigation(responseDisplay: .init(item: item))
+        viewController?.displayNavigation(responseDisplay: .init(item: item, paymentCards: actionResponse.paymentCards))
     }
     
     func presentLogout(actionResponse: ProfileModels.Logout.ActionResponse) {
