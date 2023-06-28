@@ -39,9 +39,11 @@ enum ProfileModels {
         }
         struct ActionResponse {
             var index: Int
+            var paymentCards: [PaymentCard]?
         }
         struct ResponseDisplay {
             var item: NavigationItems
+            var paymentCards: [PaymentCard]?
         }
     }
     

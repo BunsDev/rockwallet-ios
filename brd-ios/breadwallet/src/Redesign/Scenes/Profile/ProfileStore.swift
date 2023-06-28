@@ -11,8 +11,7 @@ import UIKit
 class ProfileStore: NSObject, BaseDataStore, ProfileDataStore {
     // MARK: - ProfileDataStore
     
-    var allPaymentCards: [PaymentCard]?
-    var paymentCard: PaymentCard?
+    var paymentCards: [PaymentCard]?
     
     // MARK: - Additional helpers
 }
