@@ -166,12 +166,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let profile = UserManager.shared.profile
         
         let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
-        let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
-        let dailyMaxLimitText = ExchangeFormatter.current.string(for: dailyMaxLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
         let monthlyLimitText = ExchangeFormatter.current.string(for: monthlyLimit) ?? ""
         
@@ -179,8 +177,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
-                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaxLimits),
-                                                                           value: .text("$\(dailyMaxLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
                                                                          value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
                                                            monthly: .init(title: .text(L10n.Account.monthly),
