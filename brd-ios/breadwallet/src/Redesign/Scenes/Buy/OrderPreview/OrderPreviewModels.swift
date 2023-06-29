@@ -97,9 +97,11 @@ enum OrderPreviewModels {
     
     struct BiometricStatusFailed {
         struct ActionResponse {
+            var reason: BaseInfoModels.FailureReason?
         }
         
         struct ResponseDisplay {
+            var reason: BaseInfoModels.FailureReason?
         }
     }
     

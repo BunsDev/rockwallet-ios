@@ -25,6 +25,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     var itemSelected: ((Any?) -> Void)?
     var searchController = UISearchController()
     
+    var itemDeleted: (() -> Void)?
+    
     // MARK: - Overrides
     
     override func setupSubviews() {
@@ -105,12 +107,10 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
               section == Models.Section.items else {
-            coordinator?.open(scene: Scenes.AddCard)
             return
         }
         
         guard let model = dataSource?.itemIdentifier(for: indexPath), dataStore?.isSelectingEnabled == true else { return }
-        
         itemSelected?(model)
         
         coordinator?.dismissFlow()
@@ -132,6 +132,7 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     // MARK: - User Interaction
 
     // MARK: - ItemSelectionResponseDisplay
+    
     func displayActionSheetRemovePayment(responseDisplay: ItemSelectionModels.ActionSheet.ResponseDisplay) {
         coordinator?.showPaymentsActionSheet(okButtonTitle: responseDisplay.actionSheetOkButton,
                                              cancelButtonTitle: responseDisplay.actionSheetCancelButton,
@@ -159,6 +160,8 @@ class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordina
     
     func displayRemovePaymentSuccess(responseDisplay: ItemSelectionModels.RemovePayment.ResponseDisplay) {
         interactor?.getPaymentCards(viewAction: .init())
+        
+        itemDeleted?()
     }
 
     // MARK: - Additional Helpers

@@ -175,6 +175,8 @@ internal enum L10n {
     internal static let newToRockwallet = L10n.tr("Localizable", "Account.NewToRockwallet", fallback: "New to RockWallet?")
     /// Passwords do not match
     internal static let passwordDoNotMatch = L10n.tr("Localizable", "Account.PasswordDoNotMatch", fallback: "Passwords do not match")
+    /// We have sent password recover instructions to
+    internal static let passwordRecoverDescription = L10n.tr("Localizable", "Account.PasswordRecoverDescription", fallback: "We have sent password recover instructions to")
     /// Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.
     internal static let passwordRequirements = L10n.tr("Localizable", "Account.PasswordRequirements", fallback: "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.")
     /// Pending
@@ -191,9 +193,10 @@ internal enum L10n {
     internal static let promotionsTickbox = L10n.tr("Localizable", "Account.PromotionsTickbox", fallback: "I’m ok with receiving future promotion, offers and communications")
     /// Proof of Identity title in add document for kyc2
     internal static let proofOfIdentity = L10n.tr("Localizable", "Account.ProofOfIdentity", fallback: "Proof of Identity")
-    /// We have sent password recover instructions to: %@
+    /// We have sent password recover instructions to:
+    /// %@
     internal static func recoverPasswordInstructions(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to: %@")
+      return L10n.tr("Localizable", "Account.RecoverPasswordInstructions", String(describing: p1), fallback: "We have sent password recover instructions to:\n%@")
     }
     /// Resend email
     internal static let resendEmail = L10n.tr("Localizable", "Account.ResendEmail", fallback: "Resend email")
@@ -377,7 +380,7 @@ internal enum L10n {
     /// Delete account explanation part three
     internal static let explanationThree = L10n.tr("Localizable", "AccountDelete.ExplanationThree", fallback: "-Your private keys are still yours, keep your Recovery Phrase in a safe place in case you need to restore your wallet.")
     /// Delete account explanation part two
-    internal static let explanationTwo = L10n.tr("Localizable", "AccountDelete.ExplanationTwo", fallback: "-You will no longer be able to user your KYC and registration status")
+    internal static let explanationTwo = L10n.tr("Localizable", "AccountDelete.ExplanationTwo", fallback: "-You will no longer be able to use your KYC and registration status")
     /// Recover wallet text after deleting account
     internal static let recoverWallet = L10n.tr("Localizable", "AccountDelete.RecoverWallet", fallback: "I understand that the only way to recover my wallet is by entering my Recovery Phrase")
   }
@@ -803,12 +806,6 @@ internal enum L10n {
     internal static func achFee(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Buy.achFee", String(describing: p1), fallback: "ACH fee (%@)")
     }
-    /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@
-    /// 
-    /// It currently takes 3-5 days to process a purchase with ACH.
-    internal static func achLimits(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@\n\nIt currently takes 3-5 days to process a purchase with ACH.")
-    }
     /// ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.")
     /// ACH payment method was relinked successfully
@@ -840,8 +837,8 @@ internal enum L10n {
     /// Buy limits
     internal static let buyLimit = L10n.tr("Localizable", "Buy.BuyLimit", fallback: "Buy limits")
     /// Buy min and max limit text
-    internal static func buyLimits(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@")
+    internal static func buyLimits(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Minimum for Buy is %@ %@ per transaction and your weekly limit is %@ %@. ")
     }
     /// BUY WITH ACH
     internal static let buyWithAch = L10n.tr("Localizable", "Buy.buyWithAch", fallback: "BUY WITH ACH")
@@ -1052,10 +1049,14 @@ internal enum L10n {
       }
     }
     internal enum BuyLimits {
+      /// It currently takes 3-5 days to process a purchase with ACH.
+      internal static let achDescription = L10n.tr("Localizable", "Buy.BuyLimits.AchDescription", fallback: "It currently takes 3-5 days to process a purchase with ACH.")
       /// Currently, minimum for Buy is %@ and maximum is %@ per day.
       internal static func android(_ p1: Any, _ p2: Any) -> String {
         return L10n.tr("Localizable", "Buy.BuyLimits.android", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Buy is %@ and maximum is %@ per day.")
       }
+      /// Click on your increase your limits button below if you would like to further increase your limits. 
+      internal static let increase = L10n.tr("Localizable", "Buy.BuyLimits.Increase", fallback: "Click on your increase your limits button below if you would like to further increase your limits. ")
     }
     internal enum PaymentMethodBlocked {
       /// contact support
@@ -1415,6 +1416,10 @@ internal enum L10n {
     internal static func overLifetimeLimitLevel2(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimitLevel2", String(describing: p1), fallback: "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.")
     }
+    /// This Paymail is already taken
+    internal static let paymailAlreadyTaken = L10n.tr("Localizable", "ErrorMessages.PaymailAlreadyTaken", fallback: "This Paymail is already taken")
+    /// Paymail already taken
+    internal static let paymailTaken = L10n.tr("Localizable", "ErrorMessages.PaymailTaken", fallback: "Paymail already taken")
     /// A maximum of one swap can be active for a currency at a time.
     internal static let pendingExchange = L10n.tr("Localizable", "ErrorMessages.pendingExchange", fallback: "A maximum of one swap can be active for a currency at a time.")
     /// PIN Authentication failed.
@@ -2393,8 +2398,8 @@ internal enum L10n {
     internal static let homeButton = L10n.tr("Localizable", "Segwit.HomeButton", fallback: "Proceed")
   }
   internal enum Sell {
-    /// ACH withdrawal will be processed within 3-5 business days.
-    internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will be processed within 3-5 business days.")
+    /// ACH withdrawal will take 3–5 business days to reach your bank account.
+    internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will take 3–5 business days to reach your bank account.")
     /// ACH fee
     internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee")
     /// ACH Withdrawal
@@ -2437,8 +2442,10 @@ internal enum L10n {
     internal static let tryAgain = L10n.tr("Localizable", "Sell.tryAgain", fallback: "Please try again")
     /// Withdraw to
     internal static let widrawToBank = L10n.tr("Localizable", "Sell.widrawToBank", fallback: "Withdraw to")
-    /// Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.
-    internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.")
+    /// Please try again and if the issue persist, please contact customer support
+    internal static let withdrawalErrorText = L10n.tr("Localizable", "Sell.WithdrawalErrorText", fallback: "Please try again and if the issue persist, please contact customer support")
+    /// The funds should reach your selected bank account with 3–5 business days.
+    internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "The funds should reach your selected bank account with 3–5 business days.")
     /// Your withdrawal is being processed
     internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
     /// Sell and Withdraw details
@@ -3648,20 +3655,20 @@ internal enum L10n {
     internal static let limitedAssets = L10n.tr("Localizable", "Wallet.LimitedAssets", fallback: "Limited assets")
     /// Limited assets message in add wallets popup
     internal static let limitedAssetsMessage = L10n.tr("Localizable", "Wallet.LimitedAssetsMessage", fallback: "We currently only support the assets that are listed here. You cannot access other assets through this wallet at the moment.")
-    /// 24h
-    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "24h")
-    /// 1m
-    internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1m")
-    /// 7d
-    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "7d")
-    /// 1y
-    internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1y")
+    /// 1D
+    internal static let oneDay = L10n.tr("Localizable", "Wallet.one_day", fallback: "1D")
+    /// 1M
+    internal static let oneMonth = L10n.tr("Localizable", "Wallet.one_month", fallback: "1M")
+    /// 1W
+    internal static let oneWeek = L10n.tr("Localizable", "Wallet.one_week", fallback: "1W")
+    /// 1Y
+    internal static let oneYear = L10n.tr("Localizable", "Wallet.one_year", fallback: "1Y")
     /// Staking
     internal static let stakingTitle = L10n.tr("Localizable", "Wallet.stakingTitle", fallback: "Staking")
-    /// 3m
-    internal static let threeMonths = L10n.tr("Localizable", "Wallet.three_months", fallback: "3m")
-    /// 3y
-    internal static let threeYears = L10n.tr("Localizable", "Wallet.three_years", fallback: "3y")
+    /// 3M
+    internal static let threeMonths = L10n.tr("Localizable", "Wallet.three_months", fallback: "3M")
+    /// 3Y
+    internal static let threeYears = L10n.tr("Localizable", "Wallet.three_years", fallback: "3Y")
   }
   internal enum WalletConnectionSettings {
     /// Turn off fast sync confirmation question

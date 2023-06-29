@@ -15,7 +15,6 @@ extension Scenes {
 protocol ProfileViewActions: BaseViewActions, FetchViewActions {
     func showVerificationInfo(viewAction: ProfileModels.VerificationInfo.ViewAction)
     func navigate(viewAction: ProfileModels.Navigate.ViewAction)
-    func getPaymentCards(viewAction: ProfileModels.PaymentCards.ViewAction)
     func logout(viewAction: ProfileModels.Logout.ViewAction)
 }
 
@@ -34,8 +33,7 @@ protocol ProfileResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponse
 }
 
 protocol ProfileDataStore: BaseDataStore, FetchDataStore {
-    var allPaymentCards: [PaymentCard]? { get set }
-    var paymentCard: PaymentCard? { get set }
+    var paymentCards: [PaymentCard]? { get set }
 }
 
 protocol ProfileDataPassing {

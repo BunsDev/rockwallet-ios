@@ -50,9 +50,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .accountLimits:
             cell = self.tableView(tableView, labelCellForRowAt: indexPath)
             
-        case .increaseLimits:
-            cell = self.tableView(tableView, increaseLimitsCellForRowAt: indexPath)
-            
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
             
@@ -121,27 +118,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             
             view.didTapLink = { [weak self] in
                 self?.interactor?.showLimitsInfo(viewAction: .init())
-            }
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init(font: Fonts.Body.three,
-                                       textColor: LightColors.Text.two,
-                                       isUserInteractionEnabled: true))
-            view.setup(with: model)
-            
-            view.didTapLink = { [weak self] in
-                self?.increaseLimitsTapped()
             }
         }
         
@@ -260,7 +236,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showPopup(with: responseDisplay.model)
     }
     
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
+    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay) {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         

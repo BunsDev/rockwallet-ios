@@ -178,6 +178,8 @@
 
 "Account.PasswordDoNotMatch" = "Passwords do not match";
 
+"Account.PasswordRecoverDescription" = "We have sent password recover instructions to";
+
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "Pendiente";
@@ -197,7 +199,7 @@
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Prueba de identidad";
 
-"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to: %@";
+"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to:\n%@";
 
 "Account.ResendEmail" = "Resend email";
 
@@ -876,8 +878,6 @@
 
 "Buy.achFee.android" = "ACH fee";
 
-"Buy.achLimits" = "Actualmente, el mínimo diario para comprar con ACH es %@ y el máximo es %@. Actualmente, el límite total es %@.\n\nActualmente, el periodo de proceso de compra con ACH es de 7 a 10 días";
-
 "Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
 
 "Buy.achPaymentDurationWarning" = "Actualmente, los pagos ACH tardarán de 7 a 10 días en completarse.";
@@ -917,7 +917,11 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Actualmente, el mínimo para comprar es de %@ USD/día y el máximo es de %@ USD/día. %@";
 
+"Buy.BuyLimits.AchDescription" = "It currently takes 3-5 days to process a purchase with ACH.";
+
 "Buy.BuyLimits.android" = "Actualmente, el mínimo para comprar es de 30,00 USD/día y el máximo es de 500,00 USD/día.";
+
+"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits. ";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -1388,6 +1392,10 @@
 "ErrorMessages.overLifetimeLimit" = "La cantidad es superior a tu límite total de %@  USD. Actualiza tu cuenta o introduce un importe inferior.";
 
 "ErrorMessages.overLifetimeLimitLevel2" = "La cantidad es superior a tu límite diario de %@  USD. Por favor, introduce una cantidad inferior.";
+
+"ErrorMessages.PaymailAlreadyTaken" = "This Paymail is already taken";
+
+"ErrorMessages.PaymailTaken" = "Paymail already taken";
 
 "ErrorMessages.pendingExchange" = "Se admite un máximo de un cambio activo por moneda de forma simultánea.";
 
@@ -2446,6 +2454,8 @@
 "Sell.tryAgain" = "Please try again";
 
 "Sell.widrawToBank" = "Withdraw to";
+
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
 
 "Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
 

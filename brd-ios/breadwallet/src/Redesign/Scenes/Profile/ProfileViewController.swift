@@ -141,7 +141,8 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     func displayNavigation(responseDisplay: ProfileModels.Navigate.ResponseDisplay) {
         switch responseDisplay.item {
         case .paymentMethods:
-            interactor?.getPaymentCards(viewAction: .init())
+            guard let paymentCards = responseDisplay.paymentCards else { return }
+            coordinator?.showCardSelector(cards: paymentCards, selected: nil, isFromBuy: false)
             
         case .preferences:
             coordinator?.showPreferences()
@@ -158,9 +159,13 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
     }
     
     func displayPaymentCards(responseDisplay: ProfileModels.PaymentCards.ResponseDisplay) {
-        coordinator?.showCardSelector(cards: responseDisplay.allPaymentCards,
-                                      selected: nil,
-                                      isFromBuy: false)
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.navigation.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<NavigationItemView> else {
+            return
+        }
+        
+        cell.wrappedView.setup(with: responseDisplay.model)
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     func displayLogout(responseDisplay: ProfileModels.Logout.ResponseDisplay) {

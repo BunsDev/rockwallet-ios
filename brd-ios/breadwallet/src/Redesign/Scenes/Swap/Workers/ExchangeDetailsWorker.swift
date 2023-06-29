@@ -72,6 +72,7 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDe
         let sourceCard = response?.source?.paymentInstrument
         let destination = response?.destination
         let instantDestination = response?.instantDestination
+        let sourceCardPaymentMethodStatus = PaymentCard.PaymentMethodStatus(rawValue: sourceCard?.paymentMethodStatus ?? "")
         
         let sourceData = ExchangeDetail
             .SourceDestination(currency: source?.currency?.uppercased() ?? "",
@@ -89,7 +90,8 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDe
                                                               last4: sourceCard?.last4 ?? "",
                                                               accountName: sourceCard?.accountName ?? "",
                                                               status: PaymentCard.Status(rawValue: sourceCard?.status ?? "") ?? .none,
-                                                              cardType: PaymentCard.CardType(rawValue: sourceCard?.cardType ?? "") ?? .none),
+                                                              cardType: PaymentCard.CardType(rawValue: sourceCard?.cardType ?? "") ?? .none,
+                                                              paymentMethodStatus: sourceCardPaymentMethodStatus ?? .none),
                                feeRate: source?.feeRate,
                                feeFixedRate: source?.feeFixedRate)
         

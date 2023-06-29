@@ -73,8 +73,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
-        case .increaseLimits:
-            cell = self.tableView(tableView, increaseLimitsCellForRowAt: indexPath)
+        case .limitActions:
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
             
         default:
             cell = UITableViewCell()
@@ -164,34 +164,24 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         cell.setup { view in
             view.configure(with: .init(font: Fonts.Body.three,
-                                       textColor: LightColors.Text.two,
-                                       isUserInteractionEnabled: dataStore?.isCustomLimits ?? false))
+                                       textColor: LightColors.Text.two))
             view.setup(with: model)
-            
-            view.didTapLink = { [weak self] in
-                self?.interactor?.showLimitsInfo(viewAction: .init())
-            }
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, increaseLimitsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? MultipleButtonsViewModel,
+              let cell: WrapperTableViewCell<MultipleButtonsView> = tableView.dequeueReusableCell(for: indexPath)
         else {
             return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
-            view.configure(with: .init(font: Fonts.Body.three,
-                                       textColor: LightColors.Text.two,
-                                       isUserInteractionEnabled: true))
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: .vertical))
             view.setup(with: model)
-            
-            view.didTapLink = { [weak self] in
-                self?.increaseLimitsTapped()
-            }
         }
         
         return cell
@@ -230,6 +220,14 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showInWebView(urlString: Constant.limits, title: L10n.Buy.increaseYourLimits)
     }
     
+    override func limitsInfoTapped() {
+        interactor?.showLimitsInfo(viewAction: .init())
+    }
+    
+    override func onPaymentMethodErrorLinkTapped() {
+        coordinator?.showPaymentMethodSupport()
+    }
+    
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {
@@ -256,16 +254,23 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let limitActionsSection = sections.firstIndex(where: { $0.hashValue == Models.Section.limitActions.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView>,
+              let limitActionsCell = tableView.cellForRow(at: IndexPath(row: 0, section: limitActionsSection)) as? WrapperTableViewCell<MultipleButtonsView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
             return
         }
         
+        sectionRows[fromSection] = [responseDisplay.swapCurrencyViewModel as Any]
+        sectionRows[toSection] = [responseDisplay.cardModel as Any]
+        sectionRows[limitActionsSection] = [responseDisplay.limitActions as Any]
+        
         fromCell.wrappedView.setup(with: responseDisplay.swapCurrencyViewModel)
         toCell.wrappedView.setup(with: responseDisplay.cardModel)
+        limitActionsCell.wrappedView.setup(with: responseDisplay.limitActions)
         
         tableView.invalidateTableViewIntrinsicContentSize()
         
@@ -303,7 +308,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showPopup(with: responseDisplay.model)
     }
     
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
+    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay) {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
         

@@ -14,7 +14,7 @@ import WalletKit
 enum AssetModels {
     struct Item: Hashable {
         var type: PaymentCard.PaymentType?
-        var achEnabled: Bool?
+        var achEnabled: Bool
     }
     
     struct Fee {
@@ -25,7 +25,7 @@ enum AssetModels {
         case segment
         case rateAndTimer
         case accountLimits
-        case increaseLimits
+        case limitActions
         case paymentMethod
         case swapCard
         
@@ -41,7 +41,6 @@ enum AssetModels {
             var toTokenValue: String?
             
             var currency: String?
-            var card: PaymentCard?
         }
         
         struct ActionResponse {
@@ -71,6 +70,7 @@ enum AssetModels {
             
             var continueEnabled = false
             var rate: ExchangeRateViewModel?
+            var limitActions: MultipleButtonsViewModel?
         }
     }
     

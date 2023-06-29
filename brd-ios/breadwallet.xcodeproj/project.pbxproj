@@ -432,8 +432,8 @@
 		7E5CB3B42835090E00EC787E /* FEButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5CB37B2835090E00EC787E /* FEButton.swift */; };
 		7E6729282923A28100A2B612 /* ComingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6729272923A28100A2B612 /* ComingSoonViewController.swift */; };
 		7E67680328479765007EC155 /* ResendConfirmationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67680228479765007EC155 /* ResendConfirmationWorker.swift */; };
-		7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A78E294735C40012FB3F /* AchPaymentModels.swift */; };
-		7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */; };
+		7E67A78F294735C40012FB3F /* PaymentMethodsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A78E294735C40012FB3F /* PaymentMethodsModels.swift */; };
+		7E67A791294735DB0012FB3F /* PaymentMethodsVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E67A790294735DB0012FB3F /* PaymentMethodsVIP.swift */; };
 		7E75AD492943297E00E54DEF /* AssetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD482943297E00E54DEF /* AssetModels.swift */; };
 		7E75AD4B2943298900E54DEF /* AssetVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75AD4A2943298900E54DEF /* AssetVIP.swift */; };
 		7E7AFBEA29409FCC0063023F /* BottomDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7AFBE929409FCC0063023F /* BottomDrawer.swift */; };
@@ -465,7 +465,7 @@
 		7EA9F7B529683A9D000F45B6 /* CountriesAndStatesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */; };
 		7EAFC5F72941EC4B00A7FF26 /* arrowToX.json in Resources */ = {isa = PBXBuildFile; fileRef = 7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */; };
 		7EB6CDB128C73F8500912268 /* Wallet+DefaultReceiveAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */; };
-		7EB838462849D49A00C7CC05 /* HorizontalButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */; };
+		7EB838462849D49A00C7CC05 /* MultipleButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838452849D49A00C7CC05 /* MultipleButtonsView.swift */; };
 		7EB838482849DD8200C7CC05 /* FELink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB838472849DD8200C7CC05 /* FELink.swift */; };
 		7EB8FD222897D212000FF75C /* BuyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8FD1B2897D212000FF75C /* BuyStore.swift */; };
 		7EB8FD232897D212000FF75C /* BuyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB8FD1C2897D212000FF75C /* BuyPresenter.swift */; };
@@ -1320,8 +1320,8 @@
 		7E5CB37B2835090E00EC787E /* FEButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FEButton.swift; sourceTree = "<group>"; };
 		7E6729272923A28100A2B612 /* ComingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComingSoonViewController.swift; path = ComingSoon/ComingSoonViewController.swift; sourceTree = "<group>"; };
 		7E67680228479765007EC155 /* ResendConfirmationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendConfirmationWorker.swift; sourceTree = "<group>"; };
-		7E67A78E294735C40012FB3F /* AchPaymentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchPaymentModels.swift; sourceTree = "<group>"; };
-		7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchPaymentVIP.swift; sourceTree = "<group>"; };
+		7E67A78E294735C40012FB3F /* PaymentMethodsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsModels.swift; sourceTree = "<group>"; };
+		7E67A790294735DB0012FB3F /* PaymentMethodsVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsVIP.swift; sourceTree = "<group>"; };
 		7E75AD482943297E00E54DEF /* AssetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetModels.swift; sourceTree = "<group>"; };
 		7E75AD4A2943298900E54DEF /* AssetVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetVIP.swift; sourceTree = "<group>"; };
 		7E7AFBE929409FCC0063023F /* BottomDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawer.swift; sourceTree = "<group>"; };
@@ -1351,7 +1351,7 @@
 		7EA9F7B429683A9D000F45B6 /* CountriesAndStatesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesAndStatesModels.swift; sourceTree = "<group>"; };
 		7EAFC5F62941EC4B00A7FF26 /* arrowToX.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrowToX.json; sourceTree = "<group>"; };
 		7EB6CDB028C73F8500912268 /* Wallet+DefaultReceiveAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+DefaultReceiveAddress.swift"; sourceTree = "<group>"; };
-		7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalButtonsView.swift; sourceTree = "<group>"; };
+		7EB838452849D49A00C7CC05 /* MultipleButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleButtonsView.swift; sourceTree = "<group>"; };
 		7EB838472849DD8200C7CC05 /* FELink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FELink.swift; sourceTree = "<group>"; };
 		7EB8FD1B2897D212000FF75C /* BuyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyStore.swift; sourceTree = "<group>"; };
 		7EB8FD1C2897D212000FF75C /* BuyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyPresenter.swift; sourceTree = "<group>"; };
@@ -2601,7 +2601,7 @@
 			isa = PBXGroup;
 			children = (
 				7EA9F7B129683A78000F45B6 /* CountriesAndStates */,
-				7E67A78B294734E40012FB3F /* AchPayment */,
+				7E67A78B294734E40012FB3F /* PaymentMethods */,
 				048694982A163841004EDDBA /* TwoStep */,
 				7E75AD472943296500E54DEF /* Asset */,
 				04B05FF02A120B5000EA7591 /* CreateTransaction */,
@@ -2719,7 +2719,7 @@
 				7E0968B7284A29CE006B4FC2 /* TransparentView.swift */,
 				7EC0F8B928881C680037145C /* TitleValueView.swift */,
 				04185DC429D17E4500AECBFA /* IconTitleSubtitleToggleView.swift */,
-				7EB838452849D49A00C7CC05 /* HorizontalButtonsView.swift */,
+				7EB838452849D49A00C7CC05 /* MultipleButtonsView.swift */,
 				7BE9CB74292242290016C0F4 /* VerticalButtonsView.swift */,
 				D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */,
 			);
@@ -2746,13 +2746,13 @@
 			name = ComingSoon;
 			sourceTree = "<group>";
 		};
-		7E67A78B294734E40012FB3F /* AchPayment */ = {
+		7E67A78B294734E40012FB3F /* PaymentMethods */ = {
 			isa = PBXGroup;
 			children = (
-				7E67A78E294735C40012FB3F /* AchPaymentModels.swift */,
-				7E67A790294735DB0012FB3F /* AchPaymentVIP.swift */,
+				7E67A78E294735C40012FB3F /* PaymentMethodsModels.swift */,
+				7E67A790294735DB0012FB3F /* PaymentMethodsVIP.swift */,
 			);
-			path = AchPayment;
+			path = PaymentMethods;
 			sourceTree = "<group>";
 		};
 		7E75AD472943296500E54DEF /* Asset */ = {
@@ -4184,7 +4184,7 @@
 				7E5CB38B2835090E00EC787E /* Shadable.swift in Sources */,
 				D7F75969299D1F9900FB4BFA /* RetrieveAddressWorker.swift in Sources */,
 				3A36328D225301D60043EBA4 /* PriceChangeView.swift in Sources */,
-				7E67A78F294735C40012FB3F /* AchPaymentModels.swift in Sources */,
+				7E67A78F294735C40012FB3F /* PaymentMethodsModels.swift in Sources */,
 				7BB3B7DC29558D97006FF250 /* Float+Extensions.swift in Sources */,
 				7C5AC8A6203B93D3001B221E /* TxListCell.swift in Sources */,
 				7EBC6B0A2848ABC5000A301F /* RegistrationConfirmationViewController.swift in Sources */,
@@ -4303,7 +4303,7 @@
 				7B6052C4299E55EB002C00C2 /* AnimatedBlockSetLogo.swift in Sources */,
 				7BF5D4FC296D4FC900942ADB /* SignUpStore.swift in Sources */,
 				CECCE5AB1E038C9900D99448 /* GenericPinPadCell.swift in Sources */,
-				7EB838462849D49A00C7CC05 /* HorizontalButtonsView.swift in Sources */,
+				7EB838462849D49A00C7CC05 /* MultipleButtonsView.swift in Sources */,
 				7B54E5A427F4A2B0002DD1E4 /* RequestModels.swift in Sources */,
 				7EC21A1A28991A6500FED711 /* BillingAddressModels.swift in Sources */,
 				7B6052C2299E55A7002C00C2 /* BackupSynchronizer.swift in Sources */,
@@ -4442,7 +4442,7 @@
 				0452C93629D42FC600CCC8DA /* ExchangeEndpoints.swift in Sources */,
 				CE27F9591E2C8EA300F7F7F2 /* Amount.swift in Sources */,
 				C458C7CF29E6D22F00146C0D /* PaymailAddressViewController.swift in Sources */,
-				7E67A791294735DB0012FB3F /* AchPaymentVIP.swift in Sources */,
+				7E67A791294735DB0012FB3F /* PaymentMethodsVIP.swift in Sources */,
 				043DB5D429EE8B9C00DEB8FD /* PaddedImageView.swift in Sources */,
 				7EE91A5D2968310100331B1F /* KYCAddressVIP.swift in Sources */,
 				7B54E5A727F4A2B0002DD1E4 /* BasePlainResponseWorker.swift in Sources */,
