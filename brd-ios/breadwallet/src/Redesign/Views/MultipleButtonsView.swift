@@ -46,6 +46,10 @@ class MultipleButtonsView: FEView<MultipleButtonsConfiguration, MultipleButtonsV
         super.configure(with: config)
         
         configure(background: config?.background)
+    }
+    
+    override func setup(with viewModel: MultipleButtonsViewModel?) {
+        super.setup(with: viewModel)
         
         setupButtons()
     }

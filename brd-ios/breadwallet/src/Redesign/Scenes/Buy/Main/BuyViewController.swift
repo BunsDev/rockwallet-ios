@@ -172,15 +172,16 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
-        
-        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
-            return cell
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? MultipleButtonsViewModel,
+              let cell: WrapperTableViewCell<MultipleButtonsView> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
             view.configure(with: .init(buttons: [Presets.Button.noBorders],
                                        axis: .vertical))
+            view.setup(with: model)
         }
         
         return cell
@@ -253,24 +254,26 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
-              let limitActionsSection = sections.firstIndex(where: { $0.hashValue == Models.Section.limitActions.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView>,
-              let limitActionsCell = tableView.cellForRow(at: IndexPath(row: 0, section: limitActionsSection)) as? WrapperTableViewCell<MultipleButtonsView> else {
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
             return
         }
         
+        sectionRows[fromSection] = [responseDisplay.swapCurrencyViewModel as Any]
+        sectionRows[toSection] = [responseDisplay.cardModel as Any]
+        
         fromCell.wrappedView.setup(with: responseDisplay.swapCurrencyViewModel)
         toCell.wrappedView.setup(with: responseDisplay.cardModel)
         
-        tableView.invalidateTableViewIntrinsicContentSize()
-        
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        limitActionsCell.wrappedView.setup(with: responseDisplay.limitActions)
+        
+        if let limitActions = responseDisplay.limitActions {
+            updateData(responseDisplay: .init(model: limitActions, section: Models.Section.limitActions))
+        }
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {
