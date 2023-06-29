@@ -153,7 +153,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let card = detail.source.paymentInstrument
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         
-        let currencyFormat = "%@ %@"
+        let currencyFormat = Constant.currencyFormat
         let rate = String(format: "1 %@ = %@ %@", destination.currency, ExchangeNumberFormatter().string(for: 1 / detail.rate) ?? "",
                           currencyCode)
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: detail.source.currencyAmount) ?? "",
@@ -169,7 +169,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let fixedFeeRate = (detail.destination?.feeFixedRate?.doubleValue ?? 0.0) + (detail.instantDestination?.feeFixedRate?.doubleValue ?? 0.0)
         let feeRate = (detail.destination?.feeRate ?? 0) + (detail.instantDestination?.feeRate ?? 0)
-        let buyAchFee = L10n.Buy.achFee("$\(String(format: "%.2f", fixedFeeRate)) + \(feeRate)%")
+        let buyAchFee = L10n.Buy.AchFee.sprint8("$\(String(format: "%.2f", fixedFeeRate)) + \(feeRate)%")
         let displayFeeTitle = card?.type == .card ? L10n.Swap.cardFee : buyAchFee
         
         let method = PaymentMethodViewModel(methodTitle: .text(L10n.Buy.paymentMethod),

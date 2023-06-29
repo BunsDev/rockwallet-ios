@@ -144,7 +144,7 @@ class FEButton: UIButton, ViewProtocol, StateDisplayable, Borderable, Shadable {
         
         if let title = viewModel.title {
             let shouldCapitalize = viewModel.shouldCapitalize == true
-            let titleString: String = viewModel.isUnderlined ? title : shouldCapitalize ? title.capitalized : title.uppercased()
+            let titleString: String = viewModel.isUnderlined ? title : shouldCapitalize ? title.capitalizingFirstLetter() : title.uppercased()
             
             let attributeTitle = NSMutableAttributedString(string: titleString)
             attributeTitle.addAttributes(defaultAttributes, range: NSRange(location: 0, length: title.count))
