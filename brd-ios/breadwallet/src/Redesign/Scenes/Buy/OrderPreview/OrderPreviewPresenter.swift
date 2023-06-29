@@ -169,7 +169,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
               let toAmount = actionResponse.to else { return }
         let fiatCurrency = (actionResponse.quote?.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
         let cryptoCurrency = toAmount.currency.code.uppercased()
-        let currencyFormat = "%@ %@"
+        let currencyFormat = Constant.currencyFormat
         
         var description: String {
             if toAmount.fiatValue > instantLimit {
@@ -248,7 +248,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             return 2 * (item.networkFee?.fiatValue ?? 0)
         }
         
-        let currencyFormat = "%@ %@"
+        let currencyFormat = Constant.currencyFormat
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)
         let cardFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: cardFee) ?? "", fiatCurrency)
         let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: networkFee) ?? "", fiatCurrency)
