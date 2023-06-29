@@ -169,7 +169,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let fixedFeeRate = (detail.destination?.feeFixedRate?.doubleValue ?? 0.0) + (detail.instantDestination?.feeFixedRate?.doubleValue ?? 0.0)
         let feeRate = (detail.destination?.feeRate ?? 0) + (detail.instantDestination?.feeRate ?? 0)
-        let buyAchFee = L10n.Buy.achFee("$\(String(format: "%.2f", fixedFeeRate)) + \(feeRate)%")
+        let buyAchFee = L10n.Buy.AchFee.sprint8("$\(String(format: "%.2f", fixedFeeRate)) + \(feeRate)%")
         let displayFeeTitle = card?.type == .card ? L10n.Swap.cardFee : buyAchFee
         
         let method = PaymentMethodViewModel(methodTitle: .text(L10n.Buy.paymentMethod),

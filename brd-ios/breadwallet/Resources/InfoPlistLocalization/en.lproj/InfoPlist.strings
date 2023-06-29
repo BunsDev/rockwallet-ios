@@ -862,7 +862,7 @@
 
 "Buy.achFee" = "ACH fee";
 
-"Buy.achFee.sprint8" = "ACH fee (%s)";
+"Buy.achFee.sprint8" = "ACH fee (%@)";
 
 "Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ and maximum is %@ per day. At the moment lifetime limit is %@.";
 
