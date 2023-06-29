@@ -28,7 +28,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     // MARK: - SellViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        prepareCurrencies(viewAction: .init(type: .ach))
+        let item = AssetModels.Item(type: dataStore?.paymentMethod,
+                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+        
+        prepareCurrencies(viewAction: item)
         
         guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
@@ -36,8 +39,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         if dataStore?.selected == nil {
-            presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
-                                                                                achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
+            presenter?.presentData(actionResponse: .init(item: item))
             setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
         }
         

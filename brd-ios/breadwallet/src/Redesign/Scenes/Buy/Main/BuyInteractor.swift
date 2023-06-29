@@ -28,7 +28,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     // MARK: - BuyViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        prepareCurrencies(viewAction: .init(type: dataStore?.paymentMethod ?? .card))
+        let item = AssetModels.Item(type: dataStore?.paymentMethod,
+                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+        
+        prepareCurrencies(viewAction: item)
         
         guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
@@ -36,8 +39,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         
         if dataStore?.selected == nil {
-            presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
-                                                                                achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
+            presenter?.presentData(actionResponse: .init(item: item))
             setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
         }
         
@@ -126,7 +128,9 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         dataStore?.selected = nil
         
-        prepareCurrencies(viewAction: .init(type: dataStore?.paymentMethod ?? .card))
+        let item = AssetModels.Item(type: dataStore?.paymentMethod,
+                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+        prepareCurrencies(viewAction: item)
         
         guard let currency = dataStore?.currencies.first(where: { $0 == amount?.currency }) ?? dataStore?.currencies.first else { return }
         amount = .zero(currency)

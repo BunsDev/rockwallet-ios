@@ -26,14 +26,10 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .rateAndTimer,
             .swapCard,
             .paymentMethod,
-            .accountLimits,
-            .increaseLimits
+            .accountLimits
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        
-        let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
-        limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
         
         let paymentMethodViewModel: CardSelectionViewModel
         if item.type == .ach && item.achEnabled == true {
@@ -57,9 +53,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             ],
             .accountLimits: [
                 LabelViewModel.text("")
-            ],
-            .increaseLimits: [LabelViewModel.attributedText(limitsString)]
+            ]
         ]
+        
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
     }
     
@@ -157,12 +153,10 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         let profile = UserManager.shared.profile
         
         let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
-        let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
-        let dailyMaxLimitText = ExchangeFormatter.current.string(for: dailyMaxLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
         let monthlyLimitText = ExchangeFormatter.current.string(for: monthlyLimit) ?? ""
         
@@ -170,8 +164,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
-                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaxLimits),
-                                                                           value: .text("$\(dailyMaxLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
                                                                          value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
                                                            monthly: .init(title: .text(L10n.Account.monthly),

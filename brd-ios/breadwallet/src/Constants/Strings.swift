@@ -806,12 +806,6 @@ internal enum L10n {
     internal static func achFee(_ p1: Any) -> String {
       return L10n.tr("Localizable", "Buy.achFee", String(describing: p1), fallback: "ACH fee (%@)")
     }
-    /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@
-    /// 
-    /// It currently takes 3-5 days to process a purchase with ACH.
-    internal static func achLimits(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-      return L10n.tr("Localizable", "Buy.achLimits", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  %@\n\nIt currently takes 3-5 days to process a purchase with ACH.")
-    }
     /// ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.")
     /// ACH payment method was relinked successfully
@@ -843,8 +837,8 @@ internal enum L10n {
     /// Buy limits
     internal static let buyLimit = L10n.tr("Localizable", "Buy.BuyLimit", fallback: "Buy limits")
     /// Buy min and max limit text
-    internal static func buyLimits(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@")
+    internal static func buyLimits(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Minimum for Buy is %@ %@ per transaction and your weekly limit is %@ %@. ")
     }
     /// BUY WITH ACH
     internal static let buyWithAch = L10n.tr("Localizable", "Buy.buyWithAch", fallback: "BUY WITH ACH")
@@ -1055,10 +1049,14 @@ internal enum L10n {
       }
     }
     internal enum BuyLimits {
+      /// It currently takes 3-5 days to process a purchase with ACH.
+      internal static let achDescription = L10n.tr("Localizable", "Buy.BuyLimits.AchDescription", fallback: "It currently takes 3-5 days to process a purchase with ACH.")
       /// Currently, minimum for Buy is %@ and maximum is %@ per day.
       internal static func android(_ p1: Any, _ p2: Any) -> String {
         return L10n.tr("Localizable", "Buy.BuyLimits.android", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for Buy is %@ and maximum is %@ per day.")
       }
+      /// Click on your increase your limits button below if you would like to further increase your limits. 
+      internal static let increase = L10n.tr("Localizable", "Buy.BuyLimits.Increase", fallback: "Click on your increase your limits button below if you would like to further increase your limits. ")
     }
     internal enum PaymentMethodBlocked {
       /// contact support
