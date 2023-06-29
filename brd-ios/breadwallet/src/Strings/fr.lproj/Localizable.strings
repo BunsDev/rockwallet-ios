@@ -878,8 +878,6 @@
 
 "Buy.achFee.android" = "ACH fee";
 
-"Buy.achLimits" = "Actuellement, le minimum d'achat avec ACH est de %@ et le maximum est de %@ par jour. Actuellement, la limite à vie est de %@.\n\nActuellement, le traitement d'un achat réalisé avec ACH prend entre 7 et 10 jours";
-
 "Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
 
 "Buy.achPaymentDurationWarning" = "Actuellement, les paiements ACH prennent entre 7 et 10 jours.";
@@ -919,7 +917,11 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Actuellement, le montant minimum d'achat est de $%@ USD et le montant maximum est de $%@ USD/jour. %@";
 
+"Buy.BuyLimits.AchDescription" = "It currently takes 3-5 days to process a purchase with ACH.";
+
 "Buy.BuyLimits.android" = "Actuellement, le montant minimum d'achat est de 30 USD et le montant maximum est de 500 USD par jour.";
+
+"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits. ";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 

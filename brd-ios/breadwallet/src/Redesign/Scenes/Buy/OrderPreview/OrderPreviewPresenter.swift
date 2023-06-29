@@ -237,9 +237,11 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0) / 100
         let instantAchLimit = item.quote?.instantAch?.limitUsd ?? 0
         
+        let isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
+        
         // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
         var networkFee: Decimal {
-            guard isAchAccount, toFiatValue >= instantAchLimit else {
+            guard isInstantAch, toFiatValue >= instantAchLimit else {
                 return item.networkFee?.fiatValue ?? 0
             }
             
@@ -263,7 +265,6 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let buyFee = ((quote.buyFee ?? 0) / 100) + 1
         let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
         
-        let isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
         let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
         let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
                                                                        value: .text(achFeeDescription)) : nil

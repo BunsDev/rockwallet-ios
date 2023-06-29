@@ -127,8 +127,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
         
         LoadingView.hideIfNeeded()
     }
-
+    
     // MARK: UITableViewDataSource
+    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let type = (sections[section] as? (any Sectionable))?.header
         return self.tableView(tableView, accessoryViewForType: type, for: section) { [weak self] in
