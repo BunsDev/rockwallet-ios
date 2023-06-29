@@ -862,6 +862,8 @@
 
 "Buy.achFee" = "ACH fee";
 
+"Buy.achFee.sprint8" = "ACH fee (%s)";
+
 "Buy.achLimits.android" = "Currently, minimum for buying with ACH is %s USD and maximum is %s USD per day. At the moment lifetime limit is %s USD.";
 
 "Buy.achPaymentDurationWarning" = "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.";
@@ -976,7 +978,7 @@
 /* Last Name label in billing address view on buy flow */
 "Buy.LastName" = "Last Name";
 
-"Buy.Limits.8" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@\n";
+"Buy.Limits.sprint8" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@\n";
 
 "Buy.linkBankAccount" = "Link bank account";
 
@@ -1048,6 +1050,8 @@
 "Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
 
 "Buy.Terms" = "By placing this order you agree to our %s";
+
+"Buy.terms.sprint8" = "By placing this order you agree to our";
 
 "Buy.TransactionError" = "Transaction error";
 
