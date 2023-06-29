@@ -38,7 +38,7 @@ enum PromptType: Int {
         case .noPasscode: return L10n.Prompts.NoPasscode.title
         case .kyc: return L10n.VerifyAccount.button
         case .twoStep: return L10n.Prompts.TwoStep.title
-        case .noAccount: return L10n.Account.createNewAccountTitle
+        case .noAccount: return L10n.Prompts.CreateAccount.title
         case .limitsAuthentication: return L10n.Prompts.LimitsAuthentication.title
         default: return ""
         }

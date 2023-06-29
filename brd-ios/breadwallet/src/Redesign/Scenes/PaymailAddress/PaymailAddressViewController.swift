@@ -76,15 +76,16 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     }
     
     override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
-        
-        guard let cell = cell as? WrapperTableViewCell<MultipleButtonsView> else {
-            return cell
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? MultipleButtonsViewModel,
+              let cell: WrapperTableViewCell<MultipleButtonsView> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
         }
         
         cell.setup { view in
             view.configure(with: .init(buttons: [Presets.Button.noBorders],
-                                       axis: .horizontal))
+                                       axis: .vertical))
+            view.setup(with: model)
             
             view.callbacks = [
                 showPaymailPopup
