@@ -254,8 +254,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let limitActionsSection = sections.firstIndex(where: { $0.hashValue == Models.Section.limitActions.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<SwapCurrencyView>,
-              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView>,
+              let limitActionsCell = tableView.cellForRow(at: IndexPath(row: 0, section: limitActionsSection)) as? WrapperTableViewCell<MultipleButtonsView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
@@ -264,16 +266,16 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         
         sectionRows[fromSection] = [responseDisplay.swapCurrencyViewModel as Any]
         sectionRows[toSection] = [responseDisplay.cardModel as Any]
+        sectionRows[limitActionsSection] = [responseDisplay.limitActions as Any]
         
         fromCell.wrappedView.setup(with: responseDisplay.swapCurrencyViewModel)
         toCell.wrappedView.setup(with: responseDisplay.cardModel)
+        limitActionsCell.wrappedView.setup(with: responseDisplay.limitActions)
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
         
         continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
-        if let limitActions = responseDisplay.limitActions {
-            updateData(responseDisplay: .init(model: limitActions, section: Models.Section.limitActions))
-        }
     }
     
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay) {

@@ -128,24 +128,6 @@ class BaseTableViewController<C: CoordinatableRoutes,
         LoadingView.hideIfNeeded()
     }
     
-    func updateData(responseDisplay: FetchModels.Update.ResponseDisplay) {
-        guard let section = sections.first(where: { $0.hashValue == responseDisplay.section.hashValue }) else { return }
-        
-        sectionRows[section] = [responseDisplay.model as Any]
-        
-        guard let items = sectionRows[section] as? [AnyHashable],
-              var snapshot = dataSource?.snapshot() else { return }
-        
-//        snapshot.deleteSections([section])
-//        snapshot.appendSections([section])
-//        snapshot.deleteItems(items)
-//        snapshot.appendItems(items, toSection: section)
-//        snapshot.appendItems(items)
-        snapshot.reloadItems(snapshot.itemIdentifiers(inSection: section))
-        
-        dataSource?.apply(snapshot)
-    }
-    
     // MARK: UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

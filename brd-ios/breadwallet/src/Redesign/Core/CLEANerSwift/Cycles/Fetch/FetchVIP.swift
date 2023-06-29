@@ -17,7 +17,6 @@ protocol FetchActionResponses: Hashable {
 
 protocol FetchResponseDisplays: Hashable {
     func displayData(responseDisplay: FetchModels.Get.ResponseDisplay)
-    func updateData(responseDisplay: FetchModels.Update.ResponseDisplay)
 }
 
 protocol FetchDataStore: Hashable {}

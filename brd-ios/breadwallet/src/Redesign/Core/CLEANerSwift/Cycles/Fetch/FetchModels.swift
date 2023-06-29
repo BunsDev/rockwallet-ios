@@ -62,11 +62,4 @@ enum FetchModels: Hashable {
             }
         }
     }
-    
-    struct Update {
-        struct ResponseDisplay {
-            var model: AnyHashable
-            var section: AnyHashable
-        }
-    }
 }
