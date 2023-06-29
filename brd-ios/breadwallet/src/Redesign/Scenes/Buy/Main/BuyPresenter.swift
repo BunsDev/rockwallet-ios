@@ -15,7 +15,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     var achPaymentModel: CardSelectionViewModel?
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
-    private var type: PaymentCard.PaymentType?
     
     // MARK: - BuyActionResponses
     
@@ -87,8 +86,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         let unavailableText = actionResponse.card?.paymentMethodStatus.unavailableText
         
-        type = actionResponse.type
-        
         switch actionResponse.type {
         case .ach:
             if let paymentCard = actionResponse.card {
@@ -133,7 +130,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         
         viewController?.displayAmount(responseDisplay: .init(swapCurrencyViewModel: cryptoModel,
                                                              cardModel: cardModel,
-                                                             limitActions: .init(buttons: setupLimitsButtons())))
+                                                             limitActions: .init(buttons: setupLimitsButtons(type: actionResponse.type))))
         
         guard actionResponse.handleErrors else { return }
         _ = handleError(actionResponse: actionResponse)
@@ -206,10 +203,25 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     // MARK: - Additional Helpers
     
-    private func setupLimitsButtons() -> [ButtonViewModel] {
+    private func isCustomLimits(for paymentMethod: PaymentCard.PaymentType?) -> Bool {
+        guard let limits = UserManager.shared.profile?.limits else { return false }
+        
+        switch paymentMethod {
+        case .card:
+            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
+            
+        case .ach:
+            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false
+            
+        default:
+            return false
+        }
+    }
+    
+    private func setupLimitsButtons(type: PaymentCard.PaymentType?) -> [ButtonViewModel] {
         var buttons = [ButtonViewModel]()
         
-        if viewController?.dataStore?.isCustomLimits(for: type) == true {
+        if isCustomLimits(for: type) == true {
             var button = ButtonViewModel(title: L10n.Button.moreLimits,
                                          isUnderlined: true)
             button.callback = { [weak self] in

@@ -108,21 +108,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         return true
     }
     
-    func isCustomLimits(for paymentMethod: PaymentCard.PaymentType?) -> Bool {
-        guard let limits = UserManager.shared.profile?.limits else { return false }
-        
-        switch paymentMethod {
-        case .card:
-            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
-            
-        case .ach:
-            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false
-            
-        default:
-            return false
-        }
-    }
-    
     private var isPaymentMethodProblematic: Bool {
         switch paymentMethod {
         case .card:
