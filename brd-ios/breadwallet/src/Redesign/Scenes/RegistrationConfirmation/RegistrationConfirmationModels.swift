@@ -65,7 +65,9 @@ enum RegistrationConfirmationModels {
         
         var sections: [Section] {
             switch self {
-            case .account, .twoStepEmail:
+            case .account, .twoStepEmail, .twoStepAccountEmailSettings, .twoStepAccountAppSettings,
+                    .twoStepEmailLogin, .twoStepEmailSendFunds, .twoStepEmailBuy, .twoStepEmailRequired,
+                    .twoStepEmailResetPassword, .twoStepDisable:
                 return [.image, .title, .instructions, .input, .help]
                 
             case .twoStepApp:
@@ -79,9 +81,6 @@ enum RegistrationConfirmationModels {
                 
             case .forgotPassword:
                 return [.image, .title, .instructions, .help]
-                
-            default:
-                return []
             }
         }
         
