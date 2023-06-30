@@ -78,7 +78,7 @@ enum RegistrationConfirmationModels {
                 return [.image, .title, .instructions, .help]
                 
             default:
-                return []
+                return [.image, .title, .instructions, .input, .help]
             }
         }
         
