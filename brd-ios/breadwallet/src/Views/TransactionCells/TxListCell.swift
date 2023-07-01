@@ -42,8 +42,6 @@ class TxListCell: UITableViewCell, Identifiable {
     }
     
     func setTransaction(_ viewModel: TxListViewModel, showFiatAmounts: Bool, rate: Rate) {
-        guard let currency = viewModel.currency else { return }
-        
         self.viewModel = viewModel
         
         let status = viewModel.status
@@ -52,7 +50,7 @@ class TxListCell: UITableViewCell, Identifiable {
         
         titleLabel.text = viewModel.title
         amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
-        descriptionLabel.text = viewModel.shortDescription(for: currency)
+        descriptionLabel.text = viewModel.shortDescription()
         
         setupStyle()
         layoutSubviews()

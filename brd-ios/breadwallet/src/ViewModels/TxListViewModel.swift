@@ -44,13 +44,13 @@ struct TxListViewModel: TxViewModel, Hashable {
         }
     }
     
-    func shortDescription(for currency: Currency) -> String {
+    func shortDescription() -> String {
         switch exchangeType {
         case .unknown:
             return handleDefaultTransactions()
             
         case .swap:
-            return handleSwapTransactions(for: currency)
+            return handleSwapTransactions()
             
         case .sell:
             return handleSellTransactions()
@@ -166,8 +166,8 @@ struct TxListViewModel: TxViewModel, Hashable {
         }
     }
     
-    private func handleSwapTransactions(for currency: Currency) -> String {
-        let isOnSource = currency.code.uppercased() == swapDestinationCurrency
+    private func handleSwapTransactions() -> String {
+        let isOnSource = currency?.code.uppercased() == swapDestinationCurrency
         let swapString = isOnSource ? "from \(swapSourceCurrency)" : "to \(swapDestinationCurrency)"
         
         switch status {
