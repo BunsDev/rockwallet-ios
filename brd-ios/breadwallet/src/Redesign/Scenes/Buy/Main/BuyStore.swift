@@ -40,7 +40,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
         let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
         
-        let limitsString = NSMutableAttributedString(string: L10n.Buy.buyLimits(minText, maxText, moreInfo))
+        let limitsString = NSMutableAttributedString(string: L10n.Buy.Limits.sprint8(minText, maxText, moreInfo))
         
         guard isCustomLimits else { return limitsString }
         

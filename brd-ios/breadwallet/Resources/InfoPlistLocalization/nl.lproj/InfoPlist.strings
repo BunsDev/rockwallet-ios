@@ -107,12 +107,9 @@
 /* Delete account option in menu */
 "Account.DeleteAccount" = "Delete account";
 
-/* Delisted token alert banner message */
-"Account.delistedToken" = "Dit token is verwijderd omdat de uitgever besloot de ERC20-ondersteuning stop te zetten. \n\nMogelijk kunt u deze tokens nog steeds naar een ander platform verzenden. Ga voor meer informatie naar onze ondersteuningspagina.";
+"Account.delistedToken" = "You may still be able to send these tokens to another platform. For more details, visit our support page.";
 
-"Account.delistedToken.android" = "You may still be able to send these tokens to another platform. For more details, visit our support page.";
-
-"Account.delistedTokenTitle.android" = "This token has been delisted";
+"Account.delistedTokenTitle" = "This token has been delisted";
 
 "Account.Email" = "Email";
 
@@ -178,6 +175,8 @@
 
 "Account.PasswordDoNotMatch" = "Passwords do not match";
 
+"Account.PasswordRecoverDescription" = "We have sent password recover instructions to";
+
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "Pending";
@@ -197,7 +196,7 @@
 /* Proof of Identity title in add document for kyc2 */
 "Account.ProofOfIdentity" = "Proof of Identity";
 
-"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to: %@";
+"Account.RecoverPasswordInstructions" = "We have sent password recover instructions to:\n%@";
 
 "Account.ResendEmail" = "Resend email";
 
@@ -318,7 +317,7 @@
 "AccountCreation.creating" = "Account maken";
 
 /* Enter the code message in create account flow */
-"AccountCreation.EnterCode" = "Please enter the code we’ve sent to";
+"AccountCreation.EnterCode" = "Enter the code we\’ve sent to:\n%@";
 
 "AccountCreation.EnterCode.android" = "Enter the code we\’ve sent to:\n%@";
 
@@ -582,7 +581,7 @@
 "Alerts.walletRestored" = "Recovery Phrase correct";
 
 /* Error label on XRP send amount screen */
-"Amount.MinXRPAmount" = "The minimum required ammount is 10 XRP.";
+"Amount.MinXRPAmount" = "The minimum required amount is %d XRP.";
 
 "Amount.MinXRPAmount.android" = "The minimum required amount is %d XRP.";
 
@@ -713,9 +712,6 @@
 /* Confirm button title */
 "Button.confirm" = "Bevestigen";
 
-/* Button label to open a email compose window with our support email in the to field. */
-"Button.contactSupport.android" = "Contact opnemen met ondersteuning";
-
 /* prompt continue button */
 "Button.continueAction" = "Doorgaan";
 
@@ -789,9 +785,6 @@
 /* Search button */
 "Button.search" = "Search";
 
-/* Button label to open Security Settings. */
-"Button.securitySettings.android" = "Veiligheidscentrum";
-
 /* Click this button to sell an asset */
 "Button.sell" = "Verkoop";
 
@@ -817,9 +810,6 @@
 
 "Button.Verify" = "Verify";
 
-/* Button label to wipe the user's application data. */
-"Button.wipe.android" = "Vegen";
-
 /* Yes button */
 "Button.yes" = "Ja";
 
@@ -842,9 +832,7 @@
 
 "Buy.Ach.Instant.HybridConfirmationDrawer" = "With Instant buy, %@ (%@) will show in your account instantly. The remaining %@ (%@) will arrive in 3-5 days.";
 
-"Buy.Ach.Instant.InfoButtonTitle" = "\"Receive up to $500.00 instantly\"";
-
-"Buy.Ach.Instant.InfoButtonTitle.android" = "Receive up to %@ instantly";
+"Buy.Ach.Instant.InfoButtonTitle" = "Receive up to %@ instantly";
 
 "Buy.Ach.Instant.OrderPreview.HybridNotice" = "With Instant Buy, %@ will be settled immediately. Remaining %@ will settle in 3-5 days.";
 
@@ -872,11 +860,9 @@
 
 "Buy.achBuyDisclaimer" = "It currently takes 3–5 days to process a purchase with ACH";
 
-"Buy.achFee" = "ACH fee (%@)";
+"Buy.achFee" = "ACH fee";
 
-"Buy.achFee.android" = "ACH fee";
-
-"Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.  More info\n\nIt currently takes 3-5 days to process a purchase with ACH.";
+"Buy.achFee.sprint8" = "ACH fee (%@)";
 
 "Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
 
@@ -917,7 +903,11 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@";
 
+"Buy.BuyLimits.AchDescription" = "It currently takes 3-5 days to process a purchase with ACH.";
+
 "Buy.BuyLimits.android" = "Currently, minimum for Buy is $30.00 USD and maximum is $500.00 USD per day.";
+
+"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -988,6 +978,8 @@
 /* Last Name label in billing address view on buy flow */
 "Buy.LastName" = "Last Name";
 
+"Buy.Limits.sprint8" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@\n";
+
 "Buy.linkBankAccount" = "Link bank account";
 
 /* Month and year label in add card flow */
@@ -1033,10 +1025,7 @@
 
 "Buy.relinkBankAccount" = "Re-link bank account";
 
-/* Are you sure you want to remove this card title dialog */
-"Buy.RemoveCard" = "Are you sure you want to remove card ending in";
-
-"Buy.RemoveCard.android" = "Are you sure you want to remove card ending in %@?";
+"Buy.RemoveCard" = "Are you sure you want to remove card ending in %@?";
 
 /* You will no longer be able to use it to buy assets description on removing card dialog */
 "Buy.RemoveCardOption" = "You will no longer be able to use it to buy assets.";
@@ -1060,10 +1049,9 @@
 
 "Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
 
-/* By placing this order you agree to our terms message when ordering */
-"Buy.Terms" = "By placing this order you agree to our";
+"Buy.Terms" = "By placing this order you agree to our %@";
 
-"Buy.Terms.android" = "By placing this order you agree to our %@";
+"Buy.terms.sprint8" = "By placing this order you agree to our";
 
 "Buy.TransactionError" = "Transaction error";
 
@@ -1388,6 +1376,10 @@
 "ErrorMessages.overLifetimeLimit" = "The amount is higher than your lifetime limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overLifetimeLimitLevel2" = "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.";
+
+"ErrorMessages.PaymailAlreadyTaken" = "This Paymail is already taken";
+
+"ErrorMessages.PaymailTaken" = "Paymail already taken";
 
 "ErrorMessages.pendingExchange" = "A maximum of one swap can be active for a currency at a time.";
 
@@ -1974,10 +1966,7 @@
 /* Device encryption prompt title */
 "Prompts.NoScreenLock.title.android" = "Schermvergrendeling uitgeschakeld";
 
-/* Warning about recovery phrase (formerly paper key). */
-"Prompts.PaperKey.body" = "Uw Papiersleutel moet opgeslagen worden voor het geval dat u uw telefoon ooit verliest of vervangt.";
-
-"Prompts.PaperKey.Body.Android" = "Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone\'s security settings.";
+"Prompts.PaperKey.Body" = "Set up your Recovery Phrase in case you ever lose or replace your phone. Your key is also required if you change your phone\'s security settings.";
 
 /* An action is required (You must do this action). */
 "Prompts.PaperKey.title" = "Actie Vereist";
@@ -2447,6 +2436,8 @@
 
 "Sell.widrawToBank" = "Withdraw to";
 
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
+
 "Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
 
 "Sell.WithdrawalSuccessTitle" = "Your withdrawal is being processed";
@@ -2537,10 +2528,7 @@
 /* Insufficient gas error */
 "Send.insufficientGas" = "Insufficient gas.";
 
-/* e,g, "You must have at least $2 in your wallet in order to transfer this type of token." In this case, "token" is an ethereum ERC20 token. */
-"Send.insufficientGasMessage" = "Je moet minstens %@ in je wallet hebben om dit type token te versturen. Wil je graag nu naar je Ethereum wallet gaan?";
-
-"Send.insufficientGasMessage.android" = "You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.";
+"Send.insufficientGasMessage" = "You must have at least %@ in your wallet in order to send this digital asset. Please add more %@ to your wallet and try again.";
 
 /* Your balance is insufficient to complete this action. */
 "Send.insufficientGasTitle" = "Insufficient %@ Balance";
@@ -2751,11 +2739,8 @@
 
 "Settings.WebDebugUrl" = "Web Platform Debug URL";
 
-/* Unlink/delete your wallet from the current device. */
-"Settings.wipe" = "Ontkoppelen van dit toestel";
-
 /* Wipe/delete your wallet from the current device. */
-"Settings.wipe.android" = "Ontkoppel uw wallet van dit apparaat.";
+"Settings.wipe" = "Ontkoppel uw wallet van dit apparaat.";
 
 /* Share data view body */
 "ShareData.body" = "Help om RockWallet te verbeteren door je anonieme data met ons te delen. Dit bevat geen financiële informatie. We respecteren je financiële privacy.";
@@ -2877,10 +2862,7 @@
 /* Add item label in swap flow */
 "Swap.AddItem" = "Add item!";
 
-/* Amount purchased label in detail swap screen */
-"Swap.AmountPurchased" = "Amount purchased";
-
-"Swap.AmountPurchased.android" = "Amount purchased:";
+"Swap.AmountPurchased" = "Amount purchased:";
 
 "Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
 
@@ -2890,10 +2872,7 @@
 /* Balance text on swap */
 "Swap.Balance" = "I have %@ %@";
 
-/* Card fee label in swap details screen */
-"Swap.CardFee" = "Card fee";
-
-"Swap.CardFee.android" = "Card fee:";
+"Swap.CardFee" = "Card fee:";
 
 /* Title on check your assets popup */
 "Swap.CheckAssets" = "Check your assets!";
@@ -2918,10 +2897,7 @@
 /* Swap and Buy I want label from currency */
 "Swap.iWant" = "I want";
 
-/* Mining network fee label in swap details screen */
-"Swap.MiningNetworkFee" = "Mining network fee";
-
-"Swap.MiningNetworkFee.android" = "Mining network fee:";
+"Swap.MiningNetworkFee" = "Mining network fee:";
 
 /* Not a valid pair */
 "Swap.NotValidPair" = "Not a valid pair";
@@ -3530,9 +3506,7 @@
 /* Wipe wallet prompt */
 "UnlockScreen.wipePrompt" = "Are you sure you would like to wipe this wallet?";
 
-"UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your\nidentity every time you access your \nRockwallet. Be sure to create a number that you can remember easily.";
-
-"UpdatePin.Alert.body.android" = "A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.";
+"UpdatePin.Alert.body" = "A PIN is a 6-digit number to validate your identity every time you access your Rockwallet. Be sure to create a number that you can remember easily.";
 
 "UpdatePin.Alert.title" = "What is a PIN?";
 
@@ -3650,9 +3624,7 @@
 
 "VerifyPhoneNumber.sms.changeNumber" = "Change my phone number";
 
-"VerifyPhoneNumber.sms.instructions" = "Enter the security code we’ve sent to";
-
-"VerifyPhoneNumber.sms.instructions.android" = "Enter the security code we’ve sent to:\n%@";
+"VerifyPhoneNumber.sms.instructions" = "Enter the security code we’ve sent to:\n%@";
 
 "VerifyPhoneNumber.sms.title" = "We’ve sent you an SMS";
 
