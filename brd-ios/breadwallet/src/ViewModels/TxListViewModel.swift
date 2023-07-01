@@ -17,6 +17,7 @@ struct TxListViewModel: TxViewModel, Hashable {
     
     var tx: Transaction?
     var exchange: ExchangeDetail?
+    var currency: Currency?
     var id: Int? {
         return tx?.exchange?.orderId ?? exchange?.orderId
     }

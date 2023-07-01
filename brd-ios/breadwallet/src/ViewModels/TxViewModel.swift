@@ -14,7 +14,7 @@ import UIKit
 protocol TxViewModel: Hashable {
     var tx: Transaction? { get }
     var exchange: ExchangeDetail? { get }
-    var currency: Currency? { get }
+    var currency: Currency? { get set }
     var blockHeight: String { get }
     var longTimestamp: String { get }
     var status: TransactionStatus { get }
@@ -25,20 +25,10 @@ protocol TxViewModel: Hashable {
     var tokenTransferCode: String? { get }
     var gift: Gift? { get }
     var destination: ExchangeDetail.SourceDestination? { get }
+    var title: String { get }
 }
 
-// Default and passthru values
 extension TxViewModel {
-    var currency: Currency? {
-        if let tx = tx {
-            return tx.currency
-        } else if let exchange = exchange {
-            return Store.state.currencies.first(where: { $0.code.lowercased() == exchange.source.currency.lowercased() })
-        } else {
-            return nil
-        }
-    }
-    
     var transactionId: String {
         guard let tx = tx,
               let currency = currency
@@ -196,6 +186,16 @@ extension TxViewModel {
     
     var icon: UIImage? {
         return iconDecider()
+    }
+    
+    var title: String {
+        guard let exchange = exchange,
+              let part = destination?.part?.rawValue,
+              exchange.isHybridTransaction else {
+            return shortTimestamp
+        }
+        
+        return [shortTimestamp, L10n.Transaction.hybridPart(part)].joined(separator: " ")
     }
     
     private func iconDecider() -> UIImage? {

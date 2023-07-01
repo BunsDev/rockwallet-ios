@@ -77,11 +77,11 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         var items = [TxListViewModel]()
         
         for item in exchanges {
-            items.append(.init(exchange: item))
+            items.append(.init(exchange: item, currency: currency))
         }
         
         for item in transactions where exchanges.filter({ $0.orderId == item.exchange?.orderId }).isEmpty {
-            items.append(.init(tx: item))
+            items.append(.init(tx: item, currency: currency))
         }
         
         return items.sorted(by: { lhs, rhs in
@@ -298,7 +298,6 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
               let viewModel = dataSource?.itemIdentifier(for: indexPath) as? TxListViewModel else { return UITableViewCell() }
         
         cell.setTransaction(viewModel,
-                            currency: currency,
                             showFiatAmounts: showFiatAmounts,
                             rate: rate ?? Rate.empty)
         

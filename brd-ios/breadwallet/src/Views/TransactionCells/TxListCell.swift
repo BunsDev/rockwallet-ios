@@ -41,23 +41,16 @@ class TxListCell: UITableViewCell, Identifiable {
         iconImageView.layer.cornerRadius = iconImageView.frame.height * CornerRadius.fullRadius.rawValue
     }
     
-    func setTransaction(_ viewModel: TxListViewModel, currency: Currency, showFiatAmounts: Bool, rate: Rate) {
+    func setTransaction(_ viewModel: TxListViewModel, showFiatAmounts: Bool, rate: Rate) {
+        guard let currency = viewModel.currency else { return }
+        
         self.viewModel = viewModel
         
         let status = viewModel.status
         iconImageView.image = viewModel.icon?.tinted(with: status.tintColor)
         iconImageView.backgroundColor = status.backgroundColor
         
-        if let exchange = viewModel.exchange,
-           let part = viewModel.destination?.part?.rawValue,
-           exchange.isHybridTransaction {
-            titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(part)
-            
-        } else {
-            titleLabel.text = viewModel.shortTimestamp
-            
-        }
-        
+        titleLabel.text = viewModel.title
         amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
         descriptionLabel.text = viewModel.shortDescription(for: currency)
         

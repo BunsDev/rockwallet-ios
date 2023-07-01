@@ -19,7 +19,8 @@ struct TxDetailViewModel: TxViewModel, Hashable {
     let exchangeRate: String?
     let tx: Transaction?
     let exchange: ExchangeDetail?
-    
+    var currency: Currency?
+
     // Ethereum-specific fields
     var gasPrice: String?
     var gasLimit: String?
