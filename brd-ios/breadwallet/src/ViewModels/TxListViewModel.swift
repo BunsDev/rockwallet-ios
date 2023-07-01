@@ -18,45 +18,28 @@ struct TxListViewModel: TxViewModel, Hashable {
     var tx: Transaction?
     var exchange: ExchangeDetail?
     var id: Int? {
-        return tx?.swapOrderId ?? exchange?.orderId
+        return tx?.exchange?.orderId ?? exchange?.orderId
     }
     
     func amount(showFiatAmounts: Bool, rate: Rate) -> String {
         if let tx = tx {
             var amount = tx.amount
-
+            
             // This is the originating tx of a token transfer, so the amount is 0 but we want to show the fee
             if tokenTransferCode != nil {
                 amount = tx.fee
             }
-
+            
             let text = Amount(amount: amount,
                               rate: showFiatAmounts ? rate : nil,
                               negative: (tx.direction == .sent)).description
             return text
-        } else if let exchange = exchange {
-            let amount: String
-            var destination: ExchangeDetail.SourceDestination?
-            
-            if let part = exchange.part {
-                if exchange.destination?.part == part {
-                    destination = exchange.destination
-                } else if exchange.instantDestination?.part == part {
-                    destination = exchange.instantDestination
-                }
-            } else {
-                if exchange.destination?.transactionId != nil {
-                    destination = exchange.destination
-                } else if exchange.instantDestination?.transactionId != nil {
-                    destination = exchange.instantDestination
-                }
-            }
-            
-            amount = ExchangeFormatter.current.string(for: destination?.currencyAmount) ?? ""
-            
-            return "\(amount) \(String(describing: destination?.currency ?? ""))"
+        } else if let destination = destination,
+                  let currency = Store.state.currencies.first(where: { $0.code.lowercased() == destination.currency.lowercased() }) {
+            let amount = Amount(tokenString: destination.currencyAmount.description, currency: currency)
+            return amount.description
         } else {
-            return .init()
+            return ""
         }
     }
     
@@ -130,7 +113,23 @@ struct TxListViewModel: TxViewModel, Hashable {
             }
             
         case .buyAch, .instantAch:
-            if exchange?.instantDestination?.part == .one && exchange?.isHybridTransaction == false {
+            if exchange?.isHybridTransaction == true {
+                let isPartOne = destination?.part == .one
+                
+                switch status {
+                case .pending:
+                    return isPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
+                    
+                case .complete:
+                    return isPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
+                    
+                case .failed:
+                    return isPartOne ? L10n.Transaction.failedPurchaseWithInstantBuy : L10n.Transaction.purchaseFailedWithAch
+                    
+                default:
+                    break
+                }
+            } else {
                 switch status {
                 case .pending:
                     return L10n.Transaction.pendingPurchaseWithInstantBuy
@@ -146,22 +145,6 @@ struct TxListViewModel: TxViewModel, Hashable {
                 }
             }
             
-            let isHybridPartOne = exchange?.isHybridTransaction == true && exchange?.part == .one
-            
-            switch status {
-            case .pending:
-                return isHybridPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
-                
-            case .complete:
-                return isHybridPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
-                
-            case .failed:
-                return isHybridPartOne ? L10n.Transaction.failedPurchaseWithInstantBuy : L10n.Transaction.purchaseFailedWithAch
-                
-            default:
-                break
-            }
-            
         default:
             break
         }
@@ -173,7 +156,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         switch status {
         case .invalid, .failed, .refunded:
             return L10n.Transaction.withdrawalFailed
-    
+            
         case .complete, .manuallySettled, .confirmed:
             return L10n.Transaction.withdrawalComplete
             
@@ -183,10 +166,8 @@ struct TxListViewModel: TxViewModel, Hashable {
     }
     
     private func handleSwapTransactions(for currency: Currency) -> String {
-        let sourceCurrency = exchangeSourceCurrency?.code.uppercased() ?? ""
-        let destinationCurrency = exchangeDestinationCurrency?.code.uppercased() ?? ""
-        let isOnSource = currency.code.uppercased() == destinationCurrency
-        let swapString = isOnSource ? "from \(sourceCurrency)" : "to \(destinationCurrency)"
+        let isOnSource = currency.code.uppercased() == swapDestinationCurrency
+        let swapString = isOnSource ? "from \(swapSourceCurrency)" : "to \(swapDestinationCurrency)"
         
         switch status {
         case .complete, .manuallySettled:
@@ -201,5 +182,15 @@ struct TxListViewModel: TxViewModel, Hashable {
         default:
             return ""
         }
+    }
+    
+    private var swapSourceCurrency: String {
+        let sourceCurrency = exchange?.source.currency.uppercased() ?? tx?.exchange?.source.currency.uppercased()
+        return sourceCurrency ?? ""
+    }
+    
+    private var swapDestinationCurrency: String {
+        let destinationCurrency = exchange?.destination?.currency.uppercased() ?? tx?.exchange?.destination?.currency.uppercased()
+        return destinationCurrency ?? ""
     }
 }

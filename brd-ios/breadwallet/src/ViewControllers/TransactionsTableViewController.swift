@@ -80,7 +80,7 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
             items.append(.init(exchange: item))
         }
         
-        for item in transactions where exchanges.filter({ $0.orderId == item.swapOrderId }).isEmpty {
+        for item in transactions where exchanges.filter({ $0.orderId == item.exchange?.orderId }).isEmpty {
             items.append(.init(tx: item))
         }
         
@@ -266,16 +266,11 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
                 $0.transfer.hash?.description == destinationId ||
                 $0.transfer.hash?.description == instantDestinationId
             }) {
-                element.exchangeType = exchange.type
-                element.swapOrderId = exchange.orderId
-                element.exchangeStatus = exchange.status
-                element.exchangeSource = exchange.source
-                element.exchangeDestination = exchange.destination
-                element.exchangeInstantDestination = exchange.instantDestination
+                element.exchange = exchange
             }
         }
         
-        exchanges = remainingExchanges.filter { $0.status != .failed }
+        exchanges = remainingExchanges
         
         createSnapshot(for: allTransactions)
     }

@@ -158,17 +158,12 @@ class Transaction {
     
     var hash: String { return transfer.hash?.description ?? "" }
     
-    var exchangeType: ExchangeType = .unknown
-    var exchangeStatus: TransactionStatus?
-    var exchangeSource: ExchangeDetail.SourceDestination?
-    var exchangeDestination: ExchangeDetail.SourceDestination?
-    var exchangeInstantDestination: ExchangeDetail.SourceDestination?
-    var swapOrderId: Int?
+    var exchange: ExchangeDetail?
     
     var status: TransactionStatus {
-        switch exchangeType {
+        switch exchange?.type {
         case .swap:
-            return exchangeStatus ?? .failed
+            return exchange?.status ?? .failed
             
         default:
             switch transfer.state {
@@ -177,17 +172,17 @@ class Transaction {
                 
             case .included:
                 
-                let buyTransaction = exchangeType == .buyCard || exchangeType == .buyAch
+                let buyTransaction = exchange?.type == .buyCard || exchange?.type == .buyAch || exchange?.type == .instantAch
                 
                 switch Int(confirmations) {
                 case 0:
-                    return buyTransaction ? (exchangeStatus ?? .failed) : .pending
+                    return buyTransaction ? (exchange?.status ?? .failed) : .pending
                     
                 case 1..<currency.confirmationsUntilFinal:
                     return .confirmed
                     
                 default:
-                    return buyTransaction ? (exchangeStatus ?? .failed) : .complete
+                    return buyTransaction ? (exchange?.status ?? .failed) : .complete
                     
                 }
             case .failed, .deleted:
