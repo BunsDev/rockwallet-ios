@@ -22,13 +22,9 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
             switch result {
             case .success(let data):
                 guard let data = data,
-                      let exchangeType = self?.dataStore?.exchangeType,
                       let part = self?.dataStore?.transactionPart else { return }
-                guard let destination = data.destination?.part == part ? data.destination : data.instantDestination else { return }
                 
-                let item = ExchangeDetailsModels.Item(detail: data,
-                                                      destination: destination,
-                                                      type: exchangeType)
+                let item = ExchangeDetailsModels.Item(detail: data, part: part)
                 self?.presenter?.presentData(actionResponse: .init(item: item))
                 
             case .failure(let error):

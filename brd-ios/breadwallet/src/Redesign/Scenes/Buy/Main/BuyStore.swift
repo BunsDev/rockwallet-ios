@@ -107,7 +107,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         
         let isCustom = paymentMethod == .ach ?
         limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false :
-        limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
+        limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.isCustom ?? false
         
         return isCustom
     }

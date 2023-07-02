@@ -75,19 +75,11 @@ extension TxViewModel {
         guard let exchange = tx?.exchange ?? exchange else { return nil }
         
         if exchange.isHybridTransaction {
-            if exchange.part != exchange.destination?.part {
-                return exchange.destination
-                
-            } else if exchange.part != exchange.instantDestination?.part {
-                return exchange.instantDestination
-                
-            }
+            return exchange.part == exchange.destination?.part ? exchange.destination : exchange.instantDestination
             
         } else {
             return exchange.destination?.currency.isEmpty == true ? exchange.instantDestination : exchange.destination
         }
-        
-        return nil
     }
     
     var comment: String? { return tx?.comment }
@@ -180,7 +172,7 @@ extension TxViewModel {
     
     private func iconDecider() -> UIImage? {
         switch exchangeType {
-        case .buyCard, .buyAch, .sell, .instantAch:
+        case .buy, .buyCard, .buyAch, .sell, .instantAch:
             switch status {
             case .confirmed, .complete, .completed, .manuallySettled, .pending, .invalid, .failed:
                 return direction == .received ? Asset.receive.image : Asset.send.image

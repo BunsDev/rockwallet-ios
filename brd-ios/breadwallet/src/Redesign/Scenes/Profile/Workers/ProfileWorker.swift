@@ -51,6 +51,7 @@ struct ProfileResponseData: ModelResponse {
         
         enum ExchangeType: String, Codable, CaseIterableDefaultsLast {
             case swap = "SWAP"
+            case buy = "BUY"
             case buyCard = "BUY_CARD"
             case buyAch = "BUY_ACH"
             case sell = "SELL_ACH"
@@ -118,25 +119,25 @@ struct Profile: Model {
     }
     
     var buyAllowancePerExchange: Decimal {
-        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .perExchange && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.limit ?? 0
     }
     var buyAllowanceDaily: Decimal {
-        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .daily && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.limit ?? 0
     }
     var buyAllowanceWeekly: Decimal {
-        return limits.first(where: { $0.interval == .weekly && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .weekly && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.limit ?? 0
     }
     var buyAllowanceMonthly: Decimal {
-        return limits.first(where: { $0.interval == .monthly && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .monthly && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.limit ?? 0
     }
     var buyAllowanceDailyMin: Decimal {
-        return limits.first(where: { $0.interval == .minimum && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .minimum && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.limit ?? 0
     }
     var buyAllowanceDailyMax: Decimal {
-        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .daily && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.limit ?? 0
     }
     var buyAllowanceLifetime: Decimal {
-        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .buyCard })?.limit ?? 0
+        return limits.first(where: { $0.interval == .lifetime && ($0.exchangeType == .buyCard || $0.exchangeType == .buy) })?.limit ?? 0
     }
     
     var achAllowanceDailyMin: Decimal {
