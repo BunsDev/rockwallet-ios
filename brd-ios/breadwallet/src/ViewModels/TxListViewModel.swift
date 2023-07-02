@@ -68,7 +68,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid:
             return L10n.Transaction.failed
             
-        case .complete:
+        case .complete, .completed:
             if tx.direction == .sent {
                 return L10n.TransactionDetails.sent(tx.toAddress)
             } else if tx.direction == .received {
@@ -89,7 +89,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid, .failed, .refunded:
             status = .failed
             
-        case .complete, .manuallySettled, .confirmed:
+        case .complete, .completed, .manuallySettled, .confirmed:
             status = .complete
             
         default:
@@ -103,7 +103,7 @@ struct TxListViewModel: TxViewModel, Hashable {
             case .pending:
                 return L10n.Transaction.pendingPurchase
                 
-            case .complete:
+            case .complete, .completed:
                 return L10n.Transaction.purchased
                 
             case .failed:
@@ -121,7 +121,7 @@ struct TxListViewModel: TxViewModel, Hashable {
                 case .pending:
                     return isPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
                     
-                case .complete:
+                case .complete, .completed:
                     return isPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
                     
                 case .failed:
@@ -135,7 +135,7 @@ struct TxListViewModel: TxViewModel, Hashable {
                 case .pending:
                     return L10n.Transaction.pendingPurchaseWithInstantBuy
                     
-                case .complete:
+                case .complete, .completed:
                     return L10n.Transaction.purchasedWithInstantBuy
                     
                 case .failed:
@@ -158,7 +158,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid, .failed, .refunded:
             return L10n.Transaction.withdrawalFailed
             
-        case .complete, .manuallySettled, .confirmed:
+        case .complete, .completed, .manuallySettled, .confirmed:
             return L10n.Transaction.withdrawalComplete
             
         default:
@@ -171,7 +171,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         let swapString = isOnSource ? "from \(swapSourceCurrency)" : "to \(swapDestinationCurrency)"
         
         switch status {
-        case .complete, .manuallySettled:
+        case .complete, .completed, .manuallySettled:
             return "\(L10n.Transaction.swapped) \(swapString)"
             
         case .pending:

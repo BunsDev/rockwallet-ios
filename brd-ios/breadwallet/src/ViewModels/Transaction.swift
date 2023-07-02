@@ -17,6 +17,7 @@ enum TransactionStatus: String, Hashable, ModelResponse {
     case confirmed
     /// Sufficient confirmations to deem complete (coin-specific)
     case complete = "COMPLETE"
+    case completed = "COMPLETED"
     /// Invalid / error
     case invalid
     /// Failed
@@ -27,7 +28,7 @@ enum TransactionStatus: String, Hashable, ModelResponse {
     case manuallySettled = "MANUALLY_SETTLED"
     
     init?(string: String?) {
-        guard let string = string else {
+        guard let string = string?.uppercased() else {
             self = .failed
             return
         }
@@ -39,7 +40,7 @@ enum TransactionStatus: String, Hashable, ModelResponse {
         case .pending:
             return .init(icon: Asset.pendingIcon.image, title: L10n.Staking.statusPending)
             
-        case .complete, .confirmed:
+        case .complete, .completed, .confirmed:
             return .init(icon: Asset.completeIcon.image, title: L10n.Transaction.complete)
             
         case .failed, .invalid:
@@ -58,7 +59,7 @@ enum TransactionStatus: String, Hashable, ModelResponse {
         switch self {
         case .pending: return LightColors.Pending.two
         case .failed, .invalid, .refunded: return LightColors.Error.two
-        case .complete, .confirmed, .manuallySettled: return LightColors.Success.two
+        case .complete, .completed, .confirmed, .manuallySettled: return LightColors.Success.two
         }
     }
     
@@ -66,7 +67,7 @@ enum TransactionStatus: String, Hashable, ModelResponse {
         switch self {
         case .pending: return LightColors.Pending.one
         case .failed, .invalid, .refunded: return LightColors.Error.one
-        case .complete, .confirmed, .manuallySettled: return LightColors.Success.one
+        case .complete, .completed, .confirmed, .manuallySettled: return LightColors.Success.one
         }
     }
 }
@@ -274,7 +275,7 @@ class Transaction {
             // Sender creates metadata for outgoing transactions
             if self.metaData == nil, direction == .received {
                 // only set rate if recently confirmed to ensure a relatively recent exchange rate is applied
-                createMetaData(rate: (status == .complete) ? nil : rate, kvStore: kvStore)
+                createMetaData(rate: (status == .complete || status == .completed) ? nil : rate, kvStore: kvStore)
             }
         }
     }

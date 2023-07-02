@@ -41,14 +41,10 @@ extension TxViewModel {
         if let tx = tx {
             return tx.status
             
-        } else if let exchange = exchange, exchange.destination?.part == exchange.part {
+        } else {
             return destination?.status ?? .failed
             
-        } else if let exchange = exchange, exchange.instantDestination?.part == exchange.part {
-            return exchange.status
         }
-        
-        return .failed
     }
     
     var exchangeType: ExchangeType {
@@ -76,35 +72,19 @@ extension TxViewModel {
     }
     
     var destination: ExchangeDetail.SourceDestination? {
-        if let tx = tx {
-            let exchange = tx.exchange
-            
-            if let exchange, exchange.isHybridTransaction {
-                if exchange.part != exchange.destination?.part {
-                    return exchange.destination
-                    
-                } else if exchange.part != exchange.instantDestination?.part {
-                    return exchange.instantDestination
-                    
-                }
+        guard let exchange = tx?.exchange ?? exchange else { return nil }
+        
+        if exchange.isHybridTransaction {
+            if exchange.part != exchange.destination?.part {
+                return exchange.destination
                 
-            } else {
-                return exchange?.destination ?? exchange?.instantDestination
+            } else if exchange.part != exchange.instantDestination?.part {
+                return exchange.instantDestination
+                
             }
             
-        } else if let exchange = exchange {
-            if exchange.isHybridTransaction {
-                if exchange.part != exchange.destination?.part {
-                    return exchange.destination
-                    
-                } else if exchange.part != exchange.instantDestination?.part {
-                    return exchange.instantDestination
-                    
-                }
-                
-            } else {
-                return exchange.destination?.currency.isEmpty == true ? exchange.instantDestination : exchange.destination
-            }
+        } else {
+            return exchange.destination?.currency.isEmpty == true ? exchange.instantDestination : exchange.destination
         }
         
         return nil
@@ -202,7 +182,7 @@ extension TxViewModel {
         switch exchangeType {
         case .buyCard, .buyAch, .sell, .instantAch:
             switch status {
-            case .confirmed, .complete, .manuallySettled, .pending, .invalid, .failed:
+            case .confirmed, .complete, .completed, .manuallySettled, .pending, .invalid, .failed:
                 return direction == .received ? Asset.receive.image : Asset.send.image
                 
             case .refunded:

@@ -29,18 +29,21 @@ struct TxDetailViewModel: TxViewModel, Hashable {
     
     var title: String {
         guard status != .invalid else { return L10n.TransactionDetails.titleFailed }
+        
+        let complete = status == .complete || status == .completed
+        
         switch direction {
         case .recovered:
             return L10n.TransactionDetails.titleInternal
         case .received:
-            return status == .complete ? L10n.TransactionDetails.titleReceived : L10n.TransactionDetails.titleReceiving
+            return complete ? L10n.TransactionDetails.titleReceived : L10n.TransactionDetails.titleReceiving
         case .sent:
-            return status == .complete ? L10n.TransactionDetails.titleSent : L10n.TransactionDetails.titleSending
+            return complete ? L10n.TransactionDetails.titleSent : L10n.TransactionDetails.titleSending
         }
     }
     
     var timestampHeader: NSAttributedString {
-        if status == .complete {
+        if status == .complete || status == .completed {
             let text = " " + L10n.TransactionDetails.completeTimestampHeader
             let attributedString = NSMutableAttributedString(string: text)
             let icon = NSTextAttachment()
