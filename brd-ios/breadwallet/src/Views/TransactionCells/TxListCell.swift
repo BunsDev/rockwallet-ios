@@ -100,10 +100,10 @@ class TxListCell: UITableViewCell, Identifiable {
         selectionStyle = .none
         backgroundColor = LightColors.Background.two
         amount.textAlignment = .right
+        descriptionLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         switch viewModel?.exchangeType {
         case .unknown:
-            descriptionLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             descriptionLabel.lineBreakMode = .byTruncatingTail
             descriptionLabel.numberOfLines = 1
             
