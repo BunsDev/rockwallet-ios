@@ -20,7 +20,7 @@ enum ExchangeEndpoints: String, URLType {
     case supportedCurrencies = "supported-currencies"
     case create = "create"
     case achCreate = "ach/create"
-    case details = "exchange/%@"
+    case details = "v2/exchange/%@"
     case history = "v2/exchanges"
     case paymentInstruments = "v2/payment-instruments"
     case paymentInstrument = "payment-instrument"

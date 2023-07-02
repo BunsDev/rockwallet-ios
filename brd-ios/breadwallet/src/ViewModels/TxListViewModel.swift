@@ -55,7 +55,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .sell:
             return handleSellTransactions()
             
-        case .buy, .buyAch, .buyCard, .instantAch:
+        case .buyAch, .buyCard, .instantAch:
             return handleBuyTransactions()
             
         }
@@ -98,7 +98,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         }
         
         switch exchangeType {
-        case .buy, .buyCard:
+        case .buyCard:
             switch status {
             case .pending:
                 return L10n.Transaction.pendingPurchase

@@ -37,7 +37,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                 Models.Section.transactionTo
             ]
             
-        case .buy, .buyCard, .buyAch, .sell:
+        case .buyCard, .buyAch, .sell:
             sections = [
                 Models.Section.header,
                 Models.Section.toCurrency,

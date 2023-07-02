@@ -173,7 +173,7 @@ class Transaction {
                 
             case .included:
                 
-                let buyTransaction = exchange?.type == .buy || exchange?.type == .buyCard || exchange?.type == .buyAch || exchange?.type == .instantAch
+                let buyTransaction = exchange?.type == .buyCard || exchange?.type == .buyAch || exchange?.type == .instantAch
                 
                 switch Int(confirmations) {
                 case 0:
