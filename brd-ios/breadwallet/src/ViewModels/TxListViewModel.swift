@@ -114,36 +114,20 @@ struct TxListViewModel: TxViewModel, Hashable {
             }
             
         case .buyAch, .instantAch:
-            if exchange?.isHybridTransaction == true {
-                let isPartOne = destination?.part == .one
+            let isHybridPartOne = destination?.part == .one && exchange?.isHybridTransaction == true
+            
+            switch status {
+            case .pending:
+                return isHybridPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
                 
-                switch status {
-                case .pending:
-                    return isPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
-                    
-                case .complete, .completed:
-                    return isPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
-                    
-                case .failed:
-                    return isPartOne ? L10n.Transaction.failedPurchaseWithInstantBuy : L10n.Transaction.purchaseFailedWithAch
-                    
-                default:
-                    break
-                }
-            } else {
-                switch status {
-                case .pending:
-                    return L10n.Transaction.pendingPurchaseWithInstantBuy
-                    
-                case .complete, .completed:
-                    return L10n.Transaction.purchasedWithInstantBuy
-                    
-                case .failed:
-                    return L10n.Transaction.failedPurchaseWithInstantBuy
-                    
-                default:
-                    break
-                }
+            case .complete, .completed:
+                return isHybridPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
+                
+            case .failed:
+                return isHybridPartOne ? L10n.Transaction.failedPurchaseWithInstantBuy : L10n.Transaction.purchaseFailedWithAch
+                
+            default:
+                break
             }
             
         default:
