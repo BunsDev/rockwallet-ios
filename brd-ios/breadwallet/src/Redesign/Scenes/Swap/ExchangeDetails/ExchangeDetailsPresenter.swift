@@ -83,7 +83,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                                       title: "\(L10n.TransactionDetails.addressToHeader) \(destination?.currency ?? "")",
                                                       topRightText: "\(formattedCurrencyAmountDestination) \(destination?.currency ?? "")")
             
-        case .buy, .buyCard, .buyAch, .sell:
+        case .buyCard, .buyAch, .sell:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
                                                       title: "\(formattedCurrencyAmountDestination) \(destination?.currency ?? "")",
                                                       topRightText: nil)
