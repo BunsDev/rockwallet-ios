@@ -36,11 +36,12 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
               let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description else { return nil }
-        //8
+        
         let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
         let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
         
-        let limitsString = NSMutableAttributedString(string: L10n.Buy.Limits.sprint8(minText, maxText, moreInfo))
+        var limitsText = paymentMethod == .card ? L10n.Buy.BuyLimitsCard.sprint8(minText, maxText, moreInfo) : L10n.Buy.BuyLimitsAch.sprint8(minText, maxText, moreInfo)
+        let limitsString = NSMutableAttributedString(string: limitsText)
         
         guard isCustomLimits else { return limitsString }
         
