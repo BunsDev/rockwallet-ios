@@ -36,7 +36,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
               let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description else { return nil }
-        
+        //8
         let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
         let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
         
