@@ -33,7 +33,7 @@ extension BaseCoordinator {
                    callbacks: [(() -> Void)] = []) {
         guard let view = viewController?.navigationController?.view ?? navigationController.view else { return }
         
-        let blur = UIBlurEffect(style: blurred ? .regular : .systemThinMaterialDark)
+        let blur = UIBlurEffect(style: blurred ? .dark : .systemThinMaterialDark)
         let blurView = UIVisualEffectView(effect: blur)
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.alpha = 0.0
