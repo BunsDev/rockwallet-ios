@@ -38,7 +38,11 @@ struct TxListViewModel: TxViewModel, Hashable {
         } else if let destination = destination,
                   let currency = Store.state.currencies.first(where: { $0.code.lowercased() == destination.currency.lowercased() }) {
             let amount = Amount(tokenString: destination.currencyAmount.description, currency: currency)
-            return amount.description
+            let formatter = ExchangeFormatter.current
+            formatter.minimumFractionDigits = amount.minimumFractionDigits ?? 0
+            formatter.maximumFractionDigits = amount.maximumFractionDigits
+            let formattedAmount = formatter.string(for: destination.currencyAmount) ?? ""
+            return "\(String(describing: formattedAmount)) \(String(describing: currency.code))"
         } else {
             return ""
         }
