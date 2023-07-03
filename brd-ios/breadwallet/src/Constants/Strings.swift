@@ -786,6 +786,10 @@ internal enum L10n {
     internal static let achBuyDisclaimer = L10n.tr("Localizable", "Buy.achBuyDisclaimer", fallback: "It currently takes 3–5 days to process a purchase with ACH")
     /// ACH fee
     internal static let achFee = L10n.tr("Localizable", "Buy.achFee", fallback: "ACH fee")
+    /// Currently, minimum for buying with ACH is %@ and maximum is %@ per day.
+    internal static func achLimits(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Buy.achLimits", String(describing: p1), String(describing: p2), fallback: "Currently, minimum for buying with ACH is %@ and maximum is %@ per day.")
+    }
     /// ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.
     internal static let achPaymentDurationWarning = L10n.tr("Localizable", "Buy.achPaymentDurationWarning", fallback: "ACH payments usually take 3-5 days. Funds may take a few days to be debited from your account.")
     /// ACH payment method was relinked successfully
@@ -816,9 +820,13 @@ internal enum L10n {
     internal static let buyAchLimitsTitle = L10n.tr("Localizable", "Buy.BuyAchLimitsTitle", fallback: "Buy limits (Card + ACH)")
     /// Buy limits
     internal static let buyLimit = L10n.tr("Localizable", "Buy.BuyLimit", fallback: "Buy limits")
+    /// Minimum for buying with ACH is %@ %@ per transaction and your weekly limit is %@ %@.
+    internal static func buyLimitsAch(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+      return L10n.tr("Localizable", "Buy.BuyLimitsAch", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Minimum for buying with ACH is %@ %@ per transaction and your weekly limit is %@ %@.")
+    }
     /// Buy min and max limit text
-    internal static func buyLimits(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
-      return L10n.tr("Localizable", "Buy.BuyLimits", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Minimum for Buy is %@ %@ per transaction and your weekly limit is %@ %@.")
+    internal static func buyLimitsCard(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
+      return L10n.tr("Localizable", "Buy.BuyLimitsCard", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Minimum for buying is %@ %@ per transaction and your weekly limit is %@ %@.")
     }
     /// BUY WITH ACH
     internal static let buyWithAch = L10n.tr("Localizable", "Buy.buyWithAch", fallback: "BUY WITH ACH")
@@ -1038,13 +1046,6 @@ internal enum L10n {
       /// Click on your increase your limits button below if you would like to further increase your limits.
       internal static let increase = L10n.tr("Localizable", "Buy.BuyLimits.Increase", fallback: "Click on your increase your limits button below if you would like to further increase your limits.")
     }
-    internal enum Limits {
-      /// Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@
-      /// 
-      internal static func sprint8(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-        return L10n.tr("Localizable", "Buy.Limits.sprint8", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@\n")
-      }
-    }
     internal enum PaymentMethodBlocked {
       /// contact support
       internal static let link = L10n.tr("Localizable", "Buy.PaymentMethodBlocked.Link", fallback: "contact support")
@@ -1055,10 +1056,16 @@ internal enum L10n {
         return L10n.tr("Localizable", "Buy.achFee.sprint8", String(describing: p1), fallback: "ACH fee (%@)")
       }
     }
-    internal enum AchLimits {
-      /// Currently, minimum for buying with ACH is %@ and maximum is %@ per day. At the moment lifetime limit is %@.
-      internal static func android(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-        return L10n.tr("Localizable", "Buy.achLimits.android", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for buying with ACH is %@ and maximum is %@ per day. At the moment lifetime limit is %@.")
+    internal enum BuyLimitsAch {
+      /// Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day.  %@
+      internal static func sprint8(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+        return L10n.tr("Localizable", "Buy.buyLimitsAch.sprint8", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day.  %@")
+      }
+    }
+    internal enum BuyLimitsCard {
+      /// Currently, minimum for buying is %@ USD and maximum is %@ USD per day.  %@
+      internal static func sprint8(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+        return L10n.tr("Localizable", "Buy.buyLimitsCard.sprint8", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Currently, minimum for buying is %@ USD and maximum is %@ USD per day.  %@")
       }
     }
     internal enum Terms {
@@ -1695,12 +1702,12 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "ManageWallet.title", fallback: "Manage Wallet")
   }
   internal enum MarketData {
-    /// 24h high
-    internal static let high24h = L10n.tr("Localizable", "MarketData.high24h", fallback: "24h high")
-    /// 24h low
-    internal static let low24h = L10n.tr("Localizable", "MarketData.low24h", fallback: "24h low")
-    /// Market Cap
-    internal static let marketCap = L10n.tr("Localizable", "MarketData.marketCap", fallback: "Market Cap")
+    /// 24h High
+    internal static let high24h = L10n.tr("Localizable", "MarketData.high24h", fallback: "24h High")
+    /// 24h Low
+    internal static let low24h = L10n.tr("Localizable", "MarketData.low24h", fallback: "24h Low")
+    /// Market cap
+    internal static let marketCap = L10n.tr("Localizable", "MarketData.marketCap", fallback: "Market cap")
     /// Trading Volume
     internal static let volume = L10n.tr("Localizable", "MarketData.volume", fallback: "Trading Volume")
   }
