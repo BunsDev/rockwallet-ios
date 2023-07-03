@@ -390,16 +390,15 @@ class AssetDetailsViewController: UIViewController, Subscriber {
         default:
             let vc = ExchangeDetailsViewController()
             vc.isModalDismissable = false
-            vc.dataStore?.exchangeId = String(transaction.tx?.swapOrderId ?? transaction.exchange?.orderId ?? -1)
+            vc.dataStore?.exchangeId = String(transaction.tx?.exchange?.orderId ?? transaction.exchange?.orderId ?? -1)
             vc.dataStore?.exchangeType = transaction.exchangeType
-            vc.dataStore?.transactionPart = transaction.exchange?.part ?? .one
+            vc.dataStore?.transactionPart = transaction.tx?.exchange?.part ?? transaction.exchange?.part ?? .one
             vc.coordinator = coordinator
             
             LoadingView.show()
             navigationController?.pushViewController(viewController: vc, animated: true) {
                 LoadingView.hideIfNeeded()
             }
-            
         }
     }
     

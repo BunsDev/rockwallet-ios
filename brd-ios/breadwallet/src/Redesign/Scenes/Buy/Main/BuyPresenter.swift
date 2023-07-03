@@ -78,8 +78,15 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let formattedFiatString = ExchangeFormatter.createAmountString(string: fromFiatValue ?? "")
         let formattedTokenString = ExchangeFormatter.createAmountString(string: fromTokenValue ?? "")
         
+        let fiatCurrency = (actionResponse.quote?.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
+        let instantAchLimit = actionResponse.quote?.instantAch?.limitUsd ?? 0
+        let instantAchLimitAmount = String(format: Constant.currencyFormat,
+                                           ExchangeFormatter.fiat.string(for: instantAchLimit) ?? "",
+                                           fiatCurrency)
+        let instantAchLimitText = L10n.Buy.Ach.Instant.infoButtonTitle(instantAchLimitAmount)
+        
         cryptoModel = .init(amount: from,
-                            headerInfoButtonTitle: actionResponse.type == .ach ? L10n.Buy.Ach.Instant.infoButtonTitle : nil,
+                            headerInfoButtonTitle: actionResponse.type == .ach ? instantAchLimitText : nil,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))

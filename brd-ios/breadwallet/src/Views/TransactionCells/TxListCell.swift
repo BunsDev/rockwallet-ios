@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class TxListCell: UITableViewCell, Identifiable {
 
@@ -18,15 +17,16 @@ class TxListCell: UITableViewCell, Identifiable {
         view.layer.masksToBounds = true
         return view
     }()
-    private let titleLabel = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.three)
-    private let descriptionLabel = UILabel(font: Fonts.Body.two, color: LightColors.Text.two)
+    
     private  let amount: UILabel = {
         let label = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.three)
-        label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
     
+    private let titleLabel = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.three)
+    private let descriptionLabel = UILabel(font: Fonts.Body.two, color: LightColors.Text.two)
     private let separator = UIView(color: LightColors.Outline.one)
+    private var viewModel: TxListViewModel?
     
     // MARK: - Init
     
@@ -41,31 +41,18 @@ class TxListCell: UITableViewCell, Identifiable {
         iconImageView.layer.cornerRadius = iconImageView.frame.height * CornerRadius.fullRadius.rawValue
     }
     
-    func setTransaction(_ viewModel: TxListViewModel, currency: Currency, showFiatAmounts: Bool, rate: Rate) {
-        let status = viewModel.tx?.status ?? viewModel.exchange?.status ?? .pending
+    func setTransaction(_ viewModel: TxListViewModel, showFiatAmounts: Bool, rate: Rate) {
+        self.viewModel = viewModel
+        
+        let status = viewModel.status
         iconImageView.image = viewModel.icon?.tinted(with: status.tintColor)
         iconImageView.backgroundColor = status.backgroundColor
         
-        if let exchange = viewModel.exchange,
-           exchange.type == .buyAch,
-           let part = exchange.part?.rawValue,
-           exchange.isHybridTransaction {
-            titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(part)
-            
-        } else if let exchange = viewModel.exchange,
-                  exchange.type == .buyAch,
-                  let part = viewModel.exchange?.instantDestination?.part?.rawValue,
-                  exchange.isHybridTransaction {
-            titleLabel.text = viewModel.shortTimestamp + L10n.Transaction.hybridPart(part)
-            
-        } else {
-            titleLabel.text = viewModel.shortTimestamp
-            
-        }
-        
+        titleLabel.text = viewModel.title
         amount.text = viewModel.amount(showFiatAmounts: showFiatAmounts, rate: rate)
-        descriptionLabel.text = viewModel.shortDescription(for: currency)
+        descriptionLabel.text = viewModel.shortDescription()
         
+        setupStyle()
         layoutSubviews()
     }
     
@@ -114,7 +101,15 @@ class TxListCell: UITableViewCell, Identifiable {
         backgroundColor = LightColors.Background.two
         amount.textAlignment = .right
         descriptionLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        descriptionLabel.lineBreakMode = .byTruncatingTail
+        
+        switch viewModel?.exchangeType {
+        case .unknown:
+            descriptionLabel.lineBreakMode = .byTruncatingTail
+            descriptionLabel.numberOfLines = 1
+            
+        default:
+            descriptionLabel.numberOfLines = 0
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
