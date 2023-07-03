@@ -17,56 +17,40 @@ struct TxListViewModel: TxViewModel, Hashable {
     
     var tx: Transaction?
     var exchange: ExchangeDetail?
+    var currency: Currency?
     var id: Int? {
-        return tx?.swapOrderId ?? exchange?.orderId
+        return tx?.exchange?.orderId ?? exchange?.orderId
     }
     
     func amount(showFiatAmounts: Bool, rate: Rate) -> String {
         if let tx = tx {
             var amount = tx.amount
-
+            
             // This is the originating tx of a token transfer, so the amount is 0 but we want to show the fee
             if tokenTransferCode != nil {
                 amount = tx.fee
             }
-
+            
             let text = Amount(amount: amount,
                               rate: showFiatAmounts ? rate : nil,
                               negative: (tx.direction == .sent)).description
             return text
-        } else if let exchange = exchange {
-            let amount: String
-            var destination: ExchangeDetail.SourceDestination?
-            
-            if let part = exchange.part {
-                if exchange.destination?.part == part {
-                    destination = exchange.destination
-                } else if exchange.instantDestination?.part == part {
-                    destination = exchange.instantDestination
-                }
-            } else {
-                if exchange.destination?.transactionId != nil {
-                    destination = exchange.destination
-                } else if exchange.instantDestination?.transactionId != nil {
-                    destination = exchange.instantDestination
-                }
-            }
-            
-            amount = ExchangeFormatter.current.string(for: destination?.currencyAmount) ?? ""
-            
-            return "\(amount) \(String(describing: destination?.currency ?? ""))"
+        } else if let destination = destination,
+                  let currency = Store.state.currencies.first(where: { $0.code.lowercased() == destination.currency.lowercased() }) {
+            let amount = Amount(tokenString: destination.currencyAmount.description, currency: currency)
+            return amount.description
         } else {
-            return .init()
+            return ""
         }
     }
     
-    func shortDescription(for currency: Currency) -> String {
+    func shortDescription() -> String {
         switch exchangeType {
         case .unknown:
             return handleDefaultTransactions()
             
         case .swap:
-            return handleSwapTransactions(for: currency)
+            return handleSwapTransactions()
             
         case .sell:
             return handleSellTransactions()
@@ -84,7 +68,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid:
             return L10n.Transaction.failed
             
-        case .complete:
+        case .complete, .completed:
             if tx.direction == .sent {
                 return L10n.TransactionDetails.sent(tx.toAddress)
             } else if tx.direction == .received {
@@ -105,7 +89,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid, .failed, .refunded:
             status = .failed
             
-        case .complete, .manuallySettled, .confirmed:
+        case .complete, .completed, .manuallySettled, .confirmed:
             status = .complete
             
         default:
@@ -119,7 +103,7 @@ struct TxListViewModel: TxViewModel, Hashable {
             case .pending:
                 return L10n.Transaction.pendingPurchase
                 
-            case .complete:
+            case .complete, .completed:
                 return L10n.Transaction.purchased
                 
             case .failed:
@@ -130,29 +114,13 @@ struct TxListViewModel: TxViewModel, Hashable {
             }
             
         case .buyAch, .instantAch:
-            if exchange?.instantDestination?.part == .one && exchange?.isHybridTransaction == false {
-                switch status {
-                case .pending:
-                    return L10n.Transaction.pendingPurchaseWithInstantBuy
-                    
-                case .complete:
-                    return L10n.Transaction.purchasedWithInstantBuy
-                    
-                case .failed:
-                    return L10n.Transaction.failedPurchaseWithInstantBuy
-                    
-                default:
-                    break
-                }
-            }
-            
-            let isHybridPartOne = exchange?.isHybridTransaction == true && exchange?.part == .one
+            let isHybridPartOne = destination?.part == .one && exchange?.isHybridTransaction == true
             
             switch status {
             case .pending:
                 return isHybridPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
                 
-            case .complete:
+            case .complete, .completed:
                 return isHybridPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
                 
             case .failed:
@@ -173,8 +141,8 @@ struct TxListViewModel: TxViewModel, Hashable {
         switch status {
         case .invalid, .failed, .refunded:
             return L10n.Transaction.withdrawalFailed
-    
-        case .complete, .manuallySettled, .confirmed:
+            
+        case .complete, .completed, .manuallySettled, .confirmed:
             return L10n.Transaction.withdrawalComplete
             
         default:
@@ -182,14 +150,12 @@ struct TxListViewModel: TxViewModel, Hashable {
         }
     }
     
-    private func handleSwapTransactions(for currency: Currency) -> String {
-        let sourceCurrency = exchangeSourceCurrency?.code.uppercased() ?? ""
-        let destinationCurrency = exchangeDestinationCurrency?.code.uppercased() ?? ""
-        let isOnSource = currency.code.uppercased() == destinationCurrency
-        let swapString = isOnSource ? "from \(sourceCurrency)" : "to \(destinationCurrency)"
+    private func handleSwapTransactions() -> String {
+        let isOnSource = currency?.code.uppercased() == swapDestinationCurrency
+        let swapString = isOnSource ? "from \(swapSourceCurrency)" : "to \(swapDestinationCurrency)"
         
         switch status {
-        case .complete, .manuallySettled:
+        case .complete, .completed, .manuallySettled:
             return "\(L10n.Transaction.swapped) \(swapString)"
             
         case .pending:
@@ -201,5 +167,15 @@ struct TxListViewModel: TxViewModel, Hashable {
         default:
             return ""
         }
+    }
+    
+    private var swapSourceCurrency: String {
+        let sourceCurrency = exchange?.source.currency.uppercased() ?? tx?.exchange?.source.currency.uppercased()
+        return sourceCurrency ?? ""
+    }
+    
+    private var swapDestinationCurrency: String {
+        let destinationCurrency = exchange?.destination?.currency.uppercased() ?? tx?.exchange?.destination?.currency.uppercased()
+        return destinationCurrency ?? ""
     }
 }

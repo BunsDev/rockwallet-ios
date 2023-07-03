@@ -77,11 +77,11 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
         var items = [TxListViewModel]()
         
         for item in exchanges {
-            items.append(.init(exchange: item))
+            items.append(.init(exchange: item, currency: currency))
         }
         
-        for item in transactions where exchanges.filter({ $0.orderId == item.swapOrderId }).isEmpty {
-            items.append(.init(tx: item))
+        for item in transactions where exchanges.filter({ $0.orderId == item.exchange?.orderId }).isEmpty {
+            items.append(.init(tx: item, currency: currency))
         }
         
         return items.sorted(by: { lhs, rhs in
@@ -266,16 +266,11 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
                 $0.transfer.hash?.description == destinationId ||
                 $0.transfer.hash?.description == instantDestinationId
             }) {
-                element.exchangeType = exchange.type
-                element.swapOrderId = exchange.orderId
-                element.exchangeStatus = exchange.status
-                element.exchangeSource = exchange.source
-                element.exchangeDestination = exchange.destination
-                element.exchangeInstantDestination = exchange.instantDestination
+                element.exchange = exchange
             }
         }
         
-        exchanges = remainingExchanges.filter { $0.status != .failed }
+        exchanges = remainingExchanges
         
         createSnapshot(for: allTransactions)
     }
@@ -303,7 +298,6 @@ class TransactionsTableViewController: UITableViewController, Subscriber {
               let viewModel = dataSource?.itemIdentifier(for: indexPath) as? TxListViewModel else { return UITableViewCell() }
         
         cell.setTransaction(viewModel,
-                            currency: currency,
                             showFiatAmounts: showFiatAmounts,
                             rate: rate ?? Rate.empty)
         

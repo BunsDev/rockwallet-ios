@@ -20,13 +20,13 @@ class ExchangeHistoryMapper: ModelMapper<ExchangeDetailsExchangesResponseData, [
         
         var hybridExchanges: [ExchangeDetail] = []
         
-        for exchange in exchanges where exchange.destination?.transactionId != nil && exchange.instantDestination?.transactionId != nil {
+        for exchange in exchanges where exchange.isHybridTransaction {
             var one = exchange
-            one.part = .one
+            one.part = exchange.destination?.part
             hybridExchanges.insert(one, at: 0)
             
             var two = exchange
-            two.part = .two
+            two.part = exchange.instantDestination?.part
             hybridExchanges.insert(two, at: 0)
             
             exchanges = exchanges.filter { $0 != exchange }
