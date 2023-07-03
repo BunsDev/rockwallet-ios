@@ -37,8 +37,8 @@ struct TxListViewModel: TxViewModel, Hashable {
             return text
         } else if let destination = destination,
                   let currency = Store.state.currencies.first(where: { $0.code.lowercased() == destination.currency.lowercased() }) {
-            let amount = Amount(tokenString: destination.currencyAmount.description, currency: currency)
-            return amount.description
+            let amount = ExchangeFormatter.current.string(for: destination.currencyAmount)
+            return "\(String(describing: amount)) \(String(describing: currency))"
         } else {
             return ""
         }
