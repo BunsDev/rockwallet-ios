@@ -28,10 +28,11 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
         let supportedAssets = allCurrencies.filter { item in supportedCurrencies?.contains(where: { $0.lowercased() == item.code }) ?? false }
         
         var data: [AssetViewModel]? = currencies?.compactMap {
-            let topRightText = String(format: "%@ %@",
+            let currencyFormat = Constant.currencyFormat
+            let topRightText = String(format: currencyFormat,
                                       ExchangeFormatter.current.string(for: $0.state?.balance?.tokenValue) ?? "",
                                       $0.code.uppercased())
-            let bottomRightText = String(format: "%@ %@",
+            let bottomRightText = String(format: currencyFormat,
                                          ExchangeFormatter.fiat.string(for: $0.state?.balance?.fiatValue) ?? "",
                                          Constant.usdCurrencyCode)
             

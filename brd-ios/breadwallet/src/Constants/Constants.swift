@@ -73,6 +73,7 @@ struct Constant {
     static let usLocaleCode = "en_US"
     static let countryUS = "US"
     
+    static let currencyFormat = "%@ %@"
     static let usdCurrencyCode = "USD"
     static let euroCurrencyCode = "EUR"
     static let britishPoundCurrencyCode = "GBP"

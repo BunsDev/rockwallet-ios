@@ -18,8 +18,9 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         guard let item = actionResponse.item as? Models.Item else { return }
         
         let detail = item.detail
-        let type = item.type
-        let destination = item.destination
+        let part = item.part
+        let type = detail.type
+        let destination = detail.destination?.part == part ? detail.destination : detail.instantDestination
         
         var sections = [AnyHashable]()
         
@@ -50,12 +51,12 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
             break
         }
         
-        guard let header = detail.status.viewModel else { return }
+        guard let status = destination?.status, let header = status.viewModel else { return }
         
         let destinationCurrencyAmount: Decimal = (detail.destination?.currencyAmount ?? 0) + (detail.instantDestination?.currencyAmount ?? 0)
         
         let fromImage = getBaseCurrencyImage(currencyCode: detail.source.currency)
-        let toImage = getBaseCurrencyImage(currencyCode: destination.currency)
+        let toImage = getBaseCurrencyImage(currencyCode: destination?.currency ?? "")
         
         let currencyCode = Constant.usdCurrencyCode
         
@@ -71,20 +72,20 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let orderValue = "\(detail.orderId)"
         let transactionFromValue = String(describing: detail.source.transactionId ?? "")
-        let transactionToValue = String(describing: destination.transactionId ?? detail.status.rawValue.capitalized)
-        let transactionToValueIsCopyable = destination.transactionId != nil
+        let transactionToValue = String(describing: destination?.transactionId ?? status.rawValue.capitalized)
+        let transactionToValueIsCopyable = destination?.transactionId != nil
         
         var toCurrencyAssetViewModel = AssetViewModel()
         
         switch type {
         case .swap:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
-                                                      title: "\(L10n.TransactionDetails.addressToHeader) \(destination.currency)",
-                                                      topRightText: "\(formattedCurrencyAmountDestination) \(destination.currency)")
+                                                      title: "\(L10n.TransactionDetails.addressToHeader) \(destination?.currency ?? "")",
+                                                      topRightText: "\(formattedCurrencyAmountDestination) \(destination?.currency ?? "")")
             
         case .buyCard, .buyAch, .sell:
             toCurrencyAssetViewModel = AssetViewModel(icon: toImage,
-                                                      title: "\(formattedCurrencyAmountDestination) \(destination.currency)",
+                                                      title: "\(formattedCurrencyAmountDestination) \(destination?.currency ?? "")",
                                                       topRightText: nil)
         
         default:
@@ -123,7 +124,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                isCopyable: true)
             ],
             Models.Section.transactionTo: [
-                OrderViewModel(title: "\(destination.currency) \(L10n.TransactionDetails.txHashHeader)",
+                OrderViewModel(title: "\(destination?.currency ?? "") \(L10n.TransactionDetails.txHashHeader)",
                                value: CopyTextIcon.generate(with: transactionToValue,
                                                             isCopyable: transactionToValueIsCopyable),
                                isCopyable: transactionToValueIsCopyable)
@@ -148,12 +149,14 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         return currency.imageSquareBackground
     }
     
-    private func prepareOrderViewModel(_ detail: ExchangeDetail, destination: ExchangeDetail.SourceDestination, for type: ExchangeType) -> BuyOrderViewModel? {
+    private func prepareOrderViewModel(_ detail: ExchangeDetail, destination: ExchangeDetail.SourceDestination?, for type: ExchangeType) -> BuyOrderViewModel? {
+        guard let destination else { return nil }
+        
         let currencyCode = Constant.usdCurrencyCode
         let card = detail.source.paymentInstrument
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         
-        let currencyFormat = "%@ %@"
+        let currencyFormat = Constant.currencyFormat
         let rate = String(format: "1 %@ = %@ %@", destination.currency, ExchangeNumberFormatter().string(for: 1 / detail.rate) ?? "",
                           currencyCode)
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: detail.source.currencyAmount) ?? "",
@@ -169,7 +172,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let fixedFeeRate = (detail.destination?.feeFixedRate?.doubleValue ?? 0.0) + (detail.instantDestination?.feeFixedRate?.doubleValue ?? 0.0)
         let feeRate = (detail.destination?.feeRate ?? 0) + (detail.instantDestination?.feeRate ?? 0)
-        let buyAchFee = L10n.Buy.achFee("$\(String(format: "%.2f", fixedFeeRate)) + \(feeRate)%")
+        let buyAchFee = L10n.Buy.AchFee.sprint8("$\(String(format: "%.2f", fixedFeeRate)) + \(feeRate)%")
         let displayFeeTitle = card?.type == .card ? L10n.Swap.cardFee : buyAchFee
         
         let method = PaymentMethodViewModel(methodTitle: .text(L10n.Buy.paymentMethod),

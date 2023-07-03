@@ -113,21 +113,29 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
             return
         }
         
-        let rateText = String(format: "1 %@ = %@ %@", from.currency.code, ExchangeNumberFormatter().string(for: rate) ?? "", to.currency.code)
+        let currencyFormat = Constant.currencyFormat
         
-        let fromText = String(format: "%@ %@ (%@ %@)", ExchangeFormatter.current.string(for: from.tokenValue.doubleValue) ?? "",
+        let rateText = String(format: "1 %@ = \(currencyFormat)",
+                              from.currency.code,
+                              ExchangeNumberFormatter().string(for: rate) ?? "",
+                              to.currency.code)
+        
+        let fromText = String(format: "\(Constant.currencyFormat) (\(Constant.currencyFormat)",
+                              ExchangeFormatter.current.string(for: from.tokenValue.doubleValue) ?? "",
                               from.currency.code,
                               ExchangeFormatter.fiat.string(for: from.fiatValue.doubleValue) ?? "",
                               Constant.usdCurrencyCode)
-        let toText = String(format: "%@ %@",
+        let toText = String(format: currencyFormat,
                             ExchangeFormatter.current.string(for: to.tokenValue.doubleValue) ?? "",
                             to.currency.code)
         
-        let toFeeText = String(format: "-%@ %@",
+        let toFeeText = String(format: "-\(currencyFormat)",
                                ExchangeFormatter.current.string(for: actionResponse.toFee?.tokenValue.doubleValue) ?? "",
                                actionResponse.toFee?.currency.code ?? to.currency.code)
         
-        let totalCostText = String(format: "%@ %@", ExchangeFormatter.current.string(for: to.tokenValue.doubleValue) ?? "", to.currency.code)
+        let totalCostText = String(format: currencyFormat,
+                                   ExchangeFormatter.current.string(for: to.tokenValue.doubleValue) ?? "",
+                                   to.currency.code)
         
         let config: WrapperPopupConfiguration<SwapConfimationConfiguration> = .init(wrappedView: .init())
         
