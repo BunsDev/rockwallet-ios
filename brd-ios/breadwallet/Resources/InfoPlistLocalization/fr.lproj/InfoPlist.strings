@@ -864,7 +864,7 @@
 
 "Buy.achFee.sprint8" = "ACH fee (%@)";
 
-"Buy.achLimits.android" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
+"Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
 
 "Buy.achPaymentDurationWarning" = "Actuellement, les paiements ACH prennent entre 7 et 10 jours.";
 
@@ -900,14 +900,20 @@
 
 "Buy.BuyLimit" = "Buy limits";
 
-/* Buy min and max limit text */
-"Buy.BuyLimits" = "Actuellement, le montant minimum d'achat est de $%@ USD et le montant maximum est de $%@ USD/jour. %@";
-
 "Buy.BuyLimits.AchDescription" = "It currently takes 3-5 days to process a purchase with ACH.";
 
 "Buy.BuyLimits.android" = "Actuellement, le montant minimum d'achat est de 30 USD et le montant maximum est de 500 USD par jour.";
 
 "Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
+
+"Buy.BuyLimitsAch" = "Minimum for buying with ACH is %@ %@ per transaction and your weekly limit is %@ %@.";
+
+"Buy.buyLimitsAch.sprint8" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day.  %@";
+
+/* Buy min and max limit text */
+"Buy.BuyLimitsCard" = "Actuellement, le montant minimum d'achat est de $%@ USD et le montant maximum est de $%@ USD/jour. %@";
+
+"Buy.buyLimitsCard.sprint8" = "Currently, minimum for buying is %@ USD and maximum is %@ USD per day.  %@";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -977,8 +983,6 @@
 
 /* Last Name label in billing address view on buy flow */
 "Buy.LastName" = "Nom";
-
-"Buy.Limits.sprint8" = "Currently, minimum for Buy is %@ USD and maximum is %@ USD per day.  %@\n";
 
 "Buy.linkBankAccount" = "Associer un compte bancaire";
 
