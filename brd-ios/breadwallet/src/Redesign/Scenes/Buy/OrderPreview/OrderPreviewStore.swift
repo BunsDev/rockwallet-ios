@@ -50,7 +50,6 @@ class OrderPreviewStore: NSObject, BaseDataStore, OrderPreviewDataStore {
     
     var createTransactionModel: CreateTransactionModels.Transaction.ViewAction?
     
-    // TODO: update it according to BE data
     var isAchAccount: Bool {
         return card?.type == .ach
     }
