@@ -14,7 +14,7 @@ import UIKit
 protocol TxViewModel: Hashable {
     var tx: Transaction? { get }
     var exchange: ExchangeDetail? { get }
-    var currency: Currency? { get }
+    var currency: Currency? { get set }
     var blockHeight: String { get }
     var longTimestamp: String { get }
     var status: TransactionStatus { get }
@@ -24,30 +24,11 @@ protocol TxViewModel: Hashable {
     var comment: String? { get }
     var tokenTransferCode: String? { get }
     var gift: Gift? { get }
+    var destination: ExchangeDetail.SourceDestination? { get }
+    var title: String { get }
 }
 
-// Default and passthru values
 extension TxViewModel {
-    var currency: Currency? {
-        if let tx = tx {
-            return tx.currency
-        } else if let exchange = exchange {
-            return Store.state.currencies.first(where: { $0.code.lowercased() == exchange.source.currency.lowercased() })
-        } else {
-            return nil
-        }
-    }
-    
-    var exchangeSourceCurrency: Currency? {
-        let sourceCurrency = exchange?.source.currency.lowercased() ?? tx?.exchangeSource?.currency.lowercased()
-        return Store.state.currencies.first(where: { $0.code.lowercased() == sourceCurrency })
-    }
-    
-    var exchangeDestinationCurrency: Currency? {
-        let destinationCurrency = exchange?.destination?.currency.lowercased() ?? tx?.exchangeDestination?.currency.lowercased()
-        return Store.state.currencies.first(where: { $0.code.lowercased() == destinationCurrency })
-    }
-    
     var transactionId: String {
         guard let tx = tx,
               let currency = currency
@@ -59,15 +40,16 @@ extension TxViewModel {
     var status: TransactionStatus {
         if let tx = tx {
             return tx.status
-        } else if let exchange = exchange {
-            return exchange.status
+            
+        } else {
+            return destination?.status ?? .failed
+            
         }
-        return .invalid
     }
     
     var exchangeType: ExchangeType {
         if let tx = tx {
-            return tx.exchangeType
+            return tx.exchange?.type ?? .unknown
         } else if let exchange = exchange {
             return exchange.type
         }
@@ -88,6 +70,18 @@ extension TxViewModel {
         return .received
         
     }
+    
+    var destination: ExchangeDetail.SourceDestination? {
+        guard let exchange = tx?.exchange ?? exchange else { return nil }
+        
+        if exchange.isHybridTransaction {
+            return exchange.part == exchange.destination?.part ? exchange.destination : exchange.instantDestination
+            
+        } else {
+            return exchange.destination?.currency.isEmpty == true ? exchange.instantDestination : exchange.destination
+        }
+    }
+    
     var comment: String? { return tx?.comment }
     
     // BTC does not have "from" address, only "sent to" or "received at"
@@ -105,7 +99,7 @@ extension TxViewModel {
                 address = exchange.source.transactionId
                 
             case .received:
-                address = exchange.destination?.transactionId ?? ""
+                address = destination?.transactionId ?? ""
                 
             default:
                 address = ""
@@ -163,19 +157,27 @@ extension TxViewModel {
     }
     
     var icon: UIImage? {
-        return iconDecider(exchangeType: tx?.exchangeType ?? exchangeType,
-                           status: tx?.status ?? status,
-                           direction: tx?.direction ?? direction)
+        return iconDecider()
     }
     
-    private func iconDecider(exchangeType: ExchangeType, status: TransactionStatus, direction: TransferDirection) -> UIImage? {
+    var title: String {
+        guard let exchange = exchange,
+              let part = destination?.part?.rawValue,
+              exchange.isHybridTransaction else {
+            return shortTimestamp
+        }
+        
+        return [shortTimestamp, L10n.Transaction.hybridPart(part)].joined(separator: " ")
+    }
+    
+    private func iconDecider() -> UIImage? {
         switch exchangeType {
         case .buyCard, .buyAch, .sell, .instantAch:
             switch status {
-            case .confirmed, .complete, .manuallySettled, .pending:
+            case .confirmed, .complete, .completed, .manuallySettled, .pending, .invalid, .failed:
                 return direction == .received ? Asset.receive.image : Asset.send.image
                 
-            case .invalid, .refunded, .failed:
+            case .refunded:
                 return Asset.loader.image
                 
             }

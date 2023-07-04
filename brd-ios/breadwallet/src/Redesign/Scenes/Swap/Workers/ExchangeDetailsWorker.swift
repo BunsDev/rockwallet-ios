@@ -12,6 +12,7 @@ import Foundation
 
 struct ExchangeDetailsResponseData: ModelResponse {
     struct SourceDestination: ModelResponse {
+        var status: String?
         var currency: String?
         var currencyAmount: Decimal?
         var usdAmount: Decimal?
@@ -41,6 +42,7 @@ struct ExchangeDetail: Model, Hashable {
             case two = 2
         }
         
+        var status: TransactionStatus
         var currency: String
         var currencyAmount: Decimal
         var usdAmount: Decimal
@@ -60,7 +62,7 @@ struct ExchangeDetail: Model, Hashable {
     var destination: SourceDestination?
     var instantDestination: SourceDestination?
     var isHybridTransaction: Bool
-    var part: ExchangeDetail.SourceDestination.Part?
+    var part: SourceDestination.Part?
     var rate: Decimal
     var timestamp: Int
     var type: ExchangeType
@@ -74,12 +76,13 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDe
         let instantDestination = response?.instantDestination
         
         let sourceData = ExchangeDetail
-            .SourceDestination(currency: source?.currency?.uppercased() ?? "",
+            .SourceDestination(status: .init(string: source?.status) ?? .failed,
+                               currency: source?.currency?.uppercased() ?? "",
                                currencyAmount: source?.currencyAmount ?? 0,
                                usdAmount: source?.usdAmount ?? 0,
                                usdFee: source?.usdFee ?? 0,
                                instantUsdFee: source?.instantUsdFee ?? 0,
-                               transactionId: source?.transactionId?.isEmpty == true ? nil : source?.transactionId,
+                               transactionId: source?.transactionId,
                                paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: sourceCard?.type ?? "") ?? .card,
                                                               id: sourceCard?.id ?? "",
                                                               fingerprint: sourceCard?.fingerprint ?? "",
@@ -94,25 +97,25 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDe
                                feeFixedRate: source?.feeFixedRate)
         
         let destinationData = ExchangeDetail
-            .SourceDestination(currency: destination?.currency?.uppercased() ?? "",
+            .SourceDestination(status: .init(string: destination?.status) ?? .failed,
+                               currency: destination?.currency?.uppercased() ?? "",
                                currencyAmount: destination?.currencyAmount ?? 0,
                                usdAmount: destination?.usdAmount ?? 0,
                                usdFee: destination?.usdFee ?? 0,
                                instantUsdFee: destination?.instantUsdFee,
-                               transactionId: destination?.transactionId?.isEmpty == true ? nil : destination?.transactionId,
-                               paymentInstrument: nil,
+                               transactionId: destination?.transactionId,
                                feeRate: destination?.feeRate,
                                feeFixedRate: destination?.feeFixedRate,
                                part: instantDestination == nil ? .one : .two)
         
         let instantDestinationData = ExchangeDetail
-            .SourceDestination(currency: instantDestination?.currency?.uppercased() ?? "",
+            .SourceDestination(status: .init(string: instantDestination?.status) ?? .failed,
+                               currency: instantDestination?.currency?.uppercased() ?? "",
                                currencyAmount: instantDestination?.currencyAmount ?? 0,
                                usdAmount: instantDestination?.usdAmount ?? 0,
                                usdFee: instantDestination?.usdFee ?? 0,
                                instantUsdFee: instantDestination?.instantUsdFee,
-                               transactionId: instantDestination?.transactionId?.isEmpty == true ? nil : instantDestination?.transactionId,
-                               paymentInstrument: nil,
+                               transactionId: instantDestination?.transactionId,
                                feeRate: instantDestination?.feeRate,
                                feeFixedRate: instantDestination?.feeFixedRate,
                                part: instantDestination != nil ? .one : nil)

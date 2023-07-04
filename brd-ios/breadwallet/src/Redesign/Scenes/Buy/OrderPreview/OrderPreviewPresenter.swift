@@ -25,12 +25,12 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let wrappedViewModel = prepareOrderPreviewViewModel(for: item)
         
-        let achTermsModel = InfoViewModel(description: .text(L10n.Buy.terms),
+        let achTermsModel = InfoViewModel(description: .text(L10n.Buy.Terms.sprint8),
                                           button: .init(title: L10n.About.terms, isUnderlined: true),
                                           tickbox: .init(title: .text(L10n.Buy.understandAndAgree)),
                                           dismissType: .persistent)
         
-        let termsText = NSMutableAttributedString(string: L10n.Buy.terms + " ")
+        let termsText = NSMutableAttributedString(string: L10n.Buy.Terms.sprint8 + " ")
         termsText.addAttribute(NSAttributedString.Key.font,
                                value: Fonts.Body.three,
                                range: NSRange(location: 0, length: termsText.length))
@@ -169,7 +169,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
               let toAmount = actionResponse.to else { return }
         let fiatCurrency = (actionResponse.quote?.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
         let cryptoCurrency = toAmount.currency.code.uppercased()
-        let currencyFormat = "%@ %@"
+        let currencyFormat = Constant.currencyFormat
         
         var description: String {
             if toAmount.fiatValue > instantLimit {
@@ -237,16 +237,18 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0) / 100
         let instantAchLimit = item.quote?.instantAch?.limitUsd ?? 0
         
+        let isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
+        
         // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
         var networkFee: Decimal {
-            guard isAchAccount, toFiatValue >= instantAchLimit else {
+            guard isInstantAch, toFiatValue >= instantAchLimit else {
                 return item.networkFee?.fiatValue ?? 0
             }
             
             return 2 * (item.networkFee?.fiatValue ?? 0)
         }
         
-        let currencyFormat = "%@ %@"
+        let currencyFormat = Constant.currencyFormat
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)
         let cardFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: cardFee) ?? "", fiatCurrency)
         let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: networkFee) ?? "", fiatCurrency)
@@ -254,7 +256,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         
         let cardAchFee: TitleValueViewModel = isAchAccount ?
-            .init(title: .text(L10n.Buy.achFee("$\(String(format: "%.2f", quote.buyFeeUsd?.doubleValue ?? 0.0)) + \(quote.buyFee ?? 0)%")),
+            .init(title: .text(L10n.Buy.AchFee.sprint8("$\(String(format: "%.2f", quote.buyFeeUsd?.doubleValue ?? 0.0)) + \(quote.buyFee ?? 0)%")),
                   value: .text(cardFeeText)) :
             .init(title: .text("\(L10n.Swap.cardFee) (\(quote.buyFee ?? 0)%)"),
                   value: .text(cardFeeText),
@@ -263,7 +265,6 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let buyFee = ((quote.buyFee ?? 0) / 100) + 1
         let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
         
-        let isInstantAch: Bool = (isAchAccount && item.achDeliveryType == .instant)
         let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
         let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
                                                                        value: .text(achFeeDescription)) : nil

@@ -77,7 +77,7 @@ class TxStatusCell: UITableViewCell, Subscriber {
             statusLabel.text = L10n.Transaction.pending
         case .confirmed:
             statusLabel.text = L10n.Transaction.confirming
-        case .complete, .manuallySettled:
+        case .complete, .completed, .manuallySettled:
             statusLabel.text = L10n.Transaction.complete
         case .invalid:
             statusLabel.text = L10n.Transaction.invalid
