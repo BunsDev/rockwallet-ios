@@ -65,7 +65,7 @@ class TransparentView: FEView<TransparentViewConfiguration, TransparentViewModel
     }()
     
     private lazy var blurView: UIView = {
-        let blur = UIBlurEffect(style: .regular)
+        let blur = UIBlurEffect(style: .dark)
         let view = UIVisualEffectView(effect: blur)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.alpha = 0

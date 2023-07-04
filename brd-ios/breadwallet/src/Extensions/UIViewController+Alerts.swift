@@ -58,7 +58,7 @@ extension UIViewController {
         UIView.animate(withDuration: Presets.Animation.short.rawValue,
                        delay: 0,
                        options: .transitionFlipFromBottom) {
-            blurView.effect = UIBlurEffect(style: .regular)
+            blurView.effect = UIBlurEffect(style: .dark)
             popup.alpha = 1
         }
     }
