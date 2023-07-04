@@ -12,7 +12,7 @@ import UIKit
 
 struct CardSelectionConfiguration: Configurable {
     var title: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Text.two)
-    var subtitle: LabelConfiguration? =  .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)
+    var subtitle: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)
     var arrow: BackgroundConfiguration? = Presets.Background.Secondary.selected
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
@@ -147,12 +147,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
-        
-        // TODO: Shouldn't be in viewmodel setup
-        subtitleLabel.configure(with: .init(font: Fonts.Title.six,
-                                            textColor: LightColors.Text.three,
-                                            textAlignment: .center,
-                                            numberOfLines: 1))
         
         cardDetailsView.isHidden = viewModel?.logo == nil
         
