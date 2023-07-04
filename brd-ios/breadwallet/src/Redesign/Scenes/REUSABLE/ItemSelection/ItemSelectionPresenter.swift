@@ -45,7 +45,7 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
     }
     
     func presentRemovePaymentPopup(actionResponse: ItemSelectionModels.RemovePaymenetPopup.ActionResponse) {
-        let popupViewModel = PopupViewModel(title: .text("\(L10n.Buy.removeCard) \(actionResponse.last4)?"),
+        let popupViewModel = PopupViewModel(title: .text(L10n.Buy.removeCard(actionResponse.last4)),
                                             buttons: [.init(title: L10n.Staking.remove),
                                                       .init(title: L10n.Button.cancel)],
                                             closeButton: .init(image: Asset.close.image))
