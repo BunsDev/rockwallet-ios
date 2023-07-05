@@ -153,7 +153,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         interactor?.showOrderPreview(viewAction: .init())
     }
     
-    private func increaseLimitsTapped() {
+    override func increaseLimitsTapped() {
         coordinator?.showInWebView(urlString: Constant.limits, title: L10n.Buy.increaseYourLimits)
     }
     
