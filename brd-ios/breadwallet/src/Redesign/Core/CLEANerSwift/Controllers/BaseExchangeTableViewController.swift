@@ -142,4 +142,6 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         }
     }
     
+    func limitsInfoTapped() {}
+    func increaseLimitsTapped() {}
 }

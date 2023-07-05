@@ -25,12 +25,12 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let wrappedViewModel = prepareOrderPreviewViewModel(for: item)
         
-        let achTermsModel = InfoViewModel(description: .text(L10n.Buy.Terms.sprint8),
+        let achTermsModel = InfoViewModel(description: .text(L10n.Buy.Terms.description),
                                           button: .init(title: L10n.About.terms, isUnderlined: true),
                                           tickbox: .init(title: .text(L10n.Buy.understandAndAgree)),
                                           dismissType: .persistent)
         
-        let termsText = NSMutableAttributedString(string: L10n.Buy.Terms.sprint8 + " ")
+        let termsText = NSMutableAttributedString(string: L10n.Buy.Terms.description + " ")
         termsText.addAttribute(NSAttributedString.Key.font,
                                value: Fonts.Body.three,
                                range: NSRange(location: 0, length: termsText.length))
@@ -256,7 +256,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         
         let cardAchFee: TitleValueViewModel = isAchAccount ?
-            .init(title: .text(L10n.Buy.AchFee.sprint8("$\(String(format: "%.2f", quote.buyFeeUsd?.doubleValue ?? 0.0)) + \(quote.buyFee ?? 0)%")),
+            .init(title: .text(L10n.Buy.achFee("$\(String(format: "%.2f", quote.buyFeeUsd?.doubleValue ?? 0.0)) + \(quote.buyFee ?? 0)%")),
                   value: .text(cardFeeText)) :
             .init(title: .text("\(L10n.Swap.cardFee) (\(quote.buyFee ?? 0)%)"),
                   value: .text(cardFeeText),
