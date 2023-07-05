@@ -53,6 +53,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func achSuccessMessage(viewAction: PaymentMethodsModels.Get.ViewAction) {
         let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
+        
+        selectPaymentMethod(viewAction: .init(method: .ach))
     }
     
     func setAmount(viewAction: AssetModels.Asset.ViewAction) {
