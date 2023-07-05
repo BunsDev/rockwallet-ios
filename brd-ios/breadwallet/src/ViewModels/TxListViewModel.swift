@@ -72,7 +72,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid:
             return L10n.Transaction.failed
             
-        case .complete, .completed:
+        case .complete:
             if tx.direction == .sent {
                 return L10n.TransactionDetails.sent(tx.toAddress)
             } else if tx.direction == .received {
@@ -93,7 +93,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid, .failed, .refunded:
             status = .failed
             
-        case .complete, .completed, .manuallySettled, .confirmed:
+        case .complete, .manuallySettled, .confirmed:
             status = .complete
             
         default:
@@ -107,7 +107,7 @@ struct TxListViewModel: TxViewModel, Hashable {
             case .pending:
                 return L10n.Transaction.pendingPurchase
                 
-            case .complete, .completed:
+            case .complete:
                 return L10n.Transaction.purchased
                 
             case .failed:
@@ -124,7 +124,7 @@ struct TxListViewModel: TxViewModel, Hashable {
             case .pending:
                 return isHybridPartOne ? L10n.Transaction.pendingPurchaseWithInstantBuy : L10n.Transaction.pendingPurchaseWithAch
                 
-            case .complete, .completed:
+            case .complete:
                 return isHybridPartOne ? L10n.Transaction.purchasedWithInstantBuy : L10n.Transaction.purchasedWithAch
                 
             case .failed:
@@ -146,7 +146,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .invalid, .failed, .refunded:
             return L10n.Transaction.withdrawalFailed
             
-        case .complete, .completed, .manuallySettled, .confirmed:
+        case .complete, .manuallySettled, .confirmed:
             return L10n.Transaction.withdrawalComplete
             
         default:
@@ -159,7 +159,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         let swapString = isOnSource ? "from \(swapSourceCurrency)" : "to \(swapDestinationCurrency)"
         
         switch status {
-        case .complete, .completed, .manuallySettled:
+        case .complete, .manuallySettled:
             return "\(L10n.Transaction.swapped) \(swapString)"
             
         case .pending:

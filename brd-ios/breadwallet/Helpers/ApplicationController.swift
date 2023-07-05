@@ -413,7 +413,6 @@ class ApplicationController: Subscriber {
                     self?.handleDeeplinksIfNeeded()
                 }
 
-                
             default:
                 return
             }

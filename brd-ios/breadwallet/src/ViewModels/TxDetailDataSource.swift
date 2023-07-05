@@ -64,7 +64,7 @@ class TxDetailDataSource: NSObject {
         // define visible rows and order
         fields = [.amount]
         
-        if viewModel.status != .complete && viewModel.status != .completed && viewModel.status != .invalid {
+        if viewModel.status != .complete && viewModel.status != .invalid {
             fields.append(.status)
         }
         
