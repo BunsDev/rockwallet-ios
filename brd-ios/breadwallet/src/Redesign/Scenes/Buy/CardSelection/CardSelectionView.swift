@@ -95,11 +95,13 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
     override func setupSubviews() {
         super.setupSubviews()
         
+        content.setupCustomMargins(all: .large)
+        
         content.addSubview(containerStack)
         containerStack.snp.makeConstraints { make in
             make.edges.equalTo(content.snp.margins)
+            make.height.greaterThanOrEqualTo(ViewSizes.Common.hugeCommon.rawValue)
         }
-        content.setupCustomMargins(all: .large)
         
         containerStack.addArrangedSubview(mainStack)
         mainStack.addArrangedSubview(titleLabel)
