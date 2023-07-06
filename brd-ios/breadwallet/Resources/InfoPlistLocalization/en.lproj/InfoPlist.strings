@@ -860,9 +860,7 @@
 
 "Buy.achBuyDisclaimer" = "It currently takes 3–5 days to process a purchase with ACH";
 
-"Buy.achFee" = "ACH fee";
-
-"Buy.achFee.sprint8" = "ACH fee (%@)";
+"Buy.achFee" = "ACH fee (%@)";
 
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ and maximum is %@ per day.";
 
@@ -904,16 +902,10 @@
 
 "Buy.BuyLimits.android" = "Currently, minimum for Buy is %@ and maximum is %@ per day.";
 
-"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
-
-"Buy.BuyLimitsAch" = "Minimum for buying with ACH is %@ %@ per transaction and your weekly limit is %@ %@.";
-
-"Buy.buyLimitsAch.sprint8" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day.  %@";
-
 /* Buy min and max limit text */
-"Buy.BuyLimitsCard" = "Minimum for buying is %@ %@ per transaction and your weekly limit is %@ %@.";
+"Buy.BuyLimits.description" = "Minimum for Buy is %@ %@ per transaction and your weekly limit is %@ %@.";
 
-"Buy.buyLimitsCard.sprint8" = "Currently, minimum for buying is %@ USD and maximum is %@ USD per day.  %@";
+"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -1053,9 +1045,7 @@
 
 "Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
 
-"Buy.Terms" = "By placing this order you agree to our %@";
-
-"Buy.terms.sprint8" = "By placing this order you agree to our";
+"Buy.Terms.description" = "By placing this order you agree to our";
 
 "Buy.TransactionError" = "Transaction error";
 
@@ -1689,11 +1679,11 @@
 /* Manage wallet modal title */
 "ManageWallet.title" = "Manage Wallet";
 
-"MarketData.high24h" = "24h high";
+"MarketData.high24h" = "24h High";
 
-"MarketData.low24h" = "24h low";
+"MarketData.low24h" = "24h Low";
 
-"MarketData.marketCap" = "Market Cap";
+"MarketData.marketCap" = "Market cap";
 
 "MarketData.volume" = "Trading Volume";
 
