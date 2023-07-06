@@ -25,12 +25,12 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let wrappedViewModel = prepareOrderPreviewViewModel(for: item)
         
-        let achTermsModel = InfoViewModel(description: .text(L10n.Buy.Terms.sprint8),
+        let achTermsModel = InfoViewModel(description: .text(L10n.Buy.Terms.description),
                                           button: .init(title: L10n.About.terms, isUnderlined: true),
                                           tickbox: .init(title: .text(L10n.Buy.understandAndAgree)),
                                           dismissType: .persistent)
         
-        let termsText = NSMutableAttributedString(string: L10n.Buy.Terms.sprint8 + " ")
+        let termsText = NSMutableAttributedString(string: L10n.Buy.Terms.description + " ")
         termsText.addAttribute(NSAttributedString.Key.font,
                                value: Fonts.Body.three,
                                range: NSRange(location: 0, length: termsText.length))
