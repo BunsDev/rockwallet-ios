@@ -296,7 +296,7 @@ class ApplicationController: Subscriber {
         
         coreSystem.updateFees {
             if !self.shouldRequireLogin() {
-                self.triggerDeeplinkHandling()
+                self.handleDeeplinksIfNeeded()
             }
         }
     }
@@ -398,22 +398,28 @@ class ApplicationController: Subscriber {
         UserManager.shared.refresh { [weak self] result in
             switch result {
             case .success:
-                self?.triggerDeeplinkHandling()
+                self?.handleDeeplinksIfNeeded()
                 
             case .failure(let error):
-                self?.coordinator?.showToastMessage(with: error)
-                
-                guard self?.isReachable == true else { return }
-                
-                self?.triggerDeeplinkHandling()
-                
+                if case .sessionExpired = error as? NetworkingError {
+                    self?.coordinator?.openModally(coordinator: AccountCoordinator.self, scene: Scenes.SignIn) { vc in
+                        vc?.navigationItem.hidesBackButton = true
+                    }
+                } else {
+                    self?.coordinator?.showToastMessage(with: error)
+                    
+                    guard self?.isReachable == true else { return }
+                    
+                    self?.handleDeeplinksIfNeeded()
+                }
+
             default:
                 return
             }
         }
     }
     
-    private func triggerDeeplinkHandling() {
+    private func handleDeeplinksIfNeeded() {
         if DynamicLinksManager.shared.shouldHandleDynamicLink {
             Store.trigger(name: .handleDeeplink)
         } else if UserManager.shared.profile == nil {

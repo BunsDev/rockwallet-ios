@@ -174,7 +174,7 @@ extension TxViewModel {
         switch exchangeType {
         case .buyCard, .buyAch, .sell, .instantAch:
             switch status {
-            case .confirmed, .complete, .completed, .manuallySettled, .pending, .invalid, .failed:
+            case .confirmed, .complete, .manuallySettled, .pending, .invalid, .failed:
                 return direction == .received ? Asset.receive.image : Asset.send.image
                 
             case .refunded:

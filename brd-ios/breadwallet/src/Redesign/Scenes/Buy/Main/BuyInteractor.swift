@@ -28,7 +28,10 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     // MARK: - BuyViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        prepareCurrencies(viewAction: .init(type: dataStore?.paymentMethod ?? .card))
+        let item = AssetModels.Item(type: dataStore?.paymentMethod,
+                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+        
+        prepareCurrencies(viewAction: item)
         
         guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
@@ -36,8 +39,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         }
         
         if dataStore?.selected == nil {
-            presenter?.presentData(actionResponse: .init(item: AssetModels.Item(type: dataStore?.paymentMethod,
-                                                                                achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess)))
+            presenter?.presentData(actionResponse: .init(item: item))
             setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
         }
         
@@ -53,6 +55,8 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
         let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
+        
+        selectPaymentMethod(viewAction: .init(method: .ach))
     }
     
     func setAmount(viewAction: AssetModels.Asset.ViewAction) {
@@ -142,7 +146,9 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         guard let currency = amount?.currency else { return }
         amount = .zero(currency)
         
-        prepareCurrencies(viewAction: .init(type: dataStore?.paymentMethod ?? .card))
+        let item = AssetModels.Item(type: dataStore?.paymentMethod,
+                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+        prepareCurrencies(viewAction: item)
         
         guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
