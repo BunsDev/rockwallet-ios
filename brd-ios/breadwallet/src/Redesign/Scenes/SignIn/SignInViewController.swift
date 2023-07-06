@@ -121,7 +121,8 @@ class SignInViewController: BaseTableViewController<AccountCoordinator,
         
         cell.setup { view in
             view.configure(with: .init(buttons: [Presets.Button.noBorders],
-                                       axis: .vertical))
+                                       isRightAligned: true,
+                                       axis: .horizontal))
             view.setup(with: model)
             
             view.callbacks = [
