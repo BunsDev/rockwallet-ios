@@ -98,7 +98,7 @@ class TxStatusIndicator: UIView {
             return 1
         case .confirmed:
             return 2
-        case .complete, .completed, .manuallySettled:
+        case .complete, .manuallySettled:
             return 3
         default:
             return -1

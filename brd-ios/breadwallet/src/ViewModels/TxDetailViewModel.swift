@@ -30,7 +30,7 @@ struct TxDetailViewModel: TxViewModel, Hashable {
     var title: String {
         guard status != .invalid else { return L10n.TransactionDetails.titleFailed }
         
-        let complete = status == .complete || status == .completed
+        let complete = status == .complete
         
         switch direction {
         case .recovered:
@@ -43,7 +43,7 @@ struct TxDetailViewModel: TxViewModel, Hashable {
     }
     
     var timestampHeader: NSAttributedString {
-        if status == .complete || status == .completed {
+        if status == .complete {
             let text = " " + L10n.TransactionDetails.completeTimestampHeader
             let attributedString = NSMutableAttributedString(string: text)
             let icon = NSTextAttachment()
