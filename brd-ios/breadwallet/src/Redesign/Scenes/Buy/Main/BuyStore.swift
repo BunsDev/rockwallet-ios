@@ -34,21 +34,25 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxTextCard = UserManager.shared.profile?.buyAllowanceDailyMax.description,
-              let maxTextAch = UserManager.shared.profile?.achAllowanceDailyMax.description else { return nil }
+              let weeklyCardText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly),
+              let weeklyAchText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly) else { return nil }
         
-        let maxText = paymentMethod == .card ? maxTextCard : maxTextAch
-        let moreInfo: String = isCustomLimits ? L10n.Button.moreInfo : ""
+        let limits: String
+        let limitsString: NSMutableAttributedString
         
-        var limitsText = paymentMethod == .card ? L10n.Buy.BuyLimitsCard.sprint8(minText, maxText, moreInfo) : L10n.Buy.BuyLimitsAch.sprint8(minText, maxText, moreInfo)
-        let limitsString = NSMutableAttributedString(string: limitsText)
-        
-        guard isCustomLimits else { return limitsString }
-        
-        let moreInfoRange = limitsString.mutableString.range(of: moreInfo)
-        limitsString.addAttribute(.underlineStyle, value: 1, range: moreInfoRange)
-        limitsString.addAttribute(.font, value: Fonts.Subtitle.three, range: moreInfoRange)
-        limitsString.addAttribute(.foregroundColor, value: LightColors.secondary, range: moreInfoRange)
+        switch paymentMethod {
+        case .card:
+            limits = L10n.Buy.BuyLimits.description(minText, Constant.usdCurrencyCode, weeklyCardText, Constant.usdCurrencyCode)
+            limitsString = NSMutableAttributedString(string: limits + "\n\n" + L10n.Buy.BuyLimits.increase)
+            
+        case .ach:
+            limits = L10n.Buy.BuyLimits.description(minText, Constant.usdCurrencyCode, weeklyAchText, Constant.usdCurrencyCode)
+            limitsString = NSMutableAttributedString(string: limits + "\n\n" + L10n.Buy.achBuyDisclaimer)
+            
+        default:
+            limits = ""
+            limitsString = .init(string: "")
+        }
         
         return limitsString
     }
@@ -101,15 +105,5 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
             return false
         }
         return true
-    }
-    
-    var isCustomLimits: Bool {
-        guard let limits = UserManager.shared.profile?.limits else { return false }
-        
-        let isCustom = paymentMethod == .ach ?
-        limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false :
-        limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
-        
-        return isCustom
     }
 }

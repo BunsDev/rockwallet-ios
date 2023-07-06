@@ -26,7 +26,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .swapCard,
             .paymentMethod,
             .accountLimits,
-            .increaseLimits
+            .limitActions
         ]
         
         if item.achEnabled == true {
@@ -40,9 +40,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
                                                      segments: [.init(image: nil, title: L10n.Buy.buyWithCard),
                                                                 .init(image: nil, title: L10n.Buy.buyWithAch)])
-        let limitsString = NSMutableAttributedString(string: L10n.Buy.increaseYourLimits)
-        limitsString.addAttribute(.underlineStyle, value: 1, range: NSRange.init(location: 0, length: limitsString.length))
-        
+       
         let paymentMethodViewModel: CardSelectionViewModel
         if item.type == .ach && item.achEnabled == true {
             paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
@@ -60,7 +58,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             .accountLimits: [
                 LabelViewModel.text("")
             ],
-            .increaseLimits: [LabelViewModel.attributedText(limitsString)]
+            .limitActions: [
+                MultipleButtonsViewModel(buttons: [])
+            ]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
@@ -132,7 +132,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         }
         
         viewController?.displayAmount(responseDisplay: .init(swapCurrencyViewModel: cryptoModel,
-                                                             cardModel: cardModel))
+                                                             cardModel: cardModel,
+                                                             limitActions: .init(buttons: setupLimitsButtons(type: actionResponse.type))))
         
         guard actionResponse.handleErrors else { return }
         _ = handleError(actionResponse: actionResponse)
@@ -165,12 +166,10 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let profile = UserManager.shared.profile
         
         let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
-        let dailyMaxLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceDailyMax : profile?.achAllowanceDailyMax
         let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
         let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
-        let dailyMaxLimitText = ExchangeFormatter.current.string(for: dailyMaxLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
         let monthlyLimitText = ExchangeFormatter.current.string(for: monthlyLimit) ?? ""
         
@@ -178,8 +177,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
-                                                           dailyMax: .init(title: .text(L10n.Buy.dailyMaxLimits),
-                                                                           value: .text("$\(dailyMaxLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
                                                                          value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
                                                            monthly: .init(title: .text(L10n.Account.monthly),
@@ -209,4 +206,45 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     // MARK: - Additional Helpers
     
+    private func isCustomLimits(for paymentMethod: PaymentCard.PaymentType?) -> Bool {
+        guard let limits = UserManager.shared.profile?.limits else { return false }
+        
+        switch paymentMethod {
+        case .card:
+            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
+            
+        case .ach:
+            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false
+            
+        default:
+            return false
+        }
+    }
+    
+    private func setupLimitsButtons(type: PaymentCard.PaymentType?) -> [ButtonViewModel] {
+        var buttons = [ButtonViewModel]()
+        
+        if isCustomLimits(for: type) == true {
+            var button = ButtonViewModel(title: L10n.Button.moreLimits,
+                                         isUnderlined: true)
+            button.callback = { [weak self] in
+                self?.viewController?.limitsInfoTapped()
+            }
+            
+            buttons.append(button)
+        }
+        
+        if type == .card {
+            var button = ButtonViewModel(title: L10n.Buy.increaseYourLimits,
+                                         isUnderlined: true)
+            
+            button.callback = { [weak self] in
+                self?.viewController?.increaseLimitsTapped()
+            }
+            
+            buttons.append(button)
+        }
+        
+        return buttons
+    }
 }
