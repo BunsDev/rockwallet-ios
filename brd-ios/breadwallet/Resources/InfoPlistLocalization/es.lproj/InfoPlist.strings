@@ -860,9 +860,7 @@
 
 "Buy.achBuyDisclaimer" = "It currently takes 3–5 days to process a purchase with ACH";
 
-"Buy.achFee" = "ACH fee";
-
-"Buy.achFee.sprint8" = "ACH fee (%@)";
+"Buy.achFee" = "ACH fee (%@)";
 
 "Buy.achLimits" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day. At the moment lifetime limit is %@ USD.";
 
@@ -904,16 +902,10 @@
 
 "Buy.BuyLimits.android" = "Actualmente, el mínimo para comprar es de 30,00 USD/día y el máximo es de 500,00 USD/día.";
 
-"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
-
-"Buy.BuyLimitsAch" = "Minimum for buying with ACH is %@ %@ per transaction and your weekly limit is %@ %@.";
-
-"Buy.buyLimitsAch.sprint8" = "Currently, minimum for buying with ACH is %@ USD and maximum is %@ USD per day.  %@";
-
 /* Buy min and max limit text */
-"Buy.BuyLimitsCard" = "Actualmente, el mínimo para comprar es de %@ USD/día y el máximo es de %@ USD/día. %@";
+"Buy.BuyLimits.description" = "Actualmente, el mínimo para comprar es de %@ USD/día y el máximo es de %@ USD/día. %@";
 
-"Buy.buyLimitsCard.sprint8" = "Currently, minimum for buying is %@ USD and maximum is %@ USD per day.  %@";
+"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -1053,9 +1045,7 @@
 
 "Buy.switchedToDebitCard" = "Payment method switched to Debit card!";
 
-"Buy.Terms" = "Al realizar este pedido, aceptas nuestros %@";
-
-"Buy.terms.sprint8" = "By placing this order you agree to our";
+"Buy.Terms.description" = "Al realizar este pedido, aceptas nuestros %@";
 
 "Buy.TransactionError" = "Error en la transacción";
 

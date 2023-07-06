@@ -36,19 +36,19 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let weeklyCardText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly),
               let weeklyAchText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly) else { return nil }
-        //9
+        
         let limits: String
         let limitsString: NSMutableAttributedString
         
         switch paymentMethod {
         case .card:
-            limits = L10n.Buy.buyLimitsCard(minText, Constant.usdCurrencyCode, weeklyCardText, Constant.usdCurrencyCode)
+            limits = L10n.Buy.BuyLimits.description(minText, Constant.usdCurrencyCode, weeklyCardText, Constant.usdCurrencyCode)
             limitsString = NSMutableAttributedString(string: limits + "\n\n" + L10n.Buy.BuyLimits.increase)
-            
+
         case .ach:
-            limits = L10n.Buy.buyLimitsAch(minText, Constant.usdCurrencyCode, weeklyAchText, Constant.usdCurrencyCode)
+            limits = L10n.Buy.BuyLimits.description(minText, Constant.usdCurrencyCode, weeklyAchText, Constant.usdCurrencyCode)
             limitsString = NSMutableAttributedString(string: limits + "\n\n" + L10n.Buy.achBuyDisclaimer)
-            
+
         default:
             limits = ""
             limitsString = .init(string: "")

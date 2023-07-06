@@ -243,7 +243,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                          isUnderlined: true)
             
             button.callback = { [weak self] in
-                self?.viewController?.onPaymentMethodErrorLinkTapped()
+                self?.viewController?.increaseLimitsTapped()
             }
             
             buttons.append(button)

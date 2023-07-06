@@ -152,4 +152,5 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     
     func onPaymentMethodErrorLinkTapped() {}
     func limitsInfoTapped() {}
+    func increaseLimitsTapped() {}
 }
