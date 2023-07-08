@@ -24,8 +24,8 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     // MARK: - Overrides
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func prepareData() {
+        super.prepareData()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Sell())
     }
@@ -34,14 +34,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         super.viewWillDisappear(animated)
         
         getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        didTriggerExchangeRate = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
-        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,7 +82,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didFinish = { [weak self] _ in
-                self?.interactor?.setAmount(viewAction: .init())
+                self?.interactor?.setAmount(viewAction: .init(didFinish: true))
             }
             
             view.didTapFromAssetsSelection = { [weak self] in
@@ -172,7 +164,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             self?.coordinator?.dismissFlow()
-            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle))
+            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle, didFinish: true))
         }
     }
     

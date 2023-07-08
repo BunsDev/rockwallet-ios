@@ -98,6 +98,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             
             prepareFees(viewAction: .init(), completion: {})
             
+            guard viewAction.didFinish else { return }
             getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
                 self?.setPresentAmountData(handleErrors: false)
             })
@@ -105,6 +106,11 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             return
         } else if let value = viewAction.card {
             dataStore?.selected = value
+            
+            guard viewAction.didFinish else { return }
+            getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+                self?.setPresentAmountData(handleErrors: false)
+            })
             
             return
         }

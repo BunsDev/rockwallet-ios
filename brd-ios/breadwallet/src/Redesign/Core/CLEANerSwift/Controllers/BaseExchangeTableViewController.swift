@@ -14,29 +14,16 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                                       I: Interactor,
                                       P: Presenter,
                                       DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS> {
-    var didTriggerExchangeRate: (() -> Void)?
-    
-    private var didDisplayData = false
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         ExchangeManager.shared.reload()
-        
-        guard didDisplayData else { return }
-        didTriggerExchangeRate?()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         ExchangeManager.shared.reload()
-    }
-    
-    override func displayData(responseDisplay: FetchModels.Get.ResponseDisplay) {
-        super.displayData(responseDisplay: responseDisplay)
-        
-        didDisplayData = true
     }
     
     override func setupSubviews() {

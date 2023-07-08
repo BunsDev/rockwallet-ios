@@ -29,14 +29,6 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         getRateAndTimerCell()?.wrappedView.invalidate()
     }
     
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        didTriggerExchangeRate = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {

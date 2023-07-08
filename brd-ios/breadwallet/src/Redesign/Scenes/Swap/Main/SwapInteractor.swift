@@ -34,14 +34,15 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
         let fromCurrency: Currency? = dataStore?.fromAmount != nil ? dataStore?.fromAmount?.currency : dataStore?.currencies.first
         
         guard let fromCurrency,
-              let toCurrency = dataStore?.currencies.first(where: { $0.code != fromCurrency.code })
-        else {
+              let toCurrency = dataStore?.currencies.first(where: { $0.code != fromCurrency.code }) else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
             return
         }
+        
         if dataStore?.fromAmount == nil {
             dataStore?.fromAmount = .zero(fromCurrency)
         }
+        
         dataStore?.toAmount = .zero(toCurrency)
         
         presenter?.presentData(actionResponse: .init(item: Models.Item(fromAmount: dataStore?.fromAmount,
