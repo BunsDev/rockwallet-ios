@@ -30,12 +30,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         GoogleAnalytics.logEvent(GoogleAnalytics.Sell())
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
@@ -111,19 +105,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.didTapLink = { [weak self] in
                 self?.interactor?.showLimitsInfo(viewAction: .init())
             }
-        }
-        
-        return cell
-    }
-    
-    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.viewModel?.enabled = false
-            continueButton.setup(with: continueButton.viewModel)
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-            
-            return nil
         }
         
         return cell

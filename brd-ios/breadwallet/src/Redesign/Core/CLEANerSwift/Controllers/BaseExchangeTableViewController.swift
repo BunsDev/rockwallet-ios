@@ -14,6 +14,8 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                                       I: Interactor,
                                       P: Presenter,
                                       DS: BaseDataStore & NSObject>: BaseTableViewController<C, I, P, DS> {
+    typealias Models = AssetModels
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -24,6 +26,8 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         super.viewWillDisappear(animated)
         
         ExchangeManager.shared.reload()
+        
+        getRateAndTimerCell()?.wrappedView.invalidate()
     }
     
     override func setupSubviews() {
@@ -127,6 +131,18 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         default:
             break
         }
+    }
+    
+    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
+            continueButton.viewModel?.enabled = false
+            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
+            
+            return nil
+        }
+        
+        return cell
     }
     
     func limitsInfoTapped() {}
