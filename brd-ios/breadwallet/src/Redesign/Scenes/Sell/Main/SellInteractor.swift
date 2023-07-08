@@ -85,6 +85,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
         let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
+        
+        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+            self?.setPresentAmountData(handleErrors: false)
+        })
     }
     
     func setAmount(viewAction: AssetModels.Asset.ViewAction) {
