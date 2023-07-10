@@ -85,7 +85,7 @@ class VerificationInProgressViewController: CheckListViewController {
         
         var labelConfig: LabelConfiguration {
             if let rowCount = sectionRows[CheckListModels.Section.checkmarks]?.count, indexPath.row == rowCount - 1 {
-                return .init(font: ThemeManager.shared.font(for: Fonts.Primary, size: 16), textColor: LightColors.Text.three)
+                return .init(font: Fonts.Body.one, textColor: LightColors.Text.three)
             } else {
                 return .init(font: ThemeManager.shared.font(for: Fonts.Secondary, size: 16), textColor: LightColors.Text.three)
             }

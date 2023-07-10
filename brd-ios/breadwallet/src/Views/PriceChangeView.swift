@@ -57,7 +57,7 @@ class PriceChangeView: UIView, Subscriber {
     private var currencyNumberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.currencySymbol = Rate.symbolMap[Store.state.defaultCurrencyCode]
+        formatter.currencySymbol = Store.state.defaultCurrencyCode
         return formatter
     }
     
