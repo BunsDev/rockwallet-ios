@@ -67,6 +67,8 @@ class CardSelectionViewController: ItemSelectionViewController {
             return UITableViewCell()
         }
         
+        let model = dataSource?.itemIdentifier(for: indexPath) as? PaymentCard
+        
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: .init(title: .text(L10n.Buy.card),
@@ -74,26 +76,24 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    logo: .image(Asset.card.image),
                                    cardNumber: .text(L10n.Buy.addDebitCreditCard),
                                    expiration: nil,
+                                   userInteractionEnabled: true,
                                    errorMessage: nil))
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
+            
+            view.didTapSelectCard = { [weak self] in
+                guard let dataModel = model else {
+                    self?.coordinator?.open(scene: Scenes.AddCard)
+                    return
+                }
+
+                guard self?.dataStore?.isSelectingEnabled == true, !dataModel.paymentMethodStatus.isProblematic else { return }
+                self?.itemSelected?(dataModel)
+                self?.coordinator?.dismissFlow()
+            }
         }
         
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section,
-              section == Models.Section.items,
-              let model = dataSource?.itemIdentifier(for: indexPath) as? PaymentCard else {
-            coordinator?.open(scene: Scenes.AddCard)
-            return
-        }
-        
-        guard dataStore?.isSelectingEnabled == true, !model.paymentMethodStatus.isProblematic else { return }
-        itemSelected?(model)
-        
-        coordinator?.dismissFlow()
     }
     
     // MARK: - Additional Helpers
