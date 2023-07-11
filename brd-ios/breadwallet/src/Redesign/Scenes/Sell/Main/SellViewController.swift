@@ -24,24 +24,10 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     // MARK: - Overrides
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func prepareData() {
+        super.prepareData()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Sell())
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        didTriggerExchangeRate = { [weak self] in
-            self?.interactor?.getExchangeRate(viewAction: .init(getFees: false), completion: {})
-        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,7 +76,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didFinish = { [weak self] _ in
-                self?.interactor?.setAmount(viewAction: .init())
+                self?.interactor?.setAmount(viewAction: .init(didFinish: true))
             }
             
             view.didTapFromAssetsSelection = { [weak self] in
@@ -119,19 +105,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.didTapLink = { [weak self] in
                 self?.interactor?.showLimitsInfo(viewAction: .init())
             }
-        }
-        
-        return cell
-    }
-    
-    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.viewModel?.enabled = false
-            continueButton.setup(with: continueButton.viewModel)
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-            
-            return nil
         }
         
         return cell
@@ -172,7 +145,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             self?.coordinator?.dismissFlow()
-            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle))
+            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle, didFinish: true))
         }
     }
     
@@ -234,17 +207,5 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     func displayInstantAchPopup(responseDisplay: SellModels.InstantAchPopup.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
-    }
-    
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
-        
-        cell.wrappedView.setup(with: responseDisplay.viewModel)
-        
-        tableView.invalidateTableViewIntrinsicContentSize()
-        
-        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
 }

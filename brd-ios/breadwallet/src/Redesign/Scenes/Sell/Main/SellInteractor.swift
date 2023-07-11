@@ -85,6 +85,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
         let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
+        
+        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+            self?.setPresentAmountData(handleErrors: false)
+        })
     }
     
     func setAmount(viewAction: AssetModels.Asset.ViewAction) {
@@ -94,6 +98,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             
             prepareFees(viewAction: .init(), completion: {})
             
+            guard viewAction.didFinish else { return }
             getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
                 self?.setPresentAmountData(handleErrors: false)
             })
@@ -101,6 +106,11 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             return
         } else if let value = viewAction.card {
             dataStore?.selected = value
+            
+            guard viewAction.didFinish else { return }
+            getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+                self?.setPresentAmountData(handleErrors: false)
+            })
             
             return
         }
