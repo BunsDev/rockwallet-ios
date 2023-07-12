@@ -145,7 +145,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.setup(with: viewModel)
         
         titleLabel.setup(with: viewModel?.title)
-        titleLabel.isHidden = viewModel?.subtitle == nil
+        titleLabel.isHidden = viewModel?.title == nil
         
         subtitleLabel.setup(with: viewModel?.subtitle)
         subtitleLabel.isHidden = viewModel?.logo != nil && viewModel?.cardNumber != nil && viewModel?.expiration != nil || viewModel?.subtitle == nil
