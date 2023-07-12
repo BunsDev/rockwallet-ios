@@ -82,13 +82,13 @@ class CardSelectionViewController: ItemSelectionViewController {
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
             
             view.didTapSelectCard = { [weak self] in
-                guard let dataModel = model else {
+                guard let model else {
                     self?.coordinator?.open(scene: Scenes.AddCard)
                     return
                 }
 
-                guard self?.dataStore?.isSelectingEnabled == true, !dataModel.paymentMethodStatus.isProblematic else { return }
-                self?.itemSelected?(dataModel)
+                guard self?.dataStore?.isSelectingEnabled == true, !model.paymentMethodStatus.isProblematic else { return }
+                self?.itemSelected?(model)
                 self?.coordinator?.dismissFlow()
             }
         }
