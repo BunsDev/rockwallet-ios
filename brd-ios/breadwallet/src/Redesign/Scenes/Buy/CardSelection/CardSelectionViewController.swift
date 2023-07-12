@@ -70,7 +70,7 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    logo: .image(Asset.card.image),
                                    cardNumber: .text(L10n.Buy.addDebitCreditCard),
                                    expiration: nil,
-                                   userInteractionEnabled: false))
+                                   userInteractionEnabled: true))
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
             
