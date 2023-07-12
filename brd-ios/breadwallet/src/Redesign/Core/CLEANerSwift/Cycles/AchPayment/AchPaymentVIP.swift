@@ -160,7 +160,7 @@ extension Presenter where Self: AchActionResponses,
         
         switch item.status {
         case .statusOk:
-            achPaymentModel = .init(title: .text(L10n.Sell.widrawToBank),
+            achPaymentModel = .init(title: .text(L10n.Buy.transferFromBank),
                                     subtitle: nil,
                                     logo: .image(Asset.bank.image),
                                     cardNumber: .text(item.displayName),
