@@ -145,6 +145,7 @@
 		4F3AB12425D53F5D00B378DC /* Baker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AB12225D53F5D00B378DC /* Baker.swift */; };
 		4F3AB12A25D58AB400B378DC /* SelectBakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AB12925D58AB400B378DC /* SelectBakerViewController.swift */; };
 		4F3AB13425D5E7F900B378DC /* SelectBakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AB13325D5E7F900B378DC /* SelectBakerCell.swift */; };
+		6FA3E6682A5FFE7000BD8DB4 /* WalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6FA3E6672A5FFE7000BD8DB4 /* WalletKit */; };
 		71014F7C2327E49400DA1373 /* fiat_currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 71014F7B2327E49400DA1373 /* fiat_currencies.json */; };
 		710B036421F8C208007E8A2A /* AppRatingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B036321F8C208007E8A2A /* AppRatingManager.swift */; };
 		71173059220CCC91001931B3 /* PromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71173058220CCC91001931B3 /* PromptView.swift */; };
@@ -369,7 +370,6 @@
 		7E01B90F297AA7B800C100D1 /* Presets+Veriff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B90E297AA7B800C100D1 /* Presets+Veriff.swift */; };
 		7E0968B8284A29CE006B4FC2 /* TransparentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0968B7284A29CE006B4FC2 /* TransparentView.swift */; };
 		7E0E365928E70D0F00539D99 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 7E0E365828E70D0F00539D99 /* Cosmos */; };
-		7E18DBF328C8C2C600B83E3B /* WalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7E18DBF228C8C2C600B83E3B /* WalletKit */; };
 		7E2E1A2B284E097900E56E69 /* KYCCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2E1A2A284E097900E56E69 /* KYCCoordinator.swift */; };
 		7E2E1A41284E267000E56E69 /* ProfileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2E1A40284E267000E56E69 /* ProfileWorker.swift */; };
 		7E383B4928AE1AFD00A5339F /* AssetSelectionDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E383B4828AE1AFD00A5339F /* AssetSelectionDisplayable.swift */; };
@@ -1702,6 +1702,7 @@
 			files = (
 				044D099629C352EA00C510DC /* Veriff in Frameworks */,
 				0453B0BC29D22BF100BBE246 /* GoogleTagManager in Frameworks */,
+				6FA3E6682A5FFE7000BD8DB4 /* WalletKit in Frameworks */,
 				7E0E365928E70D0F00539D99 /* Cosmos in Frameworks */,
 				3ABD8D1B24E1CF1500EC4C91 /* SwiftUI.framework in Frameworks */,
 				044D098229C3352400C510DC /* Frames in Frameworks */,
@@ -1715,7 +1716,6 @@
 				22A9A9601DF61FD8000F0016 /* CoreLocation.framework in Frameworks */,
 				044D098829C335BB00C510DC /* Lottie in Frameworks */,
 				22A9A95E1DF61FD0000F0016 /* PushKit.framework in Frameworks */,
-				7E18DBF328C8C2C600B83E3B /* WalletKit in Frameworks */,
 				22717B062315D3E300F77F4E /* CloudKit.framework in Frameworks */,
 				223DB21B1DF69F0F0076A151 /* libbz2.framework in Frameworks */,
 				044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */,
@@ -3769,7 +3769,6 @@
 			name = breadwallet;
 			packageProductDependencies = (
 				7E5CB32C2834E63400EC787E /* SnapKit */,
-				7E18DBF228C8C2C600B83E3B /* WalletKit */,
 				7E0E365828E70D0F00539D99 /* Cosmos */,
 				044D097A29C30E8D00C510DC /* MobileIntelligence */,
 				044D098129C3352400C510DC /* Frames */,
@@ -3779,6 +3778,7 @@
 				044D099529C352EA00C510DC /* Veriff */,
 				0453B0BB29D22BF100BBE246 /* GoogleTagManager */,
 				049CE74729DDACDE009D0F2D /* GoogleDataTransport */,
+				6FA3E6672A5FFE7000BD8DB4 /* WalletKit */,
 			);
 			productName = breadwallet;
 			productReference = 75A2A7901DA5934300A983D8 /* breadwallet.app */;
@@ -3941,7 +3941,6 @@
 			mainGroup = 75A2A7871DA5934300A983D8;
 			packageReferences = (
 				7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */,
-				7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */,
 				044D097929C30E8C00C510DC /* XCRemoteSwiftPackageReference "sardine-ios" */,
 				044D098029C3352400C510DC /* XCRemoteSwiftPackageReference "frames-ios" */,
 				044D098629C335BB00C510DC /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -3952,6 +3951,7 @@
 				0453B0BA29D22BF100BBE246 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
 				049CE74629DDACDE009D0F2D /* XCRemoteSwiftPackageReference "GoogleDataTransport" */,
 				049CE74929DDAD07009D0F2D /* XCRemoteSwiftPackageReference "GoogleUtilities" */,
+				6FA3E6662A5FFE7000BD8DB4 /* XCRemoteSwiftPackageReference "wallet-kit-ios" */,
 			);
 			productRefGroup = 75A2A7911DA5934300A983D8 /* Products */;
 			projectDirPath = "";
@@ -6338,9 +6338,9 @@
 				version = 7.11.0;
 			};
 		};
-		7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */ = {
+		6FA3E6662A5FFE7000BD8DB4 /* XCRemoteSwiftPackageReference "wallet-kit-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rockwalletcode/wallet-kit.git";
+			repositoryURL = "https://github.com/rockwalletcode/wallet-kit-ios.git";
 			requirement = {
 				kind = exactVersion;
 				version = 5.0.25;
@@ -6397,15 +6397,15 @@
 			package = 049CE74629DDACDE009D0F2D /* XCRemoteSwiftPackageReference "GoogleDataTransport" */;
 			productName = GoogleDataTransport;
 		};
+		6FA3E6672A5FFE7000BD8DB4 /* WalletKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6FA3E6662A5FFE7000BD8DB4 /* XCRemoteSwiftPackageReference "wallet-kit-ios" */;
+			productName = WalletKit;
+		};
 		7E0E365828E70D0F00539D99 /* Cosmos */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */;
 			productName = Cosmos;
-		};
-		7E18DBF228C8C2C600B83E3B /* WalletKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7E18DBED28C8BFE200B83E3B /* XCRemoteSwiftPackageReference "wallet-kit" */;
-			productName = WalletKit;
 		};
 		7E5CB32C2834E63400EC787E /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
