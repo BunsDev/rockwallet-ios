@@ -20,10 +20,6 @@ enum AchPaymentModels {
         struct ActionResponse {
             var item: PaymentCard?
         }
-        
-        struct ResponseDisplay {
-            var viewModel: CardSelectionViewModel?
-        }
     }
     
     struct PaymentCards {
