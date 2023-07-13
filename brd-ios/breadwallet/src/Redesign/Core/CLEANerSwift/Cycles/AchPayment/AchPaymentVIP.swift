@@ -25,11 +25,10 @@ protocol AchActionResponses: AnyObject {
     func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse)
 }
 
-protocol AchResponseDisplays: AnyObject {
+protocol AchResponseDisplays: AnyObject, AssetResponseDisplays {
     var plaidHandler: PlaidLinkKitHandler? { get set }
     
     func displayPaymentCards(responseDisplay: AchPaymentModels.PaymentCards.ResponseDisplay)
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay)
     func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay)
 }
 
@@ -145,7 +144,8 @@ extension Interactor where Self: AchViewActions,
 }
 
 extension Presenter where Self: AchActionResponses,
-                          Self.ResponseDisplays: AchResponseDisplays {
+                          Self.ResponseDisplays: AchResponseDisplays,
+                          Self.ResponseDisplays: AssetResponseDisplays {
     func presentPaymentCards(actionResponse: AchPaymentModels.PaymentCards.ActionResponse) {
         viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
     }
@@ -160,7 +160,7 @@ extension Presenter where Self: AchActionResponses,
         
         switch item.status {
         case .statusOk:
-            achPaymentModel = .init(title: .text(L10n.Sell.widrawToBank),
+            achPaymentModel = .init(title: .text(L10n.Buy.transferFromBank),
                                     subtitle: nil,
                                     logo: .image(Asset.bank.image),
                                     cardNumber: .text(item.displayName),
@@ -172,7 +172,7 @@ extension Presenter where Self: AchActionResponses,
                                     userInteractionEnabled: true)
         }
         
-        viewController?.displayAch(responseDisplay: .init(viewModel: achPaymentModel))
+        viewController?.displayAmount(responseDisplay: .init(cardModel: achPaymentModel))
     }
     
     func presentPlaidToken(actionResponse: AchPaymentModels.Link.ActionResponse) {
@@ -197,6 +197,4 @@ extension Controller where Self: AchResponseDisplays {
         plaidHandler = responseDisplay.plaidHandler
         plaidHandler?.open(presentUsing: .viewController(self))
     }
-    
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {}
 }

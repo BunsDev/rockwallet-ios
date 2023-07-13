@@ -26,7 +26,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .rateAndTimer,
             .swapCard,
             .paymentMethod,
-            .accountLimits,
             .accountLimits
         ]
         

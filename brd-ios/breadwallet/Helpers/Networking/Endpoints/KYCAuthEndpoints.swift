@@ -19,7 +19,6 @@ enum KYCAuthEndpoints: String, URLType {
     case longPollBiometricStatus = "kyc/long-poll-biometric-status?quote_id=%@"
     case longPollBiometricStatusLimits = "kyc/long-poll-biometric-status?biometric_type=%@"
     case basic = "kyc/basic"
-    case documents = "kyc/documents"
     case upload = "kyc/upload"
     case submit = "kyc/session/submit"
     case confirmationCodes = "confirmation-codes"

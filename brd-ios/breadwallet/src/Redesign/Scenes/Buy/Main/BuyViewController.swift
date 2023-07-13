@@ -31,26 +31,12 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     // MARK: - Overrides
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func prepareData() {
+        super.prepareData()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Buy(type: dataStore?.paymentMethod?.rawValue ?? ""))
         
         Store.subscribe(self, name: .reloadBuy) { [weak self] _ in
-            self?.prepareData()
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        getRateAndTimerCell()?.wrappedView.invalidate()
-    }
-    
-    override func setupSubviews() {
-        super.setupSubviews()
-        
-        didTriggerExchangeRate = { [weak self] in
             self?.interactor?.getData(viewAction: .init())
         }
     }
@@ -107,7 +93,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             view.didFinish = { [weak self] _ in
-                self?.interactor?.setAmount(viewAction: .init())
+                self?.interactor?.setAmount(viewAction: .init(didFinish: true))
             }
             
             view.didTapSelectAsset = { [weak self] in
@@ -152,6 +138,8 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         if paymentTypes.count >= segment {
             let paymentType = paymentTypes[segment]
             interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
+            
+            GoogleAnalytics.logEvent(GoogleAnalytics.Buy(type: paymentType.rawValue))
         }
     }
     
@@ -182,19 +170,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.configure(with: .init(buttons: [Presets.Button.noBorders],
                                                    axis: .vertical))
             view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
-    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.viewModel?.enabled = false
-            continueButton.setup(with: continueButton.viewModel)
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-            
-            return nil
         }
         
         return cell
@@ -239,7 +214,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             }
             
             self?.coordinator?.dismissFlow()
-            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle))
+            self?.interactor?.setAmount(viewAction: .init(currency: model.subtitle, didFinish: true))
         }
     }
     
@@ -259,10 +234,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             
             return
         }
-        
-        sectionRows[fromSection] = [responseDisplay.swapCurrencyViewModel as Any]
-        sectionRows[toSection] = [responseDisplay.cardModel as Any]
-        sectionRows[limitActionsSection] = [responseDisplay.limitActions as Any]
         
         fromCell.wrappedView.setup(with: responseDisplay.swapCurrencyViewModel)
         toCell.wrappedView.setup(with: responseDisplay.cardModel)
@@ -302,18 +273,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     func displayInstantAchPopup(responseDisplay: BuyModels.InstantAchPopup.ResponseDisplay) {
         coordinator?.showPopup(with: responseDisplay.model)
-    }
-    
-    func displayAch(responseDisplay: AchPaymentModels.Get.ResponseDisplay) {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<CardSelectionView> else { return }
-        
-        cell.wrappedView.setup(with: responseDisplay.viewModel)
-        
-        tableView.invalidateTableViewIntrinsicContentSize()
-        
-        continueButton.viewModel?.enabled = dataStore?.isFormValid ?? false
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
     // MARK: - Additional Helpers

@@ -69,9 +69,14 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    subtitle: nil,
                                    logo: .image(Asset.card.image),
                                    cardNumber: .text(L10n.Buy.addDebitCreditCard),
-                                   expiration: nil))
+                                   expiration: nil,
+                                   userInteractionEnabled: true))
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
+            
+            view.didTapSelectCard = { [weak self] in
+                self?.coordinator?.open(scene: Scenes.AddCard)
+            }
         }
         
         return cell
