@@ -4,8 +4,12 @@
 <dict>
 	<key>fonts</key>
 	<dict>
-		<key>Degular-Bold</key>
-		<string>Sofia-Pro.otf</string>
+		<key>Roboto-Regular</key>
+		<string>Roboto-Regular</string>
+		<key>Roboto-Medium</key>
+		<string>Roboto-Medium</string>
+		<key>SofiaPro-Bold</key>
+		<string>SofiaPro-Bold</string>
 	</dict>
 	<key>colors</key>
 	<dict>
