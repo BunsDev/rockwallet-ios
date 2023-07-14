@@ -21,14 +21,11 @@ class ComingSoonViewController: BaseInfoViewController {
         }
     }
     
-    override var imageName: String? { return reason?.iconName }
-    override var titleText: String? {
-        return dataStore?.restrictionReason == .manuallyConfigured ? L10n.ComingSoon.swapBuyTitle : reason?.title
-    }
-    override var descriptionText: String? {
-        return dataStore?.restrictionReason == .manuallyConfigured ? reason == .swap ?
-        L10n.ComingSoon.swapDescription : L10n.ComingSoon.buyDescription : reason?.description
-    }
+    override var imageName: String? { reason?.iconName }
+    
+    override var titleText: String? { reason?.title }
+    
+    override var descriptionText: String? { reason?.description }
     
     override var buttonViewModels: [ButtonViewModel] {
         return [
@@ -36,19 +33,11 @@ class ComingSoonViewController: BaseInfoViewController {
                 self?.shouldDismiss = true
                 
                 self?.didTapMainButton?()
-            }),
-            .init(title: reason?.secondButtonTitle, isUnderlined: true, callback: { [weak self] in
-                self?.shouldDismiss = true
-                
-                self?.didTapSecondayButton?()
             })
         ]
     }
     
-    override var buttonConfigurations: [ButtonConfiguration] {
-        return [Presets.Button.primary,
-                Presets.Button.noBorders]
-    }
+    override var buttonConfigurations: [ButtonConfiguration] { [Presets.Button.primary] }
     
     override func viewDidLoad() {
         super.viewDidLoad()

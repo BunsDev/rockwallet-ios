@@ -554,9 +554,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                         restrictionReason: Profile.AccessRights.RestrictionReason?,
                         isRestrictedUSState: Bool = false,
                         isGreyListedCountry: Bool = false) {
-        open(scene: Scenes.ComingSoon) { [weak self] vc in
-            self?.handleComingSoonNavigation(vc)
-            
+        open(scene: Scenes.ComingSoon) { vc in
             var restrictedReason: BaseInfoModels.ComingSoonReason?
             if isRestrictedUSState {
                 restrictedReason = .restrictedUSState
@@ -572,27 +570,8 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
             vc.dataStore?.restrictionReason = restrictionReason
-        }
-    }
-    
-    private func handleComingSoonNavigation(_ vc: ComingSoonViewController?) {
-        guard let vc else { return }
-        
-        vc.didTapMainButton = {
-            if vc.reason == .buyAch {
-                vc.coordinator?.showBuy(type: .card,
-                                        coreSystem: vc.dataStore?.coreSystem,
-                                        keyStore: vc.dataStore?.keyStore)
-            } else {
+            vc.didTapMainButton = {
                 vc.coordinator?.popViewController()
-            }
-        }
-        
-        vc.didTapSecondayButton = {
-            if vc.reason == .buyAch {
-                vc.coordinator?.popViewController()
-            } else {
-                vc.coordinator?.showSupport()
             }
         }
     }
