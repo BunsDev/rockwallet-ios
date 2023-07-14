@@ -208,20 +208,20 @@
       }
     },
     {
-      "identity" : "wallet-kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/rockwalletcode/wallet-kit.git",
-      "state" : {
-        "revision" : "fee7c774dc409dcf981e6b05edde7dee2043bd70",
-        "version" : "5.0.25"
-      }
-    },
-    {
       "identity" : "wallet-kit-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rockwalletcode/wallet-kit-core.git",
       "state" : {
         "revision" : "11961fef47da2224977983aee821f642f7c80391",
+        "version" : "5.0.25"
+      }
+    },
+    {
+      "identity" : "wallet-kit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rockwalletcode/wallet-kit-ios.git",
+      "state" : {
+        "revision" : "fee7c774dc409dcf981e6b05edde7dee2043bd70",
         "version" : "5.0.25"
       }
     }
