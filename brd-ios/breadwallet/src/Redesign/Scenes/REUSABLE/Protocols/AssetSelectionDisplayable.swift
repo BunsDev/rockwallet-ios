@@ -49,12 +49,10 @@ extension AssetSelectionDisplayable where Self: BaseCoordinator {
         let unsupportedAssets = supportedAssets.filter { item in !(data?.contains(where: { $0.subtitle?.lowercased() == item.code }) ?? false) }
         
         let disabledData: [AssetViewModel]? = unsupportedAssets.compactMap {
-            let isDisabledAsset = isDisabledAsset(code: $0.code, supportedCurrencies: supportedCurrencies) ?? false
-            
             return AssetViewModel(icon: $0.imageSquareBackground,
                                   title: $0.name,
                                   subtitle: $0.code.uppercased(),
-                                  isDisabled: isDisabledAsset)
+                                  isDisabled: true)
         }
         
         data?.append(contentsOf: disabledData ?? [])
