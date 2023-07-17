@@ -20,10 +20,6 @@ enum PaymentMethodsModels {
         struct ActionResponse {
             var item: PaymentCard?
         }
-        
-        struct ResponseDisplay {
-            var viewModel: CardSelectionViewModel?
-        }
     }
     
     struct SetPaymentCard {

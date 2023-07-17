@@ -26,11 +26,10 @@ protocol PaymentMethodsActionResponses: AnyObject {
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse)
 }
 
-protocol PaymentMethodsResponseDisplays: AnyObject {
+protocol PaymentMethodsResponseDisplays: AnyObject, AssetResponseDisplays {
     var plaidHandler: PlaidLinkKitHandler? { get set }
     
     func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay)
-    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay)
     func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay)
 }
 
@@ -192,7 +191,7 @@ extension Presenter where Self: PaymentMethodsActionResponses,
                                     userInteractionEnabled: true)
         }
         
-        viewController?.displayAch(responseDisplay: .init(viewModel: achPaymentModel))
+        viewController?.displayAmount(responseDisplay: .init(cardModel: achPaymentModel))
     }
     
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse) {
@@ -214,6 +213,4 @@ extension Controller where Self: PaymentMethodsResponseDisplays {
         plaidHandler = responseDisplay.plaidHandler
         plaidHandler?.open(presentUsing: .viewController(self))
     }
-    
-    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay) {}
 }
