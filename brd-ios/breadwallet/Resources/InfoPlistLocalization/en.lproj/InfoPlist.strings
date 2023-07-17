@@ -828,6 +828,8 @@
 
 "Buy.Ach.Instant.ConfirmationDrawer.Title" = "Purchase with Instant Buy";
 
+"Buy.Ach.Instant.Fee.Alternative.Title" = "Instant Buy fee";
+
 "Buy.Ach.Instant.Fee.Title" = "Instant Buy fee";
 
 "Buy.Ach.Instant.HybridConfirmationDrawer" = "With Instant buy, %@ (%@) will show in your account instantly. The remaining %@ (%@) will arrive in 3-5 days.";
