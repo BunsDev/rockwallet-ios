@@ -19,13 +19,13 @@ protocol AssetViewActions {
     func prepareCurrencies(viewAction: AssetModels.Item)
 }
 
-protocol AssetActionResponses {
+protocol AssetActionResponses: AnyObject {
     func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
     func handleError(actionResponse: AssetModels.Asset.ActionResponse) -> Bool
     func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
 }
 
-protocol AssetResponseDisplays {
+protocol AssetResponseDisplays: AnyObject {
     var tableView: ContentSizedTableView { get set }
     var continueButton: FEButton { get set }
     
