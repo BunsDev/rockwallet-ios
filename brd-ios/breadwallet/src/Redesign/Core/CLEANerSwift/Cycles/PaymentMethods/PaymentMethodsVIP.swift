@@ -26,12 +26,11 @@ protocol PaymentMethodsActionResponses: AnyObject {
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse)
 }
 
-protocol PaymentMethodsResponseDisplays: AnyObject {
+protocol AchResponseDisplays: AnyObject, AssetResponseDisplays {
     var plaidHandler: PlaidLinkKitHandler? { get set }
     
-    func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay)
-    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay)
-    func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay)
+    func displayPaymentCards(responseDisplay: AchPaymentModels.PaymentCards.ResponseDisplay)
+    func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay)
 }
 
 protocol PaymentMethodsDataStore {
@@ -164,9 +163,10 @@ extension Interactor where Self: PaymentMethodsViewActions,
     }
 }
 
-extension Presenter where Self: PaymentMethodsActionResponses,
-                          Self.ResponseDisplays: PaymentMethodsResponseDisplays {
-    func presentPaymentCards(actionResponse: PaymentMethodsModels.PaymentCards.ActionResponse) {
+extension Presenter where Self: AchActionResponses,
+                          Self.ResponseDisplays: AchResponseDisplays,
+                          Self.ResponseDisplays: AssetResponseDisplays {
+    func presentPaymentCards(actionResponse: AchPaymentModels.PaymentCards.ActionResponse) {
         viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
     }
     
@@ -192,7 +192,7 @@ extension Presenter where Self: PaymentMethodsActionResponses,
                                     userInteractionEnabled: true)
         }
         
-        viewController?.displayAch(responseDisplay: .init(viewModel: achPaymentModel))
+        viewController?.displayAmount(responseDisplay: .init(cardModel: achPaymentModel))
     }
     
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse) {
@@ -214,6 +214,4 @@ extension Controller where Self: PaymentMethodsResponseDisplays {
         plaidHandler = responseDisplay.plaidHandler
         plaidHandler?.open(presentUsing: .viewController(self))
     }
-    
-    func displayAch(responseDisplay: PaymentMethodsModels.Get.ResponseDisplay) {}
 }
