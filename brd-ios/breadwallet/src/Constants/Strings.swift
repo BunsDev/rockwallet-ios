@@ -1000,8 +1000,8 @@ internal enum L10n {
           /// Instant Buy fee
           internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Title", fallback: "Instant Buy fee")
           internal enum Alternative {
-            /// Instant Buy fee
-            internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Alternative.Title", fallback: "Instant Buy fee")
+            /// Instant ACH fee
+            internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Alternative.Title", fallback: "Instant ACH fee")
           }
         }
         internal enum OrderPreview {
@@ -2382,8 +2382,8 @@ internal enum L10n {
   internal enum Sell {
     /// ACH withdrawal will take 3–5 business days to reach your bank account.
     internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will take 3–5 business days to reach your bank account.")
-    /// ACH fee
-    internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee")
+    /// ACH fee (3-5 days)
+    internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee (3-5 days)")
     /// ACH Withdrawal
     internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
     /// Sell & Withdraw details
