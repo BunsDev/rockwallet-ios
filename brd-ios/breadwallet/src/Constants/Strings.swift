@@ -999,6 +999,10 @@ internal enum L10n {
         internal enum Fee {
           /// Instant Buy fee
           internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Title", fallback: "Instant Buy fee")
+          internal enum Alternative {
+            /// Instant Buy fee
+            internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Alternative.Title", fallback: "Instant Buy fee")
+          }
         }
         internal enum OrderPreview {
           /// With Instant Buy, %@ will be settled immediately. Remaining %@ will settle in 3-5 days.
