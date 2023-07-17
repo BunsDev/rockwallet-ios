@@ -196,7 +196,7 @@ extension Presenter where Self: AssetActionResponses,
             let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
             
             if from.currency.isERC20Token {
-                error = ExchangeErrors.balanceTooLow(balance: value, currency: fromFee?.currency.code ?? fromCode)
+                error = ExchangeErrors.insufficientGasERC20(currency: fromCode, balance: value)
                 
             } else if actionResponse.fromFeeBasis?.fee != nil {
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)

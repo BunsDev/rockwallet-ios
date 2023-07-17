@@ -905,6 +905,8 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits.description" = "Actuellement, le montant minimum d'achat est de $%@ USD et le montant maximum est de $%@ USD/jour. %@";
 
+"Buy.BuyLimits.description.android" = "Minimum for Buy is %@ per transaction and your weekly limit is %@.";
+
 "Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
@@ -1323,6 +1325,9 @@
 /* Not enough ETH for transaction fee */
 "ErrorMessages.ethBalanceLowAddEth" = "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
 
+/* Not enough ETH for transaction fee */
+"ErrorMessages.ethBalanceLowAddEthWithAmount" = "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
+
 "ErrorMessages.exchangeFailed" = "Échec de l'échange. Motif : %@.";
 
 "ErrorMessages.ExchangeQuoteFailed" = "Nous rencontrons actuellement des difficultés pour réaliser un échange entre ces deux pièces. Veuillez réessayer plus tard.";
@@ -1382,6 +1387,10 @@
 "ErrorMessages.PlaidLinkToken" = "Unfortunately, an error occurred while linking the bank account. Please contact us for further support.";
 
 "ErrorMessages.selectAssets" = "Afin de pouvoir effectuer votre échange, assurez-vous d'avoir activé et financé dans votre portefeuille au moins deux des actifs d'échange pris en charge (BSV, BTC, ETH, BCH, SHIB, USDT).";
+
+"ErrorMessages.Sell.LimitExceeded" = "You have exceeded your sell limits, please try again later.";
+
+"ErrorMessages.Sell.SsnInput.IncorrectSsn" = "Please make sure your SSN number is correct and try again.";
 
 /* Something went wrong message */
 "ErrorMessages.SomethingWentWrong" = "Oups ! Une erreur s'est produite, veuillez réessayer plus tard.";
@@ -2421,6 +2430,12 @@
 "Sell.SellLimits1" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.";
 
 "Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
+
+"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
+
+"Sell.SsnInput.Title.AdditionalInfo" = "We need additional info";
+
+"Sell.SsnInput.Title.CheckingYourData" = "Checking your data...";
 
 "Sell.subtotal" = "Subtotal";
 
