@@ -175,19 +175,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         return cell
     }
     
-    func getRateAndTimerCell() -> WrapperTableViewCell<ExchangeRateView>? {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.rateAndTimer.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<ExchangeRateView> else {
-            continueButton.viewModel?.enabled = false
-            continueButton.setup(with: continueButton.viewModel)
-            verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-            
-            return nil
-        }
-        
-        return cell
-    }
-    
     func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
         guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {

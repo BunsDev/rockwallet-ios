@@ -26,11 +26,11 @@ protocol PaymentMethodsActionResponses: AnyObject {
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse)
 }
 
-protocol AchResponseDisplays: AnyObject, AssetResponseDisplays {
+protocol PaymentMethodsResponseDisplays: AnyObject, AssetResponseDisplays {
     var plaidHandler: PlaidLinkKitHandler? { get set }
     
-    func displayPaymentCards(responseDisplay: AchPaymentModels.PaymentCards.ResponseDisplay)
-    func displayPlaidToken(responseDisplay: AchPaymentModels.Link.ResponseDisplay)
+    func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay)
+    func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay)
 }
 
 protocol PaymentMethodsDataStore {
@@ -163,10 +163,9 @@ extension Interactor where Self: PaymentMethodsViewActions,
     }
 }
 
-extension Presenter where Self: AchActionResponses,
-                          Self.ResponseDisplays: AchResponseDisplays,
-                          Self.ResponseDisplays: AssetResponseDisplays {
-    func presentPaymentCards(actionResponse: AchPaymentModels.PaymentCards.ActionResponse) {
+extension Presenter where Self: PaymentMethodsActionResponses,
+                          Self.ResponseDisplays: PaymentMethodsResponseDisplays {
+    func presentPaymentCards(actionResponse: PaymentMethodsModels.PaymentCards.ActionResponse) {
         viewController?.displayPaymentCards(responseDisplay: .init(allPaymentCards: actionResponse.allPaymentCards))
     }
     
