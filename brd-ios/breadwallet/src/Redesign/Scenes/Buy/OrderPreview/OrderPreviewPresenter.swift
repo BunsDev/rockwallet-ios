@@ -266,7 +266,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
         
         let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
-        let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
+        let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.Alternative.title),
                                                                        value: .text(achFeeDescription)) : nil
         let exceedsInstantBuyLimit: Bool = toFiatValue > instantAchLimit
         

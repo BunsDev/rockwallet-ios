@@ -267,7 +267,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         super.displayMessage(responseDisplay: responseDisplay)
         
-        continueButton.viewModel?.enabled = responseDisplay.error == nil
+        continueButton.viewModel?.enabled = responseDisplay.error == nil && dataStore?.isFormValid == true
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     
