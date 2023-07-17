@@ -1039,6 +1039,12 @@ internal enum L10n {
       }
       /// Click on your increase your limits button below if you would like to further increase your limits.
       internal static let increase = L10n.tr("Localizable", "Buy.BuyLimits.Increase", fallback: "Click on your increase your limits button below if you would like to further increase your limits.")
+      internal enum Description {
+        /// Minimum for Buy is %@ per transaction and your weekly limit is %@.
+        internal static func android(_ p1: Any, _ p2: Any) -> String {
+          return L10n.tr("Localizable", "Buy.BuyLimits.description.android", String(describing: p1), String(describing: p2), fallback: "Minimum for Buy is %@ per transaction and your weekly limit is %@.")
+        }
+      }
     }
     internal enum PaymentMethodBlocked {
       /// contact support
@@ -1334,6 +1340,10 @@ internal enum L10n {
     internal static func ethBalanceLowAddEth(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEth", String(describing: p1), fallback: "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.")
     }
+    /// Not enough ETH for transaction fee
+    internal static func ethBalanceLowAddEthWithAmount(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.ethBalanceLowAddEthWithAmount", String(describing: p1), String(describing: p2), fallback: "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add %@ ETH to your wallet.")
+    }
     /// Swap failed. Reason: %@.
     internal static func exchangeFailed(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.exchangeFailed", String(describing: p1), fallback: "Swap failed. Reason: %@.")
@@ -1423,6 +1433,14 @@ internal enum L10n {
       internal static let description = L10n.tr("Localizable", "ErrorMessages.LivenessCheckLimit.Description", fallback: "You have reached the maximum attempts for Verification. Please contact customer support for more information")
       /// Biometric authentication attempts reached
       internal static let errorMessage = L10n.tr("Localizable", "ErrorMessages.LivenessCheckLimit.errorMessage", fallback: "Biometric authentication attempts reached")
+    }
+    internal enum Sell {
+      /// You have exceeded your sell limits, please try again later.
+      internal static let limitExceeded = L10n.tr("Localizable", "ErrorMessages.Sell.LimitExceeded", fallback: "You have exceeded your sell limits, please try again later.")
+      internal enum SsnInput {
+        /// Please make sure your SSN number is correct and try again.
+        internal static let incorrectSsn = L10n.tr("Localizable", "ErrorMessages.Sell.SsnInput.IncorrectSsn", fallback: "Please make sure your SSN number is correct and try again.")
+      }
     }
     internal enum VeriffDeclined {
       /// Please try again and follow the on screen instructions.
@@ -2416,6 +2434,16 @@ internal enum L10n {
     internal static let yourSellLimits = L10n.tr("Localizable", "Sell.YourSellLimits", fallback: "Your sell limits")
     /// You’ll receive
     internal static let youWillReceive = L10n.tr("Localizable", "Sell.YouWillReceive", fallback: "You’ll receive")
+    internal enum SsnInput {
+      /// To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms
+      internal static let disclaimer = L10n.tr("Localizable", "Sell.SsnInput.Disclaimer", fallback: "To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms")
+      internal enum Title {
+        /// We need additional info
+        internal static let additionalInfo = L10n.tr("Localizable", "Sell.SsnInput.Title.AdditionalInfo", fallback: "We need additional info")
+        /// Checking your data...
+        internal static let checkingYourData = L10n.tr("Localizable", "Sell.SsnInput.Title.CheckingYourData", fallback: "Checking your data...")
+      }
+    }
   }
   internal enum Send {
     /// Send money amount label

@@ -905,7 +905,7 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits.description" = "Minimum for Buy is %@ %@ per transaction and your weekly limit is %@ %@.";
 
-"Buy.BuyLimits.description.android" = "Minimum for Buy is %s per transaction and your weekly limit is %s.";
+"Buy.BuyLimits.description.android" = "Minimum for Buy is %@ per transaction and your weekly limit is %@.";
 
 "Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
 
