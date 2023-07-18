@@ -2873,7 +2873,7 @@
 /* Add item label in swap flow */
 "Swap.AddItem" = "Add item!";
 
-"Swap.AmountPurchased" = "Amount purchased:";
+"Swap.AmountPurchased" = "Amount purchased";
 
 "Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
 
@@ -2908,7 +2908,7 @@
 /* Swap and Buy I want label from currency */
 "Swap.iWant" = "I want";
 
-"Swap.MiningNetworkFee" = "Mining network fee:";
+"Swap.MiningNetworkFee" = "Mining network fee";
 
 /* Not a valid pair */
 "Swap.NotValidPair" = "Not a valid pair";
@@ -3857,3 +3857,4 @@
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
 "WrongStateBuySell.Subtitle" = "Buy and swap aren\'t currently available in your state. We\'ll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
+
