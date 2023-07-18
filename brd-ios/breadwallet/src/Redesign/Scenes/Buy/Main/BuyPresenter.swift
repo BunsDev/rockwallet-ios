@@ -79,7 +79,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let instantAchLimitText = L10n.Buy.Ach.Instant.infoButtonTitle(instantAchLimitAmount)
         
         cryptoModel = .init(amount: from,
-                            headerInfoButtonTitle: actionResponse.type == .ach ? instantAchLimitText : nil,
+                            headerInfoButtonTitle: actionResponse.type == .ach && instantAchLimit > 0 ? instantAchLimitText : nil,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
