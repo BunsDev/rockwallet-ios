@@ -139,7 +139,6 @@ extension Presenter where Self: AssetActionResponses,
         let balance = from.currency.state?.balance
         let fromCode = from.currency.code.uppercased()
         let toCode = Constant.usdCurrencyCode
-        let fromFee = actionResponse.fromFee
         var senderValidationResult = actionResponse.senderValidationResult ?? .ok
         var error: ExchangeErrors?
         

@@ -828,6 +828,8 @@
 
 "Buy.Ach.Instant.ConfirmationDrawer.Title" = "Purchase with Instant Buy";
 
+"Buy.Ach.Instant.Fee.Alternative.Title" = "Instant ACH fee";
+
 "Buy.Ach.Instant.Fee.Title" = "Instant Buy fee";
 
 "Buy.Ach.Instant.HybridConfirmationDrawer" = "With Instant buy, %@ (%@) will show in your account instantly. The remaining %@ (%@) will arrive in 3-5 days.";
@@ -2409,7 +2411,7 @@
 
 "Sell.achDurationWarning" = "ACH withdrawal will take 3–5 business days to reach your bank account.";
 
-"Sell.achFee" = "ACH fee";
+"Sell.achFee" = "ACH fee (3-5 days)";
 
 "Sell.achWithdrawal" = "ACH Withdrawal";
 
@@ -3855,4 +3857,3 @@
 "WritePaperPhrase.warning2" = "Remember to write these words down. Swipe back if you forgot.";
 
 "WrongStateBuySell.Subtitle" = "Buy and swap aren\'t currently available in your state. We\'ll notify you when you can use these features.\n\nYou can still safely send and receive digital assets to your wallet in the meantime.";
-
