@@ -65,8 +65,8 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 switch paymentMethod {
                 case .ach:
                     self?.dataStore?.ach = ach
-                    self?.dataStore?.selected = ach
                     
+                    self?.setPaymentCard(viewAction: .init(card: ach))
                     self?.presenter?.presentAch(actionResponse: .init(item: ach))
                     
                 case .card:
