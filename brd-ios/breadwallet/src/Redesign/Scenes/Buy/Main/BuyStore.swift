@@ -113,15 +113,6 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     }
     
     private var isPaymentMethodProblematic: Bool {
-        switch paymentMethod {
-        case .card:
-            return selected?.paymentMethodStatus.isProblematic ?? true
-            
-        case .ach:
-            return ach?.paymentMethodStatus.isProblematic ?? true
-            
-        default:
-            return true
-        }
+        return selected?.paymentMethodStatus.isProblematic ?? true
     }
 }
