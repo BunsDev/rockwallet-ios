@@ -65,6 +65,7 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 switch paymentMethod {
                 case .ach:
                     self?.dataStore?.ach = ach
+                    self?.dataStore?.cards = []
                     
                     self?.setPaymentCard(viewAction: .init(card: ach))
                     self?.presenter?.presentAch(actionResponse: .init(item: ach))
@@ -72,6 +73,7 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 case .card:
                     let card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
                     self?.dataStore?.cards = cards
+                    self?.dataStore?.ach = nil
                     
                     self?.setPaymentCard(viewAction: .init(card: card))
                 }
