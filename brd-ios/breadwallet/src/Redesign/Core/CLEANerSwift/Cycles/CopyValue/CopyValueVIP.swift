@@ -10,11 +10,11 @@
 
 import UIKit
 
-protocol CopyValueActions {
+protocol CopyValueActions: BaseViewActions, FetchViewActions {
     func copyValue(viewAction: CopyValueModels.Copy.ViewAction)
 }
 
-protocol CopyValueResponses {
+protocol CopyValueResponses: BaseActionResponses, FetchActionResponses {
     func presentCopyValue(actionResponse: CopyValueModels.Copy.ActionResponse)
 }
 

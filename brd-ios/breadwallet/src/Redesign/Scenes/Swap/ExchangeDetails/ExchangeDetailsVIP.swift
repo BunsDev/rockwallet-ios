@@ -20,7 +20,7 @@ protocol ExchangeDetailsActionResponses: BaseActionResponses, FetchActionRespons
     func presentInfoPopup(actionResponse: ExchangeDetailsModels.InfoPopup.ActionResponse)
 }
 
-protocol ExchangeDetailsResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol ExchangeDetailsResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayInfoPopup(responseDisplay: ExchangeDetailsModels.InfoPopup.ResponseDisplay)
 }
 

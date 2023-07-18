@@ -98,26 +98,21 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var isFormValid: Bool {
         guard let amount = toAmount,
               amount.tokenValue > 0,
+              feeAmount != nil,
               selected != nil,
-              feeAmount != nil,
-              feeAmount != nil,
               isPaymentMethodProblematic == false
         else {
             return false
         }
-        return true
+        
+        if ach != nil && ach?.status != .statusOk {
+            return false
+        } else {
+            return true
+        }
     }
     
     private var isPaymentMethodProblematic: Bool {
-        switch paymentMethod {
-        case .card:
-            return selected?.paymentMethodStatus.isProblematic ?? true
-            
-        case .ach:
-            return ach?.paymentMethodStatus.isProblematic ?? true
-            
-        default:
-            return true
-        }
+        return selected?.paymentMethodStatus.isProblematic ?? true
     }
 }

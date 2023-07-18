@@ -24,7 +24,7 @@ protocol ForgotPasswordActionResponses: BaseActionResponses, FetchActionResponse
     func presentNext(actionResponse: ForgotPasswordModels.Next.ActionResponse)
 }
 
-protocol ForgotPasswordResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol ForgotPasswordResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayValidate(responseDisplay: ForgotPasswordModels.Validate.ResponseDisplay)
     func displayNext(responseDisplay: ForgotPasswordModels.Next.ResponseDisplay)
 }

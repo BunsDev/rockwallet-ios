@@ -11,13 +11,13 @@
 import Foundation
 import WalletKit
 
-protocol CreateTransactionViewActions: FeeFetchable {
+protocol CreateTransactionViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
     func createTransaction(viewAction: CreateTransactionModels.Transaction.ViewAction?, completion: ((FEError?) -> Void)?)
     func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((Result<TransferFeeBasis, Error>) -> Void)?)
     func generateSender(viewAction: CreateTransactionModels.Sender.ViewAction)
 }
 
-protocol CreateTransactionDataStore: NSObject {
+protocol CreateTransactionDataStore: BaseDataStore, FetchDataStore {
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     var sender: Sender? { get set }

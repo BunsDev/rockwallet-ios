@@ -13,7 +13,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     weak var viewController: BuyViewController?
     
-    var achPaymentModel: CardSelectionViewModel?
+    var achPaymentModel: CardSelectionViewModel? = CardSelectionViewModel()
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
     
     // MARK: - BuyActionResponses
@@ -41,20 +41,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                                      segments: [.init(image: nil, title: L10n.Buy.buyWithCard),
                                                                 .init(image: nil, title: L10n.Buy.buyWithAch)])
         
-        let paymentMethodViewModel: CardSelectionViewModel
-        if item.type == .ach && item.achEnabled == true {
-            paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
-                                                            subtitle: .text(L10n.Buy.linkBankAccount),
-                                                            userInteractionEnabled: true)
-        } else {
-            paymentMethodViewModel = CardSelectionViewModel()
-        }
-        
         let sectionRows: [AssetModels.Section: [any Hashable]] =  [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .swapCard: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
-            .paymentMethod: [paymentMethodViewModel],
+            .paymentMethod: [
+                achPaymentModel
+            ],
             .accountLimits: [
                 LabelViewModel.text("")
             ],
@@ -86,7 +79,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let instantAchLimitText = L10n.Buy.Ach.Instant.infoButtonTitle(instantAchLimitAmount)
         
         cryptoModel = .init(amount: from,
-                            headerInfoButtonTitle: actionResponse.type == .ach ? instantAchLimitText : nil,
+                            headerInfoButtonTitle: actionResponse.type == .ach && instantAchLimit > 0 ? instantAchLimitText : nil,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))

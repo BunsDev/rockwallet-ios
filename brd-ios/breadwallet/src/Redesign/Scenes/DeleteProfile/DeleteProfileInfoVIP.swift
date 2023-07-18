@@ -25,7 +25,7 @@ protocol DeleteProfileInfoActionResponses: BaseActionResponses, FetchActionRespo
     func presentDeleteProfile(actionResponse: DeleteProfileInfoModels.DeleteProfile.ActionResponse)
 }
 
-protocol DeleteProfileInfoResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol DeleteProfileInfoResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayToggleTickbox(responseDisplay: DeleteProfileInfoModels.Tickbox.ResponseDisplay)
     func displayDeleteProfile(responseDisplay: DeleteProfileInfoModels.DeleteProfile.ResponseDisplay)
 }

@@ -23,7 +23,7 @@ protocol RegistrationConfirmationActionResponses: BaseActionResponses, FetchActi
     func presentResend(actionResponse: RegistrationConfirmationModels.Resend.ActionResponse)
 }
 
-protocol RegistrationConfirmationResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, TwoStepResponseDisplays {
+protocol RegistrationConfirmationResponseDisplays: BaseResponseDisplays, FetchResponseDisplays, TwoStepResponseDisplays {
     func displayConfirm(responseDisplay: RegistrationConfirmationModels.Confirm.ResponseDisplay)
 }
 

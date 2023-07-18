@@ -24,7 +24,7 @@ protocol KYCBasicActionResponses: BaseActionResponses, FetchActionResponses {
     func presentSubmit(actionResponse: KYCBasicModels.Submit.ActionResponse)
 }
 
-protocol KYCBasicResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol KYCBasicResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayValidate(responseDisplay: KYCBasicModels.Validate.ResponseDisplay)
     func displaySubmit(responseDisplay: KYCBasicModels.Submit.ResponseDisplay)
 }

@@ -27,7 +27,7 @@ protocol KYCAddressActionResponses: BaseActionResponses, CountriesAndStatesActio
     func presentSsnInfo(actionResponse: KYCAddressModels.SsnInfo.ActionResponse)
 }
 
-protocol KYCAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
+protocol KYCAddressResponseDisplays: BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayForm(responseDisplay: KYCAddressModels.FormUpdated.ResponseDisplay)
     func displayExternalKYC(responseDisplay: KYCAddressModels.ExternalKYC.ResponseDisplay)
     func displaySsnInfo(responseDisplay: KYCAddressModels.SsnInfo.ResponseDisplay)

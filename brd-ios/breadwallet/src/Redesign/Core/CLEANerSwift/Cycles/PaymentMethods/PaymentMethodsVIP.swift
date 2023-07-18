@@ -11,14 +11,14 @@
 import Foundation
 import LinkKit
 
-protocol PaymentMethodsViewActions {
+protocol PaymentMethodsViewActions: BaseViewActions, FetchViewActions {
     func getPayments(viewAction: PaymentMethodsModels.Get.ViewAction, completion: (() -> Void)?)
     func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction)
     func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction)
     func achSuccessMessage(viewAction: PaymentMethodsModels.Get.ViewAction)
 }
 
-protocol PaymentMethodsActionResponses: AnyObject {
+protocol PaymentMethodsActionResponses: BaseActionResponses, FetchActionResponses {
     var achPaymentModel: CardSelectionViewModel? { get set }
     
     func presentPaymentCards(actionResponse: PaymentMethodsModels.PaymentCards.ActionResponse)
@@ -26,14 +26,14 @@ protocol PaymentMethodsActionResponses: AnyObject {
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse)
 }
 
-protocol PaymentMethodsResponseDisplays: AnyObject, AssetResponseDisplays {
+protocol PaymentMethodsResponseDisplays: BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays {
     var plaidHandler: PlaidLinkKitHandler? { get set }
     
     func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay)
     func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay)
 }
 
-protocol PaymentMethodsDataStore {
+protocol PaymentMethodsDataStore: BaseDataStore, FetchDataStore {
     var selected: PaymentCard? { get set }
     var ach: PaymentCard? { get set }
     var cards: [PaymentCard] { get set }
@@ -65,13 +65,15 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 switch paymentMethod {
                 case .ach:
                     self?.dataStore?.ach = ach
-                    self?.dataStore?.selected = ach
+                    self?.dataStore?.cards = []
                     
+                    self?.setPaymentCard(viewAction: .init(card: ach))
                     self?.presenter?.presentAch(actionResponse: .init(item: ach))
                     
                 case .card:
                     let card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
                     self?.dataStore?.cards = cards
+                    self?.dataStore?.ach = nil
                     
                     self?.setPaymentCard(viewAction: .init(card: card))
                 }
@@ -84,7 +86,7 @@ extension Interactor where Self: PaymentMethodsViewActions,
     func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction) {
         dataStore?.selected = viewAction.card
         
-        (self as? AssetViewActions)?.setAmount(viewAction: .init())
+        (self as? (any AssetViewActions))?.setAmount(viewAction: .init())
     }
     
     func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction) {
@@ -205,7 +207,7 @@ extension Controller where Self: PaymentMethodsResponseDisplays {
         
         (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
             guard let selectedCard else { return }
-            (self?.interactor as? PaymentMethodsViewActions)?.setPaymentCard(viewAction: .init(card: selectedCard))
+            (self?.interactor as? (any PaymentMethodsViewActions))?.setPaymentCard(viewAction: .init(card: selectedCard))
         })
     }
     

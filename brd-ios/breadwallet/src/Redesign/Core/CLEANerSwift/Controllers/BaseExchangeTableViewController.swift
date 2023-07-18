@@ -67,12 +67,12 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                switch (self?.dataStore as? PaymentMethodsDataStore)?.paymentMethod {
+                switch (self?.dataStore as? (any PaymentMethodsDataStore))?.paymentMethod {
                 case .ach:
-                    (self?.interactor as? PaymentMethodsViewActions)?.getPlaidToken(viewAction: .init())
+                    (self?.interactor as? (any PaymentMethodsViewActions))?.getPlaidToken(viewAction: .init())
                     
                 case .card:
-                    (self?.interactor as? PaymentMethodsViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
+                    (self?.interactor as? (any PaymentMethodsViewActions))?.getPayments(viewAction: .init(openCards: true), completion: {})
                     
                 default:
                     break
@@ -126,13 +126,13 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                     
                     switch vc?.dataStore?.confirmationType {
                     case .twoStepAppBackupCode:
-                        (self.dataStore as? AssetDataStore)?.secondFactorBackup = vc?.dataStore?.code
+                        (self.dataStore as? (any AssetDataStore))?.secondFactorBackup = vc?.dataStore?.code
                         
                     default:
-                        (self.dataStore as? AssetDataStore)?.secondFactorCode = vc?.dataStore?.code
+                        (self.dataStore as? (any AssetDataStore))?.secondFactorCode = vc?.dataStore?.code
                     }
                     
-                    (self.interactor as? AssetViewActions)?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
+                    (self.interactor as? (any AssetViewActions))?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
                 }
             }
             

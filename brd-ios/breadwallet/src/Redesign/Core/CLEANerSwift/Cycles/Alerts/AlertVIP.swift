@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol AlertViewActions {}
+protocol AlertViewActions: BaseViewActions, FetchViewActions {}
 
-protocol AlertActionResponses {
+protocol AlertActionResponses: BaseActionResponses, FetchActionResponses {
     func presentAlert(actionResponse: AlertModels.Alerts.ActionResponse)
 }
 
-protocol AlertResponseDisplays {
+protocol AlertResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayAlert(responseDisplay: AlertModels.Alerts.ResponseDisplay)
 }

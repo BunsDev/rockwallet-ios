@@ -39,7 +39,7 @@ protocol BuyActionResponses: BaseActionResponses,
     func presentAssetSelectionMessage(actionResponse: BuyModels.AssetSelectionMessage.ActionResponse)
 }
 
-protocol BuyResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays, PaymentMethodsResponseDisplays {
+protocol BuyResponseDisplays: BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays, PaymentMethodsResponseDisplays {
     func displayOrderPreview(responseDisplay: BuyModels.OrderPreview.ResponseDisplay)
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay)
     func displayLimitsInfo(responseDisplay: BuyModels.LimitsInfo.ResponseDisplay)

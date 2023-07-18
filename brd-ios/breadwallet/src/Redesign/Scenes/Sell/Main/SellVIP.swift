@@ -36,8 +36,7 @@ protocol SellActionResponses: BaseActionResponses,
     func presentAssetSelectionMessage(actionResponse: SellModels.AssetSelectionMessage.ActionResponse)
 }
 
-protocol SellResponseDisplays: AnyObject,
-                               BaseResponseDisplays,
+protocol SellResponseDisplays: BaseResponseDisplays,
                                FetchResponseDisplays,
                                AssetResponseDisplays,
                                PaymentMethodsResponseDisplays {
