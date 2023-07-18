@@ -96,9 +96,10 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     // MARK: - Additional helpers
     
     var isFormValid: Bool {
-        guard let amount = toAmount, amount.tokenValue > 0,
-              selected != nil,
+        guard let amount = toAmount,
+              amount.tokenValue > 0,
               feeAmount != nil,
+              selected != nil,
               isPaymentMethodProblematic == false
         else {
             return false

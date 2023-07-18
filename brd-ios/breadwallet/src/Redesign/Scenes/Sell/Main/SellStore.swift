@@ -83,6 +83,11 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
         else {
             return false
         }
-        return true
+        
+        if ach != nil && ach?.status != .statusOk {
+            return false
+        } else {
+            return true
+        }
     }
 }
