@@ -25,7 +25,7 @@ protocol ProfileActionResponses: BaseActionResponses, FetchActionResponses {
     func presentLogout(actionResponse: ProfileModels.Logout.ActionResponse)
 }
 
-protocol ProfileResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol ProfileResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayVerificationInfo(responseDisplay: ProfileModels.VerificationInfo.ResponseDisplay)
     func displayNavigation(responseDisplay: ProfileModels.Navigate.ResponseDisplay)
     func displayPaymentCards(responseDisplay: ProfileModels.PaymentCards.ResponseDisplay)

@@ -42,7 +42,7 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentPreview(actionRespone: OrderPreviewModels.Preview.ActionResponse)
 }
 
-protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol OrderPreviewResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayTermsAndConditions(responseDisplay: OrderPreviewModels.TermsAndConditions.ResponseDisplay)
     func displayTimeOut(responseDisplay: OrderPreviewModels.ExpirationValidations.ResponseDisplay)
     func displayInfoPopup(responseDisplay: OrderPreviewModels.InfoPopup.ResponseDisplay)

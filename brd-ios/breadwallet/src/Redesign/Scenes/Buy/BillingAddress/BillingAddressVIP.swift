@@ -30,7 +30,7 @@ protocol BillingAddressActionResponses: BaseActionResponses, CountriesAndStatesA
     func presentSubmit(actionResponse: BillingAddressModels.Submit.ActionResponse)
 }
 
-protocol BillingAddressResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
+protocol BillingAddressResponseDisplays: BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayThreeDSecure(responseDisplay: BillingAddressModels.ThreeDSecure.ResponseDisplay)
     func displayValidate(responseDisplay: BillingAddressModels.Validate.ResponseDisplay)
     func displaySubmit(responseDisplay: BillingAddressModels.Submit.ResponseDisplay)

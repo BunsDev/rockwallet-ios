@@ -11,29 +11,29 @@
 import Foundation
 import PhoneNumberKit
 
-protocol CountriesAndStatesViewActions: FetchViewActions {
+protocol CountriesAndStatesViewActions: BaseViewActions, FetchViewActions {
     func pickCountry(viewAction: CountriesAndStatesModels.SelectCountry.ViewAction)
     func pickState(viewAction: CountriesAndStatesModels.SelectState.ViewAction)
 }
 
-protocol CountriesAndStatesActionResponses: FetchActionResponses {
+protocol CountriesAndStatesActionResponses: BaseActionResponses, FetchActionResponses {
     func presentCountry(actionResponse: CountriesAndStatesModels.SelectCountry.ActionResponse)
     func presentState(actionResponse: CountriesAndStatesModels.SelectState.ActionResponse)
 }
 
-protocol CountriesAndStatesResponseDisplays: FetchResponseDisplays {
+protocol CountriesAndStatesResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayCountry(responseDisplay: CountriesAndStatesModels.SelectCountry.ResponseDisplay)
     func displayState(responseDisplay: CountriesAndStatesModels.SelectState.ResponseDisplay)
 }
 
-protocol CountriesAndStatesDataStore: FetchDataStore {
+protocol CountriesAndStatesDataStore: BaseDataStore, FetchDataStore {
     var country: Country? { get set }
     var countries: [Country] { get set }
     var states: [Place] { get set }
     var state: Place? { get set }
 }
 
-protocol CountriesAndStatesRoutes {
+protocol CountriesAndStatesRoutes: CoordinatableRoutes {
     func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?)
     func showStateSelector(states: [Place], selected: ((Place?) -> Void)?)
 }

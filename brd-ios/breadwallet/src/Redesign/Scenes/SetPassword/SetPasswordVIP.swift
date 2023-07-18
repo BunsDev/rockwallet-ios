@@ -24,7 +24,7 @@ protocol SetPasswordActionResponses: BaseActionResponses, FetchActionResponses, 
     func presentNext(actionResponse: SetPasswordModels.Next.ActionResponse)
 }
 
-protocol SetPasswordResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, TwoStepResponseDisplays {
+protocol SetPasswordResponseDisplays: BaseResponseDisplays, FetchResponseDisplays, TwoStepResponseDisplays {
     func displayValidate(responseDisplay: SetPasswordModels.Validate.ResponseDisplay)
     func displayNext(responseDisplay: SetPasswordModels.Next.ResponseDisplay)
 }

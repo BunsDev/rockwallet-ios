@@ -14,14 +14,12 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     
     weak var viewController: SellViewController?
     
-    var achPaymentModel: CardSelectionViewModel?
+    var achPaymentModel: CardSelectionViewModel? = CardSelectionViewModel()
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
     
     // MARK: - SellActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? AssetModels.Item else { return }
-        
         let sections: [AssetModels.Section] = [
             .rateAndTimer,
             .swapCard,
@@ -30,15 +28,6 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
-        
-        let paymentMethodViewModel: CardSelectionViewModel
-        if item.type == .ach && item.achEnabled == true {
-            paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
-                                                            subtitle: .text(L10n.Buy.linkBankAccount),
-                                                            userInteractionEnabled: true)
-        } else {
-            paymentMethodViewModel = CardSelectionViewModel()
-        }
         
         let sectionRows: [AssetModels.Section: [any Hashable]] = [
             .rateAndTimer: [
@@ -49,7 +38,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                   to: .init(selectionDisabled: true))
             ],
             .paymentMethod: [
-                achPaymentModel ?? paymentMethodViewModel
+                achPaymentModel
             ],
             .accountLimits: [
                 LabelViewModel.text("")

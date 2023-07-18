@@ -10,19 +10,19 @@
 
 import UIKit
 
-protocol TwoStepViewActions {
+protocol TwoStepViewActions: BaseViewActions, FetchViewActions {
     func handleNextFailure(viewAction: TwoStepModels.NextFailure.ViewAction)
 }
 
-protocol TwoStepActionResponses {
+protocol TwoStepActionResponses: BaseActionResponses, FetchActionResponses {
     func presentNextFailure(actionResponse: TwoStepModels.NextFailure.ActionResponse)
 }
 
-protocol TwoStepResponseDisplays {
+protocol TwoStepResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayNextFailure(responseDisplay: TwoStepModels.NextFailure.ResponseDisplay)
 }
 
-protocol TwoStepDataStore: NSObject {
+protocol TwoStepDataStore: BaseDataStore, FetchDataStore {
     var secondFactorCode: String? { get set }
     var secondFactorBackup: String? { get set }
 }

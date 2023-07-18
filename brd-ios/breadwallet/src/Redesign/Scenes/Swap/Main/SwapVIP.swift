@@ -32,7 +32,7 @@ protocol SwapActionResponses: BaseActionResponses, FetchActionResponses, AssetAc
     func presentAssetSelectionMessage(actionResponse: SwapModels.AssetSelectionMessage.ActionResponse)
 }
 
-protocol SwapResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays {
+protocol SwapResponseDisplays: BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays {
     func displaySelectAsset(responseDisplay: SwapModels.Assets.ResponseDisplay)
     func displayConfirmation(responseDisplay: SwapModels.ShowConfirmDialog.ResponseDisplay)
     func displayConfirm(responseDisplay: SwapModels.Confirm.ResponseDisplay)

@@ -11,7 +11,7 @@
 import UIKit
 import WalletKit
 
-protocol AssetViewActions {
+protocol AssetViewActions: BaseViewActions, FetchViewActions {
     func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
     func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?)
@@ -19,13 +19,13 @@ protocol AssetViewActions {
     func prepareCurrencies(viewAction: AssetModels.Item)
 }
 
-protocol AssetActionResponses: AnyObject {
+protocol AssetActionResponses: BaseActionResponses, FetchActionResponses {
     func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
     func handleError(actionResponse: AssetModels.Asset.ActionResponse) -> Bool
     func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
 }
 
-protocol AssetResponseDisplays: AnyObject {
+protocol AssetResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     var tableView: ContentSizedTableView { get set }
     var continueButton: FEButton { get set }
     
@@ -36,7 +36,7 @@ protocol AssetResponseDisplays: AnyObject {
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay)
 }
 
-protocol AssetDataStore: NSObject, TwoStepDataStore {
+protocol AssetDataStore: BaseDataStore, FetchDataStore, TwoStepDataStore {
     var limits: NSMutableAttributedString? { get }
     var fromCode: String { get }
     var toCode: String { get }

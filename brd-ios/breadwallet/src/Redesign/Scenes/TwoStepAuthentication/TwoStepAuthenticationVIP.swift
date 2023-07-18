@@ -22,7 +22,7 @@ protocol TwoStepAuthenticationActionResponses: BaseActionResponses, FetchActionR
     func presentChangeMethod(actionResponse: TwoStepAuthenticationModels.ChangeMethod.ActionResponse)
 }
 
-protocol TwoStepAuthenticationResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol TwoStepAuthenticationResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayChangeMethod(responseDisplay: TwoStepAuthenticationModels.ChangeMethod.ResponseDisplay)
 }
 

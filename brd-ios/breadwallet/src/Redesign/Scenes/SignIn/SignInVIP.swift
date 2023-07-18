@@ -24,7 +24,7 @@ protocol SignInActionResponses: BaseActionResponses, FetchActionResponses, TwoSt
     func presentNext(actionResponse: SignInModels.Next.ActionResponse)
 }
 
-protocol SignInResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays, TwoStepResponseDisplays {
+protocol SignInResponseDisplays: BaseResponseDisplays, FetchResponseDisplays, TwoStepResponseDisplays {
     func displayValidate(responseDisplay: SignInModels.Validate.ResponseDisplay)
     func displayNext(responseDisplay: SignInModels.Next.ResponseDisplay)
 }

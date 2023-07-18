@@ -20,7 +20,7 @@ protocol CheckListActionResponses: BaseActionResponses {
     func presentVerificationProgress(actionResponse: CheckListModels.VerificationInProgress.ActionResponse)
 }
 
-protocol CheckListResponseDisplays: AnyObject, BaseResponseDisplays {
+protocol CheckListResponseDisplays: BaseResponseDisplays {
     func displayVerificationProgress(responseDisplay: CheckListModels.VerificationInProgress.ResponseDisplay)
 }
 
