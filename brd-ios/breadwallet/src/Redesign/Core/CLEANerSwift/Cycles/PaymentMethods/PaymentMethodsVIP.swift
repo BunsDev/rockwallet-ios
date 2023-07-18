@@ -71,11 +71,9 @@ extension Interactor where Self: PaymentMethodsViewActions,
                     
                 case .card:
                     let card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
-                    self?.setPaymentCard(viewAction: .init(card: card))
-                    
                     self?.dataStore?.cards = cards
                     
-                    (self as? AssetViewActions)?.setAmount(viewAction: .init())
+                    self?.setPaymentCard(viewAction: .init(card: card))
                 }
                 
                 completion?()
@@ -85,6 +83,8 @@ extension Interactor where Self: PaymentMethodsViewActions,
     
     func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction) {
         dataStore?.selected = viewAction.card
+        
+        (self as? AssetViewActions)?.setAmount(viewAction: .init())
     }
     
     func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction) {
