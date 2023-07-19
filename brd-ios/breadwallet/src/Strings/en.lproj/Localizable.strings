@@ -266,7 +266,7 @@
 
 "Account.VerifiedAccountTitle" = "Your account is verified!";
 
-"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations. Verify your account by clicking 'Profile' then 'Verification'.";
+"Account.VerifyAccountDescription" = "Verification helps keep your funds and information secure and ensures we comply with regulations.";
 
 /* Verify account text in popup */
 "Account.VerifyAccountText" = "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.";
@@ -907,9 +907,9 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits.description" = "Minimum for Buy is %@ %@ per transaction and your weekly limit is %@ %@.";
 
-"Buy.BuyLimits.description.android" = "Minimum for Buy is %@ per transaction and your weekly limit is %@.";
+"Buy.BuyLimits.description.android" = "Minimum for Buy is %s per transaction and your weekly limit is %s.";
 
-"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
+"Buy.BuyLimits.Increase" = "Click on increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -2411,7 +2411,7 @@
 
 "Sell.achDurationWarning" = "ACH withdrawal will take 3–5 business days to reach your bank account.";
 
-"Sell.achFee" = "ACH fee (3-5 days)";
+"Sell.achFee" = "ACH fee";
 
 "Sell.achWithdrawal" = "ACH Withdrawal";
 
@@ -2427,13 +2427,13 @@
 
 "Sell.rate" = "Conversion rate";
 
-"Sell.SellLimits" = "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
+"Sell.SellLimits" = "Minimum for withdrawal is %s per transaction and your weekly limit is %s.\n\nYour withdrawal will reach your bank account in the next 3-5 business days.";
 
-"Sell.SellLimits1" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.";
+"Sell.SellLimits1" = "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.";
 
-"Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
+"Sell.SellLimits2" = "Your withdrawal will reach your bank account in the next 3-5 business days.";
 
-"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
+"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
 
 "Sell.SsnInput.Title.AdditionalInfo" = "We need additional info";
 
@@ -2447,7 +2447,7 @@
 
 "Sell.widrawToBank" = "Withdraw to";
 
-"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persists, please contact customer support";
 
 "Sell.WithdrawalSuccessText" = "The funds should reach your selected bank account with 3–5 business days.";
 
@@ -2873,7 +2873,7 @@
 /* Add item label in swap flow */
 "Swap.AddItem" = "Add item!";
 
-"Swap.AmountPurchased" = "Amount purchased";
+"Swap.AmountPurchased" = "Amount purchased:";
 
 "Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
 
@@ -2908,7 +2908,7 @@
 /* Swap and Buy I want label from currency */
 "Swap.iWant" = "I want";
 
-"Swap.MiningNetworkFee" = "Mining network fee";
+"Swap.MiningNetworkFee" = "Mining network fee:";
 
 /* Not a valid pair */
 "Swap.NotValidPair" = "Not a valid pair";
