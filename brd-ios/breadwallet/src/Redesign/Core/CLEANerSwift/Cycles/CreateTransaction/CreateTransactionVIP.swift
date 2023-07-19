@@ -30,14 +30,10 @@ struct XRPAttributeGenerator {
         // XRP destination Tag must fit into UInt32
         var attributeText: String?
         if let attribute = tag, !attribute.isEmpty, currency.isXRP {
-            if UInt32(attribute) == nil {
-                completion?(nil)
-            }
+            attributeText = UInt32(attribute) == nil ? nil : attribute
             
-            attributeText = attribute
+            completion?(attributeText)
         }
-        
-        completion?(attributeText)
     }
 }
 
