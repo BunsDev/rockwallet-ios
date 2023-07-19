@@ -263,8 +263,8 @@ internal enum L10n {
     internal static let verifiedAccountText = L10n.tr("Localizable", "Account.VerifiedAccountText", fallback: "You now have access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Your account is verified!
     internal static let verifiedAccountTitle = L10n.tr("Localizable", "Account.VerifiedAccountTitle", fallback: "Your account is verified!")
-    /// Verification helps keep your funds and information secure and ensures we comply with regulations. Verify your account by clicking 'Profile' then 'Verification'.
-    internal static let verifyAccountDescription = L10n.tr("Localizable", "Account.VerifyAccountDescription", fallback: "Verification helps keep your funds and information secure and ensures we comply with regulations. Verify your account by clicking 'Profile' then 'Verification'.")
+    /// Verification helps keep your funds and information secure and ensures we comply with regulations.
+    internal static let verifyAccountDescription = L10n.tr("Localizable", "Account.VerifyAccountDescription", fallback: "Verification helps keep your funds and information secure and ensures we comply with regulations.")
     /// Verify account text in popup
     internal static let verifyAccountText = L10n.tr("Localizable", "Account.VerifyAccountText", fallback: "If you verify your identity, you are given access to:\n・Unlimited deposits\n・Enhanced security\n・Full asset support\n・Buy assets with credit card.")
     /// Verify your identity to get full access to your RockWallet!
@@ -1041,8 +1041,8 @@ internal enum L10n {
       internal static func description(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any) -> String {
         return L10n.tr("Localizable", "Buy.BuyLimits.description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), fallback: "Minimum for Buy is %@ %@ per transaction and your weekly limit is %@ %@.")
       }
-      /// Click on your increase your limits button below if you would like to further increase your limits.
-      internal static let increase = L10n.tr("Localizable", "Buy.BuyLimits.Increase", fallback: "Click on your increase your limits button below if you would like to further increase your limits.")
+      /// Click on increase your limits button below if you would like to further increase your limits.
+      internal static let increase = L10n.tr("Localizable", "Buy.BuyLimits.Increase", fallback: "Click on increase your limits button below if you would like to further increase your limits.")
       internal enum Description {
         /// Minimum for Buy is %@ per transaction and your weekly limit is %@.
         internal static func android(_ p1: Any, _ p2: Any) -> String {
@@ -2382,8 +2382,8 @@ internal enum L10n {
   internal enum Sell {
     /// ACH withdrawal will take 3–5 business days to reach your bank account.
     internal static let achDurationWarning = L10n.tr("Localizable", "Sell.achDurationWarning", fallback: "ACH withdrawal will take 3–5 business days to reach your bank account.")
-    /// ACH fee (3-5 days)
-    internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee (3-5 days)")
+    /// ACH fee
+    internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee")
     /// ACH Withdrawal
     internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
     /// Sell & Withdraw details
@@ -2404,18 +2404,18 @@ internal enum L10n {
     internal static let orderPreview = L10n.tr("Localizable", "Sell.OrderPreview", fallback: "Withdrawal preview")
     /// Conversion rate
     internal static let rate = L10n.tr("Localizable", "Sell.rate", fallback: "Conversion rate")
-    /// Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.
+    /// Minimum for withdrawal is %@ per transaction and your weekly limit is %@.
     /// 
-    /// ACH Withdrawals will be processed within 3-5 business days.
-    internal static func sellLimits(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-      return L10n.tr("Localizable", "Sell.SellLimits", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.")
+    /// Your withdrawal will reach your bank account in the next 3-5 business days.
+    internal static func sellLimits(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Sell.SellLimits", String(describing: p1), String(describing: p2), fallback: "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.\n\nYour withdrawal will reach your bank account in the next 3-5 business days.")
     }
-    /// Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.
-    internal static func sellLimits1(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-      return L10n.tr("Localizable", "Sell.SellLimits1", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.")
+    /// Minimum for withdrawal is %@ per transaction and your weekly limit is %@.
+    internal static func sellLimits1(_ p1: Any, _ p2: Any) -> String {
+      return L10n.tr("Localizable", "Sell.SellLimits1", String(describing: p1), String(describing: p2), fallback: "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.")
     }
-    /// ACH Withdrawals will be processed within 3–5 business days.
-    internal static let sellLimits2 = L10n.tr("Localizable", "Sell.SellLimits2", fallback: "ACH Withdrawals will be processed within 3–5 business days.")
+    /// Your withdrawal will reach your bank account in the next 3-5 business days.
+    internal static let sellLimits2 = L10n.tr("Localizable", "Sell.SellLimits2", fallback: "Your withdrawal will reach your bank account in the next 3-5 business days.")
     /// Subtotal
     internal static let subtotal = L10n.tr("Localizable", "Sell.subtotal", fallback: "Subtotal")
     /// Sell & Withdraw funds
@@ -2424,8 +2424,8 @@ internal enum L10n {
     internal static let tryAgain = L10n.tr("Localizable", "Sell.tryAgain", fallback: "Please try again")
     /// Withdraw to
     internal static let widrawToBank = L10n.tr("Localizable", "Sell.widrawToBank", fallback: "Withdraw to")
-    /// Please try again and if the issue persist, please contact customer support
-    internal static let withdrawalErrorText = L10n.tr("Localizable", "Sell.WithdrawalErrorText", fallback: "Please try again and if the issue persist, please contact customer support")
+    /// Please try again and if the issue persists, please contact customer support
+    internal static let withdrawalErrorText = L10n.tr("Localizable", "Sell.WithdrawalErrorText", fallback: "Please try again and if the issue persists, please contact customer support")
     /// The funds should reach your selected bank account with 3–5 business days.
     internal static let withdrawalSuccessText = L10n.tr("Localizable", "Sell.WithdrawalSuccessText", fallback: "The funds should reach your selected bank account with 3–5 business days.")
     /// Your withdrawal is being processed
@@ -2439,8 +2439,8 @@ internal enum L10n {
     /// You’ll receive
     internal static let youWillReceive = L10n.tr("Localizable", "Sell.YouWillReceive", fallback: "You’ll receive")
     internal enum SsnInput {
-      /// To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms
-      internal static let disclaimer = L10n.tr("Localizable", "Sell.SsnInput.Disclaimer", fallback: "To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms")
+      /// To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms
+      internal static let disclaimer = L10n.tr("Localizable", "Sell.SsnInput.Disclaimer", fallback: "To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms")
       internal enum Title {
         /// We need additional info
         internal static let additionalInfo = L10n.tr("Localizable", "Sell.SsnInput.Title.AdditionalInfo", fallback: "We need additional info")
@@ -2808,8 +2808,8 @@ internal enum L10n {
   internal enum Swap {
     /// Add item label in swap flow
     internal static let addItem = L10n.tr("Localizable", "Swap.AddItem", fallback: "Add item!")
-    /// Amount purchased
-    internal static let amountPurchased = L10n.tr("Localizable", "Swap.AmountPurchased", fallback: "Amount purchased")
+    /// Amount purchased:
+    internal static let amountPurchased = L10n.tr("Localizable", "Swap.AmountPurchased", fallback: "Amount purchased:")
     /// Sorry, we currently don’t support trading of this asset.
     internal static let assetSelectionMessage = L10n.tr("Localizable", "Swap.AssetSelectionMessage", fallback: "Sorry, we currently don’t support trading of this asset.")
     /// Back to Home button
@@ -2836,8 +2836,8 @@ internal enum L10n {
     internal static let gotItButton = L10n.tr("Localizable", "Swap.GotItButton", fallback: "Got it!")
     /// Swap and Buy I want label from currency
     internal static let iWant = L10n.tr("Localizable", "Swap.iWant", fallback: "I want")
-    /// Mining network fee
-    internal static let miningNetworkFee = L10n.tr("Localizable", "Swap.MiningNetworkFee", fallback: "Mining network fee")
+    /// Mining network fee:
+    internal static let miningNetworkFee = L10n.tr("Localizable", "Swap.MiningNetworkFee", fallback: "Mining network fee:")
     /// Not a valid pair
     internal static let notValidPair = L10n.tr("Localizable", "Swap.NotValidPair", fallback: "Not a valid pair")
     /// Paid with label in swap details screen
