@@ -2427,11 +2427,11 @@
 
 "Sell.rate" = "Conversion rate";
 
-"Sell.SellLimits" = "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
+"Sell.SellLimits" = "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.\n\nYour withdrawal will reach your bank account in the next 3-5 business days.";
 
-"Sell.SellLimits1" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.";
+"Sell.SellLimits1" = "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.";
 
-"Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
+"Sell.SellLimits2" = "Your withdrawal will reach your bank account in the next 3-5 business days.";
 
 "Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
 
@@ -2873,7 +2873,7 @@
 /* Add item label in swap flow */
 "Swap.AddItem" = "Añadir elemento";
 
-"Swap.AmountPurchased" = "Importe de la compra:";
+"Swap.AmountPurchased" = "Amount purchased:";
 
 "Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
 
@@ -2908,7 +2908,7 @@
 /* Swap and Buy I want label from currency */
 "Swap.iWant" = "Yo quiero";
 
-"Swap.MiningNetworkFee" = "Tarifa de red de minera:";
+"Swap.MiningNetworkFee" = "Mining network fee:";
 
 /* Not a valid pair */
 "Swap.NotValidPair" = "No es un par válido";
