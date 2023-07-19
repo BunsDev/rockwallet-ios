@@ -158,6 +158,9 @@ struct Profile: Model {
     var sellAllowanceDaily: Decimal {
         return limits.first(where: { $0.interval == .daily && $0.exchangeType == .sell })?.limit ?? 0
     }
+    var sellAllowanceWeekly: Decimal {
+        return limits.first(where: { $0.interval == .weekly && $0.exchangeType == .sell })?.limit ?? 0
+    }
     var sellAllowancePerExchange: Decimal {
         return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .sell })?.limit ?? 0
     }
