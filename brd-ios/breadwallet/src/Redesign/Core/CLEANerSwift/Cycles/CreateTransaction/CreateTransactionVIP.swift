@@ -49,7 +49,7 @@ extension Interactor where Self: CreateTransactionViewActions,
             completion?(ExchangeErrors.noFees)
             return
         }
-            
+        
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
         let transaction = sender.createTransaction(address: destination,
                                                    amount: amount,
