@@ -909,7 +909,7 @@
 
 "Buy.BuyLimits.description.android" = "Minimum for Buy is %@ per transaction and your weekly limit is %@.";
 
-"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
+"Buy.BuyLimits.Increase" = "Click on increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -2433,7 +2433,7 @@
 
 "Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
 
-"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
+"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
 
 "Sell.SsnInput.Title.AdditionalInfo" = "We need additional info";
 
@@ -2447,7 +2447,7 @@
 
 "Sell.widrawToBank" = "Withdraw to";
 
-"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persists, please contact customer support";
 
 "Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
 
