@@ -172,7 +172,7 @@ extension TxViewModel {
     
     private func iconDecider() -> UIImage? {
         switch exchangeType {
-        case .buyCard, .buyAch, .sell, .instantAch:
+        case .buyCard, .buyAch, .instantAch:
             switch status {
             case .confirmed, .complete, .manuallySettled, .pending, .invalid, .failed:
                 return direction == .received ? Asset.receive.image : Asset.send.image
@@ -181,6 +181,9 @@ extension TxViewModel {
                 return Asset.loader.image
                 
             }
+            
+        case .sell:
+            return Asset.withdrawal.image
             
         case .unknown:
             if direction == .received || direction == .recovered {
