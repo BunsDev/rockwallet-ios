@@ -29,11 +29,15 @@ struct XRPAttributeGenerator {
     static func generate(from tag: String?, currency: Currency, completion: ((String?) -> Void)?) {
         // XRP destination Tag must fit into UInt32
         var attributeText: String?
-        if let attribute = tag, !attribute.isEmpty, currency.isXRP {
-            attributeText = UInt32(attribute) == nil ? nil : attribute
-            
-            completion?(attributeText)
+        
+        guard let attribute = tag, !attribute.isEmpty, currency.isXRP else {
+            completion?(nil)
+            return
         }
+        
+        attributeText = UInt32(attribute) == nil ? nil : attribute
+        
+        completion?(attributeText)
     }
 }
 
