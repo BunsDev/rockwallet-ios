@@ -135,8 +135,15 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
     }
     
     func presentInfoPopup(actionResponse: ExchangeDetailsModels.InfoPopup.ActionResponse) {
-        let model: PopupViewModel = .init(title: .text(L10n.Buy.networkFees),
-                                          body: L10n.Buy.networkFeeMessage)
+        let model: PopupViewModel
+        
+        if actionResponse.isCardFee {
+            let feeText = L10n.Buy.cardFee
+            model = .init(title: .text(L10n.Swap.cardFee), body: feeText)
+        } else {
+            model = .init(title: .text(L10n.Buy.networkFees),
+                          body: L10n.Buy.networkFeeMessage)
+        }
         
         viewController?.displayInfoPopup(responseDisplay: .init(model: model))
     }
@@ -200,7 +207,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                       amount: .init(title: .text("\(L10n.Swap.amountPurchased)"), value: .text(amountText), infoImage: nil),
                                       cardFee: .init(title: .text(displayFeeTitle),
                                                      value: .text(cardFeeText),
-                                                     infoImage: nil),
+                                                     infoImage: card?.type == .card ? .image(infoImage) : nil),
                                       networkFee: .init(title: .text(L10n.Swap.miningNetworkFee), value: .text(networkFeeText), infoImage: .image(infoImage)),
                                       totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)),
                                       paymentMethod: .init(methodTitle: .text(L10n.Swap.paidWith),

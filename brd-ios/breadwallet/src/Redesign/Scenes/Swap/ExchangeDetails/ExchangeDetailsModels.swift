@@ -34,8 +34,12 @@ enum ExchangeDetailsModels {
     }
     
     struct InfoPopup {
-        struct ViewAction {}
-        struct ActionResponse {}
+        struct ViewAction {
+            var isCardFee: Bool
+        }
+        struct ActionResponse {
+            var isCardFee: Bool
+        }
         struct ResponseDisplay {
             var model: PopupViewModel
         }
