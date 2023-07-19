@@ -909,7 +909,7 @@
 
 "Buy.BuyLimits.description.android" = "Minimum for Buy is %@ per transaction and your weekly limit is %@.";
 
-"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
+"Buy.BuyLimits.Increase" = "Click on increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -2427,13 +2427,13 @@
 
 "Sell.rate" = "Conversion rate";
 
-"Sell.SellLimits" = "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
+"Sell.SellLimits" = "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.\n\nYour withdrawal will reach your bank account in the next 3-5 business days.";
 
-"Sell.SellLimits1" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.";
+"Sell.SellLimits1" = "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.";
 
-"Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
+"Sell.SellLimits2" = "Your withdrawal will reach your bank account in the next 3-5 business days.";
 
-"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Number (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
+"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
 
 "Sell.SsnInput.Title.AdditionalInfo" = "We need additional info";
 
@@ -2447,7 +2447,7 @@
 
 "Sell.widrawToBank" = "Withdraw to";
 
-"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persists, please contact customer support";
 
 "Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
 
@@ -2873,7 +2873,7 @@
 /* Add item label in swap flow */
 "Swap.AddItem" = "Ajouter un élément !";
 
-"Swap.AmountPurchased" = "Montant acheté :";
+"Swap.AmountPurchased" = "Amount purchased:";
 
 "Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
 
@@ -2908,7 +2908,7 @@
 /* Swap and Buy I want label from currency */
 "Swap.iWant" = "Je fonce";
 
-"Swap.MiningNetworkFee" = "Frais de réseau d'extraction :";
+"Swap.MiningNetworkFee" = "Mining network fee:";
 
 /* Not a valid pair */
 "Swap.NotValidPair" = "Paire invalide";
