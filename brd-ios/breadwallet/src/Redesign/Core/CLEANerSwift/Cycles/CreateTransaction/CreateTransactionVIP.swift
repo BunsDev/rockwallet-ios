@@ -33,7 +33,7 @@ struct XRPAttributeGenerator {
         }
         
         // XRP destination Tag must fit into UInt32
-        completion?(UInt32(attribute) == nil ? nil : attribute)
+        completion?(UInt32(attribute))
     }
 }
 
