@@ -552,7 +552,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         }
         
         var attributeText: String?
-        XRPAttributeGenerator.generate(from: attributeCell?.attribute,
+        XRPAttributeValidator.validate(from: attributeCell?.attribute,
                                        currency: currency) { [weak self] attribute in
             if attribute == nil {
                 self?.showAlert(title: L10n.Alert.error, message: L10n.Send.destinationTag)

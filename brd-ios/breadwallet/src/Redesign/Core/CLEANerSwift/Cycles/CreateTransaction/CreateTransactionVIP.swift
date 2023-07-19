@@ -25,8 +25,8 @@ protocol CreateTransactionDataStore: BaseDataStore, FetchDataStore {
     var senderValidationResult: SenderValidationResult? { get set }
 }
 
-struct XRPAttributeGenerator {
-    static func generate(from tag: String?, currency: Currency, completion: ((String?) -> Void)?) {
+struct XRPAttributeValidator {
+    static func validate(from tag: String?, currency: Currency, completion: ((String?) -> Void)?) {
         // XRP destination Tag must fit into UInt32
         guard currency.isXRP, let attribute = tag, !attribute.isEmpty else { return }
         
@@ -61,7 +61,7 @@ extension Interactor where Self: CreateTransactionViewActions,
         }
         
         var attributeText: String?
-        XRPAttributeGenerator.generate(from: xrpTag,
+        XRPAttributeValidator.validate(from: xrpTag,
                                        currency: currency) { attribute in
             attributeText = attribute
         }
