@@ -28,7 +28,8 @@ protocol CreateTransactionDataStore: BaseDataStore, FetchDataStore {
 struct XRPAttributeGenerator {
     static func generate(from tag: String?, currency: Currency, completion: ((String?) -> Void)?) {
         // XRP destination Tag must fit into UInt32
-        guard let attribute = tag, !attribute.isEmpty, UInt32(attribute) != nil, currency.isXRP else {
+        guard currency.isXRP, let attribute = tag, !attribute.isEmpty else { return }
+        guard UInt32(attribute) != nil else {
             completion?(nil)
             return
         }
