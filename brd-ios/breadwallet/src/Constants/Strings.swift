@@ -2808,8 +2808,8 @@ internal enum L10n {
   internal enum Swap {
     /// Add item label in swap flow
     internal static let addItem = L10n.tr("Localizable", "Swap.AddItem", fallback: "Add item!")
-    /// Amount purchased:
-    internal static let amountPurchased = L10n.tr("Localizable", "Swap.AmountPurchased", fallback: "Amount purchased:")
+    /// Amount purchased
+    internal static let amountPurchased = L10n.tr("Localizable", "Swap.AmountPurchased", fallback: "Amount purchased")
     /// Sorry, we currently don’t support trading of this asset.
     internal static let assetSelectionMessage = L10n.tr("Localizable", "Swap.AssetSelectionMessage", fallback: "Sorry, we currently don’t support trading of this asset.")
     /// Back to Home button
@@ -2818,8 +2818,8 @@ internal enum L10n {
     internal static func balance(_ p1: Any, _ p2: Any) -> String {
       return L10n.tr("Localizable", "Swap.Balance", String(describing: p1), String(describing: p2), fallback: "I have %@ %@")
     }
-    /// Card fee:
-    internal static let cardFee = L10n.tr("Localizable", "Swap.CardFee", fallback: "Card fee:")
+    /// Card fee
+    internal static let cardFee = L10n.tr("Localizable", "Swap.CardFee", fallback: "Card fee")
     /// Title on check your assets popup
     internal static let checkAssets = L10n.tr("Localizable", "Swap.CheckAssets", fallback: "Check your assets!")
     /// Text body in check your assets popup
@@ -2836,8 +2836,8 @@ internal enum L10n {
     internal static let gotItButton = L10n.tr("Localizable", "Swap.GotItButton", fallback: "Got it!")
     /// Swap and Buy I want label from currency
     internal static let iWant = L10n.tr("Localizable", "Swap.iWant", fallback: "I want")
-    /// Mining network fee:
-    internal static let miningNetworkFee = L10n.tr("Localizable", "Swap.MiningNetworkFee", fallback: "Mining network fee:")
+    /// Mining network fee
+    internal static let miningNetworkFee = L10n.tr("Localizable", "Swap.MiningNetworkFee", fallback: "Mining network fee")
     /// Not a valid pair
     internal static let notValidPair = L10n.tr("Localizable", "Swap.NotValidPair", fallback: "Not a valid pair")
     /// Paid with label in swap details screen

@@ -105,7 +105,11 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
             view.setup(with: model)
             
             view.networkFeeInfoTapped = { [weak self] in
-                self?.interactor?.showInfoPopup(viewAction: .init())
+                self?.interactor?.showInfoPopup(viewAction: .init(isCardFee: false))
+            }
+            
+            view.cardFeeInfoTapped = { [weak self] in
+                self?.interactor?.showInfoPopup(viewAction: .init(isCardFee: true))
             }
         }
 
