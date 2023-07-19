@@ -2873,7 +2873,7 @@
 /* Add item label in swap flow */
 "Swap.AddItem" = "Add item!";
 
-"Swap.AmountPurchased" = "Amount purchased:";
+"Swap.AmountPurchased" = "Amount purchased";
 
 "Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
 
@@ -2883,7 +2883,7 @@
 /* Balance text on swap */
 "Swap.Balance" = "I have %@ %@";
 
-"Swap.CardFee" = "Card fee:";
+"Swap.CardFee" = "Card fee";
 
 /* Title on check your assets popup */
 "Swap.CheckAssets" = "Check your assets!";
@@ -2908,7 +2908,7 @@
 /* Swap and Buy I want label from currency */
 "Swap.iWant" = "I want";
 
-"Swap.MiningNetworkFee" = "Mining network fee:";
+"Swap.MiningNetworkFee" = "Mining network fee";
 
 /* Not a valid pair */
 "Swap.NotValidPair" = "Not a valid pair";
