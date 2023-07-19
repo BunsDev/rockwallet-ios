@@ -138,8 +138,8 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         let model: PopupViewModel
         
         if actionResponse.isCardFee {
-            let feeText = L10n.Buy.cardFee
-            model = .init(title: .text(L10n.Swap.cardFee), body: feeText)
+            model = .init(title: .text(L10n.Swap.cardFee),
+                          body: L10n.Buy.cardFee)
         } else {
             model = .init(title: .text(L10n.Buy.networkFees),
                           body: L10n.Buy.networkFeeMessage)
