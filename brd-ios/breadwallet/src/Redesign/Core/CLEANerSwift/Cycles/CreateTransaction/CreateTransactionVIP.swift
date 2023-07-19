@@ -25,6 +25,22 @@ protocol CreateTransactionDataStore: BaseDataStore, FetchDataStore {
     var senderValidationResult: SenderValidationResult? { get set }
 }
 
+struct XRPAttributeGenerator {
+    static func generate(from tag: String?, currency: Currency, completion: ((String?) -> Void)?) {
+        // XRP destination Tag must fit into UInt32
+        var attributeText: String?
+        if let attribute = tag, !attribute.isEmpty, currency.isXRP {
+            if UInt32(attribute) == nil {
+                completion?(nil)
+            }
+            
+            attributeText = attribute
+        }
+        
+        completion?(attributeText)
+    }
+}
+
 extension Interactor where Self: CreateTransactionViewActions,
                            Self.DataStore: CreateTransactionDataStore {
     func createTransaction(viewAction: CreateTransactionModels.Transaction.ViewAction?, completion: ((FEError?) -> Void)?) {
@@ -34,6 +50,7 @@ extension Interactor where Self: CreateTransactionViewActions,
               let amountValue = exchange.amount,
               let exchangeId = exchange.exchangeId,
               let exchangeCurrency = exchange.currency?.lowercased(),
+              let xrpTag = exchange.xrpTag,
               let fromAmount = viewAction.fromAmount,
               let toAmountCode = viewAction.toAmountCode,
               let fromFeeAmount = viewAction.fromFeeAmount,
@@ -50,10 +67,17 @@ extension Interactor where Self: CreateTransactionViewActions,
             return
         }
         
+        var attributeText: String?
+        XRPAttributeGenerator.generate(from: xrpTag,
+                                       currency: currency) { attribute in
+            attributeText = attribute
+        }
+        
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
         let transaction = sender.createTransaction(address: destination,
                                                    amount: amount,
                                                    feeBasis: fromFeeBasis,
+                                                   attribute: attributeText,
                                                    exchangeId: exchangeId)
         
         var error: FEError?

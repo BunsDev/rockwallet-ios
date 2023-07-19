@@ -551,14 +551,15 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        // XRP destination Tag must fit into UInt32
         var attributeText: String?
-        if let attribute = attributeCell?.attribute, currency.isXRP,
-           !attribute.isEmpty {
-            if UInt32(attribute) == nil {
-                showAlert(title: L10n.Alert.error, message: L10n.Send.destinationTag)
-                return false
+        XRPAttributeGenerator.generate(from: attributeCell?.attribute,
+                                       currency: currency) { [weak self] attribute in
+            guard let attribute else {
+                self?.showAlert(title: L10n.Alert.error, message: L10n.Send.destinationTag)
+                
+                return
             }
+            
             attributeText = attribute
         }
         
