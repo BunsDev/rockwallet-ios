@@ -137,32 +137,35 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         dataStore?.paymentMethod = viewAction.method
         
         getPayments(viewAction: .init(), completion: { [weak self] in
+            guard let self else { return }
+            
             switch viewAction.method {
             case .ach:
-                self?.dataStore?.selected = self?.dataStore?.ach
+                dataStore?.selected = dataStore?.ach
                 
             case .card:
-                self?.dataStore?.selected = self?.dataStore?.cards.first
+                dataStore?.selected = dataStore?.cards.first
                 
             }
-        })
-        
-        let item = AssetModels.Item(type: dataStore?.paymentMethod,
-                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
-        prepareCurrencies(viewAction: item)
-        
-        guard let supportedCurrencies = dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-            return
-        }
-        
-        guard let currency = supportedCurrencies.contains(amount?.currency.code.lowercased() ?? "") ? amount?.currency : dataStore?.currencies.first else { return }
-        amount = .zero(currency)
-        
-        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
-            self?.setAmount(viewAction: .init(currency: currency.code))
             
-            self?.setPresentAmountData(handleErrors: false)
+            let item = AssetModels.Item(type: dataStore?.paymentMethod,
+                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+            prepareCurrencies(viewAction: item)
+            
+            guard let supportedCurrencies = dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
+                presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+                return
+            }
+            
+            let isSelectedCurencySupported = supportedCurrencies.contains(amount?.currency.code.lowercased() ?? "")
+            guard let currency = isSelectedCurencySupported ? amount?.currency : dataStore?.currencies.first else { return }
+            amount = .zero(currency)
+            
+            getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+                self?.setAmount(viewAction: .init(currency: currency.code))
+                
+                self?.setPresentAmountData(handleErrors: false)
+            })
         })
     }
     
