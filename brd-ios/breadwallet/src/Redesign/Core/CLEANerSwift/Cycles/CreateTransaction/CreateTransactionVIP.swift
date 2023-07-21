@@ -25,6 +25,15 @@ protocol CreateTransactionDataStore: BaseDataStore, FetchDataStore {
     var senderValidationResult: SenderValidationResult? { get set }
 }
 
+struct XRPAttributeValidator {
+    static func validate(from tag: String?, currency: Currency, completion: ((String?) -> Void)?) {
+        // XRP destination Tag must fit into UInt32
+        guard currency.isXRP, let attribute = tag, !attribute.isEmpty else { return }
+        
+        completion?(UInt32(attribute) == nil ? nil : attribute)
+    }
+}
+
 extension Interactor where Self: CreateTransactionViewActions,
                            Self.DataStore: CreateTransactionDataStore {
     func createTransaction(viewAction: CreateTransactionModels.Transaction.ViewAction?, completion: ((FEError?) -> Void)?) {
@@ -34,6 +43,7 @@ extension Interactor where Self: CreateTransactionViewActions,
               let amountValue = exchange.amount,
               let exchangeId = exchange.exchangeId,
               let exchangeCurrency = exchange.currency?.lowercased(),
+              let xrpTag = exchange.xrpTag,
               let fromAmount = viewAction.fromAmount,
               let toAmountCode = viewAction.toAmountCode,
               let fromFeeAmount = viewAction.fromFeeAmount,
@@ -49,11 +59,18 @@ extension Interactor where Self: CreateTransactionViewActions,
             completion?(ExchangeErrors.noFees)
             return
         }
-            
+        
+        var attributeText: String?
+        XRPAttributeValidator.validate(from: xrpTag,
+                                       currency: currency) { attribute in
+            attributeText = attribute
+        }
+        
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
         let transaction = sender.createTransaction(address: destination,
                                                    amount: amount,
                                                    feeBasis: fromFeeBasis,
+                                                   attribute: attributeText,
                                                    exchangeId: exchangeId)
         
         var error: FEError?

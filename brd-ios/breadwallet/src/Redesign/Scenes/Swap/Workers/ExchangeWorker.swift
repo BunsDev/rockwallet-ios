@@ -46,6 +46,7 @@ struct ExchangeResponseData: ModelResponse {
     var status: String?
     var paymentReference: String?
     var redirectUrl: String?
+    var xrpTag: String?
 }
 
 struct Exchange: Model {
@@ -56,6 +57,7 @@ struct Exchange: Model {
     var status: AddCard.Status?
     var paymentReference: String?
     var redirectUrl: String?
+    var xrpTag: String?
 }
 
 class ExchangeMapper: ModelMapper<ExchangeResponseData, Exchange> {
@@ -65,7 +67,8 @@ class ExchangeMapper: ModelMapper<ExchangeResponseData, Exchange> {
         else {
             return .init(status: .init(rawValue: response?.status ?? ""),
                          paymentReference: response?.paymentReference,
-                         redirectUrl: response?.redirectUrl)
+                         redirectUrl: response?.redirectUrl,
+                         xrpTag: response?.xrpTag)
         }
         
         return .init(exchangeId: "\(response.exchangeId ?? 0)",
