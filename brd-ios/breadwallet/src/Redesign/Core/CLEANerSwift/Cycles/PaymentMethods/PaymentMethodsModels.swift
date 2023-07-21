@@ -14,7 +14,8 @@ import LinkKit
 enum PaymentMethodsModels {
     enum Get {
         struct ViewAction {
-            var openCards: Bool?
+            var openCards: Bool = false
+            var setAmount: Bool = true
         }
         
         struct ActionResponse {
@@ -25,6 +26,7 @@ enum PaymentMethodsModels {
     struct SetPaymentCard {
         struct ViewAction {
             var card: PaymentCard?
+            var setAmount: Bool
         }
     }
     

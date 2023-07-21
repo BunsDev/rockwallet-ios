@@ -67,7 +67,7 @@ extension Interactor where Self: PaymentMethodsViewActions,
                     self?.dataStore?.ach = ach
                     self?.dataStore?.cards = []
                     
-                    self?.setPaymentCard(viewAction: .init(card: ach))
+                    self?.setPaymentCard(viewAction: .init(card: ach, setAmount: viewAction.setAmount))
                     self?.presenter?.presentAch(actionResponse: .init(item: ach))
                     
                 case .card:
@@ -75,7 +75,7 @@ extension Interactor where Self: PaymentMethodsViewActions,
                     self?.dataStore?.cards = cards
                     self?.dataStore?.ach = nil
                     
-                    self?.setPaymentCard(viewAction: .init(card: card))
+                    self?.setPaymentCard(viewAction: .init(card: card, setAmount: viewAction.setAmount))
                 }
                 
                 completion?()
@@ -86,6 +86,7 @@ extension Interactor where Self: PaymentMethodsViewActions,
     func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction) {
         dataStore?.selected = viewAction.card
         
+        guard viewAction.setAmount else { return }
         (self as? (any AssetViewActions))?.setAmount(viewAction: .init())
     }
     
@@ -192,8 +193,6 @@ extension Presenter where Self: PaymentMethodsActionResponses,
                                     subtitle: .text(L10n.Buy.relinkBankAccount),
                                     userInteractionEnabled: true)
         }
-        
-        viewController?.displayAmount(responseDisplay: .init(cardModel: achPaymentModel))
     }
     
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse) {
@@ -207,7 +206,7 @@ extension Controller where Self: PaymentMethodsResponseDisplays {
         
         (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: responseDisplay.allPaymentCards, selected: { [weak self] selectedCard in
             guard let selectedCard else { return }
-            (self?.interactor as? (any PaymentMethodsViewActions))?.setPaymentCard(viewAction: .init(card: selectedCard))
+            (self?.interactor as? (any PaymentMethodsViewActions))?.setPaymentCard(viewAction: .init(card: selectedCard, setAmount: true))
         })
     }
     

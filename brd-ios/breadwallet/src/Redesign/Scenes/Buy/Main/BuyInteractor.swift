@@ -40,18 +40,21 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         
         if dataStore?.selected == nil {
             presenter?.presentData(actionResponse: .init(item: item))
-            setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
         }
         
-        dataStore?.selected = dataStore?.paymentMethod == .ach ? dataStore?.ach : (dataStore?.selected ?? dataStore?.cards.first)
-        selectPaymentMethod(viewAction: .init(method: dataStore?.selected?.type ?? .card))
+        getPayments(viewAction: .init(), completion: { [weak self] in
+            self?.dataStore?.selected = self?.dataStore?.paymentMethod == .ach ? self?.dataStore?.ach : (self?.dataStore?.selected ?? self?.dataStore?.cards.first)
+            self?.selectPaymentMethod(viewAction: .init(method: self?.dataStore?.selected?.type ?? .card))
+        })
     }
     
     func achSuccessMessage(viewAction: PaymentMethodsModels.Get.ViewAction) {
         let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
         
-        selectPaymentMethod(viewAction: .init(method: .ach))
+        getPayments(viewAction: .init(), completion: { [weak self] in
+            self?.selectPaymentMethod(viewAction: .init(method: self?.dataStore?.selected?.type ?? .card))
+        })
     }
     
     func setAmount(viewAction: AssetModels.Asset.ViewAction) {
@@ -136,60 +139,47 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
         
-        getPayments(viewAction: .init(), completion: { [weak self] in
-            guard let self else { return }
-            
-            switch viewAction.method {
-            case .ach:
-                dataStore?.selected = dataStore?.ach
-                
-            case .card:
-                dataStore?.selected = dataStore?.cards.first
-                
-            }
-            
-            let item = AssetModels.Item(type: dataStore?.paymentMethod,
-                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
-            prepareCurrencies(viewAction: item)
-            
-            guard let supportedCurrencies = dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
-                presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-                return
-            }
-            
-            let isSelectedCurencySupported = supportedCurrencies.contains(amount?.currency.code.lowercased() ?? "")
-            guard let currency = isSelectedCurencySupported ? amount?.currency : dataStore?.currencies.first else { return }
-            amount = .zero(currency)
-            
-            getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
-                self?.setAmount(viewAction: .init(currency: currency.code))
-                
-                self?.setPresentAmountData(handleErrors: false)
-            })
-        })
+        let item = AssetModels.Item(type: dataStore?.paymentMethod,
+                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+        prepareCurrencies(viewAction: item)
+        
+        guard let supportedCurrencies = dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
+            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+            return
+        }
+        
+        let isSelectedCurencySupported = supportedCurrencies.contains(amount?.currency.code.lowercased() ?? "")
+        guard let currency = isSelectedCurencySupported ? amount?.currency : dataStore?.currencies.first else { return }
+        amount = .zero(currency)
+        
+        setAmount(viewAction: .init(currency: currency.code, didFinish: true))
     }
     
     func retryPaymentMethod(viewAction: BuyModels.RetryPaymentMethod.ViewAction) {
-        var selectedCurrency: Amount?
-        
-        switch viewAction.method {
-        case .card:
-            if dataStore?.availablePayments.contains(.card) == true {
-                guard let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == dataStore?.toCode.lowercased() }) else { return }
-                selectedCurrency = .zero(currency)
+        getPayments(viewAction: .init(), completion: { [weak self] in
+            guard let self else { return }
+            
+            var selectedCurrency: Amount?
+            
+            switch viewAction.method {
+            case .card:
+                if dataStore?.availablePayments.contains(.card) == true {
+                    guard let currency = dataStore?.currencies.first(where: { $0.code.lowercased() == self.dataStore?.toCode.lowercased() }) else { return }
+                    selectedCurrency = .zero(currency)
+                }
+                
+            default:
+                break
             }
             
-        default:
-            break
-        }
-        
-        dataStore?.paymentMethod = viewAction.method
-        amount = selectedCurrency == nil ? amount : selectedCurrency
-        
-        presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
-        
-        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
-            self?.setPresentAmountData(handleErrors: false)
+            dataStore?.paymentMethod = viewAction.method
+            amount = selectedCurrency == nil ? amount : selectedCurrency
+            
+            presenter?.presentMessage(actionResponse: .init(method: viewAction.method))
+            
+            getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+                self?.setPresentAmountData(handleErrors: false)
+            })
         })
     }
     
