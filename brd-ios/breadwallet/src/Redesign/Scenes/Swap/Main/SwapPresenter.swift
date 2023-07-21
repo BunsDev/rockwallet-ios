@@ -120,7 +120,7 @@ final class SwapPresenter: NSObject, Presenter, SwapActionResponses {
                               ExchangeNumberFormatter().string(for: rate) ?? "",
                               to.currency.code)
         
-        let fromText = String(format: "\(Constant.currencyFormat) (\(Constant.currencyFormat)",
+        let fromText = String(format: "\(Constant.currencyFormat) (\(Constant.currencyFormat))",
                               ExchangeFormatter.current.string(for: from.tokenValue.doubleValue) ?? "",
                               from.currency.code,
                               ExchangeFormatter.fiat.string(for: from.fiatValue.doubleValue) ?? "",
