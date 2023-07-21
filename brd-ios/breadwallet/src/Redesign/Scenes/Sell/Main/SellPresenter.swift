@@ -24,7 +24,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .rateAndTimer,
             .swapCard,
             .paymentMethod,
-            .accountLimits
+            .accountLimits,
+            .limitActions
         ]
         
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
@@ -42,6 +43,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             ],
             .accountLimits: [
                 LabelViewModel.text("")
+            ],
+            .limitActions: [
+                MultipleButtonsViewModel(buttons: [])
             ]
         ]
         
@@ -115,7 +119,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         }
         
         viewController?.displayAmount(responseDisplay: .init(mainSwapViewModel: cryptoModel,
-                                                             cardModel: cardModel))
+                                                             cardModel: cardModel,
+                                                             limitActions: .init(buttons: setupLimitsButtons(type: actionResponse.type))))
         
         guard actionResponse.handleErrors else { return }
         _ = handleError(actionResponse: actionResponse)
@@ -182,4 +187,31 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     
     // MARK: - Additional Helpers
     
+    private func isCustomLimits(for paymentMethod: PaymentCard.PaymentType?) -> Bool {
+        guard let limits = UserManager.shared.profile?.limits else { return false }
+        
+        switch paymentMethod {
+        case .ach:
+            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .sell })?.isCustom ?? false
+            
+        default:
+            return false
+        }
+    }
+    
+    private func setupLimitsButtons(type: PaymentCard.PaymentType?) -> [ButtonViewModel] {
+        var buttons = [ButtonViewModel]()
+        
+        if isCustomLimits(for: type) == true {
+            var button = ButtonViewModel(title: L10n.Button.moreLimits,
+                                         isUnderlined: true)
+            button.callback = { [weak self] in
+                self?.viewController?.limitsInfoTapped()
+            }
+            
+            buttons.append(button)
+        }
+        
+        return buttons
+    }
 }
