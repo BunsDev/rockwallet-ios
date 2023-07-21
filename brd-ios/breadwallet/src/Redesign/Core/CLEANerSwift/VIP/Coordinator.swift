@@ -119,9 +119,8 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showSell(coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showSell(selectedCurrency: Currency? = nil, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         decideFlow { [weak self] showScene in
-            // TODO: This logic will need to be updated when hasSellAccess is available
             guard showScene,
                   let profile = UserManager.shared.profile,
                   profile.kycAccessRights.hasAchAccess == true else {
@@ -129,13 +128,12 @@ class BaseCoordinator: NSObject, Coordinatable {
                 
                 return
             }
-                
+            
             self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                 vc?.dataStore?.coreSystem = coreSystem
                 vc?.dataStore?.keyStore = keyStore
                 
-                // TODO: This logic will need to be updated.
-                guard let selectedCurrency = Currencies.shared.bsv else { return }
+                guard let selectedCurrency else { return }
                 vc?.dataStore?.fromAmount = .zero(selectedCurrency)
             }
         }
