@@ -40,13 +40,12 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         if dataStore?.selected == nil {
             presenter?.presentData(actionResponse: .init(item: item))
-            setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
         }
         
-        getPayments(viewAction: .init(), completion: { [weak self] in
-            self?.getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
-                self?.setPresentAmountData(handleErrors: false)
-            })
+        setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
+        
+        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
+            self?.getPayments(viewAction: .init(), completion: { })
         })
     }
     
