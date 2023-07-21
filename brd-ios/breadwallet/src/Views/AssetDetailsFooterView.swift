@@ -10,8 +10,7 @@ import Combine
 import UIKit
 
 enum AssetDetailsFooterAction {
-    case send, receive, buy, swap
-    // TODO: Replace buy with buySell for drawer
+    case send, receive, buySell, swap
 }
 
 class AssetDetailsFooterView: UIView, Subscriber {
@@ -55,7 +54,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
         let bottomButtonModels: [BottomBarItemViewModel] = [
             .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
             .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
-            .init(title: L10n.Button.buy, image: Asset.buy.image, enabled: isSupported, callback: { self.buy() }),
+            .init(title: L10n.Drawer.title, image: Asset.buySell.image, enabled: isSupported, callback: { self.buy() }),
             .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, enabled: isSupported, callback: { self.swap() })
         ]
         
@@ -83,7 +82,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
 
     @objc private func send() { actionSubject.send(.send) }
     @objc private func receive() { actionSubject.send(.receive) }
-    @objc private func buy() { actionSubject.send(.buy) } // TODO: Replace buy with buySell for drawer
+    @objc private func buy() { actionSubject.send(.buySell) }
     @objc private func swap() { actionSubject.send(.swap) }
 
     required init(coder aDecoder: NSCoder) {
