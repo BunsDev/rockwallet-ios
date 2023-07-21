@@ -45,6 +45,9 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
             
+        case .limitActions:
+            cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
+            
         default:
             cell = UITableViewCell()
         }
@@ -89,35 +92,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init(font: Fonts.Body.three,
-                                       textColor: LightColors.Text.two,
-                                       isUserInteractionEnabled: true))
-            view.setup(with: model)
-            
-            view.didTapLink = { [weak self] in
-                self?.interactor?.showLimitsInfo(viewAction: .init())
-            }
-        }
-        
-        return cell
-    }
-    
-    func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
-            return nil
-        }
-        return cell
-    }
-    
     // MARK: - User Interaction
     
     @objc override func buttonTapped() {
@@ -128,6 +102,14 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     override func increaseLimitsTapped() {
         coordinator?.showInWebView(urlString: Constant.limits, title: L10n.Buy.increaseYourLimits)
+    }
+    
+    override func limitsInfoTapped() {
+        interactor?.showLimitsInfo(viewAction: .init())
+    }
+    
+    override func onPaymentMethodErrorLinkTapped() {
+        coordinator?.showPaymentMethodSupport()
     }
     
     // MARK: - SellResponseDisplay
@@ -156,16 +138,23 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay) {
         guard let fromSection = sections.firstIndex(where: { $0.hashValue == Models.Section.swapCard.hashValue }),
               let toSection = sections.firstIndex(where: { $0.hashValue == Models.Section.paymentMethod.hashValue }),
+              let limitActionsSection = sections.firstIndex(where: { $0.hashValue == Models.Section.limitActions.hashValue }),
               let fromCell = tableView.cellForRow(at: IndexPath(row: 0, section: fromSection)) as? WrapperTableViewCell<MainSwapView>,
-              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView> else {
+              let toCell = tableView.cellForRow(at: IndexPath(row: 0, section: toSection)) as? WrapperTableViewCell<CardSelectionView>,
+              let limitActionsCell = tableView.cellForRow(at: IndexPath(row: 0, section: limitActionsSection)) as? WrapperTableViewCell<MultipleButtonsView> else {
             continueButton.viewModel?.enabled = false
             verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
             
             return
         }
         
+        sectionRows[fromSection] = [responseDisplay.swapCurrencyViewModel as Any]
+        sectionRows[toSection] = [responseDisplay.cardModel as Any]
+        sectionRows[limitActionsSection] = [responseDisplay.limitActions as Any]
+        
         fromCell.wrappedView.setup(with: responseDisplay.mainSwapViewModel)
         toCell.wrappedView.setup(with: responseDisplay.cardModel)
+        limitActionsCell.wrappedView.setup(with: responseDisplay.limitActions)
         
         tableView.invalidateTableViewIntrinsicContentSize()
         
