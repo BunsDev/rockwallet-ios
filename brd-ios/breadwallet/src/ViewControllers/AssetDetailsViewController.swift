@@ -18,8 +18,6 @@ class AssetDetailsViewController: UIViewController, Subscriber {
     var keyStore: KeyStore?
     
     var paymailCallback: ((Bool) -> Void)?
-    var didTapBuy: ((PaymentCard.PaymentType) -> Void)?
-    var didTapSell: (() -> Void)?
     
     weak var coordinator: BaseCoordinator?
     
