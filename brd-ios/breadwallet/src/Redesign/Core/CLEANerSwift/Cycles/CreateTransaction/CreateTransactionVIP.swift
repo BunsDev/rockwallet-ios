@@ -43,7 +43,7 @@ extension Interactor where Self: CreateTransactionViewActions,
               let amountValue = exchange.amount,
               let exchangeId = exchange.exchangeId,
               let exchangeCurrency = exchange.currency?.lowercased(),
-              let xrpTag = exchange.xrpTag,
+              let destinationTag = exchange.destinationTag,
               let fromAmount = viewAction.fromAmount,
               let toAmountCode = viewAction.toAmountCode,
               let fromFeeAmount = viewAction.fromFeeAmount,
@@ -61,7 +61,7 @@ extension Interactor where Self: CreateTransactionViewActions,
         }
         
         var attributeText: String?
-        XRPAttributeValidator.validate(from: xrpTag,
+        XRPAttributeValidator.validate(from: destinationTag,
                                        currency: currency) { attribute in
             attributeText = attribute
         }
