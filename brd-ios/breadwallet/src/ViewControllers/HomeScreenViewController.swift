@@ -326,20 +326,18 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     private func updateToolbar() {
         UserManager.shared.refresh { [weak self] _ in
-            let profile = UserManager.shared.profile
-            let hasSwapBuyAccess = profile?.status.hasKYCLevelTwo ?? false &&
-            (profile?.country?.iso2 == "US" || profile?.country?.iso2 == "AG") // "AG" - Antigua and Barbuda country code
+            let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess ?? false
+            
             if hasSwapBuyAccess && self?.tabBarButtons.count != 5 {
                 self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
                                        (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(self?.trade)),
                                        // TODO: Uncomment for drawer
-      //                                 (L10n.Drawer.title, nil, #selector(buy))
+                                       //                                 (L10n.Drawer.title, nil, #selector(buy))
                                        (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(self?.buy)),
                                        (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),
                                        (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(self?.menu))]
                 
                 self?.setupToolbar()
-                
             } else if !hasSwapBuyAccess && self?.tabBarButtons.count != 3 {
                 self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
                                        (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),

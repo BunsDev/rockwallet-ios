@@ -53,10 +53,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
     
     private func setupToolbarButtons() {
         var bottomButtonModels: [BottomBarItemViewModel]
-        let profile = UserManager.shared.profile
-        
-        let hasSwapBuyAccess = profile?.status.hasKYCLevelTwo ?? false &&
-        (profile?.country?.iso2 == "US" || profile?.country?.iso2 == "AG")
+        let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess ?? false
         
         if hasSwapBuyAccess {
             bottomButtonModels = [

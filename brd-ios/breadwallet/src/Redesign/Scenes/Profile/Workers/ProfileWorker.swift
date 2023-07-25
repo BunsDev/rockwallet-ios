@@ -161,6 +161,10 @@ struct Profile: Model {
     var sellAllowancePerExchange: Decimal {
         return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .sell })?.limit ?? 0
     }
+    
+    var hasSwapBuyAccess: Bool {
+        return status.hasKYCLevelTwo && (country?.iso2 == "US" || country?.iso2 == "AG")
+    }
 }
 
 class ProfileMapper: ModelMapper<ProfileResponseData, Profile> {
