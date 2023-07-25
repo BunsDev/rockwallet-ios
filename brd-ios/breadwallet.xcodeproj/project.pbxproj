@@ -6343,7 +6343,7 @@
 			repositoryURL = "https://github.com/rockwalletcode/wallet-kit-ios.git";
 			requirement = {
 				kind = exactVersion;
-				version = 5.0.25;
+				version = 5.0.26;
 			};
 		};
 		7E5CB32B2834E63400EC787E /* XCRemoteSwiftPackageReference "cosmos" */ = {
