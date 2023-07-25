@@ -384,6 +384,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             self.didTapLimitsAuthenticationFromPrompt?()
         })
         
+        Store.subscribe(self, name: .showSell) { _ in
+            self.didTapSell?()
+        }
+        
         Reachability.addDidChangeCallback({ [weak self] isReachable in
             PromptPresenter.shared.hidePrompt(.noInternet)
             

@@ -31,7 +31,7 @@ class VerificationInProgressViewController: CheckListViewController {
                 .init(title: .text(L10n.AccountKYCLevelTwo.imageQualityChecked), image: .image(Asset.checkboxSelectedCircle.image)),
                 .init(title: .text(L10n.AccountKYCLevelTwo.documentInspected), image: .image(Asset.checkboxSelectedCircle.image)),
                 .init(title: .text(L10n.AccountKYCLevelTwo.biometricsVerified), image: .image(Asset.checkboxSelectedCircle.image)),
-                .init(title: .text(L10n.Account.finalizingDecision), image: .animation(Animations.verificationInProgress.animation, .loop))]
+                .init(title: .text(L10n.Account.finalizingDecision), image: .animation(Animations.loader.animation, .loop))]
     }
     
     override var footerViewModel: LabelViewModel? {
