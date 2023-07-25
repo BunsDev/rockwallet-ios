@@ -9,6 +9,7 @@ enum KYCEndpoints: String, URLType {
     
     case countriesList = "countries"
     case userInformation = "user-information"
+    case updateSsn = "ssn"
     
     var url: String {
         return String(format: Self.baseURL, rawValue)

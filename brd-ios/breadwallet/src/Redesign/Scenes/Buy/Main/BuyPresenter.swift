@@ -41,7 +41,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                                      segments: [.init(image: nil, title: L10n.Buy.buyWithCard),
                                                                 .init(image: nil, title: L10n.Buy.buyWithAch)])
         
-        let sectionRows: [AssetModels.Section: [any Hashable]] =  [
+        let sectionRows: [AssetModels.Section: [any Hashable]] = [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .swapCard: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],

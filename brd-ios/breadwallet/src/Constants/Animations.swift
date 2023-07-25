@@ -13,13 +13,13 @@ import Lottie
 
 internal enum Animations {
     case buyAndSell
-    case verificationInProgress
+    case loader
     
     var animation: LottieAnimation? {
         let name: String
         switch self {
         case .buyAndSell: name = "arrowToX"
-        case .verificationInProgress: name = "verificationLoader"
+        case .loader: name = "verificationLoader"
         }
         return LottieAnimation.named(name)
     }

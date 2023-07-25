@@ -798,6 +798,14 @@
 		D712BD1229DACBAB00C2F09E /* BottomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */; };
 		D71FE3552A4D9708003BAE00 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71FE3542A4D9708003BAE00 /* String+Extensions.swift */; };
 		D730F7EE29F6659400809BEE /* SupportedCurrenciesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730F7ED29F6659400809BEE /* SupportedCurrenciesManager.swift */; };
+		D780AF432A6E5F6100794C3B /* SsnAdditionalInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF3C2A6E5F6100794C3B /* SsnAdditionalInfoPresenter.swift */; };
+		D780AF442A6E5F6100794C3B /* SsnAdditionalInfoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF3D2A6E5F6100794C3B /* SsnAdditionalInfoModels.swift */; };
+		D780AF452A6E5F6100794C3B /* SsnAdditionalInfoVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF3E2A6E5F6100794C3B /* SsnAdditionalInfoVIP.swift */; };
+		D780AF462A6E5F6100794C3B /* SsnAdditionalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF3F2A6E5F6100794C3B /* SsnAdditionalInfoViewController.swift */; };
+		D780AF472A6E5F6100794C3B /* SsnAdditionalInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF402A6E5F6100794C3B /* SsnAdditionalInfoInteractor.swift */; };
+		D780AF492A6E614100794C3B /* SsnInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF482A6E614100794C3B /* SsnInputView.swift */; };
+		D780AF4B2A6E8EE100794C3B /* SsnAdditionalInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF4A2A6E8EE100794C3B /* SsnAdditionalInfoStore.swift */; };
+		D780AF4D2A6F9AC800794C3B /* UpdateSsnWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780AF4C2A6F9AC700794C3B /* UpdateSsnWorker.swift */; };
 		D78D296029ED3A7B0039A5D6 /* TwoStepSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */; };
 		D78D296129ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */; };
 		D78D296229ED3A7B0039A5D6 /* TwoStepSettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78D295B29ED3A7B0039A5D6 /* TwoStepSettingsModels.swift */; };
@@ -812,6 +820,12 @@
 		D7F75965299BB4F800FB4BFA /* FindAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */; };
 		D7F75969299D1F9900FB4BFA /* RetrieveAddressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */; };
 		D7F8EA3829C4857B008DD7C7 /* DrawerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F8EA3729C4857B008DD7C7 /* DrawerManager.swift */; };
+		D7FBCE602A6FA37C002E5249 /* WaitingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FBCE592A6FA37B002E5249 /* WaitingStore.swift */; };
+		D7FBCE612A6FA37C002E5249 /* WaitingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FBCE5A2A6FA37B002E5249 /* WaitingPresenter.swift */; };
+		D7FBCE622A6FA37C002E5249 /* WaitingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FBCE5B2A6FA37B002E5249 /* WaitingModels.swift */; };
+		D7FBCE632A6FA37C002E5249 /* WaitingVIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FBCE5C2A6FA37B002E5249 /* WaitingVIP.swift */; };
+		D7FBCE642A6FA37C002E5249 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FBCE5D2A6FA37B002E5249 /* WaitingViewController.swift */; };
+		D7FBCE652A6FA37C002E5249 /* WaitingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FBCE5E2A6FA37B002E5249 /* WaitingInteractor.swift */; };
 		E843C1172188D19000F46672 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E843C1152188D19000F46672 /* OnboardingViewController.swift */; };
 		E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */; };
 /* End PBXBuildFile section */
@@ -1669,6 +1683,14 @@
 		D712BD1129DACBAB00C2F09E /* BottomBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarItem.swift; sourceTree = "<group>"; };
 		D71FE3542A4D9708003BAE00 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		D730F7ED29F6659400809BEE /* SupportedCurrenciesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCurrenciesManager.swift; sourceTree = "<group>"; };
+		D780AF3C2A6E5F6100794C3B /* SsnAdditionalInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsnAdditionalInfoPresenter.swift; sourceTree = "<group>"; };
+		D780AF3D2A6E5F6100794C3B /* SsnAdditionalInfoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsnAdditionalInfoModels.swift; sourceTree = "<group>"; };
+		D780AF3E2A6E5F6100794C3B /* SsnAdditionalInfoVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsnAdditionalInfoVIP.swift; sourceTree = "<group>"; };
+		D780AF3F2A6E5F6100794C3B /* SsnAdditionalInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsnAdditionalInfoViewController.swift; sourceTree = "<group>"; };
+		D780AF402A6E5F6100794C3B /* SsnAdditionalInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsnAdditionalInfoInteractor.swift; sourceTree = "<group>"; };
+		D780AF482A6E614100794C3B /* SsnInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsnInputView.swift; sourceTree = "<group>"; };
+		D780AF4A2A6E8EE100794C3B /* SsnAdditionalInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsnAdditionalInfoStore.swift; sourceTree = "<group>"; };
+		D780AF4C2A6F9AC700794C3B /* UpdateSsnWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSsnWorker.swift; sourceTree = "<group>"; };
 		D78D295929ED3A7B0039A5D6 /* TwoStepSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsStore.swift; sourceTree = "<group>"; };
 		D78D295A29ED3A7B0039A5D6 /* TwoStepSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsPresenter.swift; sourceTree = "<group>"; };
 		D78D295B29ED3A7B0039A5D6 /* TwoStepSettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoStepSettingsModels.swift; sourceTree = "<group>"; };
@@ -1683,6 +1705,12 @@
 		D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAddressWorker.swift; sourceTree = "<group>"; };
 		D7F75968299D1F9900FB4BFA /* RetrieveAddressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveAddressWorker.swift; sourceTree = "<group>"; };
 		D7F8EA3729C4857B008DD7C7 /* DrawerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerManager.swift; sourceTree = "<group>"; };
+		D7FBCE592A6FA37B002E5249 /* WaitingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingStore.swift; sourceTree = "<group>"; };
+		D7FBCE5A2A6FA37B002E5249 /* WaitingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingPresenter.swift; sourceTree = "<group>"; };
+		D7FBCE5B2A6FA37B002E5249 /* WaitingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingModels.swift; sourceTree = "<group>"; };
+		D7FBCE5C2A6FA37B002E5249 /* WaitingVIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingVIP.swift; sourceTree = "<group>"; };
+		D7FBCE5D2A6FA37B002E5249 /* WaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
+		D7FBCE5E2A6FA37B002E5249 /* WaitingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingInteractor.swift; sourceTree = "<group>"; };
 		E843C1152188D19000F46672 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = src/ViewControllers/Onboarding/OnboardingViewController.swift; sourceTree = "<group>"; };
 		E89C0612216D79550012CE0D /* BRAPIClient+EmailSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BRAPIClient+EmailSubscription.swift"; path = "src/Platform/BRAPIClient+EmailSubscription.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2871,6 +2899,8 @@
 		7E8F7E3C293F6ACE0058019B /* Sell */ = {
 			isa = PBXGroup;
 			children = (
+				D780AF382A6E5EF900794C3B /* SSN */,
+				D7FBCE572A6FA34D002E5249 /* Waiting */,
 				7E8F7E3D293F6AE50058019B /* ExchangeCoordinator.swift */,
 				7E8F7E4B293F6B190058019B /* Main */,
 			);
@@ -3674,6 +3704,20 @@
 			name = AnimatedIcons;
 			sourceTree = "<group>";
 		};
+		D780AF382A6E5EF900794C3B /* SSN */ = {
+			isa = PBXGroup;
+			children = (
+				D780AF3C2A6E5F6100794C3B /* SsnAdditionalInfoPresenter.swift */,
+				D780AF4A2A6E8EE100794C3B /* SsnAdditionalInfoStore.swift */,
+				D780AF3D2A6E5F6100794C3B /* SsnAdditionalInfoModels.swift */,
+				D780AF3E2A6E5F6100794C3B /* SsnAdditionalInfoVIP.swift */,
+				D780AF3F2A6E5F6100794C3B /* SsnAdditionalInfoViewController.swift */,
+				D780AF402A6E5F6100794C3B /* SsnAdditionalInfoInteractor.swift */,
+				D780AF482A6E614100794C3B /* SsnInputView.swift */,
+			);
+			path = SSN;
+			sourceTree = "<group>";
+		};
 		D78D295729ED3A460039A5D6 /* TwoStepSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -3702,6 +3746,20 @@
 				D7F75964299BB4F800FB4BFA /* FindAddressWorker.swift */,
 			);
 			path = FindAddress;
+			sourceTree = "<group>";
+		};
+		D7FBCE572A6FA34D002E5249 /* Waiting */ = {
+			isa = PBXGroup;
+			children = (
+				D7FBCE592A6FA37B002E5249 /* WaitingStore.swift */,
+				D7FBCE5A2A6FA37B002E5249 /* WaitingPresenter.swift */,
+				D7FBCE5B2A6FA37B002E5249 /* WaitingModels.swift */,
+				D7FBCE5C2A6FA37B002E5249 /* WaitingVIP.swift */,
+				D7FBCE5D2A6FA37B002E5249 /* WaitingViewController.swift */,
+				D7FBCE5E2A6FA37B002E5249 /* WaitingInteractor.swift */,
+				D780AF4C2A6F9AC700794C3B /* UpdateSsnWorker.swift */,
+			);
+			path = Waiting;
 			sourceTree = "<group>";
 		};
 		E843C10F2188CBDA00F46672 /* Onboarding */ = {
@@ -4192,6 +4250,7 @@
 				7BB3B7DC29558D97006FF250 /* Float+Extensions.swift in Sources */,
 				7C5AC8A6203B93D3001B221E /* TxListCell.swift in Sources */,
 				7EBC6B0A2848ABC5000A301F /* RegistrationConfirmationViewController.swift in Sources */,
+				D7FBCE632A6FA37C002E5249 /* WaitingVIP.swift in Sources */,
 				71A3171222A6E5F10088F97C /* BRAPIClient+Messages.swift in Sources */,
 				7E6729282923A28100A2B612 /* ComingSoonViewController.swift in Sources */,
 				CE45C1FB1E74F89C002C3847 /* WalletInfo.swift in Sources */,
@@ -4236,6 +4295,7 @@
 				3AEA2C9C24D122EA00DA4C3A /* CloudBackupView.swift in Sources */,
 				04DD285E2A02522E00A70C09 /* ToastMessageManager.swift in Sources */,
 				3A188FEC257FF1A300957819 /* GiftCurrencyCell.swift in Sources */,
+				D780AF4D2A6F9AC800794C3B /* UpdateSsnWorker.swift in Sources */,
 				CE8644251F2C160200033129 /* ConfirmationViewController.swift in Sources */,
 				7CBA74E820227D1300FBBFA9 /* MenuCell.swift in Sources */,
 				7B2E5057289A5F02008CACD8 /* AddCardModels.swift in Sources */,
@@ -4286,6 +4346,7 @@
 				7B54E5A527F4A2B0002DD1E4 /* Generic.swift in Sources */,
 				C49E6177288EC4C000910D01 /* ExchangeHistoryWorker.swift in Sources */,
 				7B54E59B27F4A2B0002DD1E4 /* AlertHelper.swift in Sources */,
+				D780AF462A6E5F6100794C3B /* SsnAdditionalInfoViewController.swift in Sources */,
 				7E8AA729291A6CB5005BB378 /* Strings.swift in Sources */,
 				7BDB4A052806F4470031F015 /* Extensions.swift in Sources */,
 				CEA362681E00EE320061FC0E /* CameraGuideView.swift in Sources */,
@@ -4301,6 +4362,7 @@
 				7BDB49E72806CCBB0031F015 /* Bundle+Extensions.swift in Sources */,
 				22A9A9511DF61945000F0016 /* TxMetaData.swift in Sources */,
 				7C6ACCB11FEB21580028ABFA /* TxDetailDataSource.swift in Sources */,
+				D780AF442A6E5F6100794C3B /* SsnAdditionalInfoModels.swift in Sources */,
 				CE8CD8E11E31976800785E02 /* LoginViewController.swift in Sources */,
 				7EF45F8A284768C100D1F7B0 /* ItemSelectionStore.swift in Sources */,
 				7EF45F87284768C100D1F7B0 /* ItemSelectionVIP.swift in Sources */,
@@ -4308,7 +4370,9 @@
 				7BF5D4FC296D4FC900942ADB /* SignUpStore.swift in Sources */,
 				CECCE5AB1E038C9900D99448 /* GenericPinPadCell.swift in Sources */,
 				7EB838462849D49A00C7CC05 /* MultipleButtonsView.swift in Sources */,
+				D7FBCE602A6FA37C002E5249 /* WaitingStore.swift in Sources */,
 				7B54E5A427F4A2B0002DD1E4 /* RequestModels.swift in Sources */,
+				D7FBCE622A6FA37C002E5249 /* WaitingModels.swift in Sources */,
 				7EC21A1A28991A6500FED711 /* BillingAddressModels.swift in Sources */,
 				7B6052C2299E55A7002C00C2 /* BackupSynchronizer.swift in Sources */,
 				7B60826429700B9E00C4736B /* SetPasswordPresenter.swift in Sources */,
@@ -4343,6 +4407,7 @@
 				CEC6F8451E886723000795B8 /* PaymentRequest.swift in Sources */,
 				C458C7D029E6D22F00146C0D /* PaymailAddressInteractor.swift in Sources */,
 				7B05888328A254F900D7C971 /* PaymentStatusWorker.swift in Sources */,
+				D7FBCE652A6FA37C002E5249 /* WaitingInteractor.swift in Sources */,
 				CE274A611FD7C902000A4E62 /* RootNavigationController.swift in Sources */,
 				3A6C1406257D594A00EA0689 /* ShareGiftViewController.swift in Sources */,
 				7E5CB3B42835090E00EC787E /* FEButton.swift in Sources */,
@@ -4368,6 +4433,7 @@
 				D78D296329ED3A7B0039A5D6 /* TwoStepSettingsVIP.swift in Sources */,
 				C4842F1529939F4100915BA4 /* UnlinkWalletViewController.swift in Sources */,
 				CEC6AA3D1DEE687000EE5AFD /* RadialGradientView.swift in Sources */,
+				D780AF4B2A6E8EE100794C3B /* SsnAdditionalInfoStore.swift in Sources */,
 				CEEC70921E95DA4400EF788E /* GradientSwitch.swift in Sources */,
 				D712BD1229DACBAB00C2F09E /* BottomBarItem.swift in Sources */,
 				7CEA35D5232A9D1200FB58C4 /* Identifier.swift in Sources */,
@@ -4473,6 +4539,7 @@
 				222C42501E90492800078EB5 /* BRAPIClient+KV.swift in Sources */,
 				CE5E6C941EB7964900A476DB /* WalletDisabledView.swift in Sources */,
 				0452C93B29D42FC600CCC8DA /* SardineSessionWorker.swift in Sources */,
+				D7FBCE642A6FA37C002E5249 /* WaitingViewController.swift in Sources */,
 				7ED427F328755CB200AA19A8 /* ExchangeDetailsViewController.swift in Sources */,
 				CEF3E8341DE57166007C0A9E /* AnimatableIcon.swift in Sources */,
 				7EF45F8B284768C100D1F7B0 /* ItemSelectionViewController.swift in Sources */,
@@ -4490,6 +4557,7 @@
 				E89C0613216D79550012CE0D /* BRAPIClient+EmailSubscription.swift in Sources */,
 				0452716929F678BF0070D9F7 /* CaseIterable+Extensions.swift in Sources */,
 				7EC0F8AC2887D8C40037145C /* ExchangeWorker.swift in Sources */,
+				D780AF492A6E614100794C3B /* SsnInputView.swift in Sources */,
 				7B2BF28A29659D850037E731 /* RecoveryKeyIntroModels.swift in Sources */,
 				7E383B4928AE1AFD00A5339F /* AssetSelectionDisplayable.swift in Sources */,
 				7BBBF4DC287421CF00E4D36B /* SwapModels.swift in Sources */,
@@ -4523,6 +4591,7 @@
 				C4CCFCE829D43DB600E38B3A /* AuthenticatorAppPresenter.swift in Sources */,
 				7CB593E122F8C8FE005A230A /* AuthenticationClient.swift in Sources */,
 				043DB5D829EFE6C600DEB8FD /* RequestTwoStepCodeWorker.swift in Sources */,
+				D7FBCE612A6FA37C002E5249 /* WaitingPresenter.swift in Sources */,
 				4F3AB12425D53F5D00B378DC /* Baker.swift in Sources */,
 				7EBC6B072848ABC5000A301F /* RegistrationConfirmationPresenter.swift in Sources */,
 				7B0418B5298A9131004A6385 /* UserInformationWorker.swift in Sources */,
@@ -4542,6 +4611,7 @@
 				C491ABFD28A6395D00E79954 /* OrderPreviewInteractor.swift in Sources */,
 				7EB8FD232897D212000FF75C /* BuyPresenter.swift in Sources */,
 				7EF45F91284777AC00D1F7B0 /* RegistrationConfirmationWorker.swift in Sources */,
+				D780AF452A6E5F6100794C3B /* SsnAdditionalInfoVIP.swift in Sources */,
 				CEEE92F11EBA7CBA00B7AC9C /* RequestAmountViewController.swift in Sources */,
 				7BDB49B62805AC780031F015 /* EmailFeedbackManager.swift in Sources */,
 				CE8CD8DF1E2E825100785E02 /* VerifyPinViewController.swift in Sources */,
@@ -4612,6 +4682,7 @@
 				7BDE6E00289BAFB10060C09A /* BankCardInputDetailsView.swift in Sources */,
 				CE3840E81FD590BD00437C31 /* AssetListTableView.swift in Sources */,
 				71A3171022A6D55A0088F97C /* InAppNotificationViewController.swift in Sources */,
+				D780AF432A6E5F6100794C3B /* SsnAdditionalInfoPresenter.swift in Sources */,
 				049CE73C29D7168D009D0F2D /* SetTwoStepPhoneCodeWorker.swift in Sources */,
 				7CF5319D231EE01300E61F12 /* Base32.swift in Sources */,
 				CEAA9EA61DC3246F0066731D /* StartNavigationDelegate.swift in Sources */,
@@ -4743,6 +4814,7 @@
 				3A3D63DC22F10B4F000DE920 /* AddWalletsViewController.swift in Sources */,
 				7B54E5BB27F4A2B1002DD1E4 /* LoadingView.swift in Sources */,
 				04185DC329D179B700AECBFA /* TwoStepAuthenticationVIP.swift in Sources */,
+				D780AF472A6E5F6100794C3B /* SsnAdditionalInfoInteractor.swift in Sources */,
 				7E8E979A283F4830008606B0 /* ProfileModels.swift in Sources */,
 				7BF5D4EA296BFC8D00942ADB /* SignInVIP.swift in Sources */,
 				CE6DCC271E6108D50044257B /* EnterPhraseCell.swift in Sources */,

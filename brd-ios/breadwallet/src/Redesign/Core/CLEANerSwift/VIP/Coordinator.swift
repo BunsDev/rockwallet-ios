@@ -129,6 +129,11 @@ class BaseCoordinator: NSObject, Coordinatable {
                 return
             }
             
+            guard profile.status == .levelTwo(.kycWithSsn) else {
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.SsnAdditionalInfo)
+                return
+            }
+            
             self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                 vc?.dataStore?.coreSystem = coreSystem
                 vc?.dataStore?.keyStore = keyStore
