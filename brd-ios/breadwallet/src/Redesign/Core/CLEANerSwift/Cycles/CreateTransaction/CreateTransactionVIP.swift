@@ -36,10 +36,10 @@ struct XRPAttributeValidator {
 
 struct XRPBalanceValidator {
     static func validate(balance: Amount?, amount: Amount?, currency: Currency?) -> String? {
-        // XRP balance cannot be less than 10 after transaction
+        // XRP balance cannot be less than 10 after transaction (can change with time, update in constants when it does)
         guard let balance, let amount, let currency, currency.isXRP else { return nil }
         
-        let message = "Ensure you leave at least 10 XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve."
+        let message = L10n.ErrorMessages.Exchange.xrpMinimumReserve(Constant.xrpMinimumReserve)
         return balance - amount >= Amount(decimalAmount: 10, isFiat: false, currency: currency) ? nil : message
     }
 }

@@ -1428,6 +1428,12 @@ internal enum L10n {
       /// Unfortunately the transaction could not be completed due to insufficient funds in your bank account. Please try again later
       internal static let insufficientFunds = L10n.tr("Localizable", "ErrorMessages.Ach.InsufficientFunds", fallback: "Unfortunately the transaction could not be completed due to insufficient funds in your bank account. Please try again later")
     }
+    internal enum Exchange {
+      /// Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.
+      internal static func xrpMinimumReserve(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "ErrorMessages.Exchange.xrpMinimumReserve", String(describing: p1), fallback: "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.")
+      }
+    }
     internal enum Kyc {
       /// You must be at least 18 years old to complete Level 1 and 2 verification.
       internal static let underage = L10n.tr("Localizable", "ErrorMessages.Kyc.Underage", fallback: "You must be at least 18 years old to complete Level 1 and 2 verification.")
@@ -3104,11 +3110,11 @@ internal enum L10n {
     }
     /// sending to <address>
     internal static func sendingTo(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Transaction.sendingTo", String(describing: p1), fallback: "sending to %@")
+      return L10n.tr("Localizable", "Transaction.sendingTo", String(describing: p1), fallback: "Sending to %@")
     }
     /// sent to <address>
     internal static func sentTo(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Transaction.sentTo", String(describing: p1), fallback: "sent to %@")
+      return L10n.tr("Localizable", "Transaction.sentTo", String(describing: p1), fallback: "Sent to %@")
     }
     /// staking to %@
     internal static func stakingTo(_ p1: Any) -> String {
@@ -3158,10 +3164,10 @@ internal enum L10n {
     internal static let withdrawalComplete = L10n.tr("Localizable", "Transaction.WithdrawalComplete", fallback: "Withdrawn to bank account")
     /// Withdrawal failed
     internal static let withdrawalFailed = L10n.tr("Localizable", "Transaction.WithdrawalFailed", fallback: "Withdrawal failed")
-    /// Withdraw with ACH failed
-    internal static let withdrawFailedWithAch = L10n.tr("Localizable", "Transaction.WithdrawFailedWithAch", fallback: "Withdraw with ACH failed")
-    /// Withdrew with ACH
-    internal static let withdrawWithAch = L10n.tr("Localizable", "Transaction.WithdrawWithAch", fallback: "Withdrew with ACH")
+    /// Withdrawal unsuccessful
+    internal static let withdrawFailedWithAch = L10n.tr("Localizable", "Transaction.WithdrawFailedWithAch", fallback: "Withdrawal unsuccessful")
+    /// Withdrawal successful
+    internal static let withdrawWithAch = L10n.tr("Localizable", "Transaction.WithdrawWithAch", fallback: "Withdrawal successful")
   }
   internal enum TransactionDetails {
     /// e.g. I received money from an account.
@@ -3246,19 +3252,19 @@ internal enum L10n {
     }
     /// received from <address>
     internal static func receivedFrom(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivedFrom", String(describing: p1), fallback: "received from %@")
+      return L10n.tr("Localizable", "TransactionDetails.receivedFrom", String(describing: p1), fallback: "Received from %@")
     }
     /// received via <address>
     internal static func receivedVia(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivedVia", String(describing: p1), fallback: "received via %@")
+      return L10n.tr("Localizable", "TransactionDetails.receivedVia", String(describing: p1), fallback: "Received via %@")
     }
     /// receiving from <address>
     internal static func receivingFrom(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivingFrom", String(describing: p1), fallback: "receiving from %@")
+      return L10n.tr("Localizable", "TransactionDetails.receivingFrom", String(describing: p1), fallback: "Receiving from %@")
     }
     /// receiving via <address>
     internal static func receivingVia(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "TransactionDetails.receivingVia", String(describing: p1), fallback: "receiving via %@")
+      return L10n.tr("Localizable", "TransactionDetails.receivingVia", String(describing: p1), fallback: "Receiving via %@")
     }
     /// Reclaim
     internal static let reclaim = L10n.tr("Localizable", "TransactionDetails.reclaim", fallback: "Reclaim")
