@@ -105,11 +105,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     // We are not using pullToRefreshControl.isRefreshing because when you trigger reload() it is already refreshing. We need a variable that tracks the real refreshing of the resources.
     private var isRefreshing = false
     
-    private let tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(home)),
-                                 (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
-                                 // TODO: Uncomment for drawer
-//                                 (L10n.Drawer.title, nil, #selector(buy)),
-                                 (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
+    private var tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(home)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
                                  (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
     
@@ -158,6 +154,8 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         ExchangeManager.shared.reload()
         
         pullToRefreshControl.endRefreshing()
+        
+        updateToolbar()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Home())
     }
@@ -324,6 +322,32 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         }
         
         tabBar.items = buttons
+    }
+    
+    private func updateToolbar() {
+        UserManager.shared.refresh { [weak self] _ in
+            let profile = UserManager.shared.profile
+            let hasSwapBuyAccess = profile?.status.hasKYCLevelTwo ?? false &&
+            (profile?.country?.iso2 == "US" || profile?.country?.iso2 == "AG") // "AG" - Antigua and Barbuda country code
+            if hasSwapBuyAccess && self?.tabBarButtons.count != 5 {
+                self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
+                                       (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(self?.trade)),
+                                       // TODO: Uncomment for drawer
+      //                                 (L10n.Drawer.title, nil, #selector(buy))
+                                       (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(self?.buy)),
+                                       (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),
+                                       (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(self?.menu))]
+                
+                self?.setupToolbar()
+                
+            } else if !hasSwapBuyAccess && self?.tabBarButtons.count != 3 {
+                self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
+                                       (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),
+                                       (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(self?.menu))]
+                
+                self?.setupToolbar()
+            }
+        }
     }
     
     // TODO: Uncomment for drawer
