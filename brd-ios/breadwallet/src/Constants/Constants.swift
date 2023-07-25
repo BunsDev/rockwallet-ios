@@ -85,6 +85,8 @@ struct Constant {
     static let BSV = "BSV"
     static let USDT = "USDT"
     
+    static let xrpMinimumReserve = "10"
+    
     static var backendHost: String {
         if let debugBackendHost = UserDefaults.debugBackendHost {
             return debugBackendHost
