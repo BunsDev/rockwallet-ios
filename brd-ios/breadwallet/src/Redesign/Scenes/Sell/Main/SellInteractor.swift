@@ -42,11 +42,10 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
             presenter?.presentData(actionResponse: .init(item: item))
         }
         
-        setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
-        
-        getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
-            self?.getPayments(viewAction: .init(), completion: { })
-        })
+        getPayments(viewAction: .init()) { [weak self] in
+            self?.dataStore?.selected = self?.dataStore?.ach
+            self?.setAmount(viewAction: .init(currency: self?.amount?.currency.code ?? self?.dataStore?.currencies.first?.code))
+        }
     }
     
     func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?) {
@@ -130,6 +129,13 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         amount = to
+        
+        if let xrpErrorMessage = XRPBalanceValidator.validate(balance: dataStore?.fromAmount?.currency.state?.balance,
+                                                              amount: dataStore?.fromAmount,
+                                                              currency: dataStore?.fromAmount?.currency) {
+            presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: xrpErrorMessage)))
+            return
+        }
         
         setPresentAmountData(handleErrors: false)
     }

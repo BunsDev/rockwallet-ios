@@ -171,6 +171,11 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
             return
         }
         
+        if let xrpErrorMessage = XRPBalanceValidator.validate(balance: from.currency.state?.balance, amount: from, currency: fromCurrency) {
+            presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: xrpErrorMessage)))
+            return
+        }
+        
         dataStore?.fromAmount = from
         dataStore?.toAmount = to
         

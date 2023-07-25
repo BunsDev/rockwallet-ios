@@ -1330,6 +1330,8 @@
 /* Not enough ETH for transaction fee */
 "ErrorMessages.ethBalanceLowAddEthWithAmount" = "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add ETH to your wallet.";
 
+"ErrorMessages.Exchange.xrpMinimumReserve" = "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.";
+
 "ErrorMessages.exchangeFailed" = "Échec de l'échange. Motif : %@.";
 
 "ErrorMessages.ExchangeQuoteFailed" = "Nous rencontrons actuellement des difficultés pour réaliser un échange entre ces deux pièces. Veuillez réessayer plus tard.";

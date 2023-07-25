@@ -23,10 +23,12 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var toCode: String { Constant.usdCurrencyCode }
     var isFromBuy: Bool = true
     var showTimer: Bool = false
+    var accountId: String? { return ach?.id }
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
                      to: toCode,
-                     type: .sell)
+                     type: .sell,
+                     accountId: accountId)
     }
     
     // MARK: - SellDataStore

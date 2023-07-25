@@ -301,6 +301,11 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return
         }
         
+        if let xrpBalanceError = XRPBalanceValidator.validate(balance: balance, amount: amount, currency: currency) {
+            showToastMessage(model: .init(description: .text(xrpBalanceError)), configuration: Presets.InfoView.error)
+            return
+        }
+        
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
