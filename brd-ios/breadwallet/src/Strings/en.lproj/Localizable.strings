@@ -1330,6 +1330,8 @@
 /* Not enough ETH for transaction fee */
 "ErrorMessages.ethBalanceLowAddEthWithAmount" = "%@ is an ERC-20 token on the Ethereum blockchain and requires ETH network fees. Please add %@ ETH to your wallet.";
 
+"ErrorMessages.Exchange.xrpMinimumReserve" = "Ensure you leave at least %s XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.";
+
 "ErrorMessages.exchangeFailed" = "Swap failed. Reason: %@.";
 
 "ErrorMessages.ExchangeQuoteFailed" = "We are currently having issues making a swap between this pair of coins. Please try again later.";
@@ -3184,10 +3186,10 @@
 "Transaction.sendingStatus" = "In progress: %@";
 
 /* sending to <address> */
-"Transaction.sendingTo" = "sending to %@";
+"Transaction.sendingTo" = "Sending to %@";
 
 /* sent to <address> */
-"Transaction.sentTo" = "sent to %@";
+"Transaction.sentTo" = "Sent to %@";
 
 "Transaction.stakingTo" = "staking to %@";
 
@@ -3221,9 +3223,9 @@
 
 "Transaction.WithdrawalFailed" = "Withdrawal failed";
 
-"Transaction.WithdrawFailedWithAch" = "Withdraw with ACH failed";
+"Transaction.WithdrawFailedWithAch" = "Withdrawal unsuccessful";
 
-"Transaction.WithdrawWithAch" = "Withdrew with ACH";
+"Transaction.WithdrawWithAch" = "Withdrawal successful";
 
 /* e.g. I received money from an account. */
 "TransactionDetails.account" = "account";
@@ -3318,16 +3320,16 @@
 "TransactionDetails.receivedAmountDescription" = "Received <b>%@</b>";
 
 /* received from <address> */
-"TransactionDetails.receivedFrom" = "received from %@";
+"TransactionDetails.receivedFrom" = "Received from %@";
 
 /* received via <address> */
-"TransactionDetails.receivedVia" = "received via %@";
+"TransactionDetails.receivedVia" = "Received via %@";
 
 /* receiving from <address> */
-"TransactionDetails.receivingFrom" = "receiving from %@";
+"TransactionDetails.receivingFrom" = "Receiving from %@";
 
 /* receiving via <address> */
-"TransactionDetails.receivingVia" = "receiving via %@";
+"TransactionDetails.receivingVia" = "Receiving via %@";
 
 "TransactionDetails.reclaim" = "Reclaim";
 
