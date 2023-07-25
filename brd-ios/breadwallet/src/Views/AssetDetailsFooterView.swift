@@ -52,12 +52,25 @@ class AssetDetailsFooterView: UIView, Subscriber {
     }
     
     private func setupToolbarButtons() {
-        let bottomButtonModels: [BottomBarItemViewModel] = [
-            .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
-            .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
-            .init(title: L10n.Button.buy, image: Asset.buy.image, enabled: isSupported, callback: { self.buy() }),
-            .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, enabled: isSupported, callback: { self.swap() })
-        ]
+        var bottomButtonModels: [BottomBarItemViewModel]
+        let profile = UserManager.shared.profile
+        
+        let hasSwapBuyAccess = profile?.status.hasKYCLevelTwo ?? false &&
+        (profile?.country?.iso2 == "US" || profile?.country?.iso2 == "AG")
+        
+        if hasSwapBuyAccess {
+            bottomButtonModels = [
+                .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
+                .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
+                .init(title: L10n.Button.buy, image: Asset.buy.image, enabled: isSupported, callback: { self.buy() }),
+                .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, enabled: isSupported, callback: { self.swap() })
+            ]
+        } else {
+            bottomButtonModels = [
+                .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
+                .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() })
+            ]
+        }
         
         let buttons = bottomButtonModels.compactMap { model -> BottomBarItem in
             let button = BottomBarItem()
@@ -66,7 +79,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
         }
         
         let buttonsView = UIStackView(arrangedSubviews: buttons)
-        buttonsView.spacing = Margins.small.rawValue
+        buttonsView.spacing = ViewSizes.large.rawValue
         buttonsView.distribution = .equalSpacing
         
         let bottomMargin: Margins = UIDevice.current.hasNotch ? .extraHuge : .medium
@@ -75,8 +88,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
         buttonsView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Margins.medium.rawValue)
             make.height.equalTo(BottomBarItem.defaultheight)
-            make.leading.equalToSuperview().offset(Margins.huge.rawValue)
-            make.trailing.equalToSuperview().offset(-Margins.huge.rawValue)
+            make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(bottomMargin.rawValue)
         }
     }
