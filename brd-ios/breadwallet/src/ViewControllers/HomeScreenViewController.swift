@@ -104,6 +104,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     
     // We are not using pullToRefreshControl.isRefreshing because when you trigger reload() it is already refreshing. We need a variable that tracks the real refreshing of the resources.
     private var isRefreshing = false
+    private var tabBarItemsNumber = 3
     
     private var tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(home)),
                                  (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
@@ -322,13 +323,14 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         }
         
         tabBar.items = buttons
+        tabBarItemsNumber = tabBarButtons.count
     }
     
     private func updateToolbar() {
         UserManager.shared.refresh { [weak self] _ in
             let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess ?? false
             
-            if hasSwapBuyAccess && self?.tabBarButtons.count != 5 {
+            if hasSwapBuyAccess {
                 self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
                                        (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(self?.trade)),
                                        // TODO: Uncomment for drawer
@@ -337,12 +339,15 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                                        (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),
                                        (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(self?.menu))]
                 
+                guard self?.tabBarItemsNumber != self?.tabBarButtons.count else { return }
                 self?.setupToolbar()
-            } else if !hasSwapBuyAccess && self?.tabBarButtons.count != 3 {
+                
+            } else {
                 self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
                                        (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),
                                        (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(self?.menu))]
                 
+                guard self?.tabBarItemsNumber != self?.tabBarButtons.count else { return }
                 self?.setupToolbar()
             }
         }
