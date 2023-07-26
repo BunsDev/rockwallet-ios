@@ -117,6 +117,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
 //    }()
     
     private var drawerManager: BottomDrawerManager?
+    var hasSwapBuyAccess: Bool = false
     
     // MARK: - Lifecycle
     
@@ -327,29 +328,37 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     }
     
     private func updateToolbar() {
-        UserManager.shared.refresh { [weak self] _ in
-            let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess ?? false
-            
-            if hasSwapBuyAccess {
-                self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
-                                       (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(self?.trade)),
-                                       // TODO: Uncomment for drawer
-                                       //                                 (L10n.Drawer.title, nil, #selector(buy))
-                                       (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(self?.buy)),
-                                       (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),
-                                       (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(self?.menu))]
-                
-                guard self?.tabBarItemsNumber != self?.tabBarButtons.count else { return }
-                self?.setupToolbar()
-                
-            } else {
-                self?.tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(self?.home)),
-                                       (L10n.Button.profile, Asset.user.image as UIImage, #selector(self?.profile)),
-                                       (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(self?.menu))]
-                
-                guard self?.tabBarItemsNumber != self?.tabBarButtons.count else { return }
-                self?.setupToolbar()
+        guard let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess else {
+            UserManager.shared.refresh { [weak self] _ in
+                let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess ?? false
+                self?.addSwapAndBuyRestriction(hasSwapBuyAccess: hasSwapBuyAccess)
             }
+            return
+        }
+        
+        addSwapAndBuyRestriction(hasSwapBuyAccess: hasSwapBuyAccess)
+    }
+    
+    func addSwapAndBuyRestriction(hasSwapBuyAccess: Bool) {
+        if hasSwapBuyAccess {
+            tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(home)),
+                             (L10n.HomeScreen.trade, Asset.trade.image as UIImage, #selector(trade)),
+                             // TODO: Uncomment for drawer
+                             //                                 (L10n.Drawer.title, nil, #selector(buy))
+                             (L10n.HomeScreen.buy, Asset.buy.image as UIImage, #selector(buy)),
+                             (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
+                             (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
+            
+            guard tabBarItemsNumber != tabBarButtons.count else { return }
+            setupToolbar()
+            
+        } else {
+            tabBarButtons = [(L10n.Button.home, Asset.home.image as UIImage, #selector(home)),
+                             (L10n.Button.profile, Asset.user.image as UIImage, #selector(profile)),
+                             (L10n.HomeScreen.menu, Asset.more.image as UIImage, #selector(menu))]
+            
+            guard tabBarItemsNumber != tabBarButtons.count else { return }
+            setupToolbar()
         }
     }
     
