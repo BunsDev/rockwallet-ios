@@ -44,7 +44,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         getPayments(viewAction: .init()) { [weak self] in
             self?.dataStore?.selected = self?.dataStore?.ach
-            self?.setAmount(viewAction: .init(currency: self?.amount?.currency.code ?? self?.dataStore?.currencies.first?.code))
+            self?.setAmount(viewAction: .init(currency: self?.amount?.currency.code ?? self?.dataStore?.currencies.first?.code, didFinish: true))
         }
     }
     
