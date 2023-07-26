@@ -320,7 +320,7 @@ enum BaseInfoModels {
         
         var iconName: String { Asset.time.name }
         
-        var title: String { L10n.ComingSoon.title }
+        var title: String { L10n.Buy.Ach.notAvailableTitle }
         
         var description: String { L10n.ComingSoon.FeatureUnavailable.subtitle }
         
