@@ -233,7 +233,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let from = item.from ?? 0
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
 
-        let fiatCurrency = (quote.fromFee?.currency ?? Constant.usdCurrencyCode).uppercased()
+        let usdCurrency = Constant.usdCurrencyCode.uppercased()
+        let fiatCurrency = item.type == .sell ? usdCurrency : (quote.fromFee?.currency.uppercased() ?? usdCurrency)
         let instantAchFee = (item.quote?.instantAch?.feePercentage ?? 0) / 100
         let instantAchLimit = item.quote?.instantAch?.limitUsd ?? 0
         
