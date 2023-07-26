@@ -232,6 +232,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let toCryptoDisplayName = item.to?.currency.displayName ?? ""
         let from = item.from ?? 0
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
+        var cardFeeValue: Decimal = item.type == .sell ? -cardFee : cardFee
 
         let usdCurrency = Constant.usdCurrencyCode.uppercased()
         let fiatCurrency = item.type == .sell ? usdCurrency : (quote.fromFee?.currency.uppercased() ?? usdCurrency)
@@ -251,7 +252,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let currencyFormat = "%@ %@"
         let amountText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: to) ?? "", fiatCurrency)
-        let cardFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: cardFee) ?? "", fiatCurrency)
+        let cardFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: cardFeeValue) ?? "", fiatCurrency)
         let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: networkFee) ?? "", fiatCurrency)
         
         let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
