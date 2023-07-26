@@ -163,7 +163,7 @@ struct Profile: Model {
     }
     
     var hasSwapBuyAccess: Bool {
-        return status.hasKYCLevelTwo && (country?.iso2 == "US" || country?.iso2 == "AG")
+        return status.hasKYCLevelTwo && (country?.iso2 == "US" || country?.iso2 == "AG") // "AG" - country code for Antigua and Barbuda
     }
 }
 
