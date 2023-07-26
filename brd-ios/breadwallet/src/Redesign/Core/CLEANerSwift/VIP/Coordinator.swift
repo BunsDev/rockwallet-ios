@@ -746,6 +746,11 @@ class BaseCoordinator: NSObject, Coordinatable {
                 return
             }
             
+            guard UserManager.shared.profile?.hasSwapBuyAccess == true else {
+                showComingSoon(reason: .unavailableSwapBuy, restrictionReason: .state)
+                return
+            }
+            
             showSwap(coreSystem: coreSystem, keyStore: keyStore)
             
         case .setPassword:
