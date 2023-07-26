@@ -306,6 +306,7 @@ enum BaseInfoModels {
         case sell
         case restrictedUSState
         case greyListedCountry
+        case unavailableSwapBuy
         
         var iconName: String {
             return Asset.time.name
@@ -318,6 +319,9 @@ enum BaseInfoModels {
                 
             case .buyAch, .sell, .greyListedCountry:
                 return L10n.Buy.Ach.notAvailableTitle
+                
+            case .unavailableSwapBuy:
+                return L10n.ComingSoon.swapBuyTitle
             }
         }
         
@@ -333,6 +337,10 @@ enum BaseInfoModels {
                 
             case .sell, .greyListedCountry:
                 return L10n.Sell.notAvailableBody
+                
+            case .unavailableSwapBuy:
+                let wordSwap = " \(L10n.HomeScreen.trade),"
+                return L10n.ComingSoon.buyDescription.replacingOccurrences(of: wordSwap, with: "")
             }
         }
         
