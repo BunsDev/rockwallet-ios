@@ -339,7 +339,8 @@ enum BaseInfoModels {
                 return L10n.Sell.notAvailableBody
                 
             case .unavailableSwapBuy:
-                return "You can continue to Store, Send, and Receive digital assets to your RockWallet."
+                let wordSwap = " \(L10n.HomeScreen.trade),"
+                return L10n.ComingSoon.buyDescription.replacingOccurrences(of: wordSwap, with: "")
             }
         }
         
