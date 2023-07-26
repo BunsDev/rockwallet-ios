@@ -117,7 +117,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
 //    }()
     
     private var drawerManager: BottomDrawerManager?
-    var hasSwapBuyAccess: Bool = false
     
     // MARK: - Lifecycle
     
