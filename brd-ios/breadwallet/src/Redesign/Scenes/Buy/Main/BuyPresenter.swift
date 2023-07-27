@@ -204,14 +204,15 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     // MARK: - Additional Helpers
     
     private func isCustomLimits(for paymentMethod: PaymentCard.PaymentType?) -> Bool {
-        guard let limits = UserManager.shared.profile?.limits else { return false }
+        guard let userLimits = UserManager.shared.profile?.limits else { return false }
+        let limits = userLimits.filter { ($0.interval == .daily || $0.interval == .weekly || $0.interval == .monthly) && $0.isCustom == true }
         
         switch paymentMethod {
         case .card:
-            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
+            return !limits.filter({ $0.exchangeType == .buyCard }).isEmpty
             
         case .ach:
-            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false
+            return !limits.filter({ $0.exchangeType == .buyAch }).isEmpty
             
         default:
             return false
