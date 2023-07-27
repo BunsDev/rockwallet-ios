@@ -430,6 +430,9 @@ class BaseTableViewController<C: CoordinatableRoutes,
         cell.setup { view in
             view.configure(with: Presets.TextField.primary)
             view.setup(with: model)
+            view.snp.makeConstraints { make in
+                make.bottom.equalToSuperview()                
+            }
             
             view.beganEditing = { [weak self] field in
                 self?.textFieldDidBegin(for: indexPath, with: field.text)
