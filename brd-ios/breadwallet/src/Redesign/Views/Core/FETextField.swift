@@ -266,7 +266,7 @@ class FETextField: FEView<TextFieldConfiguration, TextFieldModel>, UITextFieldDe
         
         titleStack.isHidden = leadingView.isHidden && titleLabel.isHidden
         
-        mainStack.spacing = titleStack.isHidden ? 0 : Margins.minimum.rawValue
+        mainStack.spacing = titleStack.isHidden ? 0 : Margins.extraSmall.rawValue
         textFieldStack.spacing = titleStack.isHidden ? 0 : -Margins.medium.rawValue
         
         isUserInteractionEnabled = viewModel.isUserInteractionEnabled
