@@ -65,7 +65,7 @@ class AssetDetailsFooterView: UIView, Subscriber {
             ]
         } else {
             bottomButtonModels = [
-                .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
+                .init(title: L10n.Button.send, image: Asset.send.image, enabled: canSend, callback: { self.send() }),
                 .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() })
             ]
         }
