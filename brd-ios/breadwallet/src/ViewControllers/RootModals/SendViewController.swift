@@ -300,6 +300,10 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             _ = handleValidationResult(.invalidAddress)
             return
         }
+        guard amount.fiatValue > 0 else {
+            _ = handleValidationResult(.paymentTooSmall(amount))
+            return
+        }
         
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
