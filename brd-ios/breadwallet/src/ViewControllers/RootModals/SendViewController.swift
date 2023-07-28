@@ -300,6 +300,10 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             _ = handleValidationResult(.invalidAddress)
             return
         }
+        guard amount.fiatValue > 0 else {
+            _ = handleValidationResult(.paymentTooSmall(amount))
+            return
+        }
         
         if let xrpBalanceError = XRPBalanceValidator.validate(balance: balance, amount: amount, currency: currency) {
             showToastMessage(model: .init(description: .text(xrpBalanceError)), configuration: Presets.InfoView.error)
