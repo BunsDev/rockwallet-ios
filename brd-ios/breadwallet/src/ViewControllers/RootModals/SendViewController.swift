@@ -300,10 +300,6 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             _ = handleValidationResult(.invalidAddress)
             return
         }
-        guard amount.fiatValue > 0 else {
-            _ = handleValidationResult(.paymentTooSmall(amount))
-            return
-        }
         
         if let xrpBalanceError = XRPBalanceValidator.validate(balance: balance, amount: amount, currency: currency) {
             showToastMessage(model: .init(description: .text(xrpBalanceError)), configuration: Presets.InfoView.error)
@@ -397,7 +393,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         //Use maximum if available, otherwise use balance
         let balanceAmount = Amount(amount: maximum ?? balance, rate: rate, minimumFractionDigits: 0)
         var feeOutput = ""
-        if let amount = amount, !amount.isZero, let feeBasis = currentFeeBasis {
+        if let amount = amount, amount.fiatValue > 0, let feeBasis = currentFeeBasis {
             var feeUpdated = feeBasis.fee
             if amount.currency.isEthereum && feeBasis.fee > balanceAmount.cryptoAmount {
                 feeUpdated = (feeBasis.fee - amount.cryptoAmount) ?? feeBasis.fee
@@ -550,7 +546,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        guard let amount = amount, !amount.isZero else {
+        guard let amount = amount, amount.fiatValue > 0 else {
             showAlert(title: L10n.Alert.error, message: L10n.Send.noAmount)
             return false
         }
@@ -581,7 +577,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     private func handleEstimateFeeError(error: Error) {
-        guard let amount = amount, !amount.isZero else { return }
+        guard let amount = amount, amount.fiatValue > 0 else { return }
         
         sendButton.isEnabled = false
         
@@ -725,8 +721,12 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             attributeCell?.textField.resignFirstResponder()
         }
         
-        guard let amount = amount,
-              let address = address,
+        guard let amount = amount, amount.fiatValue > 0 else {
+            showAlert(title: L10n.Alert.error, message: L10n.Send.noAmount)
+            return
+        }
+        
+        guard let address = address,
               let feeBasis = currentFeeBasis else { return }
         
         let feeCurrency = sender.wallet.feeCurrency
@@ -826,7 +826,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     private func validateReq(protoReq: PaymentProtocolRequest, feeBasis: TransferFeeBasis) {
         guard let totalAmount = protoReq.totalAmount else { handleZeroAmountPaymentProtocolRequest(protoReq); return }
         let requestAmount = Amount(cryptoAmount: totalAmount, currency: currency, maximumFractionDigits: 8)
-        guard !requestAmount.isZero else { handleZeroAmountPaymentProtocolRequest(protoReq); return }
+        guard requestAmount.fiatValue > 0 else { handleZeroAmountPaymentProtocolRequest(protoReq); return }
         let result = sender.createTransaction(protocolRequest: protoReq,
                                               ignoreUsedAddress: didIgnoreUsedAddressWarning,
                                               ignoreIdentityNotCertified: didIgnoreIdentityNotCertified,
