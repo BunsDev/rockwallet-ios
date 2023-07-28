@@ -54,10 +54,11 @@ class AssetDetailsFooterView: UIView, Subscriber {
     private func setupToolbarButtons() {
         var bottomButtonModels: [BottomBarItemViewModel]
         let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess ?? false
+        let canSend: Bool = (currency.state?.balance?.fiatValue ?? 0) > 0
         
         if hasSwapBuyAccess {
             bottomButtonModels = [
-                .init(title: L10n.Button.send, image: Asset.send.image, callback: { self.send() }),
+                .init(title: L10n.Button.send, image: Asset.send.image, enabled: canSend, callback: { self.send() }),
                 .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
                 .init(title: L10n.Button.buy, image: Asset.buy.image, enabled: isSupported, callback: { self.buy() }),
                 .init(title: L10n.HomeScreen.trade, image: Asset.trade.image, enabled: isSupported, callback: { self.swap() })
