@@ -291,12 +291,12 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     @objc private func updateFees() {
-        guard let amount = amount else { return }
+        guard let amount else { return }
         guard amount <= balance else {
             _ = handleValidationResult(.insufficientFunds)
             return
         }
-        guard let address = address, !address.isEmpty else {
+        guard let address, !address.isEmpty else {
             _ = handleValidationResult(.invalidAddress)
             return
         }
@@ -342,9 +342,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     @objc private func updateFeesMax(depth: Int) {
-        guard let amount = amount else { return }
-        guard let maximum = maximum else { return }
-        guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
+        guard let amount, let maximum else { return }
+        guard let address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
@@ -393,7 +392,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         //Use maximum if available, otherwise use balance
         let balanceAmount = Amount(amount: maximum ?? balance, rate: rate, minimumFractionDigits: 0)
         var feeOutput = ""
-        if let amount = amount, amount.fiatValue > 0, let feeBasis = currentFeeBasis {
+        if let amount = amount, !amount.isZero, let feeBasis = currentFeeBasis {
             var feeUpdated = feeBasis.fee
             if amount.currency.isEthereum && feeBasis.fee > balanceAmount.cryptoAmount {
                 feeUpdated = (feeBasis.fee - amount.cryptoAmount) ?? feeBasis.fee
@@ -531,7 +530,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         //Payment Protocol Requests do their own validation
         guard paymentProtocolRequest == nil else { return true }
         
-        guard let address = address, !address.isEmpty else {
+        guard let address, !address.isEmpty else {
             showAlert(title: L10n.Alert.error, message: L10n.Send.noAddress)
             return false
         }
@@ -546,7 +545,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        guard let amount = amount, amount.fiatValue > 0 else {
+        guard let amount, !amount.isZero else {
             showAlert(title: L10n.Alert.error, message: L10n.Send.noAmount)
             return false
         }
@@ -577,7 +576,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     private func handleEstimateFeeError(error: Error) {
-        guard let amount = amount, amount.fiatValue > 0 else { return }
+        guard let amount, !amount.isZero else { return }
         
         sendButton.isEnabled = false
         
@@ -721,13 +720,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             attributeCell?.textField.resignFirstResponder()
         }
         
-        guard let amount = amount, amount.fiatValue > 0 else {
-            showAlert(title: L10n.Alert.error, message: L10n.Send.noAmount)
-            return
-        }
-        
-        guard let address = address,
-              let feeBasis = currentFeeBasis else { return }
+        guard let amount, let address, let feeBasis = currentFeeBasis else { return }
         
         let feeCurrency = sender.wallet.feeCurrency
         let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)
@@ -826,7 +819,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     private func validateReq(protoReq: PaymentProtocolRequest, feeBasis: TransferFeeBasis) {
         guard let totalAmount = protoReq.totalAmount else { handleZeroAmountPaymentProtocolRequest(protoReq); return }
         let requestAmount = Amount(cryptoAmount: totalAmount, currency: currency, maximumFractionDigits: 8)
-        guard requestAmount.fiatValue > 0 else { handleZeroAmountPaymentProtocolRequest(protoReq); return }
+        guard !requestAmount.isZero else { handleZeroAmountPaymentProtocolRequest(protoReq); return }
         let result = sender.createTransaction(protocolRequest: protoReq,
                                               ignoreUsedAddress: didIgnoreUsedAddressWarning,
                                               ignoreIdentityNotCertified: didIgnoreIdentityNotCertified,
