@@ -87,14 +87,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     var didTapLimitsAuthenticationFromPrompt: (() -> Void)?
     var didTapMenu: (() -> Void)?
     
-    private lazy var totalAssetsNumberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.isLenient = true
-        formatter.numberStyle = .currency
-        formatter.generatesDecimalNumbers = true
-        return formatter
-    }()
-    
     private lazy var pullToRefreshControl: UIRefreshControl = {
         let view = UIRefreshControl()
         view.attributedTitle = NSAttributedString(string: L10n.HomeScreen.pullToRefresh)
@@ -428,13 +420,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                                 rate: rate)
             return amount.fiatValue
         }.reduce(0.0, +)
-        
-        let localeComponents = [NSLocale.Key.currencyCode.rawValue: Store.state.defaultCurrencyCode]
-        let localeIdentifier = Locale.identifier(fromComponents: localeComponents)
-        totalAssetsNumberFormatter.locale = Locale(identifier: localeIdentifier)
-        totalAssetsNumberFormatter.currencySymbol = Store.state.orderedWallets.first?.currentRate?.code ?? ""
-        
-        totalAssetsAmountLabel.text = totalAssetsNumberFormatter.string(from: fiatTotal as NSDecimalNumber)
+
+        guard let formattedBalance = ExchangeFormatter.fiat.string(for: fiatTotal),
+              let fiatCurrency = Store.state.orderedWallets.first?.currentRate?.code else { return }
+        totalAssetsAmountLabel.text = String(format: "%@ %@", formattedBalance, fiatCurrency)
     }
     
     private func updateAmountsForWidgets() {
