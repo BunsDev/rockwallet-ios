@@ -420,9 +420,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
                                 rate: rate)
             return amount.fiatValue
         }.reduce(0.0, +)
-        
-        guard let formattedBalance = ExchangeFormatter.fiat.string(for: fiatTotal) else { return }
-        totalAssetsAmountLabel.text = String(format: "%@ %@", formattedBalance, Constant.usdCurrencyCode)
+
+        guard let formattedBalance = ExchangeFormatter.fiat.string(for: fiatTotal),
+              let fiatCurrency = Store.state.orderedWallets.first?.currentRate?.code else { return }
+        totalAssetsAmountLabel.text = String(format: "%@ %@", formattedBalance, fiatCurrency)
     }
     
     private func updateAmountsForWidgets() {
