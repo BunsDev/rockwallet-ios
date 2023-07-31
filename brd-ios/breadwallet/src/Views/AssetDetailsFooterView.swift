@@ -51,10 +51,14 @@ class AssetDetailsFooterView: UIView, Subscriber {
         return SupportedCurrenciesManager.shared.isSupported(currency: currency.code)
     }
     
+    private var canSend: Bool {
+        guard let balance = currency.state?.balance else { return false }
+        return !balance.isZero
+    }
+    
     private func setupToolbarButtons() {
         var bottomButtonModels: [BottomBarItemViewModel]
         let hasSwapBuyAccess = UserManager.shared.profile?.hasSwapBuyAccess ?? false
-        let canSend: Bool = (currency.state?.balance?.fiatValue ?? 0) > 0
         
         if hasSwapBuyAccess {
             bottomButtonModels = [
