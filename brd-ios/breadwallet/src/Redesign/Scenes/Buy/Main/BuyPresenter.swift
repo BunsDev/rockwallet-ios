@@ -232,16 +232,13 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
             buttons.append(button)
         }
         
-        if type == .card {
-            var button = ButtonViewModel(title: L10n.Buy.increaseYourLimits,
-                                         isUnderlined: true)
-            
-            button.callback = { [weak self] in
-                self?.viewController?.increaseLimitsTapped()
-            }
-            
-            buttons.append(button)
+        var button = ButtonViewModel(title: L10n.Buy.increaseYourLimits,
+                                     isUnderlined: true)
+        button.callback = { [weak self] in
+            self?.viewController?.increaseLimitsTapped()
         }
+        
+        buttons.append(button)
         
         return buttons
     }
