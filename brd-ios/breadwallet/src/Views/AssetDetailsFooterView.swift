@@ -50,9 +50,12 @@ class AssetDetailsFooterView: UIView, Subscriber {
         return SupportedCurrenciesManager.shared.isSupported(currency: currency.code)
     }
     
+    private var canSend: Bool {
+        guard let balance = currency.state?.balance else { return false }
+        return !balance.isZero
+    }
+    
     private func setupToolbarButtons() {
-        let canSend: Bool = (currency.state?.balance?.fiatValue ?? 0) > 0
-
         let bottomButtonModels: [BottomBarItemViewModel] = [
             .init(title: L10n.Button.send, image: Asset.send.image, enabled: canSend, callback: { self.send() }),
             .init(title: L10n.Button.receive, image: Asset.receive.image, callback: { self.receive() }),
