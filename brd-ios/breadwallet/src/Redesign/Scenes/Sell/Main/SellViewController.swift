@@ -179,9 +179,11 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                       keyStore: dataStore?.keyStore,
                                       to: dataStore?.fromAmount,
                                       from: dataStore?.toAmount,
+                                      fromFeeBasis: dataStore?.fromFeeBasis,
                                       card: dataStore?.ach,
                                       quote: dataStore?.quote,
-                                      availablePayments: responseDisplay.availablePayments)
+                                      availablePayments: responseDisplay.availablePayments,
+                                      createTransactionModel: dataStore?.createTransactionModel)
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
