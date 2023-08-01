@@ -33,7 +33,7 @@ public struct Amount: Hashable {
     var minimumFractionDigits: Int?
     var maximumFractionDigits: Int
     var negative: Bool { return cryptoAmount.isNegative }
-    var isZero: Bool { return self == Amount.zero(currency, rate: rate) }
+    var isZero: Bool { return cryptoAmount.isZero }
     internal var locale = Locale.current // for testing
 
     // MARK: - Init
