@@ -115,7 +115,7 @@ extension Presenter where Self: AssetActionResponses,
            let isFromBuy = actionResponse.isFromBuy {
             var text: String
             if isFromBuy {
-                text = String(format: "1 %@ = $%@ %@", to, ExchangeNumberFormatter().string(for: 1 / quote.exchangeRate) ?? "", from.uppercased())
+                text = String(format: "1 %@ = %@ %@", to, ExchangeNumberFormatter().string(for: 1 / quote.exchangeRate) ?? "", from.uppercased())
             } else {
                 text = String(format: "1 %@ = %@ %@", from.uppercased(), ExchangeNumberFormatter().string(for: quote.exchangeRate) ?? "", to)
             }
