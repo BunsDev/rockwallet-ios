@@ -62,7 +62,8 @@ class SwapStore: NSObject, BaseDataStore, SwapDataStore {
               let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd)
         else { return nil }
         
-        return NSMutableAttributedString(string: L10n.Swap.swapLimits(minText, maxText))
+        return NSMutableAttributedString(string: L10n.Swap.swapLimits("\(minText) \(Constant.usdCurrencyCode)",
+                                                                      "\(maxText) \(Constant.usdCurrencyCode)"))
     }
     
     // MARK: - Additional helpers

@@ -123,11 +123,11 @@ enum VerificationStatus: Hashable {
                                  swapLimits: .text(L10n.Swap.swapLimit),
                                  buyLimits: .text(L10n.Buy.buyLimit),
                                  swapLimitsValue: .init(title: .text(L10n.Account.daily),
-                                                        value: .text("$\(swapAllowanceDaily) \(Constant.usdCurrencyCode)")),
+                                                        value: .text("\(swapAllowanceDaily) \(Constant.usdCurrencyCode)")),
                                  buyDailyLimitsView: .init(title: .text("\(L10n.Account.daily) (\(L10n.Buy.card))"),
-                                                           value: .text("$\(buyAllowanceDaily) \(Constant.usdCurrencyCode)")),
+                                                           value: .text("\(buyAllowanceDaily) \(Constant.usdCurrencyCode)")),
                                  buyAchDailyLimitsView: .init(title: .text(L10n.Account.achDailyLimits),
-                                                              value: .text("$\(achAllowanceDaily) \(Constant.usdCurrencyCode)")),
+                                                              value: .text("\(achAllowanceDaily) \(Constant.usdCurrencyCode)")),
                                  dismissType: .persistent,
                                  canUseAch: canUseAch)
         case .levelTwo(.expired), .levelTwo(.resubmit):
