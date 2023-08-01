@@ -158,6 +158,58 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         presenter?.presentOrderPreview(actionResponse: .init(availablePayments: dataStore?.availablePayments))
     }
     
+//    guard let address = dataStore?.ach?.id,
+//          let from = dataStore?.fromAmount?.tokenValue,
+//          let to = dataStore?.toAmount else {
+//        return
+//    }
+//
+//    let formatter = ExchangeFormatter.current
+//    formatter.locale = Locale(identifier: Constant.usLocaleCode)
+//    formatter.usesGroupingSeparator = false
+//
+//    let fromTokenValue = formatter.string(for: from) ?? ""
+//    let toTokenValue = formatter.string(for: to) ?? ""
+//
+//    let data = AchExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
+//                                      depositQuantity: fromTokenValue,
+//                                      withdrawalQuantity: toTokenValue,
+//                                      accountId: address)
+//
+//    AchExchangeWorker().execute(requestData: data) { [weak self] result in
+//        switch result {
+//        case .success(let data):
+//            self?.dataStore?.exchange = data
+//            self?.createTransaction(viewAction: .init(exchange: self?.dataStore?.exchange,
+//                                                      currencies: self?.dataStore?.currencies,
+//                                                      fromFeeAmount: self?.dataStore?.fromFeeAmount,
+//                                                      fromAmount: self?.dataStore?.fromAmount,
+//                                                      toAmountCode: self?.dataStore?.toCode), completion: { [weak self] error in
+//                guard error == nil else {
+//                    self?.presenter?.presentError(actionResponse: .init(error: error))
+//                    return
+//                }
+//
+//                self?.dataStore?.availablePayments = []
+//                let containsDebitCard = self?.dataStore?.cards.first(where: { $0.cardType == .debit }) != nil
+//
+//                if self?.dataStore?.selected?.cardType == .credit, containsDebitCard {
+//                    self?.dataStore?.availablePayments.append(.card)
+//                }
+//
+//                if self?.dataStore?.selected?.cardType == .debit, self?.dataStore?.paymentMethod == .card, self?.dataStore?.ach != nil {
+//                    self?.dataStore?.availablePayments.append(.ach)
+//                }
+//
+//                self?.presenter?.presentOrderPreview(actionResponse: .init(availablePayments: self?.dataStore?.availablePayments))
+//
+//            })
+//
+//        case .failure(let error):
+//            self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.failed(error: error)))
+//        }
+//    }
+    
     func navigateAssetSelector(viewAction: SellModels.AssetSelector.ViewAction) {
         presenter?.presentNavigateAssetSelector(actionResponse: .init())
     }

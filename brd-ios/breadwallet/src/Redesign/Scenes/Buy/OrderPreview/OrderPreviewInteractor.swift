@@ -51,6 +51,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
                                                                          errorDescription: data?.errorMessage))
                     return
                 }
+                
                 self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.paymentReference,
                                                                      previewType: self?.dataStore?.type,
                                                                      isAch: self?.dataStore?.isAchAccount,
@@ -243,17 +244,24 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         AchExchangeWorker().execute(requestData: data) { [weak self] result in
             switch result {
             case .success(let exchangeData):
+                self?.dataStore?.createTransactionModel?.exchange = exchangeData
                 self?.dataStore?.paymentReference = exchangeData?.paymentReference
                 guard let redirectUrlString = exchangeData?.redirectUrl, let redirectUrl = URL(string: redirectUrlString) else {
                     if self?.dataStore?.type == .sell {
                         self?.createTransaction(viewAction: self?.dataStore?.createTransactionModel,
                                                 completion: { [weak self] error in
-                            guard let error else {
-                                self?.getData(viewAction: .init())
+                            guard error == nil else {
+                                self?.presenter?.presentError(actionResponse: .init(error: error))
                                 return
                             }
                             
-                            self?.presenter?.presentError(actionResponse: .init(error: error))
+                            self?.presenter?.presentSubmit(actionResponse: .init(paymentReference: self?.dataStore?.createTransactionModel?.exchange?.exchangeId,
+                                                                                 previewType: self?.dataStore?.type,
+                                                                                 isAch: self?.dataStore?.isAchAccount,
+                                                                                 achDeliveryType: self?.dataStore?.achDeliveryType,
+                                                                                 failed: false,
+                                                                                 responseCode: nil,
+                                                                                 errorDescription: nil))
                         })
                     } else {
                         self?.getData(viewAction: .init())
