@@ -74,6 +74,7 @@ struct Constant {
     static let countryUS = "US"
     
     static let currencyFormat = "%@ %@"
+    static let exchangeFormat = "1 %@ = %@ %@"
     static let usdCurrencyCode = "USD"
     static let euroCurrencyCode = "EUR"
     static let britishPoundCurrencyCode = "GBP"

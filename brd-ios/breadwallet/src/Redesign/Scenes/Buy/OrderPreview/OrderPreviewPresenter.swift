@@ -255,7 +255,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let cardFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: cardFeeValue) ?? "", fiatCurrency)
         let networkFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: networkFee) ?? "", fiatCurrency)
         
-        let rate = String(format: "1 %@ = %@ %@", toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
+        let rate = String(format: Constant.exchangeFormat, toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         
         let cardAchFee: TitleValueViewModel = isAchAccount ?
             .init(title: .text(L10n.Sell.achFee),

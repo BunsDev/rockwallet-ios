@@ -75,6 +75,7 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDe
         let destination = response?.destination
         let instantDestination = response?.instantDestination
         let sourceCardPaymentMethodStatus = PaymentCard.PaymentMethodStatus(rawValue: sourceCard?.paymentMethodStatus ?? "")
+        let destinationCardPaymentMethodStatus = PaymentCard.PaymentMethodStatus(rawValue: destination?.paymentInstrument?.paymentMethodStatus ?? "")
         
         let sourceData = ExchangeDetail
             .SourceDestination(status: .init(string: source?.status) ?? .failed,
@@ -97,7 +98,6 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDe
                                                               paymentMethodStatus: sourceCardPaymentMethodStatus ?? .none),
                                feeRate: source?.feeRate,
                                feeFixedRate: source?.feeFixedRate)
-        
         let destinationData = ExchangeDetail
             .SourceDestination(status: .init(string: destination?.status) ?? .failed,
                                currency: destination?.currency?.uppercased() ?? "",
@@ -106,6 +106,17 @@ class ExchangeDetailsMapper: ModelMapper<ExchangeDetailsResponseData, ExchangeDe
                                usdFee: destination?.usdFee ?? 0,
                                instantUsdFee: destination?.instantUsdFee,
                                transactionId: destination?.transactionId,
+                               paymentInstrument: PaymentCard(type: PaymentCard.PaymentType(rawValue: destination?.paymentInstrument?.type ?? "") ?? .card,
+                                                              id: destination?.paymentInstrument?.id ?? "",
+                                                              fingerprint: destination?.paymentInstrument?.fingerprint ?? "",
+                                                              expiryMonth: destination?.paymentInstrument?.expiryMonth ?? 0,
+                                                              expiryYear: destination?.paymentInstrument?.expiryYear ?? 0,
+                                                              scheme: PaymentCard.Scheme(rawValue: destination?.paymentInstrument?.scheme ?? "") ?? .none,
+                                                              last4: destination?.paymentInstrument?.last4 ?? "",
+                                                              accountName: destination?.paymentInstrument?.accountName ?? "",
+                                                              status: PaymentCard.Status(rawValue: destination?.paymentInstrument?.status ?? "") ?? .none,
+                                                              cardType: PaymentCard.CardType(rawValue: destination?.paymentInstrument?.cardType ?? "") ?? .none,
+                                                              paymentMethodStatus: destinationCardPaymentMethodStatus ?? .none),
                                feeRate: destination?.feeRate,
                                feeFixedRate: destination?.feeFixedRate,
                                part: instantDestination == nil ? .one : .two)
