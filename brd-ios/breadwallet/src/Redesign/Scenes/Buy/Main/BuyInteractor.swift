@@ -44,7 +44,7 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
         
         getPayments(viewAction: .init(), completion: { [weak self] in
             self?.dataStore?.selected = self?.dataStore?.paymentMethod == .ach ? self?.dataStore?.ach : (self?.dataStore?.selected ?? self?.dataStore?.cards.first)
-            self?.selectPaymentMethod(viewAction: .init(method: self?.dataStore?.selected?.type ?? .card))
+            self?.selectPaymentMethod(viewAction: .init(method: self?.dataStore?.paymentMethod ?? .card))
         })
     }
     
