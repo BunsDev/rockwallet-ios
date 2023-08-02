@@ -2755,7 +2755,7 @@
 "Settings.WebDebugUrl" = "Web Platform Debug URL";
 
 /* Wipe/delete your wallet from the current device. */
-"Settings.wipe" = "Wipe wallet from this device";
+"Settings.wipe" = "Unlink from this device";
 
 /* Share data view body */
 "ShareData.body" = "Help improve RockWallet by sharing your anonymous data with us. This does not include any financial information. We respect your financial privacy.";
