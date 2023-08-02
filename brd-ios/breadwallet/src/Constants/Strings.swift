@@ -1318,7 +1318,7 @@ internal enum L10n {
     internal static let accessDenied = L10n.tr("Localizable", "ErrorMessages.accessDenied", fallback: "You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.")
     /// The currency amount is to high for exchange. Accepts 2 parameters:, - maxiumum amount, - currency code
     internal static func amountTooHigh(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.AmountTooHigh", String(describing: p1), String(describing: p2), fallback: "The amount is higher than your daily limit of %@ %@. Please enter a lower amount.")
+      return L10n.tr("Localizable", "ErrorMessages.AmountTooHigh", String(describing: p1), String(describing: p2), fallback: "The amount is higher than your weekly limit of %@ %@. Please enter a lower amount.")
     }
     /// The currency amount is to low for exchange. Accepts 2 parameters:, - minimum amount, - currency code
     internal static func amountTooLow(_ p1: Any, _ p2: Any) -> String {
@@ -2392,6 +2392,8 @@ internal enum L10n {
     internal static let achFee = L10n.tr("Localizable", "Sell.achFee", fallback: "ACH fee")
     /// ACH Withdrawal
     internal static let achWithdrawal = L10n.tr("Localizable", "Sell.achWithdrawal", fallback: "ACH Withdrawal")
+    /// Card withdrawal
+    internal static let cardWithdrawal = L10n.tr("Localizable", "Sell.cardWithdrawal", fallback: "Card withdrawal")
     /// Sell & Withdraw details
     internal static let details = L10n.tr("Localizable", "Sell.details", fallback: "Sell & Withdraw details")
     /// Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.
@@ -2630,7 +2632,7 @@ internal enum L10n {
     internal static let currency = L10n.tr("Localizable", "Settings.currency", fallback: "Display Currency")
     /// e.g. "USD Settings" (settings for how USD is handled)
     internal static func currencyPageTitle(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Settings.currencyPageTitle", String(describing: p1), fallback: "%@ Settings")
+      return L10n.tr("Localizable", "Settings.currencyPageTitle", String(describing: p1), fallback: "%@ Menu")
     }
     /// Section title for a collection of different settings screens, one for each currency
     internal static let currencySettings = L10n.tr("Localizable", "Settings.currencySettings", fallback: "Currency Settings")
