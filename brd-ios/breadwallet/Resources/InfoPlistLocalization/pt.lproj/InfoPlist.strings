@@ -2417,6 +2417,8 @@
 
 "Sell.achWithdrawal" = "ACH Withdrawal";
 
+"Sell.cardWithdrawal" = "Card withdrawal";
+
 "Sell.details" = "Sell & Withdraw details";
 
 "Sell.disclaimer" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
