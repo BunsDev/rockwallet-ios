@@ -622,7 +622,11 @@ class ModalPresenter: Subscriber {
             MenuItem(title: L10n.Settings.preferences, icon: MenuItem.Icon.preferences, subMenu: preferencesItems, rootNav: menuNav),
             
             // Security Settings
-            MenuItem(title: L10n.MenuButton.security, icon: Asset.lockClosed.image, subMenu: securityItems, rootNav: menuNav),
+            MenuItem(title: L10n.MenuButton.security,
+                     icon: Asset.lockClosed.image,
+                     subMenu: securityItems,
+                     rootNav: menuNav,
+                     faqButton: UIButton.buildHelpBarButton(articleId: ArticleIds.securityCenter)),
             
             // Support
             MenuItem(title: L10n.MenuButton.support, icon: MenuItem.Icon.support) { [weak self] in

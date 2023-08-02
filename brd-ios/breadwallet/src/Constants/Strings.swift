@@ -2691,7 +2691,7 @@ internal enum L10n {
     /// Web Platform Debug URL
     internal static let webDebugUrl = L10n.tr("Localizable", "Settings.WebDebugUrl", fallback: "Web Platform Debug URL")
     /// Wipe/delete your wallet from the current device.
-    internal static let wipe = L10n.tr("Localizable", "Settings.wipe", fallback: "Wipe wallet from this device")
+    internal static let wipe = L10n.tr("Localizable", "Settings.wipe", fallback: "Unlink from this device")
     internal enum TouchIdLimit {
       /// The fingerprint spending limit
       internal static let android = L10n.tr("Localizable", "Settings.touchIdLimit.android", fallback: "Fingerprint Authentication Spending Limit")
