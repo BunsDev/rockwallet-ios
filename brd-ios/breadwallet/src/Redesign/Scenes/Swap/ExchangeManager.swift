@@ -23,20 +23,20 @@ class ExchangeManager {
     
     func reload(for source: String? = nil, completion: (([ExchangeDetail]?) -> Void)? = nil) {
         worker.execute { [weak self] result in
-            let updatedExchanges: [ExchangeDetail]
+            let exchanges: [ExchangeDetail]
             
             switch result {
             case .success(let data):
-                updatedExchanges = data?.sorted(by: { $0.timestamp > $1.timestamp }) ?? []
+                exchanges = data?.sorted(by: { $0.timestamp > $1.timestamp }) ?? []
                 
             case .failure:
-                updatedExchanges = []
+                exchanges = []
             }
             
-            self?.exchanges = updatedExchanges
+            self?.exchanges = exchanges
             
             guard let source = source else {
-                completion?(updatedExchanges)
+                completion?(exchanges)
                 return
             }
             

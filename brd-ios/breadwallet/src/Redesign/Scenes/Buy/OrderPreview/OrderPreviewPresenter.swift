@@ -232,7 +232,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let toCryptoDisplayName = item.to?.currency.displayName ?? ""
         let from = item.from ?? 0
         let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
-        var cardFeeValue: Decimal = item.type == .sell ? -cardFee : cardFee
+        let cardFeeValue: Decimal = item.type == .sell ? -cardFee : cardFee
 
         let usdCurrency = Constant.usdCurrencyCode.uppercased()
         let fiatCurrency = item.type == .sell ? usdCurrency : (quote.fromFee?.currency.uppercased() ?? usdCurrency)
