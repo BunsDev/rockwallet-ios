@@ -268,7 +268,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
         
         guard let isAch = dataStore?.isAchAccount, let type = dataStore?.type else { return }
         
-        let exchangeType: ExchangeType = isAch ? (type == .sell ? .sell : .buyAch) : .buyCard
+        let exchangeType: ExchangeType = isAch ? (type == .sell ? .sellAch : .buyAch) : .buyCard
         coordinator?.showSuccess(reason: responseDisplay.reason,
                                  itemId: responseDisplay.paymentReference,
                                  exchangeType: exchangeType)

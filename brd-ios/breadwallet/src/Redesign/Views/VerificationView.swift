@@ -99,7 +99,7 @@ enum VerificationStatus: Hashable {
         let canUseAch = profile?.kycAccessRights.hasAchAccess ?? false
         let swapAllowanceDaily = ExchangeFormatter.current.string(for: profile?.swapAllowanceDaily) ?? ""
         let buyAllowanceDaily = ExchangeFormatter.current.string(for: profile?.buyAllowanceDaily) ?? ""
-        let achAllowanceDaily = ExchangeFormatter.current.string(for: profile?.achAllowanceDaily) ?? ""
+        let achAllowanceDaily = ExchangeFormatter.current.string(for: profile?.buyAchAllowanceDaily) ?? ""
         
         switch self {
         case .none, .email, .levelOne, .levelTwo(.notStarted), .levelTwo(.kycInfoProvided):

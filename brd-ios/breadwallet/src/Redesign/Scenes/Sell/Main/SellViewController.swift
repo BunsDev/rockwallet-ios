@@ -33,6 +33,9 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+        case .segment:
+            cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
+            
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
             cell.contentView.setupCustomMargins(top: .small, leading: .large, bottom: .extraSmall, trailing: .large)
@@ -95,6 +98,20 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         }
         
         return cell
+    }
+    
+    override func setSegment(_ segment: Int) {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.segment.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FESegmentControl> else { return }
+        cell.wrappedView.selectSegment(index: segment)
+        
+        let paymentTypes = PaymentCard.PaymentType.allCases
+        if paymentTypes.count >= segment {
+            let paymentType = paymentTypes[segment]
+            
+            interactor?.selectPaymentMethod(viewAction: .init(method: paymentTypes[segment]))
+            GoogleAnalytics.logEvent(GoogleAnalytics.Buy(type: paymentType.rawValue))
+        }
     }
     
     // MARK: - User Interaction

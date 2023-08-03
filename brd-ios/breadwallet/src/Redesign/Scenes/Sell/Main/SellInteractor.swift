@@ -56,7 +56,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         generateSender(viewAction: .init(fromAmountCurrency: amount?.currency))
         
-        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAllowanceLifetime), completion: { [weak self] _ in
+        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAchAllowanceLifetime), completion: { [weak self] _ in
             self?.setPresentAmountData(handleErrors: true)
             
             completion?()
@@ -172,6 +172,26 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     
     func showAssetSelectionMessage(viewAction: SellModels.AssetSelectionMessage.ViewAction) {
         presenter?.presentAssetSelectionMessage(actionResponse: .init())
+    }
+    
+    func selectPaymentMethod(viewAction: SellModels.PaymentMethod.ViewAction) {
+        dataStore?.paymentMethod = viewAction.method
+        getPayments(viewAction: .init(setAmount: false), completion: { [weak self] in
+            let item = AssetModels.Item(type: self?.dataStore?.paymentMethod,
+                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+            self?.prepareCurrencies(viewAction: item)
+            
+            guard let supportedCurrencies = self?.dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+                return
+            }
+            
+            let isSelectedCurencySupported = supportedCurrencies.contains(self?.amount?.currency.code.lowercased() ?? "")
+            guard let currency = isSelectedCurencySupported ? self?.amount?.currency : self?.dataStore?.currencies.first else { return }
+            self?.amount = .zero(currency)
+            
+            self?.setAmount(viewAction: .init(currency: currency.code, didFinish: true))
+        })
     }
     
     // MARK: - Additional helpers

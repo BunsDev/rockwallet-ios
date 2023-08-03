@@ -35,7 +35,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let weeklyCardText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly),
-              let weeklyAchText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly) else { return nil }
+              let weeklyAchText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAchAllowanceWeekly) else { return nil }
         
         let limits: String
         let limitsString: NSMutableAttributedString

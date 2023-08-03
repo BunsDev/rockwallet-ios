@@ -47,13 +47,30 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let weeklyLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.sellAllowanceWeekly)
+              let weeklyCardLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.sellAllowanceWeekly),
+              let weeklyAchLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.sellAchAllowanceWeekly)
         else { return nil }
         
-        let minTextFormatted = "\(minText) \(Constant.usdCurrencyCode)"
-        let maxTextFormatted = "\(weeklyLimit) \(Constant.usdCurrencyCode)"
+        let limitsString: NSMutableAttributedString
         
-        return NSMutableAttributedString(string: L10n.Sell.sellLimits(minTextFormatted, maxTextFormatted))
+        let minTextFormatted = "\(minText) \(Constant.usdCurrencyCode)"
+        let cardMaxTextFormatted = "\(weeklyCardLimit) \(Constant.usdCurrencyCode)"
+        let achMaxTextFormatted = "\(weeklyAchLimit) \(Constant.usdCurrencyCode)"
+        
+        switch paymentMethod {
+        case .card:
+            let limitsText = L10n.Sell.sellLimits1(minTextFormatted, cardMaxTextFormatted)
+            limitsString = NSMutableAttributedString(string: limitsText + "\n\n" + L10n.Buy.BuyLimits.increase)
+            
+        case .ach:
+            let limitsText = L10n.Sell.sellLimits(minTextFormatted, achMaxTextFormatted)
+            limitsString = NSMutableAttributedString(string: limitsText)
+            
+        default:
+            limitsString = .init(string: "")
+        }
+        
+        return limitsString
     }
     
     var fromAmount: Amount?
