@@ -13,7 +13,7 @@ import Foundation
 struct UpdateSsnRequestData: RequestModelData {
     let ssn: String?
     
-    func getParameters() -> [String : Any] {
+    func getParameters() -> [String: Any] {
         let params = [
             "ssn": ssn
         ]

@@ -173,11 +173,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
-                                                                                 value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
+                                                                                 value: .text("\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
-                                                                         value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
+                                                                         value: .text("\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
                                                            monthly: .init(title: .text(L10n.Account.monthly),
-                                                                          value: .text("$\(monthlyLimitText) \(Constant.usdCurrencyCode)")))
+                                                                          value: .text("\(monthlyLimitText) \(Constant.usdCurrencyCode)")))
         
         let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(trailing: .init(image: Asset.close.image),
                                                                            wrappedView: wrappedViewModel,
@@ -235,7 +235,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         if type == .card {
             var button = ButtonViewModel(title: L10n.Buy.increaseYourLimits,
                                          isUnderlined: true)
-            
             button.callback = { [weak self] in
                 self?.viewController?.increaseLimitsTapped()
             }

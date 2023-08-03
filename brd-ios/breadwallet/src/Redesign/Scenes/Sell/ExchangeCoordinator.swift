@@ -16,6 +16,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                           keyStore: KeyStore?,
                           to: Amount?,
                           from: Decimal?,
+                          fromFeeBasis: TransferFeeBasis? = nil,
                           card: PaymentCard?,
                           quote: Quote?,
                           availablePayments: [PaymentCard.PaymentType]?,
@@ -25,6 +26,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
             vc.dataStore?.from = from
+            vc.dataStore?.fromFeeBasis = fromFeeBasis
             vc.dataStore?.to = to
             vc.dataStore?.card = card
             vc.dataStore?.quote = quote

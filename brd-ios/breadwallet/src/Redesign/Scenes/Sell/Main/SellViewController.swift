@@ -33,27 +33,32 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-        case .accountLimits:
-            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
-            
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(top: .small, leading: .large, bottom: .extraSmall, trailing: .large)
             
         case .swapCard:
             cell = self.tableView(tableView, swapMainCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .zero, horizontal: .large)
             
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .small, horizontal: .large)
+            
+        case .accountLimits:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .huge)
             
         case .limitActions:
             cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .huge)
             
         default:
             cell = UITableViewCell()
         }
         
         cell.setBackground(with: Presets.Background.transparent)
-        cell.setupCustomMargins(vertical: .zero, horizontal: .large)
+        cell.setupCustomMargins(all: .large)
         
         return cell
     }
@@ -174,9 +179,11 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                       keyStore: dataStore?.keyStore,
                                       to: dataStore?.fromAmount,
                                       from: dataStore?.toAmount,
+                                      fromFeeBasis: dataStore?.fromFeeBasis,
                                       card: dataStore?.ach,
                                       quote: dataStore?.quote,
-                                      availablePayments: responseDisplay.availablePayments)
+                                      availablePayments: responseDisplay.availablePayments,
+                                      createTransactionModel: dataStore?.createTransactionModel)
     }
     
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {

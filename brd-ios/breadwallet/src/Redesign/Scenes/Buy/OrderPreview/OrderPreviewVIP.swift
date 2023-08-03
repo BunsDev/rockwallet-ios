@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import WalletKit
 
 extension Scenes {
     static let OrderPreview = OrderPreviewViewController.self
@@ -83,6 +84,7 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
                           keyStore: KeyStore?,
                           to: Amount?,
                           from: Decimal?,
+                          fromFeeBasis: WalletKit.TransferFeeBasis?,
                           card: PaymentCard?,
                           quote: Quote?,
                           availablePayments: [PaymentCard.PaymentType]?,

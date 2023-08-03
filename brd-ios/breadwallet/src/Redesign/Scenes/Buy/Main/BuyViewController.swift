@@ -47,20 +47,25 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .segment:
             cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
             
-        case .accountLimits:
-            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
-            
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(top: .small, leading: .large, bottom: .extraSmall, trailing: .large)
             
         case .swapCard:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .zero, horizontal: .large)
             
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .small, horizontal: .large)
+            
+        case .accountLimits:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .huge)
             
         case .limitActions:
             cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .huge)
             
         default:
             cell = UITableViewCell()

@@ -26,14 +26,17 @@ class SwapViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
-        case .accountLimits:
-            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
-            
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(top: .large, leading: .large, bottom: .extraSmall, trailing: .large)
             
         case .swapCard:
             cell = self.tableView(tableView, swapMainCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .zero, horizontal: .large)
+            
+        case .accountLimits:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .huge)
             
         default:
             cell = UITableViewCell()

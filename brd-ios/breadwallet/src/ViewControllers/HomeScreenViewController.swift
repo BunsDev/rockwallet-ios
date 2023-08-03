@@ -143,8 +143,6 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ExchangeManager.shared.reload()
-        
         pullToRefreshControl.endRefreshing()
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Home())
