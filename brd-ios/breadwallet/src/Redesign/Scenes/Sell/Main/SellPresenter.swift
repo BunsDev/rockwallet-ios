@@ -20,7 +20,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     // MARK: - SellActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        let sections: [AssetModels.Section] = [
+        guard let item = actionResponse.item as? AssetModels.Item else { return }
+        
+        var sections: [AssetModels.Section] = [
             .rateAndTimer,
             .swapCard,
             .paymentMethod,
@@ -28,9 +30,20 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .limitActions
         ]
         
+        if item.achEnabled == true {
+            sections.insert(.segment, at: 0)
+        }
+        
         exchangeRateViewModel = ExchangeRateViewModel(timer: TimerViewModel(), showTimer: false)
         
+        let selectedPaymentType = PaymentCard.PaymentType.allCases.firstIndex(where: { $0 == item.type })
+        
+        let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
+                                                     segments: [.init(image: nil, title: L10n.Sell.cardWithdrawal),
+                                                                .init(image: nil, title: L10n.Sell.achWithdrawal)])
+        
         let sectionRows: [AssetModels.Section: [any Hashable]] = [
+            .segment: [paymentSegment],
             .rateAndTimer: [
                 exchangeRateViewModel
             ],
@@ -109,7 +122,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             
         default:
             if let paymentCard = actionResponse.card {
-                cardModel = .init(logo: paymentCard.displayImage,
+                cardModel = .init(title: .text(L10n.Sell.widrawToBank),
+                                  logo: paymentCard.displayImage,
                                   cardNumber: .text(paymentCard.displayName),
                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                                   userInteractionEnabled: true)
@@ -193,7 +207,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         switch paymentMethod {
         case .ach:
-            return !limits.filter({ $0.exchangeType == .sell }).isEmpty
+            return !limits.filter({ $0.exchangeType == .sellAch }).isEmpty
             
         default:
             return false

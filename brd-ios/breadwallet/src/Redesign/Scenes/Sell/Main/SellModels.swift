@@ -80,4 +80,14 @@ enum SellModels {
             var config: InfoViewConfiguration?
         }
     }
+    
+    struct PaymentMethod {
+        struct ViewAction {
+            let method: PaymentCard.PaymentType
+        }
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {}
+    }
 }

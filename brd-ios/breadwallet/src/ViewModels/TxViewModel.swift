@@ -182,7 +182,7 @@ extension TxViewModel {
                 
             }
             
-        case .sell:
+        case .sellAch, .sellCard:
             return Asset.withdrawal.image
             
         case .unknown:

@@ -22,6 +22,7 @@ protocol SellViewActions: BaseViewActions,
     func showLimitsInfo(viewAction: SellModels.LimitsInfo.ViewAction)
     func showInstantAchPopup(viewAction: SellModels.InstantAchPopup.ViewAction)
     func showAssetSelectionMessage(viewAction: SellModels.AssetSelectionMessage.ViewAction)
+    func selectPaymentMethod(viewAction: SellModels.PaymentMethod.ViewAction)
 }
 
 protocol SellActionResponses: BaseActionResponses,

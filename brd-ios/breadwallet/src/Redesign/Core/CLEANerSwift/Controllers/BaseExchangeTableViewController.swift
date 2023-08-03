@@ -119,6 +119,27 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         return cell
     }
     
+    func tableView(_ tableView: UITableView, segmentControlCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: WrapperTableViewCell<FESegmentControl> = tableView.dequeueReusableCell(for: indexPath),
+              let model = dataSource?.itemIdentifier(for: indexPath) as? SegmentControlViewModel else {
+            return UITableViewCell()
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init())
+            view.setup(with: model)
+            
+            view.didChangeValue = { [weak self] segment in
+                self?.view.endEditing(true)
+                self?.setSegment(segment)
+            }
+        }
+        
+        return cell
+    }
+    
+    func setSegment(_ segment: Int) { }
+    
     override func setupVerticalButtons() {
         super.setupVerticalButtons()
         

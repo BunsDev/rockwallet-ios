@@ -53,6 +53,11 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 ach = data?.first(where: { $0.type == .ach })
                 cards = data?.filter { $0.type == .card } ?? []
                 
+                // Card withdrawal only supports visa
+                if self?.dataStore is (any SellDataStore) {
+                    cards = cards.filter { $0.scheme == .visa }
+                }
+                
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }

@@ -53,7 +53,8 @@ struct ProfileResponseData: ModelResponse {
             case swap = "SWAP"
             case buyCard = "BUY_CARD"
             case buyAch = "BUY_ACH"
-            case sell = "SELL_ACH"
+            case sellCard = "SELL_CARD"
+            case sellAch = "SELL_ACH"
             case instantAch = "INSTANT_ACH"
             
             case unknown
@@ -153,16 +154,16 @@ struct Profile: Model {
     }
     
     var sellAllowanceLifetime: Decimal {
-        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .sell })?.limit ?? 0
+        return limits.first(where: { $0.interval == .lifetime && $0.exchangeType == .sellAch })?.limit ?? 0
     }
     var sellAllowanceDaily: Decimal {
-        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .sell })?.limit ?? 0
+        return limits.first(where: { $0.interval == .daily && $0.exchangeType == .sellAch })?.limit ?? 0
     }
     var sellAllowanceWeekly: Decimal {
-        return limits.first(where: { $0.interval == .weekly && $0.exchangeType == .sell })?.limit ?? 0
+        return limits.first(where: { $0.interval == .weekly && $0.exchangeType == .sellAch })?.limit ?? 0
     }
     var sellAllowancePerExchange: Decimal {
-        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .sell })?.limit ?? 0
+        return limits.first(where: { $0.interval == .perExchange && $0.exchangeType == .sellAch })?.limit ?? 0
     }
 }
 
