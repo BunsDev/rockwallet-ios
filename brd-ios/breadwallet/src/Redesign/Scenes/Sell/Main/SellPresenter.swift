@@ -160,9 +160,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
         let profile = UserManager.shared.profile
         
-        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
-        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
-        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.sellAllowancePerExchange : profile?.sellAchAllowancePerExchange
+        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.sellAllowanceWeekly : profile?.sellAchAllowanceWeekly
+        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.sellAllowanceMonthly : profile?.sellAchAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
@@ -206,8 +206,11 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         let limits = userLimits.filter { ($0.interval == .daily || $0.interval == .weekly || $0.interval == .monthly) && $0.isCustom == true }
         
         switch paymentMethod {
+        case .card:
+            return !limits.filter { $0.exchangeType == .sellCard }.isEmpty
+            
         case .ach:
-            return !limits.filter({ $0.exchangeType == .sellAch }).isEmpty
+            return !limits.filter { $0.exchangeType == .sellAch }.isEmpty
             
         default:
             return false
@@ -222,6 +225,16 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                          isUnderlined: true)
             button.callback = { [weak self] in
                 self?.viewController?.limitsInfoTapped()
+            }
+            
+            buttons.append(button)
+        }
+        
+        if type == .card {
+            var button = ButtonViewModel(title: L10n.Buy.increaseYourLimits,
+                                         isUnderlined: true)
+            button.callback = { [weak self] in
+                self?.viewController?.increaseLimitsTapped()
             }
             
             buttons.append(button)

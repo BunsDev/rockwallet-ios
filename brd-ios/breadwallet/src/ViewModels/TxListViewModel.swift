@@ -56,7 +56,7 @@ struct TxListViewModel: TxViewModel, Hashable {
         case .swap:
             return handleSwapTransactions()
             
-        case .sellAch:
+        case .sellAch, .sellCard:
             return handleSellTransactions()
             
         case .buyAch, .buyCard, .instantAch:
