@@ -177,7 +177,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
             return String(format: Constant.exchangeFormat, detail.source.currency, ExchangeNumberFormatter().string(for: detail.rate) ?? "", currencyCode)
         }
         
-        var totalAmount: Decimal = type == .sell ? destination.currencyAmount : detail.source.currencyAmount
+        let totalAmount: Decimal = type == .sell ? destination.currencyAmount : detail.source.currencyAmount
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: totalAmount) ?? "",
                                currencyCode)
         var amountValue: Decimal {

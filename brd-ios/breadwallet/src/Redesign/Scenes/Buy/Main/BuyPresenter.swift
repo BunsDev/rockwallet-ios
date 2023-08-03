@@ -162,9 +162,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
         let profile = UserManager.shared.profile
         
-        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
-        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
-        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.buyAchAllowancePerExchange
+        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.buyAchAllowanceWeekly
+        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.buyAchAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
