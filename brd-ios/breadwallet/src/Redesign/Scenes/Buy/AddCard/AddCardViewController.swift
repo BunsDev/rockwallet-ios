@@ -10,7 +10,7 @@
 
 import UIKit
 
-class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
+class AddCardViewController: BaseTableViewController<ExchangeCoordinator,
                              AddCardInteractor,
                              AddCardPresenter,
                              AddCardStore>,
@@ -18,9 +18,8 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
     typealias Models = AddCardModels
     
     override var isRoundedBackgroundEnabled: Bool { return true }
-    override var sceneTitle: String? {
-        return L10n.Buy.addCard
-    }
+    override var isModalDismissableEnabled: Bool { return false }
+    override var sceneTitle: String? { return L10n.Buy.addCard }
     
     private var isValid = false
 

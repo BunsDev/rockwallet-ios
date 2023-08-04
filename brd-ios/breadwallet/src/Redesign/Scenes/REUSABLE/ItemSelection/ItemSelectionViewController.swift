@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemSelectionViewController: BaseTableViewController<ItemSelectionCoordinator,
+class ItemSelectionViewController: BaseTableViewController<ExchangeCoordinator,
                                    ItemSelectionInteractor,
                                    ItemSelectionPresenter,
                                    ItemSelectionStore>,

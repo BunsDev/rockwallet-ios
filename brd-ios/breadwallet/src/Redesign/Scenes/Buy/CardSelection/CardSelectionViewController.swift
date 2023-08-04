@@ -17,6 +17,7 @@ extension Scenes {
 class CardSelectionViewController: ItemSelectionViewController {
     override var sceneTitle: String? { return L10n.Buy.paymentMethods }
     override var isSearchEnabled: Bool { return false }
+    override var isModalDismissableEnabled: Bool { return false }
     
     var paymentCardDeleted: (() -> Void)?
     
@@ -51,8 +52,14 @@ class CardSelectionViewController: ItemSelectionViewController {
                                                                                  last4: model.last4))
             }
             
-            view.errorLinkCallback = { [weak self] in
-                self?.coordinator?.showPaymentMethodSupport()
+            view.errorLinkCallback = { [weak self] in                
+                if model.paymentMethodStatus.isProblematic {
+                    self?.coordinator?.showPaymentMethodSupport()
+                } else if model.verifiedToSell == false && model.scheme == .visa {
+                    Store.trigger(name: .showBuy)
+                } else {
+                    return
+                }
             }
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
@@ -100,8 +107,17 @@ class CardSelectionViewController: ItemSelectionViewController {
         if model.paymentMethodStatus.isProblematic {
             let unavailableText = model.paymentMethodStatus.unavailableText
             return .attributedText(unavailableText)
-        } else if model.verifiedToSell == true {
-            let unverifiedCardText = NSMutableAttributedString(string: "Prior to initiating...")
+        } else if model.verifiedToSell == false && model.scheme == .visa {
+            let unverifiedCardText = NSMutableAttributedString(string: L10n.ErrorMessages.cardRequiresPurchase)
+            
+            let maxRange = NSRange(location: 0, length: unverifiedCardText.mutableString.length)
+            unverifiedCardText.addAttribute(.font, value: Fonts.Body.three, range: maxRange)
+            unverifiedCardText.addAttribute(.foregroundColor, value: LightColors.Error.one, range: maxRange)
+            
+            let boldRange = unverifiedCardText.mutableString.range(of: L10n.Buy.buyWithCard.capitalizingFirstLetter())
+            unverifiedCardText.addAttribute(.font, value: Fonts.Subtitle.three, range: boldRange)
+            unverifiedCardText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: boldRange)
+            
             return .attributedText(unverifiedCardText)
         } else {
             return nil
