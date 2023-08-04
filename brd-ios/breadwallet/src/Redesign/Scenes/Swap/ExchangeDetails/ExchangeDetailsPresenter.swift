@@ -163,25 +163,26 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
     
     private func prepareOrderViewModel(_ detail: ExchangeDetail, destination: ExchangeDetail.SourceDestination?, for type: ExchangeType) -> BuyOrderViewModel? {
         guard let destination else { return nil }
+        let isSell = type == .sellAch || type == .sellCard
         
         let currencyCode = Constant.usdCurrencyCode
-        let card = type == .sellAch ? destination.paymentInstrument : detail.source.paymentInstrument
+        let card = isSell ? destination.paymentInstrument : detail.source.paymentInstrument
         let infoImage = Asset.help.image.withRenderingMode(.alwaysOriginal)
         
         let currencyFormat = Constant.currencyFormat
         var rate: String {
-            guard type == .sellAch else {
+            guard isSell else {
                 return String(format: Constant.exchangeFormat, destination.currency, ExchangeNumberFormatter().string(for: 1 / detail.rate) ?? "", currencyCode)
             }
             
             return String(format: Constant.exchangeFormat, detail.source.currency, ExchangeNumberFormatter().string(for: detail.rate) ?? "", currencyCode)
         }
         
-        let totalAmount: Decimal = type == .sellAch ? destination.currencyAmount : detail.source.currencyAmount
+        let totalAmount: Decimal = isSell ? destination.currencyAmount : detail.source.currencyAmount
         let totalText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: totalAmount) ?? "",
                                currencyCode)
         var amountValue: Decimal {
-            guard type == .sellAch else {
+            guard isSell else {
                 return detail.source.currencyAmount - detail.source.usdFee - (detail.destination?.usdFee ?? 0) - (detail.instantDestination?.usdFee ?? 0)
             }
             
@@ -193,7 +194,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                  currencyCode)
         
         var networkFee: Decimal {
-            guard type == .sellAch else {
+            guard isSell else {
                 return (detail.destination?.usdFee ?? 0) + (detail.instantDestination?.usdFee ?? 0)
             }
             
@@ -217,7 +218,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
         
         let model: BuyOrderViewModel
         switch type {
-        case .sellAch:
+        case .sellAch, .sellCard:
             model = BuyOrderViewModel(rate: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
                                       amount: .init(title: .text("\(L10n.Sell.subtotal)"), value: .text(amountText), infoImage: nil),
                                       cardFee: .init(title: .text(displayFeeTitle), value: .text(networkFeeText)),
@@ -240,6 +241,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                                                                                                        year: card?.expiryYear ?? 0)),
                                                            cvvTitle: nil, cvv: nil))
         }
+        
         return model
     }
 }

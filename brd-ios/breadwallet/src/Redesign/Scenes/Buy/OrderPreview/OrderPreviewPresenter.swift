@@ -257,7 +257,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         
         let rate = String(format: Constant.exchangeFormat, toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         
-        let cardAchFee: TitleValueViewModel = isAchAccount ?
+        let cardFeeModel: TitleValueViewModel = isAchAccount ?
             .init(title: isInstantAch ? .text("\(L10n.Sell.achFee) (\(L10n.Buy.Ach.Hybrid.title))") : .text(L10n.Sell.achFee),
                   value: .text(cardFeeText)) :
             .init(title: .text(L10n.Swap.cardFee),
@@ -268,8 +268,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
         
         let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
-        let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.Alternative.title),
-                                                                       value: .text(achFeeDescription)) : nil
+        let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.Alternative.title), value: .text(achFeeDescription)) : nil
         let exceedsInstantBuyLimit: Bool = toFiatValue > instantAchLimit
         
         var instantAchNoticeText: String {
@@ -292,7 +291,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           amount: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
                           cardFee: .init(title: .text(L10n.Sell.subtotal), value: .text(amountText)),
-                          networkFee: cardAchFee,
+                          networkFee: cardFeeModel,
                           totalCost: .init(title: .text(L10n.Swap.youReceive), value: .text(totalText)))
             
         default:
@@ -308,7 +307,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
                           rate: .init(title: .text(L10n.Swap.rateValue), value: .text(rate), infoImage: nil),
                           amount: .init(title: .text(L10n.Swap.amountPurchased), value: .text(amountText), infoImage: nil),
-                          cardFee: cardAchFee,
+                          cardFee: cardFeeModel,
                           instantBuyFee: instantBuyFee,
                           networkFee: .init(title: .text(L10n.Swap.miningNetworkFee),
                                             value: .text(networkFeeText),

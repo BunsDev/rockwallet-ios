@@ -3090,8 +3090,10 @@ internal enum L10n {
     internal static let pendingPurchaseWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingPurchaseWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Pending swap label in transaction view
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
-    /// Pending withdraw with ACH
-    internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdraw with ACH")
+    /// Pending withdrawal with card
+    internal static let pendingWithdrawalWithCard = L10n.tr("Localizable", "Transaction.pendingWithdrawalWithCard", fallback: "Pending withdrawal with card")
+    /// Pending withdrawal with ACH
+    internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdrawal with ACH")
     /// Pending purchase with Instant Buy
     internal static let pendingWithdrawWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingWithdrawWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Purchased label in transaction view
@@ -3168,10 +3170,14 @@ internal enum L10n {
     }
     /// Waiting to be confirmed string
     internal static let waiting = L10n.tr("Localizable", "Transaction.waiting", fallback: "Waiting to be confirmed. Some merchants require confirmation to complete a transaction. Estimated time: 1-2 hours.")
+    /// Withdrawal to card successful
+    internal static let withdarwalWithCardComplete = L10n.tr("Localizable", "Transaction.withdarwalWithCardComplete", fallback: "Withdrawal to card successful")
     /// Withdrawn to bank account
     internal static let withdrawalComplete = L10n.tr("Localizable", "Transaction.WithdrawalComplete", fallback: "Withdrawn to bank account")
     /// Withdrawal failed
     internal static let withdrawalFailed = L10n.tr("Localizable", "Transaction.WithdrawalFailed", fallback: "Withdrawal failed")
+    /// Withdrawal to card unsuccessful
+    internal static let withdrawalWithCardFailed = L10n.tr("Localizable", "Transaction.withdrawalWithCardFailed", fallback: "Withdrawal to card unsuccessful")
     /// Withdrawal unsuccessful
     internal static let withdrawFailedWithAch = L10n.tr("Localizable", "Transaction.WithdrawFailedWithAch", fallback: "Withdrawal unsuccessful")
     /// Withdrawal successful
