@@ -27,7 +27,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
                      to: toCode,
-                     type: .sell,
+                     type: .sell(paymentMethod),
                      accountId: accountId)
     }
     
@@ -37,6 +37,7 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var selected: PaymentCard?
     var cards: [PaymentCard] = []
     var paymentMethod: PaymentCard.PaymentType? = .ach
+    var exchangeType: ExchangeType? { return paymentMethod == .ach ? .sellAch : .sellCard }
     var availablePayments: [PaymentCard.PaymentType] = []
     
     var currencies: [Currency] = []

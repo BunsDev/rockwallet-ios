@@ -1332,6 +1332,8 @@ internal enum L10n {
     internal static func balanceTooLow(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.balanceTooLow", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "You need %@ %@ in your wallet to cover network fees. Please add more %@ to your wallet.")
     }
+    /// Prior to initiating any withdrawals to your visa debit, please complete a purchase with this card for validation purposes. Buy with card
+    internal static let cardRequiresPurchase = L10n.tr("Localizable", "ErrorMessages.cardRequiresPurchase", fallback: "Prior to initiating any withdrawals to your visa debit, please complete a purchase with this card for validation purposes. Buy with card")
     /// Check your internet connection message
     internal static let checkInternet = L10n.tr("Localizable", "ErrorMessages.CheckInternet", fallback: "Please check your internet connection and try again later.")
     /// Something went wrong! Try again later.
@@ -2430,6 +2432,10 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "Sell.title", fallback: "Sell & Withdraw funds")
     /// Please try again
     internal static let tryAgain = L10n.tr("Localizable", "Sell.tryAgain", fallback: "Please try again")
+    /// Visa Debit
+    internal static let visaDebit = L10n.tr("Localizable", "Sell.visaDebit", fallback: "Visa Debit")
+    /// Unfortunately, currently only Visa Debit is supported for withdrawals
+    internal static let visaDebitSupport = L10n.tr("Localizable", "Sell.visaDebitSupport", fallback: "Unfortunately, currently only Visa Debit is supported for withdrawals")
     /// Withdraw to
     internal static let widrawToBank = L10n.tr("Localizable", "Sell.widrawToBank", fallback: "Withdraw to")
     /// Please try again and if the issue persists, please contact customer support
