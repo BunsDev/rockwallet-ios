@@ -35,10 +35,12 @@ enum PaymentMethodsModels {
         
         struct ActionResponse {
             var allPaymentCards: [PaymentCard]
+            var exchangeType: ExchangeType?
         }
         
         struct ResponseDisplay {
             var allPaymentCards: [PaymentCard]
+            var exchangeType: ExchangeType?
         }
     }
     

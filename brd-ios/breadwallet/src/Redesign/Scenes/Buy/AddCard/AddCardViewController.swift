@@ -91,7 +91,7 @@ class AddCardViewController: BaseTableViewController<ItemSelectionCoordinator,
         cell.setup { view in
             view.setup { view in
                 view.setup(with: model)
-                view.configure(with: Presets.InfoView.verification)
+                view.configure(with: dataStore?.fromCardWithdrawal == true ? Presets.InfoView.error : Presets.InfoView.verification)
                 view.setupCustomMargins(all: .large)
             }
         }

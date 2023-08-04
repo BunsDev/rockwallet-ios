@@ -29,7 +29,9 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
             .button
         ]
         
-        let addCardNotificationModel = InfoViewModel(description: .text(L10n.Buy.addCardPrompt), dismissType: .persistent)
+        let addCardText = L10n.Buy.addCardPrompt
+        let withdrawalVisaText = "Unfortunately, currently only Visa Debit is supported for withdrawals"
+        let addCardNotificationModel = InfoViewModel(description: .text(item.fromCardWithdrawal ? withdrawalVisaText : addCardText), dismissType: .persistent)
         
         bankCardInputDetailsViewModel = BankCardInputDetailsViewModel(number: .init(leading: .image(Asset.card.image),
                                                                                     title: L10n.Buy.cardNumber,

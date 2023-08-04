@@ -145,3 +145,9 @@ class PaymentCardsWorker: BaseApiWorker<PaymentCardsMapper> {
         return ExchangeEndpoints.paymentInstruments.url
     }
 }
+
+class SellPaymentCardsWorker: BaseApiWorker<PaymentCardsMapper> {
+    override func getUrl() -> String {
+        return ExchangeEndpoints.sellPaymentInstruments.url
+    }
+}

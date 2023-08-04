@@ -139,20 +139,22 @@ class BuyInteractor: NSObject, Interactor, BuyViewActions {
     func selectPaymentMethod(viewAction: BuyModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
         
-        let item = AssetModels.Item(type: dataStore?.paymentMethod,
-                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
-        prepareCurrencies(viewAction: item)
-        
-        guard let supportedCurrencies = dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
-            presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
-            return
-        }
-        
-        let isSelectedCurencySupported = supportedCurrencies.contains(amount?.currency.code.lowercased() ?? "")
-        guard let currency = isSelectedCurencySupported ? amount?.currency : dataStore?.currencies.first else { return }
-        amount = .zero(currency)
-        
-        setAmount(viewAction: .init(currency: currency.code, didFinish: true))
+        getPayments(viewAction: .init(setAmount: false), completion: { [weak self] in
+            let item = AssetModels.Item(type: self?.dataStore?.paymentMethod,
+                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+            self?.prepareCurrencies(viewAction: item)
+            
+            guard let supportedCurrencies = self?.dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+                return
+            }
+            
+            let isSelectedCurencySupported = supportedCurrencies.contains(self?.amount?.currency.code.lowercased() ?? "")
+            guard let currency = isSelectedCurencySupported ? self?.amount?.currency : self?.dataStore?.currencies.first else { return }
+            self?.amount = .zero(currency)
+            
+            self?.setAmount(viewAction: .init(currency: currency.code, didFinish: true))
+        })
     }
     
     func retryPaymentMethod(viewAction: BuyModels.RetryPaymentMethod.ViewAction) {
