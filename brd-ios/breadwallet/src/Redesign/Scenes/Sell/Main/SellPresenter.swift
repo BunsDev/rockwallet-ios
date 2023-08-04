@@ -170,7 +170,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
         
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
-                                                           perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
+                                                           daily: .init(title: .text(L10n.Buy.perTransactionLimit),
                                                                                  value: .text("\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
                                                                          value: .text("\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
