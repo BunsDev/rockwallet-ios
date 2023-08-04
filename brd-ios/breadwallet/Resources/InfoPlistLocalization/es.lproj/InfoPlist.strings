@@ -59,6 +59,8 @@
 
 "Account.BlockedAccount.Title" = "Your RockWallet account is currently disabled.";
 
+"Account.BuyLimitsPerPayment" = "Buy limits (per payment method)";
+
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Modifica tu email";
 
@@ -214,6 +216,8 @@
 "Account.SelectCountry" = "Selecciona tu país";
 
 "Account.SelectState" = "Seleccionar estado";
+
+"Account.SellLimits" = "Sell limits";
 
 "Account.SignIn" = "Sign in";
 
@@ -3167,6 +3171,8 @@
 /* Pending swap label in transaction view */
 "Transaction.PendingSwap" = "Cambio pendiente";
 
+"Transaction.pendingWithdrawalWithCard" = "Pending withdrawal with card";
+
 "Transaction.PendingWithdrawWithAch" = "Pending withdraw with ACH";
 
 "Transaction.PendingWithdrawWithInstantBuy" = "Pending purchase with Instant Buy";
@@ -3227,9 +3233,13 @@
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "Esperando confirmación. Algunos comerciantes requieren confirmación para completar una transacción. Tiempo estimado: 1-2 horas.";
 
+"Transaction.withdarwalWithCardComplete" = "Withdrawal to card successful";
+
 "Transaction.WithdrawalComplete" = "Withdrawn to bank account";
 
 "Transaction.WithdrawalFailed" = "Withdrawal failed";
+
+"Transaction.withdrawalWithCardFailed" = "Withdrawal to card unsuccessful";
 
 "Transaction.WithdrawFailedWithAch" = "Withdraw with ACH failed";
 

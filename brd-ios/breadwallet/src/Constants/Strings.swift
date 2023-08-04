@@ -75,6 +75,8 @@ internal enum L10n {
     internal static let balance = L10n.tr("Localizable", "Account.balance", fallback: "Your balance")
     /// Before confirm photo label in create account screen
     internal static let beforeConfirm = L10n.tr("Localizable", "Account.BeforeConfirm", fallback: "Before you confirm, please:")
+    /// Buy limits (per payment method)
+    internal static let buyLimitsPerPayment = L10n.tr("Localizable", "Account.BuyLimitsPerPayment", fallback: "Buy limits (per payment method)")
     /// Change your email title on registration flow
     internal static let changeEmail = L10n.tr("Localizable", "Account.ChangeEmail", fallback: "Change your email")
     /// Check your email
@@ -216,6 +218,8 @@ internal enum L10n {
     internal static let selectCountry = L10n.tr("Localizable", "Account.SelectCountry", fallback: "Select country")
     /// Select state
     internal static let selectState = L10n.tr("Localizable", "Account.SelectState", fallback: "Select state")
+    /// Sell limits
+    internal static let sellLimits = L10n.tr("Localizable", "Account.SellLimits", fallback: "Sell limits")
     /// Sign in
     internal static let signIn = L10n.tr("Localizable", "Account.SignIn", fallback: "Sign in")
     /// Social Security Number
@@ -1382,9 +1386,9 @@ internal enum L10n {
     internal static func notEnoughBalance(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.notEnoughBalance", String(describing: p1), fallback: "You don’t have enough %@ in your wallet in order to transfer this type of token.")
     }
-    /// The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.
+    /// The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.
     internal static func overDailyLimit(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.overDailyLimit", String(describing: p1), fallback: "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.")
+      return L10n.tr("Localizable", "ErrorMessages.overDailyLimit", String(describing: p1), fallback: "The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.")
     }
     /// Over exchange limit.
     internal static let overExchangeLimit = L10n.tr("Localizable", "ErrorMessages.overExchangeLimit", fallback: "Over exchange limit.")
@@ -1392,9 +1396,9 @@ internal enum L10n {
     internal static func overLifetimeLimit(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimit", String(describing: p1), fallback: "The amount is higher than your lifetime limit of %@ USD. Please upgrade your account or enter a lower amount.")
     }
-    /// The amount is higher than your daily limit of %@ USD. Please enter a lower amount.
+    /// The amount is higher than your weekly limit of %@ USD. Please enter a lower amount.
     internal static func overLifetimeLimitLevel2(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimitLevel2", String(describing: p1), fallback: "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.")
+      return L10n.tr("Localizable", "ErrorMessages.overLifetimeLimitLevel2", String(describing: p1), fallback: "The amount is higher than your weekly limit of %@ USD. Please enter a lower amount.")
     }
     /// This Paymail is already taken
     internal static let paymailAlreadyTaken = L10n.tr("Localizable", "ErrorMessages.PaymailAlreadyTaken", fallback: "This Paymail is already taken")
@@ -3090,8 +3094,10 @@ internal enum L10n {
     internal static let pendingPurchaseWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingPurchaseWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Pending swap label in transaction view
     internal static let pendingSwap = L10n.tr("Localizable", "Transaction.PendingSwap", fallback: "Pending swap")
-    /// Pending withdraw with ACH
-    internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdraw with ACH")
+    /// Pending withdrawal with card
+    internal static let pendingWithdrawalWithCard = L10n.tr("Localizable", "Transaction.pendingWithdrawalWithCard", fallback: "Pending withdrawal with card")
+    /// Pending withdrawal with ACH
+    internal static let pendingWithdrawWithAch = L10n.tr("Localizable", "Transaction.PendingWithdrawWithAch", fallback: "Pending withdrawal with ACH")
     /// Pending purchase with Instant Buy
     internal static let pendingWithdrawWithInstantBuy = L10n.tr("Localizable", "Transaction.PendingWithdrawWithInstantBuy", fallback: "Pending purchase with Instant Buy")
     /// Purchased label in transaction view
@@ -3168,10 +3174,14 @@ internal enum L10n {
     }
     /// Waiting to be confirmed string
     internal static let waiting = L10n.tr("Localizable", "Transaction.waiting", fallback: "Waiting to be confirmed. Some merchants require confirmation to complete a transaction. Estimated time: 1-2 hours.")
+    /// Withdrawal to card successful
+    internal static let withdarwalWithCardComplete = L10n.tr("Localizable", "Transaction.withdarwalWithCardComplete", fallback: "Withdrawal to card successful")
     /// Withdrawn to bank account
     internal static let withdrawalComplete = L10n.tr("Localizable", "Transaction.WithdrawalComplete", fallback: "Withdrawn to bank account")
     /// Withdrawal failed
     internal static let withdrawalFailed = L10n.tr("Localizable", "Transaction.WithdrawalFailed", fallback: "Withdrawal failed")
+    /// Withdrawal to card unsuccessful
+    internal static let withdrawalWithCardFailed = L10n.tr("Localizable", "Transaction.withdrawalWithCardFailed", fallback: "Withdrawal to card unsuccessful")
     /// Withdrawal unsuccessful
     internal static let withdrawFailedWithAch = L10n.tr("Localizable", "Transaction.WithdrawFailedWithAch", fallback: "Withdrawal unsuccessful")
     /// Withdrawal successful
