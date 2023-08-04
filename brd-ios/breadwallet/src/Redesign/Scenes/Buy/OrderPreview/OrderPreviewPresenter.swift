@@ -258,7 +258,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let rate = String(format: Constant.exchangeFormat, toAmount.currency.code, ExchangeFormatter.fiat.string(for: 1 / quote.exchangeRate) ?? "", fiatCurrency)
         
         let cardAchFee: TitleValueViewModel = isAchAccount ?
-            .init(title: .text(L10n.Sell.achFee),
+            .init(title: isInstantAch ? .text("\(L10n.Sell.achFee) (\(L10n.Buy.Ach.Hybrid.title))") : .text(L10n.Sell.achFee),
                   value: .text(cardFeeText)) :
             .init(title: .text(L10n.Swap.cardFee),
                   value: .text(cardFeeText),
