@@ -104,6 +104,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                     presentationStyle: .currentContext) { [weak self] vc in
             vc.dataStore?.isAddingEnabled = true
             vc.dataStore?.isSelectingEnabled = exchangeType == .buyCard || exchangeType == .sellCard
+            vc.dataStore?.fromCardWithdrawal = exchangeType == .sellCard
             vc.dataStore?.items = cards
             let backButtonVisible = self?.navigationController.children.last is BillingAddressViewController
             vc.navigationItem.hidesBackButton = backButtonVisible

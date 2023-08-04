@@ -62,6 +62,9 @@ class ItemSelectionViewController: BaseTableViewController<ExchangeCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+        case .banner:
+            cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
+            
         case .addItem:
             cell = self.tableView(tableView, addItemCellForRowAt: indexPath)
             
@@ -73,7 +76,25 @@ class ItemSelectionViewController: BaseTableViewController<ExchangeCoordinator,
         }
         
         cell.setBackground(with: Presets.Background.transparent)
-        cell.contentView.setupCustomMargins(vertical: .medium, horizontal: .zero)
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, infoViewCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? InfoViewModel,
+              let cell: WrapperTableViewCell<WrapperView<FEInfoView>> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.setup { view in
+                view.configure(with: Presets.InfoView.error)
+                view.setup(with: model)
+                view.content.setupCustomMargins(all: .large)
+            }
+            view.setupCustomMargins(horizontal: .large)
+        }
         
         return cell
     }

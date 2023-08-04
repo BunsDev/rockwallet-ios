@@ -28,8 +28,12 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
         if isAddingEnabled {
             sections.insert(Models.Section.addItem, at: 0)
         }
+        if item.fromCardWithdrawal {
+            sections.insert(Models.Section.banner, at: 0)
+        }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
+            Models.Section.banner: [InfoViewModel(description: prepareCardWithdrawalBanner(), dismissType: .persistent)],
             Models.Section.addItem: [L10n.Swap.addItem],
             Models.Section.items: items
         ]
@@ -64,6 +68,14 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
         viewController?.displayRemovePaymentSuccess(responseDisplay: .init())
     }
     
-    // MARK: - Additional Helpers
-
+        // MARK: - Additional Helpers
+        
+    private func prepareCardWithdrawalBanner() -> LabelViewModel {
+        let attributedString = NSMutableAttributedString(string: L10n.Sell.visaDebitSupport)
+        
+        let boldRange = attributedString.mutableString.range(of: L10n.Sell.visaDebit)
+        attributedString.addAttribute(.font, value: Fonts.Subtitle.two, range: boldRange)
+        
+        return .attributedText(attributedString)
+    }
 }
