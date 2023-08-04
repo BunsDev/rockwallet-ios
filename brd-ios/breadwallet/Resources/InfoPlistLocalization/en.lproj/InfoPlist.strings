@@ -3167,7 +3167,9 @@
 /* Pending swap label in transaction view */
 "Transaction.PendingSwap" = "Pending swap";
 
-"Transaction.PendingWithdrawWithAch" = "Pending withdraw with ACH";
+"Transaction.pendingWithdrawalWithCard" = "Pending withdrawal with card";
+
+"Transaction.PendingWithdrawWithAch" = "Pending withdrawal with ACH";
 
 "Transaction.PendingWithdrawWithInstantBuy" = "Pending purchase with Instant Buy";
 
@@ -3227,9 +3229,13 @@
 /* Waiting to be confirmed string */
 "Transaction.waiting" = "Waiting to be confirmed. Some merchants require confirmation to complete a transaction. Estimated time: 1-2 hours.";
 
+"Transaction.withdarwalWithCardComplete" = "Withdrawal to card successful";
+
 "Transaction.WithdrawalComplete" = "Withdrawn to bank account";
 
 "Transaction.WithdrawalFailed" = "Withdrawal failed";
+
+"Transaction.withdrawalWithCardFailed" = "Withdrawal to card unsuccessful";
 
 "Transaction.WithdrawFailedWithAch" = "Withdrawal unsuccessful";
 
