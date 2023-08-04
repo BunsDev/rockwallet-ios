@@ -2417,6 +2417,8 @@
 
 "Sell.achWithdrawal" = "ACH Withdrawal";
 
+"Sell.cardWithdrawal" = "Card withdrawal";
+
 "Sell.details" = "Sell & Withdraw details";
 
 "Sell.disclaimer" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
@@ -2446,6 +2448,10 @@
 "Sell.title" = "Sell & Withdraw funds";
 
 "Sell.tryAgain" = "Please try again";
+
+"Sell.visaDebit" = "Visa Debit";
+
+"Sell.visaDebitSupport" = "Unfortunately, currently only Visa Debit is supported for withdrawals";
 
 "Sell.widrawToBank" = "Withdraw to";
 
@@ -2669,7 +2675,7 @@
 "Settings.currency" = "Display Currency";
 
 /* e.g. "USD Settings" (settings for how USD is handled) */
-"Settings.currencyPageTitle" = "%@ Settings";
+"Settings.currencyPageTitle" = "%@ Menu";
 
 /* Section title for a collection of different settings screens, one for each currency */
 "Settings.currencySettings" = "Currency Settings";
@@ -2753,7 +2759,7 @@
 "Settings.WebDebugUrl" = "Web Platform Debug URL";
 
 /* Wipe/delete your wallet from the current device. */
-"Settings.wipe" = "Wipe wallet from this device";
+"Settings.wipe" = "Unlink from this device";
 
 /* Share data view body */
 "ShareData.body" = "Help improve RockWallet by sharing your anonymous data with us. This does not include any financial information. We respect your financial privacy.";

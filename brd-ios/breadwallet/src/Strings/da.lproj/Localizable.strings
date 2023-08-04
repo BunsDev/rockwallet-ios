@@ -2417,6 +2417,8 @@
 
 "Sell.achWithdrawal" = "ACH Withdrawal";
 
+"Sell.cardWithdrawal" = "Card withdrawal";
+
 "Sell.details" = "Sell & Withdraw details";
 
 "Sell.disclaimer" = "Minimum withdrawal is %s and maximum is %s per day. At the moment your lifetime limit is %s USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
@@ -2446,6 +2448,10 @@
 "Sell.title" = "Sell & Withdraw funds";
 
 "Sell.tryAgain" = "Please try again";
+
+"Sell.visaDebit" = "Visa Debit";
+
+"Sell.visaDebitSupport" = "Unfortunately, currently only Visa Debit is supported for withdrawals";
 
 "Sell.widrawToBank" = "Withdraw to";
 
