@@ -38,14 +38,13 @@ class CardSelectionViewController: ItemSelectionViewController {
         }
         
         cell.setup { view in
-            let unavailableText = model.paymentMethodStatus.unavailableText
             view.configure(with: .init())
             view.setup(with: .init(title: nil,
                                    subtitle: nil,
                                    logo: model.displayImage,
                                    cardNumber: .text(model.displayName),
                                    expiration: .text(CardDetailsFormatter.formatExpirationDate(month: model.expiryMonth, year: model.expiryYear)),
-                                   errorMessage: model.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil))
+                                   errorMessage: getCardErrorMessage(model: model)))
             
             view.moreButtonCallback = { [weak self] in
                 self?.interactor?.showActionSheetRemovePayment(viewAction: .init(instrumentId: model.id,
@@ -76,8 +75,7 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    logo: .image(Asset.card.image),
                                    cardNumber: .text(L10n.Buy.addDebitCreditCard),
                                    expiration: nil,
-                                   userInteractionEnabled: true,
-                                   errorMessage: nil))
+                                   userInteractionEnabled: true))
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
             
@@ -97,4 +95,16 @@ class CardSelectionViewController: ItemSelectionViewController {
     }
     
     // MARK: - Additional Helpers
+    
+    private func getCardErrorMessage(model: PaymentCard) -> LabelViewModel? {
+        if model.paymentMethodStatus.isProblematic {
+            let unavailableText = model.paymentMethodStatus.unavailableText
+            return .attributedText(unavailableText)
+        } else if model.verifiedToSell == true {
+            let unverifiedCardText = NSMutableAttributedString(string: "Prior to initiating...")
+            return .attributedText(unverifiedCardText)
+        } else {
+            return nil
+        }
+    }
 }

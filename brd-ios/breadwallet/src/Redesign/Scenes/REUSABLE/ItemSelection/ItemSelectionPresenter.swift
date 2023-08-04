@@ -30,8 +30,8 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
         }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
-            Models.Section.items: items,
-            Models.Section.addItem: [L10n.Swap.addItem]
+            Models.Section.addItem: [L10n.Swap.addItem],
+            Models.Section.items: items
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
