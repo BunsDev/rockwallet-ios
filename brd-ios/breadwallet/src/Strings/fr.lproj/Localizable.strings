@@ -1313,6 +1313,8 @@
 /* Accepts 3 parameters:, - currency code, - current balance, - (same) currency code */
 "ErrorMessages.balanceTooLow" = "Vous devez disposer de %s %s dans votre portefeuille pour couvrir les frais de réseau. Veuillez ajouter plus de %s dans votre portefeuille.";
 
+"ErrorMessages.cardRequiresPurchase" = "Prior to initiating any withdrawals to your visa debit, please complete a purchase with this card for validation purposes. Buy with card";
+
 /* Check your internet connection message */
 "ErrorMessages.CheckInternet" = "Veuillez vérifier votre connexion Internet, puis réessayez.";
 
