@@ -59,6 +59,8 @@
 
 "Account.BlockedAccount.Title" = "Your RockWallet account is currently disabled.";
 
+"Account.BuyLimitsPerPayment" = "Buy limits (per payment method)";
+
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Modifier votre adresse e-mail";
 
@@ -214,6 +216,8 @@
 "Account.SelectCountry" = "Sélectionner le pays";
 
 "Account.SelectState" = "Sélectionner un État";
+
+"Account.SellLimits" = "Sell limits";
 
 "Account.SignIn" = "Sign in";
 

@@ -59,6 +59,8 @@
 
 "Account.BlockedAccount.Title" = "Your RockWallet account is currently disabled.";
 
+"Account.BuyLimitsPerPayment" = "Buy limits (per payment method)";
+
 /* Change your email title on registration flow */
 "Account.ChangeEmail" = "Change your email";
 
@@ -214,6 +216,8 @@
 "Account.SelectCountry" = "Select country";
 
 "Account.SelectState" = "Select state";
+
+"Account.SellLimits" = "Sell limits";
 
 "Account.SignIn" = "Sign in";
 
@@ -1374,13 +1378,13 @@
 
 "ErrorMessages.notEnoughBalance" = "You don’t have enough %@ in your wallet in order to transfer this type of token.";
 
-"ErrorMessages.overDailyLimit" = "The amount is higher than your daily limit of %@ USD. Please upgrade your account or enter a lower amount.";
+"ErrorMessages.overDailyLimit" = "The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overExchangeLimit" = "Over exchange limit.";
 
 "ErrorMessages.overLifetimeLimit" = "The amount is higher than your lifetime limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
-"ErrorMessages.overLifetimeLimitLevel2" = "The amount is higher than your daily limit of %@ USD. Please enter a lower amount.";
+"ErrorMessages.overLifetimeLimitLevel2" = "The amount is higher than your weekly limit of %@ USD. Please enter a lower amount.";
 
 "ErrorMessages.PaymailAlreadyTaken" = "This Paymail is already taken";
 
