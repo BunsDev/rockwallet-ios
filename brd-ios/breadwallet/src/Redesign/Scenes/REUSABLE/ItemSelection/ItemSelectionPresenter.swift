@@ -24,12 +24,17 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
             return
         }
         
-        var sections = [Models.Section.items]
-        if isAddingEnabled {
-            sections.insert(Models.Section.addItem, at: 0)
-        }
-        if item.fromCardWithdrawal {
-            sections.insert(Models.Section.banner, at: 0)
+        var sections: [Models.Section] {
+            switch (isAddingEnabled, item.fromCardWithdrawal) {
+            case (true, true):
+                return [.banner, .addItem, .items]
+                
+            case (true, false):
+                return [.banner, .addItem, .items]
+                
+            default:
+                return [.items]
+            }
         }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
