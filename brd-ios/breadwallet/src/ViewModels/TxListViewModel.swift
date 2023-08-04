@@ -98,7 +98,6 @@ struct TxListViewModel: TxViewModel, Hashable {
             
         default:
             status = .pending
-            
         }
         
         switch exchangeType {
@@ -144,13 +143,13 @@ struct TxListViewModel: TxViewModel, Hashable {
     private func handleSellTransactions() -> String {
         switch status {
         case .invalid, .failed, .refunded:
-            return L10n.Transaction.withdrawalFailed
+            return exchangeType == .sellCard ? "Withdrawal to card unsuccessful" : L10n.Transaction.withdrawalFailed
             
         case .complete, .manuallySettled, .confirmed:
-            return L10n.Transaction.withdrawalComplete
+            return exchangeType == .sellCard ? "Withdrawal to card successful" : L10n.Transaction.withdrawalComplete
             
         default:
-            return L10n.Transaction.pendingWithdrawWithAch
+            return exchangeType == .sellCard ? "Pending withdraw with card" : L10n.Transaction.pendingWithdrawWithAch
         }
     }
     

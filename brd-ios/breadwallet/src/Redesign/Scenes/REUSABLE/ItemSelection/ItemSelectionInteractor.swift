@@ -74,7 +74,8 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
     
     func findAddress(viewAction: ItemSelectionModels.FindAddress.ViewAction) {
         guard let input = viewAction.input, !input.isEmpty else {
-            presenter?.presentData(actionResponse: .init(item: Models.Item(items: nil, isAddingEnabled: false, fromCardWithdrawal: dataStore?.fromCardWithdrawal ?? false)))
+            let fromCardWithdrawal = dataStore?.fromCardWithdrawal ?? false
+            presenter?.presentData(actionResponse: .init(item: Models.Item(items: nil, isAddingEnabled: false, fromCardWithdrawal: fromCardWithdrawal)))
             return
         }
         
