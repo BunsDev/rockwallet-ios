@@ -2449,6 +2449,10 @@
 
 "Sell.tryAgain" = "Please try again";
 
+"Sell.visaDebit" = "Visa Debit";
+
+"Sell.visaDebitSupport" = "Unfortunately, currently only Visa Debit is supported for withdrawals";
+
 "Sell.widrawToBank" = "Withdraw to";
 
 "Sell.WithdrawalErrorText" = "Please try again and if the issue persists, please contact customer support";
