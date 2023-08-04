@@ -98,8 +98,8 @@ enum VerificationStatus: Hashable {
         let profile = UserManager.shared.profile
         let canUseAch = profile?.kycAccessRights.hasAchAccess ?? false
         let swapAllowanceDaily = ExchangeFormatter.current.string(for: profile?.swapAllowanceDaily) ?? ""
-        let buyAllowanceDaily = ExchangeFormatter.current.string(for: profile?.buyAllowanceDaily) ?? ""
-        let achAllowanceDaily = ExchangeFormatter.current.string(for: profile?.buyAchAllowanceDaily) ?? ""
+        let buyAllowanceWeekly = ExchangeFormatter.current.string(for: profile?.buyAllowanceWeekly) ?? ""
+        let sellAllowanceWeekly = ExchangeFormatter.current.string(for: profile?.sellAchAllowanceWeekly) ?? ""
         
         switch self {
         case .none, .email, .levelOne, .levelTwo(.notStarted), .levelTwo(.kycInfoProvided):
@@ -121,13 +121,15 @@ enum VerificationStatus: Hashable {
                                  headerTrailing: .init(image: Asset.info.image),
                                  status: VerificationStatus.levelTwo(.levelTwo),
                                  swapLimits: .text(L10n.Swap.swapLimit),
-                                 buyLimits: .text(L10n.Buy.buyLimit),
+                                 buyLimits: .text(profile?.kycAccessRights.hasAchAccess ?? false ?
+                                                  "Buy limits (per payment method)" : L10n.Buy.buyLimit),
+                                 sellLimits: .text("Sell limits"),
                                  swapLimitsValue: .init(title: .text(L10n.Account.daily),
                                                         value: .text("\(swapAllowanceDaily) \(Constant.usdCurrencyCode)")),
-                                 buyDailyLimitsView: .init(title: .text("\(L10n.Account.daily) (\(L10n.Buy.card))"),
-                                                           value: .text("\(buyAllowanceDaily) \(Constant.usdCurrencyCode)")),
-                                 buyAchDailyLimitsView: .init(title: .text(L10n.Account.achDailyLimits),
-                                                              value: .text("\(achAllowanceDaily) \(Constant.usdCurrencyCode)")),
+                                 buyDailyLimitsView: .init(title: .text(L10n.Account.weekly),
+                                                           value: .text("\(buyAllowanceWeekly) \(Constant.usdCurrencyCode)")),
+                                 sellLimitsView: .init(title: .text(L10n.Account.weekly),
+                                                       value: .text("\(sellAllowanceWeekly) \(Constant.usdCurrencyCode)")),
                                  dismissType: .persistent,
                                  canUseAch: canUseAch)
         case .levelTwo(.expired), .levelTwo(.resubmit):
