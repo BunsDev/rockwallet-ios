@@ -2430,6 +2430,10 @@ internal enum L10n {
     internal static let title = L10n.tr("Localizable", "Sell.title", fallback: "Sell & Withdraw funds")
     /// Please try again
     internal static let tryAgain = L10n.tr("Localizable", "Sell.tryAgain", fallback: "Please try again")
+    /// Visa Debit
+    internal static let visaDebit = L10n.tr("Localizable", "Sell.visaDebit", fallback: "Visa Debit")
+    /// Unfortunately, currently only Visa Debit is supported for withdrawals
+    internal static let visaDebitSupport = L10n.tr("Localizable", "Sell.visaDebitSupport", fallback: "Unfortunately, currently only Visa Debit is supported for withdrawals")
     /// Withdraw to
     internal static let widrawToBank = L10n.tr("Localizable", "Sell.widrawToBank", fallback: "Withdraw to")
     /// Please try again and if the issue persists, please contact customer support
