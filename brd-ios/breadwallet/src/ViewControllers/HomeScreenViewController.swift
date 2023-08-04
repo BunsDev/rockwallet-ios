@@ -378,6 +378,10 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
             self.didTapSell?()
         }
         
+        Store.subscribe(self, name: .showBuy) { _ in
+            self.didTapBuy?(.card)
+        }
+        
         Reachability.addDidChangeCallback({ [weak self] isReachable in
             PromptPresenter.shared.hidePrompt(.noInternet)
             

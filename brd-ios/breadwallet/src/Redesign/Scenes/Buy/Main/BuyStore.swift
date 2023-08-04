@@ -29,6 +29,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var to: Decimal?
     var isFromBuy: Bool = true
     var paymentMethod: PaymentCard.PaymentType?
+    var exchangeType: ExchangeType? { return paymentMethod == .ach ? .buyAch : .buyCard}
     var publicToken: String?
     var mask: String?
     var limits: NSMutableAttributedString? {

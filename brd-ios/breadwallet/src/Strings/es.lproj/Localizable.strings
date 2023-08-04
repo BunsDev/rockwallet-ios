@@ -1313,6 +1313,8 @@
 /* Accepts 3 parameters:, - currency code, - current balance, - (same) currency code */
 "ErrorMessages.balanceTooLow" = "Necesitas %@ %@ en tu monedero para cubrir las tarifas de red. Añade más %@ a tu monedero.";
 
+"ErrorMessages.cardRequiresPurchase" = "Prior to initiating any withdrawals to your visa debit, please complete a purchase with this card for validation purposes. Buy with card";
+
 /* Check your internet connection message */
 "ErrorMessages.CheckInternet" = "Por favor, comprueba tu conexión a Internet e inténtalo de nuevo más tarde.";
 
@@ -2448,6 +2450,10 @@
 "Sell.title" = "Sell & Withdraw funds";
 
 "Sell.tryAgain" = "Please try again";
+
+"Sell.visaDebit" = "Visa Debit";
+
+"Sell.visaDebitSupport" = "Unfortunately, currently only Visa Debit is supported for withdrawals";
 
 "Sell.widrawToBank" = "Withdraw to";
 

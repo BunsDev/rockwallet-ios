@@ -142,7 +142,7 @@ class ProfileViewController: BaseTableViewController<ProfileCoordinator,
         switch responseDisplay.item {
         case .paymentMethods:
             guard let paymentCards = responseDisplay.paymentCards else { return }
-            coordinator?.showCardSelector(cards: paymentCards, selected: nil, isFromBuy: false)
+            coordinator?.showCardSelector(cards: paymentCards, selected: nil)
             
         case .preferences:
             coordinator?.showPreferences()

@@ -124,11 +124,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         if paymentTypes.count >= segment {
             let paymentType = paymentTypes[segment]
             
-            interactor?.dataStore?.paymentMethod = paymentType
-            interactor?.getPayments(viewAction: .init(setAmount: false), completion: { [weak self] in
-                self?.interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
-            })
-            
+            interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
             GoogleAnalytics.logEvent(GoogleAnalytics.Buy(type: paymentType.rawValue))
         }
     }
