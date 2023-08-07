@@ -23,7 +23,7 @@ struct PaymentCardsResponseData: ModelResponse {
         var status: String?
         var cardType: String?
         var paymentMethodStatus: String?
-        var verifiedToSell: Bool?
+        var usedOnBuy: Bool?
     }
     
     var paymentInstruments: [PaymentInstrument]
@@ -132,7 +132,7 @@ class PaymentCardsMapper: ModelMapper<PaymentCardsResponseData, [PaymentCard]> {
                                status: PaymentCard.Status(rawValue: $0.status ?? "") ?? .none,
                                cardType: PaymentCard.CardType(rawValue: $0.cardType ?? "") ?? .none,
                                paymentMethodStatus: PaymentCard.PaymentMethodStatus(rawValue: $0.paymentMethodStatus ?? "") ?? .none,
-                               verifiedToSell: $0.verifiedToSell)
+                               verifiedToSell: $0.usedOnBuy)
         } ?? []
     }
 }
