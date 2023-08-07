@@ -30,7 +30,7 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
                 return [.banner, .addItem, .items]
                 
             case (true, false):
-                return [.banner, .addItem, .items]
+                return [.addItem, .items]
                 
             default:
                 return [.items]
