@@ -23,7 +23,7 @@ protocol ItemSelectionActionResponses: BaseActionResponses, FetchActionResponses
     func presentRemovePaymentMessage(actionResponse: ItemSelectionModels.RemovePayment.ActionResponse)
 }
 
-protocol ItemSelectionResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol ItemSelectionResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayRemovePaymentPopup(responseDisplay: ItemSelectionModels.RemovePaymenetPopup.ResponseDisplay)
     func displayRemovePaymentSuccess(responseDisplay: ItemSelectionModels.RemovePayment.ResponseDisplay)
 }

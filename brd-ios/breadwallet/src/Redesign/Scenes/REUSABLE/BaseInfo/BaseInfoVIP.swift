@@ -20,7 +20,7 @@ protocol BaseInfoActionResponses: BaseActionResponses, FetchActionResponses {
     func presentAssetSelectionData(actionResponse: BaseInfoModels.Assets.ActionResponse)
 }
 
-protocol BaseInfoResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol BaseInfoResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayAssetSelectionData(responseDisplay: BaseInfoModels.Assets.ResponseDisplay)
 }
 

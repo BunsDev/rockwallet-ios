@@ -172,12 +172,14 @@ class PaymailAddressViewController: BaseTableViewController<AccountCoordinator,
     func displayValidate(responseDisplay: PaymailAddressModels.Validate.ResponseDisplay) {
         let isValid = responseDisplay.isValid
         
-        continueButton.viewModel?.enabled = isValid
-        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
-        
         _ = getFieldCell(for: .emailView)?.setup { view in
             view.setup(with: responseDisplay.emailModel)
         }
+        
+        tableView.invalidateTableViewIntrinsicContentSize()
+        
+        continueButton.viewModel?.enabled = isValid
+        verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
 
     // MARK: - Additional Helpers

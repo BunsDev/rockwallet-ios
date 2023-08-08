@@ -33,9 +33,9 @@ struct BuyOrderViewModel: ViewModel {
     var currencyAmountName: LabelViewModel?
     var rate: TitleValueViewModel?
     var amount: TitleValueViewModel
-    var cardFee: TitleValueViewModel
+    var cardFee: TitleValueViewModel?
     var instantBuyFee: TitleValueViewModel?
-    var networkFee: TitleValueViewModel
+    var networkFee: TitleValueViewModel?
     var totalCost: TitleValueViewModel
     var paymentMethod: PaymentMethodViewModel?
     var exceedInstantBuyLimit: Bool?
@@ -125,6 +125,13 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         return view
     }()
     
+    private lazy var paymentLineView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = LightColors.Outline.one.cgColor
+        return view
+    }()
+    
     private lazy var paymentMethodView: PaymentMethodView = {
         let view = PaymentMethodView()
         return view
@@ -193,6 +200,11 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
             }
         }
         
+        mainStack.addArrangedSubview(paymentLineView)
+        paymentLineView.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.minimum.rawValue)
+        }
+        
         mainStack.addArrangedSubview(paymentMethodView)
         
         cardFeeView.didTapInfoButton = { [weak self] in
@@ -251,11 +263,14 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         
         amountView.setup(with: viewModel?.amount)
         cardFeeView.setup(with: viewModel?.cardFee)
+        cardFeeView.isHidden = viewModel?.cardFee == nil
         
         instantBuyFeeView.setup(with: viewModel?.instantBuyFee)
         instantBuyFeeView.isHidden = viewModel?.instantBuyFee == nil
         
         networkFeeView.setup(with: viewModel?.networkFee)
+        networkFeeView.isHidden = viewModel?.networkFee == nil
+        
         totalCostView.setup(with: viewModel?.totalCost)
         
         paymentMethodView.setup(with: viewModel?.paymentMethod)

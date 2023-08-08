@@ -21,7 +21,7 @@ protocol BackupCodesActionResponses: BaseActionResponses, FetchActionResponses {
     func presentSkipSaving(actionResponse: BackupCodesModels.SkipBackupCodeSaving.ActionResponse)
 }
 
-protocol BackupCodesResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol BackupCodesResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displaySkipSaving(responseDisplay: BackupCodesModels.SkipBackupCodeSaving.ResponseDisplay)
 }
 

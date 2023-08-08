@@ -1,5 +1,5 @@
 // 
-//  AchPaymentModels.swift
+//  PaymentMethodsModels.swift
 //  breadwallet
 //
 //  Created by Rok on 12/12/2022.
@@ -11,14 +11,22 @@
 import Foundation
 import LinkKit
 
-enum AchPaymentModels {
+enum PaymentMethodsModels {
     enum Get {
         struct ViewAction {
-            var openCards: Bool?
+            var openCards: Bool = false
+            var setAmount: Bool = true
         }
         
         struct ActionResponse {
             var item: PaymentCard?
+        }
+    }
+    
+    struct SetPaymentCard {
+        struct ViewAction {
+            var card: PaymentCard?
+            var setAmount: Bool
         }
     }
     

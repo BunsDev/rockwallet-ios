@@ -23,7 +23,7 @@ class SwapInteractor: NSObject, Interactor, SwapViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         let item = AssetModels.Item(type: .card,
                                     achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
-
+        
         prepareCurrencies(viewAction: item)
         
         guard (dataStore?.supportedCurrencies ?? []).count > 1 else {

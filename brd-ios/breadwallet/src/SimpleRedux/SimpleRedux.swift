@@ -86,6 +86,7 @@ enum TriggerName {
     case promptTwoStep
     case reloadBuy
     case refreshToken
+    case showSell
 }
 
 func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
@@ -175,6 +176,8 @@ func == (lhs: TriggerName, rhs: TriggerName) -> Bool {
     case (.reloadBuy, .reloadBuy):
         return true
     case (.refreshToken, .refreshToken):
+        return true
+    case (.showSell, .showSell):
         return true
     default:
         return false

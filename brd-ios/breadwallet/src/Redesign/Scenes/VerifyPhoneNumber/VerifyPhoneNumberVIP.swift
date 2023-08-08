@@ -26,7 +26,7 @@ protocol VerifyPhoneNumberActionResponses: BaseActionResponses, CountriesAndStat
     func presentConfirm(actionResponse: VerifyPhoneNumberModels.Confirm.ActionResponse)
 }
 
-protocol VerifyPhoneNumberResponseDisplays: AnyObject, BaseResponseDisplays, CountriesAndStatesResponseDisplays {
+protocol VerifyPhoneNumberResponseDisplays: BaseResponseDisplays, CountriesAndStatesResponseDisplays {
     func displayValidate(responseDisplay: VerifyPhoneNumberModels.Validate.ResponseDisplay)
     func displaySetAreaCode(responseDisplay: VerifyPhoneNumberModels.SetAreaCode.ResponseDisplay)
     func displayConfirm(responseDisplay: VerifyPhoneNumberModels.Confirm.ResponseDisplay)

@@ -192,6 +192,8 @@ enum BaseInfoModels {
         case documentVerification
         case documentVerificationRetry
         case limitsAuthentication
+        case livenessCheckLimit
+        case veriffDeclined
         
         var iconName: String {
             switch self {
@@ -205,10 +207,10 @@ enum BaseInfoModels {
         
         var title: String {
             switch self {
-            case .buyCard, .buyAch:
+            case .buyCard, .buyAch, .livenessCheckLimit, .veriffDeclined, .sell:
                 return L10n.Buy.errorProcessingPayment
                 
-            case .swap, .sell:
+            case .swap:
                 return L10n.Swap.errorProcessingTransaction
                 
             case .plaidConnection:
@@ -259,7 +261,7 @@ enum BaseInfoModels {
                 return text
                 
             case .sell:
-                return L10n.Sell.tryAgain
+                return L10n.Sell.withdrawalErrorText
                 
             case .documentVerification:
                 return L10n.Account.IdVerificationRejected.description
@@ -269,6 +271,12 @@ enum BaseInfoModels {
                 
             case .limitsAuthentication:
                 return L10n.Account.VerificationUnsuccessful.description.replacingOccurrences(of: "-", with: "\u{2022}")
+                
+            case .livenessCheckLimit:
+                return L10n.ErrorMessages.LivenessCheckLimit.description
+                
+            case .veriffDeclined:
+                return L10n.ErrorMessages.VeriffDeclined.description
             }
         }
         
@@ -279,6 +287,9 @@ enum BaseInfoModels {
                 
             case .documentVerification:
                 return L10n.Account.contactUs
+                
+            case .livenessCheckLimit, .veriffDeclined:
+                return L10n.ErrorMessages.tryAgainLater
                 
             default:
                 return L10n.PaymentConfirmation.tryAgain
@@ -307,53 +318,14 @@ enum BaseInfoModels {
         case restrictedUSState
         case greyListedCountry
         
-        var iconName: String {
-            return Asset.time.name
-        }
+        var iconName: String { Asset.time.name }
         
-        var title: String {
-            switch self {
-            case .swap, .buy, .restrictedUSState:
-                return L10n.ComingSoon.title
-                
-            case .buyAch, .sell, .greyListedCountry:
-                return L10n.Buy.Ach.notAvailableTitle
-            }
-        }
+        var title: String { L10n.Buy.Ach.notAvailableTitle }
         
-        var description: String {
-            switch self {
-            case .swap, .buy, .restrictedUSState:
-                // TODO: Uncomment this when sell is available and remove L10n.ComingSoon.bodyWithoutSell string
-//                return  L10n.ComingSoon.body
-                return  L10n.ComingSoon.bodyWithoutSell
-                
-            case .buyAch:
-                return  L10n.Buy.Ach.notAvailableBody
-                
-            case .sell, .greyListedCountry:
-                return L10n.Sell.notAvailableBody
-            }
-        }
+        var description: String { L10n.ComingSoon.FeatureUnavailable.subtitle }
         
-        var firstButtonTitle: String? {
-            switch self {
-            case .buyAch:
-                return L10n.Buy.buyWithCardButton
-                
-            default:
-                return L10n.Button.back
-            }
-        }
+        var firstButtonTitle: String? { L10n.Swap.backToHome }
         
-        var secondButtonTitle: String? {
-            switch self {
-            case .buyAch:
-                return L10n.Swap.backToHome
-                
-            default:
-                return L10n.ComingSoon.Buttons.contactSupport
-            }
-        }
+        var secondButtonTitle: String? { nil }
     }
 }

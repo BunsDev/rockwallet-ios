@@ -59,6 +59,80 @@ enum RegistrationConfirmationModels {
         
         // Disable 2FA
         case twoStepDisable
+        
+        // Check your email screen after Forgot Password
+        case forgotPassword
+        
+        var sections: [Section] {
+            switch self {
+            case .account, .twoStepEmail, .twoStepAccountEmailSettings, .twoStepAccountAppSettings,
+                    .twoStepEmailLogin, .twoStepEmailSendFunds, .twoStepEmailBuy, .twoStepEmailRequired,
+                    .twoStepEmailResetPassword, .twoStepDisable:
+                return [.image, .title, .instructions, .input, .help]
+                
+            case .twoStepApp:
+                return [.title, .input]
+                
+            case .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppRequired:
+                return [.title, .input, .help]
+                
+            case .twoStepAppBackupCode, .twoStepAppBuy:
+                return [.title, .instructions, .input, .help]
+                
+            case .forgotPassword:
+                return [.image, .title, .instructions, .help]
+            }
+        }
+        
+        var title: String {
+            switch self {
+            case .account, .twoStepAccountEmailSettings, .twoStepAccountAppSettings:
+                return L10n.AccountCreation.verifyEmail
+                
+            case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .twoStepEmailSendFunds,
+                    .twoStepEmailBuy, .twoStepEmailRequired, .twoStepDisable:
+                return L10n.TwoStep.Email.Confirmation.title
+                
+            case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy, .twoStepAppRequired:
+                return L10n.TwoStep.App.Confirmation.title
+                
+            case .twoStepAppBackupCode:
+                return L10n.TwoStep.App.Confirmation.BackupCode.title
+                
+            case .forgotPassword:
+                return L10n.Account.checkYourEmail
+            }
+        }
+        
+        var buttonTitle: String {
+            switch self {
+            case .forgotPassword:
+                return L10n.Account.resendEmail
+                
+            default:
+                return L10n.AccountCreation.resendCode
+            }
+        }
+        
+        func getInstructions(email: String) -> String? {
+            switch self {
+            case .account, .twoStepAccountEmailSettings, .twoStepAccountAppSettings:
+                return "\(L10n.AccountCreation.enterCode)\(email)"
+                
+            case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .twoStepEmailSendFunds,
+                    .twoStepEmailBuy, .twoStepEmailRequired, .twoStepDisable:
+                return "\(L10n.AccountCreation.enterCode)\(email)"
+                
+            case .twoStepAppBackupCode:
+                return L10n.TwoStep.App.Confirmation.BackupCode.instructions
+                
+            case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy, .twoStepAppRequired:
+                return nil
+                
+            case .forgotPassword:
+                return "\(L10n.Account.passwordRecoverDescription)\(email)"
+            }
+        }
     }
     
     struct Validate {

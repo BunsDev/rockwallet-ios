@@ -291,13 +291,18 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     @objc private func updateFees() {
-        guard let amount = amount else { return }
+        guard let amount else { return }
         guard amount <= balance else {
             _ = handleValidationResult(.insufficientFunds)
             return
         }
-        guard let address = address, !address.isEmpty else {
+        guard let address, !address.isEmpty else {
             _ = handleValidationResult(.invalidAddress)
+            return
+        }
+        
+        if let xrpBalanceError = XRPBalanceValidator.validate(balance: balance, amount: amount, currency: currency) {
+            showToastMessage(model: .init(description: .text(xrpBalanceError)), configuration: Presets.InfoView.error)
             return
         }
         
@@ -337,9 +342,8 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     @objc private func updateFeesMax(depth: Int) {
-        guard let amount = amount else { return }
-        guard let maximum = maximum else { return }
-        guard let address = address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
+        guard let amount, let maximum else { return }
+        guard let address, !address.isEmpty else { return _ = handleValidationResult(.invalidAddress) }
         
         sender.estimateFee(address: address, amount: amount, tier: feeLevel, isStake: false) { [weak self] result in
             DispatchQueue.main.async {
@@ -359,11 +363,9 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
                     }
                     
                     if maximum.currency.isEthereum {
-                        let adjustTokenValue = value.tokenValue * 0.95 // Reduce amount for ETH createTxn API call
-                        value = Amount(tokenString: ExchangeFormatter.current.string(for: adjustTokenValue) ?? "0", currency: value.currency)
                         self?.amountView.forceUpdateAmount(amount: value)
                     } else {
-                        if value != amount && depth < 5 { // Call recursively until the amount + fee = maximum up to 5 iterations
+                        if value != amount && depth < 3 { // Call recursively until the amount + fee = maximum up to 3 iterations
                             self?.amountView.forceUpdateAmount(amount: value)
                             self?.updateFeesMax(depth: depth + 1)
                         }
@@ -528,7 +530,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
         //Payment Protocol Requests do their own validation
         guard paymentProtocolRequest == nil else { return true }
         
-        guard let address = address, !address.isEmpty else {
+        guard let address, !address.isEmpty else {
             showAlert(title: L10n.Alert.error, message: L10n.Send.noAddress)
             return false
         }
@@ -543,7 +545,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        guard let amount = amount, !amount.isZero else {
+        guard let amount, !amount.isZero else {
             showAlert(title: L10n.Alert.error, message: L10n.Send.noAmount)
             return false
         }
@@ -553,14 +555,13 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             return false
         }
         
-        // XRP destination Tag must fit into UInt32
         var attributeText: String?
-        if let attribute = attributeCell?.attribute, currency.isXRP,
-           !attribute.isEmpty {
-            if UInt32(attribute) == nil {
-                showAlert(title: L10n.Alert.error, message: L10n.Send.destinationTag)
-                return false
+        XRPAttributeValidator.validate(from: attributeCell?.attribute,
+                                       currency: currency) { [weak self] attribute in
+            if attribute == nil {
+                self?.showAlert(title: L10n.Alert.error, message: L10n.Send.destinationTag)
             }
+            
             attributeText = attribute
         }
         
@@ -575,7 +576,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
     }
     
     private func handleEstimateFeeError(error: Error) {
-        guard let amount = amount, !amount.isZero else { return }
+        guard let amount, !amount.isZero else { return }
         
         sendButton.isEnabled = false
         
@@ -719,9 +720,7 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             attributeCell?.textField.resignFirstResponder()
         }
         
-        guard let amount = amount,
-              let address = address,
-              let feeBasis = currentFeeBasis else { return }
+        guard let amount, let address, let feeBasis = currentFeeBasis else { return }
         
         let feeCurrency = sender.wallet.feeCurrency
         let fee = Amount(cryptoAmount: feeBasis.fee, currency: feeCurrency)

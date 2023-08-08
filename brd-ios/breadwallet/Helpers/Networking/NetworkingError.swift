@@ -30,6 +30,7 @@ enum NetworkingError: FEError, Equatable {
     case twoStepBlockedAccount
     case twoStepInvalidCodeBlockedAccount
     case inappropriatePaymail
+    case livenessCheckLimit
     
     var errorMessage: String {
         switch self {
@@ -73,7 +74,7 @@ enum NetworkingError: FEError, Equatable {
         case .exchangesUnavailable:
             return .exchangesUnavailable
             
-        case .biometricAuthenticationFailed, .biometricAuthenticationRequired:
+        case .biometricAuthenticationFailed, .biometricAuthenticationRequired, .livenessCheckLimit:
             return .biometricAuthentication
             
         case .twoStepAppRequired, .twoStepEmailRequired:
@@ -150,7 +151,7 @@ enum NetworkingError: FEError, Equatable {
             switch error?.errorType {
             case .exchangesUnavailable:
                 self = .exchangesUnavailable
-            
+                
             default:
                 self = .general(serverMessage)
             }
@@ -160,6 +161,13 @@ enum NetworkingError: FEError, Equatable {
             
         case 1002:
             self = .biometricAuthenticationFailed
+            
+        case 1003:
+            if serverMessage == L10n.ErrorMessages.LivenessCheckLimit.errorMessage {
+                self = .livenessCheckLimit
+            } else {
+                self = .general(serverMessage)
+            }
             
         default:
             return nil

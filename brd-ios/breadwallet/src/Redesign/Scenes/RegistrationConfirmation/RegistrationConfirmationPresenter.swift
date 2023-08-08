@@ -22,63 +22,13 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         let email = item.email ?? ""
         let emailString = ":\n\(email)"
         
-        var sections: [Models.Section] = [
-            .image,
-            .title,
-            .instructions,
-            .input,
-            .help
-        ]
+        let sections: [Models.Section] = confirmationType.sections
         
-        // TODO: Check the designs and clean the whole presentData mess.
-        
-        if confirmationType == .twoStepApp {
-            sections = sections.filter({ $0 != .image })
-            sections = sections.filter({ $0 != .instructions })
-            sections = sections.filter({ $0 != .help })
-        }
-        
-        if confirmationType == .twoStepAppLogin || confirmationType == .twoStepAppResetPassword
-            || confirmationType == .twoStepAppSendFunds || confirmationType == .twoStepAppRequired {
-            sections = sections.filter({ $0 != .image })
-            sections = sections.filter({ $0 != .instructions })
-        }
-        
-        switch confirmationType {
-        case .twoStepAppBuy, .twoStepAppBackupCode:
-            sections = sections.filter({ $0 != .image })
-            
-        default:
-            break
-        }
-        
-        let title: String
-        let instructions: String
-        
-        switch confirmationType {
-        case .account, .twoStepAccountEmailSettings, .twoStepAccountAppSettings:
-            title = L10n.AccountCreation.verifyEmail
-            instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
-            
-        case .twoStepEmail, .twoStepEmailLogin, .twoStepEmailResetPassword, .twoStepEmailSendFunds, .twoStepEmailBuy, .twoStepEmailRequired, .twoStepDisable:
-            title = L10n.TwoStep.Email.Confirmation.title
-            instructions = "\(L10n.AccountCreation.enterCode)\(emailString)"
-            
-        case .twoStepApp, .twoStepAppLogin, .twoStepAppResetPassword, .twoStepAppSendFunds, .twoStepAppBuy, .twoStepAppRequired:
-            title = L10n.TwoStep.App.Confirmation.title
-            instructions = ""
-        
-        case .twoStepAppBackupCode:
-            title = L10n.TwoStep.App.Confirmation.BackupCode.title
-            instructions = L10n.TwoStep.App.Confirmation.BackupCode.instructions
-            
-        }
-        
-        var help: [ButtonViewModel] = [ButtonViewModel(title: L10n.AccountCreation.resendCode,
+        var help: [ButtonViewModel] = [ButtonViewModel(title: confirmationType.buttonTitle,
                                                        isUnderlined: true,
                                                        callback: viewController?.resendCodeTapped)]
         
-        if UserManager.shared.profile?.status == .emailPending {
+        if UserManager.shared.profile?.status == .emailPending || confirmationType == .forgotPassword {
             help.append(ButtonViewModel(title: L10n.AccountCreation.changeEmail,
                                         isUnderlined: true,
                                         callback: viewController?.changeEmailTapped))
@@ -96,21 +46,11 @@ final class RegistrationConfirmationPresenter: NSObject, Presenter, Registration
         }
         
         let sectionRows: [Models.Section: [any Hashable]] = [
-            .image: [
-                ImageViewModel.image(Asset.email.image)
-            ],
-            .title: [
-                LabelViewModel.text(title)
-            ],
-            .instructions: [
-                LabelViewModel.text(instructions)
-            ],
-            .input: [
-                TextFieldModel()
-            ],
-            .help: [
-                MultipleButtonsViewModel(buttons: help)
-            ]
+            .image: [ImageViewModel.image(Asset.email.image)],
+            .title: [LabelViewModel.text(confirmationType.title)],
+            .instructions: [LabelViewModel.text(confirmationType.getInstructions(email: emailString))],
+            .input: [TextFieldModel()],
+            .help: [MultipleButtonsViewModel(buttons: help)]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))

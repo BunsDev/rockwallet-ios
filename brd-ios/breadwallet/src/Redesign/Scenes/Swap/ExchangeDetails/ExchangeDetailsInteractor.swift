@@ -34,7 +34,7 @@ class ExchangeDetailsInteractor: NSObject, Interactor, ExchangeDetailsViewAction
     }
     
     func showInfoPopup(viewAction: ExchangeDetailsModels.InfoPopup.ViewAction) {
-        presenter?.presentInfoPopup(actionResponse: .init())
+        presenter?.presentInfoPopup(actionResponse: .init(isCardFee: viewAction.isCardFee))
     }
     
     // MARK: - Additional helpers

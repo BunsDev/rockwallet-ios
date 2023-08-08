@@ -64,7 +64,7 @@ class VIPViewController<C: CoordinatableRoutes,
     }
     
     lazy var blurView: UIVisualEffectView? = {
-        let blur = UIBlurEffect(style: .regular)
+        let blur = UIBlurEffect(style: .dark)
         let view = UIVisualEffectView(effect: blur)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return view

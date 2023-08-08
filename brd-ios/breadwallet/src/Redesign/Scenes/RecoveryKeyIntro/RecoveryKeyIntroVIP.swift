@@ -22,7 +22,7 @@ protocol RecoveryKeyIntroActionResponses: BaseActionResponses, FetchActionRespon
     func presentToggleTickbox(actionResponse: RecoveryKeyIntroModels.Tickbox.ActionResponse)
 }
 
-protocol RecoveryKeyIntroResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol RecoveryKeyIntroResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayToggleTickbox(responseDisplay: RecoveryKeyIntroModels.Tickbox.ResponseDisplay)
 }
 

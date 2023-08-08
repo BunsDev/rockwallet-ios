@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import WalletKit
 
 extension Scenes {
     static let OrderPreview = OrderPreviewViewController.self
@@ -42,7 +43,7 @@ protocol OrderPreviewActionResponses: BaseActionResponses, FetchActionResponses 
     func presentPreview(actionRespone: OrderPreviewModels.Preview.ActionResponse)
 }
 
-protocol OrderPreviewResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol OrderPreviewResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayTermsAndConditions(responseDisplay: OrderPreviewModels.TermsAndConditions.ResponseDisplay)
     func displayTimeOut(responseDisplay: OrderPreviewModels.ExpirationValidations.ResponseDisplay)
     func displayInfoPopup(responseDisplay: OrderPreviewModels.InfoPopup.ResponseDisplay)
@@ -83,6 +84,7 @@ protocol OrderPreviewRoutes: CoordinatableRoutes {
                           keyStore: KeyStore?,
                           to: Amount?,
                           from: Decimal?,
+                          fromFeeBasis: WalletKit.TransferFeeBasis?,
                           card: PaymentCard?,
                           quote: Quote?,
                           availablePayments: [PaymentCard.PaymentType]?,

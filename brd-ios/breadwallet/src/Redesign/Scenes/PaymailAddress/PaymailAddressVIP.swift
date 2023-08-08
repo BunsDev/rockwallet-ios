@@ -24,7 +24,7 @@ protocol PaymailAddressActionResponses: BaseActionResponses, FetchActionResponse
     func presentSuccessBottomAlert(actionResponse: PaymailAddressModels.BottomAlert.ActionResponse)
 }
 
-protocol PaymailAddressResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol PaymailAddressResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayPaymailSuccess(responseDisplay: PaymailAddressModels.CreatePaymail.ResponseDisplay)
     func displayPaymailPopup(responseDisplay: PaymailAddressModels.InfoPopup.ResponseDisplay)
     func displaySuccessBottomAlert(responseDisplay: PaymailAddressModels.BottomAlert.ResponseDisplay)

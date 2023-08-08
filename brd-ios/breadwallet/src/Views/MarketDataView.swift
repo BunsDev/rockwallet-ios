@@ -55,7 +55,7 @@ struct MarketDataView: View {
     
     func text(_ text: String) -> some View {
         Text(text)
-            .font(Font(Fonts.Body.one))
+            .font(Font(Fonts.Title.six))
             .foregroundColor(textColor)
             .minimumScaleFactor(0.1)
             .lineLimit(1)

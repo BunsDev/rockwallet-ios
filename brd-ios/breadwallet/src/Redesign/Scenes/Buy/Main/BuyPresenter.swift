@@ -13,7 +13,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     
     weak var viewController: BuyViewController?
     
-    var achPaymentModel: CardSelectionViewModel?
+    var achPaymentModel: CardSelectionViewModel? = CardSelectionViewModel()
     private var exchangeRateViewModel: ExchangeRateViewModel = .init()
     
     // MARK: - BuyActionResponses
@@ -40,21 +40,14 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let paymentSegment = SegmentControlViewModel(selectedIndex: selectedPaymentType,
                                                      segments: [.init(image: nil, title: L10n.Buy.buyWithCard),
                                                                 .init(image: nil, title: L10n.Buy.buyWithAch)])
-       
-        let paymentMethodViewModel: CardSelectionViewModel
-        if item.type == .ach && item.achEnabled == true {
-            paymentMethodViewModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
-                                                            subtitle: .text(L10n.Buy.linkBankAccount),
-                                                            userInteractionEnabled: true)
-        } else {
-            paymentMethodViewModel = CardSelectionViewModel()
-        }
         
-        let sectionRows: [AssetModels.Section: [any Hashable]] =  [
+        let sectionRows: [AssetModels.Section: [any Hashable]] = [
             .segment: [paymentSegment],
             .rateAndTimer: [exchangeRateViewModel],
             .swapCard: [SwapCurrencyViewModel(title: .text(L10n.Swap.iWant))],
-            .paymentMethod: [paymentMethodViewModel],
+            .paymentMethod: [
+                achPaymentModel
+            ],
             .accountLimits: [
                 LabelViewModel.text("")
             ],
@@ -86,10 +79,12 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let instantAchLimitText = L10n.Buy.Ach.Instant.infoButtonTitle(instantAchLimitAmount)
         
         cryptoModel = .init(amount: from,
-                            headerInfoButtonTitle: actionResponse.type == .ach ? instantAchLimitText : nil,
+                            headerInfoButtonTitle: actionResponse.type == .ach && instantAchLimit > 0 ? instantAchLimitText : nil,
                             formattedFiatString: formattedFiatString,
                             formattedTokenString: formattedTokenString,
                             title: .text(L10n.Swap.iWant))
+        
+        let unavailableText = actionResponse.card?.paymentMethodStatus.unavailableText
         
         switch actionResponse.type {
         case .ach:
@@ -100,7 +95,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                       subtitle: nil,
                                       logo: .image(Asset.bank.image),
                                       cardNumber: .text(paymentCard.displayName),
-                                      userInteractionEnabled: false)
+                                      userInteractionEnabled: false,
+                                      errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
                     
                 default:
                     cardModel = .init(title: .text(L10n.Buy.achPayments),
@@ -125,7 +121,8 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                 cardModel = .init(logo: paymentCard.displayImage,
                                   cardNumber: .text(paymentCard.displayName),
                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
-                                  userInteractionEnabled: true)
+                                  userInteractionEnabled: true,
+                                  errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
             } else {
                 cardModel = .init(userInteractionEnabled: true)
             }
@@ -165,9 +162,9 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let title = actionResponse.paymentMethod == .card ? L10n.Buy.yourBuyLimits : L10n.Buy.yourAchBuyLimits
         let profile = UserManager.shared.profile
         
-        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.achAllowancePerExchange
-        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.achAllowanceWeekly
-        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.achAllowanceMonthly
+        let perTransactionLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowancePerExchange : profile?.buyAchAllowancePerExchange
+        let weeklyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceWeekly : profile?.buyAchAllowanceWeekly
+        let monthlyLimit = actionResponse.paymentMethod == .card ? profile?.buyAllowanceMonthly : profile?.buyAchAllowanceMonthly
         
         let perTransactionLimitText = ExchangeFormatter.current.string(for: perTransactionLimit) ?? ""
         let weeklyLimitText = ExchangeFormatter.current.string(for: weeklyLimit) ?? ""
@@ -176,11 +173,11 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         let config: WrapperPopupConfiguration<LimitsPopupConfiguration> = .init(wrappedView: .init())
         let wrappedViewModel: LimitsPopupViewModel = .init(title: .text(title),
                                                            perTransaction: .init(title: .text(L10n.Buy.perTransactionLimit),
-                                                                                 value: .text("$\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
+                                                                                 value: .text("\(perTransactionLimitText) \(Constant.usdCurrencyCode)")),
                                                            weekly: .init(title: .text(L10n.Account.weekly),
-                                                                         value: .text("$\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
+                                                                         value: .text("\(weeklyLimitText) \(Constant.usdCurrencyCode)")),
                                                            monthly: .init(title: .text(L10n.Account.monthly),
-                                                                          value: .text("$\(monthlyLimitText) \(Constant.usdCurrencyCode)")))
+                                                                          value: .text("\(monthlyLimitText) \(Constant.usdCurrencyCode)")))
         
         let viewModel: WrapperPopupViewModel<LimitsPopupViewModel> = .init(trailing: .init(image: Asset.close.image),
                                                                            wrappedView: wrappedViewModel,
@@ -207,14 +204,15 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
     // MARK: - Additional Helpers
     
     private func isCustomLimits(for paymentMethod: PaymentCard.PaymentType?) -> Bool {
-        guard let limits = UserManager.shared.profile?.limits else { return false }
+        guard let userLimits = UserManager.shared.profile?.limits else { return false }
+        let limits = userLimits.filter { ($0.interval == .daily || $0.interval == .weekly || $0.interval == .monthly) && $0.isCustom == true }
         
         switch paymentMethod {
         case .card:
-            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyCard })?.isCustom ?? false
+            return !limits.filter({ $0.exchangeType == .buyCard }).isEmpty
             
         case .ach:
-            return limits.first(where: { ($0.interval == .weekly || $0.interval == .monthly) && $0.exchangeType == .buyAch })?.isCustom ?? false
+            return !limits.filter({ $0.exchangeType == .buyAch }).isEmpty
             
         default:
             return false
@@ -237,7 +235,6 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
         if type == .card {
             var button = ButtonViewModel(title: L10n.Buy.increaseYourLimits,
                                          isUnderlined: true)
-            
             button.callback = { [weak self] in
                 self?.viewController?.increaseLimitsTapped()
             }

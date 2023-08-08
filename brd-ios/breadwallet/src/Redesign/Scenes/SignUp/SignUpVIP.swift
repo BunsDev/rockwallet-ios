@@ -26,7 +26,7 @@ protocol SignUpActionResponses: BaseActionResponses, FetchActionResponses {
     func presentNext(actionResponse: SignUpModels.Next.ActionResponse)
 }
 
-protocol SignUpResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol SignUpResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayValidate(responseDisplay: SignUpModels.Validate.ResponseDisplay)
     func displayNext(responseDisplay: SignUpModels.Next.ResponseDisplay)
 }

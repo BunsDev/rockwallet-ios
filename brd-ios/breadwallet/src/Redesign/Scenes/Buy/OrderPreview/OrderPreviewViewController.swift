@@ -266,7 +266,9 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     func displaySubmit(responseDisplay: OrderPreviewModels.Submit.ResponseDisplay) {
         LoadingView.hideIfNeeded()
         
-        let exchangeType: ExchangeType = dataStore?.isAchAccount ?? false ? .buyAch : .buyCard
+        guard let isAch = dataStore?.isAchAccount, let type = dataStore?.type else { return }
+        
+        let exchangeType: ExchangeType = isAch ? (type == .sell ? .sell : .buyAch) : .buyCard
         coordinator?.showSuccess(reason: responseDisplay.reason,
                                  itemId: responseDisplay.paymentReference,
                                  exchangeType: exchangeType)
@@ -302,7 +304,7 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     }
     
     func displayBiometricStatusFailed(responseDisplay: OrderPreviewModels.BiometricStatusFailed.ResponseDisplay) {
-        coordinator?.showFailure(reason: .buyCard(nil))
+        coordinator?.showFailure(reason: responseDisplay.reason)
     }
     
     func displayThreeDSecure(responseDisplay: OrderPreviewModels.ThreeDSecure.ResponseDisplay) {

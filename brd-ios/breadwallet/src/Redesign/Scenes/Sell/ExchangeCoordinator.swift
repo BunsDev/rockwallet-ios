@@ -16,6 +16,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                           keyStore: KeyStore?,
                           to: Amount?,
                           from: Decimal?,
+                          fromFeeBasis: TransferFeeBasis? = nil,
                           card: PaymentCard?,
                           quote: Quote?,
                           availablePayments: [PaymentCard.PaymentType]?,
@@ -25,6 +26,7 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
             vc.dataStore?.from = from
+            vc.dataStore?.fromFeeBasis = fromFeeBasis
             vc.dataStore?.to = to
             vc.dataStore?.card = card
             vc.dataStore?.quote = quote
@@ -90,28 +92,30 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
         }
     }
     
-    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, isFromBuy: Bool = true, completion: (() -> Void)? = nil) {
+    func showCardSelector(cards: [PaymentCard], selected: ((PaymentCard?) -> Void)?, isFromBuy: Bool = true) {
         guard !cards.isEmpty else {
             openModally(coordinator: ItemSelectionCoordinator.self,
                         scene: Scenes.AddCard)
             return
         }
+        
         openModally(coordinator: ItemSelectionCoordinator.self,
                     scene: Scenes.CardSelection,
-                    presentationStyle: .currentContext) { vc in
+                    presentationStyle: .currentContext) { [weak self] vc in
             vc?.dataStore?.isAddingEnabled = true
             vc?.dataStore?.isSelectingEnabled = isFromBuy
             vc?.dataStore?.items = cards
-            let backButtonVisible = self.navigationController.children.last is BillingAddressViewController
+            let backButtonVisible = self?.navigationController.children.last is BillingAddressViewController
             vc?.navigationItem.hidesBackButton = backButtonVisible
             
             vc?.itemSelected = { item in
                 selected?(item as? PaymentCard)
-                self.popToRoot()
+                
+                self?.popToRoot()
             }
             
             vc?.paymentCardDeleted = {
-                completion?()
+                selected?(nil)
             }
         }
     }
@@ -146,11 +150,6 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
         let vc = ManageWalletsViewController(assetCollection: assetCollection, coreSystem: coreSystem)
         let nc = RootNavigationController(rootViewController: vc)
         navigationController.present(nc, animated: true)
-    }
-    
-    func dismissCardsSelectionFlow(completion: (() -> Void)?) {
-        navigationController.dismiss(animated: true, completion: completion)
-        parentCoordinator?.childDidFinish(child: self)
     }
 }
 

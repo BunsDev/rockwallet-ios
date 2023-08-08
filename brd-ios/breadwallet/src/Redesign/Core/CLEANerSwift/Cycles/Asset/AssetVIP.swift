@@ -11,7 +11,7 @@
 import UIKit
 import WalletKit
 
-protocol AssetViewActions {
+protocol AssetViewActions: BaseViewActions, FetchViewActions {
     func getExchangeRate(viewAction: AssetModels.ExchangeRate.ViewAction, completion: (() -> Void)?)
     func getCoingeckoExchangeRate(viewAction: AssetModels.CoingeckoRate.ViewAction, completion: (() -> Void)?)
     func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?)
@@ -19,13 +19,13 @@ protocol AssetViewActions {
     func prepareCurrencies(viewAction: AssetModels.Item)
 }
 
-protocol AssetActionResponses: AnyObject {
+protocol AssetActionResponses: BaseActionResponses, FetchActionResponses {
     func presentExchangeRate(actionResponse: AssetModels.ExchangeRate.ActionResponse, completion: (() -> Void)?)
     func handleError(actionResponse: AssetModels.Asset.ActionResponse) -> Bool
     func presentAmount(actionResponse: AssetModels.Asset.ActionResponse)
 }
 
-protocol AssetResponseDisplays: AnyObject {
+protocol AssetResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     var tableView: ContentSizedTableView { get set }
     var continueButton: FEButton { get set }
     
@@ -36,7 +36,7 @@ protocol AssetResponseDisplays: AnyObject {
     func displayAmount(responseDisplay: AssetModels.Asset.ResponseDisplay)
 }
 
-protocol AssetDataStore: NSObject, TwoStepDataStore {
+protocol AssetDataStore: BaseDataStore, FetchDataStore, TwoStepDataStore {
     var limits: NSMutableAttributedString? { get }
     var fromCode: String { get }
     var toCode: String { get }
@@ -115,9 +115,9 @@ extension Presenter where Self: AssetActionResponses,
            let isFromBuy = actionResponse.isFromBuy {
             var text: String
             if isFromBuy {
-                text = String(format: "1 %@ = $%@ %@", to, ExchangeNumberFormatter().string(for: 1 / quote.exchangeRate) ?? "", from.uppercased())
+                text = String(format: Constant.exchangeFormat, to, ExchangeNumberFormatter().string(for: 1 / quote.exchangeRate) ?? "", from.uppercased())
             } else {
-                text = String(format: "1 %@ = %@ %@", from.uppercased(), ExchangeNumberFormatter().string(for: quote.exchangeRate) ?? "", to)
+                text = String(format: Constant.exchangeFormat, from.uppercased(), ExchangeNumberFormatter().string(for: quote.exchangeRate) ?? "", to)
             }
             
             exchangeRateViewModel = ExchangeRateViewModel(exchangeRate: text,
@@ -139,7 +139,6 @@ extension Presenter where Self: AssetActionResponses,
         let balance = from.currency.state?.balance
         let fromCode = from.currency.code.uppercased()
         let toCode = Constant.usdCurrencyCode
-        let fromFee = actionResponse.fromFee
         var senderValidationResult = actionResponse.senderValidationResult ?? .ok
         var error: ExchangeErrors?
         
@@ -171,9 +170,11 @@ extension Presenter where Self: AssetActionResponses,
 
             if let balance, from > balance {
                 senderValidationResult = .insufficientFunds
-            } else if from.currency == feeAmount.currency, let balance, from + feeAmount > balance {
+            // ETH feeBasis on insufficient gas includes from + feeAmount
+            } else if from.currency.isERC20Token || from.currency.isEthereum,
+                      feeAmount > feeCurrencyWalletBalance {
                 senderValidationResult = .insufficientGas
-            } else if from.currency.isERC20Token, feeAmount > feeCurrencyWalletBalance {
+            } else if from.currency == feeAmount.currency, let balance, from + feeAmount > balance {
                 senderValidationResult = .insufficientGas
             }
         }
@@ -194,7 +195,7 @@ extension Presenter where Self: AssetActionResponses,
             let value = actionResponse.fromFeeAmount?.tokenValue ?? quote?.fromFee?.fee ?? 0
             
             if from.currency.isERC20Token {
-                error = ExchangeErrors.balanceTooLow(balance: value, currency: fromFee?.currency.code ?? fromCode)
+                error = ExchangeErrors.insufficientGasERC20(currency: fromCode, balance: value)
                 
             } else if actionResponse.fromFeeBasis?.fee != nil {
                 error = ExchangeErrors.balanceTooLow(balance: value, currency: fromCode)
@@ -206,12 +207,8 @@ extension Presenter where Self: AssetActionResponses,
             
         } else if ExchangeManager.shared.canSwap(from.currency) == false && isSwap {
             error = ExchangeErrors.pendingSwap
-            
-        } else if let feeAmount = fromFee,
-                  let feeWallet = feeAmount.currency.wallet,
-                  feeAmount.currency.isEthereum && feeAmount > feeWallet.balance {
-            error = ExchangeErrors.notEnoughEthForFee(currency: feeAmount.currency.code)
-            
+        } else if XRPBalanceValidator.validate(balance: from.currency.state?.balance, amount: from, currency: from.currency) != nil {
+            error = ExchangeErrors.xrpErrorMessage
         } else if let profile = UserManager.shared.profile {
             let fiat = from.fiatValue.round(to: 2)
             let token = from.tokenValue
@@ -231,9 +228,9 @@ extension Presenter where Self: AssetActionResponses,
                 perExchangeLimit = profile.buyAllowancePerExchange
                 reason = .buyCard(nil)
             } else if isBuy && actionResponse.type == .ach {
-                lifetimeLimit = profile.achAllowanceLifetime
-                dailyLimit = profile.achAllowanceDaily
-                perExchangeLimit = profile.achAllowancePerExchange
+                lifetimeLimit = profile.buyAchAllowanceLifetime
+                dailyLimit = profile.buyAchAllowanceDaily
+                perExchangeLimit = profile.buyAchAllowancePerExchange
                 reason = .buyAch(nil, nil)
             } else if isSell {
                 lifetimeLimit = profile.sellAllowanceLifetime

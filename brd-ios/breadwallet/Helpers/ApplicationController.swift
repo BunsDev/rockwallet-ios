@@ -412,7 +412,7 @@ class ApplicationController: Subscriber {
                     
                     self?.handleDeeplinksIfNeeded()
                 }
-
+                
             default:
                 return
             }
@@ -450,7 +450,17 @@ class ApplicationController: Subscriber {
         }
         
         homeScreen.didTapSell = { [weak self] in
-            guard let self = self else {
+            guard let self = self else { return }
+            
+            guard self.coordinator?.childCoordinators.isEmpty == true else {
+                self.coordinator?.childCoordinators.forEach { child in
+                    child.navigationController.dismiss(animated: false) { [weak self] in
+                        self?.coordinator?.childDidFinish(child: child)
+                        guard self?.coordinator?.childCoordinators.isEmpty == true else { return }
+                        self?.coordinator?.showSell(coreSystem: self?.coreSystem,
+                                                    keyStore: self?.keyStore)
+                    }
+                }
                 return
             }
             

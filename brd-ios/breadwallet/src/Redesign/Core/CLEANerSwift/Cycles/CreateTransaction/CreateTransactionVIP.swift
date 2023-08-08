@@ -11,18 +11,37 @@
 import Foundation
 import WalletKit
 
-protocol CreateTransactionViewActions: FeeFetchable {
+protocol CreateTransactionViewActions: BaseViewActions, FetchViewActions, FeeFetchable {
     func createTransaction(viewAction: CreateTransactionModels.Transaction.ViewAction?, completion: ((FEError?) -> Void)?)
     func getFees(viewAction: CreateTransactionModels.Fee.ViewAction, completion: ((Result<TransferFeeBasis, Error>) -> Void)?)
     func generateSender(viewAction: CreateTransactionModels.Sender.ViewAction)
 }
 
-protocol CreateTransactionDataStore: NSObject {
+protocol CreateTransactionDataStore: BaseDataStore, FetchDataStore {
     var coreSystem: CoreSystem? { get set }
     var keyStore: KeyStore? { get set }
     var sender: Sender? { get set }
     var fromFeeBasis: TransferFeeBasis? { get set }
     var senderValidationResult: SenderValidationResult? { get set }
+}
+
+struct XRPAttributeValidator {
+    static func validate(from tag: String?, currency: Currency, completion: ((String?) -> Void)?) {
+        // XRP destination Tag must fit into UInt32
+        guard currency.isXRP, let attribute = tag, !attribute.isEmpty else { return }
+        
+        completion?(UInt32(attribute) == nil ? nil : attribute)
+    }
+}
+
+struct XRPBalanceValidator {
+    static func validate(balance: Amount?, amount: Amount?, currency: Currency?) -> String? {
+        // XRP balance cannot be less than 10 after transaction (can change with time, update in constants when it does)
+        guard let balance, let amount, let currency, currency.isXRP else { return nil }
+        
+        let message = L10n.ErrorMessages.Exchange.xrpMinimumReserve(Constant.xrpMinimumReserve)
+        return balance - amount >= Amount(decimalAmount: 10, isFiat: false, currency: currency) ? nil : message
+    }
 }
 
 extension Interactor where Self: CreateTransactionViewActions,
@@ -49,11 +68,18 @@ extension Interactor where Self: CreateTransactionViewActions,
             completion?(ExchangeErrors.noFees)
             return
         }
-            
+        
+        var attributeText: String?
+        XRPAttributeValidator.validate(from: exchange.destinationTag,
+                                       currency: currency) { attribute in
+            attributeText = attribute
+        }
+        
         let amount = Amount(decimalAmount: amountValue, isFiat: false, currency: currency)
         let transaction = sender.createTransaction(address: destination,
                                                    amount: amount,
                                                    feeBasis: fromFeeBasis,
+                                                   attribute: attributeText,
                                                    exchangeId: exchangeId)
         
         var error: FEError?

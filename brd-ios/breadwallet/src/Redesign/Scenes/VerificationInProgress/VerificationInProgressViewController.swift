@@ -31,7 +31,7 @@ class VerificationInProgressViewController: CheckListViewController {
                 .init(title: .text(L10n.AccountKYCLevelTwo.imageQualityChecked), image: .image(Asset.checkboxSelectedCircle.image)),
                 .init(title: .text(L10n.AccountKYCLevelTwo.documentInspected), image: .image(Asset.checkboxSelectedCircle.image)),
                 .init(title: .text(L10n.AccountKYCLevelTwo.biometricsVerified), image: .image(Asset.checkboxSelectedCircle.image)),
-                .init(title: .text(L10n.Account.finalizingDecision), image: .animation(Animations.verificationInProgress.animation, .loop))]
+                .init(title: .text(L10n.Account.finalizingDecision), image: .animation(Animations.loader.animation, .loop))]
     }
     
     override var footerViewModel: LabelViewModel? {
@@ -85,7 +85,7 @@ class VerificationInProgressViewController: CheckListViewController {
         
         var labelConfig: LabelConfiguration {
             if let rowCount = sectionRows[CheckListModels.Section.checkmarks]?.count, indexPath.row == rowCount - 1 {
-                return .init(font: ThemeManager.shared.font(for: Fonts.Primary, size: 16), textColor: LightColors.Text.three)
+                return .init(font: Fonts.Body.one, textColor: LightColors.Text.three)
             } else {
                 return .init(font: ThemeManager.shared.font(for: Fonts.Secondary, size: 16), textColor: LightColors.Text.three)
             }

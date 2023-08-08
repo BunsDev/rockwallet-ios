@@ -35,7 +35,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
               let weeklyCardText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly),
-              let weeklyAchText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAllowanceWeekly) else { return nil }
+              let weeklyAchText = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.buyAchAllowanceWeekly) else { return nil }
         
         let limits: String
         let limitsString: NSMutableAttributedString
@@ -44,11 +44,11 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
         case .card:
             limits = L10n.Buy.BuyLimits.description(minText, Constant.usdCurrencyCode, weeklyCardText, Constant.usdCurrencyCode)
             limitsString = NSMutableAttributedString(string: limits + "\n\n" + L10n.Buy.BuyLimits.increase)
-            
+
         case .ach:
             limits = L10n.Buy.BuyLimits.description(minText, Constant.usdCurrencyCode, weeklyAchText, Constant.usdCurrencyCode)
             limitsString = NSMutableAttributedString(string: limits + "\n\n" + L10n.Buy.achBuyDisclaimer)
-            
+
         default:
             limits = ""
             limitsString = .init(string: "")
@@ -67,7 +67,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var toAmount: Amount?
     
-    // MARK: - AchDataStore
+    // MARK: - PaymentMethodsDataStore
     var ach: PaymentCard?
     var selected: PaymentCard?
     var cards: [PaymentCard] = []
@@ -98,12 +98,21 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var isFormValid: Bool {
         guard let amount = toAmount,
               amount.tokenValue > 0,
-              selected != nil,
               feeAmount != nil,
-              feeAmount != nil
+              selected != nil,
+              isPaymentMethodProblematic == false
         else {
             return false
         }
-        return true
+        
+        if ach != nil && ach?.status != .statusOk {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    private var isPaymentMethodProblematic: Bool {
+        return selected?.paymentMethodStatus.isProblematic ?? true
     }
 }

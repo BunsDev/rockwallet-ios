@@ -23,10 +23,12 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var toCode: String { Constant.usdCurrencyCode }
     var isFromBuy: Bool = true
     var showTimer: Bool = false
+    var accountId: String? { return ach?.id }
     var quoteRequestData: QuoteRequestData {
         return .init(from: fromCode,
                      to: toCode,
-                     type: .sell)
+                     type: .sell,
+                     accountId: accountId)
     }
     
     // MARK: - SellDataStore
@@ -45,11 +47,13 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var limits: NSMutableAttributedString? {
         guard let quote = quote,
               let minText = ExchangeFormatter.fiat.string(for: quote.minimumUsd),
-              let maxText = ExchangeFormatter.fiat.string(for: quote.maximumUsd),
-              let lifetimeLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.achAllowanceLifetime)
+              let weeklyLimit = ExchangeFormatter.fiat.string(for: UserManager.shared.profile?.sellAllowanceWeekly)
         else { return nil }
         
-        return NSMutableAttributedString(string: L10n.Sell.sellLimits(minText, maxText, lifetimeLimit))
+        let minTextFormatted = "\(minText) \(Constant.usdCurrencyCode)"
+        let maxTextFormatted = "\(weeklyLimit) \(Constant.usdCurrencyCode)"
+        
+        return NSMutableAttributedString(string: L10n.Sell.sellLimits(minTextFormatted, maxTextFormatted))
     }
     
     var fromAmount: Amount?
@@ -83,6 +87,11 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
         else {
             return false
         }
-        return true
+        
+        if ach != nil && ach?.status != .statusOk {
+            return false
+        } else {
+            return true
+        }
     }
 }

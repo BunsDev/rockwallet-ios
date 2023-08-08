@@ -26,7 +26,7 @@ protocol AddCardActionResponses: BaseActionResponses, FetchActionResponses {
     func presentCvvInfoPopup(actionResponse: AddCardModels.CvvInfoPopup.ActionResponse)
 }
 
-protocol AddCardResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol AddCardResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayCardInfo(responseDisplay: AddCardModels.CardInfo.ResponseDisplay)
     func displayValidate(responseDisplay: AddCardModels.Validate.ResponseDisplay)
     func displaySubmit(responseDisplay: AddCardModels.Submit.ResponseDisplay)

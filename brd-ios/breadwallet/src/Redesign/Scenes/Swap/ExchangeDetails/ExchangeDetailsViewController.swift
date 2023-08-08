@@ -54,18 +54,23 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         case .header, .toCurrency, .fromCurrency:
             cell = self.tableView(tableView, headerCellForRowAt: indexPath)
             
+            let topOffset: Margins = section == .header ? .huge : .zero
+            cell.contentView.setupCustomMargins(top: topOffset, leading: .large, bottom: .small, trailing: .large)
+            
         case .order, .timestamp, .transactionFrom, .transactionTo:
             cell = self.tableView(tableView, orderViewCellForRowAt: indexPath)
             
             (cell as? WrapperTableViewCell<OrderView>)?.wrappedView.didCopyValue = { [weak self] value in
                 self?.interactor?.copyValue(viewAction: .init(value: value))
             }
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .large)
             
         case .image:
             cell = self.tableView(tableView, coverCellForRowAt: indexPath)
             
         case .buyOrder:
             cell = self.tableView(tableView, buyOrderCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(top: .zero, leading: .large, bottom: .medium, trailing: .large)
             
         case .none:
             cell = UITableViewCell()
@@ -105,7 +110,11 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
             view.setup(with: model)
             
             view.networkFeeInfoTapped = { [weak self] in
-                self?.interactor?.showInfoPopup(viewAction: .init())
+                self?.interactor?.showInfoPopup(viewAction: .init(isCardFee: false))
+            }
+            
+            view.cardFeeInfoTapped = { [weak self] in
+                self?.interactor?.showInfoPopup(viewAction: .init(isCardFee: true))
             }
         }
 

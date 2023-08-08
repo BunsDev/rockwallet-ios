@@ -30,7 +30,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     func getData(viewAction: FetchModels.Get.ViewAction) {
         let item = AssetModels.Item(type: dataStore?.paymentMethod,
                                     achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
-
+        
         prepareCurrencies(viewAction: item)
         
         guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
@@ -40,16 +40,12 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         if dataStore?.selected == nil {
             presenter?.presentData(actionResponse: .init(item: item))
-            setAmount(viewAction: .init(currency: amount?.currency.code ?? dataStore?.currencies.first?.code))
         }
         
-        getPayments(viewAction: .init(), completion: { [weak self] in
-            self?.dataStore?.selected = self?.dataStore?.paymentMethod == .ach ? self?.dataStore?.ach : (self?.dataStore?.selected ?? self?.dataStore?.cards.first)
-            
-            self?.getExchangeRate(viewAction: .init(getFees: false), completion: { [weak self] in
-                self?.setPresentAmountData(handleErrors: false)
-            })
-        })
+        getPayments(viewAction: .init()) { [weak self] in
+            self?.dataStore?.selected = self?.dataStore?.ach
+            self?.setAmount(viewAction: .init(currency: self?.amount?.currency.code ?? self?.dataStore?.currencies.first?.code, didFinish: true))
+        }
     }
     
     func prepareFees(viewAction: AssetModels.Fee.ViewAction, completion: (() -> Void)?) {
@@ -82,7 +78,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
                                                        handleErrors: handleErrors && isNotZero))
     }
     
-    func achSuccessMessage(viewAction: AchPaymentModels.Get.ViewAction) {
+    func achSuccessMessage(viewAction: PaymentMethodsModels.Get.ViewAction) {
         let isRelinking = dataStore?.selected?.status == .requiredLogin
         presenter?.presentAchSuccess(actionResponse: .init(isRelinking: isRelinking))
         
@@ -133,6 +129,13 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         amount = to
+        
+        if let xrpErrorMessage = XRPBalanceValidator.validate(balance: dataStore?.fromAmount?.currency.state?.balance,
+                                                              amount: dataStore?.fromAmount,
+                                                              currency: dataStore?.fromAmount?.currency) {
+            presenter?.presentError(actionResponse: .init(error: GeneralError(errorMessage: xrpErrorMessage)))
+            return
+        }
         
         setPresentAmountData(handleErrors: false)
     }

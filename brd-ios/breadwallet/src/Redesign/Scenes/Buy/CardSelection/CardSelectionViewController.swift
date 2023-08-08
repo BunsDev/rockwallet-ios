@@ -15,21 +15,19 @@ extension Scenes {
 }
 
 class CardSelectionViewController: ItemSelectionViewController {
-    override var sceneTitle: String? { return L10n.Buy.paymentMethod }
+    override var sceneTitle: String? { return L10n.Buy.paymentMethods }
     override var isSearchEnabled: Bool { return false }
-    var paymentCardDeleted: (() -> Void)?
     
-    override func dismissModal() {
-        coordinator?.dismissCardsSelectionFlow(completion: {
-            self.paymentCardDeleted?()
-        })
-    }
+    var paymentCardDeleted: (() -> Void)?
     
     override func setupSubviews() {
         super.setupSubviews()
         
         tableView.separatorStyle = .none
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
+        
+        itemDeleted = { [weak self] in
+            self?.paymentCardDeleted?()
+        }
     }
     
     override func tableView(_ tableView: UITableView, itemCellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -40,16 +38,22 @@ class CardSelectionViewController: ItemSelectionViewController {
         }
         
         cell.setup { view in
+            let unavailableText = model.paymentMethodStatus.unavailableText
             view.configure(with: .init())
             view.setup(with: .init(title: nil,
                                    subtitle: nil,
                                    logo: model.displayImage,
                                    cardNumber: .text(model.displayName),
-                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: model.expiryMonth, year: model.expiryYear))))
+                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: model.expiryMonth, year: model.expiryYear)),
+                                   errorMessage: model.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil))
             
             view.moreButtonCallback = { [weak self] in
                 self?.interactor?.showActionSheetRemovePayment(viewAction: .init(instrumentId: model.id,
                                                                                  last4: model.last4))
+            }
+            
+            view.errorLinkCallback = { [weak self] in
+                self?.coordinator?.showPaymentMethodSupport()
             }
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
@@ -63,6 +67,8 @@ class CardSelectionViewController: ItemSelectionViewController {
             return UITableViewCell()
         }
         
+        let model = dataSource?.itemIdentifier(for: indexPath) as? PaymentCard
+        
         cell.setup { view in
             view.configure(with: .init())
             view.setup(with: .init(title: .text(L10n.Buy.card),
@@ -70,12 +76,20 @@ class CardSelectionViewController: ItemSelectionViewController {
                                    logo: .image(Asset.card.image),
                                    cardNumber: .text(L10n.Buy.addDebitCreditCard),
                                    expiration: nil,
-                                   userInteractionEnabled: true))
+                                   userInteractionEnabled: true,
+                                   errorMessage: nil))
             
             view.setupCustomMargins(top: .zero, leading: .large, bottom: .zero, trailing: .large)
             
             view.didTapSelectCard = { [weak self] in
-                self?.coordinator?.open(scene: Scenes.AddCard)
+                guard let model else {
+                    self?.coordinator?.open(scene: Scenes.AddCard)
+                    return
+                }
+
+                guard self?.dataStore?.isSelectingEnabled == true, !model.paymentMethodStatus.isProblematic else { return }
+                self?.itemSelected?(model)
+                self?.coordinator?.dismissFlow()
             }
         }
         

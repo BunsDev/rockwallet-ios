@@ -19,7 +19,7 @@ protocol TwoStepSettingsViewActions: BaseViewActions, FetchViewActions {
 protocol TwoStepSettingsActionResponses: BaseActionResponses, FetchActionResponses {
 }
 
-protocol TwoStepSettingsResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol TwoStepSettingsResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
 }
 
 protocol TwoStepSettingsDataStore: BaseDataStore, FetchDataStore {

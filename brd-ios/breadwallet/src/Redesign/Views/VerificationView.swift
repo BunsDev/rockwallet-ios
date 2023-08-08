@@ -99,7 +99,7 @@ enum VerificationStatus: Hashable {
         let canUseAch = profile?.kycAccessRights.hasAchAccess ?? false
         let swapAllowanceDaily = ExchangeFormatter.current.string(for: profile?.swapAllowanceDaily) ?? ""
         let buyAllowanceDaily = ExchangeFormatter.current.string(for: profile?.buyAllowanceDaily) ?? ""
-        let achAllowanceDaily = ExchangeFormatter.current.string(for: profile?.achAllowanceDaily) ?? ""
+        let achAllowanceDaily = ExchangeFormatter.current.string(for: profile?.buyAchAllowanceDaily) ?? ""
         
         switch self {
         case .none, .email, .levelOne, .levelTwo(.notStarted), .levelTwo(.kycInfoProvided):
@@ -123,11 +123,11 @@ enum VerificationStatus: Hashable {
                                  swapLimits: .text(L10n.Swap.swapLimit),
                                  buyLimits: .text(L10n.Buy.buyLimit),
                                  swapLimitsValue: .init(title: .text(L10n.Account.daily),
-                                                        value: .text("$\(swapAllowanceDaily) \(Constant.usdCurrencyCode)")),
+                                                        value: .text("\(swapAllowanceDaily) \(Constant.usdCurrencyCode)")),
                                  buyDailyLimitsView: .init(title: .text("\(L10n.Account.daily) (\(L10n.Buy.card))"),
-                                                           value: .text("$\(buyAllowanceDaily) \(Constant.usdCurrencyCode)")),
+                                                           value: .text("\(buyAllowanceDaily) \(Constant.usdCurrencyCode)")),
                                  buyAchDailyLimitsView: .init(title: .text(L10n.Account.achDailyLimits),
-                                                              value: .text("$\(achAllowanceDaily) \(Constant.usdCurrencyCode)")),
+                                                              value: .text("\(achAllowanceDaily) \(Constant.usdCurrencyCode)")),
                                  dismissType: .persistent,
                                  canUseAch: canUseAch)
         case .levelTwo(.expired), .levelTwo(.resubmit):

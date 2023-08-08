@@ -35,7 +35,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
-        tableView.register(WrapperTableViewCell<CardSelectionView>.self)
+        
         tableView.delaysContentTouches = false
         tableView.backgroundColor = LightColors.Background.two
     }
@@ -67,13 +67,53 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
             view.setup(with: model)
             
             view.didTapSelectCard = { [weak self] in
-                switch (self?.dataStore as? AchDataStore)?.paymentMethod {
+                switch (self?.dataStore as? (any PaymentMethodsDataStore))?.paymentMethod {
                 case .ach:
-                    (self?.interactor as? AchViewActions)?.getPlaidToken(viewAction: .init())
+                    (self?.interactor as? (any PaymentMethodsViewActions))?.getPlaidToken(viewAction: .init())
+                    
+                case .card:
+                    (self?.interactor as? (any PaymentMethodsViewActions))?.getPayments(viewAction: .init(openCards: true), completion: {})
+                    
                 default:
-                    (self?.interactor as? AchViewActions)?.getPayments(viewAction: .init(openCards: true), completion: {})
+                    break
                 }
             }
+            
+            view.errorLinkCallback = { [weak self] in
+                self?.onPaymentMethodErrorLinkTapped()
+            }
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? MultipleButtonsViewModel,
+              let cell: WrapperTableViewCell<MultipleButtonsView> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(buttons: [Presets.Button.noBorders],
+                                       axis: .vertical))
+            view.setup(with: model)
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
+              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
+        else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+        cell.setup { view in
+            view.configure(with: .init(font: Fonts.Body.three,
+                                       textColor: LightColors.Text.two))
+            view.setup(with: model)
         }
         
         return cell
@@ -118,13 +158,13 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                     
                     switch vc?.dataStore?.confirmationType {
                     case .twoStepAppBackupCode:
-                        (self.dataStore as? AssetDataStore)?.secondFactorBackup = vc?.dataStore?.code
+                        (self.dataStore as? (any AssetDataStore))?.secondFactorBackup = vc?.dataStore?.code
                         
                     default:
-                        (self.dataStore as? AssetDataStore)?.secondFactorCode = vc?.dataStore?.code
+                        (self.dataStore as? (any AssetDataStore))?.secondFactorCode = vc?.dataStore?.code
                     }
                     
-                    (self.interactor as? AssetViewActions)?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
+                    (self.interactor as? (any AssetViewActions))?.getExchangeRate(viewAction: .init(getFees: true), completion: {})
                 }
             }
             
@@ -145,6 +185,15 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
         return cell
     }
     
+    func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
+        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
+              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
+            return nil
+        }
+        return cell
+    }
+    
+    func onPaymentMethodErrorLinkTapped() {}
     func limitsInfoTapped() {}
     func increaseLimitsTapped() {}
 }

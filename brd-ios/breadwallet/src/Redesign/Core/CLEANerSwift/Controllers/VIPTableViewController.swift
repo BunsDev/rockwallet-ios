@@ -88,7 +88,9 @@ class VIPTableViewController<C: CoordinatableRoutes,
         
         view.addSubview(verticalButtons)
         verticalButtons.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            let inset: Margins = UIDevice.current.hasNotch ? .zero : .large // Added to fix button offset for iPhone SE
+            make.bottom.equalToSuperview().inset(inset.rawValue)
         }
         
         tableView.heightUpdated = { height in

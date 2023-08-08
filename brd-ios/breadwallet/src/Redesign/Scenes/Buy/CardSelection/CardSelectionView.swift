@@ -12,12 +12,13 @@ import UIKit
 
 struct CardSelectionConfiguration: Configurable {
     var title: LabelConfiguration? = .init(font: Fonts.Body.three, textColor: LightColors.Text.two)
-    var subtitle: LabelConfiguration? =  .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)
+    var subtitle: LabelConfiguration? = .init(font: Fonts.Subtitle.two, textColor: LightColors.Text.one)
     var arrow: BackgroundConfiguration? = Presets.Background.Secondary.selected
     var shadow: ShadowConfiguration? = Presets.Shadow.light
     var background: BackgroundConfiguration? = .init(backgroundColor: LightColors.Background.one,
                                                      tintColor: LightColors.Text.one,
                                                      border: Presets.Border.mediumPlain)
+    var cardDetails: CardDetailsConfiguration? = .init()
 }
 
 struct CardSelectionViewModel: ViewModel {
@@ -28,13 +29,15 @@ struct CardSelectionViewModel: ViewModel {
     var expiration: LabelViewModel?
     var arrow: ImageViewModel? = .image(Asset.chevronRight.image)
     var userInteractionEnabled = false
+    var errorMessage: LabelViewModel?
 }
 
 class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewModel> {
     
     var moreButtonCallback: (() -> Void)?
     var didTapSelectCard: (() -> Void)?
-    
+    var errorLinkCallback: (() -> Void)?
+     
     private lazy var containerStack: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -74,14 +77,31 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         return view
     }()
     
+    var hasError: Bool = false {
+        didSet {
+            let cardNumberConfig = config?.cardDetails?.cardNumber
+            let cardNumberErrorConfig = config?.cardDetails?.cardNumberError
+            
+            let expirationConfig = config?.cardDetails?.expiration
+            let expirationErrorConfig = config?.cardDetails?.expirationError
+            
+            config?.cardDetails?.cardNumber = hasError ? cardNumberErrorConfig : cardNumberConfig
+            config?.cardDetails?.expiration = hasError ? expirationErrorConfig : expirationConfig
+            
+            configure(with: config)
+        }
+    }
+    
     override func setupSubviews() {
         super.setupSubviews()
+        
+        content.setupCustomMargins(all: .large)
         
         content.addSubview(containerStack)
         containerStack.snp.makeConstraints { make in
             make.edges.equalTo(content.snp.margins)
+            make.height.greaterThanOrEqualTo(ViewSizes.Common.hugeCommon.rawValue)
         }
-        content.setupCustomMargins(all: .large)
         
         containerStack.addArrangedSubview(mainStack)
         mainStack.addArrangedSubview(titleLabel)
@@ -94,10 +114,6 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         }
                 
         mainStack.addArrangedSubview(cardDetailsView)
-        
-        cardDetailsView.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.medium.rawValue)
-        }
         
         containerStack.addArrangedSubview(spacerView)
         spacerView.snp.makeConstraints { make in
@@ -118,7 +134,7 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
         super.configure(with: config)
         titleLabel.configure(with: config?.title)
         subtitleLabel.configure(with: config?.subtitle)
-        cardDetailsView.configure(with: .init())
+        cardDetailsView.configure(with: config?.cardDetails)
         arrowImageView.configure(with: config?.arrow)
         
         configure(background: config?.background)
@@ -145,12 +161,17 @@ class CardSelectionView: FEView<CardSelectionConfiguration, CardSelectionViewMod
                                           title: titleLabel.isHidden == true ? viewModel?.title : nil,
                                           cardNumber: viewModel?.cardNumber,
                                           expiration: viewModel?.expiration,
-                                          moreOption: moreOption))
+                                          moreOption: moreOption,
+                                          errorMessage: viewModel?.errorMessage))
+        cardDetailsView.errorLinkCallback = { [weak self] in
+            self?.errorLinkCallback?()
+        }
+        hasError = viewModel?.errorMessage != nil
         
         spacerView.isHidden = arrowImageView.isHidden
+        
         guard viewModel?.userInteractionEnabled == true else {
-            gestureRecognizers?.forEach {
-                removeGestureRecognizer($0) }
+            gestureRecognizers?.forEach { removeGestureRecognizer($0) }
             return
         }
         

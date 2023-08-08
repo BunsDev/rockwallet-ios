@@ -24,7 +24,7 @@ protocol AuthenticatorAppActionResponses: BaseActionResponses, FetchActionRespon
     func presentNext(actionResponse: AuthenticatorAppModels.Next.ActionResponse)
 }
 
-protocol AuthenticatorAppResponseDisplays: AnyObject, BaseResponseDisplays, FetchResponseDisplays {
+protocol AuthenticatorAppResponseDisplays: BaseResponseDisplays, FetchResponseDisplays {
     func displayNext(responseDisplay: AuthenticatorAppModels.Next.ResponseDisplay)
     func displayOpenTotpUrl(responseDisplay: AuthenticatorAppModels.OpenTotpUrl.ResponseDisplay)
 }

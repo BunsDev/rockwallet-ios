@@ -828,6 +828,8 @@
 
 "Buy.Ach.Instant.ConfirmationDrawer.Title" = "Puchase with Instant Buy";
 
+"Buy.Ach.Instant.Fee.Alternative.Title" = "Instant ACH fee";
+
 "Buy.Ach.Instant.Fee.Title" = "Instant Buy fee";
 
 "Buy.Ach.Instant.HybridConfirmationDrawer" = "With Instant buy, %@ (%@) will show in your account instantly. The remaining %@ (%@) will arrive in 3-5 days.";
@@ -905,7 +907,9 @@
 /* Buy min and max limit text */
 "Buy.BuyLimits.description" = "Actualmente, el mínimo para comprar es de %@ USD/día y el máximo es de %@ USD/día. %@";
 
-"Buy.BuyLimits.Increase" = "Click on your increase your limits button below if you would like to further increase your limits.";
+"Buy.BuyLimits.description.android" = "Minimum for Buy is %@ per transaction and your weekly limit is %@.";
+
+"Buy.BuyLimits.Increase" = "Click on increase your limits button below if you would like to further increase your limits.";
 
 "Buy.buyWithAch" = "BUY WITH ACH";
 
@@ -1323,6 +1327,11 @@
 /* Not enough ETH for transaction fee */
 "ErrorMessages.ethBalanceLowAddEth" = "%@ es un token ERC-20 en la blockchain Ethereum y requiere tarifas de red ETH. Por favor, añade ETH a tu monedero.";
 
+/* Not enough ETH for transaction fee */
+"ErrorMessages.ethBalanceLowAddEthWithAmount" = "%@ es un token ERC-20 en la blockchain Ethereum y requiere tarifas de red ETH. Por favor, añade ETH a tu monedero.";
+
+"ErrorMessages.Exchange.xrpMinimumReserve" = "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.";
+
 "ErrorMessages.exchangeFailed" = "Error en el cambio. Motivo: %@.";
 
 "ErrorMessages.ExchangeQuoteFailed" = "Actualmente estamos teniendo problemas para hacer un cambio entre este par de monedas. Inténtalo de nuevo más tarde.";
@@ -1382,6 +1391,10 @@
 "ErrorMessages.PlaidLinkToken" = "Unfortunately, an error occurred while linking the bank account. Please contact us for further support.";
 
 "ErrorMessages.selectAssets" = "Para realizar con éxito un cambio, asegúrate de tener dos o más de nuestros activos de cambio compatibles (BSV, BTC, ETH, BCH, SHIB, USDT) activados y financiados dentro de tu monedero.";
+
+"ErrorMessages.Sell.LimitExceeded" = "You have exceeded your sell limits, please try again later.";
+
+"ErrorMessages.Sell.SsnInput.IncorrectSsn" = "Please make sure your SSN number is correct and try again.";
 
 /* Something went wrong message */
 "ErrorMessages.SomethingWentWrong" = "¡Vaya! Algo ha salido mal, por favor, inténtalo de nuevo más tarde.";
@@ -2404,6 +2417,8 @@
 
 "Sell.achWithdrawal" = "ACH Withdrawal";
 
+"Sell.cardWithdrawal" = "Card withdrawal";
+
 "Sell.details" = "Sell & Withdraw details";
 
 "Sell.disclaimer" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal";
@@ -2416,11 +2431,17 @@
 
 "Sell.rate" = "Conversion rate";
 
-"Sell.SellLimits" = "Minimum withdrawal is %@ USD and maximum is %@ USD per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.";
+"Sell.SellLimits" = "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.\n\nYour withdrawal will reach your bank account in the next 3-5 business days.";
 
-"Sell.SellLimits1" = "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@.";
+"Sell.SellLimits1" = "Minimum for withdrawal is %@ per transaction and your weekly limit is %@.";
 
-"Sell.SellLimits2" = "ACH Withdrawals will be processed within 3–5 business days.";
+"Sell.SellLimits2" = "Your withdrawal will reach your bank account in the next 3-5 business days.";
+
+"Sell.SsnInput.Disclaimer" = "To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms";
+
+"Sell.SsnInput.Title.AdditionalInfo" = "We need additional info";
+
+"Sell.SsnInput.Title.CheckingYourData" = "Checking your data...";
 
 "Sell.subtotal" = "Subtotal";
 
@@ -2430,7 +2451,7 @@
 
 "Sell.widrawToBank" = "Withdraw to";
 
-"Sell.WithdrawalErrorText" = "Please try again and if the issue persist, please contact customer support";
+"Sell.WithdrawalErrorText" = "Please try again and if the issue persists, please contact customer support";
 
 "Sell.WithdrawalSuccessText" = "Your funds should be deposited into your account within 3-5 business days. In rare cases, withdrawals may take up to 7 business days.";
 
@@ -2856,7 +2877,7 @@
 /* Add item label in swap flow */
 "Swap.AddItem" = "Añadir elemento";
 
-"Swap.AmountPurchased" = "Importe de la compra:";
+"Swap.AmountPurchased" = "Amount purchased";
 
 "Swap.AssetSelectionMessage" = "Sorry, we currently don’t support trading of this asset.";
 
@@ -2891,7 +2912,7 @@
 /* Swap and Buy I want label from currency */
 "Swap.iWant" = "Yo quiero";
 
-"Swap.MiningNetworkFee" = "Tarifa de red de minera:";
+"Swap.MiningNetworkFee" = "Mining network fee";
 
 /* Not a valid pair */
 "Swap.NotValidPair" = "No es un par válido";

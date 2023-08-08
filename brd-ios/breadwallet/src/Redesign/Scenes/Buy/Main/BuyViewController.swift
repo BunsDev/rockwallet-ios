@@ -47,20 +47,25 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         case .segment:
             cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
             
-        case .accountLimits:
-            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
-            
         case .rateAndTimer:
             cell = self.tableView(tableView, timerCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(top: .small, leading: .large, bottom: .extraSmall, trailing: .large)
             
         case .swapCard:
             cell = self.tableView(tableView, cryptoSelectionCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .zero, horizontal: .large)
             
         case .paymentMethod:
             cell = self.tableView(tableView, paymentSelectionCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .small, horizontal: .large)
+            
+        case .accountLimits:
+            cell = self.tableView(tableView, labelCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .huge)
             
         case .limitActions:
             cell = self.tableView(tableView, multipleButtonsCellForRowAt: indexPath)
+            cell.contentView.setupCustomMargins(vertical: .extraSmall, horizontal: .huge)
             
         default:
             cell = UITableViewCell()
@@ -137,50 +142,14 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         let paymentTypes = PaymentCard.PaymentType.allCases
         if paymentTypes.count >= segment {
             let paymentType = paymentTypes[segment]
-            interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
+            
+            interactor?.dataStore?.paymentMethod = paymentType
+            interactor?.getPayments(viewAction: .init(setAmount: false), completion: { [weak self] in
+                self?.interactor?.selectPaymentMethod(viewAction: .init(method: paymentType))
+            })
             
             GoogleAnalytics.logEvent(GoogleAnalytics.Buy(type: paymentType.rawValue))
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, labelCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = dataSource?.itemIdentifier(for: indexPath) as? LabelViewModel,
-              let cell: WrapperTableViewCell<FELabel> = tableView.dequeueReusableCell(for: indexPath)
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init(font: Fonts.Body.three,
-                                       textColor: LightColors.Text.two))
-            view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, multipleButtonsCellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let model = dataSource?.itemIdentifier(for: indexPath) as? MultipleButtonsViewModel,
-              let cell: WrapperTableViewCell<MultipleButtonsView> = tableView.dequeueReusableCell(for: indexPath)
-        else {
-            return super.tableView(tableView, cellForRowAt: indexPath)
-        }
-        
-        cell.setup { view in
-            view.configure(with: .init(buttons: [Presets.Button.noBorders],
-                                                   axis: .vertical))
-            view.setup(with: model)
-        }
-        
-        return cell
-    }
-    
-    func getAccountLimitsCell() -> WrapperTableViewCell<FELabel>? {
-        guard let section = sections.firstIndex(where: { $0.hashValue == Models.Section.accountLimits.hashValue }),
-              let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<FELabel> else {
-            return nil
-        }
-        return cell
     }
     
     // MARK: - User Interaction
@@ -197,6 +166,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     
     override func limitsInfoTapped() {
         interactor?.showLimitsInfo(viewAction: .init())
+    }
+    
+    override func onPaymentMethodErrorLinkTapped() {
+        coordinator?.showPaymentMethodSupport()
     }
     
     // MARK: - BuyResponseDisplay
@@ -235,6 +208,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             return
         }
         
+        sectionRows[fromSection] = [responseDisplay.swapCurrencyViewModel as Any]
+        sectionRows[toSection] = [responseDisplay.cardModel as Any]
+        sectionRows[limitActionsSection] = [responseDisplay.limitActions as Any]
+        
         fromCell.wrappedView.setup(with: responseDisplay.swapCurrencyViewModel)
         toCell.wrappedView.setup(with: responseDisplay.cardModel)
         limitActionsCell.wrappedView.setup(with: responseDisplay.limitActions)
@@ -259,7 +236,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     override func displayMessage(responseDisplay: MessageModels.ResponseDisplays) {
         super.displayMessage(responseDisplay: responseDisplay)
         
-        continueButton.viewModel?.enabled = responseDisplay.error == nil
+        continueButton.viewModel?.enabled = responseDisplay.error == nil && dataStore?.isFormValid == true
         verticalButtons.wrappedView.getButton(continueButton)?.setup(with: continueButton.viewModel)
     }
     

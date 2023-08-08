@@ -119,9 +119,8 @@ class BaseCoordinator: NSObject, Coordinatable {
         }
     }
     
-    func showSell(coreSystem: CoreSystem?, keyStore: KeyStore?) {
+    func showSell(selectedCurrency: Currency? = nil, coreSystem: CoreSystem?, keyStore: KeyStore?) {
         decideFlow { [weak self] showScene in
-            // TODO: This logic will need to be updated when hasSellAccess is available
             guard showScene,
                   let profile = UserManager.shared.profile,
                   profile.kycAccessRights.hasAchAccess == true else {
@@ -129,13 +128,17 @@ class BaseCoordinator: NSObject, Coordinatable {
                 
                 return
             }
-                
+            
+            guard profile.status == .levelTwo(.kycWithSsn) else {
+                self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.SsnAdditionalInfo)
+                return
+            }
+            
             self?.openModally(coordinator: ExchangeCoordinator.self, scene: Scenes.Sell) { vc in
                 vc?.dataStore?.coreSystem = coreSystem
                 vc?.dataStore?.keyStore = keyStore
                 
-                // TODO: This logic will need to be updated.
-                guard let selectedCurrency = Currencies.shared.bsv else { return }
+                guard let selectedCurrency else { return }
                 vc?.dataStore?.fromAmount = .zero(selectedCurrency)
             }
         }
@@ -212,6 +215,10 @@ class BaseCoordinator: NSObject, Coordinatable {
     
     func showSupport() {
         showInWebView(urlString: Constant.supportLink, title: L10n.MenuButton.support)
+    }
+    
+    func showPaymentMethodSupport() {
+        showInWebView(urlString: Constant.paymentMethodSupport, title: L10n.MenuButton.support)
     }
     
     func showKYCLevelOne(isModal: Bool) {
@@ -550,9 +557,7 @@ class BaseCoordinator: NSObject, Coordinatable {
                         restrictionReason: Profile.AccessRights.RestrictionReason?,
                         isRestrictedUSState: Bool = false,
                         isGreyListedCountry: Bool = false) {
-        open(scene: Scenes.ComingSoon) { [weak self] vc in
-            self?.handleComingSoonNavigation(vc)
-            
+        open(scene: Scenes.ComingSoon) { vc in
             var restrictedReason: BaseInfoModels.ComingSoonReason?
             if isRestrictedUSState {
                 restrictedReason = .restrictedUSState
@@ -568,27 +573,8 @@ class BaseCoordinator: NSObject, Coordinatable {
             vc.dataStore?.coreSystem = coreSystem
             vc.dataStore?.keyStore = keyStore
             vc.dataStore?.restrictionReason = restrictionReason
-        }
-    }
-    
-    private func handleComingSoonNavigation(_ vc: ComingSoonViewController?) {
-        guard let vc else { return }
-        
-        vc.didTapMainButton = {
-            if vc.reason == .buyAch {
-                vc.coordinator?.showBuy(type: .card,
-                                        coreSystem: vc.dataStore?.coreSystem,
-                                        keyStore: vc.dataStore?.keyStore)
-            } else {
+            vc.didTapMainButton = {
                 vc.coordinator?.popViewController()
-            }
-        }
-        
-        vc.didTapSecondayButton = {
-            if vc.reason == .buyAch {
-                vc.coordinator?.popViewController()
-            } else {
-                vc.coordinator?.showSupport()
             }
         }
     }
@@ -670,6 +656,9 @@ class BaseCoordinator: NSObject, Coordinatable {
                     }
                 }
                 
+            case .veriffDeclined, .livenessCheckLimit:
+                vc.coordinator?.dismissFlow()
+                
             default:
                 if containsDebit || containsBankAccount {
                     guard let vc = self.navigationController.viewControllers.first as? BuyViewController else {
@@ -688,7 +677,7 @@ class BaseCoordinator: NSObject, Coordinatable {
             case .swap:
                 vc.coordinator?.dismissFlow()
 
-            case .buyCard, .buyAch, .plaidConnection, .sell:
+            case .buyCard, .buyAch, .plaidConnection, .sell, .livenessCheckLimit, .veriffDeclined:
                 vc.coordinator?.showSupport()
                 
             case .limitsAuthentication, .documentVerification, .documentVerificationRetry:
