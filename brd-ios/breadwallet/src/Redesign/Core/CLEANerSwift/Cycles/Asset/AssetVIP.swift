@@ -207,7 +207,8 @@ extension Presenter where Self: AssetActionResponses,
             
         } else if ExchangeManager.shared.canSwap(from.currency) == false && isSwap {
             error = ExchangeErrors.pendingSwap
-            
+        } else if XRPBalanceValidator.validate(balance: from.currency.state?.balance, amount: from, currency: from.currency) != nil {
+            error = ExchangeErrors.xrpErrorMessage
         } else if let profile = UserManager.shared.profile {
             let fiat = from.fiatValue.round(to: 2)
             let token = from.tokenValue
