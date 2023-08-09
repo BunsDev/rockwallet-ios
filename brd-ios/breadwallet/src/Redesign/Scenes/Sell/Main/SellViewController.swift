@@ -197,7 +197,7 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
                                       to: dataStore?.fromAmount,
                                       from: dataStore?.toAmount,
                                       fromFeeBasis: dataStore?.fromFeeBasis,
-                                      card: dataStore?.ach,
+                                      card: dataStore?.selected,
                                       quote: dataStore?.quote,
                                       availablePayments: responseDisplay.availablePayments,
                                       createTransactionModel: dataStore?.createTransactionModel)

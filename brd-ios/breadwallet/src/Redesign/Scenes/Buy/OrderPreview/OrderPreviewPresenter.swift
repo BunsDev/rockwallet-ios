@@ -87,7 +87,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                                        expiration: .text(CardDetailsFormatter.formatExpirationDate(month: card.expiryMonth, year: card.expiryYear)))
             ],
             .termsAndConditions: [
-                isAchAccount ? achTermsModel : LabelViewModel.attributedText(termsText)
+                isAchAccount || item.type == .sell ? achTermsModel : LabelViewModel.attributedText(termsText)
             ],
             .submit: [
                 ButtonViewModel(title: L10n.Button.confirm, enabled: false)

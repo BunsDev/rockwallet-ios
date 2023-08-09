@@ -344,6 +344,7 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         
         sellLimitsView.setup(with: viewModel.sellLimitsView)
         sellLimitsView.isHidden = viewModel.sellLimitsView == nil
+        spacerViewSell.isHidden = viewModel.sellLimitsView == nil
         
         sellLimitsLabel.setup(with: viewModel.sellLimits)
         sellLimitsLabel.isHidden = viewModel.sellLimitsView == nil
@@ -365,8 +366,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         guard headerLeadingView.isHidden,
               headerTitleLabel.isHidden,
               headerTrailingButton.isHidden else {
-            layoutIfNeeded()
-            
             return
         }
         
@@ -375,8 +374,6 @@ class FEInfoView: FEView<InfoViewConfiguration, InfoViewModel> {
         tickboxItemView.didToggleTickbox = { [weak self] value in
             self?.tickboxTapped(value: value)
         }
-        
-        layoutIfNeeded()
     }
     
     @objc private func headerButtonTapped(_ sender: UIButton?) {

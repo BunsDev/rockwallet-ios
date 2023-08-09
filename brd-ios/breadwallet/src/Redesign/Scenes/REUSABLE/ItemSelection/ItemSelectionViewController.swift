@@ -91,7 +91,7 @@ class ItemSelectionViewController: BaseTableViewController<ExchangeCoordinator,
             view.setup { view in
                 view.configure(with: Presets.InfoView.error)
                 view.setup(with: model)
-                view.content.setupCustomMargins(all: .large)
+                view.content.setupCustomMargins(top: .large, leading: .large, bottom: .extraSmall, trailing: .large)
             }
             view.setupCustomMargins(horizontal: .large)
         }
