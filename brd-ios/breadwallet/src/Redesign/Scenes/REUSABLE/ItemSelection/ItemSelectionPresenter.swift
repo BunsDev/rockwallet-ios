@@ -78,6 +78,9 @@ final class ItemSelectionPresenter: NSObject, Presenter, ItemSelectionActionResp
     private func prepareCardWithdrawalBanner() -> LabelViewModel {
         let attributedString = NSMutableAttributedString(string: L10n.Sell.visaDebitSupport)
         
+        let maxRange = NSRange(location: 0, length: attributedString.mutableString.length)
+        attributedString.addAttribute(.font, value: Fonts.Body.two, range: maxRange)
+        
         let boldRange = attributedString.mutableString.range(of: L10n.Sell.visaDebit)
         attributedString.addAttribute(.font, value: Fonts.Subtitle.two, range: boldRange)
         
