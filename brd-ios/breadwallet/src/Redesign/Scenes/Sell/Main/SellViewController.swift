@@ -93,8 +93,6 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
             view.didTapFromAssetsSelection = { [weak self] in
                 self?.interactor?.navigateAssetSelector(viewAction: .init())
             }
-            
-            view.setupCustomMargins(top: .zero, leading: .zero, bottom: .medium, trailing: .zero)
         }
         
         return cell
