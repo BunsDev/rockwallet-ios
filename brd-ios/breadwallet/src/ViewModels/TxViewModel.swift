@@ -40,7 +40,7 @@ extension TxViewModel {
     var status: TransactionStatus {
         if let tx = tx {
             return tx.status
-            
+
         } else {
             return destination?.status ?? .failed
             
@@ -54,6 +54,10 @@ extension TxViewModel {
             return exchange.type
         }
         return .unknown
+    }
+    
+    var isSell: Bool {
+        return exchangeType == .sellAch || exchangeType == .sellCard
     }
     
     var direction: TransferDirection {
@@ -76,8 +80,6 @@ extension TxViewModel {
         
         if exchange.isHybridTransaction {
             return exchange.part == exchange.destination?.part ? exchange.destination : exchange.instantDestination
-        } else if exchange.destination?.currency == Constant.usdCurrencyCode {
-            return exchange.source
         } else {
             return exchange.destination?.currency.isEmpty == true ? exchange.instantDestination : exchange.destination
         }

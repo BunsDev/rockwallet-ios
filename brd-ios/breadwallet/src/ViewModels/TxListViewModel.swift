@@ -35,7 +35,7 @@ struct TxListViewModel: TxViewModel, Hashable {
                               rate: showFiatAmounts ? rate : nil,
                               negative: (tx.direction == .sent)).description
             return text
-        } else if let destination = destination,
+        } else if let destination = isSell ? exchange?.source : destination,
                   let currency = Store.state.currencies.first(where: { $0.code.lowercased() == destination.currency.lowercased() }) {
             let amount = Amount(tokenString: destination.currencyAmount.description, currency: currency)
             let formatter = ExchangeFormatter.current

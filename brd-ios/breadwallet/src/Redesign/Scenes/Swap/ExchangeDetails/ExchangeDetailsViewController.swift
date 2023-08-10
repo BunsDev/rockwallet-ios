@@ -24,7 +24,7 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         case .swap:
             return L10n.Swap.details
             
-        case .sellAch:
+        case .sellAch, .sellCard:
             return L10n.Sell.details
             
         default:
