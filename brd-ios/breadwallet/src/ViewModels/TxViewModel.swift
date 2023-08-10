@@ -56,6 +56,10 @@ extension TxViewModel {
         return .unknown
     }
     
+    var isSell: Bool {
+        return exchangeType == .sellAch || exchangeType == .sellCard
+    }
+    
     var direction: TransferDirection {
         if let tx = tx {
             return tx.direction

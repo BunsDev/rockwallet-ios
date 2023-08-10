@@ -35,22 +35,13 @@ struct TxListViewModel: TxViewModel, Hashable {
                               rate: showFiatAmounts ? rate : nil,
                               negative: (tx.direction == .sent)).description
             return text
-        } else if let destination = destination,
+        } else if let destination = isSell ? exchange?.source : destination,
                   let currency = Store.state.currencies.first(where: { $0.code.lowercased() == destination.currency.lowercased() }) {
             let amount = Amount(tokenString: destination.currencyAmount.description, currency: currency)
             let formatter = ExchangeFormatter.current
             formatter.minimumFractionDigits = amount.minimumFractionDigits ?? 0
             formatter.maximumFractionDigits = amount.maximumFractionDigits
             let formattedAmount = formatter.string(for: destination.currencyAmount) ?? ""
-            return "\(String(describing: formattedAmount)) \(String(describing: currency.code))"
-        } else if exchangeType == .sellAch || exchangeType == .sellCard,
-                  let source = exchange?.source,
-                  let currency = Store.state.currencies.first(where: { $0.code.lowercased() == source.currency.lowercased() }) {
-            let amount = Amount(tokenString: source.currencyAmount.description, currency: currency)
-            let formatter = ExchangeFormatter.current
-            formatter.minimumFractionDigits = amount.minimumFractionDigits ?? 0
-            formatter.maximumFractionDigits = amount.maximumFractionDigits
-            let formattedAmount = formatter.string(for: source.currencyAmount) ?? ""
             return "\(String(describing: formattedAmount)) \(String(describing: currency.code))"
         } else {
             return ""
