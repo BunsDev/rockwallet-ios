@@ -146,21 +146,38 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
     func presentSubmit(actionResponse: OrderPreviewModels.Submit.ActionResponse) {
         guard let reference = actionResponse.paymentReference,
               actionResponse.failed == false else {
-            let isAch = actionResponse.isAch == true
             let responseCode = actionResponse.responseCode ?? ""
-            let reason: BaseInfoModels.FailureReason = isAch ? (actionResponse.previewType == .sell ? .sell
-                                                                : .buyAch(actionResponse.achDeliveryType, responseCode))
-            : .buyCard(actionResponse.errorDescription)
+            var failureReason: BaseInfoModels.FailureReason {
+                switch (actionResponse.isAch, actionResponse.previewType) {
+                case (true, .buy):
+                    return .buyAch(actionResponse.achDeliveryType, responseCode)
+                    
+                case (false, .buy):
+                    return .buyCard(actionResponse.errorDescription)
+                    
+                default:
+                    return .sell
+                }
+            }
             
-            viewController?.displayFailure(responseDisplay: .init(reason: reason))
+            viewController?.displayFailure(responseDisplay: .init(reason: failureReason))
             
             return
         }
         
-        let reason: BaseInfoModels.SuccessReason = actionResponse.isAch == true ? (actionResponse.previewType == .sell
-                                                                                   ? .sell :
-                .buyAch(actionResponse.achDeliveryType)) : .buyCard
-        viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: reason))
+        var successReason: BaseInfoModels.SuccessReason {
+            switch (actionResponse.isAch, actionResponse.previewType) {
+            case (true, .buy):
+                return .buyAch(actionResponse.achDeliveryType)
+                
+            case (false, .buy):
+                return .buyCard
+                
+            default:
+                return .sell
+            }
+        }
+        viewController?.displaySubmit(responseDisplay: .init(paymentReference: reference, reason: successReason))
     }
     
     func presentAchInstantDrawer(actionResponse: OrderPreviewModels.AchInstantDrawer.ActionResponse) {
