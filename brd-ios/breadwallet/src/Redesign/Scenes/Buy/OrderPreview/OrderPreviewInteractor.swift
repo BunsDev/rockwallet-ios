@@ -135,11 +135,14 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let withdrawalQuantity = dataStore?.type == .buy ? withdrawalQuantityBuy : withdrawalQuantitySell
         let formattedWithdrawalQuantity = fiatFormatter.string(from: withdrawalQuantity as NSNumber) ?? ""
         
+        let destination = dataStore?.type == .buy ? address : dataStore?.card?.id
+        let sourceInstrumentId = dataStore?.type == .buy ? dataStore?.card?.id : nil
+        
         let data = ExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
                                        depositQuantity: formattedDepositQuantity,
                                        withdrawalQuantity: formattedWithdrawalQuantity,
-                                       destination: dataStore?.type == .buy ? address : dataStore?.card?.id,
-                                       sourceInstrumentId: dataStore?.type == .buy ? dataStore?.card?.id : nil,
+                                       destination: destination,
+                                       sourceInstrumentId: sourceInstrumentId,
                                        nologCvv: dataStore?.cvv?.description,
                                        secondFactorCode: dataStore?.secondFactorCode,
                                        secondFactorBackup: dataStore?.secondFactorBackup)
@@ -246,13 +249,17 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
             formattedWithdrawalQuantity = cryptoFormatter.string(for: toAmount) ?? ""
         }
         
+        let destination = dataStore?.type == .buy ? currency?.wallet?.defaultReceiveAddress : nil
+        let cvv = dataStore?.type == .buy ? dataStore?.cvv?.description : nil
+        let useInstantAch = dataStore?.type == .buy ? dataStore?.achDeliveryType == .instant : nil
+        
         let data = AchExchangeRequestData(quoteId: dataStore?.quote?.quoteId,
                                           depositQuantity: formattedDepositQuantity,
                                           withdrawalQuantity: formattedWithdrawalQuantity,
-                                          destination: dataStore?.type == .sell ? nil : currency?.wallet?.defaultReceiveAddress,
+                                          destination: destination,
                                           accountId: dataStore?.card?.id,
-                                          nologCvv: dataStore?.type == .sell ? nil : dataStore?.cvv?.description,
-                                          useInstantAch: dataStore?.type == .sell ? nil : dataStore?.achDeliveryType == .instant,
+                                          nologCvv: cvv,
+                                          useInstantAch: useInstantAch,
                                           secondFactorCode: dataStore?.secondFactorCode,
                                           secondFactorBackup: dataStore?.secondFactorBackup)
         
