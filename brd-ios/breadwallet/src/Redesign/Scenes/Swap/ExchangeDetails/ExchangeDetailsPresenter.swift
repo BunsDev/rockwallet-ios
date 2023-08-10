@@ -37,7 +37,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                 Models.Section.transactionTo
             ]
             
-        case .buyCard, .buyAch, .sellAch:
+        case .buyCard, .buyAch, .sellAch, .sellCard:
             sections = [
                 Models.Section.header,
                 Models.Section.toCurrency,
@@ -88,7 +88,7 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                                       title: "\(formattedCurrencyAmountDestination) \(destination?.currency ?? "")",
                                                       topRightText: nil)
             
-        case .sellAch:
+        case .sellAch, .sellCard:
             toCurrencyAssetViewModel = AssetViewModel(icon: fromImage,
                                                       title: "\(formattedCurrencyAmountString) \(detail.source.currency)",
                                                       topRightText: nil)
