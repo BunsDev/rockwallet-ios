@@ -127,7 +127,7 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         let depositQuantityBuy = from + (dataStore?.networkFee?.fiatValue ?? 0) + from * (dataStore?.quote?.buyFee ?? 1) / 100
         let depositQuantitySell = to
         let depositQuantity = dataStore?.type == .buy ? depositQuantityBuy : depositQuantitySell
-        let formattedDepositQuantity = fiatFormatter.string(from: depositQuantity as NSNumber) ?? ""
+        let formattedDepositQuantity = cryptoFormatter.string(from: depositQuantity as NSNumber) ?? ""
         
         let sellValue = from - from * (dataStore?.quote?.buyFee ?? 1) / 100
         let withdrawalQuantityBuy = to

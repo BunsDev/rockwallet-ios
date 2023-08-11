@@ -17,7 +17,7 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     var showTimer: Bool = false
     var accountId: String? { return ach?.id }
     var quoteRequestData: QuoteRequestData {
-        return .init(from: fromCode.lowercased(),
+        return .init(from: fromCode,
                      to: toCode,
                      type: .buy(paymentMethod),
                      accountId: paymentMethod == .ach ? accountId : nil)
