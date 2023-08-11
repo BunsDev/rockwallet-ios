@@ -147,11 +147,10 @@ class ApplicationController: Subscriber {
                 request.httpBody = Data(adAttributionToken.utf8)
                 
                 let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, error) in
-                    if let error = error {
-                        return
-                    }
+                    if let error = error { return }
                     do {
-                        let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any]
+                        guard let dataResponse = data else { return }
+                        let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: .allowFragments) as? [String: Any]
                         if jsonResponse?["campaignId"] is Int {
                             // TODO: Send Data to APP Backend??
                         }
@@ -161,9 +160,7 @@ class ApplicationController: Subscriber {
             }
         } else {
             ADClient.shared().requestAttributionDetails({ (attributionDetails, error) in
-                guard let attributionDetails = attributionDetails else {
-                    return
-                }
+                guard let attributionDetails = attributionDetails else { return }
                 for (version, adDictionary) in attributionDetails {
                     if let adAttributionInfo = adDictionary as? [String: Any] {
                         
