@@ -88,13 +88,15 @@ class CardSelectionViewController: ItemSelectionViewController {
             
             view.didTapSelectCard = { [weak self] in
                 guard let model else {
-                    self?.coordinator?.open(scene: Scenes.AddCard)
+                    let fromCardWithdrawal = self?.dataStore?.fromCardWithdrawal
+                    self?.coordinator?.open(scene: Scenes.AddCard) { vc in
+                        vc.dataStore?.fromCardWithdrawal = fromCardWithdrawal ?? false
+                    }
                     return
                 }
 
                 guard self?.dataStore?.isSelectingEnabled == true, !model.paymentMethodStatus.isProblematic else { return }
                 self?.itemSelected?(model)
-                self?.coordinator?.dismissFlow()
             }
         }
         

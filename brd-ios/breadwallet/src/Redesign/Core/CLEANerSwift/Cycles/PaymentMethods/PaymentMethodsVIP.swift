@@ -61,6 +61,8 @@ extension Interactor where Self: PaymentMethodsViewActions,
                     cards = cards.filter { $0.scheme == .visa }
                 }
                 
+                self?.dataStore?.cards = cards
+                
             case .failure(let error):
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
@@ -80,9 +82,13 @@ extension Interactor where Self: PaymentMethodsViewActions,
                     self?.presenter?.presentAch(actionResponse: .init(item: ach))
                     
                 case .card:
-                    let card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
+                    var card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
                     self?.dataStore?.cards = cards
                     self?.dataStore?.ach = nil
+                    
+                    if self?.dataStore?.exchangeType == .sellCard {
+                        card = cards.first(where: { $0.verifiedToSell == true })
+                    }
                     
                     self?.setPaymentCard(viewAction: .init(card: card, setAmount: viewAction.setAmount))
                 }
@@ -214,8 +220,10 @@ extension Controller where Self: PaymentMethodsResponseDisplays {
     func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay) {
         view.endEditing(true)
         
-        (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: responseDisplay.allPaymentCards, from: responseDisplay.exchangeType) { [weak self] selectedCard in
-            guard let selectedCard else { return }
+        let cards = responseDisplay.allPaymentCards
+        let from = responseDisplay.exchangeType
+        
+        (coordinator as? ExchangeCoordinator)?.showCardSelector(cards: cards, from: from) { [weak self] selectedCard in
             (self?.interactor as? (any PaymentMethodsViewActions))?.setPaymentCard(viewAction: .init(card: selectedCard, setAmount: true))
         }
     }

@@ -95,10 +95,16 @@ class ItemSelectionInteractor: NSObject, Interactor, ItemSelectionViewActions {
     // MARK: - Additional helpers
     
     private func fetchCards(completion: ((Result<[PaymentCard]?, Error>) -> Void)?) {
-        PaymentCardsWorker().execute(requestData: PaymentCardsRequestData()) { [weak self] result in
+        let worker = dataStore?.fromCardWithdrawal == true ? SellPaymentCardsWorker() : PaymentCardsWorker()
+        
+        worker.execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.dataStore?.items = data?.filter { $0.type == .card }
+                var cards = data?.filter { $0.type == .card }
+                if self?.dataStore?.fromCardWithdrawal == true {
+                    cards = cards?.filter { $0.scheme == .visa }
+                }
+                self?.dataStore?.items = cards
                 
             default:
                 break
