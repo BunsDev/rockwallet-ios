@@ -11,6 +11,9 @@ import WalletKit
 import UserNotifications
 import IQKeyboardManagerSwift
 import Firebase
+import AdServices
+import iAd
+
 #if canImport(WidgetKit)
 import WidgetKit
 #endif
@@ -89,6 +92,7 @@ class ApplicationController: Subscriber {
         mainSetup()
         setupKeyboard()
         setupFirebase()
+        fetchAttributionData()
         
         Reachability.addDidChangeCallback({ isReachable in
             self.isReachable = isReachable
@@ -131,6 +135,45 @@ class ApplicationController: Subscriber {
         initializeAssets(completionHandler: { [weak self] in
             self?.decideFlow()
         })
+    }
+    
+    private func fetchAttributionData() {
+        if #available(iOS 14.3, *) {
+            if let adAttributionToken = try? AAAttribution.attributionToken() {
+                guard let url =  URL(string: "https://api-adservices.apple.com/api/v1/") else { return }
+                let request = NSMutableURLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+                request.httpBody = Data(adAttributionToken.utf8)
+                
+                let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, error) in
+                    if let error = error {
+                        return
+                    }
+                    do {
+                        let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any]
+                        if jsonResponse?["campaignId"] is Int {
+                            // TODO: Send Data to APP Backend??
+                        }
+                    } catch {}
+                }
+                task.resume()
+            }
+        } else {
+            ADClient.shared().requestAttributionDetails({ (attributionDetails, error) in
+                guard let attributionDetails = attributionDetails else {
+                    return
+                }
+                for (version, adDictionary) in attributionDetails {
+                    if let adAttributionInfo = adDictionary as? [String: Any] {
+                        
+                        if adAttributionInfo["iad-campaign-id"] is String {
+                            // TODO: Send Data to APP Backend??
+                        }
+                    }
+                }
+            })
+        }
     }
     
     private func decideFlow() {

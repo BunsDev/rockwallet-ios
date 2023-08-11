@@ -620,6 +620,8 @@
 		A2439D7BB746E6CFC3F9B64A /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2439F5D8263945E73EFF4A3 /* CacheService.swift */; };
 		C43EFBE829DC33620067FE70 /* LogoutWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43EFBE729DC33620067FE70 /* LogoutWorker.swift */; };
 		C4520F102875C726003FFB7F /* AssetSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */; };
+		C455E4422A82228400A0CDEA /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C455E4412A82228300A0CDEA /* AdServices.framework */; };
+		C455E4432A82229000A0CDEA /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBC6B2D21751ECA00899AFB /* iAd.framework */; };
 		C458C7CB29E6D22E00146C0D /* PaymailAddressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458C7C429E6D22E00146C0D /* PaymailAddressStore.swift */; };
 		C458C7CC29E6D22E00146C0D /* PaymailAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458C7C529E6D22E00146C0D /* PaymailAddressPresenter.swift */; };
 		C458C7CD29E6D22F00146C0D /* PaymailAddressModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C458C7C629E6D22E00146C0D /* PaymailAddressModels.swift */; };
@@ -1493,6 +1495,7 @@
 		A2439F5D8263945E73EFF4A3 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		C43EFBE729DC33620067FE70 /* LogoutWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWorker.swift; sourceTree = "<group>"; };
 		C4520F092875C726003FFB7F /* AssetSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionViewController.swift; sourceTree = "<group>"; };
+		C455E4412A82228300A0CDEA /* AdServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdServices.framework; path = System/Library/Frameworks/AdServices.framework; sourceTree = SDKROOT; };
 		C458C7C429E6D22E00146C0D /* PaymailAddressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressStore.swift; sourceTree = "<group>"; };
 		C458C7C529E6D22E00146C0D /* PaymailAddressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressPresenter.swift; sourceTree = "<group>"; };
 		C458C7C629E6D22E00146C0D /* PaymailAddressModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymailAddressModels.swift; sourceTree = "<group>"; };
@@ -1745,7 +1748,9 @@
 				22717B062315D3E300F77F4E /* CloudKit.framework in Frameworks */,
 				223DB21B1DF69F0F0076A151 /* libbz2.framework in Frameworks */,
 				044D097B29C30E8D00C510DC /* MobileIntelligence in Frameworks */,
+				C455E4432A82229000A0CDEA /* iAd.framework in Frameworks */,
 				049CE74829DDACDE009D0F2D /* GoogleDataTransport in Frameworks */,
+				C455E4422A82228400A0CDEA /* AdServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2162,6 +2167,7 @@
 		75A2A7F11DA5935F00A983D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C455E4412A82228300A0CDEA /* AdServices.framework */,
 				3ABD8D0D24E1CF1500EC4C91 /* SwiftUI.framework */,
 				22717B052315D3E300F77F4E /* CloudKit.framework */,
 				7C4D64CA222C511900DE2C2B /* libresolv.tbd */,
