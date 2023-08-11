@@ -163,7 +163,6 @@ class BillingAddressViewController: BaseTableViewController<ExchangeCoordinator,
         LoadingView.hideIfNeeded()
         coordinator?.showOverlay(with: .success) { [weak self] in
             Store.trigger(name: .reloadBuy)
-            self?.coordinator?.dismissFlow()
         }
     }
     
