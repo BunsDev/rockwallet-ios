@@ -91,7 +91,7 @@ class ItemSelectionViewController: BaseTableViewController<ExchangeCoordinator,
             view.setup { view in
                 view.configure(with: Presets.InfoView.error)
                 view.setup(with: model)
-                view.content.setupCustomMargins(top: .large, leading: .large, bottom: .extraSmall, trailing: .large)
+                view.content.setupCustomMargins(all: .large)
             }
             view.setupCustomMargins(horizontal: .large)
         }
@@ -133,8 +133,6 @@ class ItemSelectionViewController: BaseTableViewController<ExchangeCoordinator,
         
         guard let model = dataSource?.itemIdentifier(for: indexPath), dataStore?.isSelectingEnabled == true else { return }
         itemSelected?(model)
-        
-        coordinator?.dismissFlow()
     }
     
     // MARK: - Search View Delegate

@@ -110,7 +110,11 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
             vc.navigationItem.hidesBackButton = backButtonVisible
             
             vc.itemSelected = { item in
-                selected?(item as? PaymentCard)
+                guard let item = item as? PaymentCard else { return }
+                if exchangeType == .sellCard, item.verifiedToSell == false {
+                    return
+                }
+                selected?(item)
                 
                 self?.popToRoot()
             }
@@ -122,13 +126,13 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
     }
     
     func showCountrySelector(countries: [Country], selected: ((Country?) -> Void)?) {
-        openModally(coordinator: ExchangeCoordinator.self,
-                    scene: Scenes.ItemSelection,
-                    presentationStyle: .formSheet) { vc in
-            vc?.dataStore?.items = countries
-            vc?.dataStore?.sceneTitle = L10n.Account.selectCountry
-            vc?.itemSelected = { item in
+        open(scene: Scenes.ItemSelection,
+             presentationStyle: .formSheet) { [weak self] vc in
+            vc.dataStore?.items = countries
+            vc.dataStore?.sceneTitle = L10n.Account.selectCountry
+            vc.itemSelected = { item in
                 selected?(item as? Country)
+                self?.popViewController()
             }
         }
     }
@@ -139,8 +143,9 @@ class ExchangeCoordinator: BaseCoordinator, SellRoutes, BuyRoutes, SwapRoutes, O
                     presentationStyle: .formSheet) { vc in
             vc?.dataStore?.items = states
             vc?.dataStore?.sceneTitle = L10n.Account.selectState
-            vc?.itemSelected = { item in
+            vc?.itemSelected = { [weak self] item in
                 selected?(item as? Place)
+                self?.popViewController()
             }
         }
     }
