@@ -305,7 +305,7 @@ class ApplicationController: Subscriber {
                         guard let dataResponse = data else { return }
                         let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: .allowFragments) as? [String: Any]
                         if jsonResponse?["campaignId"] is Int {
-                            // TODO: Send Data to APP Backend??
+                            // TODO: Send Data to your tracking tool, APP Backend??
                         }
                     } catch {}
                 }
@@ -322,7 +322,7 @@ class ApplicationController: Subscriber {
                     if let adAttributionInfo = adDictionary as? [String: Any] {
                         
                         if adAttributionInfo["iad-campaign-id"] is String {
-                            // TODO: Send Data to APP Backend??
+                            // TODO: Send Data to your tracking tool, APP Backend??
                         }
                     }
                 }
