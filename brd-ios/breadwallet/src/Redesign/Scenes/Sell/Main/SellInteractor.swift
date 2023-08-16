@@ -56,7 +56,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         generateSender(viewAction: .init(fromAmountCurrency: amount?.currency))
         
-        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAchAllowanceLifetime), completion: { _ in
+        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAchAllowanceLifetime), completion: {
             completion?()
         })
     }
@@ -174,6 +174,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     
     func selectPaymentMethod(viewAction: SellModels.PaymentMethod.ViewAction) {
         dataStore?.paymentMethod = viewAction.method
+        
         getPayments(viewAction: .init(setAmount: false), completion: { [weak self] in
             let item = AssetModels.Item(type: self?.dataStore?.paymentMethod,
                                         achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)

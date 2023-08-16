@@ -118,8 +118,6 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         cryptoFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         cryptoFormatter.usesGroupingSeparator = false
         
-        let toTokenValue = cryptoFormatter.string(for: to) ?? ""
-        
         let fiatFormatter = ExchangeFormatter.fiat
         fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
