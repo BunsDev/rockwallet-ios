@@ -12,7 +12,6 @@ import UserNotifications
 import IQKeyboardManagerSwift
 import Firebase
 import AdServices
-import iAd
 
 #if canImport(WidgetKit)
 import WidgetKit
@@ -290,43 +289,29 @@ class ApplicationController: Subscriber {
     private func fetchAttributionData() {
         if #available(iOS 14.3, *) {
             if let adAttributionToken = try? AAAttribution.attributionToken() {
-                guard let url =  URL(string: Constant.appleSearchAds) else { return }
-                let request = NSMutableURLRequest(url: url)
-                request.httpMethod = "POST"
-                request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-                request.httpBody = Data(adAttributionToken.utf8)
-                
-                let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, error) in
-                    if let error = error {
-                        print(error)
-                        return
-                    }
-                    do {
-                        guard let dataResponse = data else { return }
-                        let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: .allowFragments) as? [String: Any]
-                        if jsonResponse?["campaignId"] is Int {
-                            // TODO: Send Data to your tracking tool, APP Backend??
+                if let url =  URL(string: Constant.appleSearchAds) {
+                    let request = NSMutableURLRequest(url: url)
+                    request.httpMethod = "POST"
+                    request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+                    request.httpBody = Data(adAttributionToken.utf8)
+                    
+                    let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, error) in
+                        do {
+                            if let dataResponse = data,
+                               error == nil {
+                                let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: .allowFragments) as? [String: Any]
+                                if let campaignid = jsonResponse?["campaignId"] as? Int {
+                                    // TODO: Send Data to your tracking tool, APP Backend??
+                                }
+                            }
+                        } catch let error {
+                            print("JSON Serialization error \(error)")
+                            return
                         }
-                    } catch {}
+                    }
+                    task.resume()
                 }
-                task.resume()
             }
-        } else {
-            ADClient.shared().requestAttributionDetails({ (attributionDetails, error) in
-                guard let attributionDetails = attributionDetails else {
-                    print("Search Ads error: \(error?.localizedDescription ?? "")")
-                    return
-                }
-                for (version, adDictionary) in attributionDetails {
-                    print("Search Ads version:", version)
-                    if let adAttributionInfo = adDictionary as? [String: Any] {
-                        
-                        if adAttributionInfo["iad-campaign-id"] is String {
-                            // TODO: Send Data to your tracking tool, APP Backend??
-                        }
-                    }
-                }
-            })
         }
     }
     
