@@ -20,7 +20,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
     // MARK: - SellActionResponses
     
     func presentData(actionResponse: FetchModels.Get.ActionResponse) {
-        guard let item = actionResponse.item as? AssetModels.Item else { return }
+        guard let item = actionResponse.item as? Models.Item else { return }
         
         var sections: [AssetModels.Section] = [
             .rateAndTimer,
@@ -30,7 +30,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             .limitActions
         ]
         
-        if item.achEnabled == true {
+        if item.achSellAccess && item.cardSellAccess {
             sections.insert(.segment, at: 0)
         }
         
