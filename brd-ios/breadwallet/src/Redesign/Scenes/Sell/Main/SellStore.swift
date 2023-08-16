@@ -39,6 +39,8 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     var paymentMethod: PaymentCard.PaymentType? = .ach
     var exchangeType: ExchangeType? { return paymentMethod == .ach ? .sellAch : .sellCard }
     var availablePayments: [PaymentCard.PaymentType] = []
+    var hasAchSellAccess: Bool { return UserManager.shared.profile?.kycAccessRights.hasAchSellAccess == true }
+    var hasCardSellAccess: Bool { return UserManager.shared.profile?.kycAccessRights.hasCardSellAccess == true }
     
     var currencies: [Currency] = []
     var supportedCurrencies: [String]?

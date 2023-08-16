@@ -28,10 +28,11 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
     // MARK: - SellViewActions
     
     func getData(viewAction: FetchModels.Get.ViewAction) {
-        let item = AssetModels.Item(type: dataStore?.paymentMethod,
-                                    achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+        let item = SellModels.Item(type: dataStore?.paymentMethod,
+                                   achSellAccess: dataStore?.hasAchSellAccess ?? false,
+                                   cardSellAccess: dataStore?.hasCardSellAccess ?? false)
         
-        prepareCurrencies(viewAction: item)
+        prepareCurrencies(viewAction: .init(type: dataStore?.paymentMethod, achEnabled: dataStore?.hasAchSellAccess ?? false))
         
         guard !(dataStore?.supportedCurrencies ?? []).isEmpty else {
             presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
@@ -43,7 +44,6 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         }
         
         getPayments(viewAction: .init()) { [weak self] in
-            self?.dataStore?.selected = self?.dataStore?.ach
             self?.setAmount(viewAction: .init(currency: self?.amount?.currency.code ?? self?.dataStore?.currencies.first?.code, didFinish: true))
         }
     }
@@ -56,7 +56,7 @@ class SellInteractor: NSObject, Interactor, SellViewActions {
         
         generateSender(viewAction: .init(fromAmountCurrency: amount?.currency))
         
-        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAchAllowanceLifetime), completion: { [weak self] _ in
+        getFees(viewAction: .init(fromAmount: from, limit: profile.sellAchAllowanceLifetime), completion: { _ in
             completion?()
         })
     }
