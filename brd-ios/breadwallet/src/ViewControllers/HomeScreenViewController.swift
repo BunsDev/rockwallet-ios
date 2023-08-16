@@ -144,6 +144,7 @@ class HomeScreenViewController: UIViewController, UITabBarDelegate, Subscriber {
         super.viewWillAppear(animated)
         
         pullToRefreshControl.endRefreshing()
+        animationView.animation = Animations.buyAndSell.animation
         
         GoogleAnalytics.logEvent(GoogleAnalytics.Home())
     }
