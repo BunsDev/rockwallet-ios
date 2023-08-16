@@ -46,6 +46,7 @@ protocol AssetDataStore: BaseDataStore, FetchDataStore, TwoStepDataStore {
     var isFromBuy: Bool { get set }
     var currencies: [Currency] { get set }
     var supportedCurrencies: [String]? { get set }
+    var amount: Amount? { get set }
 }
 
 extension Interactor where Self: AssetViewActions,

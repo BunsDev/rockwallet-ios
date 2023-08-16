@@ -31,11 +31,14 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
                      accountId: accountId)
     }
     
-    // MARK: - SellDataStore
-    
+    // MARK: - PaymentMethodsDataStore
+
     var ach: PaymentCard?
     var selected: PaymentCard?
     var cards: [PaymentCard] = []
+    
+    // MARK: - SellDataStore
+    
     var paymentMethod: PaymentCard.PaymentType? = .ach
     var exchangeType: ExchangeType? { return paymentMethod == .ach ? .sellAch : .sellCard }
     var availablePayments: [PaymentCard.PaymentType] = []
@@ -44,6 +47,14 @@ class SellStore: NSObject, BaseDataStore, SellDataStore {
     
     var currencies: [Currency] = []
     var supportedCurrencies: [String]?
+    var amount: Amount? {
+        get {
+            return fromAmount
+        }
+        set(value) {
+            fromAmount = value
+        }
+    }
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?
