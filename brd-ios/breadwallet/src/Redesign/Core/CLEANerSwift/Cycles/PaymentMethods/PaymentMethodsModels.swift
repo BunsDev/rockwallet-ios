@@ -55,4 +55,14 @@ enum PaymentMethodsModels {
             var plaidHandler: PlaidLinkKitHandler
         }
     }
+    
+    struct PaymentMethod {
+        struct ViewAction {
+            let method: PaymentCard.PaymentType
+        }
+        
+        struct ActionResponse {}
+        
+        struct ResponseDisplay {}
+    }
 }

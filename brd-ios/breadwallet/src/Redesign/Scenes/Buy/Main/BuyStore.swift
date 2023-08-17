@@ -77,6 +77,14 @@ class BuyStore: NSObject, BaseDataStore, BuyDataStore {
     
     var currencies: [Currency] = []
     var supportedCurrencies: [String]?
+    var amount: Amount? {
+        get {
+            return toAmount
+        }
+        set(value) {
+            toAmount = value
+        }
+    }
     
     var coreSystem: CoreSystem?
     var keyStore: KeyStore?

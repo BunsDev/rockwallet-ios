@@ -11,14 +11,15 @@
 import Foundation
 import LinkKit
 
-protocol PaymentMethodsViewActions: BaseViewActions, FetchViewActions {
+protocol PaymentMethodsViewActions: BaseViewActions, FetchViewActions, AssetViewActions {
     func getPayments(viewAction: PaymentMethodsModels.Get.ViewAction, completion: (() -> Void)?)
+    func selectPaymentMethod(viewAction: PaymentMethodsModels.PaymentMethod.ViewAction)
     func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction)
     func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction)
     func achSuccessMessage(viewAction: PaymentMethodsModels.Get.ViewAction)
 }
 
-protocol PaymentMethodsActionResponses: BaseActionResponses, FetchActionResponses {
+protocol PaymentMethodsActionResponses: BaseActionResponses, FetchActionResponses, AssetActionResponses {
     var achPaymentModel: CardSelectionViewModel? { get set }
     
     func presentPaymentCards(actionResponse: PaymentMethodsModels.PaymentCards.ActionResponse)
@@ -33,11 +34,11 @@ protocol PaymentMethodsResponseDisplays: BaseResponseDisplays, FetchResponseDisp
     func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay)
 }
 
-protocol PaymentMethodsDataStore: BaseDataStore, FetchDataStore {
+protocol PaymentMethodsDataStore: BaseDataStore, FetchDataStore, AssetDataStore {
     var selected: PaymentCard? { get set }
     var ach: PaymentCard? { get set }
     var cards: [PaymentCard] { get set }
-    var paymentMethod: PaymentCard.PaymentType? { get }
+    var paymentMethod: PaymentCard.PaymentType? { get set }
     var exchangeType: ExchangeType? { get }
 }
 
@@ -98,11 +99,32 @@ extension Interactor where Self: PaymentMethodsViewActions,
         }
     }
     
+    func selectPaymentMethod(viewAction: PaymentMethodsModels.PaymentMethod.ViewAction) {
+        dataStore?.paymentMethod = viewAction.method
+        
+        getPayments(viewAction: .init(setAmount: false), completion: { [weak self] in
+            let item = AssetModels.Item(type: self?.dataStore?.paymentMethod,
+                                        achEnabled: UserManager.shared.profile?.kycAccessRights.hasAchAccess ?? false)
+            self?.prepareCurrencies(viewAction: item)
+            
+            guard let supportedCurrencies = self?.dataStore?.supportedCurrencies, !supportedCurrencies.isEmpty else {
+                self?.presenter?.presentError(actionResponse: .init(error: ExchangeErrors.selectAssets))
+                return
+            }
+            
+            let isSelectedCurencySupported = supportedCurrencies.contains(self?.dataStore?.amount?.currency.code.lowercased() ?? "")
+            guard let currency = isSelectedCurencySupported ? self?.dataStore?.amount?.currency : self?.dataStore?.currencies.first else { return }
+            self?.dataStore?.amount = .zero(currency)
+            
+            self?.setAmount(viewAction: .init(currency: currency.code, didFinish: true))
+        })
+    }
+    
     func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction) {
         dataStore?.selected = viewAction.card
         
         guard viewAction.setAmount else { return }
-        (self as? (any AssetViewActions))?.setAmount(viewAction: .init())
+        setAmount(viewAction: .init())
     }
     
     func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction) {
