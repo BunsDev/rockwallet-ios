@@ -33,11 +33,20 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     override func setupSubviews() {
         super.setupSubviews()
         
+        view.backgroundColor = LightColors.Background.two
+        
         tableView.register(WrapperTableViewCell<MainSwapView>.self)
         tableView.register(WrapperTableViewCell<SwapCurrencyView>.self)
         
         tableView.delaysContentTouches = false
         tableView.backgroundColor = LightColors.Background.two
+        verticalButtons.backgroundColor = LightColors.Background.two
+        
+        tableView.snp.remakeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview().offset(Margins.extraHuge.rawValue)
+            make.bottom.equalTo(verticalButtons.snp.top).offset(-Margins.large.rawValue)
+        }
     }
     
     func tableView(_ tableView: UITableView, timerCellForRowAt indexPath: IndexPath) -> UITableViewCell {
