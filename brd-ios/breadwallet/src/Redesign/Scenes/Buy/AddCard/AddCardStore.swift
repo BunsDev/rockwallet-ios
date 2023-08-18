@@ -25,10 +25,14 @@ class AddCardStore: NSObject, BaseDataStore, AddCardDataStore {
     
     // MARK: - Additional helpers
     var isValid: Bool {
-        return FieldValidator.validate(fields: [cardExpDateYear,
-                                                cardExpDateMonth,
-                                                cardCVV,
-                                                cardNumber])
+        if fromCardWithdrawal && cardNumber?.first != "4" {
+            return false
+        } else {
+            return FieldValidator.validate(fields: [cardExpDateYear,
+                                                    cardExpDateMonth,
+                                                    cardCVV,
+                                                    cardNumber])
+        }
     }
     
 }

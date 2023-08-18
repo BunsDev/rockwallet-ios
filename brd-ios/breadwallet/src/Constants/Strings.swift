@@ -59,6 +59,8 @@ internal enum L10n {
   internal enum Account {
     /// Account limits title in profile view
     internal static let accountLimits = L10n.tr("Localizable", "Account.AccountLimits", fallback: "Account limits")
+    /// Account status
+    internal static let accountStatus = L10n.tr("Localizable", "Account.AccountStatus", fallback: "Account status")
     /// Account Verification screen title
     internal static let accountVerification = L10n.tr("Localizable", "Account.AccountVerification", fallback: "Account Verification")
     /// Daily (ACH)
@@ -1001,8 +1003,8 @@ internal enum L10n {
           internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.ConfirmationDrawer.Title", fallback: "Purchase with Instant Buy")
         }
         internal enum Fee {
-          /// Instant Buy fee
-          internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Title", fallback: "Instant Buy fee")
+          /// Instant ACH fee
+          internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Title", fallback: "Instant ACH fee")
           internal enum Alternative {
             /// Instant ACH fee
             internal static let title = L10n.tr("Localizable", "Buy.Ach.Instant.Fee.Alternative.Title", fallback: "Instant ACH fee")
@@ -1152,6 +1154,8 @@ internal enum L10n {
     internal static let bodyWithoutSell = L10n.tr("Localizable", "ComingSoon.BodyWithoutSell", fallback: "Buy and Swap are not available in your state. We will notify you when they become available. \n\nYou can still Store, Send and Receive digital assets in your RockWallet.")
     /// You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.
     internal static let buyDescription = L10n.tr("Localizable", "ComingSoon.BuyDescription", fallback: "You can continue to Swap, Store, Send, and Receive digital assets to your RockWallet.")
+    /// You can continue to Buy, Swap, Store, Send, and Receive digital assets in your RockWallet.
+    internal static let sellDescription = L10n.tr("Localizable", "ComingSoon.SellDescription", fallback: "You can continue to Buy, Swap, Store, Send, and Receive digital assets in your RockWallet.")
     /// This feature is not available for your account at this time.
     internal static let swapBuyTitle = L10n.tr("Localizable", "ComingSoon.SwapBuyTitle", fallback: "This feature is not available for your account at this time.")
     /// You can continue to Buy, Store, Send, and Receive digital assets to your RockWallet.
@@ -1362,6 +1366,8 @@ internal enum L10n {
     internal static let exchangeQuoteFailed = L10n.tr("Localizable", "ErrorMessages.ExchangeQuoteFailed", fallback: "We are currently having issues making a swap between this pair of coins. Please try again later.")
     /// We are having temporary network issues. Please try again later.
     internal static let exchangesUnavailable = L10n.tr("Localizable", "ErrorMessages.ExchangesUnavailable", fallback: "We are having temporary network issues. Please try again later.")
+    /// Failed to generate wallet. Please try again.
+    internal static let failedToGenerateWallet = L10n.tr("Localizable", "ErrorMessages.FailedToGenerateWallet", fallback: "Failed to generate wallet. Please try again.")
     /// Minimum buy/swap amount for this pair is temporarily higher due to higher withdrawal network fees. Try other pairs or try again later.
     internal static let highWidrawalFee = L10n.tr("Localizable", "ErrorMessages.highWidrawalFee", fallback: "Minimum buy/swap amount for this pair is temporarily higher due to higher withdrawal network fees. Try other pairs or try again later.")
     /// The Paymail address cannot be found. Please use the BSV address.
@@ -1385,6 +1391,10 @@ internal enum L10n {
     /// You don’t have enough %@ in your wallet in order to transfer this type of token.
     internal static func notEnoughBalance(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.notEnoughBalance", String(describing: p1), fallback: "You don’t have enough %@ in your wallet in order to transfer this type of token.")
+    }
+    /// Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.
+    internal static func notEnoughBalanceXRP(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.notEnoughBalanceXRP", String(describing: p1), fallback: "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.")
     }
     /// The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.
     internal static func overDailyLimit(_ p1: Any) -> String {
@@ -1806,6 +1816,8 @@ internal enum L10n {
     internal static let browseFirst = L10n.tr("Localizable", "Onboarding.browseFirst", fallback: "I'll browse first")
     /// Onboarding screen 'Buy some coin' button
     internal static let buyCoin = L10n.tr("Localizable", "Onboarding.buyCoin", fallback: "Buy some coin")
+    /// Empowering you to navigate the digital asset economy easily and securely
+    internal static let description = L10n.tr("Localizable", "Onboarding.Description", fallback: "Empowering you to navigate the digital asset economy easily and securely")
     /// Onboarding screen 'Get started' (create new wallet) button
     internal static let getStarted = L10n.tr("Localizable", "Onboarding.getStarted", fallback: "Get started")
     /// Onboarding screen 'Next' button
@@ -1947,6 +1959,8 @@ internal enum L10n {
     internal enum CreateAccount {
       /// With your RockWallet account you’ll be able to Swap and Buy seamlessly.
       internal static let body = L10n.tr("Localizable", "Prompts.CreateAccount.body", fallback: "With your RockWallet account you’ll be able to Swap and Buy seamlessly.")
+      /// With your RockWallet account, you’ll be able to Store and Manage your digital assets seamlessly.
+      internal static let description = L10n.tr("Localizable", "Prompts.CreateAccount.description", fallback: "With your RockWallet account, you’ll be able to Store and Manage your digital assets seamlessly.")
       /// Create your RockWallet account
       internal static let title = L10n.tr("Localizable", "Prompts.CreateAccount.title", fallback: "Create your RockWallet account")
     }
@@ -2057,6 +2071,8 @@ internal enum L10n {
     internal enum VerifyAccount {
       /// One more step and you’ll be able to Swap and Buy seamlessly.
       internal static let body = L10n.tr("Localizable", "Prompts.VerifyAccount.body", fallback: "One more step and you’ll be able to Swap and Buy seamlessly.")
+      /// One more step, and you´ll unlock all RockWallet features.
+      internal static let description = L10n.tr("Localizable", "Prompts.VerifyAccount.description", fallback: "One more step, and you´ll unlock all RockWallet features.")
       /// Verify your account
       internal static let title = L10n.tr("Localizable", "Prompts.VerifyAccount.title", fallback: "Verify your account")
     }
@@ -2408,6 +2424,8 @@ internal enum L10n {
     internal static func disclaimer(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
       return L10n.tr("Localizable", "Sell.disclaimer", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "Minimum withdrawal is %@ and maximum is %@ per day. At the moment your lifetime limit is %@ USD.\n\nACH Withdrawals will be processed within 3-5 business days.withdrawal")
     }
+    /// Only Visa Debit is supported for withdrawals
+    internal static let invalidCardNumber = L10n.tr("Localizable", "Sell.InvalidCardNumber", fallback: "Only Visa Debit is supported for withdrawals")
     /// I receive
     internal static let iReceive = L10n.tr("Localizable", "Sell.iReceive", fallback: "I receive")
     /// This feature is not available in your region. We will notify you when it becomes available.
@@ -2457,8 +2475,9 @@ internal enum L10n {
     /// You’ll receive
     internal static let youWillReceive = L10n.tr("Localizable", "Sell.YouWillReceive", fallback: "You’ll receive")
     internal enum SsnInput {
-      /// To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms
-      internal static let disclaimer = L10n.tr("Localizable", "Sell.SsnInput.Disclaimer", fallback: "To enable selling and ACH withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations. Rest assured, your data is fully encrypted with the industry's latest encryption algorithms")
+      /// To enable selling and withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations.
+      /// Rest assured, your data is fully encrypted with the industry’s latest encryption algorithms.
+      internal static let disclaimer = L10n.tr("Localizable", "Sell.SsnInput.Disclaimer", fallback: "To enable selling and withdrawals, we require your Social Security Numbers (SSN). It is a standard procedure to comply with financial regulations.\nRest assured, your data is fully encrypted with the industry’s latest encryption algorithms.")
       internal enum Title {
         /// We need additional info
         internal static let additionalInfo = L10n.tr("Localizable", "Sell.SsnInput.Title.AdditionalInfo", fallback: "We need additional info")
@@ -2684,6 +2703,8 @@ internal enum L10n {
     internal static let shareWithWidget = L10n.tr("Localizable", "Settings.shareWithWidget", fallback: "Share portfolio data with widgets")
     /// Sync blockchain label
     internal static let sync = L10n.tr("Localizable", "Settings.sync", fallback: "Sync Blockchain")
+    /// Hey, I use RockWallet to store and manage my crypto. It’s really easy to use. Give it a try. https://rockwallet.com/
+    internal static let tellAFriendText = L10n.tr("Localizable", "Settings.TellAFriendText", fallback: "Hey, I use RockWallet to store and manage my crypto. It’s really easy to use. Give it a try. https://rockwallet.com/")
     /// Hey, I use RockWallet to send, receive, store, buy and trade crypto. It’s really easy to use. Give it a try. https://rockwallet.com/
     internal static let tellFriendDescription = L10n.tr("Localizable", "Settings.TellFriendDescription", fallback: "Hey, I use RockWallet to send, receive, store, buy and trade crypto. It’s really easy to use. Give it a try. https://rockwallet.com/")
     /// Settings title
@@ -3596,6 +3617,8 @@ internal enum L10n {
     internal static let button = L10n.tr("Localizable", "VerifyAccount.Button", fallback: "Verify your account")
     /// Verify your identity before you can start buying and swapping.
     internal static let verifyIdentityDescription = L10n.tr("Localizable", "VerifyAccount.VerifyIdentityDescription", fallback: "Verify your identity before you can start buying and swapping.")
+    /// Verify your identity to enjoy all RockWallet features.
+    internal static let verifyIdentityText = L10n.tr("Localizable", "VerifyAccount.VerifyIdentityText", fallback: "Verify your identity to enjoy all RockWallet features.")
     /// Verify my identity
     internal static let verifyMyIdentity = L10n.tr("Localizable", "VerifyAccount.VerifyMyIdentity", fallback: "Verify my identity")
     /// Verify your identity

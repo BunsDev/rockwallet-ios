@@ -136,6 +136,7 @@ class AddCardViewController: BaseTableViewController<ExchangeCoordinator,
               let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? WrapperTableViewCell<BankCardInputDetailsView> else { return }
         
         cell.wrappedView.setup(with: responseDisplay.model)
+        tableView.invalidateTableViewIntrinsicContentSize()
     }
     
     func displayValidate(responseDisplay: AddCardModels.Validate.ResponseDisplay) {
