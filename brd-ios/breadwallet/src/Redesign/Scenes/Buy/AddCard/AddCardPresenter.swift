@@ -61,7 +61,7 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
         if let input = actionResponse.dataStore?.cardNumber, !input.isEmpty, bankCardInputDetailsViewModel.number?.value != input {
             let fromCardWithdrawal = actionResponse.dataStore?.fromCardWithdrawal ?? false
             let visaCheck = fromCardWithdrawal && input.first != "4"
-            bankCardInputDetailsViewModel.number?.hint = visaCheck ? "Only visa supported" : nil
+            bankCardInputDetailsViewModel.number?.hint = visaCheck ? L10n.Sell.invalidCardNumber : nil
             bankCardInputDetailsViewModel.number?.displayState = visaCheck ? .error : .selected
             bankCardInputDetailsViewModel.number?.trailing = visaCheck ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil
         } else {

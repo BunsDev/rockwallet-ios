@@ -1384,7 +1384,7 @@
 
 "ErrorMessages.notEnoughBalance" = "You don’t have enough %@ in your wallet in order to transfer this type of token.";
 
-"ErrorMessages.notEnoughBalanceXRP" = "Ensure you leave at least %s XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.";
+"ErrorMessages.notEnoughBalanceXRP" = "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.";
 
 "ErrorMessages.overDailyLimit" = "The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.";
 
