@@ -58,6 +58,18 @@ final class AddCardPresenter: NSObject, Presenter, AddCardActionResponses {
     }
     
     func presentCardInfo(actionResponse: AddCardModels.CardInfo.ActionResponse) {
+        if let input = actionResponse.dataStore?.cardNumber, !input.isEmpty, bankCardInputDetailsViewModel.number?.value != input {
+            let fromCardWithdrawal = actionResponse.dataStore?.fromCardWithdrawal ?? false
+            let visaCheck = fromCardWithdrawal && input.first != "4"
+            bankCardInputDetailsViewModel.number?.hint = visaCheck ? "Only visa supported" : nil
+            bankCardInputDetailsViewModel.number?.displayState = visaCheck ? .error : .selected
+            bankCardInputDetailsViewModel.number?.trailing = visaCheck ? .image(Asset.warning.image.tinted(with: LightColors.Error.one)) : nil
+        } else {
+            bankCardInputDetailsViewModel.number?.hint = nil
+            bankCardInputDetailsViewModel.number?.displayState = .normal
+            bankCardInputDetailsViewModel.number?.trailing = nil
+        }
+        
         bankCardInputDetailsViewModel.number?.value = actionResponse.dataStore?.cardNumber?.chunkFormatted()
         bankCardInputDetailsViewModel.expiration?.value = actionResponse.dataStore?.cardExpDateString
         bankCardInputDetailsViewModel.cvv?.value = actionResponse.dataStore?.cardCVV
