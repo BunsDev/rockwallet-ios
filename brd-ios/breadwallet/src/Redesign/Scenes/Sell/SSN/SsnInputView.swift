@@ -70,7 +70,7 @@ class SsnInputView: FEView<SsnInputConfiguration, SsnInputViewModel> {
         mainStack.addArrangedSubview(textField)
         mainStack.addArrangedSubview(button)
         button.snp.makeConstraints { make in
-            make.height.equalTo(ViewSizes.Common.largeCommon)
+            make.height.equalTo(ViewSizes.Common.largeCommon.rawValue)
         }
     }
     
