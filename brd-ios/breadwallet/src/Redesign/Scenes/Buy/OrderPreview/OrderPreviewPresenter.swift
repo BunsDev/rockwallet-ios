@@ -231,7 +231,14 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
         let toCryptoDisplayImage = item.to?.currency.imageSquareBackground
         let toCryptoDisplayName = item.to?.currency.displayName ?? ""
         let from = item.from ?? 0
-        let cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
+        var cardFee = from * (quote.buyFee ?? 0) / 100 + (quote.buyFeeUsd ?? 0)
+        
+        // Add fixed rate for small purchases (buy with card only)
+        let fromFeeRateThreshold = quote.fromFeeRateThreshold ?? 0
+        if item.type == .buy && !isAchAccount, from < fromFeeRateThreshold, let feeRate = quote.fromFeeRate {
+            cardFee += feeRate
+        }
+        
         let cardFeeValue: Decimal = item.type == .sell ? -cardFee : cardFee
 
         let usdCurrency = Constant.usdCurrencyCode.uppercased()
