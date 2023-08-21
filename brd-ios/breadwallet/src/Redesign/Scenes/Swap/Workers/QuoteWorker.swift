@@ -75,6 +75,7 @@ struct QuoteModelResponse: ModelResponse {
         var feeCurrency: String?
         var rate: Decimal?
         var depositRate: Decimal?
+        var fixedRateThreshold: Decimal?
     }
     
     struct AchFee: Codable {
@@ -104,6 +105,7 @@ struct Quote {
     var minimumUsd: Decimal
     var maximumUsd: Decimal
     var fromFeeRate: Decimal?
+    var fromFeeRateThreshold: Decimal?
     var toFeeRate: Decimal?
     var fromFee: EstimateFee?
     var toFee: EstimateFee?
@@ -151,6 +153,7 @@ class QuoteMapper: ModelMapper<QuoteModelResponse, Quote> {
                      minimumUsd: response.minimumValueUsd,
                      maximumUsd: response.maximumValueUsd,
                      fromFeeRate: response.fromFeeCurrency?.rate,
+                     fromFeeRateThreshold: response.fromFeeCurrency?.fixedRateThreshold,
                      toFeeRate: response.toFeeCurrency?.rate,
                      fromFee: fromFee,
                      toFee: toFee,

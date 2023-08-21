@@ -122,7 +122,14 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
         fiatFormatter.locale = Locale(identifier: Constant.usLocaleCode)
         fiatFormatter.usesGroupingSeparator = false
         
-        let depositQuantityBuy = from + (dataStore?.networkFee?.fiatValue ?? 0) + from * (dataStore?.quote?.buyFee ?? 1) / 100
+        var depositQuantityBuy = from + (dataStore?.networkFee?.fiatValue ?? 0) + from * (dataStore?.quote?.buyFee ?? 1) / 100
+        // Add fixed rate for small purchases (buy with card only)
+        let fromFeeRateThreshold = dataStore?.quote?.fromFeeRateThreshold ?? 0
+        if dataStore?.type == .buy && dataStore?.isAchAccount == false,
+           from < fromFeeRateThreshold,
+           let feeRate = dataStore?.quote?.fromFeeRate {
+            depositQuantityBuy += feeRate
+        }
         let depositQuantitySell = to
         let depositQuantity = dataStore?.type == .buy ? depositQuantityBuy : depositQuantitySell
         let formattedDepositQuantity = cryptoFormatter.string(from: depositQuantity as NSNumber) ?? ""
