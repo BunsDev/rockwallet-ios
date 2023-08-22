@@ -185,6 +185,8 @@
 
 "Account.Pending" = "En cours…";
 
+"Account.PerExchange" = "Per exchange";
+
 /* Account Personal Information title */
 "Account.PersonalInformation" = "Informations personnelles";
 

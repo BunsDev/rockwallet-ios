@@ -73,7 +73,9 @@ enum ExchangeErrors: FEError {
         case .tooHigh(let amount, let currency, let reason):
             switch reason {
             case .buyCard, .buyAch, .sell:
-                return L10n.ErrorMessages.amountTooHigh(ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "", currency)
+                return L10n.ErrorMessages.amountTooHigh(L10n.Account.weekly.lowercased(),
+                                                        ExchangeFormatter.fiat.string(for: amount.doubleValue) ?? "",
+                                                        currency)
                 
             case .swap:
                 return L10n.ErrorMessages.swapAmountTooHigh(ExchangeFormatter.current.string(for: amount) ?? "", currency)

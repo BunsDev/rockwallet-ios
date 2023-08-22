@@ -187,6 +187,8 @@ internal enum L10n {
     internal static let passwordRequirements = L10n.tr("Localizable", "Account.PasswordRequirements", fallback: "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.")
     /// Pending
     internal static let pending = L10n.tr("Localizable", "Account.Pending", fallback: "Pending")
+    /// Per exchange
+    internal static let perExchange = L10n.tr("Localizable", "Account.PerExchange", fallback: "Per exchange")
     /// Account Personal Information title
     internal static let personalInformation = L10n.tr("Localizable", "Account.PersonalInformation", fallback: "Personal Information")
     /// Please try again.
@@ -1325,8 +1327,8 @@ internal enum L10n {
     /// You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.
     internal static let accessDenied = L10n.tr("Localizable", "ErrorMessages.accessDenied", fallback: "You cannot purchase assets without completing Level 2 account verification. Upgrade your limits on the Profile screen.")
     /// The currency amount is to high for exchange. Accepts 2 parameters:, - maxiumum amount, - currency code
-    internal static func amountTooHigh(_ p1: Any, _ p2: Any) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.AmountTooHigh", String(describing: p1), String(describing: p2), fallback: "The amount is higher than your weekly limit of %@ %@. Please enter a lower amount.")
+    internal static func amountTooHigh(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.AmountTooHigh", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "The amount is higher than your %@ limit of %@ %@. Please enter a lower amount.")
     }
     /// The currency amount is to low for exchange. Accepts 2 parameters:, - minimum amount, - currency code
     internal static func amountTooLow(_ p1: Any, _ p2: Any) -> String {
@@ -2661,7 +2663,7 @@ internal enum L10n {
     internal static let currency = L10n.tr("Localizable", "Settings.currency", fallback: "Display Currency")
     /// e.g. "USD Settings" (settings for how USD is handled)
     internal static func currencyPageTitle(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "Settings.currencyPageTitle", String(describing: p1), fallback: "%@ Menu")
+      return L10n.tr("Localizable", "Settings.currencyPageTitle", String(describing: p1), fallback: "%@ Settings")
     }
     /// Section title for a collection of different settings screens, one for each currency
     internal static let currencySettings = L10n.tr("Localizable", "Settings.currencySettings", fallback: "Currency Settings")
