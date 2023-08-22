@@ -42,8 +42,8 @@ class FESegmentControl: UISegmentedControl, ViewProtocol {
         
         if subviews.indices.contains(selectedSegmentIndex),
             let foregroundImageView = subviews[numberOfSegments] as? UIImageView {
-            foregroundImageView.bounds = foregroundImageView.bounds.insetBy(dx: 10, dy: 10)
-            foregroundImageView.image = UIImage.imageForColor(LightColors.primary)
+            foregroundImageView.bounds = foregroundImageView.bounds.insetBy(dx: Margins.small.rawValue, dy: Margins.small.rawValue)
+            foregroundImageView.image = UIImage.imageForColor(config?.selected.backgroundColor ?? LightColors.primary)
             foregroundImageView.layer.removeAnimation(forKey: "SelectionBounds")
             foregroundImageView.layer.masksToBounds = true
             foregroundImageView.layer.cornerRadius = foregroundImageView.frame.height / 2

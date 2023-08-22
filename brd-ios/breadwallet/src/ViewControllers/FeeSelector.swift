@@ -62,7 +62,7 @@ class FeeSelector: UIView {
     private let header = UILabel(font: Fonts.Subtitle.two, color: LightColors.Text.two)
     private let footer = UILabel(font: Fonts.Body.three, color: LightColors.Text.two)
     private let warning = UILabel.wrapping(font: Fonts.Body.three, color: LightColors.Error.one)
-    private let control = UISegmentedControl(items: [L10n.FeeSelector.economy, L10n.FeeSelector.regular, L10n.FeeSelector.priority])
+    private let control = FESegmentControl(items: [L10n.FeeSelector.economy, L10n.FeeSelector.regular, L10n.FeeSelector.priority])
 
     private func setupViews() {
         addSubview(topBorder)
@@ -74,10 +74,10 @@ class FeeSelector: UIView {
         topBorder.constrainTopCorners(height: 1.0)
         header.constrain([
             header.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Margins.large.rawValue),
-            header.topAnchor.constraint(equalTo: topBorder.bottomAnchor, constant: Margins.small.rawValue) ])
+            header.topAnchor.constraint(equalTo: topBorder.bottomAnchor, constant: Margins.small.rawValue)])
         footer.constrain([
             footer.leadingAnchor.constraint(equalTo: header.leadingAnchor),
-            footer.topAnchor.constraint(equalTo: control.bottomAnchor, constant: Margins.small.rawValue) ])
+            footer.topAnchor.constraint(equalTo: control.bottomAnchor, constant: Margins.small.rawValue)])
 
         warning.constrain([
             warning.leadingAnchor.constraint(equalTo: header.leadingAnchor),
@@ -89,7 +89,8 @@ class FeeSelector: UIView {
         control.constrain([
             control.leadingAnchor.constraint(equalTo: header.leadingAnchor),
             control.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 4.0),
-            control.widthAnchor.constraint(equalTo: widthAnchor, constant: -Margins.extraHuge.rawValue) ])
+            control.widthAnchor.constraint(equalTo: widthAnchor, constant: -Margins.extraHuge.rawValue)])
+        control.configure(with: .init())
         control.valueChanged = { [weak self] in
             guard let self = self else { return }
             
@@ -123,17 +124,13 @@ class FeeSelector: UIView {
     
     private func setupSegmentControl() {
         control.selectedSegmentIndex = 2 // Default to priority (index 2)
-        control.selectedSegmentTintColor = LightColors.Text.two
-        var font: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Fonts.Body.two,
-            NSAttributedString.Key.foregroundColor: LightColors.Text.two
-        ]
-        control.setTitleTextAttributes(font, for: .normal)
-        font = [
-            NSAttributedString.Key.font: Fonts.Body.two,
-            NSAttributedString.Key.foregroundColor: LightColors.Contrast.two
-        ]
-        control.setTitleTextAttributes(font, for: .selected)
+        
+        control.configure(with: .init(font: Fonts.Body.two,
+                                      normal: .init(backgroundColor: LightColors.Background.two, tintColor: LightColors.Text.two, border: nil),
+                                      selected: .init(backgroundColor: LightColors.Text.two, tintColor: LightColors.Contrast.two, border: nil)))
+        control.snp.makeConstraints { make in
+            make.height.equalTo(ViewSizes.medium.rawValue)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

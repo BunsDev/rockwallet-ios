@@ -405,26 +405,20 @@ class SendViewController: BaseSendViewController, Subscriber, ModalPresentable {
             feeOutput = L10n.Send.fee(feeText)
         }
         
-        let balanceLabelattributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Fonts.Body.two,
-            NSAttributedString.Key.foregroundColor: LightColors.Text.two
+        let balanceLabelattributes: [NSAttributedString.Key: Any] = [.font: Fonts.Body.two,
+                                                                     .foregroundColor: LightColors.Text.two
         ]
         
-        var balanceAttributes: [NSAttributedString.Key: Any] = [ NSAttributedString.Key.font: Fonts.Subtitle.two ]
-        if isSendingMax || maximum == nil {
-            balanceAttributes[NSAttributedString.Key.foregroundColor] = LightColors.Text.two
-        } else {
-            balanceAttributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
-            balanceAttributes[NSAttributedString.Key.foregroundColor] = LightColors.Text.two
-        }
+        var balanceAttributes: [NSAttributedString.Key: Any] = [.font: Fonts.Subtitle.two,
+                                                                .foregroundColor: LightColors.Text.two]
         
-        let feeAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.font: Fonts.Body.two,
-            NSAttributedString.Key.foregroundColor: LightColors.Text.two
+        let feeAttributes: [NSAttributedString.Key: Any] = [.font: Fonts.Body.two,
+                                                            .foregroundColor: LightColors.Text.two
         ]
         
         let balanceOutput = NSMutableAttributedString()
         balanceOutput.append(NSAttributedString(string: isSendingMax ? L10n.Send.sendingMax : L10n.Send.balanceString, attributes: balanceLabelattributes))
+        balanceOutput.append(NSAttributedString(string: " "))
         balanceOutput.append(NSAttributedString(string: balanceAmount.description, attributes: balanceAttributes))
         return (balanceOutput, NSAttributedString(string: feeOutput, attributes: feeAttributes), !isSendingMax)
     }
