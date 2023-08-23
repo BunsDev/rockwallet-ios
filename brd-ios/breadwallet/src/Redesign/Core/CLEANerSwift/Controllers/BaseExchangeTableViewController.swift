@@ -88,6 +88,10 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                 }
             }
             
+            view.didTapPlaidAccount = { [weak self] in
+                self?.showPlaidAccountPopup()
+            }
+            
             view.errorLinkCallback = { [weak self] in
                 self?.onPaymentMethodErrorLinkTapped()
             }
@@ -226,4 +230,5 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
     func onPaymentMethodErrorLinkTapped() {}
     func limitsInfoTapped() {}
     func increaseLimitsTapped() {}
+    func showPlaidAccountPopup() {}
 }

@@ -96,6 +96,7 @@ final class BuyPresenter: NSObject, Presenter, BuyActionResponses {
                                       logo: .image(Asset.bank.image),
                                       cardNumber: .text(paymentCard.displayName),
                                       userInteractionEnabled: false,
+                                      plaidLinked: true,
                                       errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
                     
                 default:
