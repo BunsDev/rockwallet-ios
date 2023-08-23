@@ -17,6 +17,7 @@ protocol PaymentMethodsViewActions: BaseViewActions, FetchViewActions, AssetView
     func getPlaidToken(viewAction: PaymentMethodsModels.Link.ViewAction)
     func setPaymentCard(viewAction: PaymentMethodsModels.SetPaymentCard.ViewAction)
     func achSuccessMessage(viewAction: PaymentMethodsModels.Get.ViewAction)
+    func showPlaidLinkedPopup(viewAction: PaymentMethodsModels.PlaidLinked.ViewAction)
 }
 
 protocol PaymentMethodsActionResponses: BaseActionResponses, FetchActionResponses, AssetActionResponses {
@@ -25,6 +26,7 @@ protocol PaymentMethodsActionResponses: BaseActionResponses, FetchActionResponse
     func presentPaymentCards(actionResponse: PaymentMethodsModels.PaymentCards.ActionResponse)
     func presentAch(actionResponse: PaymentMethodsModels.Get.ActionResponse)
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse)
+    func presentPlaidLinkedPopup(actionResponse: PaymentMethodsModels.PlaidLinked.ActionResponse)
 }
 
 protocol PaymentMethodsResponseDisplays: BaseResponseDisplays, FetchResponseDisplays, AssetResponseDisplays {
@@ -32,6 +34,7 @@ protocol PaymentMethodsResponseDisplays: BaseResponseDisplays, FetchResponseDisp
     
     func displayPaymentCards(responseDisplay: PaymentMethodsModels.PaymentCards.ResponseDisplay)
     func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay)
+    func displayPlaidLinkedPopup(responseDisplay: PaymentMethodsModels.PlaidLinked.ResponseDisplay)
 }
 
 protocol PaymentMethodsDataStore: BaseDataStore, FetchDataStore, AssetDataStore {
@@ -201,6 +204,10 @@ extension Interactor where Self: PaymentMethodsViewActions,
         )
         return dictionary.compactMapValues { $0 }
     }
+    
+    func showPlaidLinkedPopup(viewAction: PaymentMethodsModels.PlaidLinked.ViewAction) {
+        presenter?.presentPlaidLinkedPopup(actionResponse: .init())
+    }
 }
 
 extension Presenter where Self: PaymentMethodsActionResponses,
@@ -236,6 +243,14 @@ extension Presenter where Self: PaymentMethodsActionResponses,
     func presentPlaidToken(actionResponse: PaymentMethodsModels.Link.ActionResponse) {
         viewController?.displayPlaidToken(responseDisplay: .init(plaidHandler: actionResponse.plaidHandler))
     }
+    
+    func presentPlaidLinkedPopup(actionResponse: PaymentMethodsModels.PlaidLinked.ActionResponse) {
+        let model = PopupViewModel(title: .text(L10n.Buy.plaidAccountLinkingTitle),
+                                   body: L10n.Buy.plaidAccountLinkingDescription,
+                                   buttons: [.init(title: L10n.Button.gotIt), .init(title: L10n.Account.contactUs)])
+        
+        viewController?.displayPlaidLinkedPopup(responseDisplay: .init(model: model))
+    }
 }
 
 extension Controller where Self: PaymentMethodsResponseDisplays {
@@ -253,5 +268,14 @@ extension Controller where Self: PaymentMethodsResponseDisplays {
     func displayPlaidToken(responseDisplay: PaymentMethodsModels.Link.ResponseDisplay) {
         plaidHandler = responseDisplay.plaidHandler
         plaidHandler?.open(presentUsing: .viewController(self))
+    }
+    
+    func displayPlaidLinkedPopup(responseDisplay: PaymentMethodsModels.PlaidLinked.ResponseDisplay) {
+        (coordinator as? ExchangeCoordinator)?.showPopup(with: responseDisplay.model, callbacks: [ {[weak self] in
+                (self?.coordinator as? ExchangeCoordinator)?.hidePopup()
+            }, { [weak self] in
+                (self?.coordinator as? ExchangeCoordinator)?.hidePopup()
+                (self?.coordinator as? ExchangeCoordinator)?.showSupport()}
+        ])
     }
 }

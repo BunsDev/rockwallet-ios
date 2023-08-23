@@ -910,6 +910,11 @@ internal enum L10n {
     internal static let payWith = L10n.tr("Localizable", "Buy.PayWith", fallback: "Pay with")
     /// Per Transaction Limit
     internal static let perTransactionLimit = L10n.tr("Localizable", "Buy.perTransactionLimit", fallback: "Per Transaction Limit")
+    /// For security, we currently support linking just one bank account per user. This ensures safer transactions and a streamlined experience.
+    /// If you require further assistance, please contact customer support
+    internal static let plaidAccountLinkingDescription = L10n.tr("Localizable", "Buy.plaidAccountLinkingDescription", fallback: "For security, we currently support linking just one bank account per user. This ensures safer transactions and a streamlined experience.\nIf you require further assistance, please contact customer support")
+    /// Plaid account linking
+    internal static let plaidAccountLinkingTitle = L10n.tr("Localizable", "Buy.plaidAccountLinkingTitle", fallback: "Plaid account linking")
     /// Please check with your bank or try again later.
     internal static let plaidErrorDescription = L10n.tr("Localizable", "Buy.plaidErrorDescription", fallback: "Please check with your bank or try again later.")
     /// There was an error connecting your account via Plaid
@@ -1398,9 +1403,9 @@ internal enum L10n {
     internal static func notEnoughBalanceXRP(_ p1: Any) -> String {
       return L10n.tr("Localizable", "ErrorMessages.notEnoughBalanceXRP", String(describing: p1), fallback: "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.")
     }
-    /// The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.
-    internal static func overDailyLimit(_ p1: Any) -> String {
-      return L10n.tr("Localizable", "ErrorMessages.overDailyLimit", String(describing: p1), fallback: "The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.")
+    /// The amount is higher than your %@ limit of %@ %@. Please upgrade your account or enter a lower amount.
+    internal static func overDailyLimit(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+      return L10n.tr("Localizable", "ErrorMessages.overDailyLimit", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "The amount is higher than your %@ limit of %@ %@. Please upgrade your account or enter a lower amount.")
     }
     /// Over exchange limit.
     internal static let overExchangeLimit = L10n.tr("Localizable", "ErrorMessages.overExchangeLimit", fallback: "Over exchange limit.")

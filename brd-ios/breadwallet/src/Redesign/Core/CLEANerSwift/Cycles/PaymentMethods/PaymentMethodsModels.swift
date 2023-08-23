@@ -65,4 +65,12 @@ enum PaymentMethodsModels {
         
         struct ResponseDisplay {}
     }
+    
+    struct PlaidLinked {
+        struct ViewAction {}
+        struct ActionResponse {}
+        struct ResponseDisplay {
+            let model: PopupViewModel
+        }
+    }
 }

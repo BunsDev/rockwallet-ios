@@ -150,6 +150,7 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     override func showPlaidAccountPopup() {
+        interactor?.showPlaidLinkedPopup(viewAction: .init())
     }
     
     // MARK: - BuyResponseDisplay

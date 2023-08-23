@@ -261,7 +261,7 @@ extension Presenter where Self: AssetActionResponses,
                 // Over daily limit
                 
                 let level2 = ExchangeErrors.overDailyLimitLevel2(limit: dailyLimit)
-                let level1 = ExchangeErrors.overDailyLimit(limit: dailyLimit)
+                let level1 = ExchangeErrors.overDailyLimit(limit: dailyLimit, currency: toCode)
                 error = profile.status == .levelTwo(.levelTwo) ? level2 : level1
                 
             case _ where fiat > perExchangeLimit:
