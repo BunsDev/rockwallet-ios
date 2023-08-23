@@ -91,6 +91,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                                   title: .text(L10n.Sell.iReceive),
                                                   selectionDisabled: true))
         
+        let unavailableText = actionResponse.card?.paymentMethodStatus.unavailableText
+        
         switch actionResponse.type {
         case .ach:
             if let paymentCard = actionResponse.card {
@@ -100,7 +102,9 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                       subtitle: nil,
                                       logo: .image(Asset.bank.image),
                                       cardNumber: .text(paymentCard.displayName),
-                                      userInteractionEnabled: false)
+                                      userInteractionEnabled: false,
+                                      plaidLinked: true,
+                                      errorMessage: paymentCard.paymentMethodStatus.isProblematic ? .attributedText(unavailableText) : nil)
                     
                 default:
                     cardModel = .init(title: .text(L10n.Buy.achPayments),

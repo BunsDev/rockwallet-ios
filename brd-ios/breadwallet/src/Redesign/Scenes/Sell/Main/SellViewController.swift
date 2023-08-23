@@ -132,6 +132,10 @@ class SellViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showPaymentMethodSupport()
     }
     
+    override func showPlaidAccountPopup() {
+        interactor?.showPlaidLinkedPopup(viewAction: .init())
+    }
+    
     // MARK: - SellResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: SellModels.AssetSelector.ResponseDisplay) {

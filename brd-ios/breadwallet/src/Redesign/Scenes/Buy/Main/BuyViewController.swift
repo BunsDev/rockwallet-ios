@@ -149,6 +149,10 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
         coordinator?.showPaymentMethodSupport()
     }
     
+    override func showPlaidAccountPopup() {
+        interactor?.showPlaidLinkedPopup(viewAction: .init())
+    }
+    
     // MARK: - BuyResponseDisplay
     
     func displayNavigateAssetSelector(responseDisplay: BuyModels.AssetSelector.ResponseDisplay) {

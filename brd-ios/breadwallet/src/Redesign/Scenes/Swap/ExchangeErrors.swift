@@ -20,7 +20,7 @@ enum ExchangeErrors: FEError {
     case balanceTooLow(balance: Decimal, currency: String)
     case insufficientGasERC20(currency: String, balance: Decimal)
     case insufficientFunds(currency: String)
-    case overDailyLimit(limit: Decimal)
+    case overDailyLimit(limit: Decimal, currency: String)
     case overLifetimeLimit(limit: Decimal)
     case overDailyLimitLevel2(limit: Decimal)
     case notEnoughEthForFee(balance: Decimal, currency: String)
@@ -84,8 +84,10 @@ enum ExchangeErrors: FEError {
                 return ""
                 
             }
-        case .overDailyLimit(let limit):
-            return L10n.ErrorMessages.overDailyLimit(ExchangeFormatter.fiat.string(for: limit) ?? "")
+        case .overDailyLimit(let limit, let currency):
+            return L10n.ErrorMessages.overDailyLimit(L10n.Account.weekly.lowercased(),
+                                                     ExchangeFormatter.fiat.string(for: limit) ?? "",
+                                                     currency)
             
         case .overLifetimeLimit(let limit):
             return L10n.ErrorMessages.overLifetimeLimit(ExchangeFormatter.fiat.string(for: limit) ?? "")
