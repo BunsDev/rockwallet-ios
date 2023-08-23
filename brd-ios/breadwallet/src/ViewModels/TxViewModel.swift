@@ -56,6 +56,10 @@ extension TxViewModel {
         return .unknown
     }
     
+    var isSell: Bool {
+        return exchangeType == .sell
+    }
+    
     var direction: TransferDirection {
         if let tx = tx {
             return tx.direction
@@ -76,8 +80,6 @@ extension TxViewModel {
         
         if exchange.isHybridTransaction {
             return exchange.part == exchange.destination?.part ? exchange.destination : exchange.instantDestination
-        } else if exchange.destination?.currency == Constant.usdCurrencyCode {
-            return exchange.source
         } else {
             return exchange.destination?.currency.isEmpty == true ? exchange.instantDestination : exchange.destination
         }
