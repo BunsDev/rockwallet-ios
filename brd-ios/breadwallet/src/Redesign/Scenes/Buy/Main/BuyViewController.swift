@@ -150,7 +150,6 @@ class BuyViewController: BaseExchangeTableViewController<ExchangeCoordinator,
     }
     
     override func showPlaidAccountPopup() {
-        coordinator?.showPopup(with: <#T##WrapperPopupConfiguration<Configurable>?#>, viewModel: <#T##WrapperPopupViewModel<ViewModel>#>, confirmedCallback: <#T##(() -> Void)##(() -> Void)##() -> Void#>)
     }
     
     // MARK: - BuyResponseDisplay
