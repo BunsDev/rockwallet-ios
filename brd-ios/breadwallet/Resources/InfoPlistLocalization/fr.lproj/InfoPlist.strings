@@ -1019,6 +1019,10 @@
 
 "Buy.perTransactionLimit" = "Per Transaction Limit";
 
+"Buy.plaidAccountLinkingDescription" = "For security, we currently support linking just one bank account per user. This ensures safer transactions and a streamlined experience.\nIf you require further assistance, please contact customer support";
+
+"Buy.plaidAccountLinkingTitle" = "Plaid account linking";
+
 "Buy.plaidErrorDescription" = "Veuillez vérifier auprès de votre banque ou réessayer plus tard.";
 
 "Buy.plaidErrorTitle" = "Une erreur est survenue lors de la connexion de votre compte via Plaid";

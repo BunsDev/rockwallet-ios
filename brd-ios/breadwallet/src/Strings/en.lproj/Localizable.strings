@@ -1019,6 +1019,10 @@
 
 "Buy.perTransactionLimit" = "Per Transaction Limit";
 
+"Buy.plaidAccountLinkingDescription" = "For security, we currently support linking just one bank account per user. This ensures safer transactions and a streamlined experience.\nIf you require further assistance, please contact customer support";
+
+"Buy.plaidAccountLinkingTitle" = "Plaid account linking";
+
 "Buy.plaidErrorDescription" = "Please check with your bank or try again later.";
 
 "Buy.plaidErrorTitle" = "There was an error connecting your account via Plaid";
@@ -1388,7 +1392,7 @@
 
 "ErrorMessages.notEnoughBalanceXRP" = "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.";
 
-"ErrorMessages.overDailyLimit" = "The amount is higher than your weekly limit of %@ USD. Please upgrade your account or enter a lower amount.";
+"ErrorMessages.overDailyLimit" = "The amount is higher than your %@ limit of %@ %@. Please upgrade your account or enter a lower amount.";
 
 "ErrorMessages.overExchangeLimit" = "Over exchange limit.";
 
