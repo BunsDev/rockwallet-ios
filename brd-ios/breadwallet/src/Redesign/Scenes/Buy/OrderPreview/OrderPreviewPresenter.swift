@@ -272,6 +272,7 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   infoImage: .image(infoImage))
         
         let buyFee = ((quote.buyFee ?? 0) / 100) + 1
+        // If purchase value exceeds the instant ach limit we use the latter as a basis for instant ach fee
         let instantAchFeeBasis = min(to, instantAchLimit)
         let instantAchFeeUsd = instantAchFeeBasis * instantAchFee * buyFee
         
