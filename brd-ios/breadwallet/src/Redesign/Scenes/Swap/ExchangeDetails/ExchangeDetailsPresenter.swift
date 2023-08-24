@@ -182,7 +182,11 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                currencyCode)
         var amountValue: Decimal {
             guard type == .sell else {
-                return detail.source.currencyAmount - detail.source.usdFee - (detail.destination?.usdFee ?? 0) - (detail.instantDestination?.usdFee ?? 0)
+                return detail.source.currencyAmount
+                - detail.source.usdFee
+                - (detail.destination?.usdFee ?? 0)
+                - (detail.instantDestination?.usdFee ?? 0)
+                - (detail.source.instantUsdFee ?? 0)
             }
             
             return destination.currencyAmount + destination.usdFee
@@ -204,6 +208,11 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                     currencyCode)
         
         let displayFeeTitle = card?.type == .card ? L10n.Swap.cardFee : L10n.Sell.achFee
+        
+        let instantAchFee = detail.source.instantUsdFee
+        let instantAchFeeText = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFee) ?? "", currencyCode)
+        let instantBuyFeeModel: TitleValueViewModel? = instantAchFee != nil ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.title),
+                                                                                    value: .text(instantAchFeeText)) : nil
         
         let method = PaymentMethodViewModel(methodTitle: .text(L10n.Sell.widrawToBank),
                                             logo: card?.displayImage,
@@ -230,7 +239,10 @@ final class ExchangeDetailsPresenter: NSObject, Presenter, ExchangeDetailsAction
                                       cardFee: .init(title: .text(displayFeeTitle),
                                                      value: .text(cardFeeText),
                                                      infoImage: card?.type == .card ? .image(infoImage) : nil),
-                                      networkFee: .init(title: .text(L10n.Swap.miningNetworkFee), value: .text(networkFeeText), infoImage: .image(infoImage)),
+                                      instantBuyFee: instantBuyFeeModel,
+                                      networkFee: .init(title: .text(L10n.Swap.miningNetworkFee),
+                                                        value: .text(networkFeeText),
+                                                        infoImage: .image(infoImage)),
                                       totalCost: .init(title: .text(L10n.Swap.total), value: .text(totalText)),
                                       paymentMethod: .init(methodTitle: .text(L10n.Swap.paidWith),
                                                            logo: card?.displayImage,
