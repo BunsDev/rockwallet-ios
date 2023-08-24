@@ -272,8 +272,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   infoImage: .image(infoImage))
         
         let buyFee = ((quote.buyFee ?? 0) / 100) + 1
-        let instnatAchFeeBasis = min(to, instantAchLimit)
-        let instantAchFeeUsd = instnatAchFeeBasis * instantAchFee * buyFee
+        let instantAchFeeBasis = min(to, instantAchLimit)
+        let instantAchFeeUsd = instantAchFeeBasis * instantAchFee * buyFee
         
         let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
         let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.Alternative.title),
