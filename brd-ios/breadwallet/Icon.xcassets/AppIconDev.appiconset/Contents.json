@@ -43,13 +43,13 @@
       "size" : "40x40"
     },
     {
-      "filename" : "iPhone_STG_40_3x-1.png",
+      "filename" : "60x60-2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "iPhone_STG_60_3x-1.png",
+      "filename" : "60x60-3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
@@ -109,7 +109,7 @@
       "size" : "83.5x83.5"
     },
     {
-      "filename" : "App_store_DEV_1024_1x.png",
+      "filename" : "1024x1024.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
