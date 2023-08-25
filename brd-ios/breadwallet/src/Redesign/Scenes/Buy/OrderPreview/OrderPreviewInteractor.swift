@@ -234,7 +234,9 @@ class OrderPreviewInteractor: NSObject, Interactor, OrderPreviewViewActions {
             
             let instantAchFee = (dataStore?.quote?.instantAch?.feePercentage ?? 0) / 100
             let instantAchLimit = dataStore?.quote?.instantAch?.limitUsd ?? 0
-            let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
+            // If purchase value exceeds the instant ach limit we use the latter as a basis for instant ach fee
+            let instantAchFeeBasis = min(dataStore?.from ?? 0, instantAchLimit)
+            let instantAchFeeUsd = instantAchFeeBasis * instantAchFee * buyFee
             
             // If purchase value exceeds instant ach limit the purchase is split, so network fee is applied to both instant and normal purchase
             var networkFeeValue: Decimal {
