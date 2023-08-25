@@ -272,7 +272,9 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                   infoImage: .image(infoImage))
         
         let buyFee = ((quote.buyFee ?? 0) / 100) + 1
-        let instantAchFeeUsd = instantAchLimit * instantAchFee * buyFee
+        // If purchase value exceeds the instant ach limit we use the latter as a basis for instant ach fee
+        let instantAchFeeBasis = min(to, instantAchLimit)
+        let instantAchFeeUsd = instantAchFeeBasis * instantAchFee * buyFee
         
         let achFeeDescription: String = String(format: currencyFormat, ExchangeFormatter.fiat.string(for: instantAchFeeUsd) ?? "", fiatCurrency)
         let instantBuyFee: TitleValueViewModel? = isInstantAch ? .init(title: .text(L10n.Buy.Ach.Instant.Fee.Alternative.title),
