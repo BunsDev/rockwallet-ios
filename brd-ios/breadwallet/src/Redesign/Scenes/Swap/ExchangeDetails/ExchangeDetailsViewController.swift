@@ -106,7 +106,7 @@ class ExchangeDetailsViewController: BaseTableViewController<BaseCoordinator,
         }
         
         cell.setup { view in
-            view.configure(with: .init())
+            view.configure(with: .init(BuyOrderConfiguration(instantBuyFeeConfig: Presets.TitleValue.common)))
             view.setup(with: model)
             
             view.networkFeeInfoTapped = { [weak self] in

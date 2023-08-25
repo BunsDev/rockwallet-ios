@@ -24,6 +24,7 @@ struct BuyOrderConfiguration: Configurable {
                                                      tintColor: LightColors.Text.one,
                                                      border: Presets.Border.mediumPlain)
     var currencyIconImage = BackgroundConfiguration(border: BorderConfiguration(borderWidth: 0, cornerRadius: .fullRadius))
+    var instantBuyFeeConfig: TitleValueConfiguration? = nil
 }
 
 struct BuyOrderViewModel: ViewModel {
@@ -231,7 +232,7 @@ class BuyOrderView: FEView<BuyOrderConfiguration, BuyOrderViewModel> {
         var instantBuyFeeConfig = config?.common
         instantBuyFeeConfig?.title.textColor = LightColors.instantPurple
         instantBuyFeeConfig?.title.font = Fonts.Subtitle.two
-        instantBuyFeeView.configure(with: instantBuyFeeConfig)
+        instantBuyFeeView.configure(with: config?.instantBuyFeeConfig != nil ? config?.instantBuyFeeConfig : instantBuyFeeConfig)
         
         networkFeeView.configure(with: config?.common)
         totalCostView.configure(with: config?.bold)

@@ -43,13 +43,13 @@
       "size" : "40x40"
     },
     {
-      "filename" : "iPhone_STG_40_3x.png",
+      "filename" : "60x60-2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "iPhone_STG_60_3x.png",
+      "filename" : "60x60-3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
