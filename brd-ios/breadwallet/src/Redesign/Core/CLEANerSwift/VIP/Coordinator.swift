@@ -748,7 +748,11 @@ class BaseCoordinator: NSObject, Coordinatable {
             showSwap(coreSystem: coreSystem, keyStore: keyStore)
             
         case .setPassword:
-            handleUserAccount()
+            openModally(coordinator: AccountCoordinator.self, scene: Scenes.SetPassword) { vc in
+                vc?.navigationItem.hidesBackButton = true
+                vc?.dataStore?.code = DynamicLinksManager.shared.code
+                DynamicLinksManager.shared.code = nil
+            }
         }
     }
 }
