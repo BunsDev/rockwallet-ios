@@ -68,6 +68,8 @@ class BaseTableViewController<C: CoordinatableRoutes,
         view.backgroundColor = LightColors.Background.one
         tableView.backgroundColor = .clear
         
+        tableView.bounces = false // TODO: Remove when dataSource issues are resolves
+        
         tableView.registerAccessoryView(WrapperAccessoryView<FELabel>.self)
         tableView.registerAccessoryView(WrapperAccessoryView<FEButton>.self)
         tableView.registerAccessoryView(WrapperAccessoryView<AssetView>.self)
