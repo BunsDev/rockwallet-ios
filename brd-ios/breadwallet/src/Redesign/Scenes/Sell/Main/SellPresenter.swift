@@ -128,7 +128,8 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                   expiration: .text(CardDetailsFormatter.formatExpirationDate(month: paymentCard.expiryMonth, year: paymentCard.expiryYear)),
                                   userInteractionEnabled: true)
             } else {
-                cardModel = .init(userInteractionEnabled: true)
+                cardModel = .init(title: .text(L10n.Sell.widrawToBank),
+                                  userInteractionEnabled: true)
             }
         }
         

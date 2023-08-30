@@ -51,6 +51,12 @@ extension Interactor where Self: PaymentMethodsViewActions,
         
         let worker = (dataStore?.exchangeType == .buyCard || dataStore?.exchangeType == .buyAch) ? PaymentCardsWorker() : SellPaymentCardsWorker()
         
+        guard !viewAction.openCards else {
+            self.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self.dataStore?.cards ?? [],
+                                                                      exchangeType: self.dataStore?.exchangeType))
+            return
+        }
+        
         worker.execute(requestData: PaymentCardsRequestData()) { [weak self] result in
             switch result {
             case .success(let data):
@@ -68,34 +74,29 @@ extension Interactor where Self: PaymentMethodsViewActions,
                 self?.presenter?.presentError(actionResponse: .init(error: error))
             }
             
-            if viewAction.openCards == true {
-                self?.presenter?.presentPaymentCards(actionResponse: .init(allPaymentCards: self?.dataStore?.cards ?? [],
-                                                                           exchangeType: self?.dataStore?.exchangeType))
-            } else {
-                guard let paymentMethod = self?.dataStore?.paymentMethod else { return }
+            guard let paymentMethod = self?.dataStore?.paymentMethod else { return }
+            
+            switch paymentMethod {
+            case .ach:
+                self?.dataStore?.ach = ach
+                self?.dataStore?.cards = []
                 
-                switch paymentMethod {
-                case .ach:
-                    self?.dataStore?.ach = ach
-                    self?.dataStore?.cards = []
-                    
-                    self?.setPaymentCard(viewAction: .init(card: ach, setAmount: viewAction.setAmount))
-                    self?.presenter?.presentAch(actionResponse: .init(item: ach))
-                    
-                case .card:
-                    var card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
-                    self?.dataStore?.cards = cards
-                    self?.dataStore?.ach = nil
-                    
-                    if self?.dataStore?.exchangeType == .sellCard {
-                        card = cards.first(where: { $0.verifiedToSell == true })
-                    }
-                    
-                    self?.setPaymentCard(viewAction: .init(card: card, setAmount: viewAction.setAmount))
+                self?.setPaymentCard(viewAction: .init(card: ach, setAmount: viewAction.setAmount))
+                self?.presenter?.presentAch(actionResponse: .init(item: ach))
+                
+            case .card:
+                var card = cards.contains(where: { $0.id == self?.dataStore?.selected?.id }) ? self?.dataStore?.selected : cards.first
+                self?.dataStore?.cards = cards
+                self?.dataStore?.ach = nil
+                
+                if self?.dataStore?.exchangeType == .sellCard {
+                    card = cards.first(where: { $0.verifiedToSell == true })
                 }
                 
-                completion?()
+                self?.setPaymentCard(viewAction: .init(card: card, setAmount: viewAction.setAmount))
             }
+            
+            completion?()
         }
     }
     
