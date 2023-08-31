@@ -141,6 +141,8 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
             view.didChangeValue = { [weak self] segment in
                 self?.view.endEditing(true)
                 self?.setSegment(segment)
+                
+                TouchSpamPreventor.shared.preventTouches(for: cell)
             }
         }
         
