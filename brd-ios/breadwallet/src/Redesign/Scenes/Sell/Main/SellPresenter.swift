@@ -96,14 +96,14 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
             if let paymentCard = actionResponse.card {
                 switch actionResponse.card?.status {
                 case .statusOk:
-                    cardModel = .init(title: .text(L10n.Buy.transferFromBank),
+                    cardModel = .init(title: .text(L10n.Sell.widrawToBank),
                                       subtitle: nil,
                                       logo: .image(Asset.bank.image),
                                       cardNumber: .text(paymentCard.displayName),
                                       userInteractionEnabled: false)
                     
                 default:
-                    cardModel = .init(title: .text(L10n.Buy.achPayments),
+                    cardModel = .init(title: .text(L10n.Sell.achWithdrawal),
                                       subtitle: .text(L10n.Buy.relinkBankAccount),
                                       userInteractionEnabled: true)
                     
@@ -115,7 +115,7 @@ final class SellPresenter: NSObject, Presenter, SellActionResponses {
                                                                           config: config))
                 }
             } else {
-                cardModel = CardSelectionViewModel(title: .text(L10n.Buy.achPayments),
+                cardModel = CardSelectionViewModel(title: .text(L10n.Sell.achWithdrawal),
                                                    subtitle: .text(L10n.Buy.linkBankAccount),
                                                    userInteractionEnabled: true)
             }
