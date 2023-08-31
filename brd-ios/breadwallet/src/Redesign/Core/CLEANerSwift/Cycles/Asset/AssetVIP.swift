@@ -218,7 +218,7 @@ extension Presenter where Self: AssetActionResponses,
             let minimumUsd = quote?.minimumUsd.round(to: 2) ?? 0
             
             var reason: BaseInfoModels.FailureReason = .swap
-            var limits = quote?.currentExchangeLimits?.sorted(by: { $0.interval?.order ?? 0 < $1.interval?.order ?? 0 }) ?? []
+            let limits = quote?.currentExchangeLimits?.sorted(by: { $0.interval?.priorityOrder ?? 0 < $1.interval?.priorityOrder ?? 0 }) ?? []
             
             if isBuy && actionResponse.type == .card {
                 reason = .buyCard(nil)

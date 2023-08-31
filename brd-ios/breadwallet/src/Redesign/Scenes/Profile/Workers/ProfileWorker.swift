@@ -98,7 +98,7 @@ struct ProfileResponseData: ModelResponse {
             }
             
             /// Check the order from this link: https://bayes.atlassian.net/browse/RWDO-409
-            var order: Int {
+            var priorityOrder: Int {
                 switch self {
                 case .daily: return 3
                 case .weekly: return 2
