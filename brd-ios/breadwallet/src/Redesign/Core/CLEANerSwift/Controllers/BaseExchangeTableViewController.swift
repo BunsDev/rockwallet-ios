@@ -142,7 +142,7 @@ class BaseExchangeTableViewController<C: CoordinatableRoutes,
                 self?.view.endEditing(true)
                 self?.setSegment(segment)
                 
-                TouchSpamPreventor.shared.preventTouches(for: cell)
+                TouchSpamPreventer.shared.preventTouches(for: cell)
             }
         }
         

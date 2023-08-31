@@ -10,8 +10,8 @@
 
 import UIKit
 
-class TouchSpamPreventor {
-    static var shared = TouchSpamPreventor()
+class TouchSpamPreventer {
+    static var shared = TouchSpamPreventer()
     
     let views = [WrapperTableViewCell<FETextField>.self,
                  WrapperTableViewCell<NavigationItemView>.self,
@@ -33,6 +33,6 @@ extension UIView {
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         
-        TouchSpamPreventor.shared.preventTouches(for: self)
+        TouchSpamPreventer.shared.preventTouches(for: self)
     }
 }
