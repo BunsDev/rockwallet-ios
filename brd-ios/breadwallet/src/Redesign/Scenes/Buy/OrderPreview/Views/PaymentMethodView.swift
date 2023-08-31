@@ -157,7 +157,8 @@ class PaymentMethodView: FEView<PaymentMethodConfiguration, PaymentMethodViewMod
         cvvTitle.isHidden = true
         
         cardDetailsView.setup(with: .init(logo: viewModel?.logo,
-                                          cardNumber: viewModel?.cardNumber))
+                                          cardNumber: viewModel?.cardNumber,
+                                          expiration: (viewModel?.type == .card && viewModel?.previewFor == .sell) ? viewModel?.expiration : nil))
     }
     
     // MARK: - User interaction

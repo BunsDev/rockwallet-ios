@@ -62,8 +62,15 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             .submit
         ]
         
-        if isAchAccount && item.type != .sell {
+        switch (isAchAccount, item.type) {
+        case (true, .sell):
+            sections.insert(.disclaimer, at: 0)
+            
+        case (true, .buy):
             sections.insert(.achSegment, at: 0)
+            
+        default:
+            return
         }
         
         let selectedSegment = Models.AchDeliveryType.allCases.firstIndex(where: { $0.hashValue == item.achDeliveryType?.hashValue })
@@ -72,26 +79,17 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
                                                             .init(image: Asset.timelapse.image, title: L10n.Buy.Ach.Hybrid.title)])
         
         let sectionRows: [Models.Section: [any Hashable]] = [
-            .achSegment: [
-                achSegment
-            ],
-            .orderInfoCard: [
-                wrappedViewModel
-            ],
-            .payment: [
-                PaymentMethodViewModel(methodTitle: .text(L10n.Buy.paymentMethod),
-                                       logo: card.displayImage,
-                                       type: card.type,
-                                       previewFor: item.type,
-                                       cardNumber: .text(card.displayName),
-                                       expiration: .text(CardDetailsFormatter.formatExpirationDate(month: card.expiryMonth, year: card.expiryYear)))
-            ],
-            .termsAndConditions: [
-                isAchAccount || item.type == .sell ? achTermsModel : LabelViewModel.attributedText(termsText)
-            ],
-            .submit: [
-                ButtonViewModel(title: L10n.Button.confirm, enabled: false)
-            ]
+            .disclaimer: [InfoViewModel(description: .text(item.type?.disclaimer))],
+            .achSegment: [achSegment],
+            .orderInfoCard: [wrappedViewModel],
+            .payment: [PaymentMethodViewModel(methodTitle: .text(L10n.Buy.paymentMethod),
+                                              logo: card.displayImage,
+                                              type: card.type,
+                                              previewFor: item.type,
+                                              cardNumber: .text(card.displayName),
+                                              expiration: .text(CardDetailsFormatter.formatExpirationDate(month: card.expiryMonth, year: card.expiryYear)))],
+            .termsAndConditions: [isAchAccount || item.type == .sell ? achTermsModel : LabelViewModel.attributedText(termsText)],
+            .submit: [ButtonViewModel(title: L10n.Button.confirm, enabled: false)]
         ]
         
         viewController?.displayData(responseDisplay: .init(sections: sections, sectionRows: sectionRows))
@@ -315,8 +313,8 @@ final class OrderPreviewPresenter: NSObject, Presenter, OrderPreviewActionRespon
             model = .init(title: .text(L10n.Sell.yourOrder),
                           currencyIcon: .image(toCryptoDisplayImage),
                           currencyAmountName: .text(toCryptoValue + " " + toCryptoDisplayName),
-                          amount: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
-                          cardFee: .init(title: .text(L10n.Sell.subtotal), value: .text(amountText)),
+                          rate: .init(title: .text(L10n.Sell.rate), value: .text(rate), infoImage: nil),
+                          amount: .init(title: .text(L10n.Sell.subtotal), value: .text(amountText)),
                           networkFee: cardFeeModel,
                           totalCost: .init(title: .text(L10n.Swap.youReceive), value: .text(totalText)))
             

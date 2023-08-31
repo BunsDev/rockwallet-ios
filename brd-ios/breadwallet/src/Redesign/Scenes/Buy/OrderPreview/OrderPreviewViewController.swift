@@ -38,6 +38,11 @@ class OrderPreviewViewController: BaseTableViewController<ExchangeCoordinator,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         switch dataSource?.sectionIdentifier(for: indexPath.section) as? Models.Section {
+        case .disclaimer:
+            cell = self.tableView(tableView, infoViewCellForRowAt: indexPath)
+            (cell as? WrapperTableViewCell<FEInfoView>)?.wrappedView.configure(with: Presets.InfoView.warning)
+            cell.contentView.setupCustomMargins(vertical: .zero, horizontal: .large)
+            
         case .achSegment:
             cell = self.tableView(tableView, segmentControlCellForRowAt: indexPath)
             
