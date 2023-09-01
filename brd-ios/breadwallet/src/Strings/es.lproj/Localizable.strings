@@ -157,6 +157,8 @@
 
 "Account.LetsGetVerified" = "Let’s get you verified";
 
+"Account.Lifetime" = "Lifetime";
+
 /* Loading Wallet Message */
 "Account.loadingMessage" = "Cargando cartera";
 
@@ -168,6 +170,8 @@
 
 /* Verify your account to get full access to the wallet message */
 "Account.MessageVerifyAccount" = "¡Verifica tu cuenta para obtener acceso completo a tu RockWallet!";
+
+"Account.Minimum" = "Minimum";
 
 "Account.MissingDataPromptText" = "Please fill in the missing information  to use your RockWallet seamlessly.";
 
@@ -184,6 +188,8 @@
 "Account.PasswordRequirements" = "Password must be at least 8 characters long and contain 1 lower, 1 upper case letter, 1 numeric character and one special character.";
 
 "Account.Pending" = "Pendiente";
+
+"Account.PerExchange" = "Per exchange";
 
 /* Account Personal Information title */
 "Account.PersonalInformation" = "Datos personales";
@@ -1017,6 +1023,10 @@
 
 "Buy.perTransactionLimit" = "Per Transaction Limit";
 
+"Buy.plaidAccountLinkingDescription" = "For security, we currently support linking just one bank account per user. This ensures safer transactions and a streamlined experience.\nIf you require further assistance, please contact customer support";
+
+"Buy.plaidAccountLinkingTitle" = "Plaid account linking";
+
 "Buy.plaidErrorDescription" = "Consulta con tu banco o inténtalo de nuevo más tarde.";
 
 "Buy.plaidErrorTitle" = "Se ha producido un error al conectar tu cuenta a través de Plaid";
@@ -1386,14 +1396,6 @@
 
 "ErrorMessages.notEnoughBalanceXRP" = "Ensure you leave at least %@ XRP in your wallet; the Ripple Ledger requires this as a non-withdrawable minimum reserve.";
 
-"ErrorMessages.overDailyLimit" = "La cantidad es superior a tu límite diario de %@  USD. Actualiza tu cuenta o introduce un importe inferior.";
-
-"ErrorMessages.overExchangeLimit" = "Límite de cambio excedido.";
-
-"ErrorMessages.overLifetimeLimit" = "La cantidad es superior a tu límite total de %@  USD. Actualiza tu cuenta o introduce un importe inferior.";
-
-"ErrorMessages.overLifetimeLimitLevel2" = "La cantidad es superior a tu límite diario de %@  USD. Por favor, introduce una cantidad inferior.";
-
 "ErrorMessages.PaymailAlreadyTaken" = "This Paymail is already taken";
 
 "ErrorMessages.PaymailTaken" = "Paymail already taken";
@@ -1412,9 +1414,6 @@
 
 /* Something went wrong message */
 "ErrorMessages.SomethingWentWrong" = "¡Vaya! Algo ha salido mal, por favor, inténtalo de nuevo más tarde.";
-
-/* Two parameters:, - maximum amount, - currency code */
-"ErrorMessages.swapAmountTooHigh" = "El importe del cambio es superior al máximo de %@ %@.";
 
 "ErrorMessages.temporaryNetworkIssues" = "Estamos experimentando problemas temporales para conectarnos a nuestra red. Inténtalo de nuevo más tarde.";
 
