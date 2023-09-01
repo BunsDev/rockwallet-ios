@@ -2461,6 +2461,8 @@ internal enum L10n {
     internal static let withdrawalSuccessTitle = L10n.tr("Localizable", "Sell.WithdrawalSuccessTitle", fallback: "Your withdrawal is being processed")
     /// Sell and Withdraw details
     internal static let withdrawDetails = L10n.tr("Localizable", "Sell.WithdrawDetails", fallback: "Sell and Withdraw details")
+    /// Your ACH sell limits
+    internal static let yourAchSellLimits = L10n.tr("Localizable", "Sell.YourAchSellLimits", fallback: "Your ACH sell limits")
     /// You sell:
     internal static let yourOrder = L10n.tr("Localizable", "Sell.yourOrder", fallback: "You sell:")
     /// Your sell limits
